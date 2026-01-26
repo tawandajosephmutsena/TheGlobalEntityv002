@@ -27,6 +27,7 @@ import {
     List,
     TrendingUp,
     Shield,
+    Palette,
 } from 'lucide-react';
 import { usePermissions } from '@/hooks/use-permissions';
 
@@ -108,6 +109,12 @@ const systemNavItems = [
         icon: Settings,
         permission: 'settings.manage',
     },
+    {
+        title: 'Branding',
+        href: '/admin/settings?tab=theme', // Assuming query param works or just to indicate intent
+        icon: Palette,
+        permission: 'settings.manage',
+    },
 ];
 
 
@@ -142,7 +149,7 @@ export function AdminSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/admin" className="flex items-center justify-center">
+                            <Link href="/admin" className="flex items-center justify-center bg-transparent">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -201,7 +208,6 @@ export function AdminSidebar() {
                     <SidebarGroupLabel>System</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                        <SidebarMenu>
                             {systemNavItems.filter(item => !item.permission || can(item.permission)).map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
@@ -216,8 +222,6 @@ export function AdminSidebar() {
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}
-                        </SidebarMenu>
-
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>

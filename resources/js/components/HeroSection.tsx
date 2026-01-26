@@ -185,20 +185,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
                     <div className="overflow-hidden">
                         <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.4s_both]">
-                           {title.split(' ').slice(0, 2).join(' ')} 
+                           {(title || '').split(' ').slice(0, 2).join(' ')} 
                         </span>
                     </div>
                     <div className="overflow-hidden mt-2">
                         <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.6s_both] text-transparent bg-clip-text bg-gradient-to-r from-agency-accent to-agency-accent-soft italic pr-4">
-                            {title.split(' ').slice(2).join(' ')}
+                            {(title || '').split(' ').slice(2).join(' ')}
                         </span>
                     </div>
                 </h1>
 
                 {/* Description */}
-                <p className="max-w-lg text-lg md:text-xl text-agency-primary/70 dark:text-white/70 font-light leading-relaxed mb-10 animate-[bloom_1s_ease-out_0.8s_both]">
-                    {description}
-                </p>
+                {(description || '').length > 0 && (
+                    <p className="max-w-lg text-lg md:text-xl text-agency-primary/70 dark:text-white/70 font-light leading-relaxed mb-10 animate-[bloom_1s_ease-out_0.8s_both]">
+                        {description}
+                    </p>
+                )}
 
                 {/* CTA Actions */}
                 <div className="flex flex-wrap items-center justify-center gap-6 animate-[bloom_1s_ease-out_1s_both]">

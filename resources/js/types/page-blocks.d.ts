@@ -313,6 +313,7 @@ export interface VideoBackgroundHeroBlock extends BaseBlock {
         videoUrl?: string;
         trustedByText?: string;
         logos?: Array<{ name: string; url: string }>;
+        showLogoSlider?: boolean;
     };
 }
 

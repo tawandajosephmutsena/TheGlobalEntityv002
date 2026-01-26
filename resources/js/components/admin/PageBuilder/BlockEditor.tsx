@@ -29,6 +29,21 @@ interface CinematicSlide { title: string; subtitle?: string; tagline?: string; i
 interface ParallaxItem { title: string; description: string; image: string; }
 interface HorizontalScrollItem { title: string; description: string; tag: string; image: string; }
 
+interface FormField {
+    label: string;
+    type: 'text' | 'email' | 'number' | 'tel' | 'textarea' | 'select' | 'radio' | 'checkbox';
+    name: string;
+    required?: boolean;
+    placeholder?: string;
+    options?: string[];
+}
+interface FormStep {
+    id: string;
+    title: string;
+    description?: string;
+    fields: FormField[];
+}
+
 interface Column {
     id: string;
     type: 'text' | 'image' | 'video' | 'button';
@@ -877,6 +892,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                     </div>
 
                     <div className="space-y-4 pt-4 border-t">
+                        <div className="flex items-center gap-3 mb-4">
+                            <input 
+                                type="checkbox" 
+                                id="showLogoSlider" 
+                                checked={block.content.showLogoSlider !== false} 
+                                onChange={(e) => updateContent({ showLogoSlider: e.target.checked })}
+                                className="h-4 w-4 rounded border-gray-300 text-agency-accent focus:ring-agency-accent"
+                                aria-label="Show Logo Slider"
+                                title="Toggle logo slider visibility"
+                            />
+                            <Label htmlFor="showLogoSlider" className="text-sm cursor-pointer font-bold">Show Logo Slider</Label>
+                        </div>
                         <div className="space-y-1">
                             <Label className="text-xs font-bold uppercase tracking-wider">Trusted By Text</Label>
                             <Input 
@@ -1268,7 +1295,299 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             );
         }
 
-        // Fallback for form and other complex types
+        case 'form':
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Form Title</Label>
+                        <Input 
+                            value={String(block.content.title || '')} 
+                            onChange={(e) => updateContent({ title: e.target.value })} 
+                            placeholder="e.g. Onboarding"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Textarea 
+                            className="h-20" 
+                            value={String(block.content.description || '')} 
+                            onChange={(e) => updateContent({ description: e.target.value })} 
+                            placeholder="e.g. Tell us about your project"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Submit Button Text</Label>
+                        <Input 
+                            value={String(block.content.submitText || '')} 
+                            onChange={(e) => updateContent({ submitText: e.target.value })} 
+                            placeholder="Submit enquiry"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Success Message</Label>
+                        <Input 
+                            value={String(block.content.successMessage || '')} 
+                            onChange={(e) => updateContent({ successMessage: e.target.value })} 
+                            placeholder="Form submitted successfully!"
+                        />
+                    </div>
+                    <div className="space-y-4 pt-4 border-t">
+                        <div className="flex items-center justify-between">
+                            <Label className="text-xs font-bold uppercase tracking-wider">Form Steps</Label>
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => {
+                                    const steps = (block.content.steps as FormStep[]) || [];
+                                    updateContent({ 
+                                        steps: [...steps, { 
+                                            id: Math.random().toString(36).substr(2, 9), 
+                                            title: 'New Step', 
+                                            fields: [] 
+                                        }] 
+                                    });
+                                }}
+                            >
+                                <Plus className="h-3 w-3 mr-1" /> Add Step
+                            </Button>
+                        </div>
+                        <div className="space-y-6">
+                            {((block.content.steps as FormStep[]) || []).map((step, stepIdx) => (
+                                <div key={step.id || stepIdx} className="p-4 border rounded-xl bg-muted/5 space-y-4 relative group">
+                                    <button 
+                                        type="button" 
+                                        title="Remove Step"
+                                        className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
+                                        onClick={() => {
+                                            const steps = [...(block.content.steps as FormStep[])];
+                                            steps.splice(stepIdx, 1);
+                                            updateContent({ steps });
+                                        }}
+                                    >
+                                        <Trash className="h-3 w-3" />
+                                    </button>
+                                    
+                                    <div className="space-y-3">
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] font-bold uppercase opacity-50">Step Title</Label>
+                                            <Input 
+                                                className="h-8 text-xs font-bold" 
+                                                value={step.title} 
+                                                onChange={(e) => {
+                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                    steps[stepIdx] = { ...step, title: e.target.value };
+                                                    updateContent({ steps });
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] font-bold uppercase opacity-50">Step Description</Label>
+                                            <Input 
+                                                className="h-8 text-[11px]" 
+                                                value={step.description || ''} 
+                                                onChange={(e) => {
+                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                    steps[stepIdx] = { ...step, description: e.target.value };
+                                                    updateContent({ steps });
+                                                }}
+                                                placeholder="Short description for this step..."
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3 pt-3 border-t">
+                                        <div className="flex items-center justify-between">
+                                            <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Fields</Label>
+                                            <Button 
+                                                variant="ghost" 
+                                                size="sm" 
+                                                className="h-6 text-[10px]"
+                                                onClick={() => {
+                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                    const fields = [...(step.fields || [])];
+                                                    fields.push({ 
+                                                        label: 'New Field', 
+                                                        type: 'text', 
+                                                        name: 'field_' + Math.random().toString(36).substr(2, 5),
+                                                        required: false
+                                                    });
+                                                    steps[stepIdx] = { ...step, fields };
+                                                    updateContent({ steps });
+                                                }}
+                                            >
+                                                <Plus className="h-3 w-3 mr-1" /> Add Field
+                                            </Button>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            {(step.fields || []).map((field, fieldIdx) => (
+                                                <div key={fieldIdx} className="p-3 border rounded-lg bg-background/50 space-y-3 relative group/field">
+                                                    <button 
+                                                        type="button" 
+                                                        title="Remove Field"
+                                                        className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover/field:opacity-100 transition-opacity"
+                                                        onClick={() => {
+                                                            const steps = [...(block.content.steps as FormStep[])];
+                                                            const fields = [...(step.fields || [])];
+                                                            fields.splice(fieldIdx, 1);
+                                                            steps[stepIdx] = { ...step, fields };
+                                                            updateContent({ steps });
+                                                        }}
+                                                    >
+                                                        <Trash className="h-3 w-3" />
+                                                    </button>
+
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div className="space-y-1">
+                                                            <Label className="text-[9px] uppercase font-bold opacity-50">Label</Label>
+                                                            <Input 
+                                                                className="h-7 text-xs" 
+                                                                value={field.label} 
+                                                                onChange={(e) => {
+                                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                                    const fields = [...step.fields];
+                                                                    fields[fieldIdx] = { ...field, label: e.target.value };
+                                                                    steps[stepIdx] = { ...step, fields };
+                                                                    updateContent({ steps });
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            <Label className="text-[9px] uppercase font-bold opacity-50">Field Type</Label>
+                                                            <Select 
+                                                                value={field.type} 
+                                                                onValueChange={(val: FormField['type']) => {
+                                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                                    const fields = [...step.fields];
+                                                                    fields[fieldIdx] = { ...field, type: val };
+                                                                    // Initialize options array if switching to multi-option type
+                                                                    if (['select', 'radio', 'checkbox'].includes(val) && !field.options) {
+                                                                        fields[fieldIdx].options = ['Option 1'];
+                                                                    }
+                                                                    steps[stepIdx] = { ...step, fields };
+                                                                    updateContent({ steps });
+                                                                }}
+                                                            >
+                                                                <SelectTrigger className="h-7 text-xs">
+                                                                    <SelectValue />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="text">Text</SelectItem>
+                                                                    <SelectItem value="email">Email</SelectItem>
+                                                                    <SelectItem value="number">Number</SelectItem>
+                                                                    <SelectItem value="tel">Phone</SelectItem>
+                                                                    <SelectItem value="textarea">Long Text</SelectItem>
+                                                                    <SelectItem value="select">Dropdown</SelectItem>
+                                                                    <SelectItem value="radio">Radio Buttons</SelectItem>
+                                                                    <SelectItem value="checkbox">Checkboxes</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div className="space-y-1">
+                                                            <Label className="text-[9px] uppercase font-bold opacity-50">Field Name (ID)</Label>
+                                                            <Input 
+                                                                className="h-7 text-[10px] font-mono" 
+                                                                value={field.name} 
+                                                                onChange={(e) => {
+                                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                                    const fields = [...step.fields];
+                                                                    fields[fieldIdx] = { ...field, name: e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '_') };
+                                                                    steps[stepIdx] = { ...step, fields };
+                                                                    updateContent({ steps });
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="flex items-center gap-2 pt-4">
+                                                            <input 
+                                                                type="checkbox" 
+                                                                id={`req-${stepIdx}-${fieldIdx}`}
+                                                                checked={!!field.required}
+                                                                onChange={(e) => {
+                                                                    const steps = [...(block.content.steps as FormStep[])];
+                                                                    const fields = [...step.fields];
+                                                                    fields[fieldIdx] = { ...field, required: e.target.checked };
+                                                                    steps[stepIdx] = { ...step, fields };
+                                                                    updateContent({ steps });
+                                                                }}
+                                                                className="rounded border-gray-300 text-agency-accent focus:ring-agency-accent h-3 w-3"
+                                                            />
+                                                            <Label htmlFor={`req-${stepIdx}-${fieldIdx}`} className="text-[10px] cursor-pointer">Required</Label>
+                                                        </div>
+                                                    </div>
+
+                                                    {['select', 'radio', 'checkbox'].includes(field.type) && (
+                                                        <div className="space-y-2 pt-2 border-t">
+                                                            <div className="flex items-center justify-between">
+                                                                <Label className="text-[9px] uppercase font-bold text-muted-foreground">Options</Label>
+                                                                <Button 
+                                                                    variant="ghost" 
+                                                                    size="sm" 
+                                                                    className="h-5 text-[8px]"
+                                                                    onClick={() => {
+                                                                        const steps = [...(block.content.steps as FormStep[])];
+                                                                        const fields = [...step.fields];
+                                                                        const options = [...(field.options || [])];
+                                                                        options.push(`Option ${options.length + 1}`);
+                                                                        fields[fieldIdx] = { ...field, options };
+                                                                        steps[stepIdx] = { ...step, fields };
+                                                                        updateContent({ steps });
+                                                                    }}
+                                                                >
+                                                                    <Plus className="h-2 w-2 mr-1" /> Add Option
+                                                                </Button>
+                                                            </div>
+                                                            <div className="space-y-1">
+                                                                {(field.options || []).map((opt, optIdx) => (
+                                                                    <div key={optIdx} className="flex gap-1 group/opt">
+                                                                        <Input 
+                                                                            className="h-6 text-[10px]" 
+                                                                            value={opt} 
+                                                                            onChange={(e) => {
+                                                                                const steps = [...(block.content.steps as FormStep[])];
+                                                                                const fields = [...step.fields];
+                                                                                const options = [...(field.options || [])];
+                                                                                options[optIdx] = e.target.value;
+                                                                                fields[fieldIdx] = { ...field, options };
+                                                                                steps[stepIdx] = { ...step, fields };
+                                                                                updateContent({ steps });
+                                                                            }}
+                                                                        />
+                                                                        <Button 
+                                                                            variant="ghost" 
+                                                                            size="icon" 
+                                                                            className="h-6 w-6 opacity-0 group-hover/opt:opacity-100"
+                                                                            onClick={() => {
+                                                                                const steps = [...(block.content.steps as FormStep[])];
+                                                                                const fields = [...step.fields];
+                                                                                const options = [...(field.options || [])];
+                                                                                options.splice(optIdx, 1);
+                                                                                fields[fieldIdx] = { ...field, options };
+                                                                                steps[stepIdx] = { ...step, fields };
+                                                                                updateContent({ steps });
+                                                                            }}
+                                                                        >
+                                                                            <Trash className="h-2 w-2" />
+                                                                        </Button>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+        // Fallback for other complex types
         default:
             return (
                 <div className="space-y-6">

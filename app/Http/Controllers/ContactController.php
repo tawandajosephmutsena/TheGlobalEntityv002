@@ -18,13 +18,6 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         try {
-            // Rate limiting check (5 submissions per 5 minutes per IP)
-            $key = 'contact_form_' . $request->ip();
-            if (Cache::has($key)) {
-                return back()->withErrors([
-                    'message' => 'Please wait before submitting another message.'
-                ])->with('error', 'Rate limit exceeded');
-            }
 
             $data = $request->except(['_token', 'form_title']);
             
@@ -94,8 +87,6 @@ class ContactController extends Controller
                 ],
             ]);
 
-            // Set rate limit (5 minutes)
-            Cache::put($key, true, now()->addMinutes(5));
 
             return back()->with('success', 'Thank you for your message. We\'ll get back to you soon!');
             

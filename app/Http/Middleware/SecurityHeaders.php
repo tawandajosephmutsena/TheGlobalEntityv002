@@ -57,13 +57,14 @@ class SecurityHeaders
         $permissionsPolicy = $this->buildPermissionsPolicy();
         $response->headers->set('Permissions-Policy', $permissionsPolicy);
 
-        // Cross-Origin Embedder Policy
-        // Relax for local dev to avoid issues with non-HTTPS
+        // Cross-Origin Embedder Policy - Disabled for shared hosting compatibility
+        /*
         if (!app()->environment('local')) {
             $response->headers->set('Cross-Origin-Embedder-Policy', 'require-corp');
             $response->headers->set('Cross-Origin-Opener-Policy', 'same-origin');
             $response->headers->set('Cross-Origin-Resource-Policy', 'same-origin');
         }
+        */
 
         // Remove server information
         $response->headers->remove('Server');

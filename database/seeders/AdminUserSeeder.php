@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,7 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         // Create admin user if it doesn't exist
-        User::firstOrCreate(
+        $admin = User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin User',
@@ -24,6 +25,11 @@ class AdminUserSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
+        
+        $adminRole = \App\Models\Role::where('slug', 'admin')->first();
+        if ($adminRole) {
+            $admin->roles()->syncWithoutDetaching([$adminRole->id]);
+        }
 
         // Create editor user if it doesn't exist
         User::firstOrCreate(

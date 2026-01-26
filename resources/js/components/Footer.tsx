@@ -69,20 +69,24 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
             console.warn('Failed to parse footer resources links:', e);
         }
     }
+    const footerNavTitle = site.footer?.nav_title || 'Navigation';
+    const footerOfficeTitle = site.footer?.office_title || 'Office';
+    const footerBackToTop = site.footer?.back_to_top || 'Back to top';
+    const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
     return (
-        <footer className={cn('bg-agency-dark text-white dark:bg-black pt-32 pb-12 overflow-hidden border-t border-white/5', className)}>
+        <footer className={cn('bg-background text-foreground pt-32 pb-12 overflow-hidden border-t border-border', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32">
                     {/* Massive Brand Side */}
                     <div className="lg:col-span-6 flex flex-col justify-between">
                         <div>
-                            <Link href="/" className="inline-flex items-center mb-12 group overflow-visible">
+                            <Link href="/" className="inline-flex items-center mb-12 group overflow-visible bg-transparent">
                                 <AppLogo 
                                     className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-105" 
                                 />
                             </Link>
-                            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-8">
+                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8">
                                 {footerHeadingLine1} <br/>
                                 <span className="text-agency-accent">{footerHeadingLine2}</span> {footerHeadingLine3}
                             </h2>
@@ -96,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                                     aria-label={social.name}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="size-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-agency-primary transition-all duration-500"
+                                    className="size-12 rounded-full border border-border flex items-center justify-center hover:bg-agency-accent hover:text-agency-primary transition-all duration-500"
                                 >
                                     <social.icon className="size-5" />
                                 </a>
@@ -107,7 +111,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     {/* Navigation Columns */}
                     <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
                         <div>
-                            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-agency-accent mb-8">Navigation</h3>
+                            <h3 className="text-xs font-bold tracking-[0.2em] text-agency-accent mb-8">{footerNavTitle}</h3>
                             <ul className="space-y-4">
                                 {menuItems.length > 0 ? (
                                     menuItems.map((link) => (
@@ -129,7 +133,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-agency-accent mb-8">{footerResourcesTitle}</h3>
+                            <h3 className="text-xs font-bold tracking-[0.2em] text-agency-accent mb-8">{footerResourcesTitle}</h3>
                             <ul className="space-y-4">
                                 {resourcesLinks.map((link) => (
                                     <li key={link.name}>
@@ -141,7 +145,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                             </ul>
                         </div>
                         <div className="col-span-2 md:col-span-1">
-                            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-agency-accent mb-8">Office</h3>
+                            <h3 className="text-xs font-bold tracking-[0.2em] text-agency-accent mb-8">{footerOfficeTitle}</h3>
                             <address className="not-italic">
                                 <p className="text-xl font-bold opacity-40 leading-tight">
                                     {site.contact?.address || '123 Creative Studio\nMarket Street 456\nSan Francisco, CA'}
@@ -153,9 +157,9 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div className="pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex items-center gap-8 order-2 md:order-1">
-                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'AVANT-GARDE'} AGY</span>
+                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'AVANT-GARDE'} {footerCopyrightSuffix}</span>
                         <div className="hidden md:flex gap-6">
                             {footerLinks.legal.map((link) => (
                                 <Link key={link.name} href={link.href} className="text-xs opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
@@ -166,8 +170,8 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     </div>
 
                     <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">Back to top</span>
-                        <div className="size-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
+                        <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">{footerBackToTop}</span>
+                        <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>
                         </div>
                     </div>

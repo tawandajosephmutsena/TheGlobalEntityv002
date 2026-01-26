@@ -1,0 +1,48 @@
+[23-Jan-2026 12:14:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Component\ErrorHandler\ErrorRenderer\highlight_file() in /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php:257
+Stack trace:
+#0 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/trace.html.php(36): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->fileExcerpt()
+#1 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#2 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/traces.html.php(48): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#3 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#4 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/exception.html.php(54): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#5 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#6 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/exception_full.html.php(35): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#7 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#8 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(140): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#9 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(72): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->renderException()
+#10 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(911): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->render()
+#11 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(885): Illuminate\Foundation\Exceptions\Handler->renderExceptionWithSymfony()
+#12 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(860): Illuminate\Foundation\Exceptions\Handler->renderExceptionContent()
+#13 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(839): Illuminate\Foundation\Exceptions\Handler->convertExceptionToResponse()
+#14 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(738): Illuminate\Foundation\Exceptions\Handler->prepareResponse()
+#15 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(626): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse()
+#16 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Foundation\Exceptions\Handler->render()
+#17 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#18 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}()
+#20 {main}
+  thrown in /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257
+[24-Jan-2026 09:01:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function Symfony\Component\ErrorHandler\ErrorRenderer\highlight_file() in /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php:257
+Stack trace:
+#0 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/trace.html.php(36): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->fileExcerpt()
+#1 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#2 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/traces.html.php(48): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#3 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#4 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/exception.html.php(54): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#5 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#6 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/Resources/views/exception_full.html.php(35): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#7 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(345): include('/home/datcitiz/...')
+#8 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(140): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->include()
+#9 /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php(72): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->renderException()
+#10 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(911): Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer->render()
+#11 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(885): Illuminate\Foundation\Exceptions\Handler->renderExceptionWithSymfony()
+#12 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(860): Illuminate\Foundation\Exceptions\Handler->renderExceptionContent()
+#13 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(839): Illuminate\Foundation\Exceptions\Handler->convertExceptionToResponse()
+#14 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(738): Illuminate\Foundation\Exceptions\Handler->prepareResponse()
+#15 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(626): Illuminate\Foundation\Exceptions\Handler->renderExceptionResponse()
+#16 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(221): Illuminate\Foundation\Exceptions\Handler->render()
+#17 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(198): Illuminate\Foundation\Bootstrap\HandleExceptions->renderHttpResponse()
+#18 /home/datcitiz/wisti-conference.co.zw/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#19 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->{closure:Illuminate\Foundation\Bootstrap\HandleExceptions::forwardsTo():257}()
+#20 {main}
+  thrown in /home/datcitiz/wisti-conference.co.zw/vendor/symfony/error-handler/ErrorRenderer/HtmlErrorRenderer.php on line 257

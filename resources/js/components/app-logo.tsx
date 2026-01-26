@@ -15,17 +15,19 @@ const AppLogo = React.forwardRef<HTMLDivElement, AppLogoProps>(({ className, log
     return (
         <div 
             ref={ref} 
-            className={cn("flex items-center justify-start overflow-hidden shrink-0", className)}
-            style={{ height: '32px', maxWidth: '180px', minWidth: '32px' }}
+            className={cn("flex items-center justify-start shrink-0 !bg-transparent !bg-none overflow-visible border-none shadow-none h-auto w-auto max-w-[300px]", className)}
         >
             {site.logo ? (
                 <img 
                     src={site.logo} 
                     alt={site.name} 
                     className={cn(
-                        "h-full w-auto object-contain block",
+                        "h-auto w-auto max-h-[50px] object-contain block",
                         // Ensure SVGs have at least some width if w-auto is failing
                         site.logo.endsWith('.svg') && "min-w-[120px]",
+                        // Use multiply blend mode to make white backgrounds transparent
+                        // This works on both light and dark backgrounds
+                        "mix-blend-multiply dark:mix-blend-screen dark:invert",
                         logoClassName
                     )} 
                     loading="eager"

@@ -25,6 +25,20 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
     const activeShowMap = show_map != null ? blockShowMap : (site?.contact?.show_map ?? true);
     const activeMapsUrl = google_maps_url || site?.contact?.google_maps_url;
     
+    // Fallbacks for content from site settings
+    const activeSubtitle = subtitle || site?.contact?.hero_subtitle || 'Inquiries';
+    const activeTitle = title || site?.contact?.hero_title || "We're Listening.";
+    const activeItems = (items && items.length > 0) ? items : [
+        { label: 'Email', value: site?.contact?.email || 'hello@avant-garde.com', href: `mailto:${site?.contact?.email}` },
+        { label: 'Phone', value: site?.contact?.phone || '+1 (555) 123-4567', href: `tel:${site?.contact?.phone?.replace(/\s+/g, '')}` },
+        { label: 'Address', value: site?.contact?.address || 'San Francisco, CA' }
+    ];
+    const activeHours = (office_hours && office_hours.length > 0) ? office_hours : (site?.contact?.hours ? site.contact.hours.split('\n') : [
+        'Mon — Fri: 09:00 — 18:00',
+        'Sat: 10:00 — 14:00',
+        'Sun: Closed'
+    ]);
+
     // Convert to normalized boolean if they are strings
     const isVisible = activeShowMap === true || activeShowMap === 'true' || activeShowMap === 1 || activeShowMap === '1' || (activeShowMap === undefined && site?.contact?.show_map !== false);
 
@@ -34,12 +48,12 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                         <AnimatedSection animation="fade-right">
-                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{subtitle}</span>
+                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{activeSubtitle}</span>
                             <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-agency-primary dark:text-white leading-none mb-12">
-                                {title}
+                                {activeTitle}
                             </h2>
                             <div className="space-y-12">
-                                {(items || []).map((item, i) => (
+                                {activeItems.map((item, i) => (
                                     <div key={i}>
                                         <p className="text-xs font-bold uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-4">{item.label}</p>
                                         {item.href ? (
@@ -55,12 +69,11 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
                                 ))}
                             </div>
                         </AnimatedSection>
-
                         <AnimatedSection animation="fade-left" delay={200}>
                             <div className="bg-muted/30 dark:bg-white/5 rounded-[40px] p-12 border border-black/5 dark:border-white/5">
                                 <h3 className="text-xl font-black uppercase tracking-widest text-agency-primary dark:text-white mb-8 italic">Office Hours</h3>
                                 <div className="space-y-4">
-                                    {(office_hours || []).map((hour, i) => (
+                                    {activeHours.map((hour, i) => (
                                         <div key={i} className="flex justify-between items-center border-b border-black/5 dark:border-white/5 pb-4">
                                             <span className="text-agency-primary/60 dark:text-white/60 font-medium">{hour}</span>
                                         </div>

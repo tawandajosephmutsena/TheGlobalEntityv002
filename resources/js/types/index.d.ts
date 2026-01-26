@@ -48,6 +48,10 @@ export interface SharedData {
             phone?: string;
             email?: string;
             hours?: string;
+            hero_title?: string;
+            hero_subtitle?: string;
+            hero_description?: string;
+            form_title?: string;
             google_maps_url?: string;
             show_map?: boolean;
         };
@@ -57,6 +61,10 @@ export interface SharedData {
             heading_line3?: string;
             resources_title?: string;
             resources_links?: string | Array<{ name: string; href: string }>;
+            nav_title?: string;
+            office_title?: string;
+            back_to_top?: string;
+            copyright_suffix?: string;
         };
     };
     breadcrumbs?: Array<{

@@ -16,6 +16,7 @@ interface VideoBackgroundHeroProps {
     videoUrl?: string;
     logos?: Array<{ name: string; url: string }>;
     trustedByText?: string;
+    showLogoSlider?: boolean;
 }
 
 const DEFAULT_LOGOS = [
@@ -62,7 +63,8 @@ export default function VideoBackgroundHero({
     ctaLink2 = "#",
     videoUrl = "https://videos.pexels.com/video-files/30333849/13003128_2560_1440_25fps.mp4",
     logos = [],
-    trustedByText = "Trusted by industry leaders"
+    trustedByText = "Trusted by industry leaders",
+    showLogoSlider = true
 }: VideoBackgroundHeroProps) {
     const activeLogos = logos && logos.length > 0 ? logos : DEFAULT_LOGOS;
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -141,38 +143,40 @@ export default function VideoBackgroundHero({
                 </div>
             </div>
 
-            {/* Footer / Logo Cloud */}
-            <div className="relative z-30 bg-black/40 backdrop-blur-md border-t border-white/10 py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-8">
-                    <div className="shrink-0 px-4">
-                        <p className="text-white/40 text-sm font-medium uppercase tracking-widest whitespace-nowrap">
-                            {trustedByText}
-                        </p>
-                    </div>
-                    <div className="flex-grow overflow-hidden relative">
-                        <InfiniteSlider duration={25} gap={100}>
-                            {activeLogos.map((logo, idx) => (
-                                <img
-                                    key={`${logo.name}-${idx}`}
-                                    src={logo.url}
-                                    alt={logo.name}
-                                    className="h-6 md:h-8 w-auto invert opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
-                                />
-                            ))}
-                        </InfiniteSlider>
-                        <ProgressiveBlur
-                            className="pointer-events-none absolute left-0 top-0 h-full w-32 z-10"
-                            direction="left"
-                            blurIntensity={1.5}
-                        />
-                        <ProgressiveBlur
-                            className="pointer-events-none absolute right-0 top-0 h-full w-32 z-10"
-                            direction="right"
-                            blurIntensity={1.5}
-                        />
+            {/* Footer / Logo Cloud - conditionally rendered */}
+            {showLogoSlider && (
+                <div className="relative z-30 bg-black/40 backdrop-blur-md border-t border-white/10 py-12">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-8">
+                        <div className="shrink-0 px-4">
+                            <p className="text-white/40 text-sm font-medium uppercase tracking-widest whitespace-nowrap">
+                                {trustedByText}
+                            </p>
+                        </div>
+                        <div className="flex-grow overflow-hidden relative">
+                            <InfiniteSlider duration={25} gap={100}>
+                                {activeLogos.map((logo, idx) => (
+                                    <img
+                                        key={`${logo.name}-${idx}`}
+                                        src={logo.url}
+                                        alt={logo.name}
+                                        className="h-6 md:h-8 w-auto invert opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300"
+                                    />
+                                ))}
+                            </InfiniteSlider>
+                            <ProgressiveBlur
+                                className="pointer-events-none absolute left-0 top-0 h-full w-32 z-10"
+                                direction="left"
+                                blurIntensity={1.5}
+                            />
+                            <ProgressiveBlur
+                                className="pointer-events-none absolute right-0 top-0 h-full w-32 z-10"
+                                direction="right"
+                                blurIntensity={1.5}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </section>
     );
 }

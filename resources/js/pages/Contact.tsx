@@ -43,13 +43,27 @@ export default function Contact() {
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                     <div className="max-w-4xl mx-auto">
-                        <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Let's Connect</span>
+                        <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{site?.contact?.hero_subtitle || "Let's Connect"}</span>
                         <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
-                            Start a <br/>
-                            <span className="opacity-30 italic">Conversation.</span>
+                            {site?.contact?.hero_title ? (
+                                <>
+                                    {site.contact.hero_title.split('.').map((part, i, arr) => (
+                                        <React.Fragment key={i}>
+                                            {part}{i < arr.length - 1 && '.'}
+                                            {i === 0 && <br/>}
+                                            {i === 0 && arr.length > 2 && <span className="opacity-30 italic">Conversation.</span>}
+                                        </React.Fragment>
+                                    ))}
+                                </>
+                            ) : (
+                                <>
+                                    Start a <br/>
+                                    <span className="opacity-30 italic">Conversation.</span>
+                                </>
+                            )}
                         </h1>
                         <p className="text-xl md:text-2xl text-agency-primary/60 dark:text-white/60 font-light max-w-2xl mx-auto">
-                            Ready to transform your vision into reality? We're here to listen, collaborate, and create something extraordinary together.
+                            {site?.contact?.hero_description || "Ready to transform your vision into reality? We're here to listen, collaborate, and create something extraordinary together."}
                         </p>
                     </div>
                 </div>
@@ -64,7 +78,17 @@ export default function Contact() {
                         <AnimatedSection animation="slide-up" className="lg:col-span-7">
                             <div className="bg-white dark:bg-agency-dark rounded-[60px] p-12 md:p-16 shadow-2xl border border-agency-primary/5 dark:border-white/5">
                                 <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-12">
-                                    Send us a <span className="text-agency-accent">Message</span>
+                                    {site?.contact?.form_title ? (
+                                        <>
+                                            {site.contact.form_title.split(' ').map((word, i, arr) => (
+                                                <React.Fragment key={i}>
+                                                    {i === arr.length - 1 ? <span className="text-agency-accent">{word}</span> : word}{' '}
+                                                </React.Fragment>
+                                            ))}
+                                        </>
+                                    ) : (
+                                        <>Send us a <span className="text-agency-accent">Message</span></>
+                                    )}
                                 </h2>
 
                                 {formSubmitted && (

@@ -39,7 +39,7 @@ class HandleInertiaRequests extends Middleware
         // Fetch all settings and theme presets from cache (processed together for performance)
         $cachedData = \Illuminate\Support\Facades\Cache::remember('site_settings_all', 60 * 60, function () {
             $allSettings = \App\Models\Setting::all();
-            
+
             // Flat format for easy access - respects types and avoids unwrapping actual arrays (like JSON)
             $flatSettings = $allSettings->mapWithKeys(function ($item) {
                 $value = $item->value;
@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
                 if ($item->type === 'json') {
                     return [$item->key => $value];
                 }
-                
+
                 return [$item->key => is_array($value) ? ($value[0] ?? null) : $value];
             })->toArray();
 
@@ -82,7 +82,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user() ? (function ($user) {
                     // Eager load roles and permissions if not already loaded to optimize
                     $user->loadMissing('roles.permissions');
-                    
+
                     return array_merge($user->toArray(), [
                         'roles' => $user->roles->map(fn($r) => ['slug' => $r->slug, 'name' => $r->name]),
                         'permissions' => $user->permissions()->map(fn($p) => ['slug' => $p->slug]),
@@ -92,16 +92,16 @@ class HandleInertiaRequests extends Middleware
             ],
 
             'csrf_token' => $request->session()->token(),
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'site' => [
                 'name' => $settings['site_name'] ?? 'Avant-Garde CMS',
                 'tagline' => $settings['site_tagline'] ?? 'Digital Innovation Redefined',
                 'description' => $settings['site_description'] ?? 'We create avant-garde digital experiences that push boundaries and inspire innovation through cutting-edge design and technology.',
                 'url' => config('app.url'),
-                'logo' => ($settings['site_logo'] ?? null) 
-                    ? (str_starts_with($settings['site_logo'], 'http') || str_starts_with($settings['site_logo'], '/') 
-                        ? $settings['site_logo'] 
-                        : '/' . $settings['site_logo']) 
+                'logo' => ($settings['site_logo'] ?? null)
+                    ? (str_starts_with($settings['site_logo'], 'http') || str_starts_with($settings['site_logo'], '/')
+                        ? $settings['site_logo']
+                        : '/' . $settings['site_logo'])
                     : asset('logo.svg'),
                 'social' => [
                     'twitter' => $settings['twitter_url'] ?? 'https://twitter.com/avantgarde',
@@ -115,15 +115,21 @@ class HandleInertiaRequests extends Middleware
                     'phone' => $settings['contact_phone'] ?? '+1 (555) 123-4567',
                     'address' => $settings['contact_address'] ?? 'San Francisco, CA',
                     'hours' => $settings['contact_hours'] ?? "Mon - Fri: 9:00 AM - 6:00 PM\nWeekend: By Appointment",
-                    'google_maps_url' => (function($val) {
+                    'hero_title' => $settings['contact_hero_title'] ?? null,
+                    'hero_subtitle' => $settings['contact_hero_subtitle'] ?? null,
+                    'hero_description' => $settings['contact_hero_description'] ?? null,
+                    'form_title' => $settings['contact_form_title'] ?? null,
+                    'google_maps_url' => (function ($val) {
                         $v = is_array($val) ? ($val[0] ?? null) : $val;
                         return $v ?: null;
                     })($settings['google_maps_url'] ?? null),
-                    'show_map' => (function($val) {
-                        if ($val === null) return true; // Default to showing map
+                    'show_map' => (function ($val) {
+                        if ($val === null)
+                            return true; // Default to showing map
                         $v = is_array($val) ? ($val[0] ?? 'true') : $val;
-                        if (is_bool($v)) return $v;
-                        return in_array(strtolower((string)$v), ['true', '1', 'yes', 'on'], true);
+                        if (is_bool($v))
+                            return $v;
+                        return in_array(strtolower((string) $v), ['true', '1', 'yes', 'on'], true);
                     })($settings['show_contact_map'] ?? null),
                 ],
                 'footer' => [
@@ -132,6 +138,10 @@ class HandleInertiaRequests extends Middleware
                     'heading_line3' => $settings['footer_heading_line3'] ?? null,
                     'resources_title' => $settings['footer_resources_title'] ?? null,
                     'resources_links' => $settings['footer_resources_links'] ?? null,
+                    'nav_title' => $settings['footer_nav_title'] ?? null,
+                    'office_title' => $settings['footer_office_title'] ?? null,
+                    'back_to_top' => $settings['footer_back_to_top'] ?? null,
+                    'copyright_suffix' => $settings['footer_copyright_suffix'] ?? null,
                 ],
             ],
             'theme' => [
@@ -166,15 +176,18 @@ class HandleInertiaRequests extends Middleware
 
                 $mainMenu = \App\Models\NavigationMenu::where('slug', 'main-menu')
                     ->where('is_active', true)
-                    ->with(['items' => function ($query) {
-                        $query->where('is_visible', true)
-                            ->orderBy('order')
-                            ->with('page:id,title,slug');
-                    }, 'items.children' => function ($query) {
-                        $query->where('is_visible', true)
-                            ->orderBy('order')
-                            ->with('page:id,title,slug');
-                    }])
+                    ->with([
+                        'items' => function ($query) {
+                            $query->where('is_visible', true)
+                                ->orderBy('order')
+                                ->with('page:id,title,slug');
+                        },
+                        'items.children' => function ($query) {
+                            $query->where('is_visible', true)
+                                ->orderBy('order')
+                                ->with('page:id,title,slug');
+                        }
+                    ])
                     ->first();
 
                 return [

@@ -27,6 +27,10 @@ Route::get('/documentation', function () {
 })->name('documentation');
 
 Route::get('/contact', function () {
+    // If a CMS page with slug 'contact' exists, use the dynamic renderer
+    if (\App\Models\Page::where('slug', 'contact')->where('is_published', true)->exists()) {
+        return (new \App\Http\Controllers\PageController())->show('contact');
+    }
     return Inertia::render('Contact');
 })->name('contact');
 
@@ -49,7 +53,7 @@ Route::post('/interactions', [App\Http\Controllers\InteractionController::class,
 
 // Contact form (no caching for POST)
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])
-    ->middleware('throttle:10,1') // Increased from 5 to 10
+    ->middleware('throttle:30,1') // Increased to 30 requests per minute for better user experience
     ->name('contact.store');
 
 // SEO and Sitemap routes

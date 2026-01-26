@@ -100,6 +100,7 @@ export default function ThemeStyles() {
     const customRing = getSettingValue('brand_ring');
     const customRadius = getSettingValue('border_radius');
     const customFontWeight = getSettingValue('font_weight');
+    const customFontWeightHeading = getSettingValue('font_weight_heading');
     const customDisplayFont = getSettingValue('font_display');
     const customBodyFont = getSettingValue('font_body');
 
@@ -205,6 +206,7 @@ export default function ThemeStyles() {
                         --font-serif: "${preset.fonts.serif || 'Georgia'}", ui-serif, Georgia, serif;
                         --font-mono: "${preset.fonts.mono || 'monospace'}", ui-monospace, SFMono-Regular, monospace;
                         --font-weight-base: ${customFontWeight || '400'};
+                        --font-weight-heading: ${customFontWeightHeading || '700'};
                         
                         /* Chart colors - derived from theme */
                         --chart-1: ${preset.light.primary || 'oklch(0.55 0.13 43)'};
@@ -213,13 +215,13 @@ export default function ThemeStyles() {
                         --chart-4: ${preset.light.muted || 'oklch(0.88 0.04 298)'};
                         --chart-5: ${preset.light.ring || 'oklch(0.56 0.13 42)'};
                         
-                        /* Agency color mappings */
+                        /* Agency color mappings - light mode */
                         --agency-primary: var(--foreground);
                         --agency-secondary: var(--background);
                         --agency-accent: var(--primary);
                         --agency-accent-soft: var(--secondary);
-                        --agency-neutral: var(--background);
-                        --agency-dark: var(--foreground);
+                        --agency-neutral: var(--muted);
+                        --agency-dark: oklch(0.15 0 0);
                         
                         /* Primary RGB for effects (approximate) */
                         --primary-rgb: 194, 94, 46;
@@ -241,7 +243,7 @@ export default function ThemeStyles() {
                         --agency-accent: var(--primary);
                         --agency-accent-soft: var(--secondary);
                         --agency-neutral: var(--muted);
-                        --agency-dark: var(--background);
+                        --agency-dark: oklch(0.10 0 0);
                         
                         /* Primary RGB for effects - dark mode */
                         --primary-rgb: 217, 116, 65;
@@ -255,6 +257,7 @@ export default function ThemeStyles() {
 
                     h1, h2, h3, h4, h5, h6, .font-display {
                         font-family: var(--font-display);
+                        font-weight: var(--font-weight-heading);
                     }
                 `
             }} />

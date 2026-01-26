@@ -84,12 +84,20 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'footer_heading_line3', label: 'Footer Heading (Line 3)', type: 'text', placeholder: 'juntos.' },
         { key: 'footer_resources_title', label: 'Footer Resources Column Title', type: 'text', placeholder: 'Resources' },
         { key: 'footer_resources_links', label: 'Footer Resources Links', type: 'links', placeholder: '', description: 'Manage footer resources column links' },
+        { key: 'footer_nav_title', label: 'Footer Navigation Title', type: 'text', placeholder: 'Navigation' },
+        { key: 'footer_office_title', label: 'Footer Office Title', type: 'text', placeholder: 'Office' },
+        { key: 'footer_back_to_top', label: 'Back to Top Text', type: 'text', placeholder: 'Back to top' },
+        { key: 'footer_copyright_suffix', label: 'Copyright Suffix', type: 'text', placeholder: 'AGY' },
     ],
     contact: [
         { key: 'contact_email', label: 'Contact Email', type: 'text', placeholder: 'hello@example.com' },
         { key: 'contact_phone', label: 'Phone Number', type: 'text', placeholder: '+1 (555) 000-0000' },
         { key: 'contact_address', label: 'Physical Address', type: 'textarea', placeholder: '123 Innovation Dr...' },
         { key: 'contact_hours', label: 'Office Hours', type: 'textarea', placeholder: 'Mon - Fri: 9:00 AM - 6:00 PM\nWeekend: By Appointment' },
+        { key: 'contact_hero_title', label: 'Contact Hero Title', type: 'text', placeholder: 'Start a Conversation.' },
+        { key: 'contact_hero_subtitle', label: 'Contact Hero Subtitle', type: 'text', placeholder: "Let's Connect" },
+        { key: 'contact_hero_description', label: 'Contact Hero Description', type: 'textarea', placeholder: "Ready to transform your vision into reality? We're here to listen, collaborate, and create something extraordinary together." },
+        { key: 'contact_form_title', label: 'Contact Form Title', type: 'text', placeholder: 'Send us a Message' },
         { key: 'google_maps_url', label: 'Google Maps Embed URL', type: 'text', placeholder: 'https://www.google.com/maps/embed?pb=...', description: 'Go to Google Maps > Share > Embed a Map > Copy the src URL from the iframe code' },
         { key: 'show_contact_map', label: 'Show Map Section', type: 'boolean', placeholder: 'true' },
     ],
@@ -183,6 +191,21 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
                 { value: '500', label: 'Medium (500)' },
                 { value: '600', label: 'Semibold (600)' },
                 { value: '700', label: 'Bold (700)' },
+            ]
+        },
+        { 
+            key: 'font_weight_heading', 
+            label: 'Heading Font Weight', 
+            type: 'select', 
+            placeholder: '700',
+            description: 'Font weight for headings and titles.',
+            options: [
+                { value: '400', label: 'Normal (400)' },
+                { value: '500', label: 'Medium (500)' },
+                { value: '600', label: 'Semibold (600)' },
+                { value: '700', label: 'Bold (700)' },
+                { value: '800', label: 'Extra Bold (800)' },
+                { value: '900', label: 'Black (900)' },
             ]
         },
         { 
@@ -310,6 +333,23 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
     const setData = _setData as (key: string, value: any) => void;
     const [processing, setProcessing] = useState(false);
     const [selectedPreset, setSelectedPreset] = useState<string>(initialData['theme_preset']);
+    const [currentTab, setCurrentTab] = useState('general');
+
+    // Initialize tab from URL
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const tab = params.get('tab');
+        if (tab && Object.keys(SETTINGS_STRUCT).includes(tab)) {
+            setCurrentTab(tab);
+        }
+    }, []);
+
+    const handleTabChange = (value: string) => {
+        setCurrentTab(value);
+        const url = new URL(window.location.href);
+        url.searchParams.set('tab', value);
+        window.history.pushState({}, '', url);
+    };
 
     // Apply theme preview when preset changes - respects current dark/light mode
     // Apply theme preview when preset OR data changes
@@ -477,7 +517,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                 </div>
 
                 <form onSubmit={handleSubmit}>
-                    <Tabs defaultValue="general" className="w-full">
+                    <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
                         <TabsList className="mb-4">
                             <TabsTrigger value="general">General</TabsTrigger>
                             <TabsTrigger value="contact">Contact Info</TabsTrigger>

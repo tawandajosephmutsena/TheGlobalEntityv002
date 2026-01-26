@@ -142,7 +142,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     {/* Logo */}
                     <Link
                         href="/"
-                        className="group relative z-10 flex items-center overflow-visible font-display"
+                        className="group relative z-10 flex items-center !bg-transparent overflow-visible font-display"
                     >
                         <AppLogo
                             ref={logoRef as React.RefObject<HTMLDivElement>}
