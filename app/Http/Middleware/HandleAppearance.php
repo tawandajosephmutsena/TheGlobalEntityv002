@@ -16,7 +16,14 @@ class HandleAppearance
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $appearance = $request->cookie('appearance') ?? 'system';
+        // Try to get the appearance from cookie first
+        $appearance = $request->cookie('appearance');
+
+        // If no cookie, use the site-wide default from settings (or 'system')
+        if (!$appearance) {
+            $appearance = \App\Models\Setting::get('default_appearance', 'system');
+        }
+
         View::share('appearance', $appearance);
         \Inertia\Inertia::share('appearance', $appearance);
 

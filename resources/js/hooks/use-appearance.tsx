@@ -36,13 +36,18 @@ const mediaQuery = () => {
 };
 
 const handleSystemThemeChange = () => {
-    const currentAppearance = localStorage.getItem('appearance') as Appearance;
-    applyTheme(currentAppearance || 'system');
+    const currentAppearance = (localStorage.getItem('appearance') as Appearance) || getServerAppearance();
+    applyTheme(currentAppearance);
+};
+
+const getServerAppearance = () => {
+    if (typeof document === 'undefined') return 'system';
+    return (document.documentElement.getAttribute('data-appearance') as Appearance) || 'system';
 };
 
 export function initializeTheme() {
     const savedAppearance =
-        (localStorage.getItem('appearance') as Appearance) || 'system';
+        (localStorage.getItem('appearance') as Appearance) || getServerAppearance();
 
     applyTheme(savedAppearance);
 
@@ -53,7 +58,7 @@ export function initializeTheme() {
 export function useAppearance() {
     const [appearance, setAppearance] = useState<Appearance>(() => {
         if (typeof window !== 'undefined') {
-            return (localStorage.getItem('appearance') as Appearance) || 'system';
+            return (localStorage.getItem('appearance') as Appearance) || getServerAppearance();
         }
         return 'system';
     });
@@ -76,7 +81,7 @@ export function useAppearance() {
 
         const handleMediaQueryChange = () => {
             const current = localStorage.getItem('appearance') as Appearance | null;
-            applyTheme(current || 'system');
+            applyTheme(current || getServerAppearance());
         };
 
         const mq = mediaQuery();

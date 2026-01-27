@@ -230,6 +230,18 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
             ]
         },
         { key: 'theme_preset', label: 'Active Theme Preset', type: 'text', placeholder: 'ottostart_default' },
+        { 
+            key: 'default_appearance', 
+            label: 'Default Site Appearance', 
+            type: 'select', 
+            placeholder: 'system',
+            description: 'The default theme for visitors. Users can still change their individual preference.',
+            options: [
+                { value: 'system', label: 'System (Respects visitor\'s OS settings)' },
+                { value: 'light', label: 'Light Mode (Forced)' },
+                { value: 'dark', label: 'Dark Mode (Forced)' },
+            ]
+        },
     ]
 };
 

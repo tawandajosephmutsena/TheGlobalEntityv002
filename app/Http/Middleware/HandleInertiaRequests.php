@@ -146,6 +146,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'theme' => [
                 'preset' => $settings['theme_preset'] ?? config('theme-presets.default'),
+                'default_appearance' => $settings['default_appearance'] ?? 'system',
                 'colors' => [
                     'primary' => $settings['brand_primary'] ?? '#1a1a1a',
                     'secondary' => $settings['brand_secondary'] ?? '#666666',
