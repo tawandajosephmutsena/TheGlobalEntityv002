@@ -175,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => (window as any).scrollTo?.({ top: 0, behavior: 'smooth' })}>
+                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                         <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">{footerBackToTop}</span>
                         <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>

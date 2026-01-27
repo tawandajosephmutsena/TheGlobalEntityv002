@@ -640,22 +640,27 @@
 
 /* Editor Button Styles - Works with theme colors */
 .editor-btn-primary {
+    background-color: #c25e2e; /* HEX Fallback */
     background-color: oklch(0.646 0.222 41.116);
     color: white !important;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 }
 
 .editor-btn-primary:hover {
+    background-color: #a74b21; /* HEX Fallback */
     background-color: oklch(0.58 0.222 41.116);
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 .editor-btn-secondary {
+    background-color: #f8f8f8; /* HEX Fallback */
     background-color: oklch(0.97 0.001 286.375);
+    color: #707070; /* HEX Fallback */
     color: oklch(0.45 0.01 286.375) !important;
 }
 
 .editor-btn-secondary:hover {
+    background-color: #ebebeb; /* HEX Fallback */
     background-color: oklch(0.92 0.001 286.375);
 }
 

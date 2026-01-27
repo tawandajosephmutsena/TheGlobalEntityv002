@@ -339,7 +339,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const setData = _setData as (key: string, value: any) => void;
     const [processing, setProcessing] = useState(false);
-    const [selectedPreset, setSelectedPreset] = useState<string>((initialData['theme_preset'] as string) || 'ottostart_default');
+    const [selectedPreset, setSelectedPreset] = useState<string>(String(initialData['theme_preset'] || 'ottostart_default'));
 
     const getInitialTab = () => {
         if (typeof window === 'undefined') return 'general';
