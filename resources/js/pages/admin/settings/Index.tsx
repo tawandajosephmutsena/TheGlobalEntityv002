@@ -103,10 +103,15 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
     ],
     social: [
         { key: 'facebook_url', label: 'Facebook URL', type: 'text', placeholder: 'https://facebook.com/...' },
+        { key: 'show_facebook', label: 'Show Facebook Icon', type: 'boolean', placeholder: 'true' },
         { key: 'linkedin_url', label: 'LinkedIn URL', type: 'text', placeholder: 'https://linkedin.com/company/...' },
+        { key: 'show_linkedin', label: 'Show LinkedIn Icon', type: 'boolean', placeholder: 'true' },
         { key: 'twitter_url', label: 'Twitter / X URL', type: 'text', placeholder: 'https://x.com/...' },
+        { key: 'show_twitter', label: 'Show Twitter Icon', type: 'boolean', placeholder: 'true' },
         { key: 'github_url', label: 'GitHub URL', type: 'text', placeholder: 'https://github.com/...' },
+        { key: 'show_github', label: 'Show GitHub Icon', type: 'boolean', placeholder: 'true' },
         { key: 'instagram_url', label: 'Instagram URL', type: 'text', placeholder: 'https://instagram.com/...' },
+        { key: 'show_instagram', label: 'Show Instagram Icon', type: 'boolean', placeholder: 'true' },
     ],
     seo: [
         { key: 'default_meta_title', label: 'Default Meta Title', type: 'text', placeholder: 'Avant-Garde Experience' },
@@ -330,19 +335,21 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
     }, {} as Record<string, any>);
 
     const { data, setData: _setData } = useForm(initialData);
-    const setData = _setData as (key: string, value: any) => void;
+    const setData = _setData as (key: string, value: unknown) => void;
     const [processing, setProcessing] = useState(false);
     const [selectedPreset, setSelectedPreset] = useState<string>(initialData['theme_preset']);
-    const [currentTab, setCurrentTab] = useState('general');
 
-    // Initialize tab from URL
-    useEffect(() => {
+    const getInitialTab = () => {
+        if (typeof window === 'undefined') return 'general';
         const params = new URLSearchParams(window.location.search);
         const tab = params.get('tab');
         if (tab && Object.keys(SETTINGS_STRUCT).includes(tab)) {
-            setCurrentTab(tab);
+            return tab;
         }
-    }, []);
+        return 'general';
+    };
+
+    const [currentTab, setCurrentTab] = useState(getInitialTab);
 
     const handleTabChange = (value: string) => {
         setCurrentTab(value);

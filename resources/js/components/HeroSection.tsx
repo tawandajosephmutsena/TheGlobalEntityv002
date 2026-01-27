@@ -3,7 +3,7 @@ import { useHeroParallax, useTextReveal } from '@/hooks/useAnimations';
 import { cn } from '@/lib/utils';
 import { accessibilityManager } from '@/lib/accessibilityManager';
 import { ArrowRight } from 'lucide-react';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 
 interface HeroSectionProps {
@@ -46,7 +46,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     // Check for reduced motion preference
     const reducedMotion = accessibilityManager.prefersReducedMotion();
 
-    // Apply parallax effects to background images
+    // Detect mobile - SSR safe check
+    const [isMobile, setIsMobile] = useState(false);
+    
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const checkMobile = () => {
+                const mobile = window.innerWidth < 768;
+                setIsMobile(prev => prev !== mobile ? mobile : prev);
+            };
+
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+            return () => window.removeEventListener('resize', checkMobile);
+        }
+    }, []);
+
+    // Apply parallax effects to background images - disabled on mobile for performance
     useHeroParallax(
         containerRef as React.RefObject<HTMLElement>,
         [
@@ -55,16 +71,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             image3Ref as React.RefObject<HTMLElement>,
         ],
         {
-            mouseParallax: !reducedMotion,
-            scrollParallax: !reducedMotion,
-            intensity: reducedMotion ? 0 : 1.2,
+            mouseParallax: !reducedMotion && !isMobile,
+            scrollParallax: !reducedMotion && !isMobile,
+            intensity: (reducedMotion || isMobile) ? 0 : 1.2,
         },
     );
 
-    // Apply text reveal animations
+    // Apply text reveal animations - simplified on mobile
     useTextReveal(containerRef, {
         splitType: 'words',
-        stagger: reducedMotion ? 0 : 0.08,
+        stagger: (reducedMotion || isMobile) ? 0 : 0.08,
     });
 
     // Robust GSAP Marquee for Hero Background
@@ -78,7 +94,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         const tween = gsap.to(el, {
             xPercent: -50,
-            duration: 40,
+            duration: window.innerWidth < 768 ? 60 : 40, // Slower on mobile
             ease: 'none',
             repeat: -1,
             overwrite: 'auto'
@@ -93,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <section
             ref={containerRef}
             className={cn(
-                'relative flex min-h-screen flex-col items-center overflow-hidden',
+                'relative flex min-h-[100dvh] flex-col items-center overflow-hidden',
                 'bg-agency-secondary dark:bg-agency-dark pt-20',
                 className,
             )}
@@ -120,9 +136,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
 
             {/* Floating Image Cards with Parallax */}
-            {/* Conditional rendering based on showFloatingImages prop */}
+            {/* Hidden and pointer-events-none on mobile to prevent interference */}
             {showFloatingImages && (
-                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
+                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden select-none touch-none md:pointer-events-auto md:select-auto md:touch-auto">
                     {/* Image 1: Top Left */}
                     <div 
                         ref={image1Ref}

@@ -42,6 +42,16 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
         const trigger = triggerRef.current;
         const pin = pinRef.current;
         if (!pin || !trigger || items.length === 0) return;
+
+        // Detect mobile
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+            // On mobile, we don't use GSAP for horizontal scroll
+            // We'll let it be a native horizontal scroll container
+            trigger.style.overflowX = 'auto';
+            (trigger.style as any).webkitOverflowScrolling = 'touch';
+            return;
+        }
         
         const ctx = gsap.context(() => {
             gsap.to(pin, {
@@ -50,15 +60,14 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                 scrollTrigger: {
                     trigger: trigger,
                     pin: true,
-                    pinSpacing: true, // Explicitly reserve space
+                    pinSpacing: true,
                     scrub: 1,
                     start: 'top top',
                     end: () => `+=${pin.scrollWidth}`,
                     invalidateOnRefresh: true,
                     anticipatePin: 1,
-                    refreshPriority: 1, // Calculate this before elements below it
+                    refreshPriority: 1,
                     onUpdate: (self) => {
-                        // Ensure high z-index when active to prevent overlapping
                         if (self.isActive) {
                             trigger.style.zIndex = '50';
                         } else {
@@ -67,19 +76,8 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                     }
                 }
             });
-
-            // Animate headers partially
-            gsap.from('.horizontal-header', {
-                opacity: 0,
-                y: 100,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: trigger,
-                    start: 'top 80%',
-                }
-            });
-
-            // Refresh ScrollTrigger when images load to ensure correct width calculations
+            
+            // ... images load refresh logic ...
             const images = pin.querySelectorAll('img');
             let loadedCount = 0;
             const handleImageLoad = () => {
@@ -97,15 +95,12 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                 }
             });
 
-            // Final refresh after a short delay to catch any late layout shifts
             const timer = setTimeout(() => ScrollTrigger.refresh(), 1000);
             return () => clearTimeout(timer);
         }, triggerRef);
 
         return () => {
             ctx.revert();
-            const images = pin.querySelectorAll('img');
-            images.forEach(img => img.removeEventListener('load', () => {}));
         };
     }, [items]);
 

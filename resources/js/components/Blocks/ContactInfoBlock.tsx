@@ -21,30 +21,46 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
     const site = props.site;
     
     // Resolve combined settings: Block settings override Global settings
-    const blockShowMap = show_map as any;
-    const activeShowMap = show_map != null ? blockShowMap : (site?.contact?.show_map ?? true);
+    const activeShowMap = show_map != null ? show_map : (site?.contact?.show_map ?? true);
     const activeMapsUrl = google_maps_url || site?.contact?.google_maps_url;
+
+    // Helper to check social visibility
+    const isSocialVisible = (key: string) => {
+        const socialSettings = (props.settings as any)?.social;
+        if (!socialSettings) return true;
+        const item = socialSettings.find((s: any) => s.key === `show_${key.toLowerCase()}`);
+        if (!item) return true;
+        const val = item.value;
+        return val === true || val === 'true' || val === '1' || val === undefined;
+    };
     
     // Fallbacks for content from site settings
     const activeSubtitle = subtitle || site?.contact?.hero_subtitle || 'Inquiries';
     const activeTitle = title || site?.contact?.hero_title || "We're Listening.";
-    const activeItems = (items && items.length > 0) ? items : [
+    
+    const defaultItems = [
         { label: 'Email', value: site?.contact?.email || 'hello@avant-garde.com', href: `mailto:${site?.contact?.email}` },
         { label: 'Phone', value: site?.contact?.phone || '+1 (555) 123-4567', href: `tel:${site?.contact?.phone?.replace(/\s+/g, '')}` },
         { label: 'Address', value: site?.contact?.address || 'San Francisco, CA' }
     ];
+
+    const activeItems = (items && items.length > 0) ? items : defaultItems.filter(item => {
+        if (item.label === 'Email') return isSocialVisible('email'); // Though we don't have a toggle for email yet, it's safe
+        return true;
+    });
+
     const activeHours = (office_hours && office_hours.length > 0) ? office_hours : (site?.contact?.hours ? site.contact.hours.split('\n') : [
         'Mon — Fri: 09:00 — 18:00',
         'Sat: 10:00 — 14:00',
         'Sun: Closed'
     ]);
 
-    // Convert to normalized boolean if they are strings
-    const isVisible = activeShowMap === true || activeShowMap === 'true' || activeShowMap === 1 || activeShowMap === '1' || (activeShowMap === undefined && site?.contact?.show_map !== false);
+    // Convert to normalized boolean
+    const isVisible = (activeShowMap as any) === true || (activeShowMap as any) === 'true' || (activeShowMap as any) === 1 || (activeShowMap as any) === '1' || (activeShowMap === undefined && site?.contact?.show_map !== false);
 
     return (
         <div className="bg-white dark:bg-black">
-            <section className="py-24 px-4">
+            <section className="py-24 px-4 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                         <AnimatedSection animation="fade-right">

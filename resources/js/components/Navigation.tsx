@@ -69,6 +69,17 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         speed: 0.4,
     });
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // Toggle menu body lock
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }, [isMenuOpen]);
+
     // Handle scroll effects
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -100,6 +111,9 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
             start: 'top top',
             end: 99999,
             onUpdate: (self) => {
+                // Skip hiding logic if menu is open
+                if (isMenuOpen) return;
+
                 if (self.direction === -1) {
                     showAnim.play();
                     hideAnim.pause();
@@ -116,9 +130,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
             showAnim.kill();
             hideAnim.kill();
         };
-    }, []);
-
-
+    }, [isMenuOpen]);
 
     return (
         <>
@@ -127,22 +139,27 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 ref={navRef}
                 className={cn(
                     'fixed right-0 left-0 z-[100] transition-all duration-500 will-change-transform',
-                    isScrolled ? 'top-0 px-0' : 'top-0 px-4 pt-6 md:px-8',
+                    isScrolled 
+                        ? 'top-0 px-0 md:top-0' 
+                        : 'top-0 px-4 pt-6 md:px-8',
                     className,
                 )}
             >
                 <div
                     className={cn(
-                        'relative mx-auto flex h-16 items-center justify-between px-6 transition-all duration-500',
+                        'relative mx-auto flex h-20 items-center justify-between px-6 transition-all duration-500',
                         isScrolled
-                            ? 'max-w-full rounded-none border-b border-white/20 bg-white/40 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/40'
-                            : 'max-w-7xl rounded-full border border-white/20 bg-white/80 shadow-2xl backdrop-blur-2xl dark:border-white/5 dark:bg-black/80',
+                            ? 'max-w-full rounded-none border-b border-border bg-white shadow-sm dark:border-white/10 dark:bg-black md:rounded-none'
+                            : 'max-w-7xl rounded-full border border-border bg-white shadow-2xl dark:border-white/5 dark:bg-black',
+                        // On mobile, even when scrolled, we want a bit of breathing room if it's not meant to be full-width
+                        // but the user said "navigation should have more padding so its not on the edges"
+                        isScrolled && 'max-md:px-4'
                     )}
                 >
                     {/* Logo */}
                     <Link
                         href="/"
-                        className="group relative z-10 flex items-center !bg-transparent overflow-visible font-display"
+                        className="group relative z-[110] flex items-center !bg-transparent overflow-visible font-display"
                     >
                         <AppLogo
                             ref={logoRef as React.RefObject<HTMLDivElement>}
@@ -185,7 +202,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                         <LogIn className="size-3" /> Sign In
                                     </Link>
                                     <Link
-                                        href="/register"
+                                        href="/registration"
                                         className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
                                     >
                                         <UserPlus className="size-3" /> Sign Up
@@ -194,8 +211,81 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                             )}
                         </div>
 
-                        {/* Burger menu hidden as per request */}
-                        {/* <button ... /> */}
+                        {/* Burger menu toggler */}
+                        <button 
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+                            className="relative z-[110] flex size-12 items-center justify-center rounded-full bg-agency-accent/10 text-agency-accent hover:bg-agency-accent hover:text-white transition-all lg:hidden"
+                        >
+                            <div className="flex flex-col gap-1.5 w-6 items-end">
+                                <span className={cn("h-0.5 bg-current transition-all duration-300", isMenuOpen ? "w-6 rotate-45 translate-y-2" : "w-6")}></span>
+                                <span className={cn("h-0.5 bg-current transition-all duration-300", isMenuOpen ? "opacity-0" : "w-4")}></span>
+                                <span className={cn("h-0.5 bg-current transition-all duration-300", isMenuOpen ? "w-6 -rotate-45 -translate-y-2" : "w-5")}></span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Fullscreen Mobile Menu */}
+                <div 
+                    className={cn(
+                        "fixed inset-0 z-[105] bg-white dark:bg-black transition-all duration-700 ease-in-out lg:hidden",
+                        isMenuOpen ? "translate-y-0 opacity-100 visible" : "-translate-y-full opacity-0 invisible"
+                    )}
+                >
+                    {/* Background Blobs for Mobile Menu */}
+                    <div className="absolute inset-0 z-0 opacity-20 dark:opacity-40">
+                        <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full bg-agency-accent blur-[100px] animate-pulse"></div>
+                        <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full bg-primary blur-[120px] animation-delay-2000"></div>
+                    </div>
+
+                    <div className="relative z-10 flex h-full flex-col p-8 pt-32">
+                        <div className="flex flex-col gap-6">
+                            {menuItems.map((item, i) => (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className={cn(
+                                        "text-4xl font-black uppercase tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
+                                        url === item.href ? "text-agency-accent" : "text-agency-primary/40 dark:text-white/40 hover:text-agency-accent"
+                                    )}
+                                    style={{ transitionDelay: `${i * 50}ms` }}
+                                >
+                                    {item.name}
+                                </Link>
+                            ))}
+                        </div>
+
+                        <div className="mt-auto space-y-4 pt-12 border-t border-border">
+                            {!auth?.user && (
+                                <div className="grid grid-cols-2 gap-4">
+                                    <Link
+                                        href="/login"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-14 items-center justify-center rounded-2xl border border-border font-bold uppercase tracking-widest text-xs"
+                                    >
+                                        Log In
+                                    </Link>
+                                    <Link
+                                        href="/registration"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold uppercase tracking-widest text-xs"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </div>
+                            )}
+                            {auth?.user && (
+                                <Link
+                                    href="/admin"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold uppercase tracking-widest text-xs"
+                                >
+                                    Dashboard
+                                </Link>
+                            )}
+                        </div>
                     </div>
                 </div>
             </nav>

@@ -69,14 +69,14 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                     {/* Large Stat Box */}
                     <AnimatedSection 
                         animation="scale"
-                        className="lg:col-span-7 bg-white dark:bg-[#161616] border border-current/5 p-12 rounded-3xl flex flex-col justify-between min-h-[400px] relative overflow-hidden group cursor-default"
+                        className="lg:col-span-7 bg-white dark:bg-[#161616] border border-current/5 p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[300px] md:min-h-[400px] relative overflow-hidden group cursor-default"
                     >
                         <div className="relative z-10">
                             <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-8">
                                 <span className="material-symbols-outlined text-4xl">groups</span>
                             </div>
                             <h3 className="text-xl uppercase tracking-widest opacity-40 font-bold mb-4">{displayStats[0].label}</h3>
-                            <div className="text-9xl font-black text-foreground dark:text-white group-hover:scale-110 transition-transform origin-left duration-700">
+                            <div className="text-7xl md:text-9xl font-black text-foreground dark:text-white group-hover:scale-110 transition-transform origin-left duration-700">
                                 {displayStats[0].value}<span className="text-primary">{displayStats[0].suffix || '+'}</span>
                             </div>
                         </div>
@@ -88,23 +88,23 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                         <AnimatedSection 
                             animation="scale"
                             delay={200}
-                            className="flex-1 bg-primary text-primary-foreground p-12 rounded-3xl flex flex-col justify-between min-h-[250px] group transition-transform hover:-translate-y-2 cursor-default"
+                            className="flex-1 bg-primary text-primary-foreground p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[200px] md:min-h-[250px] group transition-transform hover:-translate-y-2 cursor-default"
                         >
                             <div>
                                 <span className="material-symbols-outlined text-4xl mb-4">bolt</span>
                                 <h3 className="text-xl uppercase tracking-widest opacity-60 font-bold">{displayStats[1].label}</h3>
                             </div>
-                            <div className="text-8xl font-black">{displayStats[1].value}{displayStats[1].suffix || '%'}</div>
+                            <div className="text-6xl md:text-8xl font-black">{displayStats[1].value}{displayStats[1].suffix || '%'}</div>
                         </AnimatedSection>
 
                         <div className="grid grid-cols-2 gap-6">
                             <AnimatedSection 
                                 animation="scale"
                                 delay={400}
-                                className="bg-white dark:bg-[#161616] border border-current/5 p-8 rounded-3xl group hover:shadow-2xl transition-all cursor-default"
+                                className="bg-white dark:bg-[#161616] border border-current/5 p-6 md:p-8 rounded-3xl group hover:shadow-2xl transition-all cursor-default"
                             >
-                                <h3 className="text-sm uppercase tracking-widest opacity-40 font-bold mb-4 leading-tight">{displayStats[2].label}</h3>
-                                <div className="text-5xl font-black text-foreground dark:text-white group-hover:text-primary transition-colors">
+                                <h3 className="text-xs md:text-sm uppercase tracking-widest opacity-40 font-bold mb-4 leading-tight">{displayStats[2].label}</h3>
+                                <div className="text-4xl md:text-5xl font-black text-foreground dark:text-white group-hover:text-primary transition-colors">
                                     {displayStats[2].value}<span className="text-primary">{displayStats[2].suffix || '+'}</span>
                                 </div>
                             </AnimatedSection>
@@ -112,10 +112,10 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                             <AnimatedSection 
                                 animation="scale"
                                 delay={600}
-                                className="bg-foreground text-background dark:bg-card dark:text-card-foreground p-8 rounded-3xl group hover:scale-105 transition-all cursor-default"
+                                className="bg-foreground text-background dark:bg-card dark:text-card-foreground p-6 md:p-8 rounded-3xl group hover:scale-105 transition-all cursor-default"
                             >
-                                <h3 className="text-sm uppercase tracking-widest opacity-60 font-bold mb-4 leading-tight">{displayStats[3].label}</h3>
-                                <div className="text-5xl font-black">{displayStats[3].value}</div>
+                                <h3 className="text-xs md:text-sm uppercase tracking-widest opacity-60 font-bold mb-4 leading-tight">{displayStats[3].label}</h3>
+                                <div className="text-4xl md:text-5xl font-black">{displayStats[3].value}</div>
                             </AnimatedSection>
                         </div>
                     </div>

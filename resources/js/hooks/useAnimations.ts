@@ -20,7 +20,17 @@ export const useSmoothScroll = () => {
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        // Initialize Lenis with optimized settings
+        // Detect mobile device
+        const isMobile = window.innerWidth < 768;
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        // Skip Lenis on mobile/touch to allow native momentum scrolling
+        if (isMobile || isTouch) {
+            console.log('[useAnimations] Disabling smooth scroll (Lenis) for mobile/touch device');
+            return;
+        }
+
+        // Initialize Lenis with optimized settings for desktop
         lenisRef.current = new Lenis({
             duration: 1.2,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -60,6 +70,16 @@ export const useSmoothScroll = () => {
                     lenisRef.current.scrollTo(target, {
                         offset: options?.offset || 0,
                         duration: options?.duration || 1.2,
+                    });
+                } else if (typeof window !== 'undefined') {
+                    // Fallback for mobile where Lenis is disabled
+                    const targetPosition = typeof target === 'number' 
+                        ? target 
+                        : (document.querySelector(target as string)?.getBoundingClientRect().top || 0) + window.scrollY;
+                    
+                    window.scrollTo({
+                        top: targetPosition + (options?.offset || 0),
+                        behavior: 'smooth'
                     });
                 }
             },
@@ -106,6 +126,9 @@ export const useHeroParallax = (
         // Mouse move parallax
         if (mouseParallax) {
             const handleMouseMove = (e: MouseEvent) => {
+                // Skip on touch/no-hover devices to avoid "finnicky" feel
+                if (window.matchMedia('(hover: none)').matches) return;
+                
                 const rect = container.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
@@ -583,6 +606,9 @@ export const useMagneticEffect = (
         const element = elementRef.current;
 
         const handleMouseMove = (e: MouseEvent) => {
+            // Skip on touch devices
+            if (window.matchMedia('(hover: none)').matches) return;
+
             const rect = element.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;

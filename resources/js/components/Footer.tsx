@@ -41,13 +41,19 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const site = props.site || { name: 'Avant-Garde', logo: '', tagline: 'Premium Agency' };
     const menuItems = props.menus?.main || [];
 
+    // Helper to check social visibility
+    const isSocialVisible = (key: string) => {
+        const val = (props.settings as any)?.social?.find((s: any) => s.key === `show_${key}`)?.value;
+        return val === true || val === 'true' || val === '1' || val === undefined; // Default to true if not found
+    };
+
     // Map social links from settings
     const socialLinks = [
-        { name: 'Github', href: site.social?.github, icon: Github },
-        { name: 'Twitter', href: site.social?.twitter, icon: Twitter },
-        { name: 'LinkedIn', href: site.social?.linkedin, icon: Linkedin },
-        { name: 'Instagram', href: site.social?.instagram, icon: Instagram },
-    ].filter(link => link.href);
+        { name: 'Github', href: site.social?.github, icon: Github, visible: isSocialVisible('github') },
+        { name: 'Twitter', href: site.social?.twitter, icon: Twitter, visible: isSocialVisible('twitter') },
+        { name: 'LinkedIn', href: site.social?.linkedin, icon: Linkedin, visible: isSocialVisible('linkedin') },
+        { name: 'Instagram', href: site.social?.instagram, icon: Instagram, visible: isSocialVisible('instagram') },
+    ].filter(link => link.href && link.visible);
 
     // Get footer content from settings with fallbacks
     const footerHeadingLine1 = site.footer?.heading_line1 || "Let's create";
@@ -75,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
     return (
-        <footer className={cn('bg-background text-foreground pt-32 pb-12 overflow-hidden border-t border-border', className)}>
+        <footer className={cn('relative bg-muted/30 dark:bg-background text-foreground pt-32 pb-12 overflow-hidden border-t border-border', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32">
                     {/* Massive Brand Side */}
@@ -169,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => (window as any).scrollControls?.scrollTo(0)}>
                         <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">{footerBackToTop}</span>
                         <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -55,14 +55,33 @@ const fadeInUp = {
 };
 
 const contentVariants = {
-  hidden: { opacity: 0, x: 50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-  exit: { opacity: 0, x: -50, transition: { duration: 0.2 } },
+  hidden: (isMobile: boolean) => ({ 
+    opacity: 0, 
+    x: isMobile ? 0 : 50,
+    y: isMobile ? 10 : 0
+  }),
+  visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.3 } },
+  exit: (isMobile: boolean) => ({ 
+    opacity: 0, 
+    x: isMobile ? 0 : -50,
+    y: isMobile ? -10 : 0,
+    transition: { duration: 0.2 } 
+  }),
 };
 
 const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Mobile detection for animation simplification
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // Initialize formData dynamically based on steps
   const initialData = useMemo(() => {
@@ -110,6 +129,8 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
 
     import('@inertiajs/react').then(({ router }) => {
       router.post('/contact', formData, {
+        preserveScroll: true,
+        preserveState: true,
         onSuccess: () => {
           toast.success("Form submitted successfully!");
           setIsSubmitting(false);
@@ -160,41 +181,41 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                 <motion.div
                   className={cn(
                     "w-4 h-4 rounded-full cursor-pointer transition-colors duration-300",
-                    index < currentStep
-                      ? "bg-agency-accent"
-                      : index === currentStep
-                        ? "bg-agency-accent ring-4 ring-agency-accent/20"
-                        : "bg-muted",
-                  )}
-                  onClick={() => {
-                    if (index <= currentStep) {
-                      setCurrentStep(index);
-                    }
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                />
-                <motion.span
-                  className={cn(
-                    "text-xs mt-1.5 hidden sm:block",
-                    index === currentStep
-                      ? "text-agency-accent font-medium"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  {step.title}
-                </motion.span>
-              </motion.div>
-            ))}
-          </div>
-          <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden mt-2">
-            <motion.div
-              className="h-full bg-agency-accent"
-              initial={{ width: 0 }}
-              animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-        </motion.div>
+                  index < currentStep
+                    ? "bg-agency-accent"
+                    : index === currentStep
+                      ? "bg-agency-accent ring-4 ring-agency-accent/30 scale-125"
+                      : "bg-muted/50",
+                )}
+                onClick={() => {
+                  if (index <= currentStep) {
+                    setCurrentStep(index);
+                  }
+                }}
+                whileTap={{ scale: 0.95 }}
+              />
+              <motion.span
+                className={cn(
+                  "text-[10px] mt-2 hidden sm:block font-bold tracking-widest uppercase",
+                  index === currentStep
+                    ? "text-agency-accent"
+                    : "text-muted-foreground/60",
+                )}
+              >
+                {step.title}
+              </motion.span>
+            </motion.div>
+          ))}
+        </div>
+        <div className="w-full bg-muted/30 h-1.5 rounded-full overflow-hidden mt-3 shadow-inner">
+          <motion.div
+            className="h-full bg-agency-accent shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
+            initial={{ width: 0 }}
+            animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+            transition={{ duration: 0.5, ease: "circOut" }}
+          />
+        </div>
+      </motion.div>
       )}
 
       {/* Form card */}
@@ -207,6 +228,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStepData.id || currentStep}
+              custom={isMobile}
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -239,7 +261,8 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                     ) : field.type === "select" ? (
                       <Select
                         value={formData[field.name] || ""}
-                        onValueChange={(value) => updateFormData(field.name, value)}
+                        onValueChange={(value: string) => updateFormData(field.name, value)}
+                        {...({ modal: false } as any)}
                       >
                         <SelectTrigger
                           id={field.name}
@@ -265,8 +288,8 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                           <motion.div
                             key={option}
                             className="flex items-center space-x-2 rounded-md border p-3 cursor-pointer hover:bg-accent transition-colors"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                            whileHover={isMobile ? {} : { scale: 1.02 }}
+                            whileTap={isMobile ? {} : { scale: 0.98 }}
                             transition={{ duration: 0.2 }}
                           >
                             <RadioGroupItem
@@ -314,7 +337,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                         placeholder={field.placeholder}
                         value={formData[field.name] || ""}
                         onChange={(e) => updateFormData(field.name, e.target.value)}
-                        className="transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
+                        className="h-12 px-4 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-agency-accent/20 focus:border-agency-accent"
                       />
                     )}
                   </motion.div>
@@ -342,19 +365,19 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                   currentStep === steps.length - 1 ? () => handleSubmit() : nextStep
                 }
                 disabled={!isStepValid() || isSubmitting}
-                className="flex items-center gap-1 transition-all duration-300 rounded-2xl bg-agency-accent hover:bg-agency-accent/90 text-agency-primary"
+                className="flex items-center gap-2 h-12 px-8 transition-all duration-300 rounded-2xl bg-agency-accent hover:bg-agency-accent/90 text-agency-primary font-black tracking-tighter shadow-xl shadow-agency-accent/20"
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="h-4 w-4 animate-spin" /> Submitting...
+                    <Loader2 className="h-4 w-4 animate-spin" /> <span>SUBMITTING...</span>
                   </>
                 ) : (
                   <>
-                    {currentStep === steps.length - 1 ? submitText : "Next"}
+                    <span className="uppercase">{currentStep === steps.length - 1 ? submitText : "Next"}</span>
                     {currentStep === steps.length - 1 ? (
-                      <Check className="h-4 w-4" />
+                      <Check className="h-4 w-4 stroke-[3]" />
                     ) : (
-                      <ChevronRight className="h-4 w-4" />
+                      <ChevronRight className="h-4 w-4 stroke-[3]" />
                     )}
                   </>
                 )}
