@@ -43,7 +43,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
 
     // Helper to check social visibility
     const isSocialVisible = (key: string) => {
-        const val = (props.settings as any)?.social?.find((s: any) => s.key === `show_${key}`)?.value;
+        const val = props.settings?.social?.find((s) => s.key === `show_${key}`)?.value;
         return val === true || val === 'true' || val === '1' || val === undefined; // Default to true if not found
     };
 
@@ -175,7 +175,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => (window as any).scrollControls?.scrollTo(0)}>
+                    <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => (window as any).scrollTo?.({ top: 0, behavior: 'smooth' })}>
                         <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">{footerBackToTop}</span>
                         <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>

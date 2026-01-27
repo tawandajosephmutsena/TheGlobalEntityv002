@@ -46,7 +46,7 @@ export interface FormStep {
 interface OnboardingFormProps {
   steps: FormStep[];
   submitText?: string;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: Record<string, unknown>) => void;
 }
 
 const fadeInUp = {
@@ -85,7 +85,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
   
   // Initialize formData dynamically based on steps
   const initialData = useMemo(() => {
-    const data: Record<string, any> = {};
+    const data: Record<string, string | string[]> = {};
     steps.forEach((step) => {
       step.fields.forEach((field) => {
         data[field.name] = field.type === "checkbox" ? [] : "";
@@ -94,9 +94,9 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
     return data;
   }, [steps]);
 
-  const [formData, setFormData] = useState<Record<string, any>>(initialData);
+  const [formData, setFormData] = useState<Record<string, string | string[]>>(initialData);
 
-  const updateFormData = (field: string, value: any) => {
+  const updateFormData = (field: string, value: string | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -260,9 +260,9 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                       />
                     ) : field.type === "select" ? (
                       <Select
-                        value={formData[field.name] || ""}
+                        value={formData[field.name] as string || ""}
                         onValueChange={(value: string) => updateFormData(field.name, value)}
-                        {...({ modal: false } as any)}
+                        {...({ modal: false } as { modal: boolean })}
                       >
                         <SelectTrigger
                           id={field.name}
@@ -280,7 +280,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                       </Select>
                     ) : field.type === "radio" ? (
                       <RadioGroup
-                        value={formData[field.name] || ""}
+                        value={formData[field.name] as string || ""}
                         onValueChange={(value) => updateFormData(field.name, value)}
                         className="space-y-2"
                       >
@@ -335,7 +335,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
                         id={field.name}
                         type={field.type}
                         placeholder={field.placeholder}
-                        value={formData[field.name] || ""}
+                        value={formData[field.name] as string || ""}
                         onChange={(e) => updateFormData(field.name, e.target.value)}
                         className="h-12 px-4 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-agency-accent/20 focus:border-agency-accent"
                       />

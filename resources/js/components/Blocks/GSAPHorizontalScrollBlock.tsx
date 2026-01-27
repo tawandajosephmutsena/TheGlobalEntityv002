@@ -49,7 +49,7 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
             // On mobile, we don't use GSAP for horizontal scroll
             // We'll let it be a native horizontal scroll container
             trigger.style.overflowX = 'auto';
-            (trigger.style as any).webkitOverflowScrolling = 'touch';
+            trigger.style.setProperty('-webkit-overflow-scrolling', 'touch');
             return;
         }
         

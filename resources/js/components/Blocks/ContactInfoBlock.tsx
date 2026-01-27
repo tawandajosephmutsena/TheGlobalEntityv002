@@ -26,9 +26,9 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
 
     // Helper to check social visibility
     const isSocialVisible = (key: string) => {
-        const socialSettings = (props.settings as any)?.social;
+        const socialSettings = props.settings?.social;
         if (!socialSettings) return true;
-        const item = socialSettings.find((s: any) => s.key === `show_${key.toLowerCase()}`);
+        const item = socialSettings.find((s) => s.key === `show_${key.toLowerCase()}`);
         if (!item) return true;
         const val = item.value;
         return val === true || val === 'true' || val === '1' || val === undefined;
@@ -56,7 +56,7 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
     ]);
 
     // Convert to normalized boolean
-    const isVisible = (activeShowMap as any) === true || (activeShowMap as any) === 'true' || (activeShowMap as any) === 1 || (activeShowMap as any) === '1' || (activeShowMap === undefined && site?.contact?.show_map !== false);
+    const isVisible = activeShowMap === true || String(activeShowMap) === 'true' || String(activeShowMap) === '1' || (activeShowMap === undefined && site?.contact?.show_map !== false);
 
     return (
         <div className="bg-white dark:bg-black">

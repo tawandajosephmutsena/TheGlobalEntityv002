@@ -332,12 +332,14 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
         // Add theme_preset to form data
         acc['theme_preset'] = getSettingValue('theme_preset') || themePresets?.default || 'ottostart_default';
         return acc;
-    }, {} as Record<string, any>);
+    }, {} as Record<string, string | number | boolean | unknown[] | null>);
 
-    const { data, setData: _setData } = useForm(initialData);
-    const setData = _setData as (key: string, value: unknown) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data, setData: _setData } = useForm<Record<string, any>>(initialData);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const setData = _setData as (key: string, value: any) => void;
     const [processing, setProcessing] = useState(false);
-    const [selectedPreset, setSelectedPreset] = useState<string>(initialData['theme_preset']);
+    const [selectedPreset, setSelectedPreset] = useState<string>((initialData['theme_preset'] as string) || 'ottostart_default');
 
     const getInitialTab = () => {
         if (typeof window === 'undefined') return 'general';
@@ -383,17 +385,17 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
 
         // 2. Apply Custom Overrides from Form Data (takes precedence)
         // We only apply if the field is not empty
-        if (data.brand_primary) applyVar('--primary', data.brand_primary);
-        if (data.brand_secondary) applyVar('--secondary', data.brand_secondary);
-        if (data.brand_accent) applyVar('--accent', data.brand_accent);
-        if (data.brand_neutral) applyVar('--muted', data.brand_neutral);
-        if (data.brand_background) applyVar('--background', data.brand_background);
-        if (data.brand_foreground) applyVar('--foreground', data.brand_foreground);
-        if (data.brand_border) applyVar('--border', data.brand_border);
-        if (data.brand_ring) applyVar('--ring', data.brand_ring);
+        if (data['brand_primary']) applyVar('--primary', data['brand_primary'] as string);
+        if (data['brand_secondary']) applyVar('--secondary', data['brand_secondary'] as string);
+        if (data['brand_accent']) applyVar('--accent', data['brand_accent'] as string);
+        if (data['brand_neutral']) applyVar('--muted', data['brand_neutral'] as string);
+        if (data['brand_background']) applyVar('--background', data['brand_background'] as string);
+        if (data['brand_foreground']) applyVar('--foreground', data['brand_foreground'] as string);
+        if (data['brand_border']) applyVar('--border', data['brand_border'] as string);
+        if (data['brand_ring']) applyVar('--ring', data['brand_ring'] as string);
         
         // Apply Radius Override
-        if (data.border_radius) root.style.setProperty('--radius', data.border_radius);
+        if (data['border_radius']) root.style.setProperty('--radius', data['border_radius'] as string);
 
         return () => {
              // Cleanup if needed, though usually next effect run overwrites
@@ -655,7 +657,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                     
                                                     {item.type === 'links' ? (
                                                         <LinkManager
-                                                            value={data[item.key] || []}
+                                                            value={(data[item.key] as unknown) as Array<{ name: string; href: string }>}
                                                             onChange={(links) => setData(item.key, links)}
                                                             pages={pages}
                                                             label={item.label}
@@ -712,6 +714,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                         </div>
                                                     ) : item.type === 'select' && item.options ? (
                                                         <select
+                                                            aria-label={item.label}
                                                             id={item.key}
                                                             value={data[item.key] || item.placeholder}
                                                             onChange={(e) => setData(item.key, e.target.value)}

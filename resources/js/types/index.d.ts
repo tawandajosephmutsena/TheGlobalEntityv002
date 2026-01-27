@@ -97,7 +97,16 @@ export interface SharedData {
         warning: string | null;
         info: string | null;
     };
+    settings?: Record<string, SettingItem[]>;
     [key: string]: unknown;
+}
+
+export interface SettingItem {
+    id?: number;
+    key: string;
+    value: string | string[] | boolean | null;
+    type: 'text' | 'json' | 'boolean' | 'number' | 'color';
+    group_name: string;
 }
 
 export interface User {
