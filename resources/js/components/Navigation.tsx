@@ -32,13 +32,13 @@ const NavLink = ({
             ref={linkRef}
             href={item.href}
             className={cn(
-                'relative overflow-hidden rounded-full px-4 py-2 text-[11px] font-bold tracking-widest uppercase transition-all duration-500',
+                'relative overflow-hidden rounded-full px-4 py-2 text-[12px] font-bold tracking-widest [font-variant-caps:all-small-caps] transition-all duration-500',
                 isActive
                     ? 'bg-agency-accent text-primary-foreground shadow-lg shadow-agency-accent/20'
                     : 'text-agency-primary/80 hover:bg-agency-accent/5 hover:text-agency-accent dark:text-white/60',
             )}
         >
-            <span className="relative z-10">{item.name}</span>
+            <span className="relative z-10">{item.name.toLowerCase()}</span>
         </Link>
     );
 };
@@ -197,15 +197,15 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                 <>
                                     <Link
                                         href="/login"
-                                        className="inline-flex h-10 items-center gap-2 rounded-full px-5 text-[10px] font-bold tracking-widest text-agency-primary/80 uppercase transition-all hover:text-agency-accent dark:text-white/60"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full px-5 text-[12px] font-bold tracking-widest text-agency-primary/80 [font-variant-caps:all-small-caps] transition-all hover:text-agency-accent dark:text-white/60"
                                     >
-                                        <LogIn className="size-3" /> Sign In
+                                        <LogIn className="size-3" /> sign in
                                     </Link>
                                     <Link
                                         href="/registration"
-                                        className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[10px] font-bold tracking-widest text-white uppercase shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[12px] font-bold tracking-widest text-white [font-variant-caps:all-small-caps] shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
                                     >
-                                        <UserPlus className="size-3" /> Sign Up
+                                        <UserPlus className="size-3" /> sign up
                                     </Link>
                                 </>
                             )}
@@ -226,69 +226,73 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     </div>
                 </div>
 
-                {/* Fullscreen Mobile Menu */}
-                <div 
-                    className={cn(
-                        "fixed inset-0 z-[105] bg-white dark:bg-black transition-all duration-700 ease-in-out lg:hidden",
-                        isMenuOpen ? "translate-y-0 opacity-100 visible" : "-translate-y-full opacity-0 invisible"
-                    )}
-                >
-                    {/* Background Blobs for Mobile Menu */}
-                    <div className="absolute inset-0 z-0 opacity-20 dark:opacity-40">
-                        <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full bg-agency-accent blur-[100px] animate-pulse"></div>
-                        <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full bg-primary blur-[120px] animation-delay-2000"></div>
+            </nav>
+
+            {/* Fullscreen Mobile Menu - Moved outside nav for cleaner stacking context */}
+            <div 
+                className={cn(
+                    "fixed inset-0 z-[105] transition-all duration-700 ease-in-out lg:hidden",
+                    isMenuOpen ? "translate-y-0 opacity-100 visible" : "-translate-y-full opacity-0 invisible"
+                )}
+            >
+                {/* Background layers to ensure full opacity */}
+                <div className="absolute inset-0 bg-white dark:bg-black"></div>
+                
+                {/* Background Blobs for Visual Interest */}
+                <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">
+                    <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full bg-agency-accent blur-[100px] animate-pulse"></div>
+                    <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full bg-primary blur-[120px] animation-delay-2000"></div>
+                </div>
+
+                <div className="relative z-10 flex h-full flex-col p-8 pt-32">
+                    <div className="flex flex-col gap-6">
+                        {menuItems.map((item, i) => (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                onClick={() => setIsMenuOpen(false)}
+                                className={cn(
+                                    "text-5xl font-black [font-variant-caps:all-small-caps] tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
+                                    url === item.href ? "text-agency-accent" : "text-agency-primary/60 dark:text-white/60 hover:text-agency-accent"
+                                )}
+                                style={{ transitionDelay: `${i * 50}ms` }}
+                            >
+                                {item.name.toLowerCase()}
+                            </Link>
+                        ))}
                     </div>
 
-                    <div className="relative z-10 flex h-full flex-col p-8 pt-32">
-                        <div className="flex flex-col gap-6">
-                            {menuItems.map((item, i) => (
+                    <div className="mt-auto space-y-4 pt-12 border-t border-border">
+                        {!auth?.user && (
+                            <div className="grid grid-cols-2 gap-4">
                                 <Link
-                                    key={item.name}
-                                    href={item.href}
+                                    href="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className={cn(
-                                        "text-4xl font-black uppercase tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
-                                        url === item.href ? "text-agency-accent" : "text-agency-primary/40 dark:text-white/40 hover:text-agency-accent"
-                                    )}
-                                    style={{ transitionDelay: `${i * 50}ms` }}
+                                    className="flex h-14 items-center justify-center rounded-2xl border border-border font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
                                 >
-                                    {item.name}
+                                    log in
                                 </Link>
-                            ))}
-                        </div>
-
-                        <div className="mt-auto space-y-4 pt-12 border-t border-border">
-                            {!auth?.user && (
-                                <div className="grid grid-cols-2 gap-4">
-                                    <Link
-                                        href="/login"
-                                        onClick={() => setIsMenuOpen(false)}
-                                        className="flex h-14 items-center justify-center rounded-2xl border border-border font-bold uppercase tracking-widest text-xs"
-                                    >
-                                        Log In
-                                    </Link>
-                                    <Link
-                                        href="/registration"
-                                        onClick={() => setIsMenuOpen(false)}
-                                        className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold uppercase tracking-widest text-xs"
-                                    >
-                                        Sign Up
-                                    </Link>
-                                </div>
-                            )}
-                            {auth?.user && (
                                 <Link
-                                    href="/admin"
+                                    href="/registration"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold uppercase tracking-widest text-xs"
+                                    className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
                                 >
-                                    Dashboard
+                                    sign up
                                 </Link>
-                            )}
-                        </div>
+                            </div>
+                        )}
+                        {auth?.user && (
+                            <Link
+                                href="/admin"
+                                onClick={() => setIsMenuOpen(false)}
+                                className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
+                            >
+                                dashboard
+                            </Link>
+                        )}
                     </div>
                 </div>
-            </nav>
+            </div>
         </>
     );
 };
