@@ -2,6 +2,7 @@ import React from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { usePage } from '@inertiajs/react';
 import { SharedData } from '@/types';
+import DynamicForm from '@/components/DynamicForm';
 
 interface ContactInfoBlockProps {
     title: string;
@@ -14,9 +15,22 @@ interface ContactInfoBlockProps {
     office_hours: string[];
     show_map?: boolean;
     google_maps_url?: string;
+    show_form?: boolean;
+    form_title?: string;
+    success_message?: string;
 }
 
-const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, items, office_hours, show_map, google_maps_url }) => {
+const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ 
+    title, 
+    subtitle, 
+    items, 
+    office_hours, 
+    show_map, 
+    google_maps_url,
+    show_form,
+    form_title,
+    success_message
+}) => {
     const { props } = usePage<SharedData>();
     const site = props.site;
     
@@ -86,16 +100,31 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ title, subtitle, it
                             </div>
                         </AnimatedSection>
                         <AnimatedSection animation="fade-left" delay={200}>
-                            <div className="bg-muted/30 dark:bg-white/5 rounded-[40px] p-12 border border-black/5 dark:border-white/5">
-                                <h3 className="text-xl font-black uppercase tracking-widest text-agency-primary dark:text-white mb-8 italic">Office Hours</h3>
-                                <div className="space-y-4">
-                                    {activeHours.map((hour, i) => (
-                                        <div key={i} className="flex justify-between items-center border-b border-black/5 dark:border-white/5 pb-4">
-                                            <span className="text-agency-primary/60 dark:text-white/60 font-medium">{hour}</span>
-                                        </div>
-                                    ))}
+                            {show_form ? (
+                                <DynamicForm 
+                                    title={form_title || site?.contact?.form_title || 'Send us a Message'}
+                                    successMessage={success_message}
+                                    fields={[
+                                        { name: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'Your Name' },
+                                        { name: 'email', label: 'Email Address', type: 'email', required: true, placeholder: 'your@email.com' },
+                                        { name: 'phone', label: 'Phone Number', type: 'tel', required: false, placeholder: 'Optional' },
+                                        { name: 'subject', label: 'Subject', type: 'text', required: false, placeholder: 'How can we help?' },
+                                        { name: 'message', label: 'Message', type: 'textarea', required: true, placeholder: 'Tell us about your project...' }
+                                    ]}
+                                    className="border-none shadow-none p-0 bg-transparent dark:bg-transparent"
+                                />
+                            ) : (
+                                <div className="bg-muted/30 dark:bg-white/5 rounded-[40px] p-12 border border-black/5 dark:border-white/5">
+                                    <h3 className="text-xl font-black uppercase tracking-widest text-agency-primary dark:text-white mb-8 italic">Office Hours</h3>
+                                    <div className="space-y-4">
+                                        {activeHours.map((hour, i) => (
+                                            <div key={i} className="flex justify-between items-center border-b border-black/5 dark:border-white/5 pb-4">
+                                                <span className="text-agency-primary/60 dark:text-white/60 font-medium">{hour}</span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </AnimatedSection>
                     </div>
                 </div>

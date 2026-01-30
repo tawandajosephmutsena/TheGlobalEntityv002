@@ -177,6 +177,9 @@ export interface ContactInfoBlock extends BaseBlock {
         office_hours: string[];
         show_map?: boolean;
         google_maps_url?: string;
+        show_form?: boolean;
+        form_title?: string;
+        success_message?: string;
     };
 }
 

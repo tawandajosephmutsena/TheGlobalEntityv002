@@ -38,8 +38,9 @@ const getEmbedUrl = (url: string) => {
         } else {
             videoId = url.split("v=")[1]?.split("&")[0];
         }
+        const origin = typeof window !== "undefined" ? window.location.origin : "";
         // YouTube background params: autoplay, mute, loop, controls=0, disablekb=1, playlist (required for loop)
-        return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1`;
+        return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
     } else if (url.includes("vimeo.com")) {
         const videoId = url.split("vimeo.com/")[1]?.split("?")[0];
         // Vimeo background params: autoplay, background=1, loop, muted, byline=0, portrait=0, title=0

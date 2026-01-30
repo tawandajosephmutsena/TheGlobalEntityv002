@@ -624,6 +624,43 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             <p className="text-[10px] text-muted-foreground">Copy the 'src' value from the Google Maps iframe embed code.</p>
                         </div>
                     </div>
+                    <div className="space-y-4 pt-4 border-t">
+                        <Label className="text-xs font-bold uppercase tracking-wider">Form Configuration</Label>
+                        <div className="flex items-center gap-3 mb-2">
+                            <input 
+                                type="checkbox" 
+                                id="show_form" 
+                                checked={Boolean(block.content.show_form)} 
+                                onChange={(e) => updateContent({ show_form: e.target.checked })}
+                                className="h-4 w-4 rounded border-gray-300 text-agency-accent focus:ring-agency-accent"
+                                aria-label="Show Contact Form"
+                                title="Toggle contact form visibility"
+                            />
+                            <Label htmlFor="show_form" className="text-sm cursor-pointer font-bold">Show Contact Form</Label>
+                        </div>
+                        {block.content.show_form && (
+                            <div className="space-y-4">
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Form Title</Label>
+                                    <Input 
+                                        className="h-8 text-xs"
+                                        value={String(block.content.form_title || 'Send us a Message')} 
+                                        onChange={(e) => updateContent({ form_title: e.target.value })}
+                                        placeholder="Send us a Message"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Success Message</Label>
+                                    <Input 
+                                        className="h-8 text-xs"
+                                        value={String(block.content.success_message || 'Thank you! Your message has been sent.')} 
+                                        onChange={(e) => updateContent({ success_message: e.target.value })}
+                                        placeholder="Thank you! Your message has been sent."
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             );
         }

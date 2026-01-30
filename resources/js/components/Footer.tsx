@@ -141,13 +141,29 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                         <div>
                             <h3 className="text-xs font-bold tracking-[0.2em] text-agency-accent mb-8">{footerResourcesTitle}</h3>
                             <ul className="space-y-4">
-                                {resourcesLinks.map((link) => (
-                                    <li key={link.name}>
-                                        <Link href={link.href} className="text-xl font-bold opacity-40 hover:opacity-100 transition-opacity">
-                                            {link.name}
-                                        </Link>
-                                    </li>
-                                ))}
+                                {resourcesLinks.map((link) => {
+                                    const isExternal = link.href.startsWith('http://') || link.href.startsWith('https://');
+                                    const linkClassName = "text-xl font-bold opacity-40 hover:opacity-100 transition-opacity";
+                                    
+                                    return (
+                                        <li key={link.name}>
+                                            {isExternal ? (
+                                                <a 
+                                                    href={link.href} 
+                                                    className={linkClassName}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    {link.name}
+                                                </a>
+                                            ) : (
+                                                <Link href={link.href} className={linkClassName}>
+                                                    {link.name}
+                                                </Link>
+                                            )}
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                         <div className="col-span-2 md:col-span-1">

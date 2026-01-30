@@ -49,13 +49,14 @@ const getEmbedUrl = (url: string) => {
   if (url.includes("youtube.com") || url.includes("youtu.be")) {
     let videoId = "";
     if (url.includes("youtu.be")) {
-      videoId = url.split("youtu.be/")[1];
+      videoId = url.split("youtu.be/")[1]?.split("?")[0];
     } else {
       videoId = url.split("v=")[1]?.split("&")[0];
     }
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
   } else if (url.includes("vimeo.com")) {
-    const videoId = url.split("vimeo.com/")[1];
+    const videoId = url.split("vimeo.com/")[1]?.split("?")[0];
     return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
   }
   return url;
