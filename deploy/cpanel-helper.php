@@ -38,7 +38,9 @@ function runCommand($command): array {
     $output = [];
     $returnCode = 0;
     
-    $fullCommand = 'cd ' . dirname(__DIR__) . ' && php artisan ' . $command . ' 2>&1';
+    // Laravel app is at /home/ottomate/ottomate/ (sibling to public_html)
+    $laravelPath = dirname(__DIR__) . '/ottomate';
+    $fullCommand = 'cd ' . $laravelPath . ' && php artisan ' . $command . ' 2>&1';
     exec($fullCommand, $output, $returnCode);
     
     return [

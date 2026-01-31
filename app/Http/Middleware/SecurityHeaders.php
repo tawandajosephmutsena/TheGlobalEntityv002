@@ -18,15 +18,21 @@ class SecurityHeaders
         $response = $next($request);
 
         // Only add headers to HTTP responses
-        if (!$response instanceof \Illuminate\Http\Response && 
+        if (
+            !$response instanceof \Illuminate\Http\Response &&
             !$response instanceof \Illuminate\Http\JsonResponse &&
-            !$response instanceof \Inertia\Response) {
+            !$response instanceof \Inertia\Response
+        ) {
             return $response;
         }
 
         // Content Security Policy
+        // Remove any existing CSP header first to prevent conflicts (e.g., from server config, CDN, or other sources)
+        $response->headers->remove('Content-Security-Policy');
+        $response->headers->remove('Content-Security-Policy-Report-Only');
+        
         $csp = $this->buildContentSecurityPolicy($request);
-        $response->headers->set('Content-Security-Policy', $csp);
+        $response->headers->set('Content-Security-Policy', $csp, true); // true = replace any existing
 
         // HTTP Strict Transport Security (HSTS)
         if ($request->isSecure()) {
@@ -96,7 +102,7 @@ class SecurityHeaders
             $nonce = base64_encode(random_bytes(16));
             // We'd ideally register this back with Vite, but this path shouldn't happen if AppServiceProvider is correct
         }
-        
+
         // Store nonce for use in views (legacy support if needed directly)
         app()->instance('csp-nonce', $nonce);
 
@@ -105,8 +111,8 @@ class SecurityHeaders
 
         $policies = [
             "default-src 'self'",
-            "style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://fonts.googleapis.com http://localhost:5173 http://127.0.0.1:5173",
-            "font-src 'self' https://fonts.bunny.net https://fonts.gstatic.com http://localhost:5173 http://127.0.0.1:5173",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com http://localhost:5173 http://127.0.0.1:5173",
+            "font-src 'self' https://fonts.gstatic.com http://localhost:5173 http://127.0.0.1:5173",
             "img-src 'self' data: https: http://localhost:5173 http://127.0.0.1:5173",
             "media-src 'self' https: http://localhost:5173 http://127.0.0.1:5173",
             "object-src 'none'",
@@ -121,19 +127,28 @@ class SecurityHeaders
             // Local Dev: Relaxed rules for Vite HMR and inline scripts
             // We MUST allow 'unsafe-inline' and 'unsafe-eval' for Vite to work properly without strict-dynamic blocking it
             $policies[] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://127.0.0.1:5173 http://localhost:5173";
-            
+
             // Explicit script-src-elem for browsers that check this directive for <script> elements
             $policies[] = "script-src-elem 'self' 'unsafe-inline' http://127.0.0.1:5173 http://localhost:5173";
-            
+
             // Allow Vite dev server connections
             $policies[] = "connect-src 'self' ws: wss: http://127.0.0.1:5173 ws://127.0.0.1:5173 http://localhost:5173 ws://localhost:5173";
         } else {
-            // Production: Strict CSP using nonce and strict-dynamic
-            $policies[] = "script-src 'self' 'nonce-{$nonce}' 'strict-dynamic'";
+            // Production: Use nonce for CSP compliance
+            // Note: We explicitly DO NOT use 'strict-dynamic' here because:
+            // 1. It causes 'unsafe-inline' to be ignored entirely
+            // 2. Any inline script without a nonce gets blocked
+            // Instead, we use nonce + unsafe-inline fallback pattern:
+            // - Browsers that support nonces will use nonce (more secure)
+            // - Older browsers fallback to unsafe-inline (compatible)
+            $policies[] = "script-src 'self' 'unsafe-inline' 'nonce-{$nonce}'";
             
+            // Also set script-src-elem to ensure <script> tags work properly
+            $policies[] = "script-src-elem 'self' 'unsafe-inline' 'nonce-{$nonce}'";
+
             // Standard connect-src
             $policies[] = "connect-src 'self'";
-            
+
             // Force HTTPS
             $policies[] = "upgrade-insecure-requests";
         }

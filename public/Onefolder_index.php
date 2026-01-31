@@ -31,8 +31,5 @@ require $laravelRoot.'/vendor/autoload.php';
 /** @var Application $app */
 $app = require_once $laravelRoot.'/bootstrap/app.php';
 
-// Set the public path to THIS directory (public_html on cPanel)
-$app->usePublicPath(__DIR__);
-
 $app->handleRequest(Request::capture());
 

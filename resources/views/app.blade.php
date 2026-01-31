@@ -6,8 +6,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         {{-- Web Core Vitals: Preconnect to external domains for better LCP --}}
-        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
-        <link rel="dns-prefetch" href="https://fonts.bunny.net">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
         {{-- Web Core Vitals: Critical CSS inlined to prevent render blocking --}}
         <style>

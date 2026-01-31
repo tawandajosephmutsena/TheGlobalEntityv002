@@ -57,7 +57,7 @@ echo "<span style='color: #4ade80;'>[4] Laravel Files Check</span>\n";
 $basePaths = [
     dirname(__DIR__),           // One level up from public_html
     __DIR__,                    // Same directory (if app is in public_html)
-    dirname(__DIR__) . '/ottostart',  // Separate folder
+    dirname(__DIR__) . '/ottomate',  // Separate folder (ottomate)
 ];
 
 $laravelBase = null;
