@@ -25,9 +25,6 @@ const AppLogo = React.forwardRef<HTMLDivElement, AppLogoProps>(({ className, log
                         "h-auto w-auto max-h-[50px] object-contain block",
                         // Ensure SVGs have at least some width if w-auto is failing
                         site.logo.endsWith('.svg') && "min-w-[120px]",
-                        // Use multiply blend mode to make white backgrounds transparent
-                        // This works on both light and dark backgrounds
-                        "mix-blend-multiply dark:mix-blend-screen dark:invert",
                         logoClassName
                     )} 
                     loading="eager"

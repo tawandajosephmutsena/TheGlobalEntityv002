@@ -420,32 +420,20 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
         setSelectedPreset(presetKey);
         setData('theme_preset', presetKey);
         
-        // Clear custom color overrides so the preset colors are used directly
-        // Users can still manually edit colors after selecting a preset if needed
-        if (themePresets?.themes[presetKey]) {
-            const preset = themePresets.themes[presetKey];
-            
-            // Populate custom color fields with the selected preset's colors
-            // This ensures users can visualize what colors are being applied and edit them
-            setData('brand_primary', preset.light.primary || '');
-            setData('brand_secondary', preset.light.secondary || '');
-            setData('brand_accent', preset.light.accent || '');
-            setData('brand_neutral', preset.light.muted || '');
-            setData('brand_dark', preset.dark.background || ''); // Usually dark bg is the "dark" brand color reference
-            setData('brand_background', preset.light.background || '');
-            setData('brand_foreground', preset.light.foreground || '');
-            setData('brand_border', preset.light.border || '');
-            setData('brand_ring', preset.light.ring || '');
-            
-            // Sync fonts
-            if (preset.fonts.sans) setData('font_display', preset.fonts.sans);
-            if (preset.fonts.sans) setData('font_body', preset.fonts.sans);
-            
-            // Sync border radius if available
-            if (preset.radius) setData('border_radius', preset.radius);
-            
-            toast.success(`Theme "${preset.name}" applied! Save to make it permanent.`);
-        }
+        // Clear custom color overrides so the preset colors are used directly.
+        // This ensures that dark mode works correctly by falling back to the preset's dark mode values.
+        // Users can still manually edit colors if they want to override.
+        setData('brand_primary', '');
+        setData('brand_secondary', '');
+        setData('brand_accent', '');
+        setData('brand_neutral', '');
+        setData('brand_dark', '');
+        setData('brand_background', '');
+        setData('brand_foreground', '');
+        setData('brand_border', '');
+        setData('brand_ring', '');
+        
+        toast.success(`Theme "${themePresets?.themes[presetKey].name}" applied! Save to make it permanent.`);
     };
     
     const handleReset = (group: keyof typeof SETTINGS_STRUCT) => {
@@ -453,8 +441,20 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
             const groupItems = SETTINGS_STRUCT[group];
             if (groupItems) {
                 groupItems.forEach((item) => {
-                    setData(item.key, item.placeholder);
+                    // Special case for theme colors: reset to empty to allow falling back to preset defaults
+                    // which correctly handle both light and dark mode.
+                    if (group === 'theme' && item.type === 'color') {
+                        setData(item.key, '');
+                    } else {
+                        setData(item.key, item.placeholder);
+                    }
                 });
+                
+                if (group === 'theme') {
+                    setSelectedPreset(themePresets?.default || 'ottostart_default');
+                    setData('theme_preset', themePresets?.default || 'ottostart_default');
+                }
+                
                 toast.info(`${group.charAt(0).toUpperCase() + group.slice(1)} settings reset to defaults. Don't forget to save!`);
             }
         }
@@ -741,22 +741,45 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                     ) : (
                                                         <div className="flex items-center gap-2">
                                                             {isColor && (
+                                                                <div className="flex items-center gap-2 w-full">
+                                                                    <Input
+                                                                        id={item.key}
+                                                                        type="color"
+                                                                        className="w-10 h-8 p-0.5 border-none bg-transparent cursor-pointer shrink-0"
+                                                                        value={oklchToHex(data[item.key] as string)}
+                                                                        onChange={(e) => setData(item.key, e.target.value)}
+                                                                    />
+                                                                    <div className="relative flex-1">
+                                                                        <Input
+                                                                            type="text"
+                                                                            className="h-8 text-sm font-mono text-[11px] pr-8"
+                                                                            value={data[item.key] as string}
+                                                                            onChange={(e) => setData(item.key, e.target.value)}
+                                                                            placeholder={item.placeholder}
+                                                                        />
+                                                                        {data[item.key] && (
+                                                                            <button 
+                                                                                type="button"
+                                                                                onClick={() => setData(item.key, '')}
+                                                                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-0.5"
+                                                                                title="Clear override - use preset default"
+                                                                            >
+                                                                                <X className="w-3 h-3" />
+                                                                            </button>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                            {!isColor && (
                                                                 <Input
                                                                     id={item.key}
-                                                                    type="color"
-                                                                    className="w-10 h-8 p-0.5 border-none bg-transparent cursor-pointer shrink-0"
-                                                                    value={oklchToHex(data[item.key])}
+                                                                    type={item.type === 'email' ? 'email' : 'text'}
+                                                                    className="h-8 text-sm"
+                                                                    value={data[item.key] as string}
                                                                     onChange={(e) => setData(item.key, e.target.value)}
+                                                                    placeholder={item.placeholder}
                                                                 />
                                                             )}
-                                                            <Input
-                                                                id={isColor ? undefined : item.key}
-                                                                type={item.type === 'email' ? 'email' : 'text'}
-                                                                className={cn("h-8 text-sm", isColor ? "flex-1 font-mono text-[11px]" : "")}
-                                                                value={data[item.key]}
-                                                                onChange={(e) => setData(item.key, e.target.value)}
-                                                                placeholder={item.placeholder}
-                                                            />
                                                         </div>
                                                     )}
                                                     {item.description && (

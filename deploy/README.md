@@ -9,6 +9,8 @@ This folder contains scripts and utilities for deploying OttoStart to cPanel sha
 | `verify.sh` | Pre-deployment verification script - checks that everything is ready |
 | `create-package.sh` | Creates a production-ready deployment package (zip file) |
 | `cpanel-helper.php` | Web-based artisan command runner for cPanel (use when SSH unavailable) |
+| `debug.php` | Deployment debugger - diagnoses 500 errors and configuration issues |
+| `TROUBLESHOOTING.md` | **Common issues and solutions guide** |
 
 ## 🚀 Quick Start
 

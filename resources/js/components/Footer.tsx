@@ -38,7 +38,7 @@ const footerLinks = {
 
 export const Footer: React.FC<FooterProps> = ({ className }) => {
     const { props } = usePage<SharedData>();
-    const site = props.site || { name: 'Avant-Garde', logo: '', tagline: 'Premium Agency' };
+    const site = props.site || { name: 'Ottomate', logo: '', tagline: 'High-Performance Website Platform' };
     const menuItems = props.menus?.main || [];
 
     // Helper to check social visibility
@@ -181,7 +181,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                 {/* Bottom Bar */}
                 <div className="pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex items-center gap-8 order-2 md:order-1">
-                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'AVANT-GARDE'} {footerCopyrightSuffix}</span>
+                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'OTTOMATE'} {footerCopyrightSuffix}</span>
                         <div className="hidden md:flex gap-6">
                             {footerLinks.legal.map((link) => (
                                 <Link key={link.name} href={link.href} className="text-xs opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
@@ -202,7 +202,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
 
             {/* Background Massive Text */}
             <div className="absolute bottom-[-5%] left-1/2 -translate-x-1/2 pointer-events-none select-none opacity-[0.03] whitespace-nowrap">
-                <span className="text-[25vw] font-black uppercase leading-none">{site.name || 'AVANT-GARDE'}</span>
+                <span className="text-[25vw] font-black uppercase leading-none">{site.name || 'OTTOMATE'}</span>
             </div>
         </footer>
     );

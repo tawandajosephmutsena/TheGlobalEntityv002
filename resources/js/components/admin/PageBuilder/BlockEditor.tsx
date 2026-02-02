@@ -777,7 +777,23 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             const stats = (block.content.items as StatItem[]) || [];
             return (
                 <div className="space-y-6">
-                    <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>Subtitle (Label)</Label>
+                        <Input 
+                            value={String(block.content.subtitle || 'Our Impact')} 
+                            onChange={(e) => updateContent({ subtitle: e.target.value })}
+                            placeholder="e.g., Our Impact"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Section Title</Label>
+                        <Input 
+                            value={String(block.content.title || 'By The Numbers')} 
+                            onChange={(e) => updateContent({ title: e.target.value })}
+                            placeholder="e.g., By The Numbers"
+                        />
+                    </div>
+                    <div className="space-y-4 pt-4 border-t">
                         <div className="flex items-center justify-between">
                             <Label className="text-xs font-bold uppercase tracking-wider">Stat Items</Label>
                             <Button variant="outline" size="sm" onClick={() => updateContent({ items: [...stats, { value: '0', label: 'New Stat', suffix: '' }] })}>

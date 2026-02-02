@@ -415,7 +415,7 @@ export default function BlockRenderer({
                     case 'features':
                         return <FeaturesBlock key={block.id} content={block.content as FeaturesBlockType['content']} />;
                     case 'stats':
-                        return <StatsSection key={block.id} stats={block.content.items} />;
+                        return <StatsSection key={block.id} stats={block.content.items} title={block.content.title} subtitle={block.content.subtitle} />;
                     case 'services':
                         return <ServicesSection key={block.id} title={block.content.title} services={featuredServices?.slice(0, Number(block.content.limit) || 3)} useStackedCards={block.content.useStackedCards} />;
                     case 'portfolio':

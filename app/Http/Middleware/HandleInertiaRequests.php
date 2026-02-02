@@ -94,9 +94,9 @@ class HandleInertiaRequests extends Middleware
             'csrf_token' => $request->session()->token(),
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'site' => [
-                'name' => $settings['site_name'] ?? 'Avant-Garde CMS',
-                'tagline' => $settings['site_tagline'] ?? 'Digital Innovation Redefined',
-                'description' => $settings['site_description'] ?? 'We create avant-garde digital experiences that push boundaries and inspire innovation through cutting-edge design and technology.',
+                'name' => $settings['site_name'] ?? 'Ottomate',
+                'tagline' => $settings['site_tagline'] ?? 'High-Performance Website Platform',
+                'description' => $settings['site_description'] ?? 'Ottomate: Professional, SEO-ready digital presences for small businesses that prioritize speed, complete ownership, and offline capabilities. Developed by Mhondoro Inc.',
                 'url' => config('app.url'),
                 'logo' => ($settings['site_logo'] ?? null)
                     ? (str_starts_with($settings['site_logo'], 'http') || str_starts_with($settings['site_logo'], '/')
@@ -104,16 +104,16 @@ class HandleInertiaRequests extends Middleware
                         : '/' . $settings['site_logo'])
                     : asset('logo.svg'),
                 'social' => [
-                    'twitter' => $settings['twitter_url'] ?? 'https://twitter.com/avantgarde',
-                    'linkedin' => $settings['linkedin_url'] ?? 'https://linkedin.com/company/avantgarde',
-                    'github' => $settings['github_url'] ?? 'https://github.com/avantgarde',
-                    'instagram' => $settings['instagram_url'] ?? 'https://instagram.com/avantgarde',
-                    'facebook' => $settings['facebook_url'] ?? 'https://facebook.com/avantgarde',
+                    'twitter' => $settings['twitter_url'] ?? 'https://twitter.com/ottomate',
+                    'linkedin' => $settings['linkedin_url'] ?? 'https://linkedin.com/company/mhondoro-inc',
+                    'github' => $settings['github_url'] ?? 'https://github.com/mhondoro',
+                    'instagram' => $settings['instagram_url'] ?? 'https://instagram.com/ottomate',
+                    'facebook' => $settings['facebook_url'] ?? 'https://facebook.com/ottomate',
                 ],
                 'contact' => [
-                    'email' => $settings['contact_email'] ?? 'hello@avant-garde.com',
-                    'phone' => $settings['contact_phone'] ?? '+1 (555) 123-4567',
-                    'address' => $settings['contact_address'] ?? 'San Francisco, CA',
+                    'email' => $settings['contact_email'] ?? 'hello@otto-mate.space',
+                    'phone' => $settings['contact_phone'] ?? '+263 77 123 4567',
+                    'address' => $settings['contact_address'] ?? 'Harare, Zimbabwe',
                     'hours' => $settings['contact_hours'] ?? "Mon - Fri: 9:00 AM - 6:00 PM\nWeekend: By Appointment",
                     'hero_title' => $settings['contact_hero_title'] ?? null,
                     'hero_subtitle' => $settings['contact_hero_subtitle'] ?? null,

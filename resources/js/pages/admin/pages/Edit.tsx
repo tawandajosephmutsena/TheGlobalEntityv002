@@ -62,7 +62,11 @@ const getDefaultContentForType = (type: BlockType) => {
         };
         case 'image': return { url: '', alt: '', caption: '' };
         case 'features': return { title: 'Our Features', items: [{ title: 'Feature 1', desc: 'Description' }] };
-        case 'stats': return { items: [{ value: '10', label: 'Projects', suffix: '+' }] };
+        case 'stats': return { 
+            title: 'By The Numbers', 
+            subtitle: 'Our Impact',
+            items: [{ value: '10', label: 'Projects', suffix: '+' }] 
+        };
         case 'services': return { title: 'Our Services', limit: 3, useStackedCards: true };
         case 'portfolio': return { title: 'Selected Works', limit: 3 };
         case 'insights': return { title: 'Recent Insights', limit: 3 };

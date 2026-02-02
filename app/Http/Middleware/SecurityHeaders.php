@@ -111,8 +111,8 @@ class SecurityHeaders
 
         $policies = [
             "default-src 'self'",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com http://localhost:5173 http://127.0.0.1:5173",
-            "font-src 'self' https://fonts.gstatic.com http://localhost:5173 http://127.0.0.1:5173",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173",
+            "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173",
             "img-src 'self' data: https: http://localhost:5173 http://127.0.0.1:5173",
             "media-src 'self' https: http://localhost:5173 http://127.0.0.1:5173",
             "object-src 'none'",
@@ -135,19 +135,14 @@ class SecurityHeaders
             $policies[] = "connect-src 'self' ws: wss: http://127.0.0.1:5173 ws://127.0.0.1:5173 http://localhost:5173 ws://localhost:5173";
         } else {
             // Production: Use nonce for CSP compliance
-            // Note: We explicitly DO NOT use 'strict-dynamic' here because:
-            // 1. It causes 'unsafe-inline' to be ignored entirely
-            // 2. Any inline script without a nonce gets blocked
-            // Instead, we use nonce + unsafe-inline fallback pattern:
-            // - Browsers that support nonces will use nonce (more secure)
-            // - Older browsers fallback to unsafe-inline (compatible)
+            // We use nonce + 'unsafe-inline' fallback + 'unsafe-eval' (only if needed, but keeping it secure for now)
             $policies[] = "script-src 'self' 'unsafe-inline' 'nonce-{$nonce}'";
             
             // Also set script-src-elem to ensure <script> tags work properly
             $policies[] = "script-src-elem 'self' 'unsafe-inline' 'nonce-{$nonce}'";
 
-            // Standard connect-src
-            $policies[] = "connect-src 'self'";
+            // Standard connect-src (allow analytics/apis)
+            $policies[] = "connect-src 'self' https:";
 
             // Force HTTPS
             $policies[] = "upgrade-insecure-requests";
