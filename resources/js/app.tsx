@@ -8,6 +8,7 @@ import { setupCsrfProtection } from './lib/csrf';
 import { initPerformanceMonitoring } from './lib/performanceMonitor';
 import { registerServiceWorker, showUpdateAvailableNotification } from './lib/serviceWorker';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { registerBlocks } from './lib/registerBlocks';
 
 // Initialize GSAP and animation system
 import { gsap } from 'gsap';
@@ -43,6 +44,9 @@ if (typeof window !== 'undefined') {
     import('./lib/analytics').then(({ analytics }) => {
         analytics.init();
     });
+
+    // Register Dynamic blocks for the Page Builder
+    registerBlocks();
 }
 
 const appName = import.meta.env.VITE_APP_NAME || 'Avant-Garde CMS';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { blockRegistry } from '@/lib/BlockRegistry';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -638,7 +639,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             />
                             <Label htmlFor="show_form" className="text-sm cursor-pointer font-bold">Show Contact Form</Label>
                         </div>
-                        {block.content.show_form && (
+                        {Boolean(block.content.show_form) && (
                             <div className="space-y-4">
                                 <div className="space-y-1">
                                     <Label className="text-[10px]">Form Title</Label>
@@ -1308,8 +1309,10 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             <Input className="h-9 font-mono" value={String(block.content.backgroundColor || '#0a0a0a')} onChange={(e) => updateContent({ backgroundColor: e.target.value })} placeholder="#000000" />
                             <div 
                                 className="h-9 w-9 rounded border shadow-sm" 
-                                style={{ backgroundColor: String(block.content.backgroundColor || '#0a0a0a') }}
-                            />
+                                style={{ '--bg-color': String(block.content.backgroundColor || '#0a0a0a') } as React.CSSProperties}
+                            >
+                                <div className="w-full h-full rounded-[inherit] bg-[var(--bg-color)]" />
+                            </div>
                         </div>
                     </div>
                     <div className="space-y-4 pt-4 border-t">
@@ -1540,8 +1543,9 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
 
                                                     <div className="grid grid-cols-2 gap-2">
                                                         <div className="space-y-1">
-                                                            <Label className="text-[9px] uppercase font-bold opacity-50">Field Name (ID)</Label>
+                                                            <Label htmlFor={`field-name-${stepIdx}-${fieldIdx}`} className="text-[9px] uppercase font-bold opacity-50">Field Name (ID)</Label>
                                                             <Input 
+                                                                id={`field-name-${stepIdx}-${fieldIdx}`}
                                                                 className="h-7 text-[10px] font-mono" 
                                                                 value={field.name} 
                                                                 onChange={(e) => {
@@ -1557,6 +1561,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                                             <input 
                                                                 type="checkbox" 
                                                                 id={`req-${stepIdx}-${fieldIdx}`}
+                                                                title="Toggle Required"
                                                                 checked={!!field.required}
                                                                 onChange={(e) => {
                                                                     const steps = [...(block.content.steps as FormStep[])];
@@ -1640,24 +1645,26 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                 </div>
             );
 
-        // Fallback for other complex types
-        default:
+        default: {
+            const blockAny = block as any;
+            const dynamicBlock = blockRegistry.get(blockAny.type);
+            if (dynamicBlock) {
+                const Editor = dynamicBlock.editor as React.ComponentType<any>;
+                return <Editor content={blockAny.content} onUpdate={updateContent} />;
+            }
             return (
                 <div className="space-y-6">
                     <div className="p-8 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center text-center space-y-3 bg-muted/10">
-                        <AlertCircle className="h-8 w-8 text-muted-foreground/30" />
-                        <div className="space-y-1">
-                            <p className="text-sm font-bold">Editor for "{block.type}"</p>
-                            <p className="text-[11px] text-muted-foreground">This block type uses a specialized editor or is rendered from JSON data.</p>
+                        <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                            <Settings2 className="h-6 w-6 text-muted-foreground" />
                         </div>
-                    </div>
-                    <div className="space-y-2">
-                        <Label className="text-[10px] font-bold uppercase opacity-50">Content Data (Read Only)</Label>
-                        <pre className="p-4 bg-muted rounded-lg text-[10px] overflow-auto max-h-48">
-                            {JSON.stringify(block.content, null, 2)}
-                        </pre>
+                        <div>
+                            <p className="font-bold text-foreground">No specific editor available</p>
+                            <p className="text-xs text-muted-foreground max-w-[200px] mx-auto">This block type ({blockAny.type}) might not have a dedicated editor yet.</p>
+                        </div>
                     </div>
                 </div>
             );
+        }
     }
 }

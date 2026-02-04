@@ -19,11 +19,11 @@ interface Props {
 }
 
 // Define the structure of our blocks
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll';
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'carousel' | (string & {});
 
 export interface Block {
     id: string;
-    type: BlockType;
+    type: string;
     content: Record<string, unknown>;
     is_enabled: boolean;
 }
@@ -309,20 +309,49 @@ const getDefaultContentForType = (type: BlockType) => {
                 { title: 'Aura Skincare', description: 'High-end e-commerce experience with interactive features.', tag: 'E-commerce', image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=2574&auto=format&fit=crop' }
             ]
         };
+        case 'carousel': return {
+            slides: [
+                { 
+                    title: "The Obsidian Project", 
+                    button: "Explore Project", 
+                    src: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?q=80&w=3400&auto=format&fit=crop",
+                    link: "#"
+                },
+                { 
+                    title: "Lumina Dashboard", 
+                    button: "View Case Study", 
+                    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+                    link: "#"
+                },
+                { 
+                    title: "Aura Skincare", 
+                    button: "Live Demo", 
+                    src: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=2574&auto=format&fit=crop",
+                    link: "#"
+                }
+            ]
+        };
         default: return {};
     }
 };
 
 export default function Edit({ page }: Props) {
-    // @ts-expect-error - Inertia useForm has complex type inference with nested Block content
-    const { data, setData, put, processing } = useForm({
+    const { data, setData, put, processing } = useForm<{
+        title: string;
+        slug: string;
+        meta_title: string;
+        meta_description: string;
+        template: 'default' | 'home' | 'contact';
+        is_published: boolean;
+        content: { blocks: Block[] };
+    }>({
         title: page.title,
         slug: page.slug,
         meta_title: page.meta_title || '',
         meta_description: page.meta_description || '',
-        template: page.template as 'default' | 'home' | 'contact',
-        is_published: page.is_published,
-        content: (page.content as { blocks?: Block[] }) || { blocks: [] },
+        template: (page.template as 'default' | 'home' | 'contact') || 'default',
+        is_published: !!page.is_published,
+        content: (page.content as { blocks: Block[] }) || { blocks: [] },
     });
 
     const initialBlocks = (Array.isArray(data.content?.blocks) ? data.content.blocks : []) as Block[];

@@ -28,6 +28,7 @@ import {
     TrendingUp,
     Shield,
     Palette,
+    Package,
 } from 'lucide-react';
 import { usePermissions } from '@/hooks/use-permissions';
 
@@ -113,6 +114,12 @@ const systemNavItems = [
         title: 'Branding',
         href: '/admin/settings?tab=theme', // Assuming query param works or just to indicate intent
         icon: Palette,
+        permission: 'settings.manage',
+    },
+    {
+        title: 'Plugins',
+        href: '/admin/plugins/component-importer',
+        icon: Package,
         permission: 'settings.manage',
     },
 ];

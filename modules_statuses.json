@@ -1,3 +1,4 @@
 {
-    "DemoPlugin": false
+    "DemoPlugin": false,
+    "ComponentImporter": true
 }

@@ -134,15 +134,12 @@ class SecurityHeaders
             // Allow Vite dev server connections
             $policies[] = "connect-src 'self' ws: wss: http://127.0.0.1:5173 ws://127.0.0.1:5173 http://localhost:5173 ws://localhost:5173";
         } else {
-            // Production: Use nonce for CSP compliance
-            // We use nonce + 'unsafe-inline' fallback + 'unsafe-eval' (only if needed, but keeping it secure for now)
-            $policies[] = "script-src 'self' 'unsafe-inline' 'nonce-{$nonce}'";
-            
-            // Also set script-src-elem to ensure <script> tags work properly
+            // Production: Relaxed CSP for better compatibility with shared hosting and dynamic components
+            $policies[] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-{$nonce}'";
             $policies[] = "script-src-elem 'self' 'unsafe-inline' 'nonce-{$nonce}'";
 
             // Standard connect-src (allow analytics/apis)
-            $policies[] = "connect-src 'self' https:";
+            $policies[] = "connect-src 'self' https: wss:";
 
             // Force HTTPS
             $policies[] = "upgrade-insecure-requests";

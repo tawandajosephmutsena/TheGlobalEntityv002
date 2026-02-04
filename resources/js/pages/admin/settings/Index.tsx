@@ -607,19 +607,25 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                             <div className="flex gap-1 mb-2">
                                                                 <div 
                                                                     className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ backgroundColor: preset.light.primary }}
+                                                                    style={{ '--bg-color': preset.light.primary } as React.CSSProperties}
                                                                     title="Primary"
-                                                                />
+                                                                >
+                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                                </div>
                                                                 <div 
                                                                     className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ backgroundColor: preset.light.accent || preset.light.secondary }}
+                                                                    style={{ '--bg-color': preset.light.accent || preset.light.secondary } as React.CSSProperties}
                                                                     title="Accent"
-                                                                />
+                                                                >
+                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                                </div>
                                                                 <div 
                                                                     className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ backgroundColor: preset.light.background }}
+                                                                    style={{ '--bg-color': preset.light.background } as React.CSSProperties}
                                                                     title="Background"
-                                                                />
+                                                                >
+                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                                </div>
                                                             </div>
                                                             <p className="font-medium text-sm truncate">{preset.name}</p>
                                                             <p className="text-xs text-muted-foreground truncate">{preset.description}</p>

@@ -1,0 +1,11 @@
+{
+    "name": "ComponentImporter",
+    "alias": "componentimporter",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ComponentImporter\\Providers\\ComponentImporterServiceProvider"
+    ],
+    "files": []
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { blockRegistry } from '@/lib/BlockRegistry';
 import DOMPurify from 'dompurify';
 import AnimatedSection from '@/components/AnimatedSection';
 import CinematicHero from './CinematicHero';
@@ -484,8 +485,14 @@ export default function BlockRenderer({
                         return <ParallaxFeaturesBlock key={block.id} {...(block.content as ParallaxFeaturesBlockType['content'])} />;
                     case 'gsap_horizontal_scroll':
                         return <GSAPHorizontalScrollBlock key={block.id} {...(block.content as GSAPHorizontalScrollBlockType['content'])} />;
-                    default:
+                    default: {
+                        const dynamicBlock = blockRegistry.get(block.type);
+                        if (dynamicBlock) {
+                            const Renderer = dynamicBlock.renderer;
+                            return <Renderer key={block.id} {...block.content} />;
+                        }
                         return null;
+                    }
                 }
             })}
         </div>

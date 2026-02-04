@@ -1,4 +1,5 @@
 import React from 'react';
+import { blockRegistry } from '@/lib/BlockRegistry';
 import { 
     Dialog, 
     DialogContent, 
@@ -101,33 +102,77 @@ export default function AddBlockMenu({ onAddBlock }: AddBlockMenuProps) {
 
                 <div className="flex-1 overflow-y-auto p-8">
                     <div className="space-y-12 pb-8">
-                        {CATEGORIES.map((category) => (
-                            <div key={category.name} className="space-y-4">
-                                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 border-b pb-2">
-                                    {category.icon} {category.name}
-                                </h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                    {category.blocks.map((block) => (
-                                        <button
-                                            key={block.type}
-                                            onClick={() => {
-                                                onAddBlock(block.type as BlockType);
-                                                setOpen(false);
-                                            }}
-                                            className="group flex items-start gap-4 p-4 rounded-xl border bg-card hover:border-agency-accent hover:ring-1 hover:ring-agency-accent transition-all text-left shadow-sm hover:shadow-md"
-                                        >
-                                            <div className="flex items-center justify-center p-3 rounded-lg bg-muted text-muted-foreground group-hover:bg-agency-accent group-hover:text-white transition-colors">
-                                                {block.icon}
-                                            </div>
-                                            <div className="flex flex-col gap-1 min-w-0">
-                                                <span className="text-sm font-bold truncate tracking-tight">{block.label}</span>
-                                                <span className="text-[11px] text-muted-foreground line-clamp-2 leading-tight">{block.desc}</span>
-                                            </div>
-                                        </button>
-                                    ))}
+                        {CATEGORIES.map((category) => {
+                            const dynamicBlocksForCategory = blockRegistry.getAll()
+                                .filter(b => b.category === category.name)
+                                .map(b => ({
+                                    type: b.type,
+                                    label: b.label,
+                                    icon: b.icon,
+                                    desc: b.desc
+                                }));
+                            
+                            const allBlocks = [...category.blocks, ...dynamicBlocksForCategory];
+
+                            return (
+                                <div key={category.name} className="space-y-4">
+                                    <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 border-b pb-2">
+                                        {category.icon} {category.name}
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                        {allBlocks.map((block) => (
+                                            <button
+                                                key={block.type}
+                                                onClick={() => {
+                                                    (onAddBlock as any)(block.type as any);
+                                                    setOpen(false);
+                                                }}
+                                                className="group flex items-start gap-4 p-4 rounded-xl border bg-card hover:border-agency-accent hover:ring-1 hover:ring-agency-accent transition-all text-left shadow-sm hover:shadow-md"
+                                            >
+                                                <div className="flex items-center justify-center p-3 rounded-lg bg-muted text-muted-foreground group-hover:bg-agency-accent group-hover:text-white transition-colors">
+                                                    {block.icon}
+                                                </div>
+                                                <div className="flex flex-col gap-1 min-w-0">
+                                                    <span className="text-sm font-bold truncate tracking-tight">{block.label}</span>
+                                                    <span className="text-[11px] text-muted-foreground line-clamp-2 leading-tight">{block.desc}</span>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
+                        
+                        {/* Render any new categories not in the static list */}
+                        {blockRegistry.getCategories()
+                            .filter(cat => !CATEGORIES.find(c => c.name === cat))
+                            .map(cat => (
+                                <div key={cat} className="space-y-4">
+                                    <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/50 border-b pb-2">
+                                        <Layout className="h-4 w-4" /> {cat}
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                        {blockRegistry.getAll().filter(b => b.category === cat).map((block) => (
+                                            <button
+                                                key={block.type}
+                                                onClick={() => {
+                                                    (onAddBlock as any)(block.type as any);
+                                                    setOpen(false);
+                                                }}
+                                                className="group flex items-start gap-4 p-4 rounded-xl border bg-card hover:border-agency-accent hover:ring-1 hover:ring-agency-accent transition-all text-left shadow-sm hover:shadow-md"
+                                            >
+                                                <div className="flex items-center justify-center p-3 rounded-lg bg-muted text-muted-foreground group-hover:bg-agency-accent group-hover:text-white transition-colors">
+                                                    {block.icon}
+                                                </div>
+                                                <div className="flex flex-col gap-1 min-w-0">
+                                                    <span className="text-sm font-bold truncate tracking-tight">{block.label}</span>
+                                                    <span className="text-[11px] text-muted-foreground line-clamp-2 leading-tight">{block.desc}</span>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </DialogContent>
