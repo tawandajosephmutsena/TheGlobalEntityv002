@@ -17,19 +17,19 @@ define('LARAVEL_START', microtime(true));
 */
 
 // Path to Laravel app root (relative to public_html)
-$laravelRoot = __DIR__.'/../ottomate';
+$laravelRoot = is_dir(__DIR__ . '/../ottomate') ? __DIR__ . '/../ottomate' : __DIR__ . '/..';
 
 // Determine if the application is in maintenance mode...
-if (file_exists($maintenance = $laravelRoot.'/storage/framework/maintenance.php')) {
+if (file_exists($maintenance = $laravelRoot . '/storage/framework/maintenance.php')) {
     require $maintenance;
 }
 
 // Register the Composer autoloader...
-require $laravelRoot.'/vendor/autoload.php';
+require $laravelRoot . '/vendor/autoload.php';
 
 // Bootstrap Laravel and handle the request...
 /** @var Application $app */
-$app = require_once $laravelRoot.'/bootstrap/app.php';
+$app = require_once $laravelRoot . '/bootstrap/app.php';
 
 // Set the public path to THIS directory (public_html on cPanel)
 $app->usePublicPath(__DIR__);

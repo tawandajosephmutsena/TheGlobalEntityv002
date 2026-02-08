@@ -30,6 +30,8 @@ export interface HeroBlock extends BaseBlock {
 export interface StatsBlock extends BaseBlock {
     type: 'stats';
     content: {
+        title?: string;
+        subtitle?: string;
         items: Array<{
             value: string;
             label: string;
@@ -42,6 +44,7 @@ export interface ServicesBlock extends BaseBlock {
     type: 'services';
     content: {
         title: string;
+        subtitle?: string;
         limit?: number;
         useStackedCards?: boolean;
     };
@@ -51,7 +54,10 @@ export interface PortfolioBlock extends BaseBlock {
     type: 'portfolio';
     content: {
         title: string;
+        subtitle?: string;
+        description?: string;
         limit?: number;
+        showViewAll?: boolean;
     };
 }
 

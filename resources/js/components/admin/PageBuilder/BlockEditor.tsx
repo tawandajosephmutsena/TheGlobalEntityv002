@@ -5,7 +5,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2 } from 'lucide-react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import { MediaAsset } from '@/types';
@@ -718,10 +719,35 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                         <Label>Section Title</Label>
                         <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
                     </div>
-                    {block.type === 'services' && (
+                    {(block.type === 'services' || block.type === 'portfolio' || block.type === 'insights') && (
                         <div className="space-y-2">
                             <Label>Subtitle</Label>
-                            <Textarea className="h-16" value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                            <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                        </div>
+                    )}
+                    {block.type === 'portfolio' && (
+                        <div className="space-y-2">
+                            <Label>Section Description</Label>
+                            <Textarea 
+                                className="h-24"
+                                value={String(block.content.description || '')} 
+                                onChange={(e) => updateContent({ description: e.target.value })}
+                                placeholder="Intro text for the portfolio section..."
+                            />
+                        </div>
+                    )}
+                    {block.type === 'portfolio' && (
+                        <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="space-y-0.5">
+                                <Label>Show View All Link</Label>
+                                <p className="text-xs text-muted-foreground">
+                                    Display a link to the full portfolio page.
+                                </p>
+                            </div>
+                            <Switch 
+                                checked={!!block.content.showViewAll} 
+                                onCheckedChange={(checked: boolean) => updateContent({ showViewAll: checked })} 
+                            />
                         </div>
                     )}
                     <div className="space-y-2">

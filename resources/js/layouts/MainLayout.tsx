@@ -46,8 +46,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     children,
     title,
     className,
-    showNavigation = false,
-    showFooter = false,
+    showNavigation = true,
+    showFooter = true,
     showBreadcrumbs = false,
     customBreadcrumbs,
 }) => {

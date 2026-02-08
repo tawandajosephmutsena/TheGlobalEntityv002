@@ -420,7 +420,16 @@ export default function BlockRenderer({
                     case 'services':
                         return <ServicesSection key={block.id} title={block.content.title} services={featuredServices?.slice(0, Number(block.content.limit) || 3)} useStackedCards={block.content.useStackedCards} />;
                     case 'portfolio':
-                        return <FeaturedProjects key={block.id} title={block.content.title} projects={featuredProjects?.slice(0, Number(block.content.limit) || 3)} />;
+                        return (
+                            <FeaturedProjects 
+                                key={block.id} 
+                                title={block.content.title} 
+                                subtitle={block.content.subtitle} 
+                                description={block.content.description}
+                                showViewAll={block.content.showViewAll}
+                                projects={featuredProjects?.slice(0, Number(block.content.limit) || 3)} 
+                            />
+                        );
                     case 'insights':
                         return <RecentInsights key={block.id} title={block.content.title} insights={recentInsights?.slice(0, Number(block.content.limit) || 3)} />;
                     case 'cta':
@@ -486,10 +495,11 @@ export default function BlockRenderer({
                     case 'gsap_horizontal_scroll':
                         return <GSAPHorizontalScrollBlock key={block.id} {...(block.content as GSAPHorizontalScrollBlockType['content'])} />;
                     default: {
-                        const dynamicBlock = blockRegistry.get(block.type);
+                        const unknownBlock = block as any;
+                        const dynamicBlock = blockRegistry.get(unknownBlock.type);
                         if (dynamicBlock) {
                             const Renderer = dynamicBlock.renderer;
-                            return <Renderer key={block.id} {...block.content} />;
+                            return <Renderer key={unknownBlock.id} {...unknownBlock.content} />;
                         }
                         return null;
                     }
