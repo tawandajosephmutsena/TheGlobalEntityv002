@@ -23,6 +23,8 @@ interface DynamicFormProps {
     submitText?: string;
     successMessage?: string;
     adminEmail?: string;
+    replyToEmail?: string;
+    confirmationEmailBody?: string;
     allowMultipleSubmissions?: boolean;
     className?: string;
 }
@@ -34,6 +36,8 @@ export default function DynamicForm({
     submitText = 'Submit',
     successMessage = 'Thank you for your submission!',
     adminEmail,
+    replyToEmail,
+    confirmationEmailBody,
     allowMultipleSubmissions,
     className
 }: DynamicFormProps) {
@@ -43,6 +47,12 @@ export default function DynamicForm({
     }
     if (adminEmail) {
         initialData.admin_email = adminEmail;
+    }
+    if (replyToEmail) {
+        initialData.reply_to_email = replyToEmail;
+    }
+    if (confirmationEmailBody) {
+        initialData.confirmation_email_body = confirmationEmailBody;
     }
     if (allowMultipleSubmissions !== undefined) {
         initialData.allow_multiple_submissions = String(allowMultipleSubmissions);

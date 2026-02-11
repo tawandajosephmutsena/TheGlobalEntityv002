@@ -9,6 +9,8 @@ interface FormSectionProps {
     steps: FormStep[];
     submitText?: string;
     adminEmail?: string;
+    replyToEmail?: string;
+    confirmationEmailBody?: string;
     successMessage?: string;
     allowMultipleSubmissions?: boolean;
     className?: string;
@@ -20,6 +22,8 @@ export const FormSection: React.FC<FormSectionProps> = ({
     steps,
     submitText,
     adminEmail,
+    replyToEmail,
+    confirmationEmailBody,
     successMessage,
     allowMultipleSubmissions,
     className,
@@ -45,6 +49,8 @@ export const FormSection: React.FC<FormSectionProps> = ({
                             steps={steps} 
                             submitText={submitText} 
                             adminEmail={adminEmail}
+                            replyToEmail={replyToEmail}
+                            confirmationEmailBody={confirmationEmailBody}
                             successMessage={successMessage}
                             allowMultipleSubmissions={allowMultipleSubmissions}
                         />

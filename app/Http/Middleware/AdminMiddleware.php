@@ -16,11 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+        /** @var \App\Models\User|null $user */
+        $user = Auth::user();
 
-        if (!Auth::user()->isAdmin()) {
+        if (!$user || !$user->isAdmin()) {
             abort(403, 'Unauthorized. Admin access required.');
         }
 

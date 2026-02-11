@@ -461,6 +461,8 @@ export default function BlockRenderer({
                                 }))}
                                 submitText={block.content.submitText}
                                 adminEmail={block.content.adminEmail}
+                                replyToEmail={block.content.replyToEmail}
+                                confirmationEmailBody={block.content.confirmationEmailBody}
                                 successMessage={block.content.successMessage}
                                 allowMultipleSubmissions={block.content.allowMultipleSubmissions}
                             />

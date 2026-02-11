@@ -129,6 +129,8 @@ export interface FormBlock extends BaseBlock {
         }>;
         submitText: string;
         adminEmail?: string;
+        replyToEmail?: string;
+        confirmationEmailBody?: string;
         successMessage?: string;
         allowMultipleSubmissions?: boolean;
     };
@@ -190,6 +192,8 @@ export interface ContactInfoBlock extends BaseBlock {
         form_title?: string;
         success_message?: string;
         admin_email?: string;
+        reply_to_email?: string;
+        confirmation_email_body?: string;
         allow_multiple_submissions?: boolean;
     };
 }

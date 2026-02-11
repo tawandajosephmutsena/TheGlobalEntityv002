@@ -19,6 +19,8 @@ interface ContactInfoBlockProps {
     form_title?: string;
     success_message?: string;
     admin_email?: string;
+    reply_to_email?: string;
+    confirmation_email_body?: string;
     allow_multiple_submissions?: boolean;
 }
 
@@ -33,6 +35,8 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
     form_title,
     success_message,
     admin_email,
+    reply_to_email,
+    confirmation_email_body,
     allow_multiple_submissions
 }) => {
     const { props } = usePage<SharedData>();
@@ -109,6 +113,8 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
                                     title={form_title || site?.contact?.form_title || 'Send us a Message'}
                                     successMessage={success_message}
                                     adminEmail={admin_email}
+                                    replyToEmail={reply_to_email}
+                                    confirmationEmailBody={confirmation_email_body}
                                     allowMultipleSubmissions={allow_multiple_submissions}
                                     fields={[
                                         { name: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'Your Name' },

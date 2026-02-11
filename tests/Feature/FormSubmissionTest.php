@@ -23,6 +23,8 @@ class FormSubmissionTest extends TestCase
             'message' => 'Hello test',
             'form_title' => 'Test Form',
             'admin_email' => 'admin@test.com',
+            'reply_to_email' => 'support@test.com',
+            'confirmation_email_body' => '<p>Custom message for you!</p>',
             'allow_multiple_submissions' => true
         ]);
 
@@ -35,12 +37,15 @@ class FormSubmissionTest extends TestCase
 
         Mail::assertSent(ContactConfirmation::class, function ($mail) {
             return $mail->hasTo('john@example.com') && 
-                   $mail->contactData['name'] === 'John Doe';
+                   $mail->contactData['name'] === 'John Doe' &&
+                   $mail->hasReplyTo('support@test.com') &&
+                   $mail->contactData['custom_confirmation_body'] === '<p>Custom message for you!</p>';
         });
 
         Mail::assertSent(ContactSubmissionNotification::class, function ($mail) {
             return $mail->hasTo('admin@test.com') && 
-                   $mail->contactData['form_title'] === 'Test Form';
+                   $mail->contactData['form_title'] === 'Test Form' &&
+                   !isset($mail->contactData['custom_confirmation_body']);
         });
     }
 

@@ -669,6 +669,24 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                         placeholder="admin@example.com (Optional)"
                                     />
                                 </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Reply-To Email (Sent to User)</Label>
+                                    <Input
+                                        className="h-8 text-xs"
+                                        value={String(block.content.reply_to_email || '')}
+                                        onChange={(e) => updateContent({ reply_to_email: e.target.value })}
+                                        placeholder="noreply@example.com (Optional)"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Confirmation Email Body (Sent to User)</Label>
+                                    <RichTextEditor
+                                        content={String(block.content.confirmation_email_body || '')}
+                                        onChange={(content) => updateContent({ confirmation_email_body: content })}
+                                        placeholder="Custom message for the confirmation email..."
+                                        className="min-h-[150px]"
+                                    />
+                                </div>
                                 <div className="flex items-center gap-3 pt-2">
                                     <input 
                                         type="checkbox" 
@@ -1439,6 +1457,22 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             value={String(block.content.adminEmail || '')} 
                             onChange={(e) => updateContent({ adminEmail: e.target.value })} 
                             placeholder="admin@example.com (Optional)"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Reply-To Email (Sent to User)</Label>
+                        <Input
+                            value={String(block.content.replyToEmail || '')}
+                            onChange={(e) => updateContent({ replyToEmail: e.target.value })}
+                            placeholder="noreply@example.com (Optional)"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Confirmation Email Body (Sent to User)</Label>
+                        <RichTextEditor
+                            content={String(block.content.confirmationEmailBody || '')}
+                            onChange={(content) => updateContent({ confirmationEmailBody: content })}
+                            placeholder="Custom message for the confirmation email..."
                         />
                     </div>
                     <div className="flex items-center gap-3 pt-2">

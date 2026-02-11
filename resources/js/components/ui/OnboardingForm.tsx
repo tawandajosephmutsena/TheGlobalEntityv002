@@ -47,6 +47,8 @@ interface OnboardingFormProps {
   steps: FormStep[];
   submitText?: string;
   adminEmail?: string;
+  replyToEmail?: string;
+  confirmationEmailBody?: string;
   successMessage?: string;
   allowMultipleSubmissions?: boolean;
   onSuccess?: (data: Record<string, unknown>) => void;
@@ -76,6 +78,8 @@ const OnboardingForm = ({
   steps, 
   submitText = "Submit", 
   adminEmail,
+  replyToEmail,
+  confirmationEmailBody,
   successMessage,
   allowMultipleSubmissions,
   onSuccess 
@@ -141,6 +145,8 @@ const OnboardingForm = ({
       router.post('/contact', {
         ...formData,
         admin_email: adminEmail,
+        reply_to_email: replyToEmail,
+        confirmation_email_body: confirmationEmailBody,
         allow_multiple_submissions: allowMultipleSubmissions,
         form_title: steps[0]?.title || 'Multi-step Form'
       }, {

@@ -21,14 +21,20 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->except(['_token', 'form_title', 'admin_email', 'allow_multiple_submissions']);
+            $data = $request->except(['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions']);
             $formTitle = $request->input('form_title', 'Multi-step Form');
             $adminEmail = $request->input('admin_email');
+            $replyToEmail = $request->input('reply_to_email');
+            $confirmationBody = $request->input('confirmation_email_body');
             $allowMultiple = $request->input('allow_multiple_submissions') !== 'false' && $request->input('allow_multiple_submissions') !== false;
             
             // Format all fields for clean display
             $formattedFields = [];
+            $excludeFromFormatted = ['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions', 'custom_confirmation_body'];
+            
             foreach ($data as $fieldName => $value) {
+                if (in_array($fieldName, $excludeFromFormatted)) continue;
+                
                 // Convert field names to readable format (e.g., 'full_name' -> 'Full Name')
                 $readableKey = ucwords(str_replace(['-', '_'], ' ', preg_replace('/([a-z])([A-Z])/', '$1 $2', $fieldName)));
                 $formattedFields[$readableKey] = $value;
@@ -107,21 +113,67 @@ class ContactController extends Controller
             ]);
 
             // Prepare data for emails
-            $contactEmailData = array_merge($data, [
+            $summaryData = $formattedFields;
+            
+            // Ensure Name and Email are included if they were found but maybe named differently in the form
+            if ($name && !isset($summaryData['Name']) && !isset($summaryData['Full Name'])) {
+                $summaryData['Name'] = $name;
+            }
+            if ($email && !isset($summaryData['Email'])) {
+                $summaryData['Email'] = $email;
+            }
+
+            $userEmailData = [
+                'summary' => $summaryData,
                 'name' => $name,
                 'email' => $email,
-                'form_title' => $type
-            ]);
+                'form_title' => $type,
+                'custom_confirmation_body' => $confirmationBody
+            ];
+
+            $adminEmailData = [
+                'summary' => $summaryData,
+                'name' => $name,
+                'email' => $email,
+                'form_title' => $type,
+            ];
 
             // Send confirmation email to user
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                Mail::to($email)->send(new ContactConfirmation($contactEmailData));
+                try {
+                    Log::info('Attempting to send confirmation email to user', ['email' => $email]);
+                    $confirmationMail = new ContactConfirmation($userEmailData);
+                    
+                    if ($replyToEmail && filter_var($replyToEmail, FILTER_VALIDATE_EMAIL)) {
+                        Log::info('Adding reply-to header to confirmation email', ['reply_to' => $replyToEmail]);
+                        $confirmationMail->replyTo($replyToEmail);
+                    }
+                    
+                    Mail::to($email)->send($confirmationMail);
+                    Log::info('Confirmation email sent successfully to user');
+                } catch (\Exception $e) {
+                    Log::error('Failed to send confirmation email to user', [
+                        'email' => $email,
+                        'error' => $e->getMessage()
+                    ]);
+                }
+            } else {
+                Log::warning('Invalid user email for confirmation', ['email' => $email]);
             }
 
             // Send notification to admin
             $notifyEmail = $adminEmail ?: config('mail.from.address');
             if ($notifyEmail) {
-                Mail::to($notifyEmail)->send(new ContactSubmissionNotification($contactEmailData));
+                try {
+                    Log::info('Attempting to send notification email to admin', ['email' => $notifyEmail]);
+                    Mail::to($notifyEmail)->send(new ContactSubmissionNotification($adminEmailData));
+                    Log::info('Admin notification email sent successfully');
+                } catch (\Exception $e) {
+                    Log::error('Failed to send notification email to admin', [
+                        'email' => $notifyEmail,
+                        'error' => $e->getMessage()
+                    ]);
+                }
             }
 
             $successMessage = $request->session()->get('success') ?: 'Thank you for your message. We\'ll get back to you soon!';

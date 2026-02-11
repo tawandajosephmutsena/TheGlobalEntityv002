@@ -5,11 +5,11 @@ You have received a new submission from the **{{ $contactData['form_title'] ?? '
 
 ## Submission Details
 
-@foreach($contactData as $key => $value)
-@if(!in_array($key, ['admin_email', 'allow_multiple_submissions', 'form_title']))
-**{{ ucfirst(str_replace('_', ' ', $key)) }}:** {{ is_array($value) ? implode(', ', $value) : $value }}
-@endif
+@if(isset($contactData['summary']) && count($contactData['summary']) > 0)
+@foreach($contactData['summary'] as $label => $value)
+**{{ $label }}:** {{ is_array($value) ? implode(', ', $value) : $value }}<br>
 @endforeach
+@endif
 
 <x-mail::button :url="config('app.url') . '/admin/contacts'">
 View in Dashboard
