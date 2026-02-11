@@ -6,6 +6,9 @@ use App\Models\ContactInquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactSubmissionNotification;
+use App\Mail\ContactConfirmation;
 use Inertia\Inertia;
 
 class ContactController extends Controller
@@ -18,8 +21,10 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         try {
-
-            $data = $request->except(['_token', 'form_title']);
+            $data = $request->except(['_token', 'form_title', 'admin_email', 'allow_multiple_submissions']);
+            $formTitle = $request->input('form_title', 'Multi-step Form');
+            $adminEmail = $request->input('admin_email');
+            $allowMultiple = $request->input('allow_multiple_submissions') !== 'false' && $request->input('allow_multiple_submissions') !== false;
             
             // Format all fields for clean display
             $formattedFields = [];
@@ -55,7 +60,21 @@ class ContactController extends Controller
             // Fallback values
             $name = $name ?? 'Form Submission';
             $email = $email ?? 'no-email@provided.com';
-            $type = $request->input('form_title', 'Multi-step Form');
+            $type = $formTitle;
+
+            // Check for multiple submissions if restricted
+            if (!$allowMultiple && $email !== 'no-email@provided.com') {
+                $exists = ContactInquiry::where('email', $email)
+                    ->where('subject', $type . ' Submission')
+                    ->where('created_at', '>', now()->subDay()) // Limit check to last 24h or perpetual? Let's go with perpetual for now as per "toggle whether a user can submit to the same form several times"
+                    ->exists();
+
+                if ($exists) {
+                    return back()->withErrors([
+                        'message' => 'You have already submitted this form.'
+                    ])->with('error', 'Duplicate submission');
+                }
+            }
             
             // Create a readable summary of all fields if no message was found
             if (!$message) {
@@ -87,8 +106,26 @@ class ContactController extends Controller
                 ],
             ]);
 
+            // Prepare data for emails
+            $contactEmailData = array_merge($data, [
+                'name' => $name,
+                'email' => $email,
+                'form_title' => $type
+            ]);
 
-            return back()->with('success', 'Thank you for your message. We\'ll get back to you soon!');
+            // Send confirmation email to user
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                Mail::to($email)->send(new ContactConfirmation($contactEmailData));
+            }
+
+            // Send notification to admin
+            $notifyEmail = $adminEmail ?: config('mail.from.address');
+            if ($notifyEmail) {
+                Mail::to($notifyEmail)->send(new ContactSubmissionNotification($contactEmailData));
+            }
+
+            $successMessage = $request->session()->get('success') ?: 'Thank you for your message. We\'ll get back to you soon!';
+            return back()->with('success', $successMessage);
             
         } catch (\Illuminate\Validation\ValidationException $e) {
             return back()->withErrors($e->errors())->withInput();

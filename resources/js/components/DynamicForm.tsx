@@ -22,6 +22,8 @@ interface DynamicFormProps {
     fields: FormField[];
     submitText?: string;
     successMessage?: string;
+    adminEmail?: string;
+    allowMultipleSubmissions?: boolean;
     className?: string;
 }
 
@@ -31,11 +33,19 @@ export default function DynamicForm({
     fields = [],
     submitText = 'Submit',
     successMessage = 'Thank you for your submission!',
+    adminEmail,
+    allowMultipleSubmissions,
     className
 }: DynamicFormProps) {
     const initialData: Record<string, string> = {};
     if (title) {
         initialData.form_title = title;
+    }
+    if (adminEmail) {
+        initialData.admin_email = adminEmail;
+    }
+    if (allowMultipleSubmissions !== undefined) {
+        initialData.allow_multiple_submissions = String(allowMultipleSubmissions);
     }
     fields.forEach(field => {
         initialData[field.name || field.label.toLowerCase().replace(/\s+/g, '_')] = '';

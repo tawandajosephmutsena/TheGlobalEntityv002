@@ -660,6 +660,26 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                         placeholder="Thank you! Your message has been sent."
                                     />
                                 </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Admin Notification Email</Label>
+                                    <Input 
+                                        className="h-8 text-xs"
+                                        value={String(block.content.admin_email || '')} 
+                                        onChange={(e) => updateContent({ admin_email: e.target.value })}
+                                        placeholder="admin@example.com (Optional)"
+                                    />
+                                </div>
+                                <div className="flex items-center gap-3 pt-2">
+                                    <input 
+                                        type="checkbox" 
+                                        id="allow_multiple_submissions_ci" 
+                                        checked={block.content.allow_multiple_submissions !== false} 
+                                        onChange={(e) => updateContent({ allow_multiple_submissions: e.target.checked })}
+                                        className="h-4 w-4 rounded border-gray-300 text-agency-accent focus:ring-agency-accent"
+                                        aria-label="Allow Multiple Submissions"
+                                    />
+                                    <Label htmlFor="allow_multiple_submissions_ci" className="text-[10px] font-bold uppercase opacity-50 cursor-pointer">Allow Multiple Submissions</Label>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -1412,6 +1432,25 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             onChange={(e) => updateContent({ successMessage: e.target.value })} 
                             placeholder="Form submitted successfully!"
                         />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Admin Notification Email</Label>
+                        <Input 
+                            value={String(block.content.adminEmail || '')} 
+                            onChange={(e) => updateContent({ adminEmail: e.target.value })} 
+                            placeholder="admin@example.com (Optional)"
+                        />
+                    </div>
+                    <div className="flex items-center gap-3 pt-2">
+                        <input 
+                            type="checkbox" 
+                            id="allow_multiple_submissions_form" 
+                            checked={block.content.allowMultipleSubmissions !== false} 
+                            onChange={(e) => updateContent({ allowMultipleSubmissions: e.target.checked })}
+                            className="h-4 w-4 rounded border-gray-300 text-agency-accent focus:ring-agency-accent"
+                            aria-label="Allow Multiple Submissions"
+                        />
+                        <Label htmlFor="allow_multiple_submissions_form" className="text-sm cursor-pointer">Allow Multiple Submissions</Label>
                     </div>
                     <div className="space-y-4 pt-4 border-t">
                         <div className="flex items-center justify-between">

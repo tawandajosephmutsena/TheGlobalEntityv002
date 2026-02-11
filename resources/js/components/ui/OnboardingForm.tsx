@@ -46,6 +46,9 @@ export interface FormStep {
 interface OnboardingFormProps {
   steps: FormStep[];
   submitText?: string;
+  adminEmail?: string;
+  successMessage?: string;
+  allowMultipleSubmissions?: boolean;
   onSuccess?: (data: Record<string, unknown>) => void;
 }
 
@@ -69,7 +72,14 @@ const contentVariants = {
   }),
 };
 
-const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingFormProps) => {
+const OnboardingForm = ({ 
+  steps, 
+  submitText = "Submit", 
+  adminEmail,
+  successMessage,
+  allowMultipleSubmissions,
+  onSuccess 
+}: OnboardingFormProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -128,11 +138,16 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
     setIsSubmitting(true);
 
     import('@inertiajs/react').then(({ router }) => {
-      router.post('/contact', formData, {
+      router.post('/contact', {
+        ...formData,
+        admin_email: adminEmail,
+        allow_multiple_submissions: allowMultipleSubmissions,
+        form_title: steps[0]?.title || 'Multi-step Form'
+      }, {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
-          toast.success("Form submitted successfully!");
+          toast.success(successMessage || "Form submitted successfully!");
           setIsSubmitting(false);
           if (onSuccess) onSuccess(formData);
         },
@@ -242,7 +257,7 @@ const OnboardingForm = ({ steps, submitText = "Submit", onSuccess }: OnboardingF
               </CardHeader>
               <CardContent className="space-y-4">
                 {currentStepData.fields.map((field, index) => (
-                  <motion.div 
+                   <motion.div 
                     key={field.name} 
                     variants={fadeInUp} 
                     custom={index}

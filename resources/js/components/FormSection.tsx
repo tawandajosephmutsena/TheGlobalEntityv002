@@ -8,6 +8,9 @@ interface FormSectionProps {
     description?: string;
     steps: FormStep[];
     submitText?: string;
+    adminEmail?: string;
+    successMessage?: string;
+    allowMultipleSubmissions?: boolean;
     className?: string;
 }
 
@@ -16,6 +19,9 @@ export const FormSection: React.FC<FormSectionProps> = ({
     description,
     steps,
     submitText,
+    adminEmail,
+    successMessage,
+    allowMultipleSubmissions,
     className,
 }) => {
     return (
@@ -34,9 +40,15 @@ export const FormSection: React.FC<FormSectionProps> = ({
                     </div>
                 </AnimatedSection>
 
-                <AnimatedSection animation="slide-up" delay={200}>
-                    <OnboardingForm steps={steps} submitText={submitText} />
-                </AnimatedSection>
+                					<AnimatedSection animation="slide-up" delay={200}>
+						<OnboardingForm 
+                            steps={steps} 
+                            submitText={submitText} 
+                            adminEmail={adminEmail}
+                            successMessage={successMessage}
+                            allowMultipleSubmissions={allowMultipleSubmissions}
+                        />
+					</AnimatedSection>
             </div>
         </section>
     );

@@ -25,6 +25,11 @@ interface CarouselBlockProps {
     services?: BaseCollectionItem[];
     portfolio?: BaseCollectionItem[];
     insights?: BaseCollectionItem[];
+    // Slider settings
+    speed?: number;
+    gap?: number;
+    itemsToDisplay?: number;
+    height?: number;
 }
 
 export default function CarouselBlock({ 
@@ -33,7 +38,11 @@ export default function CarouselBlock({
     slides = [],
     services = [],
     portfolio = [],
-    insights = []
+    insights = [],
+    speed = 20,
+    gap = 8,
+    itemsToDisplay = 4,
+    height = 250
 }: CarouselBlockProps) {
     // Determine which items to show
     let displaySlides = [...slides];
@@ -59,7 +68,13 @@ export default function CarouselBlock({
 
     return (
         <section className="bg-transparent overflow-hidden">
-            <Carousel slides={displaySlides} />
+            <Carousel 
+                slides={displaySlides} 
+                speed={speed} 
+                gap={gap} 
+                itemsToDisplay={itemsToDisplay} 
+                height={height}
+            />
         </section>
     );
 }

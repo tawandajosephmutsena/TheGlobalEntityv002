@@ -18,6 +18,8 @@ interface ContactInfoBlockProps {
     show_form?: boolean;
     form_title?: string;
     success_message?: string;
+    admin_email?: string;
+    allow_multiple_submissions?: boolean;
 }
 
 const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({ 
@@ -29,7 +31,9 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
     google_maps_url,
     show_form,
     form_title,
-    success_message
+    success_message,
+    admin_email,
+    allow_multiple_submissions
 }) => {
     const { props } = usePage<SharedData>();
     const site = props.site;
@@ -104,6 +108,8 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
                                 <DynamicForm 
                                     title={form_title || site?.contact?.form_title || 'Send us a Message'}
                                     successMessage={success_message}
+                                    adminEmail={admin_email}
+                                    allowMultipleSubmissions={allow_multiple_submissions}
                                     fields={[
                                         { name: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'Your Name' },
                                         { name: 'email', label: 'Email Address', type: 'email', required: true, placeholder: 'your@email.com' },

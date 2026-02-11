@@ -460,6 +460,9 @@ export default function BlockRenderer({
                                     fields: step.fields || [],
                                 }))}
                                 submitText={block.content.submitText}
+                                adminEmail={block.content.adminEmail}
+                                successMessage={block.content.successMessage}
+                                allowMultipleSubmissions={block.content.allowMultipleSubmissions}
                             />
                         );
                     case 'story':
