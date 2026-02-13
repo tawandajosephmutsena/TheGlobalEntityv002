@@ -368,3 +368,19 @@ export interface GSAPHorizontalScrollBlock extends BaseBlock {
         backgroundColor?: string;
     };
 }
+
+export interface KimiHeroBlock extends BaseBlock {
+    type: 'kimi_hero';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        ctaText?: string;
+        ctaLink?: string;
+        ctaSecondaryText?: string;
+        ctaSecondaryLink?: string;
+        images?: string[];
+        backgroundColor?: string;
+        scrollSpeed?: number;
+    };
+}

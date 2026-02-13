@@ -19,7 +19,7 @@ interface Props {
 }
 
 // Define the structure of our blocks
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'carousel' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | (string & {});
 
 export interface Block {
     id: string;
@@ -330,6 +330,18 @@ const getDefaultContentForType = (type: BlockType) => {
                     link: "#"
                 }
             ]
+        };
+        case 'kimi_hero': return {
+            title: 'Streamline Your Team,',
+            subtitle: 'Supercharge Your Workflow',
+            description: 'All-in-one platform to plan, collaborate, and deliver — faster and smarter.',
+            ctaText: 'Get started for Free',
+            ctaLink: '#',
+            ctaSecondaryText: '',
+            ctaSecondaryLink: '',
+            images: ['/team-1.jpg', '/team-2.jpg', '/team-3.jpg', '/team-4.jpg', '/team-5.jpg', '/team-6.jpg', '/team-7.jpg', '/team-8.jpg'],
+            backgroundColor: '#FFF8F0',
+            scrollSpeed: 30,
         };
         default: return {};
     }

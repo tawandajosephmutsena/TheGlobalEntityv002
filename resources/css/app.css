@@ -597,6 +597,43 @@
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
+/* Kimi Hero Section - 3D Carousel */
+.kimi-carousel-container {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+.kimi-carousel-track {
+    transform-style: preserve-3d;
+    animation: kimi-carousel-scroll 30s linear infinite;
+}
+
+.kimi-carousel-item {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+@keyframes kimi-carousel-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.kimi-hero-cta:hover {
+    background-color: #1f2937 !important;
+}
+
+.kimi-hero-cta-arrow {
+    transition: transform 0.3s ease;
+}
+
+.kimi-hero-cta:hover .kimi-hero-cta-arrow {
+    transform: translateX(4px);
+}
+
 .prose p {
     margin-bottom: 1rem;
     line-height: 1.75;
