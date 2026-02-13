@@ -1747,9 +1747,20 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
         default: {
             const blockAny = block as any;
             const dynamicBlock = blockRegistry.get(blockAny.type);
-            if (dynamicBlock) {
+            if (dynamicBlock && dynamicBlock.editor) {
                 const Editor = dynamicBlock.editor as React.ComponentType<any>;
-                return <Editor content={blockAny.content} onUpdate={updateContent} />;
+                // Registry editors expect { block, onUpdate } where onUpdate receives
+                // the full updated block. We adapt onUpdate to extract just the content.
+                const handleRegistryUpdate = (updatedBlock: any) => {
+                    if (updatedBlock && updatedBlock.content) {
+                        // Editor returned a full block object — extract content
+                        onUpdate(updatedBlock.content);
+                    } else {
+                        // Editor returned content directly — pass through
+                        onUpdate(updatedBlock);
+                    }
+                };
+                return <Editor block={blockAny} onUpdate={handleRegistryUpdate} />;
             }
             return (
                 <div className="space-y-6">
