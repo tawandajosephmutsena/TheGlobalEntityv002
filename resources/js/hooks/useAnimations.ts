@@ -22,24 +22,26 @@ export const useSmoothScroll = () => {
 
         // Detect mobile device
         const isMobile = window.innerWidth < 768;
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        // Refined touch detection: only disable on true touch devices (like tablets/phones)
+        // that don't have a hover capability (which indicates a mouse/trackpad)
+        const isTouchOnly = window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(hover: hover)').matches;
 
-        // Skip Lenis on mobile/touch to allow native momentum scrolling
-        if (isMobile || isTouch) {
-            console.log('[useAnimations] Disabling smooth scroll (Lenis) for mobile/touch device');
+        // Skip Lenis on mobile/touch only to allow native momentum scrolling
+        if (isMobile || isTouchOnly) {
+            console.log('[useAnimations] Disabling smooth scroll (Lenis) for mobile/touch-only device');
             return;
         }
 
         // Initialize Lenis with optimized settings for desktop
         lenisRef.current = new Lenis({
-            duration: 1.2,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            lerp: 0.1, // Using lerp instead of duration for smoother trackpad handling
             smoothWheel: true,
-            wheelMultiplier: 1,
+            wheelMultiplier: 1.1, // Slightly increased for better responsiveness
             touchMultiplier: 2,
             infinite: false,
             autoResize: true,
         });
+
 
         // Connect Lenis with GSAP ScrollTrigger
         lenisRef.current.on('scroll', ScrollTrigger.update);

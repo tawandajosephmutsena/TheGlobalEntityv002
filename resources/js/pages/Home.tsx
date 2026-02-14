@@ -4,7 +4,7 @@ import { SeoHead } from '@/components/SeoHead';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 import { SharedData } from '@/types';
 import { HomePageProps } from '@/types/page-props';
-import { usePage, Link } from '@inertiajs/react';
+import { usePage, Link, Deferred } from '@inertiajs/react';
 import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -41,10 +41,17 @@ export default function Home() {
                     ctaText="Learn More"
                     ctaHref="/about"
                 />
-                <StatsSection stats={defaultStats} />
+                
+                <Deferred data="stats" fallback={<div className="h-40 bg-muted/20 animate-pulse rounded-3xl mx-4 my-8" />}>
+                    <StatsSection stats={defaultStats} />
+                </Deferred>
+
                 <ServicesSection services={featuredServices} />
                 <FeaturedProjects projects={featuredProjects} />
-                <RecentInsights insights={recentInsights} />
+
+                <Deferred data="recentInsights" fallback={<div className="h-96 bg-muted/10 animate-pulse rounded-3xl mx-4 my-8" />}>
+                    <RecentInsights insights={recentInsights} />
+                </Deferred>
                 <section className="bg-white dark:bg-[#0a0a0a] py-40 relative overflow-hidden">
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-agency-primary/10 to-transparent"></div>
                     <div className="mx-auto max-w-7xl px-4 flex flex-col items-center text-center relative z-10">
@@ -79,12 +86,14 @@ export default function Home() {
             
             {structuredData && <StructuredData data={structuredData} />}
 
-            <BlockRenderer 
-                blocks={blocks}
-                featuredServices={featuredServices}
-                featuredProjects={featuredProjects}
-                recentInsights={recentInsights}
-            />
+            <Deferred data={["recentInsights", "stats"]} fallback={<div className="min-h-screen animate-pulse bg-muted/5 rounded-3xl mx-4 my-8" />}>
+                <BlockRenderer 
+                    blocks={blocks}
+                    featuredServices={featuredServices}
+                    featuredProjects={featuredProjects}
+                    recentInsights={recentInsights}
+                />
+            </Deferred>
         </MainLayout>
     );
 }

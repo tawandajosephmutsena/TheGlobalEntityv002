@@ -31,26 +31,21 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        // Fetch recent insights with eager loading for author and category
-        $recentInsights = Insight::where('is_published', true)
-            ->with(['author', 'category']) // These relationships exist
-            ->latest('published_at')
-            ->take(3)
-            ->get();
-
-        $stats = [
-            'projects_completed' => PortfolioItem::where('is_published', true)->count(),
-            'services_offered' => Service::where('is_published', true)->count(),
-            'insights_published' => Insight::where('is_published', true)->count(),
-            'years_experience' => 5,
-        ];
-
         return Inertia::render('Home', [
             'page' => $homePage,
             'featuredProjects' => $featuredProjects,
             'featuredServices' => $featuredServices,
-            'recentInsights' => $recentInsights,
-            'stats' => $stats,
+            'recentInsights' => Inertia::defer(fn () => Insight::where('is_published', true)
+                ->with(['author', 'category'])
+                ->latest('published_at')
+                ->take(3)
+                ->get()),
+            'stats' => Inertia::defer(fn () => [
+                'projects_completed' => PortfolioItem::where('is_published', true)->count(),
+                'services_offered' => Service::where('is_published', true)->count(),
+                'insights_published' => Insight::where('is_published', true)->count(),
+                'years_experience' => 5,
+            ]),
             'canRegister' => \Laravel\Fortify\Features::enabled(\Laravel\Fortify\Features::registration()),
         ]);
     }

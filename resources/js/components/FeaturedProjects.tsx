@@ -15,12 +15,21 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+import { OptimizedImage } from '@/components/OptimizedImage';
+
+interface ImageConversions {
+    sizes?: Record<string, string>;
+    webp_sizes?: Record<string, string>;
+    placeholder?: string;
+}
+
 interface ProjectItem {
     id: number;
     title: string;
     slug: string;
     description: string;
     featured_image?: string | null;
+    conversions?: ImageConversions;
     client?: string | null;
     technologies?: string[] | null;
 }
@@ -186,10 +195,11 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                             {/* Image Container - Square Aspect Ratio */}
                             <div className="aspect-square rounded-[40px] overflow-hidden mb-8 relative shadow-2xl">
                                 {project.featured_image ? (
-                                    <img 
+                                    <OptimizedImage 
                                         src={project.featured_image} 
                                         alt={project.title}
-                                        loading="lazy"
+                                        conversions={project.conversions}
+                                        priority={index === 0}
                                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                     />
                                 ) : (

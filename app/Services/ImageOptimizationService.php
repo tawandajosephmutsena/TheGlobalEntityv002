@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MediaAsset;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -44,9 +45,84 @@ class ImageOptimizationService
         'hero' => 2 * 1024 * 1024,   // 2MB
     ];
 
-    public function __construct()
+    public function __construct(?ImageManager $manager = null)
     {
-        $this->imageManager = new ImageManager(new Driver());
+        $this->imageManager = $manager ?? new ImageManager(new Driver());
+    }
+
+    /**
+     * Optimize an existing MediaAsset
+     */
+    public function optimizeAsset(MediaAsset $asset): array
+    {
+        try {
+            if (!$asset->is_image || $asset->mime_type === 'image/svg+xml') {
+                return [];
+            }
+
+            $fullPath = Storage::disk('public')->path($asset->path);
+            $directory = dirname($asset->path);
+            $filename = pathinfo($asset->filename, PATHINFO_FILENAME);
+            $slug = Str::slug($filename);
+            $basePath = "{$directory}";
+
+            $results = [
+                'sizes' => [],
+                'webp_sizes' => [],
+            ];
+
+            // Load the image
+            $image = $this->imageManager->read($fullPath);
+            $originalWidth = $image->width();
+            $originalHeight = $image->height();
+
+            // Generate different sizes
+            foreach (self::SIZES as $sizeName => $dimensions) {
+                // Skip if original is smaller than target size
+                if ($originalWidth < $dimensions['width'] && $originalHeight < $dimensions['height']) {
+                    continue;
+                }
+
+                // Generate JPEG version
+                $jpegPath = $this->generateResizedImage(
+                    $image, 
+                    $basePath, 
+                    $sizeName, 
+                    $dimensions, 
+                    'jpeg'
+                );
+                if ($jpegPath) {
+                    $results['sizes'][$sizeName] = $jpegPath;
+                }
+
+                // Generate WebP version
+                $webpPath = $this->generateResizedImage(
+                    $image, 
+                    $basePath, 
+                    $sizeName, 
+                    $dimensions, 
+                    'webp'
+                );
+                if ($webpPath) {
+                    $results['webp_sizes'][$sizeName] = $webpPath;
+                }
+            }
+
+            // Generate lazy loading placeholder
+            $results['placeholder'] = $this->generatePlaceholder($image, $basePath);
+
+            // Update asset with conversions
+            $asset->update(['conversions' => $results]);
+
+            return $results;
+
+        } catch (\Exception $e) {
+            Log::error('Image asset optimization failed', [
+                'asset_id' => $asset->id,
+                'error' => $e->getMessage(),
+            ]);
+            return [];
+        }
     }
 
     /**

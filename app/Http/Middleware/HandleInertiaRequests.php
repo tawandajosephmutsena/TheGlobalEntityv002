@@ -170,6 +170,13 @@ class HandleInertiaRequests extends Middleware
                 'contentRating' => config('seo.ai_optimization.content_rating', 'safe'),
                 'llmsTxtUrl' => url('/llms.txt'),
             ],
+            'seo' => [
+                'site_name' => $settings['site_name'] ?? 'Ottomate',
+                'default_description' => $settings['site_description'] ?? 'High-Performance Website Platform',
+                'site_url' => config('app.url'),
+                'default_og_image' => ($settings['site_logo'] ?? null) ? asset($settings['site_logo']) : asset('logo.svg'),
+                'twitter_handle' => $settings['twitter_handle'] ?? '@ottomate',
+            ],
             'nonce' => \Illuminate\Support\Facades\Vite::cspNonce(),
             'themePresets' => $themePresets,
             'settings' => $groupedSettings,

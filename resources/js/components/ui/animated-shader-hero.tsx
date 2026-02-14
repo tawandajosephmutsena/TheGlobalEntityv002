@@ -444,7 +444,7 @@ const AnimatedShaderHero: React.FC<HeroProps> = ({
     <div className={cn("relative w-full h-screen overflow-hidden bg-black font-sans", className)}>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full object-contain touch-none bg-black"
+        className="absolute inset-0 w-full h-full object-contain bg-black"
       />
       
       {/* Hero Content Overlay */}

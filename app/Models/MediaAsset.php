@@ -22,12 +22,14 @@ class MediaAsset extends Model
         'folder',
         'tags',
         'seo_metadata',
+        'conversions',
     ];
 
     protected $casts = [
         'tags' => 'array',
         'size' => 'integer',
         'seo_metadata' => 'array',
+        'conversions' => 'array',
     ];
 
     protected $appends = [

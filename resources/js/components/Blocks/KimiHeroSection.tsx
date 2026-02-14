@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React from 'react';
+
 import { ArrowRight } from 'lucide-react';
 
 export interface KimiHeroProps {
@@ -38,30 +39,10 @@ export default function KimiHeroSection({
     scrollSpeed = 30,
 }: KimiHeroProps) {
     const carouselImages = images && images.length > 0 ? images : DEFAULT_IMAGES;
-    const allImages = [...carouselImages, ...carouselImages, ...carouselImages];
+    // Use 2 sets for CSS marquee (-50% transform)
+    const allImages = [...carouselImages, ...carouselImages];
 
-    const trackRef = useRef<HTMLDivElement>(null);
-    const animationRef = useRef<number>(0);
-    const positionRef = useRef<number>(0);
-
-    const animate = useCallback(() => {
-        if (!trackRef.current) return;
-        const speed = 1.5 * (30 / scrollSpeed);
-        positionRef.current -= speed;
-        const singleSetWidth = trackRef.current.scrollWidth / 3;
-        if (Math.abs(positionRef.current) >= singleSetWidth) {
-            positionRef.current += singleSetWidth;
-        }
-        trackRef.current.style.transform = `translateX(${positionRef.current}px)`;
-        animationRef.current = requestAnimationFrame(animate);
-    }, [scrollSpeed]);
-
-    useEffect(() => {
-        animationRef.current = requestAnimationFrame(animate);
-        return () => {
-            if (animationRef.current) cancelAnimationFrame(animationRef.current);
-        };
-    }, [animate]);
+    const duration = (scrollSpeed || 30) * 2; // Adjust duration based on scrollSpeed prop
 
     // Use theme CSS variable or fallback to provided prop or default
     const sectionBg = backgroundColor || 'var(--background)';
@@ -141,10 +122,14 @@ export default function KimiHeroSection({
                 {/* Carousel Container */}
                 <div className="kimi-carousel-container relative w-full overflow-hidden">
                     <div
-                        ref={trackRef}
-                        className="flex gap-6 sm:gap-8 lg:gap-10"
-                        style={{ width: 'max-content', willChange: 'transform' }}
+                        className="flex gap-6 sm:gap-8 lg:gap-10 animate-marquee"
+                        style={{ 
+                            width: 'max-content',
+                            animation: `marquee ${duration}s linear infinite`,
+                            willChange: 'transform'
+                        }}
                     >
+
                         {allImages.map((src, index) => {
                             const position = index % carouselImages.length;
                             const centerIndex = carouselImages.length / 2;
