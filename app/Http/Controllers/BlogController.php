@@ -68,6 +68,29 @@ class BlogController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
+        // Load top-level approved comments with nested replies, users, and reactions
+        $comments = $insight->comments()
+            ->approved()
+            ->topLevel()
+            ->with(['user:id,name,avatar', 'replies.user:id,name,avatar', 'replies.reactions', 'reactions'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Load reaction counts for the insight
+        $reactionCounts = $insight->reactions()
+            ->selectRaw('type, count(*) as count')
+            ->groupBy('type')
+            ->pluck('count', 'type')
+            ->toArray();
+
+        // Get the current user's reaction on the insight (if logged in)
+        $userReaction = null;
+        if (auth()->check()) {
+            $userReaction = $insight->reactions()
+                ->where('user_id', auth()->id())
+                ->value('type');
+        }
+
         $relatedInsights = Insight::published()
             ->where('id', '!=', $insight->id)
             ->where('category_id', $insight->category_id)
@@ -76,6 +99,9 @@ class BlogController extends Controller
 
         return Inertia::render('Blog/Show', [
             'insight' => $insight,
+            'comments' => $comments,
+            'reactionCounts' => $reactionCounts,
+            'userReaction' => $userReaction,
             'relatedInsights' => $relatedInsights,
         ]);
     }

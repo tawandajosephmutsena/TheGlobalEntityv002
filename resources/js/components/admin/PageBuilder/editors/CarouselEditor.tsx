@@ -20,22 +20,15 @@ interface CarouselEditorProps {
         feedSource?: 'manual' | 'services' | 'portfolio' | 'insights';
         maxItems?: number;
         slides: Slide[];
-        speed?: number;
-        itemsToDisplay?: number;
-        gap?: number;
-        height?: number;
     };
     onUpdate: (content: CarouselEditorProps['content']) => void;
 }
 
 export default function CarouselEditor({ content, onUpdate }: CarouselEditorProps) {
+    if (!content) return null;
     const slides = content.slides || [];
     const feedSource = content.feedSource || 'manual';
     const maxItems = content.maxItems || 6;
-    const speed = content.speed || 20;
-    const itemsToDisplay = content.itemsToDisplay || 4;
-    const gap = content.gap ?? 8;
-    const height = content.height || 250;
 
     const addSlide = () => {
         onUpdate({
@@ -103,66 +96,6 @@ export default function CarouselEditor({ content, onUpdate }: CarouselEditorProp
                 )}
             </div>
 
-            {/* Slider Settings */}
-            <div className="grid grid-cols-2 gap-6 p-6 bg-muted/30 rounded-2xl border">
-                <div className="space-y-3">
-                    <Label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        <Plus className="h-3 w-3" /> Scroll Speed (Slow to Fast)
-                    </Label>
-                    <div className="flex gap-4 items-center">
-                        <Input 
-                            type="range" 
-                            min={1} 
-                            max={90}
-                            value={speed}
-                            onChange={(e) => onUpdate({ ...content, speed: parseInt(e.target.value) })}
-                            className="bg-background flex-1"
-                        />
-                        <span className="text-xs font-mono w-8">{speed}</span>
-                    </div>
-                </div>
-
-                <div className="space-y-3">
-                    <Label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        <Layers className="h-3 w-3" /> Items to Display
-                    </Label>
-                    <Input 
-                        type="number" 
-                        min={1} 
-                        max={10}
-                        value={itemsToDisplay}
-                        onChange={(e) => onUpdate({ ...content, itemsToDisplay: parseInt(e.target.value) })}
-                        className="bg-background"
-                    />
-                </div>
-                <div className="space-y-3">
-                    <Label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        <Layers className="h-3 w-3" /> Item Gap (px)
-                    </Label>
-                    <Input 
-                        type="number" 
-                        min={0} 
-                        max={100}
-                        value={gap}
-                        onChange={(e) => onUpdate({ ...content, gap: parseInt(e.target.value) })}
-                        className="bg-background"
-                    />
-                </div>
-
-                <div className="space-y-3">
-                    <Label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        <Plus className="h-3 w-3" /> Slider Height (px)
-                    </Label>
-                    <Input 
-                        type="number" 
-                        min={50} 
-                        max={1000}
-                        value={height}
-                        onChange={(e) => onUpdate({ ...content, height: parseInt(e.target.value) })}
-                        className="bg-background"
-                    />
-                </div>
-            </div>
 
             {feedSource === 'manual' ? (
                 <div className="space-y-6">

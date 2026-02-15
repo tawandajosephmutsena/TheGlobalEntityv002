@@ -1995,18 +1995,19 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             const dynamicBlock = blockRegistry.get(blockAny.type);
             if (dynamicBlock && dynamicBlock.editor) {
                 const Editor = dynamicBlock.editor as React.ComponentType<any>;
-                // Registry editors expect { block, onUpdate } where onUpdate receives
-                // the full updated block. We adapt onUpdate to extract just the content.
-                const handleRegistryUpdate = (updatedBlock: any) => {
-                    if (updatedBlock && updatedBlock.content) {
-                        // Editor returned a full block object — extract content
-                        onUpdate(updatedBlock.content);
+                // Adapter: some editors (KimiHero, ScrollAnimation) call onUpdate
+                // with full block objects { ...block, content: {...} }, while others
+                // (Carousel) pass just the content. Detect and normalize.
+                const handleRegistryUpdate = (updated: any) => {
+                    if (updated && typeof updated === 'object' && updated.content && updated.type) {
+                        // Full block object — extract content
+                        onUpdate(updated.content);
                     } else {
-                        // Editor returned content directly — pass through
-                        onUpdate(updatedBlock);
+                        // Content object — pass through
+                        onUpdate(updated);
                     }
                 };
-                return <Editor block={blockAny} onUpdate={handleRegistryUpdate} />;
+                return <Editor block={blockAny} content={blockAny.content} onUpdate={handleRegistryUpdate} />;
             }
             return (
                 <div className="space-y-6">

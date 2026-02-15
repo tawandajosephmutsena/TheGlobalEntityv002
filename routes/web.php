@@ -22,6 +22,13 @@ Route::get('/team', [App\Http\Controllers\TeamController::class, 'index'])->name
 Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 
+// Comments & Reactions (requires authentication)
+Route::middleware('auth')->group(function () {
+    Route::post('/blog/{insight}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/reactions/toggle', [App\Http\Controllers\ReactionController::class, 'toggle'])->name('reactions.toggle');
+});
+
 Route::get('/documentation', function () {
     return Inertia::render('Documentation');
 })->name('documentation');

@@ -200,6 +200,32 @@ export interface Insight {
     category?: Category;
 }
 
+export type ReactionType = 'like' | 'love' | 'celebrate' | 'insightful';
+
+export interface Reaction {
+    id: number;
+    user_id: number;
+    type: ReactionType;
+    reactable_id: number;
+    reactable_type: string;
+    created_at: string;
+    user?: User;
+}
+
+export interface Comment {
+    id: number;
+    user_id: number;
+    insight_id: number;
+    parent_id: number | null;
+    body: string;
+    is_approved: boolean;
+    created_at: string;
+    updated_at: string;
+    user?: User;
+    replies?: Comment[];
+    reactions?: Reaction[];
+}
+
 export interface Category {
     id: number;
     name: string;

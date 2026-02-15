@@ -1,5 +1,7 @@
 "use client";
-import React, { useEffect, useRef, useState, useId } from "react";
+import { IconArrowNarrowRight } from "@tabler/icons-react";
+import { useState, useRef, useId, useEffect } from "react";
+import { cn } from "@/lib/utils";
 
 interface SlideData {
   title: string;
@@ -8,126 +10,219 @@ interface SlideData {
   link?: string;
 }
 
-const Slide = ({ slide, width, height, gap }: { slide: SlideData, width: number | string, height: number | string, gap: number }) => {
-  const { src, title } = slide;
+interface SlideProps {
+  slide: SlideData;
+  index: number;
+  current: number;
+  handleSlideClick: (index: number) => void;
+}
+
+const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
+  const slideRef = useRef<HTMLDivElement>(null);
+
+  const xRef = useRef(0);
+  const yRef = useRef(0);
+  const frameRef = useRef<number>(0);
+
+  useEffect(() => {
+    const animate = () => {
+      if (!slideRef.current) return;
+
+      const x = xRef.current;
+      const y = yRef.current;
+
+      slideRef.current.style.setProperty("--x", `${x}px`);
+      slideRef.current.style.setProperty("--y", `${y}px`);
+
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const el = slideRef.current;
+    if (!el) return;
+
+    const r = el.getBoundingClientRect();
+    xRef.current = event.clientX - (r.left + Math.floor(r.width / 2));
+    yRef.current = event.clientY - (r.top + Math.floor(r.height / 2));
+  };
+
+  const handleMouseLeave = () => {
+    xRef.current = 0;
+    yRef.current = 0;
+  };
+
+  const imageLoaded = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    event.currentTarget.style.opacity = "1";
+  };
+
+  if (!slide) return null;
+
+  const { src, button, title, link } = slide;
 
   return (
-    <div
-      className="flex flex-col items-center justify-center relative flex-shrink-0"
-      style={{ width: width, paddingRight: gap }}
-    >
-      <div 
-        className="relative w-full overflow-hidden bg-muted/5 rounded-xl"
-        style={{ height: height }}
+    <div className="[perspective:1200px] [transform-style:preserve-3d]">
+      <div
+        ref={slideRef}
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 "
+        onClick={() => handleSlideClick(index)}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          transform:
+            current !== index
+              ? "scale(0.98) rotateX(8deg)"
+              : "scale(1) rotateX(0deg)",
+          transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+          transformOrigin: "bottom",
+        }}
       >
-        <img
-          className="w-full h-full object-contain p-4 transition-opacity duration-600 ease-in-out"
-          alt={title}
-          src={src}
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-black/5 opacity-0 hover:opacity-100 transition-opacity duration-300" />
-      </div>
+        <div
+          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out"
+          style={{
+            transform:
+              current === index
+                ? "translate3d(calc(var(--x) / 30), calc(var(--y) / 30), 0)"
+                : "none",
+          }}
+        >
+          <img
+            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            style={{
+              opacity: current === index ? 1 : 0.5,
+            }}
+            alt={title}
+            src={src}
+            onLoad={imageLoaded}
+            loading="eager"
+            decoding="sync"
+          />
+          {current === index && (
+            <div className="absolute inset-0 bg-black/30 transition-all duration-1000" />
+          )}
+        </div>
 
-      <article className="mt-4 text-center w-full px-2">
-        <h3 className="text-foreground text-sm font-bold uppercase tracking-wider truncate mb-2">
-          {title}
-        </h3>
-        {slide.button && (
-            <a 
-              href={slide.link || "#"} 
-              className="inline-block text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
-            >
-                {slide.button}
-            </a>
-        )}
-      </article>
+        <article
+          className={cn(
+            "relative p-[4vmin] transition-opacity duration-1000 ease-in-out",
+            current === index ? "opacity-100 visible" : "opacity-0 invisible"
+          )}
+        >
+          <h2 className="text-lg md:text-2xl lg:text-4xl font-semibold  relative">
+            {title}
+          </h2>
+          <div className="flex justify-center">
+            {link ? (
+                <a href={link} className="mt-6  px-4 py-2 w-fit mx-auto sm:text-sm text-black bg-white h-12 border border-transparent text-xs flex justify-center items-center rounded-2xl hover:shadow-lg transition duration-200 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+                  {button}
+                </a>
+            ) : (
+                <button className="mt-6  px-4 py-2 w-fit mx-auto sm:text-sm text-black bg-white h-12 border border-transparent text-xs flex justify-center items-center rounded-2xl hover:shadow-lg transition duration-200 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+                  {button}
+                </button>
+            )}
+          </div>
+        </article>
+      </div>
     </div>
   );
 };
 
-import { animate, useMotionValue } from "framer-motion";
+interface CarouselControlProps {
+  type: string;
+  title: string;
+  handleClick: () => void;
+}
+
+const CarouselControl = ({
+  type,
+  title,
+  handleClick,
+}: CarouselControlProps) => {
+  return (
+    <button
+      className={cn(
+        "w-10 h-10 flex items-center mx-2 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200",
+        type === "previous" ? "rotate-180" : ""
+      )}
+      title={title}
+      onClick={handleClick}
+    >
+      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200" />
+    </button>
+  );
+};
 
 interface CarouselProps {
   slides: SlideData[];
-  speed?: number;
-  gap?: number;
-  itemsToDisplay?: number;
-  height?: number | string;
 }
 
-export function Carousel({ slides, speed = 20, gap = 8, itemsToDisplay = 4, height = 250 }: CarouselProps) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const translation = useMotionValue(0);
-  const [contentSize, setContentSize] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const id = useId();
+export function Carousel({ slides }: CarouselProps) {
+  const [current, setCurrent] = useState(0);
 
-  useEffect(() => {
-    let controls: { stop: () => void } | undefined;
-    const element = scrollerRef.current;
-    if (!element) return;
+  const handlePreviousClick = () => {
+    const previous = current - 1;
+    setCurrent(previous < 0 ? slides.length - 1 : previous);
+  };
 
-    const measureContent = () => {
-        setContentSize(element.scrollWidth / 2);
-    };
+  const handleNextClick = () => {
+    const next = current + 1;
+    setCurrent(next === slides.length ? 0 : next);
+  };
 
-    measureContent();
-    const observer = new ResizeObserver(measureContent);
-    observer.observe(element);
-
-    const duration = (100 - speed) / 2; // Higher speed = lower duration
-
-    if (contentSize > 0) {
-        controls = animate(translation, [0, -contentSize], {
-            ease: "linear",
-            duration: isHovered ? duration * 2 : duration,
-            repeat: Infinity,
-            repeatType: "loop",
-            repeatDelay: 0,
-            onUpdate: (latest) => {
-                element.style.transform = `translateX(${latest}px)`;
-            },
-        });
+  const handleSlideClick = (index: number) => {
+    if (current !== index) {
+      setCurrent(index);
     }
+  };
 
-    return () => {
-        controls?.stop();
-        observer.disconnect();
-    };
-  }, [translation, speed, contentSize, isHovered]);
+  const id = useId();
 
   if (!slides || slides.length === 0) return null;
 
-  // Duplicate slides for infinite scroll
-  const allSlides = [...slides, ...slides];
-  
-  // Calculate slide width based on itemsToDisplay
-  // We use a CSS variable for the width to handle responsive calculations if needed,
-  // but for now we'll pass it as a percentage or pixel value.
-  const slideWidth = `calc((100% - ${(itemsToDisplay - 1) * gap}px) / ${itemsToDisplay})`;
-
   return (
-    <div 
-        className="relative w-full overflow-hidden py-12" 
-        aria-labelledby={`carousel-heading-${id}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+    <div
+      className="relative w-[70vmin] h-[70vmin] mx-auto"
+      aria-labelledby={`carousel-heading-${id}`}
     >
-      <div 
-        className="flex w-max"
-        ref={scrollerRef}
-        style={{ gap: 0 }} // Gap is handled inside Slide via padding for precise width calculation
+      <div
+        className="absolute flex mx-[-4vmin]"
+        style={{
+          transform: `translateX(calc(-${current} * (70vmin + 8vmin)))`,
+          transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
       >
-        {allSlides.map((slide, index) => (
+        {slides.map((slide, index) => (
           <Slide
             key={index}
             slide={slide}
-            width={slideWidth}
-            height={height}
-            gap={gap}
+            index={index}
+            current={current}
+            handleSlideClick={handleSlideClick}
           />
         ))}
+      </div>
+
+      <div className="absolute flex justify-center w-full top-[calc(100%+1rem)] z-20">
+        <CarouselControl
+          type="previous"
+          title="Go to previous slide"
+          handleClick={handlePreviousClick}
+        />
+
+        <CarouselControl
+          type="next"
+          title="Go to next slide"
+          handleClick={handleNextClick}
+        />
       </div>
     </div>
   );

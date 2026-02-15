@@ -1,16 +1,21 @@
 import AnimatedSection from '@/components/AnimatedSection';
+import CommentSection from '@/components/Comments/CommentSection';
+import ReactionButton from '@/components/Reactions/ReactionButton';
 import MainLayout from '@/layouts/MainLayout';
-import { Insight } from '@/types';
+import { Comment, Insight, ReactionType } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react';
 import React from 'react';
 
 interface Props {
     insight: Insight;
+    comments: Comment[];
+    reactionCounts: Record<string, number>;
+    userReaction: ReactionType | null;
     relatedInsights?: Insight[];
 }
 
-export default function BlogShow({ insight, relatedInsights = [] }: Props) {
+export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [] }: Props) {
     return (
         <MainLayout title={`${insight.title} - Avant-Garde Insights`}>
             <Head title={insight.title}>
@@ -111,9 +116,19 @@ export default function BlogShow({ insight, relatedInsights = [] }: Props) {
                                 )}
                             </div>
 
+                            {/* Reactions on Post */}
+                            <div className="mt-16 pt-10 border-t border-agency-primary/5 dark:border-white/5">
+                                <ReactionButton
+                                    reactableId={insight.id}
+                                    reactableType="insight"
+                                    counts={reactionCounts}
+                                    userReaction={userReaction}
+                                />
+                            </div>
+
                             {/* Tags */}
                             {insight.tags && insight.tags.length > 0 && (
-                                <div className="mt-20 pt-10 border-t border-agency-primary/5 dark:border-white/5">
+                                <div className="mt-12 pt-10 border-t border-agency-primary/5 dark:border-white/5">
                                     <div className="flex flex-wrap gap-3">
                                         {insight.tags.map(tag => (
                                             <span key={tag} className="px-5 py-2 rounded-full bg-agency-secondary dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest">
@@ -143,6 +158,8 @@ export default function BlogShow({ insight, relatedInsights = [] }: Props) {
                                     </p>
                                 </div>
                             </div>
+                            {/* Comments Section */}
+                            <CommentSection insightSlug={insight.slug} insightId={insight.id} comments={comments} />
                         </div>
                     </div>
                 </div>

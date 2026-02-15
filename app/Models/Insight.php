@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Builder;
 use App\Traits\HasVersions;
 use App\Traits\HasSeoOptimization;
@@ -61,6 +63,22 @@ class Insight extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class)->select(['id', 'name', 'slug']);
+    }
+
+    /**
+     * Comments on this insight
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Reactions on this insight (polymorphic)
+     */
+    public function reactions(): MorphMany
+    {
+        return $this->morphMany(Reaction::class, 'reactable');
     }
 
     /**
