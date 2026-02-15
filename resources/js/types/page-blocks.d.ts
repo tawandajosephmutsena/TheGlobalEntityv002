@@ -271,7 +271,19 @@ export type PageBlock =
     | TeamHeroBlock
     | TeamGridBlock
     | CultureBentoBlock
-    | TeamJoinBlock;
+    | TeamJoinBlock
+    | ScrollAnimationBlock;
+
+
+export interface ScrollAnimationBlock extends BaseBlock {
+    type: 'scroll_animation';
+    content: {
+        title?: string;
+        highlightTitle?: string;
+        image?: string;
+        highlightColor?: string;
+    };
+}
 
 
 export interface CreativeGridBlock extends BaseBlock {

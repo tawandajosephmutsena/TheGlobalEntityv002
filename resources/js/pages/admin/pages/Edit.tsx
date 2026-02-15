@@ -340,6 +340,12 @@ const getDefaultContentForType = (type: BlockType) => {
                 }
             ]
         };
+        case 'scroll_animation': return {
+            title: 'Unleash the power of',
+            highlightTitle: 'Scroll Animations',
+            image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=2671&auto=format&fit=crop',
+            highlightColor: '#4F46E5', // Indigo-600 defaults
+        };
         case 'kimi_hero': return {
             title: 'Streamline Your Team,',
             subtitle: 'Supercharge Your Workflow',
