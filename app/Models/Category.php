@@ -22,6 +22,16 @@ class Category extends Model
         return $this->hasMany(Insight::class);
     }
 
+    public function services(): HasMany
+    {
+        return $this->hasMany(Service::class);
+    }
+
+    public function portfolioItems(): HasMany
+    {
+        return $this->hasMany(PortfolioItem::class);
+    }
+
     public function scopeByType($query, $type)
     {
         return $query->where('type', $type);

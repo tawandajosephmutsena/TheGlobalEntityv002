@@ -29,7 +29,9 @@ import {
     Shield,
     Palette,
     Package,
+    Tags,
 } from 'lucide-react';
+
 import { usePermissions } from '@/hooks/use-permissions';
 
 import AppLogo from '@/components/app-logo';
@@ -83,7 +85,13 @@ const contentNavItems = [
         href: '/admin/contact-inquiries',
         icon: MessageSquare,
     },
+    {
+        title: 'Categories',
+        href: '/admin/categories',
+        icon: Tags,
+    },
 ];
+
 
 const systemNavItems = [
     {

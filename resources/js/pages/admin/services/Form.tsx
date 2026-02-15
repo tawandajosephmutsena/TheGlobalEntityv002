@@ -9,9 +9,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Service } from '@/types';
+import { Service, Category } from '@/types';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
+
 import { Save, ArrowLeft, ImagePlus, Palette, Layout, Code, Cpu, Shield, Rocket, Globe, Zap } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
@@ -27,7 +28,9 @@ import { toast } from 'sonner';
 
 interface Props {
     service?: Service;
+    categories: Category[];
 }
+
 
 interface ServiceFormData {
     title: string;
@@ -39,7 +42,9 @@ interface ServiceFormData {
     is_published: boolean;
     is_featured: boolean;
     sort_order: number;
+    category_id: string;
     content: {
+
         body: string;
         scope: string;
         features?: string[];
@@ -58,7 +63,8 @@ const ICONS = [
     { value: 'zap', label: 'Zap', icon: Zap },
 ];
 
-export default function ServiceForm({ service }: Props) {
+export default function ServiceForm({ service, categories }: Props) {
+
     const { data, setData, post, put, processing, errors } = useForm<ServiceFormData>({
         title: service?.title || '',
         slug: service?.slug || '',
@@ -69,7 +75,9 @@ export default function ServiceForm({ service }: Props) {
         is_published: service?.is_published ?? false,
         is_featured: service?.is_featured ?? false,
         sort_order: service?.sort_order ?? 0,
+        category_id: service?.category_id?.toString() || '',
         content: {
+
             body: (service?.content as Record<string, string>)?.body || '',
             scope: (service?.content as Record<string, string>)?.scope || '',
             features: (service?.content as Record<string, string[]>)?.features || [],
@@ -148,8 +156,27 @@ export default function ServiceForm({ service }: Props) {
                                     placeholder="A brief overview of the service..."
                                 />
                             </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="category">Category</Label>
+                                <Select value={data.category_id} onValueChange={(val) => setData('category_id', val)}>
+                                    <SelectTrigger id="category">
+                                        <SelectValue placeholder="Select a category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="">Uncategorized</SelectItem>
+                                        {categories.map((cat) => (
+                                            <SelectItem key={cat.id} value={cat.id.toString()}>
+                                                {cat.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
+                            </div>
                         </CardContent>
                     </Card>
+
 
                     <Card>
                         <CardHeader>

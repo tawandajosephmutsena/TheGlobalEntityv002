@@ -10,21 +10,33 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { PortfolioItem, MediaAsset } from '@/types';
+import { PortfolioItem, MediaAsset, Category } from '@/types';
 import { useForm } from '@inertiajs/react';
 import React from 'react';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ImagePlus, X, Plus, Save, ArrowLeft, GripVertical } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import MediaLibrary from '@/components/admin/MediaLibrary';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { toast } from 'sonner';
+
 
 interface Props {
     portfolioItem?: PortfolioItem;
+    categories: Category[];
 }
 
-export default function PortfolioForm({ portfolioItem }: Props) {
+
+export default function PortfolioForm({ portfolioItem, categories }: Props) {
+
     const { data, setData, post, put, processing, errors } = useForm({
         title: portfolioItem?.title || '',
         slug: portfolioItem?.slug || '',
@@ -38,7 +50,9 @@ export default function PortfolioForm({ portfolioItem }: Props) {
         is_featured: portfolioItem?.is_featured ?? false,
         technologies: portfolioItem?.technologies || [],
         stats: portfolioItem?.stats || [],
+        category_id: portfolioItem?.category_id?.toString() || '',
         content: {
+
             overview: portfolioItem?.content?.overview || '',
             challenge: portfolioItem?.content?.challenge || '',
             solution: portfolioItem?.content?.solution || '',
@@ -150,8 +164,27 @@ export default function PortfolioForm({ portfolioItem }: Props) {
                                 />
                                 {errors.description && <p className="text-sm text-destructive">{errors.description}</p>}
                             </div>
+
+                            <div className="grid gap-2">
+                                <Label htmlFor="category">Category</Label>
+                                <Select value={data.category_id} onValueChange={(val) => setData('category_id', val)}>
+                                    <SelectTrigger id="category">
+                                        <SelectValue placeholder="Select a category" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="">Uncategorized</SelectItem>
+                                        {categories.map((cat) => (
+                                            <SelectItem key={cat.id} value={cat.id.toString()}>
+                                                {cat.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
+                            </div>
                         </CardContent>
                     </Card>
+
 
                     <Card>
                         <CardHeader>

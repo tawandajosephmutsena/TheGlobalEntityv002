@@ -27,7 +27,9 @@ class Service extends Model
         'is_featured',
         'is_published',
         'sort_order',
+        'category_id',
     ];
+
 
     protected $casts = [
         'content' => 'array',
@@ -96,6 +98,13 @@ class Service extends Model
               ->orWhere('description', 'LIKE', "%{$term}%");
         });
     }
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
 
     public function getRouteKeyName(): string
     {

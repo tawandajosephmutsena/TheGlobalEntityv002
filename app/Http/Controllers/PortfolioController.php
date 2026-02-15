@@ -20,17 +20,23 @@ class PortfolioController extends Controller
         $cacheKey = 'portfolio.index.' . $version . '.' . $page;
 
         $portfolioItems = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60, function () {
-            return PortfolioItem::published()
+            return PortfolioItem::with('category')
+                ->published()
                 ->ordered()
                 ->paginate(12);
         });
+
+        $categories = \App\Models\Category::where('type', 'portfolio')->get();
+
 
         $dynamicPage = Page::published()->where('slug', 'portfolio')->first();
 
         return Inertia::render('Portfolio', [
             'portfolioItems' => $portfolioItems,
+            'categories' => $categories,
             'page' => $dynamicPage,
         ]);
+
     }
 
     /**
@@ -38,9 +44,11 @@ class PortfolioController extends Controller
      */
     public function show(string $slug): Response
     {
-        $portfolioItem = PortfolioItem::published()
+        $portfolioItem = PortfolioItem::with('category')
+            ->published()
             ->where('slug', $slug)
             ->firstOrFail();
+
 
         return Inertia::render('Portfolio/Show', [
             'portfolioItem' => $portfolioItem,

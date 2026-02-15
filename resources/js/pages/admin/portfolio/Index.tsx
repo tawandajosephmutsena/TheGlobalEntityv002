@@ -1,19 +1,24 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import { AdvancedDataTable } from '@/components/admin/AdvancedDataTable';
-import { PortfolioItem, PaginatedData } from '@/types';
+import { PortfolioItem, PaginatedData, Category } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, Eye, Edit, Trash } from 'lucide-react';
 import { router } from '@inertiajs/react';
 import React from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
 
 interface Props {
     portfolioItems: PaginatedData<PortfolioItem>;
+    categories: Category[];
     filters: {
         search?: string;
+        category?: string;
         status?: string;
     };
+
     stats: {
         total: number;
         published: number;
@@ -21,7 +26,9 @@ interface Props {
     };
 }
 
-export default function Index({ portfolioItems }: Props) {
+export default function Index({ portfolioItems, categories, filters }: Props) {
+
+
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Portfolio', href: '/admin/portfolio' },
@@ -49,7 +56,16 @@ export default function Index({ portfolioItems }: Props) {
             ),
         },
         {
+            header: 'Category',
+            cell: (item: PortfolioItem) => (
+                <Badge variant="outline" className="text-[10px] capitalize">
+                    {item.category?.name || 'Uncategorized'}
+                </Badge>
+            ),
+        },
+        {
             header: 'Status',
+
             cell: (item: PortfolioItem) => (
                 <div className="flex gap-2">
                     <Badge variant={item.is_published ? 'default' : 'secondary'}>
@@ -101,12 +117,18 @@ export default function Index({ portfolioItems }: Props) {
             </div>
             <CardHeader className="p-4 space-y-1">
                 <div className="flex justify-between items-start">
-                    <h3 className="font-bold truncate text-sm" title={item.title}>{item.title}</h3>
+                    <div className="space-y-1 overflow-hidden">
+                        <h3 className="font-bold truncate text-sm" title={item.title}>{item.title}</h3>
+                        <Badge variant="outline" className="text-[8px] h-3.5 px-1 capitalize">
+                            {item.category?.name || 'Uncategorized'}
+                        </Badge>
+                    </div>
                     <Badge variant={item.is_published ? 'default' : 'secondary'} className="text-[10px] px-1 h-4">
                         {item.is_published ? 'PUB' : 'DFT'}
                     </Badge>
                 </div>
                 <p className="text-xs text-muted-foreground truncate">{item.client || 'No Client'}</p>
+
             </CardHeader>
             <CardFooter className="p-4 pt-0 mt-auto flex justify-between items-center border-t text-xs pt-3">
                 <div className="flex gap-1 overflow-hidden">
@@ -138,6 +160,26 @@ export default function Index({ portfolioItems }: Props) {
                     </div>
                 </div>
 
+                <div className="flex items-center gap-4 bg-muted/20 p-4 rounded-xl">
+                    <div className="flex-1 max-w-sm">
+                        <Select 
+                            value={filters.category || 'all'} 
+                            onValueChange={(val) => router.get('/admin/portfolio', { ...filters, category: val === 'all' ? undefined : val }, { preserveState: true })}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Filter by category" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All Categories</SelectItem>
+                                {categories.map(cat => (
+                                    <SelectItem key={cat.id} value={cat.id.toString()}>{cat.name}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+
                 <AdvancedDataTable
                     data={portfolioItems.data}
                     columns={columns}
@@ -148,8 +190,9 @@ export default function Index({ portfolioItems }: Props) {
                     searchPlaceholder="Search projects..."
                     routeKey="slug"
                     baseUrl="/admin/portfolio"
-                    onSearch={(query) => router.get('/admin/portfolio', { search: query }, { preserveState: true })}
+                    onSearch={(query) => router.get('/admin/portfolio', { ...filters, search: query }, { preserveState: true })}
                 />
+
             </div>
         </AdminLayout>
     );

@@ -1,15 +1,18 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
-import { Service, Page } from '@/types';
-import { Link, Head } from '@inertiajs/react';
+import { Service, Page, Category } from '@/types';
+import { Link, Head, router } from '@inertiajs/react';
 import { ArrowRight, Code, Cpu, Layout, Palette, Shield, Rocket, Globe, Zap, LucideIcon } from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
+
 
 interface Props {
     services: Service[];
+    categories: Category[];
     page?: Page;
 }
+
 
 const iconMap: Record<string, LucideIcon> = {
     palette: Palette,
@@ -22,11 +25,18 @@ const iconMap: Record<string, LucideIcon> = {
     zap: Zap,
 };
 
-export default function Services({ services, page }: Props) {
+export default function Services({ services, categories, page }: Props) {
+    const [activeCategory, setActiveCategory] = useState<number | 'all'>('all');
+
+    const filteredServices = activeCategory === 'all' 
+        ? services 
+        : services.filter(s => s.category_id === activeCategory);
+
     const renderIcon = (iconName: string | null) => {
         const Icon = iconMap[iconName?.toLowerCase() || 'zap'] || Zap;
         return <Icon className="size-8 text-agency-accent group-hover:text-white dark:group-hover:text-agency-primary" />;
     };
+
 
     return (
         <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Services - Avant-Garde"}>
@@ -58,11 +68,44 @@ export default function Services({ services, page }: Props) {
                         </div>
                     </section>
 
+                    {/* Filter Bar */}
+                    <section className="bg-white dark:bg-[#0a0a0a] border-y border-agency-primary/5 dark:border-white/5 py-8 sticky top-[80px] z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80">
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                            <div className="flex flex-wrap justify-center gap-4">
+                                <button
+                                    onClick={() => setActiveCategory('all')}
+                                    className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                        activeCategory === 'all' 
+                                            ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
+                                            : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
+                                    }`}
+                                >
+                                    All
+                                </button>
+                                {categories.map((cat) => (
+                                    <button
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(cat.id)}
+                                        className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                            activeCategory === cat.id 
+                                                ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
+                                                : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
+                                        }`}
+                                    >
+                                        {cat.name}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+
                     {/* Out-of-the-box Services Grid */}
                     <section className="bg-white dark:bg-black/20 py-40">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-agency-primary/5 dark:bg-white/5 border border-agency-primary/5 dark:border-white/5 overflow-hidden rounded-[40px]">
-                                {services.map((service, i) => (
+                                {filteredServices.map((service, i) => (
+
                                     <div key={service.id} className="group relative bg-white dark:bg-agency-dark p-12 md:p-20 overflow-hidden min-h-[500px] flex flex-col justify-between transition-all duration-700 hover:bg-agency-primary dark:hover:bg-agency-accent">
                                         {/* Image Display */}
                                         {service.featured_image && (
@@ -73,11 +116,17 @@ export default function Services({ services, page }: Props) {
 
                                         <div className="relative z-10">
                                             <div className="flex items-center justify-between mb-8">
-                                                <div className="size-16 rounded-2xl bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                                                    {renderIcon(service.icon)}
+                                                <div className="flex items-center gap-4">
+                                                    <div className="size-16 rounded-2xl bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                                                        {renderIcon(service.icon)}
+                                                    </div>
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent group-hover:text-white/60">
+                                                        {service.category?.name || 'Service'}
+                                                    </span>
                                                 </div>
                                                 <span className="text-5xl font-black opacity-10 font-display group-hover:text-white dark:group-hover:text-agency-primary group-hover:opacity-30">0{i + 1}</span>
                                             </div>
+
                                             
                                             <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-agency-primary dark:text-white group-hover:text-white dark:group-hover:text-agency-primary mb-6 transition-all group-hover:translate-x-4">
                                                 {service.title}

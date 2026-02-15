@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Service;
+use App\Models\Category;
+
 use App\Http\Requests\Admin\ServiceRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -38,13 +40,21 @@ class ServiceController extends Controller
             }
         }
 
-        $services = $query->ordered()
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $services = $query->with('category')->ordered()
             ->paginate(15)
             ->withQueryString();
 
+        $categories = Category::where('type', 'service')->get(['id', 'name']);
+
         return Inertia::render('admin/services/Index', [
             'services' => $services,
-            'filters' => $request->only(['search', 'status']),
+            'categories' => $categories,
+            'filters' => $request->only(['search', 'status', 'category']),
+
             'stats' => [
                 'total' => Service::count(),
                 'published' => Service::published()->count(),
@@ -58,8 +68,12 @@ class ServiceController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('admin/services/Create');
+        $categories = Category::where('type', 'service')->get(['id', 'name']);
+        return Inertia::render('admin/services/Create', [
+            'categories' => $categories,
+        ]);
     }
+
 
     /**
      * Store a newly created service.
@@ -90,10 +104,13 @@ class ServiceController extends Controller
      */
     public function edit(Service $service): Response
     {
+        $categories = Category::where('type', 'service')->get(['id', 'name']);
         return Inertia::render('admin/services/Edit', [
             'service' => $service,
+            'categories' => $categories,
         ]);
     }
+
 
     /**
      * Update the specified service.

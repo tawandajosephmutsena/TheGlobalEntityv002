@@ -19,17 +19,23 @@ class ServiceController extends Controller
         $cacheKey = 'services.index.' . $version;
 
         $services = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60 * 24, function () {
-            return Service::published()
+            return Service::with('category')
+                ->published()
                 ->ordered()
                 ->get();
         });
+
+        $categories = \App\Models\Category::where('type', 'service')->get();
+
 
         $page = Page::published()->where('slug', 'services')->first();
         
         return Inertia::render('Services', [
             'services' => $services,
+            'categories' => $categories,
             'page' => $page,
         ]);
+
     }
 
     /**
@@ -37,9 +43,11 @@ class ServiceController extends Controller
      */
     public function show(string $slug): Response
     {
-        $service = Service::published()
+        $service = Service::with('category')
+            ->published()
             ->where('slug', $slug)
             ->firstOrFail();
+
 
         return Inertia::render('Services/Show', [
             'service' => $service,

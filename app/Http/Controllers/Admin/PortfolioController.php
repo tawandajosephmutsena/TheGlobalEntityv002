@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PortfolioItem;
+use App\Models\Category;
+
 use App\Http\Requests\Admin\PortfolioItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -39,13 +41,21 @@ class PortfolioController extends Controller
             }
         }
 
-        $portfolioItems = $query->ordered()
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $portfolioItems = $query->with('category')->ordered()
             ->paginate(15)
             ->withQueryString();
 
+        $categories = Category::where('type', 'portfolio')->get(['id', 'name']);
+
         return Inertia::render('admin/portfolio/Index', [
             'portfolioItems' => $portfolioItems,
-            'filters' => $request->only(['search', 'status']),
+            'categories' => $categories,
+            'filters' => $request->only(['search', 'status', 'category']),
+
             'stats' => [
                 'total' => PortfolioItem::count(),
                 'published' => PortfolioItem::published()->count(),
@@ -59,8 +69,12 @@ class PortfolioController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('admin/portfolio/Create');
+        $categories = Category::where('type', 'portfolio')->get(['id', 'name']);
+        return Inertia::render('admin/portfolio/Create', [
+            'categories' => $categories,
+        ]);
     }
+
 
     /**
      * Store a newly created portfolio item.
@@ -91,10 +105,13 @@ class PortfolioController extends Controller
      */
     public function edit(PortfolioItem $portfolio): Response
     {
+        $categories = Category::where('type', 'portfolio')->get(['id', 'name']);
         return Inertia::render('admin/portfolio/Edit', [
             'portfolioItem' => $portfolio,
+            'categories' => $categories,
         ]);
     }
+
 
     /**
      * Update the specified portfolio item.

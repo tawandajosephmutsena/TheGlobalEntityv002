@@ -154,9 +154,12 @@ export interface PortfolioItem {
     is_featured: boolean;
     is_published: boolean;
     sort_order: number;
+    category_id: number | null;
     created_at: string;
     updated_at: string;
+    category?: Category;
 }
+
 
 export interface Service {
     id: number;
@@ -170,9 +173,12 @@ export interface Service {
     is_featured: boolean;
     is_published: boolean;
     sort_order: number;
+    category_id: number | null;
     created_at: string;
     updated_at: string;
+    category?: Category;
 }
+
 
 export interface Insight {
     id: number;
@@ -199,7 +205,9 @@ export interface Category {
     name: string;
     slug: string;
     description: string | null;
+    type: 'insight' | 'service' | 'portfolio';
 }
+
 
 export interface TeamMember {
     id: number;

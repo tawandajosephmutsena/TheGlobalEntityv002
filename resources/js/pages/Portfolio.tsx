@@ -1,36 +1,27 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
-import { PortfolioItem, PaginatedData, Page } from '@/types';
+import { PortfolioItem, PaginatedData, Page, Category } from '@/types';
+
 import { Link, Head } from '@inertiajs/react';
 import React, { useState } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 
 interface Props {
     portfolioItems: PaginatedData<PortfolioItem>;
+    categories: Category[];
     page?: Page;
 }
 
-export default function Portfolio({ portfolioItems, page }: Props) {
+
+export default function Portfolio({ portfolioItems, categories, page }: Props) {
     const projects = portfolioItems.data;
     
-    // Extract unique technologies for dummy filtering or use categories if available
-    // For now, let's keep the category filtering logic but base it on technologies if categories aren't in the model
-    const categories = [
-        'All',
-        'Web Development',
-        'Mobile Development',
-        'UI/UX Design',
-        'Branding',
-    ];
+    const [activeCategory, setActiveCategory] = useState<number | 'All'>('All');
 
-    const [activeCategory, setActiveCategory] = useState('All');
-
-    // In a real scenario, categories would be a separate model or a field in PortfolioItem
-    // Since our model doesn't have a category_id yet in types, we'll just show all filtered by technology if needed
-    // but for now, we'll just show all projects from the backend
     const filteredProjects = activeCategory === 'All' 
         ? projects 
-        : projects.filter(p => p.technologies?.includes(activeCategory));
+        : projects.filter(p => p.category_id === activeCategory);
+
 
     return (
         <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Portfolio - Avant-Garde"}>
@@ -73,17 +64,18 @@ export default function Portfolio({ portfolioItems, page }: Props) {
                             <div className="flex flex-wrap justify-center gap-4">
                                 {categories.map((cat) => (
                                     <button
-                                        key={cat}
-                                        onClick={() => setActiveCategory(cat)}
+                                        key={cat.id}
+                                        onClick={() => setActiveCategory(cat.id)}
                                         className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
-                                            activeCategory === cat 
+                                            activeCategory === cat.id 
                                                 ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
                                                 : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
                                         }`}
                                     >
-                                        {cat}
+                                        {cat.name}
                                     </button>
                                 ))}
+
                             </div>
                         </div>
                     </section>
@@ -119,9 +111,16 @@ export default function Portfolio({ portfolioItems, page }: Props) {
                                                 </div>
                                                 
                                                 <div className="px-4">
-                                                    <span className="text-agency-accent font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">
-                                                        {project.client || 'Featured Project'}
-                                                    </span>
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <span className="text-agency-accent font-bold uppercase tracking-[0.3em] text-[10px] block">
+                                                            {project.category?.name || 'Project'}
+                                                        </span>
+                                                        <span className="opacity-20">•</span>
+                                                        <span className="text-agency-primary/40 dark:text-white/40 font-bold uppercase tracking-[0.3em] text-[10px] block">
+                                                            {project.client || 'Featured'}
+                                                        </span>
+                                                    </div>
+
                                                     <h3 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-4 transition-colors group-hover:text-agency-accent">
                                                         {project.title}
                                                     </h3>

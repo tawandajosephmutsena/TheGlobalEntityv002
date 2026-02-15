@@ -177,6 +177,8 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
     // User Management
     Route::resource('users', App\Http\Controllers\Admin\UserController::class);
     Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+
 
 
 

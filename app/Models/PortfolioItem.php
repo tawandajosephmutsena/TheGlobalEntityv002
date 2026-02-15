@@ -30,7 +30,9 @@ class PortfolioItem extends Model
         'is_featured',
         'is_published',
         'sort_order',
+        'category_id',
     ];
+
 
     protected $casts = [
         'content' => 'array',
@@ -103,6 +105,13 @@ class PortfolioItem extends Model
               ->orWhere('client', 'LIKE', "%{$term}%");
         });
     }
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
 
     public function getRouteKeyName(): string
     {
