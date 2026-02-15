@@ -52,7 +52,7 @@ class Insight extends Model
      */
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'author_id')->select(['id', 'name']);
+        return $this->belongsTo(User::class, 'author_id')->select(['id', 'name', 'avatar']);
     }
 
     /**
@@ -93,7 +93,7 @@ class Insight extends Model
     public function scopeRecentWithRelations(Builder $query): Builder
     {
         return $query->published()
-            ->with(['author:id,name', 'category:id,name,slug'])
+            ->with(['author:id,name,avatar', 'category:id,name,slug'])
             ->orderBy('published_at', 'desc')
             ->select(['id', 'title', 'slug', 'excerpt', 'featured_image', 'author_id', 'category_id', 'published_at', 'reading_time', 'is_published'])
             ->limit(6);

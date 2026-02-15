@@ -44,6 +44,7 @@ class PortfolioItemRequest extends SecureFormRequest
             'is_featured' => 'boolean',
             'is_published' => 'boolean',
             'sort_order' => 'nullable|integer|min:0|max:9999',
+            'category_id' => 'nullable|exists:categories,id',
         ];
     }
 
@@ -69,6 +70,7 @@ class PortfolioItemRequest extends SecureFormRequest
             'is_featured' => 'featured status',
             'is_published' => 'published status',
             'sort_order' => 'sort order',
+            'category_id' => 'category',
         ];
     }
 

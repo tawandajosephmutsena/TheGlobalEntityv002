@@ -12,16 +12,18 @@ interface CustomPage extends Page {
 
 interface DynamicPageProps {
     page: CustomPage;
-    featuredServices?: any[];
+    featuredServices?: any[]; // Keep any for now as types might be complex
     featuredProjects?: any[];
     recentInsights?: any[];
+    teamMembers?: any[];
 }
 
 export default function DynamicPage({ 
     page,
     featuredServices = [],
     featuredProjects = [],
-    recentInsights = []
+    recentInsights = [],
+    teamMembers = []
 }: DynamicPageProps) {
     const [blocks, setBlocks] = React.useState<PageBlock[]>(page.content?.blocks || []);
 
@@ -49,6 +51,7 @@ export default function DynamicPage({
                 featuredServices={featuredServices}
                 featuredProjects={featuredProjects}
                 recentInsights={recentInsights}
+                teamMembers={teamMembers}
             />
             
             {blocks.length === 0 && (

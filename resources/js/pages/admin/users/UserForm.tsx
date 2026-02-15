@@ -6,10 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Shield, User, Mail, Lock } from 'lucide-react';
+import { Shield, User, Mail, Lock, Image as ImageIcon } from 'lucide-react';
+import MediaLibrary from '@/components/admin/MediaLibrary';
+import { MediaAsset } from '@/types';
 
-// @ts-ignore
-declare const route: any;
+declare function route(name: string, params?: unknown, absolute?: boolean): string;
 
 interface Role {
 
@@ -24,6 +25,7 @@ interface UserFormProps {
         id: number;
         name: string;
         email: string;
+        avatar?: string | null;
         is_active: boolean;
         roles: { id: number }[];
     };
@@ -35,6 +37,7 @@ export function UserForm({ user, roles, mode }: UserFormProps) {
     const { data, setData, post, put, processing, errors } = useForm({
         name: user?.name || '',
         email: user?.email || '',
+        avatar: user?.avatar || '',
         password: '',
         password_confirmation: '',
         is_active: user?.is_active ?? true,
@@ -70,37 +73,61 @@ export function UserForm({ user, roles, mode }: UserFormProps) {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="name">Full Name</Label>
-                        <div className="relative">
-                            <User className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
-                            <Input
-                                id="name"
-                                placeholder="John Doe"
-                                className="pl-9"
-                                value={data.name}
-                                onChange={e => setData('name', e.target.value)}
-                                required
-                            />
+                    <div className="grid gap-4 md:grid-cols-4 items-start">
+                        <div className="md:col-span-1">
+                            <Label>Profile Picture</Label>
+                            <div className="mt-2">
+                                <MediaLibrary
+                                    currentValue={data.avatar || ''}
+                                    onSelect={(asset: MediaAsset) => setData('avatar', asset.url)}
+                                    // @ts-expect-error - MediaLibrary trigger prop mismatch in some versions
+                                    trigger={
+                                        <div className="size-24 rounded-full border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-agency-accent transition-colors overflow-hidden bg-muted/30">
+                                            {data.avatar ? (
+                                                <img src={data.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                                            ) : (
+                                                <ImageIcon className="size-8 text-muted-foreground/50" />
+                                            )}
+                                        </div>
+                                    }
+                                />
+                                {errors.avatar && <p className="text-xs text-destructive mt-1">{errors.avatar}</p>}
+                            </div>
                         </div>
-                        {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-                    </div>
+                        <div className="md:col-span-3 space-y-4">
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Full Name</Label>
+                                <div className="relative">
+                                    <User className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
+                                    <Input
+                                        id="name"
+                                        placeholder="John Doe"
+                                        className="pl-9"
+                                        value={data.name}
+                                        onChange={e => setData('name', e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+                            </div>
 
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email Address</Label>
-                        <div className="relative">
-                            <Mail className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="john@example.com"
-                                className="pl-9"
-                                value={data.email}
-                                onChange={e => setData('email', e.target.value)}
-                                required
-                            />
+                            <div className="grid gap-2">
+                                <Label htmlFor="email">Email Address</Label>
+                                <div className="relative">
+                                    <Mail className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="john@example.com"
+                                        className="pl-9"
+                                        value={data.email}
+                                        onChange={e => setData('email', e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                            </div>
                         </div>
-                        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                     </div>
 
                     <div className="grid gap-2">

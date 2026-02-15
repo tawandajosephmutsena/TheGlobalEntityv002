@@ -62,6 +62,16 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                     <section className="bg-white dark:bg-[#0a0a0a] border-y border-agency-primary/5 dark:border-white/5 py-8 sticky top-[80px] z-50 backdrop-blur-xl bg-white/80 dark:bg-black/80">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <div className="flex flex-wrap justify-center gap-4">
+                                <button
+                                    onClick={() => setActiveCategory('All')}
+                                    className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                        activeCategory === 'All' 
+                                            ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
+                                            : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
+                                    }`}
+                                >
+                                    All
+                                </button>
                                 {categories.map((cat) => (
                                     <button
                                         key={cat.id}
@@ -75,7 +85,6 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                         {cat.name}
                                     </button>
                                 ))}
-
                             </div>
                         </div>
                     </section>

@@ -25,7 +25,7 @@ class BlogController extends Controller
 
         $insights = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60, function () use ($request) {
             $query = Insight::published()
-                ->with(['author:id,name', 'category:id,name,slug']);
+                ->with(['author:id,name,avatar', 'category:id,name,slug']);
 
             if ($request->filled('category')) {
                 $query->whereHas('category', function ($q) use ($request) {

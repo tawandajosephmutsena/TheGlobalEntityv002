@@ -76,12 +76,14 @@ export default function BlogShow({ insight, relatedInsights = [] }: Props) {
 
                 {/* Featured Image - Wide Layout */}
                 {insight.featured_image && (
-                    <div className="w-full h-[70vh] relative overflow-hidden">
-                        <img 
-                            src={insight.featured_image} 
-                            alt={insight.title} 
-                            className="w-full h-full object-cover scale-105"
-                        />
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="aspect-video relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5">
+                            <img 
+                                src={insight.featured_image} 
+                                alt={insight.title} 
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
                     </div>
                 )}
 
@@ -124,13 +126,15 @@ export default function BlogShow({ insight, relatedInsights = [] }: Props) {
 
                             {/* Author Bio */}
                             <div className="mt-24 p-12 rounded-[50px] bg-agency-secondary dark:bg-white/5 flex flex-col md:flex-row items-center gap-10">
-                                <div className="size-24 rounded-full overflow-hidden shrink-0 border-2 border-agency-accent p-1">
-                                    <img 
-                                        src={insight.author?.avatar || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2574&auto=format&fit=crop'} 
-                                        alt={insight.author?.name} 
-                                        className="w-full h-full object-cover rounded-full"
-                                    />
-                                </div>
+                                {insight.author?.avatar && (
+                                    <div className="size-24 rounded-full overflow-hidden shrink-0 border-2 border-agency-accent p-1">
+                                        <img 
+                                            src={insight.author.avatar} 
+                                            alt={insight.author.name} 
+                                            className="w-full h-full object-cover rounded-full"
+                                        />
+                                    </div>
+                                )}
                                 <div className="text-center md:text-left">
                                     <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
                                     <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Avant-Garde Collective'}</h4>
