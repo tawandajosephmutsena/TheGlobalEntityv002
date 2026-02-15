@@ -21,8 +21,12 @@ import {
     Star,
     Layers,
     Activity,
-    Users
+    Users,
+    Briefcase,
+    Heart,
+    Handshake
 } from 'lucide-react';
+
 import { BlockType } from '@/pages/admin/pages/Edit';
 
 
@@ -69,9 +73,13 @@ const CATEGORIES = [
         ]
     },
     {
-        name: 'About & Interaction',
-        icon: <PhoneCall className="h-4 w-4" />,
+        name: 'About, Team & Interaction',
+        icon: <Briefcase className="h-4 w-4" />,
         blocks: [
+            { type: 'team_hero', label: 'Team Hero', icon: <Users className="h-5 w-5" />, desc: 'Intro for the team page' },
+            { type: 'team_grid', label: 'Team Grid', icon: <Users className="h-5 w-5" />, desc: 'Creative team grid' },
+            { type: 'culture_bento', label: 'Culture Bento', icon: <Heart className="h-5 w-5" />, desc: 'Shared culture highlights' },
+            { type: 'team_join', label: 'Join Tribe', icon: <Handshake className="h-5 w-5" />, desc: 'Careers CTA section' },
             { type: 'story', label: 'Story', icon: <BookOpen className="h-5 w-5" />, desc: 'Brand narrative section' },
             { type: 'manifesto', label: 'Manifesto', icon: <HelpCircle className="h-5 w-5" />, desc: 'Vision and mission' },
             { type: 'process', label: 'Process', icon: <Activity className="h-5 w-5" />, desc: 'Step-by-step workflow' },
@@ -81,6 +89,7 @@ const CATEGORIES = [
             { type: 'cta', label: 'Call to Action', icon: <Plus className="h-5 w-5" />, desc: 'Direct conversion box' },
         ]
     }
+
 ];
 
 export default function AddBlockMenu({ onAddBlock }: AddBlockMenuProps) {

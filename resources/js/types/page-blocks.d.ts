@@ -267,7 +267,12 @@ export type PageBlock =
     | VideoBackgroundHeroBlock
     | ParallaxFeaturesBlock
     | GSAPHorizontalScrollBlock
-    | CreativeGridBlock;
+    | CreativeGridBlock
+    | TeamHeroBlock
+    | TeamGridBlock
+    | CultureBentoBlock
+    | TeamJoinBlock;
+
 
 export interface CreativeGridBlock extends BaseBlock {
     type: 'creative_grid';
@@ -404,3 +409,56 @@ export interface KimiHeroBlock extends BaseBlock {
         scrollSpeed?: number;
     };
 }
+
+export interface TeamHeroBlock extends BaseBlock {
+    type: 'team_hero';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        marqueeText?: string;
+    };
+}
+
+export interface TeamGridBlock extends BaseBlock {
+    type: 'team_grid';
+    content: {
+        title?: string;
+        subtitle?: string;
+        feedSource?: 'manual' | 'team';
+        maxItems?: number;
+        items?: Array<{
+            name: string;
+            position: string;
+            avatar?: string;
+            bio?: string;
+            social_links?: {
+                linkedin?: string;
+                github?: string;
+                twitter?: string;
+                website?: string;
+            };
+        }>;
+    };
+}
+
+export interface CultureBentoBlock extends BaseBlock {
+    type: 'culture_bento';
+    content: {
+        title?: string;
+        description?: string;
+        statValue?: string;
+        statLabel?: string;
+    };
+}
+
+export interface TeamJoinBlock extends BaseBlock {
+    type: 'team_join';
+    content: {
+        title?: string;
+        subtitle?: string;
+        ctaText?: string;
+        ctaHref?: string;
+    };
+}
+

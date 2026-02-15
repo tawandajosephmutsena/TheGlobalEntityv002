@@ -1838,6 +1838,157 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                     </div>
                 </div>
             );
+        case 'team_hero':
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Title</Label>
+                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Subtitle</Label>
+                        <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Textarea value={String(block.content.description || '')} onChange={(e) => updateContent({ description: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Marquee Text</Label>
+                        <Input value={String(block.content.marqueeText || '')} onChange={(e) => updateContent({ marqueeText: e.target.value })} />
+                    </div>
+                </div>
+            );
+
+        case 'team_grid': {
+            const items = (block.content.items as any[]) || [];
+            const feedSource = (block.content.feedSource as string) || 'team';
+            const maxItems = Number(block.content.maxItems) || 8;
+
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Title</Label>
+                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Subtitle</Label>
+                        <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t">
+                        <Label className="text-xs font-bold uppercase tracking-wider">Content Source</Label>
+                        <Select value={feedSource} onValueChange={(val) => updateContent({ feedSource: val })}>
+                            <SelectTrigger>
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="manual">Manual Entry</SelectItem>
+                                <SelectItem value="team">Dynamic: Team Members</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {feedSource === 'team' ? (
+                        <div className="space-y-4 p-4 border rounded-xl bg-primary/5">
+                            <Label className="text-[10px] font-bold text-primary uppercase">Dynamic Settings</Label>
+                            <div className="space-y-2">
+                                <Label className="text-[10px]">Max Items</Label>
+                                <Input type="number" min="1" max="50" value={maxItems} onChange={(e) => updateContent({ maxItems: parseInt(e.target.value) || 8 })} />
+                            </div>
+                            <p className="text-[10px] text-muted-foreground">
+                                Members will be pulled from the central Team management system.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-4 pt-4 border-t">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-xs font-bold uppercase tracking-wider">Manual Members</Label>
+                                <Button variant="outline" size="sm" onClick={() => updateContent({ items: [...items, { name: 'Member Name', position: 'Role', avatar: '', bio: '', social_links: {} }] })}>
+                                    <Plus className="h-3 w-3 mr-1" /> Add Member
+                                </Button>
+                            </div>
+                            <div className="space-y-3">
+                                {items.map((item, i) => (
+                                    <div key={i} className="group relative p-3 border rounded-lg bg-muted/10 space-y-2">
+                                        <button type="button" title="Remove" className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover:opacity-100" onClick={() => updateContent({ items: items.filter((_, idx) => idx !== i) })}>
+                                            <Trash className="h-3 w-3" />
+                                        </button>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Input className="h-8 text-xs font-bold" value={item.name} onChange={(e) => { const n = [...items]; n[i] = { ...item, name: e.target.value }; updateContent({ items: n }); }} placeholder="Name" />
+                                            <Input className="h-8 text-xs" value={item.position} onChange={(e) => { const n = [...items]; n[i] = { ...item, position: e.target.value }; updateContent({ items: n }); }} placeholder="Position" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-[10px] text-muted-foreground">Avatar Image</Label>
+                                            <div className="flex gap-2">
+                                                <MediaLibrary 
+                                                    onSelect={(asset: MediaAsset) => { const n = [...items]; n[i] = { ...item, avatar: asset.url }; updateContent({ items: n }); }}
+                                                    trigger={<Button type="button" variant="outline" size="sm" className="h-8 text-xs"><ImageIcon className="h-3 w-3 mr-1" /> {item.avatar ? 'Change' : 'Upload'}</Button>}
+                                                />
+                                                <Input className="h-8 text-xs flex-1" value={item.avatar} onChange={(e) => { const n = [...items]; n[i] = { ...item, avatar: e.target.value }; updateContent({ items: n }); }} placeholder="URL..." />
+                                            </div>
+                                        </div>
+                                        <Textarea className="h-16 text-xs" value={item.bio} onChange={(e) => { const n = [...items]; n[i] = { ...item, bio: e.target.value }; updateContent({ items: n }); }} placeholder="Brief bio..." />
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Input className="h-7 text-[10px]" value={item.social_links?.linkedin || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, social_links: { ...item.social_links, linkedin: e.target.value } }; updateContent({ items: n }); }} placeholder="LinkedIn URL" />
+                                            <Input className="h-7 text-[10px]" value={item.social_links?.twitter || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, social_links: { ...item.social_links, twitter: e.target.value } }; updateContent({ items: n }); }} placeholder="Twitter URL" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        case 'culture_bento':
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Title</Label>
+                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Textarea value={String(block.content.description || '')} onChange={(e) => updateContent({ description: e.target.value })} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+                        <div className="space-y-2">
+                            <Label>Stat Value</Label>
+                            <Input value={String(block.content.statValue || '')} onChange={(e) => updateContent({ statValue: e.target.value })} placeholder="e.g. 150+" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Stat Label</Label>
+                            <Input value={String(block.content.statLabel || '')} onChange={(e) => updateContent({ statLabel: e.target.value })} placeholder="e.g. Projects Done" />
+                        </div>
+                    </div>
+                </div>
+            );
+
+        case 'team_join':
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Title</Label>
+                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Subtitle</Label>
+                        <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+                        <div className="space-y-2">
+                            <Label>CTA Text</Label>
+                            <Input value={String(block.content.ctaText || '')} onChange={(e) => updateContent({ ctaText: e.target.value })} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>CTA Link</Label>
+                            <Input value={String(block.content.ctaHref || '')} onChange={(e) => updateContent({ ctaHref: e.target.value })} />
+                        </div>
+                    </div>
+                </div>
+            );
 
         default: {
             const blockAny = block as any;

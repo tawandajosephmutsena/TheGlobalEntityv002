@@ -11,10 +11,10 @@ import {
     ImageBlock as ImageBlockType, 
     FeaturesBlock as FeaturesBlockType,
     AnimatedShaderHeroBlock,
-    HeroBlock,
-    StatsBlock,
+    HeroBlock as HeroBlockType, // Added alias to keep it available
+    StatsBlock as StatsBlockType, // Added alias
     CinematicHeroBlock as CinematicHeroBlockType,
-    FormBlock,
+    FormBlock as FormBlockType, // Added alias
     StoryBlock as StoryBlockType,
     ManifestoBlock as ManifestoBlockType,
     ProcessBlock as ProcessBlockType,
@@ -27,11 +27,17 @@ import {
     VideoBackgroundHeroBlock as VideoBackgroundHeroBlockType,
     ParallaxFeaturesBlock as ParallaxFeaturesBlockType,
     GSAPHorizontalScrollBlock as GSAPHorizontalScrollBlockType,
-    CreativeGridBlock as CreativeGridBlockType
+    CreativeGridBlock as CreativeGridBlockType,
+    TeamHeroBlock as TeamHeroBlockType,
+    TeamGridBlock as TeamGridBlockType,
+    CultureBentoBlock as CultureBentoBlockType,
+    TeamJoinBlock as TeamJoinBlockType
 } from '@/types/page-blocks';
 import { cn } from '@/lib/utils';
+import { TeamMember } from '@/types'; // Import real type
 
 import AnimatedShaderHero from '@/components/ui/animated-shader-hero';
+
 
 // Import all block components
 import HeroSection from '@/components/HeroSection';
@@ -54,6 +60,11 @@ import VideoBackgroundHero from './VideoBackgroundHero';
 import ParallaxFeaturesBlock from './ParallaxFeaturesBlock';
 import GSAPHorizontalScrollBlock from './GSAPHorizontalScrollBlock';
 import CreativeGridBlock from './CreativeGridBlock';
+import TeamHeroBlock from './TeamHeroBlock';
+import TeamGridBlock from './TeamGridBlock';
+import CultureBentoBlock from './CultureBentoBlock';
+import TeamJoinBlock from './TeamJoinBlock';
+
 
 // Type definitions for external data
 interface ServiceItem {
@@ -351,12 +362,22 @@ const FeaturesBlock = ({ content }: { content: FeaturesBlockType['content'] }) =
     );
 };
 
+interface BlockRendererProps {
+    blocks: PageBlock[];
+    featuredServices?: ServiceItem[]; 
+    featuredProjects?: ProjectItem[]; 
+    recentInsights?: InsightItem[]; 
+    teamMembers?: TeamMember[];
+}
+
 export default function BlockRenderer({ 
     blocks, 
     featuredServices = [], 
     featuredProjects = [], 
-    recentInsights = [] 
+    recentInsights = [],
+    teamMembers = []
 }: BlockRendererProps) {
+
     if (!blocks || blocks.length === 0) return null;
 
     return (
@@ -511,6 +532,21 @@ export default function BlockRenderer({
                                 insights={recentInsights}
                             />
                         );
+                    case 'team_hero':
+                        return <TeamHeroBlock key={block.id} {...(block.content as TeamHeroBlockType['content'])} />;
+                    case 'team_grid':
+                        return (
+                            <TeamGridBlock 
+                                key={block.id} 
+                                {...(block.content as TeamGridBlockType['content'])} 
+                                teamMembers={teamMembers}
+                            />
+                        );
+                    case 'culture_bento':
+                        return <CultureBentoBlock key={block.id} {...(block.content as CultureBentoBlockType['content'])} />;
+                    case 'team_join':
+                        return <TeamJoinBlock key={block.id} {...(block.content as TeamJoinBlockType['content'])} />;
+
                     default: {
                         const unknownBlock = block as any;
                         const dynamicBlock = blockRegistry.get(unknownBlock.type);

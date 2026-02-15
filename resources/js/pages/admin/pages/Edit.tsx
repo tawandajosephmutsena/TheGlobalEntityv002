@@ -18,8 +18,9 @@ interface Props {
     page: Page;
 }
 
-// Define the structure of our blocks
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | (string & {});
+
+
 
 export interface Block {
     id: string;
@@ -351,7 +352,33 @@ const getDefaultContentForType = (type: BlockType) => {
             backgroundColor: '#FFF8F0',
             scrollSpeed: 30,
         };
+        case 'team_hero': return {
+            title: 'Meet the Minds',
+            subtitle: 'THE TRIBE',
+            description: 'A collective of researchers, designers, and engineers dedicated to building the future of digital interaction.',
+            marqueeText: 'INNOVATION • DESIGN • ENGINEERING • STRATEGY • '
+        };
+        case 'team_grid': return {
+            title: 'Our Experts',
+            subtitle: 'Leadership & Talent',
+            feedSource: 'team',
+            maxItems: 8,
+            items: []
+        };
+        case 'culture_bento': return {
+            title: 'Our Culture',
+            description: 'We believe in a culture of radical transparency, relentless curiosity, and collective excellence.',
+            statValue: '15+',
+            statLabel: 'Countries Represented'
+        };
+        case 'team_join': return {
+            title: 'Ready to build the future?',
+            subtitle: 'JOIN OUR TRIBE',
+            ctaText: 'View Openings',
+            ctaHref: '/careers'
+        };
         default: return {};
+
     }
 };
 
