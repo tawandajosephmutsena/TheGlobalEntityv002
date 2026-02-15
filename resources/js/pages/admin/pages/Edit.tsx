@@ -19,7 +19,7 @@ interface Props {
 }
 
 // Define the structure of our blocks
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | (string & {});
 
 export interface Block {
     id: string;
@@ -269,6 +269,14 @@ const getDefaultContentForType = (type: BlockType) => {
                  { category: 'Product', title: 'Macbook Pro M4.', src: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=2626&auto=format&fit=crop', content: '<p>Content goes here</p>', link: '' },
                  { category: 'Hiring', title: 'Hiring for a Staff Software Engineer', src: 'https://images.unsplash.com/photo-1621237022370-3d707252064c?q=80&w=2670&auto=format&fit=crop', content: '<p>Content goes here</p>', link: '' }
             ]
+        };
+        case 'creative_grid': return {
+            title: 'Creative Insights',
+            subtitle: 'New Perspectives',
+            feedSource: 'insights',
+            maxItems: 6,
+            sourceCategory: 'all',
+            items: []
         };
         case 'cover_demo': return {
             titleOne: 'Build amazing websites',

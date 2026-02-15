@@ -1189,6 +1189,101 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             );
         }
 
+        case 'creative_grid': {
+            const items = (block.content.items as any[]) || [];
+            const feedSource = (block.content.feedSource as string) || 'insights';
+            const maxItems = Number(block.content.maxItems) || 6;
+            const sourceCategory = String(block.content.sourceCategory || 'all');
+
+            return (
+                <div className="space-y-6">
+                    <div className="space-y-2">
+                        <Label>Section Title</Label>
+                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Subtitle</Label>
+                        <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                    </div>
+
+                    <div className="space-y-4 pt-4 border-t">
+                        <Label className="text-xs font-bold uppercase tracking-wider">Content Source</Label>
+                        <Select value={feedSource} onValueChange={(val) => updateContent({ feedSource: val })}>
+                            <SelectTrigger>
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="manual">Manual Cards</SelectItem>
+                                <SelectItem value="services">Dynamic: Services</SelectItem>
+                                <SelectItem value="portfolio">Dynamic: Portfolio</SelectItem>
+                                <SelectItem value="insights">Dynamic: Insights</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+
+                    {feedSource !== 'manual' ? (
+                        <div className="space-y-4 p-4 border rounded-xl bg-primary/5">
+                            <div className="flex items-center gap-2 mb-2">
+                                <AlertCircle className="h-4 w-4 text-primary" />
+                                <span className="text-xs font-bold text-primary uppercase">Dynamic Feed Settings</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label className="text-[10px]">Max Items</Label>
+                                    <Input type="number" min="1" max="20" value={maxItems} onChange={(e) => updateContent({ maxItems: parseInt(e.target.value) || 6 })} />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[10px]">Category Filter</Label>
+                                    <Input value={sourceCategory} onChange={(e) => updateContent({ sourceCategory: e.target.value })} placeholder="e.g. Design or 'all'" />
+                                </div>
+                            </div>
+                            <p className="text-[10px] text-muted-foreground">
+                                Cards will be automatically populated from your <strong>{feedSource}</strong> collection.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-4 pt-4 border-t">
+                            <div className="flex items-center justify-between">
+                                <Label className="text-xs font-bold uppercase tracking-wider">Manual Items</Label>
+                                <Button variant="outline" size="sm" onClick={() => updateContent({ items: [...items, { category: 'New', title: 'New Item', image: '', description: '', link: '' }] })}>
+                                    <Plus className="h-3 w-3 mr-1" /> Add Item
+                                </Button>
+                            </div>
+                            <div className="space-y-3">
+                                {items.map((item, i) => (
+                                    <div key={i} className="group relative p-3 border rounded-lg bg-muted/10 space-y-2">
+                                        <button type="button" title="Remove" className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover:opacity-100" onClick={() => updateContent({ items: items.filter((_, idx) => idx !== i) })}>
+                                            <Trash className="h-3 w-3" />
+                                        </button>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <Input className="h-8 text-xs" value={item.category} onChange={(e) => { const n = [...items]; n[i] = { ...item, category: e.target.value }; updateContent({ items: n }); }} placeholder="Category" />
+                                            <Input className="h-8 text-xs font-semibold" value={item.title} onChange={(e) => { const n = [...items]; n[i] = { ...item, title: e.target.value }; updateContent({ items: n }); }} placeholder="Title" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label className="text-[10px] text-muted-foreground">Image</Label>
+                                            <div className="flex gap-2">
+                                                <MediaLibrary 
+                                                    onSelect={(asset: MediaAsset) => { const n = [...items]; n[i] = { ...item, image: asset.url }; updateContent({ items: n }); }}
+                                                    trigger={<Button type="button" variant="outline" size="sm" className="h-8 text-xs"><ImageIcon className="h-3 w-3 mr-1" /> {item.image ? 'Change' : 'Upload'}</Button>}
+                                                />
+                                                <Input className="h-8 text-xs flex-1" value={item.image} onChange={(e) => { const n = [...items]; n[i] = { ...item, image: e.target.value }; updateContent({ items: n }); }} placeholder="Image URL..." />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] text-muted-foreground">Description</Label>
+                                            <Textarea className="h-20 text-xs" value={item.description} onChange={(e) => { const n = [...items]; n[i] = { ...item, description: e.target.value }; updateContent({ items: n }); }} placeholder="Description..." />
+                                        </div>
+                                        <Input className="h-8 text-xs" value={item.link} onChange={(e) => { const n = [...items]; n[i] = { ...item, link: e.target.value }; updateContent({ items: n }); }} placeholder="Link (optional)" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+
         case 'cover_demo':
             return (
                 <div className="space-y-6">

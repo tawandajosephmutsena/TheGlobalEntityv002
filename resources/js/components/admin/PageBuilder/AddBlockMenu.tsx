@@ -64,6 +64,7 @@ const CATEGORIES = [
             { type: 'testimonials', label: 'Reviews', icon: <Users className="h-5 w-5" />, desc: 'Client testimonials' },
             { type: 'logo_cloud', label: 'Logos', icon: <Layout className="h-5 w-5" />, desc: 'Client logo strip' },
             { type: 'apple_cards_carousel', label: 'Cards Carousel', icon: <Layers className="h-5 w-5" />, desc: 'Apple-style slider' },
+            { type: 'creative_grid', label: 'Creative Grid', icon: <Layers className="h-5 w-5" />, desc: 'Asymmetrical article grid' },
             { type: 'gsap_horizontal_scroll', label: 'Premium Showcase', icon: <Activity className="h-5 w-5" />, desc: 'Horizontal scroll project showcase' },
         ]
     },

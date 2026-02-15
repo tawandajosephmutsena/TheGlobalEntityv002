@@ -266,7 +266,27 @@ export type PageBlock =
     | AppleCardsCarouselBlock
     | VideoBackgroundHeroBlock
     | ParallaxFeaturesBlock
-    | GSAPHorizontalScrollBlock;
+    | GSAPHorizontalScrollBlock
+    | CreativeGridBlock;
+
+export interface CreativeGridBlock extends BaseBlock {
+    type: 'creative_grid';
+    content: {
+        title?: string;
+        subtitle?: string;
+        feedSource?: 'manual' | 'services' | 'portfolio' | 'insights';
+        maxItems?: number;
+        sourceCategory?: string;
+        items?: Array<{
+            image: string;
+            title: string;
+            category: string;
+            description: string;
+            link?: string;
+        }>;
+    };
+}
+
 
 export interface TestimonialBlock extends BaseBlock {
     type: 'testimonials';

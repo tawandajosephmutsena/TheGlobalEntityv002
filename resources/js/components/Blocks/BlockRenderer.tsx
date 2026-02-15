@@ -26,7 +26,8 @@ import {
     CoverDemoBlock as CoverDemoBlockType,
     VideoBackgroundHeroBlock as VideoBackgroundHeroBlockType,
     ParallaxFeaturesBlock as ParallaxFeaturesBlockType,
-    GSAPHorizontalScrollBlock as GSAPHorizontalScrollBlockType
+    GSAPHorizontalScrollBlock as GSAPHorizontalScrollBlockType,
+    CreativeGridBlock as CreativeGridBlockType
 } from '@/types/page-blocks';
 import { cn } from '@/lib/utils';
 
@@ -52,6 +53,7 @@ import CoverDemoBlock from './CoverDemoBlock';
 import VideoBackgroundHero from './VideoBackgroundHero';
 import ParallaxFeaturesBlock from './ParallaxFeaturesBlock';
 import GSAPHorizontalScrollBlock from './GSAPHorizontalScrollBlock';
+import CreativeGridBlock from './CreativeGridBlock';
 
 // Type definitions for external data
 interface ServiceItem {
@@ -499,6 +501,16 @@ export default function BlockRenderer({
                         return <ParallaxFeaturesBlock key={block.id} {...(block.content as ParallaxFeaturesBlockType['content'])} />;
                     case 'gsap_horizontal_scroll':
                         return <GSAPHorizontalScrollBlock key={block.id} {...(block.content as GSAPHorizontalScrollBlockType['content'])} />;
+                    case 'creative_grid':
+                        return (
+                            <CreativeGridBlock 
+                                key={block.id} 
+                                {...(block.content as CreativeGridBlockType['content'])} 
+                                services={featuredServices}
+                                portfolio={featuredProjects}
+                                insights={recentInsights}
+                            />
+                        );
                     default: {
                         const unknownBlock = block as any;
                         const dynamicBlock = blockRegistry.get(unknownBlock.type);
