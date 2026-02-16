@@ -1,5 +1,5 @@
 import React from 'react';
-import { Feature108Block } from '@/types/page-blocks';
+import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
 import { Layout, Sparkles } from 'lucide-react';
 
@@ -14,7 +14,9 @@ const Feature108 = React.lazy(() => import('@/components/Blocks/Feature108'));
 const Feature108Editor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Feature108Editor'));
 const FlipRevealBlock = React.lazy(() => import('@/components/Blocks/FlipRevealBlock'));
 const FlipRevealBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FlipRevealBlockEditor'));
-import { FlipRevealBlock as FlipRevealBlockType } from '@/types/page-blocks';
+
+const Connect = React.lazy(() => import('@/components/Blocks/ConnectBlock'));
+const ConnectEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ConnectEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -76,7 +78,7 @@ export function registerBlocks() {
         label: 'Feature Tabs (108)',
         icon: <Sparkles className="h-4 w-4" />,
         desc: 'A collection of components built with Shadcn & Tailwind, featuring tabs with icons.',
-        category: 'Features',
+        category: 'Content',
         renderer: (props: Feature108Block['content']) => (
             <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
                 <Feature108 {...props} />
@@ -94,15 +96,32 @@ export function registerBlocks() {
         label: 'Flip Reveal Gallery',
         icon: <Layout className="h-4 w-4" />,
         desc: 'An animated, filterable gallery using GSAP Flip.',
-        category: 'Media',
-        renderer: (props: any) => (
-            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+        category: 'Showcase',
+        renderer: (props: FlipRevealBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
                 <FlipRevealBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: any) => (
+        editor: (props: { content: FlipRevealBlockType['content']; onUpdate: (updates: Partial<FlipRevealBlockType['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <FlipRevealBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+    blockRegistry.register({
+        type: 'connect',
+        label: 'Connect (Highlighter)',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Interactive connection section with mouse-following effects and floating labels.',
+        category: 'Content',
+        renderer: (props: ConnectBlock['content']) => (
+            <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
+                <Connect {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: ConnectBlock['content']; onUpdate: (updates: Partial<ConnectBlock['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <ConnectEditor {...props} />
             </React.Suspense>
         )
     });
