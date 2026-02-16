@@ -12,6 +12,9 @@ const ScrollAnimationBlock = React.lazy(() => import('@/components/Blocks/Scroll
 const ScrollAnimationEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ScrollAnimationEditor'));
 const Feature108 = React.lazy(() => import('@/components/Blocks/Feature108'));
 const Feature108Editor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Feature108Editor'));
+const FlipRevealBlock = React.lazy(() => import('@/components/Blocks/FlipRevealBlock'));
+const FlipRevealBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FlipRevealBlockEditor'));
+import { FlipRevealBlock as FlipRevealBlockType } from '@/types/page-blocks';
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -82,6 +85,24 @@ export function registerBlocks() {
         editor: (props: { content: Feature108Block['content']; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <Feature108Editor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'flip_reveal',
+        label: 'Flip Reveal Gallery',
+        icon: <Layout className="h-4 w-4" />,
+        desc: 'An animated, filterable gallery using GSAP Flip.',
+        category: 'Media',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <FlipRevealBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: any) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <FlipRevealBlockEditor {...props} />
             </React.Suspense>
         )
     });

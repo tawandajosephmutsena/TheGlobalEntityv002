@@ -4,8 +4,12 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { FlipRevealBlock } from '@/types/page-blocks';
 import AnimatedSection from '@/components/AnimatedSection';
 
-export default function FlipRevealBlockRenderer({ content }: { content: FlipRevealBlock['content'] }) {
-    const { title, subtitle, categories = [], items = [] } = content;
+export default function FlipRevealBlockRenderer({ 
+    title, 
+    subtitle, 
+    categories = [], 
+    items = [] 
+}: FlipRevealBlock['content']) {
     const [activeCategory, setActiveCategory] = useState<string>('all');
 
     return (

@@ -274,7 +274,8 @@ export type PageBlock =
     | TeamJoinBlock
     | Feature108Block
     | ScrollAnimationBlock
-    | FlipRevealBlock;
+    | FlipRevealBlock
+    | ConnectBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -515,5 +516,20 @@ export interface FlipRevealBlock extends BaseBlock {
             image: string;
             title?: string;
         }>;
+    };
+}
+
+
+export interface ConnectBlock extends BaseBlock {
+    type: 'connect';
+    content: {
+        title?: string;
+        description?: string;
+        labels?: string[];
+        pointerLabel?: string;
+        ctaText?: string;
+        ctaHref?: string;
+        email?: string;
+        whatsapp?: string;
     };
 }
