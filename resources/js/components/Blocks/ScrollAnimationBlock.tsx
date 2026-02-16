@@ -15,11 +15,10 @@ export default function ScrollAnimationBlock({ title, highlightTitle, image, hig
                         )}
                         {highlightTitle && (
                             <span 
-                                className="text-4xl md:text-[6rem] font-bold mt-1 leading-none"
+                                className="text-4xl md:text-[6rem] font-bold mt-1 leading-none font-display [color:var(--highlight-color)]"
                                 style={{ 
-                                    fontFamily: 'var(--font-display, sans-serif)',
-                                    color: highlightColor || 'var(--foreground)'
-                                }}
+                                    "--highlight-color": highlightColor || 'var(--foreground)'
+                                } as React.CSSProperties}
                             >
                                 {highlightTitle}
                             </span>

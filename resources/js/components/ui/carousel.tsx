@@ -72,33 +72,27 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
       <div
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 "
-        onClick={() => handleSlideClick(index)}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 w-[70vmin] h-[70vmin] mx-[4vmin] z-10 [transform:var(--transform)] [transition:transform_0.5s_cubic-bezier(0.4,0,0.2,1)] [transform-origin:bottom]"
         style={{
-          transform:
-            current !== index
-              ? "scale(0.98) rotateX(8deg)"
-              : "scale(1) rotateX(0deg)",
-          transition: "transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-          transformOrigin: "bottom",
-        }}
+          "--transform": current !== index
+            ? "scale(0.98) rotateX(8deg)"
+            : "scale(1) rotateX(0deg)",
+        } as React.CSSProperties}
       >
         <div
-          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out"
+          className="absolute top-0 left-0 w-full h-full bg-[#1D1F2F] rounded-[1%] overflow-hidden transition-all duration-150 ease-out [transform:var(--inner-transform)]"
           style={{
-            transform:
+            "--inner-transform":
               current === index
                 ? "translate3d(calc(var(--x) / 30), calc(var(--y) / 30), 0)"
                 : "none",
-          }}
+          } as React.CSSProperties}
         >
           <img
-            className="absolute inset-0 w-[120%] h-[120%] object-cover opacity-100 transition-opacity duration-600 ease-in-out"
+            className="absolute inset-0 w-[120%] h-[120%] object-cover transition-opacity duration-600 ease-in-out [opacity:var(--img-opacity)]"
             style={{
-              opacity: current === index ? 1 : 0.5,
-            }}
+              "--img-opacity": current === index ? 1 : 0.5,
+            } as React.CSSProperties}
             alt={title}
             src={src}
             onLoad={imageLoaded}
@@ -194,11 +188,10 @@ export function Carousel({ slides }: CarouselProps) {
       aria-labelledby={`carousel-heading-${id}`}
     >
       <div
-        className="absolute flex mx-[-4vmin]"
+        className="absolute flex mx-[-4vmin] [transform:var(--carousel-transform)] [transition:transform_0.8s_cubic-bezier(0.4,0,0.2,1)]"
         style={{
-          transform: `translateX(calc(-${current} * (70vmin + 8vmin)))`,
-          transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
+          "--carousel-transform": `translateX(calc(-${current} * (70vmin + 8vmin)))`,
+        } as React.CSSProperties}
       >
         {slides.map((slide, index) => (
           <Slide

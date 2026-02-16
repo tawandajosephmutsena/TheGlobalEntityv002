@@ -80,7 +80,6 @@ export function UserForm({ user, roles, mode }: UserFormProps) {
                                 <MediaLibrary
                                     currentValue={data.avatar || ''}
                                     onSelect={(asset: MediaAsset) => setData('avatar', asset.url)}
-                                    // @ts-expect-error - MediaLibrary trigger prop mismatch in some versions
                                     trigger={
                                         <div className="size-24 rounded-full border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-agency-accent transition-colors overflow-hidden bg-muted/30">
                                             {data.avatar ? (

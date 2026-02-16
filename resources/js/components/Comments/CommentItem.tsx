@@ -120,6 +120,8 @@ export default function CommentItem({ comment, insightSlug, insightId, depth = 0
                                     <button
                                         onClick={() => setShowActions(!showActions)}
                                         className="p-1.5 rounded-full opacity-0 group-hover:opacity-40 hover:!opacity-100 hover:bg-red-500/10 transition-all"
+                                        title="More actions"
+                                        aria-label="More actions"
                                     >
                                         <MoreHorizontal className="size-4" />
                                     </button>

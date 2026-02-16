@@ -1466,11 +1466,11 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                         <Label>Background Color</Label>
                         <div className="flex gap-2">
                             <Input className="h-9 font-mono" value={String(block.content.backgroundColor || '#0a0a0a')} onChange={(e) => updateContent({ backgroundColor: e.target.value })} placeholder="#000000" />
-                            <div 
-                                className="h-9 w-9 rounded border shadow-sm" 
-                                style={{ '--bg-color': String(block.content.backgroundColor || '#0a0a0a') } as React.CSSProperties}
-                            >
-                                <div className="w-full h-full rounded-[inherit] bg-[var(--bg-color)]" />
+                            <div className="h-9 w-9 rounded border shadow-sm">
+                                <div 
+                                    className="w-full h-full rounded-[inherit]" 
+                                    style={{ backgroundColor: String(block.content.backgroundColor || '#0a0a0a') }}
+                                />
                             </div>
                         </div>
                     </div>

@@ -174,11 +174,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 <main
                     className={cn(
                         'relative',
-                        !showNavigation && 'pt-0',
+                        !showNavigation ? 'pt-0 min-h-screen' : 'min-h-[calc(100vh-4rem)]',
                     )}
-                    style={{
-                        minHeight: showNavigation ? 'calc(100vh - 4rem)' : '100vh',
-                    }}
                 >
                     <PageTransition mode="slideUp">
                         {children}
