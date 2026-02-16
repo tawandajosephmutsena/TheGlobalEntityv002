@@ -6,6 +6,8 @@ import { Comment, Insight, ReactionType } from '@/types';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
+
 
 interface Props {
     insight: Insight;
@@ -16,6 +18,56 @@ interface Props {
 }
 
 export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [] }: Props) {
+    const handleShare = (platform: 'facebook' | 'twitter' | 'linkedin') => {
+        const url = encodeURIComponent(window.location.origin + window.location.pathname);
+        const text = encodeURIComponent(insight.title);
+        
+        let shareUrl = '';
+        switch (platform) {
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
+                break;
+            case 'linkedin':
+                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                break;
+        }
+        
+        if (shareUrl) {
+            window.open(shareUrl, '_blank', 'noopener,noreferrer');
+        }
+    };
+
+    const handleCopyLink = () => {
+        const url = window.location.origin + window.location.pathname;
+        
+        const copyToClipboard = (text: string) => {
+            if (navigator.clipboard) {
+                return navigator.clipboard.writeText(text);
+            } else {
+                // Fallback for non-secure contexts
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    return Promise.resolve();
+                } catch (err) {
+                    return Promise.reject(err);
+                } finally {
+                    document.body.removeChild(textArea);
+                }
+            }
+        };
+
+        copyToClipboard(url)
+            .then(() => toast.success('Link copied to clipboard!'))
+            .catch(() => toast.error('Failed to copy link. Please copy it manually.'));
+    };
+
     return (
         <MainLayout title={`${insight.title} - Avant-Garde Insights`}>
             <Head title={insight.title}>
@@ -99,10 +151,38 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         <aside className="lg:col-span-1 hidden lg:block">
                             <div className="sticky top-48 space-y-8 flex flex-col items-center">
                                 <span className="text-[10px] font-black uppercase tracking-widest [writing-mode:vertical-rl] opacity-20">Share Article</span>
-                                <button title="Share on Facebook" aria-label="Share on Facebook" className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"><Facebook className="size-4" /></button>
-                                <button title="Share on Twitter" aria-label="Share on Twitter" className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"><Twitter className="size-4" /></button>
-                                <button title="Share on LinkedIn" aria-label="Share on LinkedIn" className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"><Linkedin className="size-4" /></button>
-                                <button title="Copy Link" aria-label="Copy Link" className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"><Share2 className="size-4" /></button>
+                                <button 
+                                    onClick={() => handleShare('facebook')}
+                                    title="Share on Facebook" 
+                                    aria-label="Share on Facebook" 
+                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                                >
+                                    <Facebook className="size-4" />
+                                </button>
+                                <button 
+                                    onClick={() => handleShare('twitter')}
+                                    title="Share on Twitter" 
+                                    aria-label="Share on Twitter" 
+                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                                >
+                                    <Twitter className="size-4" />
+                                </button>
+                                <button 
+                                    onClick={() => handleShare('linkedin')}
+                                    title="Share on LinkedIn" 
+                                    aria-label="Share on LinkedIn" 
+                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                                >
+                                    <Linkedin className="size-4" />
+                                </button>
+                                <button 
+                                    onClick={handleCopyLink}
+                                    title="Copy Link" 
+                                    aria-label="Copy Link" 
+                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                                >
+                                    <Share2 className="size-4" />
+                                </button>
                             </div>
                         </aside>
 

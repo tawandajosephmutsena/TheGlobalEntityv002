@@ -12,6 +12,8 @@ import { PageTransition, ScrollProgressIndicator, PageLoadingIndicator } from '@
 import { router } from '@inertiajs/react';
 import { CommandPalette } from '@/components/CommandPalette';
 import { ToastContainer } from '@/components/ToastContainer';
+import { Toaster } from 'sonner';
+
 
 declare const gtag: (command: string, action: string, params?: Record<string, unknown>) => void;
 
@@ -145,6 +147,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             <ThemeStyles />
             <CommandPalette />
             <ToastContainer />
+            <Toaster position="bottom-right" richColors />
             <ScrollProgressIndicator />
             <PageLoadingIndicator isLoading={isNavigating} />
 

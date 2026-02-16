@@ -1,4 +1,5 @@
 import React from 'react';
+import { Feature108Block } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
 import { Layout, Sparkles } from 'lucide-react';
 
@@ -9,6 +10,8 @@ const KimiHeroSection = React.lazy(() => import('@/components/Blocks/KimiHeroSec
 const KimiHeroEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/KimiHeroEditor'));
 const ScrollAnimationBlock = React.lazy(() => import('@/components/Blocks/ScrollAnimationBlock'));
 const ScrollAnimationEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ScrollAnimationEditor'));
+const Feature108 = React.lazy(() => import('@/components/Blocks/Feature108'));
+const Feature108Editor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Feature108Editor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -17,12 +20,12 @@ export function registerBlocks() {
         icon: <Layout className="h-4 w-4" />,
         desc: 'A premium 3D perspective scroll animation for images.',
         category: 'Animations',
-        renderer: (props) => (
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-screen bg-muted animate-pulse" />}>
                 <ScrollAnimationBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props) => (
+        editor: (props: any) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ScrollAnimationEditor {...props} />
             </React.Suspense>
@@ -35,12 +38,12 @@ export function registerBlocks() {
         icon: <Layout className="h-4 w-4" />,
         desc: 'Auto-scrolling marquee carousel with customizable speed and direction.',
         category: 'Media',
-        renderer: (props) => (
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse" />}>
                 <CarouselBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props) => (
+        editor: (props: any) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <CarouselEditor {...props} />
             </React.Suspense>
@@ -53,14 +56,32 @@ export function registerBlocks() {
         icon: <Sparkles className="h-4 w-4" />,
         desc: 'A premium hero with 3D scrolling image carousel — automatically uses your active theme.',
         category: 'Heroes',
-        renderer: (props) => (
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-screen bg-muted animate-pulse" />}>
                 <KimiHeroSection {...props} />
             </React.Suspense>
         ),
-        editor: (props) => (
+        editor: (props: any) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <KimiHeroEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'feature108',
+        label: 'Feature Tabs (108)',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'A collection of components built with Shadcn & Tailwind, featuring tabs with icons.',
+        category: 'Features',
+        renderer: (props: Feature108Block['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <Feature108 {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: Feature108Block['content']; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <Feature108Editor {...props} />
             </React.Suspense>
         )
     });

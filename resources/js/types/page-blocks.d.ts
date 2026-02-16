@@ -272,7 +272,32 @@ export type PageBlock =
     | TeamGridBlock
     | CultureBentoBlock
     | TeamJoinBlock
-    | ScrollAnimationBlock;
+    | Feature108Block
+    | ScrollAnimationBlock
+    | FlipRevealBlock;
+
+
+export interface Feature108Block extends BaseBlock {
+    type: 'feature108';
+    content: {
+        badge?: string;
+        heading?: string;
+        description?: string;
+        tabs?: Array<{
+            value: string;
+            icon: string; // lucide icon name
+            label: string;
+            content: {
+                badge: string;
+                title: string;
+                description: string;
+                buttonText: string;
+                imageSrc: string;
+                imageAlt: string;
+            };
+        }>;
+    };
+}
 
 
 export interface ScrollAnimationBlock extends BaseBlock {
@@ -474,3 +499,21 @@ export interface TeamJoinBlock extends BaseBlock {
     };
 }
 
+
+export interface FlipRevealBlock extends BaseBlock {
+    type: 'flip_reveal';
+    content: {
+        title?: string;
+        subtitle?: string;
+        categories: Array<{
+            id: string;
+            label: string;
+        }>;
+        items: Array<{
+            id: string;
+            category: string;
+            image: string;
+            title?: string;
+        }>;
+    };
+}
