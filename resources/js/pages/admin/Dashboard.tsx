@@ -1,59 +1,28 @@
+import React, { useEffect, useState } from 'react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import AdminLayout from '@/layouts/AdminLayout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Card, CardContent, CardDescription, CardHeader, CardTitle
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Link } from '@inertiajs/react';
 import {
-    FolderOpen,
-    Briefcase,
-    FileText,
-    Users,
-    Image,
-    MessageSquare,
-    Plus,
-    Eye,
-    Star,
-    Settings,
-    Globe,
-    PanelsTopLeft,
-    BookOpen,
-    UserCheck,
-    HardDrive,
-    ShieldCheck,
-    TrendingUp,
-    ArrowUpRight,
-    Sparkles,
-    Layers,
-    Activity,
-    Calendar,
+    Shield, Smartphone, Monitor, Tablet, Activity,
+    Eye, Star, Sparkles, FolderOpen, Briefcase, FileText,
+    Calendar, Layers, TrendingUp, UserCheck, HardDrive,
+    ShieldCheck, Plus, PanelsTopLeft, Settings, BookOpen, Image,
+    ArrowUpRight, MessageSquare, Users, Globe
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import {
-    AreaChart,
-    Area,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
+import { 
     ResponsiveContainer,
-    PieChart,
-    Pie,
-    Cell,
+    XAxis, YAxis, CartesianGrid, Tooltip,
+    AreaChart, Area,
+    PieChart, Pie, Cell
 } from 'recharts';
 
 // ─── Types ───────────────────────────────────────────────────────────
-
-interface DashboardStats {
-    portfolio_items: { total: number; published: number; featured: number };
-    services: { total: number; published: number; featured: number };
-    insights: { total: number; published: number; featured: number };
-    team_members: { total: number; active: number; featured: number };
-    media_assets: { total: number; images: number; videos: number };
-    users: { total: number; admins: number; editors: number };
-    contact_inquiries: { total: number; new: number; unread: number };
-}
 
 interface RecentActivityItem {
     id: number;
@@ -69,6 +38,16 @@ interface RecentActivity {
     portfolio: RecentActivityItem[];
     insights: RecentActivityItem[];
     inquiries: RecentActivityItem[];
+}
+
+interface DashboardStats {
+    portfolio_items: { total: number; published: number; featured: number };
+    services: { total: number; published: number; featured: number };
+    insights: { total: number; published: number; featured: number };
+    team_members: { total: number; active: number; featured: number };
+    media_assets: { total: number; images: number; videos: number };
+    users: { total: number; admins: number; editors: number };
+    contact_inquiries: { total: number; new: number; unread: number };
 }
 
 interface SeoStats {
@@ -175,12 +154,21 @@ function StatCard({
 }) {
     return (
         <motion.div variants={item}>
-            <Card className={`group relative overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-500 border-t-0 border-r-0 border-b-0 border-l-[3px] border-l-[var(--accent-color)] [--accent-color:${accentColor}]`}>
+            <Card 
+                className="group relative overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-500 border-t-0 border-r-0 border-b-0 border-l-[3px] border-l-[var(--accent-color)]"
+                {...{ style: { '--accent-color': accentColor } as any }}
+            >
                 {/* Glow effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_20%_50%,var(--accent-color)08,transparent_70%)]" />
+                <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" 
+                    {...{ style: { background: `radial-gradient(circle at 20% 50%, ${accentColor}08, transparent 70%)` } }}
+                />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
                     <CardTitle className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">{title}</CardTitle>
-                    <div className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110 bg-[color-mix(in_srgb,var(--accent-color),transparent_85%)] text-[var(--accent-color)]">
+                    <div 
+                        className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110"
+                        {...{ style: { backgroundColor: `color-mix(in srgb, ${accentColor}, transparent 85%)`, color: accentColor } }}
+                    >
                         <Icon className="h-4 w-4" />
                     </div>
                 </CardHeader>

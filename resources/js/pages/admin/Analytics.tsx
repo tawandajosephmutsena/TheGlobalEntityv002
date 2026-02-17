@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import AdminLayout from '@/layouts/AdminLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { 
     Card, CardContent, CardDescription, CardHeader, CardTitle 
 } from '@/components/ui/card';
@@ -17,17 +17,16 @@ import { Button } from '@/components/ui/button';
 import { 
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
 
 interface AnalyticsProps {
     totalVisits?: number;
     uniqueVisitors?: number;
     activeNow?: number;
-    chartData?: any[];
-    browserData?: any[];
-    deviceData?: any[];
-    topPages?: any[];
-    topReferrers?: any[];
+    chartData?: Array<{ date: string; views: number; unique: number }>;
+    browserData?: Array<{ name: string; value: number }>;
+    deviceData?: Array<{ name: string; value: number }>;
+    topPages?: Array<{ url: string; count: number; bounceRate: string }>;
+    topReferrers?: Array<{ referer: string; count: number; conversion: string }>;
 }
 
 export default function Analytics({ 
@@ -243,7 +242,8 @@ export default function Analytics({
                                             </div>
                                             <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                                                 <div 
-                                                    className={`h-full bg-agency-accent transition-all duration-1000 w-[${(browser.value / totalViews) * 100}%]`}
+                                                    className="h-full bg-agency-accent transition-all duration-1000"
+                                                    {...{ style: { width: `${(browser.value / (totalViews || 1)) * 100}%` } }}
                                                 />
                                             </div>
                                         </div>
@@ -304,7 +304,7 @@ export default function Analytics({
                                             <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
                                                 <div 
                                                     className="h-full bg-agency-accent/40"
-                                                    style={{ width: `${(source.count / totalViews) * 100}%` }}
+                                                    {...{ style: { width: `${(source.count / (totalViews || 1)) * 100}%` } }}
                                                 />
                                             </div>
                                         </div>

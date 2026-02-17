@@ -45,19 +45,28 @@ class PerformanceHeaders
         $links[] = '<https://fonts.bunny.net>; rel=preconnect';
         $links[] = '<https://fonts.gstatic.com>; rel=preconnect; crossorigin';
 
-        // 3. Preload CSS (If we can find the main CSS file)
-        // Since we are using Vite, we can try to guess or use a consistent name if configured
-        // However, Vite hashes names. We could use Vite::asset() if we knew the entry.
-        try {
-            // We don't want to crash if manifest is missing
-            // This is a bit hacky but works for preloading the main app assets
-            // In a production environment, you'd ideally parse the manifest once and cache it.
-        } catch (\Exception $e) {
-            // Silently fail
-        }
-
         if (!empty($links)) {
             $response->headers->set('Link', implode(', ', $links), false);
+        }
+
+        // Try to add Vite assets to preload
+        try {
+            $manifestPath = public_path('build/manifest.json');
+            if (file_exists($manifestPath)) {
+                $manifest = json_decode(file_get_contents($manifestPath), true);
+                if (isset($manifest['resources/js/app.tsx'])) {
+                    $appJs = $manifest['resources/js/app.tsx']['file'];
+                    $response->headers->set('Link', "<" . asset("build/{$appJs}") . ">; rel=preload; as=script", false);
+                    
+                    if (isset($manifest['resources/js/app.tsx']['css'])) {
+                        foreach ($manifest['resources/js/app.tsx']['css'] as $cssFile) {
+                            $response->headers->set('Link', "<" . asset("build/{$cssFile}") . ">; rel=preload; as=style", false);
+                        }
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            // Silently fail
         }
 
         // Add Timing-Allow-Origin for performance monitoring

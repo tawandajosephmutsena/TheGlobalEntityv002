@@ -309,15 +309,29 @@ export const SemanticAnalyzer: React.FC<SemanticAnalysisProps> = ({
                             <div>
                                 <label className="text-sm font-medium text-gray-700 mb-2 block">Heading Hierarchy</label>
                                 <div className="space-y-2">
-                                    {analysis.heading_structure.headings.map((heading, index) => (
-                                        <div 
-                                            key={index} 
-                                            className={`flex items-center gap-2 p-2 bg-gray-50 rounded ml-[${(heading.level - 1) * 20}px]`}
-                                        >
-                                            <Badge variant="outline">H{heading.level}</Badge>
-                                            <span className="flex-1 truncate">{heading.text}</span>
-                                            <span className="text-xs text-gray-500">{heading.length} chars</span>
-                                        </div>                                </div>
+                                    {analysis.heading_structure.headings.map((heading, index) => {
+                                        const marginClass = [
+                                            'ml-0',
+                                            'ml-0', // H1
+                                            'ml-4', // H2
+                                            'ml-8', // H3
+                                            'ml-12', // H4
+                                            'ml-16', // H5
+                                            'ml-20', // H6
+                                        ][heading.level] || 'ml-0';
+
+                                        return (
+                                            <div 
+                                                key={index} 
+                                                className={`flex items-center gap-2 p-2 bg-gray-50 rounded ${marginClass}`}
+                                            >
+                                                <Badge variant="outline">H{heading.level}</Badge>
+                                                <span className="flex-1 truncate">{heading.text}</span>
+                                                <span className="text-xs text-gray-500">{heading.length} chars</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         )}
 

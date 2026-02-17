@@ -217,17 +217,31 @@ export function CookieConsent() {
                                                 <p className="text-xs font-semibold text-foreground">Analytics Cookies</p>
                                                 <p className="text-[10px] text-muted-foreground">Help us understand site usage</p>
                                             </div>
-                                            <button
-                                                type="button"
-                                                role="switch"
-                                                aria-checked={analyticsChecked}
-                                                aria-label="Toggle analytics cookies"
-                                                title="Toggle analytics cookies"
-                                                onClick={() => setAnalyticsEnabled(!analyticsEnabled)}
-                                                className={`relative w-9 h-5 rounded-full transition-colors ${analyticsEnabled ? 'bg-primary' : 'bg-muted-foreground/30'}`}
-                                            >
-                                                <span className={`block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] ${analyticsEnabled ? 'translate-x-[18px]' : 'translate-x-[3px]'}`} />
-                                            </button>
+                                            {analyticsEnabled ? (
+                                                <button
+                                                    type="button"
+                                                    role="switch"
+                                                    aria-checked="true"
+                                                    aria-label="Toggle analytics cookies"
+                                                    title="Toggle analytics cookies"
+                                                    onClick={() => setAnalyticsEnabled(false)}
+                                                    className="relative w-9 h-5 rounded-full transition-colors bg-primary"
+                                                >
+                                                    <span className="block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] translate-x-[18px]" />
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    role="switch"
+                                                    aria-checked="false"
+                                                    aria-label="Toggle analytics cookies"
+                                                    title="Toggle analytics cookies"
+                                                    onClick={() => setAnalyticsEnabled(true)}
+                                                    className="relative w-9 h-5 rounded-full transition-colors bg-muted-foreground/30"
+                                                >
+                                                    <span className="block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] translate-x-[3px]" />
+                                                </button>
+                                            )}
                                         </div>
 
                                         {/* Marketing */}
@@ -236,17 +250,31 @@ export function CookieConsent() {
                                                 <p className="text-xs font-semibold text-foreground">Marketing Cookies</p>
                                                 <p className="text-[10px] text-muted-foreground">Personalized ads and content</p>
                                             </div>
-                                            <button
-                                                type="button"
-                                                role="switch"
-                                                aria-checked={marketingChecked}
-                                                aria-label="Toggle marketing cookies"
-                                                title="Toggle marketing cookies"
-                                                onClick={() => setMarketingEnabled(!marketingEnabled)}
-                                                className={`relative w-9 h-5 rounded-full transition-colors ${marketingEnabled ? 'bg-primary' : 'bg-muted-foreground/30'}`}
-                                            >
-                                                <span className={`block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] ${marketingEnabled ? 'translate-x-[18px]' : 'translate-x-[3px]'}`} />
-                                            </button>
+                                            {marketingEnabled ? (
+                                                <button
+                                                    type="button"
+                                                    role="switch"
+                                                    aria-checked="true"
+                                                    aria-label="Toggle marketing cookies"
+                                                    title="Toggle marketing cookies"
+                                                    onClick={() => setMarketingEnabled(false)}
+                                                    className="relative w-9 h-5 rounded-full transition-colors bg-primary"
+                                                >
+                                                    <span className="block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] translate-x-[18px]" />
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    role="switch"
+                                                    aria-checked="false"
+                                                    aria-label="Toggle marketing cookies"
+                                                    title="Toggle marketing cookies"
+                                                    onClick={() => setMarketingEnabled(true)}
+                                                    className="relative w-9 h-5 rounded-full transition-colors bg-muted-foreground/30"
+                                                >
+                                                    <span className="block w-3.5 h-3.5 rounded-full bg-white transition-transform mt-[3px] translate-x-[3px]" />
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </motion.div>

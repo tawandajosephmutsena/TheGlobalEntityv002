@@ -36,7 +36,6 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\XssProtection::class,
             \App\Http\Middleware\SecurityHeaders::class,
             \App\Http\Middleware\PerformanceHeaders::class,
-            \App\Http\Middleware\CompressionMiddleware::class,
             \App\Http\Middleware\HandleRedirects::class,
             \App\Http\Middleware\CanonicalRedirect::class,
             \App\Http\Middleware\InjectSeoData::class,

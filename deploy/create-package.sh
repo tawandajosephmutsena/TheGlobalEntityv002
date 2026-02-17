@@ -173,6 +173,7 @@ VIA SSH TERMINAL:
 [ ] chmod -R 755 storage bootstrap/cache
 [ ] chmod 644 database/database.sqlite
 [ ] php artisan storage:link
+[ ] php artisan optimize
 [ ] php artisan config:cache
 [ ] php artisan route:cache
 [ ] php artisan view:cache

@@ -76,4 +76,4 @@ See `docs/CPANEL_DEPLOYMENT.md` for complete deployment instructions including:
 3. Run the update commands via SSH or cpanel-helper.php:
    - Clear caches
    - Run migrations
-   - Rebuild caches
+   - Rebuild caches: `php artisan optimize`
