@@ -41,8 +41,6 @@ import {
     PieChart,
     Pie,
     Cell,
-    BarChart,
-    Bar,
 } from 'recharts';
 
 // ─── Types ───────────────────────────────────────────────────────────
@@ -166,7 +164,6 @@ function StatCard({
     featured,
     href,
     accentColor,
-    delay = 0,
 }: {
     title: string;
     icon: React.ComponentType<{ className?: string }>;
@@ -175,7 +172,6 @@ function StatCard({
     featured?: number;
     href: string;
     accentColor: string;
-    delay?: number;
 }) {
     return (
         <motion.div variants={item}>
@@ -184,8 +180,8 @@ function StatCard({
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: `radial-gradient(circle at 20% 50%, ${accentColor}08, transparent 70%)` }} />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
                     <CardTitle className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">{title}</CardTitle>
-                    <div className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: `${accentColor}15` }}>
-                        <Icon className="h-4 w-4" style={{ color: accentColor }} />
+                    <div className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
+                        <Icon className="h-4 w-4" />
                     </div>
                 </CardHeader>
                 <CardContent className="relative">
@@ -194,14 +190,14 @@ function StatCard({
                     </div>
                     <div className="flex gap-2 mt-3">
                         {published !== undefined && (
-                            <Badge variant="secondary" className="text-[10px] font-bold px-2 py-0.5 bg-muted/50">
-                                <Eye className="w-3 h-3 mr-1 opacity-60" />
+                            <Badge className="text-[10px] font-bold px-2.5 py-1 bg-emerald-500/15 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20">
+                                <Eye className="w-3 h-3 mr-1" />
                                 {published} published
                             </Badge>
                         )}
                         {featured !== undefined && (
-                            <Badge variant="outline" className="text-[10px] font-bold px-2 py-0.5">
-                                <Star className="w-3 h-3 mr-1 opacity-60" />
+                            <Badge className="text-[10px] font-bold px-2.5 py-1 bg-amber-500/15 text-amber-400 border-amber-500/20 hover:bg-amber-500/20">
+                                <Star className="w-3 h-3 mr-1" />
                                 {featured} featured
                             </Badge>
                         )}
