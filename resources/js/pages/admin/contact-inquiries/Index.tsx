@@ -7,6 +7,7 @@ import { MessageSquare, Eye, Trash2, Mail, Calendar } from 'lucide-react';
 import React from 'react';
 import { PaginatedData } from '@/types';
 import { cn } from '@/lib/utils';
+import DOMPurify from 'dompurify';
 
 interface ContactInquiry {
     id: number;
@@ -135,7 +136,7 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
                                     link.active ? "bg-agency-accent text-agency-primary font-bold" : "bg-muted hover:bg-muted/80 text-muted-foreground",
                                     !link.url && "opacity-50 cursor-not-allowed"
                                 )}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
                             />
                         ))}
                     </div>

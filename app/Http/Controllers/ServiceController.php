@@ -18,7 +18,7 @@ class ServiceController extends Controller
         $version = \Illuminate\Support\Facades\Cache::get('services.cache_version', 1);
         $cacheKey = 'services.index.' . $version;
 
-        $services = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60 * 24, function () {
+        $services = \Illuminate\Support\Facades\Cache::flexible($cacheKey, [60 * 60 * 24, 60 * 60 * 48], function () {
             return Service::with('category')
                 ->published()
                 ->ordered()

@@ -1,7 +1,8 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { Service, Page, Category } from '@/types';
-import { Link, Head, router } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import { ArrowRight, Code, Cpu, Layout, Palette, Shield, Rocket, Globe, Zap, LucideIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
@@ -40,7 +41,10 @@ export default function Services({ services, categories, page }: Props) {
 
     return (
         <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Services - Avant-Garde"}>
-            <Head title={page?.title || "Our Services"} />
+            <SeoHead
+                title={page?.title || "Our Services"}
+                description={page?.meta_description || "Explore our range of creative, digital, and technology services."}
+            />
             
             {(page?.content?.blocks && page.content.blocks.length > 0) ? (
                 <BlockRenderer 
@@ -110,7 +114,7 @@ export default function Services({ services, categories, page }: Props) {
                                         {/* Image Display */}
                                         {service.featured_image && (
                                             <div className="absolute inset-x-0 bottom-0 top-0 opacity-10 group-hover:opacity-30 transition-all duration-700 scale-100 group-hover:scale-105 pointer-events-none">
-                                                <img src={service.featured_image} alt={service.title} className="w-full h-full object-cover filter grayscale" />
+                                                <img src={service.featured_image} alt={service.title} loading="lazy" className="w-full h-full object-cover filter grayscale" />
                                             </div>
                                         )}
 

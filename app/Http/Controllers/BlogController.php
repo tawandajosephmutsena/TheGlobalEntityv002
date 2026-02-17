@@ -23,7 +23,7 @@ class BlogController extends Controller
         $version = \Illuminate\Support\Facades\Cache::get('blog.cache_version', 1);
         $cacheKey = "blog.index.{$version}.{$page}.{$category}.{$search}";
 
-        $insights = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60, function () use ($request) {
+        $insights = \Illuminate\Support\Facades\Cache::flexible($cacheKey, [60 * 60, 60 * 60 * 2], function () use ($request) {
             $query = Insight::published()
                 ->with(['author:id,name,avatar', 'category:id,name,slug']);
 
@@ -44,7 +44,7 @@ class BlogController extends Controller
                 ->paginate(9);
         });
 
-        $categories = \Illuminate\Support\Facades\Cache::remember('blog.categories', 60 * 60 * 24, function () {
+        $categories = \Illuminate\Support\Facades\Cache::flexible('blog.categories', [60 * 60 * 24, 60 * 60 * 48], function () {
             return Category::where('type', 'insight')->get(['id', 'name', 'slug']);
         });
 

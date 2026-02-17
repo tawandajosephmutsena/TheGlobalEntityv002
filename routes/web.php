@@ -7,20 +7,29 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\HomeController;
 
-// Frontend routes with caching
-// Frontend routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Frontend routes with cache headers for public pages
+Route::middleware([App\Http\Middleware\CacheHeadersMiddleware::class . ':public'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/services', [App\Http\Controllers\ServiceController::class, 'index'])->name('services');
-Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
+    Route::get('/services', [App\Http\Controllers\ServiceController::class, 'index'])->name('services');
+    Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
 
-Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio');
-Route::get('/portfolio/{slug}', [App\Http\Controllers\PortfolioController::class, 'show'])->name('portfolio.show');
+    Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio');
+    Route::get('/portfolio/{slug}', [App\Http\Controllers\PortfolioController::class, 'show'])->name('portfolio.show');
 
-Route::get('/team', [App\Http\Controllers\TeamController::class, 'index'])->name('team');
+    Route::get('/team', [App\Http\Controllers\TeamController::class, 'index'])->name('team');
 
-Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
-Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+    Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
+    Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
+
+    Route::get('/contact', function () {
+        // If a CMS page with slug 'contact' exists, use the dynamic renderer
+        if (\App\Models\Page::where('slug', 'contact')->where('is_published', true)->exists()) {
+            return (new \App\Http\Controllers\PageController())->show('contact');
+        }
+        return Inertia::render('Contact');
+    })->name('contact');
+});
 
 // Comments & Reactions (requires authentication)
 Route::middleware('auth')->group(function () {
@@ -33,13 +42,7 @@ Route::get('/documentation', function () {
     return Inertia::render('Documentation');
 })->name('documentation');
 
-Route::get('/contact', function () {
-    // If a CMS page with slug 'contact' exists, use the dynamic renderer
-    if (\App\Models\Page::where('slug', 'contact')->where('is_published', true)->exists()) {
-        return (new \App\Http\Controllers\PageController())->show('contact');
-    }
-    return Inertia::render('Contact');
-})->name('contact');
+
 
 // Demo Routes
 Route::get('/demo/animated-shader-hero', function () {

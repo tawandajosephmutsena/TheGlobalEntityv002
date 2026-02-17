@@ -2,9 +2,11 @@ import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { PortfolioItem, PaginatedData, Page, Category } from '@/types';
 
-import { Link, Head } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import React, { useState } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
+import DOMPurify from 'dompurify';
 
 interface Props {
     portfolioItems: PaginatedData<PortfolioItem>;
@@ -25,7 +27,10 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
 
     return (
         <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Portfolio - Avant-Garde"}>
-            <Head title={page?.title || "Portfolio"} />
+            <SeoHead
+                title={page?.title || "Portfolio"}
+                description={page?.meta_description || "Browse our portfolio of creative projects and digital solutions."}
+            />
             
             {(page?.content?.blocks && page.content.blocks.length > 0) ? (
                 <BlockRenderer 
@@ -107,6 +112,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                                         <img 
                                                             src={project.featured_image} 
                                                             alt={project.title} 
+                                                            loading="lazy"
                                                             className="absolute inset-0 !w-full !h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                                         />
                                                     ) : (
@@ -169,7 +175,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                                     ? 'bg-agency-accent text-agency-primary' 
                                                     : 'bg-white dark:bg-white/5 text-agency-primary/40 dark:text-white/40 hover:bg-agency-accent hover:text-agency-primary'
                                             } ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
                                         />
                                     ))}
                                 </div>

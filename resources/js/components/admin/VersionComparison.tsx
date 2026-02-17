@@ -15,6 +15,7 @@ import {
     User
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import DOMPurify from 'dompurify';
 
 interface VersionDifference {
     field: string;
@@ -92,7 +93,7 @@ export default function VersionComparison({
                 <div className="max-h-32 overflow-y-auto">
                     <div 
                         className="prose prose-sm max-w-none text-xs"
-                        dangerouslySetInnerHTML={{ __html: value.substring(0, 500) + (value.length > 500 ? '...' : '') }}
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(value.substring(0, 500) + (value.length > 500 ? '...' : '')) }}
                     />
                 </div>
             );

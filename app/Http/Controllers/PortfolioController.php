@@ -19,7 +19,7 @@ class PortfolioController extends Controller
         $version = \Illuminate\Support\Facades\Cache::get('portfolio.cache_version', 1);
         $cacheKey = 'portfolio.index.' . $version . '.' . $page;
 
-        $portfolioItems = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60 * 60, function () {
+        $portfolioItems = \Illuminate\Support\Facades\Cache::flexible($cacheKey, [60 * 60, 60 * 60 * 2], function () {
             return PortfolioItem::with('category')
                 ->published()
                 ->ordered()

@@ -1,11 +1,13 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { Insight, PaginatedData, Category, Page } from '@/types';
-import { Link, Head, useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import { cn } from '@/lib/utils';
 import { Clock, User as UserIcon, ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import React, { useState } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
+import DOMPurify from 'dompurify';
 
 interface Props {
     insights: PaginatedData<Insight>;
@@ -41,7 +43,10 @@ export default function Blog({ insights, categories, page }: Props) {
 
     return (
         <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Blog - Avant-Garde"}>
-            <Head title={page?.title || "Insights & Thoughts"} />
+            <SeoHead
+                title={page?.title || "Insights & Thoughts"}
+                description={page?.meta_description || "Explore our latest insights, articles, and thought leadership pieces."}
+            />
             
             {(page?.content?.blocks && page.content.blocks.length > 0) ? (
                 <BlockRenderer 
@@ -122,6 +127,7 @@ export default function Blog({ insights, categories, page }: Props) {
                                                         <img 
                                                             src={post.featured_image} 
                                                             alt={post.title} 
+                                                            loading="lazy"
                                                             className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
                                                         />
                                                     ) : (
@@ -185,7 +191,7 @@ export default function Blog({ insights, categories, page }: Props) {
                                                     ? 'bg-agency-accent text-agency-primary' 
                                                     : 'bg-white dark:bg-white/5 text-agency-primary/40 dark:text-white/40 hover:bg-agency-accent hover:text-agency-primary'
                                             } ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
                                         />
                                     ))}
                                 </div>

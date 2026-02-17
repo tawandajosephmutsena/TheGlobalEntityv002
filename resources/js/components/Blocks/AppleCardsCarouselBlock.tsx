@@ -1,5 +1,6 @@
 import React from 'react';
 import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
+import DOMPurify from 'dompurify';
 
 interface BaseCollectionItem {
     id: number;
@@ -96,7 +97,7 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
                 title: card.title,
                 category: card.category,
                 link: card.link,
-                content: <div dangerouslySetInnerHTML={{ __html: card.content || '' }} className="prose dark:prose-invert max-w-none text-base md:text-xl font-sans" />
+                content: <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(card.content || '') }} className="prose dark:prose-invert max-w-none text-base md:text-xl font-sans" />
             }} 
             index={index} 
             layout={true} 

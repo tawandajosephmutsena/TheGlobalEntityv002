@@ -21,6 +21,7 @@ import { Check, Copy, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlertError from './alert-error';
 import { Spinner } from './ui/spinner';
+import DOMPurify from 'dompurify';
 
 function GridScanIcon() {
     return (
@@ -77,7 +78,7 @@ function TwoFactorSetupStep({
                                     <div
                                         className="aspect-square w-full rounded-lg bg-white p-2 [&_svg]:size-full"
                                         dangerouslySetInnerHTML={{
-                                            __html: qrCodeSvg,
+                                            __html: DOMPurify.sanitize(qrCodeSvg, { USE_PROFILES: { svg: true } }),
                                         }}
                                     />
                                 ) : (
@@ -112,11 +113,13 @@ function TwoFactorSetupStep({
                                         type="text"
                                         readOnly
                                         value={manualSetupKey}
+                                        aria-label="Two-factor authentication setup key"
                                         className="h-full w-full bg-background p-3 text-foreground outline-none"
                                     />
                                     <button
                                         onClick={() => copy(manualSetupKey)}
                                         className="border-l border-border px-3 hover:bg-muted"
+                                        title="Copy setup key"
                                     >
                                         <IconComponent className="w-4" />
                                     </button>

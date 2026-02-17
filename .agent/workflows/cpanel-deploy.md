@@ -59,9 +59,9 @@ chmod 644 database/database.sqlite
 php artisan storage:link
 ```
 
-13. Cache for production:
+13. Optimize for production (caches config, routes, views, events):
 ```bash
-php artisan config:cache && php artisan route:cache && php artisan view:cache
+php artisan optimize
 ```
 
 14. Run migrations if needed:
@@ -69,15 +69,25 @@ php artisan config:cache && php artisan route:cache && php artisan view:cache
 php artisan migrate --force
 ```
 
+15. Restart SSR process (if SSR is enabled):
+```bash
+php artisan inertia:stop-ssr; php artisan inertia:start-ssr &
+```
+
 ## Verification
 
-15. Visit https://your-domain.com and verify the site loads
+16. Visit https://your-domain.com and verify the site loads
 
-16. Test login/authentication
+17. Test login/authentication
 
-17. Check that images and uploads work
+18. Check that images and uploads work
 
-18. Verify admin panel access
+19. Verify admin panel access
+
+20. Check SSR health (if enabled):
+```bash
+php artisan inertia:check-ssr
+```
 
 ## Troubleshooting
 

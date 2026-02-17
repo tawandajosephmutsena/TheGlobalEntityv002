@@ -1,7 +1,8 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { PortfolioItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import React from 'react';
 import { ArrowLeft, Zap, ArrowUpRight } from 'lucide-react';
 import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export default function PortfolioShow({ portfolioItem }: Props) {
+    const { site } = usePage<{ site: { url: string; name: string } }>().props;
     const galleryCards = portfolioItem.gallery?.map((img, index) => (
         <Card
             key={index}
@@ -31,27 +33,28 @@ export default function PortfolioShow({ portfolioItem }: Props) {
 
     return (
         <MainLayout title={`${portfolioItem.title} - Avant-Garde Portfolio`}>
-            <Head title={portfolioItem.title}>
-                <script type="application/ld+json">
-                    {JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "CreativeWork",
-                        "name": portfolioItem.title,
-                        "description": portfolioItem.description,
-                        "image": portfolioItem.featured_image,
-                        "dateCreated": portfolioItem.project_date,
-                        "author": {
-                            "@type": "Organization",
-                            "name": "Avant-Garde Creative"
-                        },
-                        "copyrightHolder": {
-                            "@type": "Organization",
-                            "name": portfolioItem.client || "Avant-Garde Creative" 
-                        },
-                        "keywords": portfolioItem.technologies?.join(', ')
-                    })}
-                </script>
-            </Head>
+            <SeoHead
+                title={portfolioItem.title}
+                description={portfolioItem.description}
+                image={portfolioItem.featured_image}
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'CreativeWork',
+                    'name': portfolioItem.title,
+                    'description': portfolioItem.description,
+                    'image': portfolioItem.featured_image,
+                    'dateCreated': portfolioItem.project_date,
+                    'author': {
+                        '@type': 'Organization',
+                        'name': site?.name || 'Avant-Garde Creative',
+                    },
+                    'copyrightHolder': {
+                        '@type': 'Organization',
+                        'name': portfolioItem.client || 'Avant-Garde Creative',
+                    },
+                    'keywords': portfolioItem.technologies?.join(', '),
+                }}
+            />
 
             {/* Immersive Hero Section - Service Style */}
             <section className="relative pt-32 pb-20 overflow-hidden bg-background">

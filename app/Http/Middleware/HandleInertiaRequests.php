@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         // Fetch all settings and theme presets from cache (processed together for performance)
-        $cachedData = \Illuminate\Support\Facades\Cache::remember('site_settings_all', 60 * 60, function () {
+        $cachedData = \Illuminate\Support\Facades\Cache::flexible('site_settings_all', [60 * 60, 60 * 60 * 2], function () {
             $allSettings = \App\Models\Setting::all();
 
             // Flat format for easy access - respects types and avoids unwrapping actual arrays (like JSON)
@@ -78,9 +79,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
 
-            'auth' => [
+            'auth' => fn () => [
                 'user' => $request->user() ? (function ($user) {
-                    // Eager load roles and permissions if not already loaded to optimize
                     $user->loadMissing('roles.permissions');
 
                     return array_merge($user->toArray(), [
@@ -165,11 +165,11 @@ class HandleInertiaRequests extends Middleware
                 ],
                 'radius' => $settings['border_radius'] ?? '0.5rem',
             ],
-            'ai' => [
+            'ai' => Inertia::once(fn () => [
                 'citationPreference' => config('seo.ai_optimization.citation_preference', 'with-attribution'),
                 'contentRating' => config('seo.ai_optimization.content_rating', 'safe'),
                 'llmsTxtUrl' => url('/llms.txt'),
-            ],
+            ]),
             'seo' => [
                 'site_name' => $settings['site_name'] ?? 'Ottomate',
                 'default_description' => $settings['site_description'] ?? 'High-Performance Website Platform',
@@ -178,9 +178,9 @@ class HandleInertiaRequests extends Middleware
                 'twitter_handle' => $settings['twitter_handle'] ?? '@ottomate',
             ],
             'nonce' => \Illuminate\Support\Facades\Vite::cspNonce(),
-            'themePresets' => $themePresets,
-            'settings' => $groupedSettings,
-            'menus' => \Illuminate\Support\Facades\Cache::remember('navigation_menus', 60 * 60, function () {
+            'themePresets' => Inertia::once(fn () => $themePresets),
+            'settings' => Inertia::once(fn () => $groupedSettings),
+            'menus' => Inertia::once(fn () => \Illuminate\Support\Facades\Cache::flexible('navigation_menus', [60 * 60, 60 * 60 * 2], function () {
 
                 $mainMenu = \App\Models\NavigationMenu::where('slug', 'main-menu')
                     ->where('is_active', true)
@@ -214,7 +214,7 @@ class HandleInertiaRequests extends Middleware
                         ];
                     }) : [],
                 ];
-            }),
+            })),
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),

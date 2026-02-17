@@ -1,7 +1,7 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { TeamMember } from '@/types';
-import { Head } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import { Github, Linkedin, Twitter, ArrowUpRight, Globe } from 'lucide-react';
 import React from 'react';
 
@@ -12,7 +12,10 @@ interface Props {
 export default function Team({ teamMembers }: Props) {
     return (
         <MainLayout title="Team - Avant-Garde">
-            <Head title="Our Team" />
+            <SeoHead
+                title="Our Team"
+                description="Meet the talented team behind our creative digital agency."
+            />
             
             {/* Minimal High-Impact Hero */}
             <section className="bg-white dark:bg-agency-dark pt-40 pb-20 relative overflow-hidden">
@@ -49,6 +52,7 @@ export default function Team({ teamMembers }: Props) {
                                         <img 
                                             src={member.avatar} 
                                             alt={member.name} 
+                                            loading="lazy"
                                             className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
                                         />
                                     ) : (

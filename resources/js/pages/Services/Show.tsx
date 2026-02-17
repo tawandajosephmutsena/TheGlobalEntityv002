@@ -1,7 +1,8 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
 import { Service } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import { ArrowLeft, CheckCircle2, ArrowRight } from 'lucide-react';
 import React from 'react';
 import DOMPurify from 'dompurify';
@@ -14,30 +15,32 @@ export default function ServiceShow({ service }: Props) {
     const content = (service.content as unknown as Record<string, unknown>) || {};
     const scope = (content.scope as string) || '';
     const body = (content.body as string) || '';
+    const { site } = usePage<{ site: { url: string; name: string } }>().props;
 
     return (
         <MainLayout title={`${service.title} - Avant-Garde Services`}>
-            <Head title={service.title}>
-                <script type="application/ld+json">
-                    {JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "Service",
-                        "name": service.title,
-                        "description": service.description,
-                        "image": service.featured_image,
-                        "provider": {
-                            "@type": "Organization",
-                            "name": "Avant-Garde Creative",
-                            "url": "https://avantgarde.test"
-                        },
-                        "offers": {
-                            "@type": "Offer",
-                            "priceCurrency": "USD",
-                            "price": service.price_range || "Custom Quote"
-                        }
-                    })}
-                </script>
-            </Head>
+            <SeoHead
+                title={service.title}
+                description={service.description}
+                image={service.featured_image}
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'Service',
+                    'name': service.title,
+                    'description': service.description,
+                    'image': service.featured_image,
+                    'provider': {
+                        '@type': 'Organization',
+                        'name': site?.name || 'Avant-Garde Creative',
+                        'url': site?.url || (typeof window !== 'undefined' ? window.location.origin : ''),
+                    },
+                    'offers': {
+                        '@type': 'Offer',
+                        'priceCurrency': 'USD',
+                        'price': service.price_range || 'Custom Quote',
+                    },
+                }}
+            />
 
             {/* Service Hero - Theme Consistent */}
             <section className="relative pt-48 pb-32 overflow-hidden bg-background">

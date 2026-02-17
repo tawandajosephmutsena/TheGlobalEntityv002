@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Request Logging
+    |--------------------------------------------------------------------------
+    |
+    | Enable request logging via the terminable RequestLogMiddleware.
+    | In production this is always on. Set LOG_REQUESTS=true in .env
+    | to enable in other environments.
+    |
+    */
+
+    'log_requests' => (bool) env('LOG_REQUESTS', false),
+
 ];

@@ -1,6 +1,7 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import MainLayout from '@/layouts/MainLayout';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 // import { cn } from '@/lib/utils'; // Removed unused import
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import React, { useState } from 'react';
@@ -31,7 +32,10 @@ export default function Contact() {
 
     return (
         <MainLayout title="Contact Us - Avant-Garde">
-            <Head title="Contact Us" />
+            <SeoHead
+                title="Contact Us"
+                description="Get in touch with our team. We'd love to hear about your project."
+            />
             
             {/* Immersive Hero Section */}
             <section className="bg-white dark:bg-agency-dark pt-40 pb-20 relative overflow-hidden">

@@ -3,10 +3,12 @@ import CommentSection from '@/components/Comments/CommentSection';
 import ReactionButton from '@/components/Reactions/ReactionButton';
 import MainLayout from '@/layouts/MainLayout';
 import { Comment, Insight, ReactionType } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { SeoHead } from '@/components/SeoHead';
 import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
+import DOMPurify from 'dompurify';
 
 
 interface Props {
@@ -18,6 +20,8 @@ interface Props {
 }
 
 export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [] }: Props) {
+    const { site } = usePage<{ site: { url: string; logo: string; name: string } }>().props;
+
     const handleShare = (platform: 'facebook' | 'twitter' | 'linkedin') => {
         const url = encodeURIComponent(window.location.origin + window.location.pathname);
         const text = encodeURIComponent(insight.title);
@@ -70,31 +74,36 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
 
     return (
         <MainLayout title={`${insight.title} - Avant-Garde Insights`}>
-            <Head title={insight.title}>
-                <script type="application/ld+json">
-                    {JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "BlogPosting",
-                        "headline": insight.title,
-                        "description": insight.excerpt,
-                        "image": insight.featured_image,
-                        "datePublished": insight.published_at,
-                        "dateModified": insight.updated_at,
-                        "author": {
-                            "@type": "Person",
-                            "name": insight.author?.name || "Avant-Garde"
+            <SeoHead
+                title={insight.title}
+                description={insight.excerpt}
+                type="article"
+                image={insight.featured_image}
+                publishedTime={insight.published_at}
+                modifiedTime={insight.updated_at}
+                author={insight.author?.name || 'Avant-Garde'}
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'BlogPosting',
+                    'headline': insight.title,
+                    'description': insight.excerpt,
+                    'image': insight.featured_image,
+                    'datePublished': insight.published_at,
+                    'dateModified': insight.updated_at,
+                    'author': {
+                        '@type': 'Person',
+                        'name': insight.author?.name || 'Avant-Garde',
+                    },
+                    'publisher': {
+                        '@type': 'Organization',
+                        'name': site?.name || 'Avant-Garde Creative',
+                        'logo': {
+                            '@type': 'ImageObject',
+                            'url': `${site?.url || ''}/logo.png`,
                         },
-                        "publisher": {
-                            "@type": "Organization",
-                            "name": "Avant-Garde Creative",
-                            "logo": {
-                                "@type": "ImageObject",
-                                "url": "https://avantgarde.test/logo.png" 
-                            }
-                        }
-                    })}
-                </script>
-            </Head>
+                    },
+                }}
+            />
 
             {/* Reading Progress Bar (Fixed at top) */}
             <div className="fixed top-[80px] left-0 w-full h-1 z-50 bg-agency-accent/20">
@@ -190,7 +199,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                             <div className="prose prose-xl md:prose-2xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-a:text-agency-accent prose-strong:text-agency-primary dark:prose-strong:text-white">
                                 {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
                                 {insight.content?.body ? (
-                                    <div dangerouslySetInnerHTML={{ __html: String(insight.content.body) }} />
+                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
                                 ) : (
                                     <p className="italic opacity-40">Article content is being developed...</p>
                                 )}
@@ -266,6 +275,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                                 <img 
                                                     src={post.featured_image} 
                                                     alt={post.title} 
+                                                    loading="lazy"
                                                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
                                                 />
                                             )}

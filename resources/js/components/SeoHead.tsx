@@ -4,16 +4,16 @@ import { SharedData } from '@/types';
 
 interface SeoData {
     title?: string;
-    description?: string;
+    description?: string | null;
     keywords?: string[];
-    image?: string;
+    image?: string | null;
     imageAlt?: string;
     url?: string;
     canonicalUrl?: string;
     type?: string;
     locale?: string;
-    publishedTime?: string;
-    modifiedTime?: string;
+    publishedTime?: string | null;
+    modifiedTime?: string | null;
     author?: string;
     twitterCard?: 'summary' | 'summary_large_image' | 'app' | 'player';
     twitterCreator?: string;
@@ -22,12 +22,30 @@ interface SeoData {
     noFollow?: boolean;
     noArchive?: boolean;
     noSnippet?: boolean;
-    structuredData?: Record<string, any>;
+    structuredData?: Record<string, unknown>;
     hreflang?: Array<{ lang: string; url: string }>;
 }
 
-interface SeoHeadProps extends SeoData {
-    // Legacy props for backward compatibility
+type SeoHeadProps = SeoData;
+
+interface SeoSharedData {
+    site_name?: string;
+    default_description?: string;
+    site_url?: string;
+    default_og_image?: string;
+    twitter_handle?: string;
+    title_separator?: string;
+    facebook_app_id?: string;
+    verification?: {
+        google?: string | null;
+        bing?: string | null;
+        yandex?: string | null;
+        pinterest?: string | null;
+    };
+    analytics?: {
+        google_analytics_id?: string | null;
+        google_tag_manager_id?: string | null;
+    };
 }
 
 export const SeoHead: React.FC<SeoHeadProps> = ({
@@ -53,7 +71,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     structuredData,
     hreflang = [],
 }) => {
-    const { site, seo } = usePage<SharedData & { seo?: any }>().props;
+    const { site, seo } = usePage<SharedData & { seo?: SeoSharedData }>().props;
     
     // Fallback defaults from config or site data
     const siteName = seo?.site_name || site?.name || 'Avant-Garde CMS';
@@ -67,7 +85,9 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     // Computed values
     const metaTitle = title ? `${title}${titleSeparator}${siteName}` : siteName;
     const metaDescription = description || siteDescription;
-    const metaImage = image || defaultImage;
+    const rawImage = image || defaultImage;
+    // Ensure OG image is an absolute URL (social crawlers require it)
+    const metaImage = rawImage && rawImage.startsWith('/') ? `${siteUrl}${rawImage}` : rawImage;
     const metaImageAlt = imageAlt || title || siteName;
     const metaUrl = canonicalUrl || url || (typeof window !== 'undefined' ? window.location.href : siteUrl);
     
