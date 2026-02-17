@@ -312,15 +312,12 @@ export const SemanticAnalyzer: React.FC<SemanticAnalysisProps> = ({
                                     {analysis.heading_structure.headings.map((heading, index) => (
                                         <div 
                                             key={index} 
-                                            className="flex items-center gap-2 p-2 bg-gray-50 rounded"
-                                            style={{ marginLeft: `${(heading.level - 1) * 20}px` }}
+                                            className={`flex items-center gap-2 p-2 bg-gray-50 rounded ml-[${(heading.level - 1) * 20}px]`}
                                         >
                                             <Badge variant="outline">H{heading.level}</Badge>
                                             <span className="flex-1 truncate">{heading.text}</span>
                                             <span className="text-xs text-gray-500">{heading.length} chars</span>
-                                        </div>
-                                    ))}
-                                </div>
+                                        </div>                                </div>
                             </div>
                         )}
 

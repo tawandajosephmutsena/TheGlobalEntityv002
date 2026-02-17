@@ -27,11 +27,6 @@ const footerLinks = {
         { name: 'Contact', href: '/contact' },
         { name: 'Careers', href: '/careers' },
     ],
-    legal: [
-        { name: 'Privacy Policy', href: '/privacy' },
-        { name: 'Terms of Service', href: '/terms' },
-        { name: 'Cookie Policy', href: '/cookies' },
-    ],
 };
 
 
@@ -40,6 +35,14 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const { props } = usePage<SharedData>();
     const site = props.site || { name: 'Ottomate', logo: '', tagline: 'High-Performance Website Platform' };
     const menuItems = props.menus?.main || [];
+    const compliance = props.site?.compliance;
+
+    // Build legal links dynamically from compliance settings
+    const legalLinks = [
+        { name: 'Privacy Policy', href: compliance?.privacy_policy_url || '/privacy' },
+        { name: 'Terms of Service', href: compliance?.terms_url || '/terms' },
+        { name: 'Cookie Policy', href: compliance?.cookie_policy_url || '/cookies' },
+    ];
 
     // Helper to check social visibility
     const isSocialVisible = (key: string) => {
@@ -183,7 +186,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     <div className="flex items-center gap-8 order-2 md:order-1">
                         <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'OTTOMATE'} {footerCopyrightSuffix}</span>
                         <div className="hidden md:flex gap-6">
-                            {footerLinks.legal.map((link) => (
+                            {legalLinks.map((link) => (
                                 <Link key={link.name} href={link.href} className="text-xs opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
                                     {link.name}
                                 </Link>

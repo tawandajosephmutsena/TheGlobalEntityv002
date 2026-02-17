@@ -45,15 +45,7 @@ export default function ServiceShow({ service }: Props) {
             {/* Service Hero - Theme Consistent */}
             <section className="relative pt-48 pb-32 overflow-hidden bg-background">
                 {/* Animated Grid Pattern */}
-                <div className="absolute inset-0 opacity-[0.15]"
-                    style={{
-                        backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
-                        backgroundSize: '40px 40px',
-                        maskImage: 'radial-gradient(circle at center, black 60%, transparent 100%)',
-                        color: 'var(--foreground)'
-                    }}
-                />
-                
+                <div className="absolute inset-0 opacity-[0.15] [background-image:linear-gradient(currentColor_1px,transparent_1px),linear-gradient(90deg,currentColor_1px,transparent_1px)] bg-[length:40px_40px] [mask-image:radial-gradient(circle_at_center,black_60%,transparent_100%)] text-[var(--foreground)]" />                
                 {/* Floating Elements for depth */}
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-pulse mix-blend-multiply dark:mix-blend-screen" />
                 <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-[80px] animate-pulse delay-1000 mix-blend-multiply dark:mix-blend-screen" />

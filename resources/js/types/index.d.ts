@@ -66,6 +66,18 @@ export interface SharedData {
             back_to_top?: string;
             copyright_suffix?: string;
         };
+        compliance?: {
+            cookie_consent_enabled?: boolean;
+            cookie_consent_message?: string;
+            cookie_consent_accept_text?: string;
+            cookie_consent_reject_text?: string;
+            cookie_consent_style?: 'bottom-bar' | 'top-bar' | 'bottom-left' | 'bottom-right';
+            analytics_enabled?: boolean;
+            google_analytics_id?: string;
+            privacy_policy_url?: string;
+            terms_url?: string;
+            cookie_policy_url?: string;
+        };
     };
     breadcrumbs?: Array<{
         title: string;

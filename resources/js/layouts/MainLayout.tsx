@@ -13,6 +13,8 @@ import { router } from '@inertiajs/react';
 import { CommandPalette } from '@/components/CommandPalette';
 import { ToastContainer } from '@/components/ToastContainer';
 import { Toaster } from 'sonner';
+import CookieConsent from '@/components/CookieConsent';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 
 declare const gtag: (command: string, action: string, params?: Record<string, unknown>) => void;
@@ -188,6 +190,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                     </div>
                 )}
             </div>
+
+            {/* Compliance components */}
+            <GoogleAnalytics />
+            <CookieConsent />
 
             {/* Web Core Vitals: Performance monitoring script */}
             <script

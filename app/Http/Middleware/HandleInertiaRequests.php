@@ -143,6 +143,28 @@ class HandleInertiaRequests extends Middleware
                     'back_to_top' => $settings['footer_back_to_top'] ?? null,
                     'copyright_suffix' => $settings['footer_copyright_suffix'] ?? null,
                 ],
+                'compliance' => [
+                    'cookie_consent_enabled' => (function ($val) {
+                        if ($val === null) return false;
+                        $v = is_array($val) ? ($val[0] ?? 'false') : $val;
+                        if (is_bool($v)) return $v;
+                        return in_array(strtolower((string) $v), ['true', '1', 'yes', 'on'], true);
+                    })($settings['cookie_consent_enabled'] ?? null),
+                    'cookie_consent_message' => $settings['cookie_consent_message'] ?? 'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.',
+                    'cookie_consent_accept_text' => $settings['cookie_consent_accept_text'] ?? 'Accept All',
+                    'cookie_consent_reject_text' => $settings['cookie_consent_reject_text'] ?? 'Reject Non-Essential',
+                    'cookie_consent_style' => $settings['cookie_consent_style'] ?? 'bottom-bar',
+                    'analytics_enabled' => (function ($val) {
+                        if ($val === null) return false;
+                        $v = is_array($val) ? ($val[0] ?? 'false') : $val;
+                        if (is_bool($v)) return $v;
+                        return in_array(strtolower((string) $v), ['true', '1', 'yes', 'on'], true);
+                    })($settings['analytics_enabled'] ?? null),
+                    'google_analytics_id' => $settings['google_analytics_id'] ?? null,
+                    'privacy_policy_url' => $settings['privacy_policy_page'] ?? '/privacy',
+                    'terms_url' => $settings['terms_page'] ?? '/terms',
+                    'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',
+                ],
             ],
             'theme' => [
                 'preset' => $settings['theme_preset'] ?? config('theme-presets.default'),

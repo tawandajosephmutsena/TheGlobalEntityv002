@@ -116,7 +116,30 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
     seo: [
         { key: 'default_meta_title', label: 'Default Meta Title', type: 'text', placeholder: 'Avant-Garde Experience' },
         { key: 'default_meta_description', label: 'Default Meta Description', type: 'textarea', placeholder: 'Default description for SEO...' },
-        { key: 'google_analytics_id', label: 'Google Analytics ID', type: 'text', placeholder: 'G-XXXXXXXXXX' },
+        { key: 'google_analytics_id', label: 'Google Analytics ID', type: 'text', placeholder: 'G-XXXXXXXXXX', description: 'Your Google Analytics Measurement ID (e.g. G-XXXXXXXXXX). Also requires enabling Analytics in the Compliance tab.' },
+    ],
+    compliance: [
+        { key: 'cookie_consent_enabled', label: 'Enable Cookie Consent Banner', type: 'boolean', placeholder: 'false', description: 'Show a GDPR/POPIA-compliant cookie consent banner to all visitors.' },
+        { key: 'cookie_consent_message', label: 'Cookie Banner Message', type: 'textarea', placeholder: 'We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.', description: 'The main message displayed in the cookie consent banner.' },
+        { key: 'cookie_consent_accept_text', label: 'Accept Button Text', type: 'text', placeholder: 'Accept All' },
+        { key: 'cookie_consent_reject_text', label: 'Reject Button Text', type: 'text', placeholder: 'Reject Non-Essential' },
+        { 
+            key: 'cookie_consent_style', 
+            label: 'Banner Position', 
+            type: 'select', 
+            placeholder: 'bottom-bar',
+            description: 'Where the cookie consent banner appears on the page.',
+            options: [
+                { value: 'bottom-bar', label: 'Bottom Bar (Full Width)' },
+                { value: 'top-bar', label: 'Top Bar (Full Width)' },
+                { value: 'bottom-left', label: 'Bottom Left (Card)' },
+                { value: 'bottom-right', label: 'Bottom Right (Card)' },
+            ]
+        },
+        { key: 'analytics_enabled', label: 'Enable Google Analytics', type: 'boolean', placeholder: 'false', description: 'Load Google Analytics tracking. Requires a valid GA Measurement ID in the SEO tab. Analytics will only load after the visitor accepts analytics cookies.' },
+        { key: 'privacy_policy_page', label: 'Privacy Policy URL', type: 'text', placeholder: '/privacy', description: 'Path to your privacy policy page. Used in the cookie banner and footer.' },
+        { key: 'terms_page', label: 'Terms of Service URL', type: 'text', placeholder: '/terms', description: 'Path to your terms of service page. Used in the footer.' },
+        { key: 'cookie_policy_page', label: 'Cookie Policy URL', type: 'text', placeholder: '/cookies', description: 'Path to your cookie policy page. Used in the cookie banner and footer.' },
     ],
     theme: [
         { 
@@ -545,6 +568,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                             <TabsTrigger value="social">Social Media</TabsTrigger>
                             <TabsTrigger value="seo">SEO & Analytics</TabsTrigger>
                             <TabsTrigger value="theme">Theme & Branding</TabsTrigger>
+                            <TabsTrigger value="compliance">Compliance</TabsTrigger>
                         </TabsList>
 
                         {Object.entries(SETTINGS_STRUCT).map(([group, items]) => (
@@ -606,12 +630,11 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                             {/* Color swatches */}
                                                             <div className="flex gap-1 mb-2">
                                                                 <div 
-                                                                    className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ '--bg-color': preset.light.primary } as React.CSSProperties}
-                                                                    title="Primary"
-                                                                >
-                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
-                                                                </div>
+                                                                className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.primary}]`}
+                                                                title="Primary"
+                                                            >
+                                                                <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                            </div>
                                                                 <div 
                                                                     className="w-6 h-6 rounded-full border border-border/50"
                                                                     style={{ '--bg-color': preset.light.accent || preset.light.secondary } as React.CSSProperties}
@@ -620,12 +643,11 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                                     <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
                                                                 </div>
                                                                 <div 
-                                                                    className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ '--bg-color': preset.light.background } as React.CSSProperties}
-                                                                    title="Background"
-                                                                >
-                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
-                                                                </div>
+                                                                className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.foreground}]`}
+                                                                title="Foreground"
+                                                            >
+                                                                <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                            </div>
                                                             </div>
                                                             <p className="font-medium text-sm truncate">{preset.name}</p>
                                                             <p className="text-xs text-muted-foreground truncate">{preset.description}</p>

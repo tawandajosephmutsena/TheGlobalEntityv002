@@ -145,7 +145,7 @@ function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: 
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">{label}</p>
             {payload.map((entry, i) => (
                 <div key={i} className="flex items-center gap-2 text-sm">
-                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                    <span className={`w-2 h-2 rounded-full bg-[${entry.color}]`} />
                     <span className="font-semibold capitalize">{entry.name}:</span>
                     <span className="font-black">{entry.value}</span>
                 </div>
@@ -175,12 +175,12 @@ function StatCard({
 }) {
     return (
         <motion.div variants={item}>
-            <Card className="group relative overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-500 border-t-0 border-r-0 border-b-0 border-l-[3px]" style={{ borderLeftColor: accentColor }}>
+            <Card className={`group relative overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-500 border-t-0 border-r-0 border-b-0 border-l-[3px] border-l-[var(--accent-color)] [--accent-color:${accentColor}]`}>
                 {/* Glow effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: `radial-gradient(circle at 20% 50%, ${accentColor}08, transparent 70%)` }} />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_20%_50%,var(--accent-color)08,transparent_70%)]" />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative">
                     <CardTitle className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground">{title}</CardTitle>
-                    <div className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: `${accentColor}15`, color: accentColor }}>
+                    <div className="p-2 rounded-lg transition-all duration-300 group-hover:scale-110 bg-[color-mix(in_srgb,var(--accent-color),transparent_85%)] text-[var(--accent-color)]">
                         <Icon className="h-4 w-4" />
                     </div>
                 </CardHeader>
@@ -232,8 +232,8 @@ function QuickActionCard({
     return (
         <motion.div variants={item}>
             <Link href={href} className="block">
-                <Card className="group relative overflow-hidden hover:shadow-lg transition-all duration-500 cursor-pointer h-full border-border/30 hover:border-border/60">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: gradient || 'radial-gradient(circle at 50% 0%, hsl(var(--primary) / 0.05), transparent 70%)' }} />
+                <Card className={`group relative overflow-hidden hover:shadow-lg transition-all duration-500 cursor-pointer h-full border-border/30 hover:border-border/60 [--action-gradient:${gradient || 'radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.05),transparent_70%)'}]`}>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[var(--action-gradient)]" />
                     <CardContent className="pt-5 pb-4 relative">
                         <div className="flex items-start gap-3">
                             <div className="p-2.5 rounded-xl bg-muted/60 group-hover:bg-muted transition-colors duration-300 shrink-0">
@@ -312,7 +312,7 @@ function AnimatedProgressBar({
             <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                 <motion.div
                     className="h-full rounded-full"
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: color } as React.CSSProperties}
                     initial={{ width: 0 }}
                     animate={{ width: `${value}%` }}
                     transition={{ duration: 1.2, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
