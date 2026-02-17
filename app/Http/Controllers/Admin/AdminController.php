@@ -64,25 +64,31 @@ class AdminController extends Controller
         $recent_insights = Insight::latest()->take(5)->get(['id', 'title', 'created_at', 'is_published']);
         $recent_inquiries = ContactInquiry::latest()->take(5)->get(['id', 'name', 'subject', 'status', 'created_at']);
 
-        // Visit Activity (Last 14 days)
-        $endDate = now();
-        $startDate = now()->subDays(13);
-        $visits = \App\Models\Visit::selectRaw('DATE(created_at) as date, count(*) as count')
-            ->whereBetween('created_at', [$startDate->startOfDay(), $endDate->endOfDay()])
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get()
-            ->pluck('count', 'date');
+        // Content distribution for PieChart
+        $content_distribution = [
+            ['name' => 'Portfolio', 'value' => PortfolioItem::count(), 'color' => '#C25E2E'],
+            ['name' => 'Services', 'value' => Service::count(), 'color' => '#3b82f6'],
+            ['name' => 'Insights', 'value' => Insight::count(), 'color' => '#a855f7'],
+            ['name' => 'Pages', 'value' => Page::count(), 'color' => '#10b981'],
+        ];
 
-        $system_activity = [];
-        for ($i = 0; $i < 14; $i++) {
-            $date = $startDate->clone()->addDays($i)->format('Y-m-d');
-            $system_activity[] = $visits->get($date, 0);
+        // Content timeline (items created per day, last 7 days)
+        $content_timeline = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dayStart = $date->copy()->startOfDay();
+            $dayEnd = $date->copy()->endOfDay();
+            $content_timeline[] = [
+                'date' => $date->format('M d'),
+                'portfolio' => PortfolioItem::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
+                'insights' => Insight::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
+                'services' => Service::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
+            ];
         }
 
         // SEO Stats
         $seo_stats = [
-            'average_score' => 85, // Placeholder until detailed analysis is implemented
+            'average_score' => 85,
             'pages_needing_attention' => 
                 Insight::published()->whereNull('excerpt')->count() + 
                 PortfolioItem::published()->whereNull('description')->count(),
@@ -100,7 +106,8 @@ class AdminController extends Controller
                 'insights' => $recent_insights,
                 'inquiries' => $recent_inquiries,
             ],
-            'system_activity' => $system_activity,
+            'content_distribution' => $content_distribution,
+            'content_timeline' => $content_timeline,
             'seo_stats' => $seo_stats,
         ]);
     }
