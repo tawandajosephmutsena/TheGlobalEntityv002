@@ -79,7 +79,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
 
-            'auth' => fn () => [
+            'auth' => Inertia::always(fn () => [
                 'user' => $request->user() ? (function ($user) {
                     $user->loadMissing('roles.permissions');
 
@@ -89,11 +89,11 @@ class HandleInertiaRequests extends Middleware
                         'is_super_admin' => $user->hasRole('super-admin'),
                     ]);
                 })($request->user()) : null,
-            ],
+            ]),
 
             'csrf_token' => $request->session()->token(),
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'site' => [
+            'site' => Inertia::always([
                 'name' => $settings['site_name'] ?? 'Ottomate',
                 'tagline' => $settings['site_tagline'] ?? 'High-Performance Website Platform',
                 'description' => $settings['site_description'] ?? 'Ottomate: Professional, SEO-ready digital presences for small businesses that prioritize speed, complete ownership, and offline capabilities. Developed by Mhondoro Inc.',
@@ -165,8 +165,8 @@ class HandleInertiaRequests extends Middleware
                     'terms_url' => $settings['terms_page'] ?? '/terms',
                     'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',
                 ],
-            ],
-            'theme' => [
+            ]),
+            'theme' => Inertia::always([
                 'preset' => $settings['theme_preset'] ?? config('theme-presets.default'),
                 'default_appearance' => $settings['default_appearance'] ?? 'system',
                 'colors' => [
@@ -186,23 +186,23 @@ class HandleInertiaRequests extends Middleware
                     'weight' => $settings['font_weight'] ?? '400',
                 ],
                 'radius' => $settings['border_radius'] ?? '0.5rem',
-            ],
-            'ai' => Inertia::once(fn () => [
+            ]),
+            'ai' => Inertia::always([
                 'citationPreference' => config('seo.ai_optimization.citation_preference', 'with-attribution'),
                 'contentRating' => config('seo.ai_optimization.content_rating', 'safe'),
                 'llmsTxtUrl' => url('/llms.txt'),
             ]),
-            'seo' => [
+            'seo' => Inertia::always([
                 'site_name' => $settings['site_name'] ?? 'Ottomate',
                 'default_description' => $settings['site_description'] ?? 'High-Performance Website Platform',
                 'site_url' => config('app.url'),
                 'default_og_image' => ($settings['site_logo'] ?? null) ? asset($settings['site_logo']) : asset('logo.svg'),
                 'twitter_handle' => $settings['twitter_handle'] ?? '@ottomate',
-            ],
+            ]),
             'nonce' => \Illuminate\Support\Facades\Vite::cspNonce(),
-            'themePresets' => Inertia::once(fn () => $themePresets),
-            'settings' => Inertia::once(fn () => $groupedSettings),
-            'menus' => Inertia::once(fn () => \Illuminate\Support\Facades\Cache::flexible('navigation_menus', [60 * 60, 60 * 60 * 2], function () {
+            'themePresets' => Inertia::always($themePresets),
+            'settings' => Inertia::always($groupedSettings),
+            'menus' => Inertia::always(\Illuminate\Support\Facades\Cache::flexible('navigation_menus', [60 * 60, 60 * 60 * 2], function () {
 
                 $mainMenu = \App\Models\NavigationMenu::where('slug', 'main-menu')
                     ->where('is_active', true)

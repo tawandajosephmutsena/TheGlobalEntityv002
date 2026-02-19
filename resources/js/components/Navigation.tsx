@@ -47,6 +47,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const { url, props } = usePage<SharedData>();
     const { auth, menus } = props;
+    
     const navRef = useRef<HTMLElement>(null);
     const logoRef = useRef<HTMLDivElement>(null);
 
