@@ -1,8 +1,13 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import ServiceForm from './Form';
+import { Category } from '@/types';
 import React from 'react';
 
-export default function Create() {
+interface Props {
+    categories: Category[];
+}
+
+export default function Create({ categories }: Props) {
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Services', href: '/admin/services' },
@@ -11,7 +16,7 @@ export default function Create() {
 
     return (
         <AdminLayout title="Add New Service" breadcrumbs={breadcrumbs}>
-            <ServiceForm />
+            <ServiceForm categories={categories} />
         </AdminLayout>
     );
 }

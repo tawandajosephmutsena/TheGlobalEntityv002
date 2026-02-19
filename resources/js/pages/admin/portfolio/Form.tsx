@@ -167,12 +167,12 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
 
                             <div className="grid gap-2">
                                 <Label htmlFor="category">Category</Label>
-                                <Select value={data.category_id} onValueChange={(val) => setData('category_id', val)}>
+                                <Select value={data.category_id || '_none_'} onValueChange={(val) => setData('category_id', val === '_none_' ? '' : val)}>
                                     <SelectTrigger id="category">
                                         <SelectValue placeholder="Select a category" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="">Uncategorized</SelectItem>
+                                        <SelectItem value="_none_">Uncategorized</SelectItem>
                                         {categories.map((cat) => (
                                             <SelectItem key={cat.id} value={cat.id.toString()}>
                                                 {cat.name}

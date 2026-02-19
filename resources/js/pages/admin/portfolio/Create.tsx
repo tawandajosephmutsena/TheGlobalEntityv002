@@ -1,8 +1,13 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import PortfolioForm from './Form';
+import { Category } from '@/types';
 import React from 'react';
 
-export default function Create() {
+interface Props {
+    categories: Category[];
+}
+
+export default function Create({ categories }: Props) {
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Portfolio', href: '/admin/portfolio' },
@@ -11,7 +16,7 @@ export default function Create() {
 
     return (
         <AdminLayout title="Add New Project" breadcrumbs={breadcrumbs}>
-            <PortfolioForm />
+            <PortfolioForm categories={categories} />
         </AdminLayout>
     );
 }

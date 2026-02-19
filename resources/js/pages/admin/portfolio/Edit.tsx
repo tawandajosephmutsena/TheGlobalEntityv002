@@ -1,13 +1,14 @@
 import AdminLayout from '@/layouts/AdminLayout';
 import PortfolioForm from './Form';
-import { PortfolioItem } from '@/types';
+import { PortfolioItem, Category } from '@/types';
 import React from 'react';
 
 interface Props {
     portfolioItem: PortfolioItem;
+    categories: Category[];
 }
 
-export default function Edit({ portfolioItem }: Props) {
+export default function Edit({ portfolioItem, categories }: Props) {
     console.log('Edit Page portfolioItem:', portfolioItem);
     
     const breadcrumbs = [
@@ -18,7 +19,7 @@ export default function Edit({ portfolioItem }: Props) {
 
     return (
         <AdminLayout title={`Edit: ${portfolioItem.title}`} breadcrumbs={breadcrumbs}>
-            <PortfolioForm portfolioItem={portfolioItem} />
+            <PortfolioForm portfolioItem={portfolioItem} categories={categories} />
         </AdminLayout>
     );
 }

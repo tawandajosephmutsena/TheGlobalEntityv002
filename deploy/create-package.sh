@@ -120,6 +120,12 @@ cp .env.production "$TEMP_DIR/.env" # Rename for production
 cp artisan "$TEMP_DIR/"
 cp composer.json "$TEMP_DIR/"
 cp composer.lock "$TEMP_DIR/"
+cp package.json "$TEMP_DIR/" 2>/dev/null || true
+cp package-lock.json "$TEMP_DIR/" 2>/dev/null || true
+cp vite.config.* "$TEMP_DIR/" 2>/dev/null || true
+cp tailwind.config.* "$TEMP_DIR/" 2>/dev/null || true
+cp tsconfig.json "$TEMP_DIR/" 2>/dev/null || true
+cp postcss.config.js "$TEMP_DIR/" 2>/dev/null || true
 cp index.php "$TEMP_DIR/"
 cp modules_statuses.json "$TEMP_DIR/" 2>/dev/null || true
 
@@ -132,7 +138,7 @@ echo "*.log\n!.gitignore" > "$TEMP_DIR/storage/logs/.gitignore"
 # Create the zip file
 echo -e "${YELLOW}   Creating zip archive...${NC}"
 cd "$TEMP_DIR"
-zip -r "$PROJECT_ROOT/$PACKAGE_NAME" . -x "*.DS_Store" -x "*__MACOSX*" > /dev/null
+zip -r "$PROJECT_ROOT/$PACKAGE_NAME" . -x "*.DS_Store" -x "*__MACOSX*" -x "bootstrap/cache/*.php" -x "storage/framework/cache/data/*" -x "storage/framework/sessions/*" -x "storage/framework/views/*.php" > /dev/null
 
 # Cleanup temp directory
 cd "$PROJECT_ROOT"

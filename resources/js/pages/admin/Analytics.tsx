@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
 import { 
@@ -10,7 +10,7 @@ import {
     Monitor, Smartphone, Tablet
 } from 'lucide-react';
 import { 
-    BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+    XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
     AreaChart, Area
 } from 'recharts';
 import { Button } from '@/components/ui/button';

@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             NavigationMenuSeeder::class,
             TeamSeeder::class,
             SampleContentSeeder::class,
+            ComplianceSettingsSeeder::class,
+            CompliancePagesSeeder::class,
         ]);
 
         // User::factory(10)->create();

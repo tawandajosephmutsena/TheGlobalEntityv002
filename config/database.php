@@ -34,7 +34,14 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DB_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => (function() {
+                $path = env('DB_DATABASE');
+                // Use compatible string checks (pre-PHP 8.0 compatibility)
+                if ($path && strpos($path, '/') !== 0 && strpos($path, ':') === false) {
+                    return base_path($path);
+                }
+                return $path ?: database_path('database.sqlite');
+            })(),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
             'busy_timeout' => null,

@@ -139,7 +139,7 @@
         </noscript>
 
         @viteReactRefresh
-        @routes
+        @routes(nonce: Vite::cspNonce())
         @vite(['resources/js/app.tsx'])
 
         @inertiaHead

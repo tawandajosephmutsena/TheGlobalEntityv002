@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import React, { useState, useEffect } from 'react';
+import { Link } from '@inertiajs/react';
 import AdminLayout from '@/layouts/AdminLayout';
 import {
     Card, CardContent, CardDescription, CardHeader, CardTitle
@@ -7,7 +7,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
-    Shield, Smartphone, Monitor, Tablet, Activity,
+    Activity,
     Eye, Star, Sparkles, FolderOpen, Briefcase, FileText,
     Calendar, Layers, TrendingUp, UserCheck, HardDrive,
     ShieldCheck, Plus, PanelsTopLeft, Settings, BookOpen, Image,
@@ -18,8 +18,7 @@ import { motion } from 'motion/react';
 import { 
     ResponsiveContainer,
     XAxis, YAxis, CartesianGrid, Tooltip,
-    AreaChart, Area,
-    PieChart, Pie, Cell
+    AreaChart, Area, PieChart, Pie, Cell
 } from 'recharts';
 
 // ─── Types ───────────────────────────────────────────────────────────
@@ -156,7 +155,7 @@ function StatCard({
         <motion.div variants={item}>
             <Card 
                 className="group relative overflow-hidden hover:shadow-lg hover:shadow-black/5 transition-all duration-500 border-t-0 border-r-0 border-b-0 border-l-[3px] border-l-[var(--accent-color)]"
-                {...{ style: { '--accent-color': accentColor } as any }}
+                {...{ style: { '--accent-color': accentColor } as React.CSSProperties }}
             >
                 {/* Glow effect */}
                 <div 

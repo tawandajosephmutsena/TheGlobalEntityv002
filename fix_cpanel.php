@@ -1,68 +1,83 @@
 <?php
 /**
- * cPanel Fixer Script
- * Upload this to your public_html/ (or public/ if in subfolder) and visit it in your browser.
+ * OttoStart "Two Websites" Fixer (v5)
+ * HUNTS for conflicting index.html files and DB issues.
  */
 
-define('LARAVEL_START', microtime(true));
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
-// 1. Detect Base Path
-$basePath = realpath(__DIR__ . '/..');
-echo "<h1>cPanel Environment Fixer</h1>";
-echo "<p>Base Path: <code>$basePath</code></p>";
+echo "<html><head><style>body{font-family:sans-serif;line-height:1.5;padding:20px;background:#f4f4f4} .card{background:white;padding:20px;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);margin-bottom:20px} .success{color:green} .error{color:red} .warn{color:orange} code{background:#eee;padding:2px 4px;border-radius:4px}</style></head><body>";
+echo "<h1>🕵️ Conflict Hunter v5</h1>";
 
-// 2. Fix Storage Path
-$publicStorage = __DIR__ . '/storage';
-$actualStorage = $basePath . '/storage/app/public';
+$root = realpath(__DIR__);
+if (!file_exists($root . '/artisan')) {
+    $root = realpath(__DIR__ . '/..');
+}
 
-if (is_link($publicStorage)) {
-    echo "<p style='color: green;'>✓ Storage link exists.</p>";
+// 1. Conflict Hunter
+echo "<div class='card'><h2>🤺 File Conflict Hunter</h2>";
+$conflicts = ['index.html', 'index.htm', 'default.php', 'default.html'];
+$foundConflicts = false;
+foreach ($conflicts as $file) {
+    if (file_exists(__DIR__ . '/' . $file) && $file !== 'fix_cpanel.php') {
+        echo "<p class='error'>❌ Found CONFLICT: <code>$file</code></p>";
+        echo "<p>This file is likely preventing your real website from loading on the homepage.</p>";
+        if (isset($_GET['delete_conflict']) && $_GET['delete_conflict'] == $file) {
+            unlink(__DIR__ . '/' . $file);
+            echo "<p class='success'>✓ Deleted $file!</p>";
+        } else {
+            echo "<a href='?delete_conflict=$file' style='background:red;color:white;padding:5px 10px;text-decoration:none;border-radius:4px'>DELETE $file NOW</a>";
+        }
+        $foundConflicts = true;
+    }
+}
+if (!$foundConflicts) echo "<p class='success'>✓ No conflicting static files found in this directory.</p>";
+echo "</div>";
+
+// 2. Database Deep Dive
+echo "<div class='card'><h2>🗄️ Database Integrity Check</h2>";
+$dbPath = $root . '/database/database.sqlite';
+if (!file_exists($dbPath)) {
+    echo "<p class='error'>❌ Database MISSING at <code>$dbPath</code></p>";
 } else {
-    echo "<p style='color: orange;'>! Storage link missing or is a directory. Fixing...</p>";
-    if (is_dir($publicStorage)) {
-        // Backup if it's a real directory with files
-        rename($publicStorage, $publicStorage . '_backup_' . time());
-    }
-    
-    if (symlink($actualStorage, $publicStorage)) {
-        echo "<p style='color: green;'>✓ Storage link created successfully!</p>";
-    } else {
-        echo "<p style='color: red;'>✗ Failed to create storage link. Please check permissions.</p>";
+    try {
+        $pdo = new PDO("sqlite:" . $dbPath);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $tableCount = $pdo->query("SELECT count(*) FROM sqlite_master WHERE type='table'")->fetchColumn();
+        echo "<li><b>Tables found:</b> $tableCount</li>";
+        
+        if ($tableCount > 0) {
+            $siteName = $pdo->query("SELECT value FROM settings WHERE key='site_name' LIMIT 1")->fetchColumn();
+            echo "<li><b>Site name in DB:</b> <b class='success'>" . ($siteName ?: 'EMPTY') . "</b></li>";
+            
+            $projectCount = $pdo->query("SELECT count(*) FROM portfolio_items")->fetchColumn();
+            echo "<li><b>Portfolio projects:</b> $projectCount</li>";
+        } else {
+            echo "<p class='error'>❌ Database is EMPTY. Upload your local database/database.sqlite to <code>$dbPath</code></p>";
+        }
+    } catch (\Exception $e) {
+        echo "<p class='error'>❌ Connection Error: " . $e->getMessage() . "</p>";
     }
 }
+echo "</div>";
 
-// 3. Fix Permissions
-$folders = [
-    $basePath . '/storage',
-    $basePath . '/storage/logs',
-    $basePath . '/storage/framework',
-    $basePath . '/storage/framework/views',
-    $basePath . '/storage/framework/cache',
-    $basePath . '/bootstrap/cache',
+// 3. Cache Killer
+echo "<div class='card'><h2>⚡ Cache Killer</h2>";
+$caches = [
+    $root . '/bootstrap/cache/config.php',
+    $root . '/bootstrap/cache/routes-v7.php',
+    $root . '/bootstrap/cache/packages.php',
+    $root . '/bootstrap/cache/services.php',
+    __DIR__ . '/hot'
 ];
-
-echo "<h3>Checking Folder Permissions (775):</h3><ul>";
-foreach ($folders as $folder) {
-    if (!is_dir($folder)) {
-        mkdir($folder, 0775, true);
+foreach ($caches as $c) {
+    if (file_exists($c)) {
+        if (unlink($c)) echo "<li>🗑️ Cleared: <code>$c</code></li>";
     }
-    chmod($folder, 0775);
-    echo "<li>Fixed: <code>$folder</code></li>";
 }
-echo "</ul>";
+echo "<p>Caches cleared. Your site should now respect the latest settings.</p>";
+echo "</div>";
 
-// 4. Clear Cache
-echo "<h3>Clearing Application Cache:</h3>";
-try {
-    require $basePath . '/vendor/autoload.php';
-    $app = require_once $basePath . '/bootstrap/app.php';
-    $kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
-    
-    $kernel->call('optimize:clear');
-    echo "<pre>" . $kernel->output() . "</pre>";
-    echo "<p style='color: green;'>✓ Cache cleared successfully.</p>";
-} catch (\Exception $e) {
-    echo "<p style='color: red;'>✗ Could not run artisan commands: " . $e->getMessage() . "</p>";
-}
-
-echo "<hr><p><b>Next Step</b>: Delete this script (<code>fix_cpanel.php</code>) from your server for security.</p>";
+echo "</body></html>";
