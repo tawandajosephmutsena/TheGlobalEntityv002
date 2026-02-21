@@ -1,0 +1,18 @@
+HTTP/1.1 409 Conflict
+Server: nginx/1.25.4
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Powered-By: PHP/8.5.1
+X-Inertia-Location: http://agent.test/contact
+Cache-Control: no-cache, private
+Date: Fri, 20 Feb 2026 11:47:07 GMT
+Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173; font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173; img-src 'self' data: https: http://localhost:5173 http://127.0.0.1:5173; media-src 'self' https: http://localhost:5173 http://127.0.0.1:5173; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://vimeo.com; frame-ancestors 'none'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://127.0.0.1:5173 http://localhost:5173; script-src-elem 'self' 'unsafe-inline' http://127.0.0.1:5173 http://localhost:5173; connect-src 'self' ws: wss: http://127.0.0.1:5173 ws://127.0.0.1:5173 http://localhost:5173 ws://localhost:5173
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=()
+Set-Cookie: XSRF-TOKEN=eyJpdiI6Ii9aVmZvOW1GSGN0REFxMG02bERtdXc9PSIsInZhbHVlIjoiYmVIMVk1SlFwdnM1QWFWcS95ck1YOGlrNWtyeWhNT3R6R1FLeW1HRzl3SkpPZDA4dVdiOUplcUlwQzMvNzE3MXUvNTRwVTRUNzYvYThFUGZ4aDRQdGxoY2dIT2lRcGtrM2k0Skx0d1d0MDFKN21QQWhzTGg5SnlaQ29qcmNXejMiLCJtYWMiOiIwYjgxM2QwOTlkNzc2NTc1OTgzMjNjNDU5NWVlZTY2MTRlNWNlZDFhOWM3ZmNmYTU1Mjk4YzA3NmZhMWRiN2E5IiwidGFnIjoiIn0%3D; expires=Fri, 20 Feb 2026 13:47:07 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: ottomate-web-app-session=eyJpdiI6Imo0TE9kUDlRZVRJdE9ORlNid280S0E9PSIsInZhbHVlIjoibXpVWndIU2JLbUF6K1dadVRsOHRHUjVpTHBjbExxaUdiWWw0ejlYSTRFRm1KVTdaWjEvOWJvNTdOT0NMdCt5QmxXZHplZGROMGJDN24yYTdZZ0ZDbUxjbTFLenRNYmdqNFgrTzMwVVNqVTNPb1pZNlo1QjIvc3RFM2czbG5aMXIiLCJtYWMiOiJkNzIyNDNkMTlmYWE0NWQzY2YzZWZkOWU2OGZlYTRlYmNkNWM4MDIzOGY1YzU1YmVkOWVhOTk2NWEzNWYwMTJmIiwidGFnIjoiIn0%3D; expires=Fri, 20 Feb 2026 13:47:07 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+

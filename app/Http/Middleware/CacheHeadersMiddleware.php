@@ -27,6 +27,12 @@ class CacheHeadersMiddleware
             return $this->setNoCacheHeaders($response);
         }
 
+        // CRITICAL: Never cache Inertia XHR payloads in the browser, otherwise navigation
+        // will serve stale JSON data while hard-refreshes serve fresh HTML.
+        if ($request->hasHeader('X-Inertia')) {
+            return $this->setNoCacheHeaders($response);
+        }
+
         // Apply cache headers based on profile
         return $this->applyCacheProfile($response, $cacheProfile, $request);
     }
@@ -101,7 +107,7 @@ class CacheHeadersMiddleware
         return $response->withHeaders([
             'Cache-Control' => "public, max-age={$maxAge}, must-revalidate",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
-            'Vary' => 'Accept-Encoding, Accept',
+            'Vary' => 'Accept-Encoding, Accept, X-Inertia',
             'ETag' => '"' . md5($response->getContent()) . '"',
         ]);
     }
@@ -116,7 +122,7 @@ class CacheHeadersMiddleware
         return $response->withHeaders([
             'Cache-Control' => "public, max-age={$maxAge}, must-revalidate",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
-            'Vary' => 'Accept-Encoding, Accept',
+            'Vary' => 'Accept-Encoding, Accept, X-Inertia',
             'ETag' => '"' . md5($response->getContent()) . '"',
         ]);
     }
@@ -131,7 +137,7 @@ class CacheHeadersMiddleware
         return $response->withHeaders([
             'Cache-Control' => "public, max-age={$maxAge}",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
-            'Vary' => 'Accept-Encoding',
+            'Vary' => 'Accept-Encoding, X-Inertia',
         ]);
     }
 
@@ -145,7 +151,7 @@ class CacheHeadersMiddleware
         return $response->withHeaders([
             'Cache-Control' => "public, max-age={$maxAge}",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
-            'Vary' => 'Accept-Encoding',
+            'Vary' => 'Accept-Encoding, X-Inertia',
         ]);
     }
 

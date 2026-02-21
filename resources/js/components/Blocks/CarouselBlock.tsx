@@ -47,7 +47,7 @@ export default function CarouselBlock({
         displaySlides = sourceData.map((item) => ({
             title: item.title,
             button: "View Details",
-            src: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop',
+            src: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=1200&auto=format&fit=crop&q=75',
             link: `/${feedSource === 'insights' ? 'blog' : feedSource}/${item.slug}`
         }));
 

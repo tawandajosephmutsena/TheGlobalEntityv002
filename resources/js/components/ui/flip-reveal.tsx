@@ -4,7 +4,7 @@ import { ComponentProps, useRef } from "react";
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Flip from "gsap/Flip";
+import { Flip } from "gsap/all";
 
 gsap.registerPlugin(Flip);
 
@@ -51,7 +51,7 @@ export const FlipReveal = ({ keys, hideClass = "", showClass = "", ...props }: F
                 ease: "power1.inOut",
                 stagger: 0.05,
                 absolute: true,
-                onEnter: (elements) =>
+                onEnter: (elements: Element[]) =>
                     gsap.fromTo(
                         elements,
                         { opacity: 0, scale: 0 },
@@ -61,7 +61,7 @@ export const FlipReveal = ({ keys, hideClass = "", showClass = "", ...props }: F
                             duration: 0.8,
                         },
                     ),
-                onLeave: (elements) => gsap.to(elements, { opacity: 0, scale: 0, duration: 0.8 }),
+                onLeave: (elements: Element[]) => gsap.to(elements, { opacity: 0, scale: 0, duration: 0.8 }),
             });
         },
 

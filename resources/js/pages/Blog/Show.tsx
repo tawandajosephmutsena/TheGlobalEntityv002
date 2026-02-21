@@ -73,7 +73,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
     };
 
     return (
-        <MainLayout title={`${insight.title} - Avant-Garde Insights`}>
+        <MainLayout title={`${insight.title} - ${site?.name || 'Insights'}`}>
             <SeoHead
                 title={insight.title}
                 description={insight.excerpt}
@@ -81,7 +81,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                 image={insight.featured_image}
                 publishedTime={insight.published_at}
                 modifiedTime={insight.updated_at}
-                author={insight.author?.name || 'Avant-Garde'}
+                author={insight.author?.name || 'Anonymous'}
                 structuredData={{
                     '@context': 'https://schema.org',
                     '@type': 'BlogPosting',
@@ -92,11 +92,11 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     'dateModified': insight.updated_at,
                     'author': {
                         '@type': 'Person',
-                        'name': insight.author?.name || 'Avant-Garde',
+                        'name': insight.author?.name || 'Anonymous',
                     },
                     'publisher': {
                         '@type': 'Organization',
-                        'name': site?.name || 'Avant-Garde Creative',
+                        'name': site?.name || 'Website',
                         'logo': {
                             '@type': 'ImageObject',
                             'url': `${site?.url || ''}/logo.png`,
@@ -125,7 +125,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 </span>
                                 <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest opacity-40">
                                     <div className="flex items-center gap-2"><Clock className="size-3" /> {insight.reading_time || 5} min read</div>
-                                    <div className="flex items-center gap-2"><User className="size-3" /> {insight.author?.name || 'Avant-Garde'}</div>
+                                    <div className="flex items-center gap-2"><User className="size-3" /> {insight.author?.name || 'Anonymous'}</div>
                                 </div>
                             </div>
                             
@@ -241,9 +241,9 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 )}
                                 <div className="text-center md:text-left">
                                     <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
-                                    <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Avant-Garde Collective'}</h4>
+                                    <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Anonymous'}</h4>
                                     <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light">
-                                        Thought leader and creative visionary at Avant-Garde, exploring the intersection of design, technology, and human experience.
+                                        Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.
                                     </p>
                                 </div>
                             </div>

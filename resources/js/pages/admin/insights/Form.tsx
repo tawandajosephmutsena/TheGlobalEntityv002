@@ -170,7 +170,7 @@ export default function InsightForm({ insight, categories, authors }: Props) {
                                     id="title"
                                     value={data.title}
                                     onChange={(e) => setData('title', e.target.value)}
-                                    placeholder="The Future of Avant-Garde Design"
+                                    placeholder="The Future of Digital Design"
                                 />
                                 {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
                             </div>

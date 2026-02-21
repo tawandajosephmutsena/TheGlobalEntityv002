@@ -6,8 +6,8 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { home } from '@/routes';
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
+import { type SharedData } from '@/types';
 import { type PropsWithChildren } from 'react';
 
 export default function AuthCardLayout({

@@ -36,7 +36,7 @@ export function LinkManager({ value, onChange, pages = [], label, description }:
     const [links, setLinks] = useState<LinkItem[]>(value || []);
 
     const handleAddLink = () => {
-        const newLinks = [...links, { name: '', href: '', type: 'custom' }];
+        const newLinks: LinkItem[] = [...links, { name: '', href: '', type: 'custom' }];
         setLinks(newLinks);
         onChange(newLinks);
     };

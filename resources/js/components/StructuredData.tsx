@@ -83,7 +83,7 @@ export const ArticleStructuredData: React.FC<ArticleStructuredDataProps> = ({
         },
         publisher: {
             '@type': 'Organization',
-            name: 'Avant-Garde CMS',
+            name: import.meta.env.VITE_APP_NAME || 'Website',
             logo: {
                 '@type': 'ImageObject',
                 url: '/images/logo.png'

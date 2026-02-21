@@ -47,7 +47,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const { url, props } = usePage<SharedData>();
     const { auth, menus } = props;
-    
+
     const navRef = useRef<HTMLElement>(null);
     const logoRef = useRef<HTMLDivElement>(null);
 
@@ -158,15 +158,25 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     )}
                 >
                     {/* Logo */}
-                    <Link
-                        href="/"
-                        className="group relative z-[110] flex items-center !bg-transparent overflow-visible font-display"
-                    >
-                        <AppLogo
-                            ref={logoRef as React.RefObject<HTMLDivElement>}
-                            className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[5deg]"
-                        />
-                    </Link>
+                    {menus?.logo ? (
+                        <Link
+                            href={menus.logo.href}
+                            target={menus.logo.target}
+                            className="group relative z-[110] flex items-center !bg-transparent overflow-visible font-display"
+                        >
+                            <AppLogo
+                                ref={logoRef as React.RefObject<HTMLDivElement>}
+                                className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[5deg]"
+                            />
+                        </Link>
+                    ) : (
+                        <div className="group relative z-[110] flex items-center !bg-transparent overflow-visible font-display">
+                            <AppLogo
+                                ref={logoRef as React.RefObject<HTMLDivElement>}
+                                className="transition-transform duration-500 group-hover:scale-110 group-hover:rotate-[5deg]"
+                            />
+                        </div>
+                    )}
 
                     {/* Desktop Navigation */}
                     <div className="hidden items-center gap-1 lg:flex">

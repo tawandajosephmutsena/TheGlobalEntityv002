@@ -86,7 +86,6 @@ export interface SharedData {
         active?: boolean;
     }>;
     breadcrumbStructuredData?: Record<string, unknown>;
-    nonce?: string;
     menus?: {
         main: Array<{
             name: string;
@@ -98,6 +97,10 @@ export interface SharedData {
                 target: string;
             }>;
         }>;
+        logo?: {
+            href: string;
+            target: string;
+        } | null;
     };
     ai?: {
         citationPreference: string;

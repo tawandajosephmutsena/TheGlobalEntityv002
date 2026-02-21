@@ -90,11 +90,23 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     {/* Massive Brand Side */}
                     <div className="lg:col-span-6 flex flex-col justify-between">
                         <div>
-                            <Link href="/" className="inline-flex items-center mb-12 group overflow-visible bg-transparent">
-                                <AppLogo 
-                                    className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-105" 
-                                />
-                            </Link>
+                            {props.menus?.logo ? (
+                                <Link 
+                                    href={props.menus.logo.href} 
+                                    target={props.menus.logo.target}
+                                    className="inline-flex items-center mb-12 group overflow-visible bg-transparent"
+                                >
+                                    <AppLogo 
+                                        className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-105" 
+                                    />
+                                </Link>
+                            ) : (
+                                <div className="inline-flex items-center mb-12 group overflow-visible bg-transparent">
+                                    <AppLogo 
+                                        className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-105" 
+                                    />
+                                </div>
+                            )}
                             <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8">
                                 {footerHeadingLine1} <br/>
                                 <span className="text-agency-accent">{footerHeadingLine2}</span> {footerHeadingLine3}

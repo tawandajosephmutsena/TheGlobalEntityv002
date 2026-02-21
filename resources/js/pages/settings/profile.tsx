@@ -65,7 +65,6 @@ export default function Profile({
                                     <MediaLibrary
                                         currentValue={data.avatar}
                                         onSelect={(asset: MediaAsset) => setData('avatar', asset.url)}
-                                        // @ts-expect-error - trigger is custom
                                         trigger={
                                             <div className="size-24 rounded-full border-2 border-dashed border-muted-foreground/25 flex items-center justify-center cursor-pointer hover:border-agency-accent transition-colors overflow-hidden bg-muted/30">
                                                 {data.avatar ? (

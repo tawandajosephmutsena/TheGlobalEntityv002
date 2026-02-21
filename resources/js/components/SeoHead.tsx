@@ -74,9 +74,10 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     const { site, seo } = usePage<SharedData & { seo?: SeoSharedData }>().props;
     
     // Fallback defaults from config or site data
-    const siteName = seo?.site_name || site?.name || 'Avant-Garde CMS';
-    const siteDescription = seo?.default_description || site?.description || 'Digital Innovation Redefined';
-    const siteUrl = seo?.site_url || site?.url || 'https://avant-garde.com';
+    const appName = import.meta.env.VITE_APP_NAME || 'Website';
+    const siteName = seo?.site_name || site?.name || appName;
+    const siteDescription = seo?.default_description || site?.description || '';
+    const siteUrl = seo?.site_url || site?.url || (typeof window !== 'undefined' ? window.location.origin : '');
     const defaultImage = seo?.default_og_image || site?.logo || '/images/og-default.jpg';
     const titleSeparator = seo?.title_separator || ' | ';
     const twitterHandle = seo?.twitter_handle;

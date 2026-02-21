@@ -2,7 +2,7 @@
  * Service Worker for caching and offline functionality
  */
 
-const CACHE_NAME = 'avant-garde-v1';
+const CACHE_NAME = 'ottomate-v1';
 const STATIC_CACHE = 'static-v1';
 const DYNAMIC_CACHE = 'dynamic-v1';
 const IMAGE_CACHE = 'images-v1';
@@ -301,7 +301,7 @@ async function handleOffline(request) {
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Offline - Avant-Garde</title>
+          <title>Offline - Ottomate</title>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <style>

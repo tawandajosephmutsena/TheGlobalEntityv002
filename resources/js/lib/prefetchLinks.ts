@@ -41,6 +41,7 @@ const processQueue = (): void => {
     const prefetch = () => {
         try {
             router.prefetch(href, {
+                // @ts-expect-error - cacheFor is valid in Inertia 2.0 but not necessarily in TS bindings
                 cacheFor: '30s',
             });
         } catch (error) {

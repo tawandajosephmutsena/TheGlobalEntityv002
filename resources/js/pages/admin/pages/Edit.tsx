@@ -33,8 +33,8 @@ const getDefaultContentForType = (type: BlockType) => {
     switch (type) {
         case 'hero': return { 
             title: 'Digital Innovation Redefined', 
-            subtitle: 'Avant-Garde Agency', 
-            description: 'We create avant-garde digital experiences.', 
+            subtitle: 'Creative Agency', 
+            description: 'We create inspiring digital experiences.', 
             ctaText: 'View Our Work', 
             ctaHref: '/portfolio', 
             image: '/images/hero-bg.jpg',
@@ -152,7 +152,7 @@ const getDefaultContentForType = (type: BlockType) => {
         case 'story': return { 
             title: 'A journey of obsession.', 
             subtitle: 'Story',
-            body: 'Founded in 2019, Avant-Garde emerged from a singular conviction...', 
+            body: 'Founded in 2019, we emerged from a singular conviction...', 
             items: [
                 { value: '5+', label: 'Years of Craft' },
                 { value: '50+', label: 'Successes' }
@@ -181,7 +181,7 @@ const getDefaultContentForType = (type: BlockType) => {
             title: 'We\'re Listening.', 
             subtitle: 'Inquiries',
             items: [
-                { label: 'Email', value: 'hello@avant-garde.com', href: 'mailto:hello@avant-garde.com' },
+                { label: 'Email', value: 'hello@example.com', href: 'mailto:hello@example.com' },
                 { label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
                 { label: 'Address', value: 'San Francisco, CA', href: '' }
             ],
@@ -396,7 +396,8 @@ export default function Edit({ page }: Props) {
         meta_description: string;
         template: 'default' | 'home' | 'contact';
         is_published: boolean;
-        content: { blocks: Block[] };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        content: { blocks: any };
     }>({
         title: page.title,
         slug: page.slug,
@@ -412,7 +413,6 @@ export default function Edit({ page }: Props) {
 
     // Update form data when blocks change
     React.useEffect(() => {
-        // @ts-expect-error - Depth issue with useForm and blocks
         setData('content', { blocks });
     }, [blocks, setData]);
 

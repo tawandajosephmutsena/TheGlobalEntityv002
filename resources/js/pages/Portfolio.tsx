@@ -25,8 +25,10 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
         : projects.filter(p => p.category_id === activeCategory);
 
 
+    const appName = import.meta.env.VITE_APP_NAME || 'Website';
+
     return (
-        <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Portfolio - Avant-Garde"}>
+        <MainLayout title={page?.title ? `${page.title} - ${appName}` : `Portfolio - ${appName}`}>
             <SeoHead
                 title={page?.title || "Portfolio"}
                 description={page?.meta_description || "Browse our portfolio of creative projects and digital solutions."}

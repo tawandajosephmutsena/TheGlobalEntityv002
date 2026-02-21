@@ -1,0 +1,124 @@
+
+> types
+> tsc --noEmit
+
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/ContactInquiryController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/ContentVersionController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/ImageSeoController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/InsightController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/MediaController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/MenuController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/PageController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/PluginController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/SeoAnalysisController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/ServiceController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/TeamMemberController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Admin/WebCoreVitalsController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Settings/PasswordController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Settings/ProfileController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Settings/TwoFactorAuthenticationController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/App/Http/Controllers/Settings/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Illuminate/Routing/RedirectController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/AuthenticatedSessionController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/ConfirmablePasswordController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/ConfirmedPasswordStatusController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/ConfirmedTwoFactorAuthenticationController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/EmailVerificationNotificationController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/EmailVerificationPromptController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/NewPasswordController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/PasswordResetLinkController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/RecoveryCodeController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/RegisteredUserController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticatedSessionController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorAuthenticationController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorQrCodeController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/TwoFactorSecretKeyController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/VerifyEmailController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/Controllers/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/Http/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Laravel/Fortify/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Modules/ComponentImporter/Http/Controllers/ComponentImporterController.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Modules/ComponentImporter/Http/Controllers/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Modules/ComponentImporter/Http/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Modules/ComponentImporter/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'
+error TS6053: File '/Users/mac/Herd/agent/resources/js/actions/Modules/index.ts' not found.
+  The file is in the program because:
+    Matched by include pattern 'resources/js/**/*.ts' in '/Users/mac/Herd/agent/tsconfig.json'

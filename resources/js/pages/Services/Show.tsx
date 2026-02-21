@@ -18,7 +18,7 @@ export default function ServiceShow({ service }: Props) {
     const { site } = usePage<{ site: { url: string; name: string } }>().props;
 
     return (
-        <MainLayout title={`${service.title} - Avant-Garde Services`}>
+        <MainLayout title={`${service.title} - ${site?.name || 'Services'}`}>
             <SeoHead
                 title={service.title}
                 description={service.description}
@@ -31,7 +31,7 @@ export default function ServiceShow({ service }: Props) {
                     'image': service.featured_image,
                     'provider': {
                         '@type': 'Organization',
-                        'name': site?.name || 'Avant-Garde Creative',
+                        'name': site?.name || 'Website',
                         'url': site?.url || (typeof window !== 'undefined' ? window.location.origin : ''),
                     },
                     'offers': {

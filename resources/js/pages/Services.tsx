@@ -39,8 +39,10 @@ export default function Services({ services, categories, page }: Props) {
     };
 
 
+    const appName = import.meta.env.VITE_APP_NAME || 'Website';
+
     return (
-        <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Services - Avant-Garde"}>
+        <MainLayout title={page?.title ? `${page.title} - ${appName}` : `Services - ${appName}`}>
             <SeoHead
                 title={page?.title || "Our Services"}
                 description={page?.meta_description || "Explore our range of creative, digital, and technology services."}

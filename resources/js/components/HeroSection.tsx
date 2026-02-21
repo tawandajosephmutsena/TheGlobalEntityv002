@@ -26,7 +26,7 @@ interface HeroSectionProps {
  */
 export const HeroSection: React.FC<HeroSectionProps> = ({
     title = 'Create Digital Experiences That Inspire',
-    subtitle = 'Avant-Garde Agency',
+    subtitle = 'Creative Agency',
     description = 'We push the boundaries of design and technology to create extraordinary digital experiences that captivate and convert.',
     ctaText = 'Start Your Project',
     ctaHref = '/contact',
@@ -199,12 +199,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
                 {/* Title with Gradient and Custom Typography */}
                 <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
-                    <div className="overflow-hidden">
+                    <div className="overflow-visible">
                         <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.4s_both]">
                            {(title || '').split(' ').slice(0, 2).join(' ')} 
                         </span>
                     </div>
-                    <div className="overflow-hidden mt-2">
+                    <div className="overflow-visible mt-2">
                         <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.6s_both] text-transparent bg-clip-text bg-gradient-to-r from-agency-accent to-agency-accent-soft italic pr-4">
                             {(title || '').split(' ').slice(2).join(' ')}
                         </span>

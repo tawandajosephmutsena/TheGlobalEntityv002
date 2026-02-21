@@ -61,7 +61,7 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
     const activeTitle = title || site?.contact?.hero_title || "We're Listening.";
     
     const defaultItems = [
-        { label: 'Email', value: site?.contact?.email || 'hello@avant-garde.com', href: `mailto:${site?.contact?.email}` },
+        { label: 'Email', value: site?.contact?.email || 'hello@example.com', href: `mailto:${site?.contact?.email}` },
         { label: 'Phone', value: site?.contact?.phone || '+1 (555) 123-4567', href: `tel:${site?.contact?.phone?.replace(/\s+/g, '')}` },
         { label: 'Address', value: site?.contact?.address || 'San Francisco, CA' }
     ];

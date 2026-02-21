@@ -32,7 +32,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
     )) || [];
 
     return (
-        <MainLayout title={`${portfolioItem.title} - Avant-Garde Portfolio`}>
+        <MainLayout title={`${portfolioItem.title} - ${site?.name || 'Portfolio'}`}>
             <SeoHead
                 title={portfolioItem.title}
                 description={portfolioItem.description}
@@ -46,11 +46,11 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                     'dateCreated': portfolioItem.project_date,
                     'author': {
                         '@type': 'Organization',
-                        'name': site?.name || 'Avant-Garde Creative',
+                        'name': site?.name || 'Website',
                     },
                     'copyrightHolder': {
                         '@type': 'Organization',
-                        'name': portfolioItem.client || 'Avant-Garde Creative',
+                        'name': portfolioItem.client || 'Client',
                     },
                     'keywords': portfolioItem.technologies?.join(', '),
                 }}

@@ -10,8 +10,10 @@ interface Props {
 }
 
 export default function Team({ teamMembers }: Props) {
+    const appName = import.meta.env.VITE_APP_NAME || 'Website';
+
     return (
-        <MainLayout title="Team - Avant-Garde">
+        <MainLayout title={`Team - ${appName}`}>
             <SeoHead
                 title="Our Team"
                 description="Meet the talented team behind our creative digital agency."

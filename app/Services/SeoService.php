@@ -33,7 +33,7 @@ class SeoService
      */
     private function generateTitle(?string $title, array $siteConfig): string
     {
-        $siteName = $siteConfig['site_name'] ?? config('app.name', 'Avant-Garde CMS');
+        $siteName = $siteConfig['site_name'] ?? config('app.name', 'Website');
         $separator = $siteConfig['title_separator'] ?? ' | ';
         
         if (!$title) {

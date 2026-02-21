@@ -111,10 +111,10 @@ class SecurityHeaders
 
         $policies = [
             "default-src 'self'",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173",
-            "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net http://localhost:5173 http://127.0.0.1:5173",
-            "img-src 'self' data: https: http://localhost:5173 http://127.0.0.1:5173",
-            "media-src 'self' https: http://localhost:5173 http://127.0.0.1:5173",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.bunny.net",
+            "font-src 'self' https://fonts.gstatic.com https://fonts.bunny.net",
+            "img-src 'self' data: https:",
+            "media-src 'self' https:",
             "object-src 'none'",
             "base-uri 'self'",
             "form-action 'self'",
@@ -125,14 +125,23 @@ class SecurityHeaders
         // Conditional CSP for Local Development vs Production
         if (app()->environment('local', 'development')) {
             // Local Dev: Relaxed rules for Vite HMR and inline scripts
-            // We MUST allow 'unsafe-inline' and 'unsafe-eval' for Vite to work properly without strict-dynamic blocking it
-            $policies[] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://127.0.0.1:5173 http://localhost:5173";
+            // Read Vite's dev server URL from the hot file if it exists
+            $viteHost = is_file(public_path('hot')) ? rtrim(file_get_contents(public_path('hot'))) : 'http://127.0.0.1:5173';
+            
+            // Allow current Vite host, plus common fallback ports just in case
+            $localHosts = "{$viteHost} http://localhost:5173 http://127.0.0.1:5173";
+            $wsHosts = str_replace('http://', 'ws://', $localHosts);
 
-            // Explicit script-src-elem for browsers that check this directive for <script> elements
-            $policies[] = "script-src-elem 'self' 'unsafe-inline' http://127.0.0.1:5173 http://localhost:5173";
+            // Append local hosts to asset directives
+            $policies[1] .= " {$localHosts}"; // style-src
+            $policies[2] .= " {$localHosts}"; // font-src
+            $policies[3] .= " {$localHosts}"; // img-src
+            $policies[4] .= " {$localHosts}"; // media-src
 
-            // Allow Vite dev server connections
-            $policies[] = "connect-src 'self' ws: wss: http://127.0.0.1:5173 ws://127.0.0.1:5173 http://localhost:5173 ws://localhost:5173";
+            // Script and connect rules for Vite HMR
+            $policies[] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' {$localHosts}";
+            $policies[] = "script-src-elem 'self' 'unsafe-inline' {$localHosts}";
+            $policies[] = "connect-src 'self' ws: wss: {$localHosts} {$wsHosts}";
         } else {
             // Production: Relaxed CSP for better compatibility with shared hosting and dynamic components
             $policies[] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'nonce-{$nonce}'";

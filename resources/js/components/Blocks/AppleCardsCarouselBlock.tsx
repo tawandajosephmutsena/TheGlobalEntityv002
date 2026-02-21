@@ -72,7 +72,7 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
             return {
                 category,
                 title: item.title,
-                image: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop',
+                image: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=1200&auto=format&fit=crop&q=75',
                 content: item.description || item.excerpt || item.content || '',
                 link: `/${feedSource === 'insights' ? 'blog' : feedSource}/${item.slug}`
             };

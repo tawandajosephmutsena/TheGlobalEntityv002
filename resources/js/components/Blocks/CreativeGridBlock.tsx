@@ -86,13 +86,13 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
 
         displayItems = sourceData.map((item) => {
             let category = 'Service';
-            let author = 'Avant-Garde';
+            let author = 'Anonymous';
             let readingTime = 5;
 
             if (feedSource === 'insights') {
                 const insight = item as Insight;
                 category = (insight.category && typeof insight.category === 'object') ? insight.category.name : (typeof insight.category === 'string' ? insight.category : 'Insight');
-                author = insight.author?.name || 'Avant-Garde';
+                author = insight.author?.name || 'Anonymous';
                 readingTime = insight.reading_time || 5;
             } else if (feedSource === 'portfolio') {
                 category = (item as PortfolioItem).category || 'Project';
@@ -183,7 +183,7 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
                                 <div className="px-2 flex-grow">
                                     <div className="flex items-center gap-6 mb-6 opacity-40 text-[10px] font-bold uppercase tracking-widest group-hover:opacity-100 transition-opacity duration-500">
                                         <div className="flex items-center gap-2">
-                                            <UserIcon className="size-3" /> {item.author || 'Avant-Garde'}
+                                            <UserIcon className="size-3" /> {item.author || 'Anonymous'}
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <Clock className="size-3" /> {item.readingTime || 5} min read

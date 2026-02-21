@@ -668,7 +668,7 @@ php artisan migrate --force`}
     const currentSubsection = currentSection?.subsections.find(ss => ss.id === activeSubsection);
 
     return (
-        <MainLayout title="Documentation - Avant-Garde">
+        <MainLayout title={`Documentation - ${import.meta.env.VITE_APP_NAME || 'Website'}`}>
             <Head title="Documentation" />
 
             <div className="min-h-screen bg-white dark:bg-agency-dark pt-24 pb-20">

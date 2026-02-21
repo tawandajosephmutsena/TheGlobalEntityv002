@@ -31,7 +31,7 @@ export default function Contact() {
     };
 
     return (
-        <MainLayout title="Contact Us - Avant-Garde">
+        <MainLayout title={`Contact Us - ${site?.name || 'Website'}`}>
             <SeoHead
                 title="Contact Us"
                 description="Get in touch with our team. We'd love to hear about your project."
@@ -248,8 +248,8 @@ export default function Contact() {
                                         </div>
                                         <div>
                                             <p className="text-xs font-black uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Email</p>
-                                            <a href={`mailto:${site?.contact?.email || 'hello@avantgarde.com'}`} className="text-lg font-bold text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
-                                                {site?.contact?.email || 'hello@avantgarde.com'}
+                                            <a href={`mailto:${site?.contact?.email || 'hello@example.com'}`} className="text-lg font-bold text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
+                                                {site?.contact?.email || 'hello@example.com'}
                                             </a>
                                         </div>
                                     </div>

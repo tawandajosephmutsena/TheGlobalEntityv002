@@ -137,7 +137,7 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
                                     id="title"
                                     value={data.title}
                                     onChange={(e) => setData('title', e.target.value)}
-                                    placeholder="e.g. Avant-Garde Website Redesign"
+                                    placeholder="e.g. Website Redesign"
                                 />
                                 {errors.title && <p className="text-sm text-destructive">{errors.title}</p>}
                             </div>
@@ -148,7 +148,7 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
                                     id="slug"
                                     value={data.slug}
                                     onChange={(e) => setData('slug', e.target.value)}
-                                    placeholder="avant-garde-website-redesign"
+                                    placeholder="website-redesign"
                                 />
                                 {errors.slug && <p className="text-sm text-destructive">{errors.slug}</p>}
                             </div>

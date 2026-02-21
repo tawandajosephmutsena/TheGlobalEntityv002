@@ -1,4 +1,4 @@
-import { usePage } from '@inertiajs/react';
+import { usePage, Head } from '@inertiajs/react';
 
 interface ThemeColors {
     background?: string;
@@ -54,6 +54,7 @@ interface PageProps {
     theme?: ThemeData & { preset?: string };
     themePresets?: ThemePresetsConfig;
     settings?: Record<string, Array<{ key: string; value: string | string[] | null }>>;
+    nonce?: string;
     [key: string]: unknown; // Index signature for Inertia PageProps compatibility
 }
 
@@ -194,9 +195,9 @@ export default function ThemeStyles() {
     };
 
     return (
-        <>
+        <Head>
             {fontUrl && <link rel="stylesheet" href={fontUrl} />}
-            <style id="theme-variables" dangerouslySetInnerHTML={{
+            <style id="theme-variables" nonce={props.nonce} dangerouslySetInnerHTML={{
                 __html: `
                     :root {
                         ${generateCssVariables(preset.light, false, '                        ')}
@@ -261,6 +262,6 @@ export default function ThemeStyles() {
                     }
                 `
             }} />
-        </>
+        </Head>
     );
 }

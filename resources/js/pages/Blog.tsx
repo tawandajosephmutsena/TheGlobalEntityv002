@@ -41,8 +41,10 @@ export default function Blog({ insights, categories, page }: Props) {
         ? posts 
         : posts.filter(post => post.category_id === activeCategoryId);
 
+    const appName = import.meta.env.VITE_APP_NAME || 'Website';
+
     return (
-        <MainLayout title={page?.title ? `${page.title} - Avant-Garde` : "Blog - Avant-Garde"}>
+        <MainLayout title={page?.title ? `${page.title} - ${appName}` : `Blog - ${appName}`}>
             <SeoHead
                 title={page?.title || "Insights & Thoughts"}
                 description={page?.meta_description || "Explore our latest insights, articles, and thought leadership pieces."}
@@ -150,7 +152,7 @@ export default function Blog({ insights, categories, page }: Props) {
 
                                                 <div className="px-2 flex-grow">
                                                     <div className="flex items-center gap-6 mb-6 opacity-40 text-[10px] font-bold uppercase tracking-widest group-hover:opacity-100 transition-opacity duration-500">
-                                                        <div className="flex items-center gap-2"><UserIcon className="size-3" /> {post.author?.name || 'Avant-Garde'}</div>
+                                                        <div className="flex items-center gap-2"><UserIcon className="size-3" /> {post.author?.name || 'Anonymous'}</div>
                                                         <div className="flex items-center gap-2"><Clock className="size-3" /> {post.reading_time || 5} min read</div>
                                                     </div>
                                                     <h2 className={cn(

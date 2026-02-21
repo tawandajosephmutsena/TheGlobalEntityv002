@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inertia Test</title>
+</head>
+<body>
+    <div id="app" data-page="{}"></div>
+    <script>
+        // Very basic script to manually trigger an inertia visit and log the response
+        fetch('/services', {
+            headers: {
+                'X-Inertia': 'true',
+                'X-Inertia-Version': 'd80250147581c9e361a3c3b4e82b0418', // Replace with an actual version hash if needed, or leave blank to force full reload
+                'Accept': 'text/html, application/xhtml+xml'
+            }
+        })
+        .then(res => {
+            console.log("Response headers:", [...res.headers.entries()]);
+            return res.json();
+        })
+        .then(data => {
+            console.log("Inertia Props:", Object.keys(data.props));
+            console.log("Has Site:", !!data.props.site);
+        })
+        .catch(err => console.error("Error fetching:", err));
+    </script>
+</body>
+</html>

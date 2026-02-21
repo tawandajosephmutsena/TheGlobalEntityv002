@@ -201,8 +201,8 @@ class HandleInertiaRequests extends Middleware
                 'twitter_handle' => $settings['twitter_handle'] ?? '@ottomate',
             ]),
             'nonce' => \Illuminate\Support\Facades\Vite::cspNonce(),
-            'themePresets' => Inertia::always($themePresets),
-            'settings' => Inertia::always($groupedSettings),
+            'themePresets' => $themePresets,
+            'settings' => $groupedSettings,
             'menus' => Inertia::always(\Illuminate\Support\Facades\Cache::flexible('navigation_menus', [60 * 60, 60 * 60 * 2], function () {
 
                 $mainMenu = \App\Models\NavigationMenu::where('slug', 'main-menu')
@@ -221,6 +221,19 @@ class HandleInertiaRequests extends Middleware
                     ])
                     ->first();
 
+                $logoMenu = \App\Models\NavigationMenu::where('slug', 'logo-menu')
+                    ->where('is_active', true)
+                    ->with([
+                        'items' => function ($query) {
+                            $query->where('is_visible', true)
+                                ->orderBy('order')
+                                ->with('page:id,title,slug');
+                        }
+                    ])
+                    ->first();
+
+                $logoMenuItem = $logoMenu ? $logoMenu->items->first() : null;
+
                 return [
                     'main' => $mainMenu ? $mainMenu->items->map(function ($item) {
                         return [
@@ -236,6 +249,10 @@ class HandleInertiaRequests extends Middleware
                             }),
                         ];
                     }) : [],
+                    'logo' => $logoMenuItem ? [
+                        'href' => $logoMenuItem->resolved_url,
+                        'target' => $logoMenuItem->open_in_new_tab ? '_blank' : '_self',
+                    ] : null,
                 ];
             })),
             'flash' => [

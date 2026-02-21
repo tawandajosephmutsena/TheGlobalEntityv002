@@ -75,7 +75,7 @@ interface StructItem {
 
 const SETTINGS_STRUCT: Record<string, StructItem[]> = {
     general: [
-        { key: 'site_name', label: 'Site Name', type: 'text', placeholder: 'Avant-Garde CMS' },
+        { key: 'site_name', label: 'Site Name', type: 'text', placeholder: 'Website Name' },
         { key: 'site_tagline', label: 'Site Tagline', type: 'text', placeholder: 'Digital Innovation Redefined' },
         { key: 'site_logo', label: 'Site Logo', type: 'image', placeholder: '/logo.svg' },
         { key: 'site_description', label: 'Site Description', type: 'textarea', placeholder: 'A Digital Innovation Agency' },

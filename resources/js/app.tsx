@@ -49,7 +49,7 @@ if (typeof window !== 'undefined') {
     registerBlocks();
 }
 
-const appName = import.meta.env.VITE_APP_NAME || 'Avant-Garde CMS';
+const appName = import.meta.env.VITE_APP_NAME || 'Website';
 
 // Initialize performance monitoring
 const performanceMonitor = initPerformanceMonitoring();

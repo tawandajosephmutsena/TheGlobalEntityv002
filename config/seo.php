@@ -6,7 +6,7 @@ return [
     | Site Configuration
     |--------------------------------------------------------------------------
     */
-    'site_name' => env('SEO_SITE_NAME', config('app.name', 'Avant-Garde CMS')),
+    'site_name' => env('SEO_SITE_NAME', config('app.name', 'Website')),
     'default_description' => env('SEO_DEFAULT_DESCRIPTION', 'Digital Innovation Redefined - Premium web development and design solutions'),
     'title_separator' => env('SEO_TITLE_SEPARATOR', ' | '),
     
@@ -23,7 +23,7 @@ return [
     | Social Media
     |--------------------------------------------------------------------------
     */
-    'twitter_handle' => env('SEO_TWITTER_HANDLE', '@avantgardecms'),
+    'twitter_handle' => env('SEO_TWITTER_HANDLE', '@ottomate'),
     'facebook_app_id' => env('SEO_FACEBOOK_APP_ID'),
     
     /*

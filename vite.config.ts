@@ -40,8 +40,16 @@ export default defineConfig({
         // Web Core Vitals: Optimize chunk sizes for better LCP
         rollupOptions: {
             output: {
-                // Let Vite handle chunking automatically to avoid circular dependencies
-                manualChunks: undefined,
+                manualChunks(id) {
+                    if (id.includes('node_modules')) {
+                        if (id.includes('gsap')) return 'gsap';
+                        if (id.includes('framer-motion') || id.includes('motion')) return 'animations';
+                        if (id.includes('recharts')) return 'charts';
+                        if (id.includes('lucide-react')) return 'icons';
+                        if (id.includes('@tiptap') || id.includes('prosemirror')) return 'editor';
+                        return 'vendor';
+                    }
+                },
                 // Optimize chunk file names for caching
                 chunkFileNames: 'js/[name]-[hash].js',
                 entryFileNames: 'js/[name]-[hash].js',
