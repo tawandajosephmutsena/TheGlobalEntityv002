@@ -74,6 +74,7 @@ export interface SharedData {
             cookie_consent_style?: 'bottom-bar' | 'top-bar' | 'bottom-left' | 'bottom-right';
             analytics_enabled?: boolean;
             google_analytics_id?: string;
+            google_tag_id?: string;
             privacy_policy_url?: string;
             terms_url?: string;
             cookie_policy_url?: string;

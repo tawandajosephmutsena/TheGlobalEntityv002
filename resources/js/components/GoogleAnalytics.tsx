@@ -4,6 +4,13 @@ import { SharedData } from '@/types';
 
 const CONSENT_KEY = 'cookie_consent';
 
+declare global {
+    interface Window {
+        dataLayer: unknown[];
+        gtag: (...args: unknown[]) => void;
+    }
+}
+
 interface ConsentPreferences {
     analytics: boolean;
     [key: string]: unknown;
@@ -24,35 +31,45 @@ function hasAnalyticsConsent(): boolean {
     return consent?.analytics === true;
 }
 
-let gaLoaded = false;
-
-function loadGoogleAnalytics(measurementId: string): void {
-    if (gaLoaded) return;
+function loadGoogleTags(measurementIds: string[]): void {
+    if (measurementIds.length === 0) return;
     if (typeof document === 'undefined') return;
 
-    // Create and inject the gtag.js script
-    const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    script.async = true;
-    document.head.appendChild(script);
+    // Use the first ID as the main ID for the script source
+    const mainId = measurementIds[0];
 
-    // Initialize gtag
-    const gtagScript = document.createElement('script');
-    gtagScript.textContent = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('consent', 'update', {
-            'analytics_storage': 'granted'
-        });
-        gtag('config', '${measurementId}', {
+    // Create and inject the gtag.js script if not already loaded
+    if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${mainId}"]`)) {
+        const script = document.createElement('script');
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${mainId}`;
+        script.async = true;
+        document.head.appendChild(script);
+    }
+
+    // Initialize/Update gtag
+    if (!window.dataLayer) {
+        const gtagScript = document.createElement('script');
+        gtagScript.textContent = `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('consent', 'update', {
+                'analytics_storage': 'granted',
+                'ad_storage': 'granted'
+            });
+        `;
+        document.head.appendChild(gtagScript);
+    }
+
+    // Configure each ID
+    measurementIds.forEach(id => {
+        const configScript = document.createElement('script');
+        configScript.textContent = `gtag('config', '${id}', {
             send_page_view: true,
             cookie_flags: 'SameSite=Lax;Secure'
-        });
-    `;
-    document.head.appendChild(gtagScript);
-
-    gaLoaded = true;
+        });`;
+        document.head.appendChild(configScript);
+    });
 }
 
 function setDefaultConsent(): void {
@@ -90,17 +107,25 @@ export function GoogleAnalytics() {
 
     const analyticsEnabled = compliance?.analytics_enabled === true;
     const measurementId = compliance?.google_analytics_id;
-    const isValidId = measurementId && measurementId.startsWith('G-');
+    const googleTagId = compliance?.google_tag_id;
+    
+    const isValidGA = measurementId && measurementId.startsWith('G-');
+    const isValidTag = googleTagId && (googleTagId.startsWith('AW-') || googleTagId.startsWith('G-'));
 
     const attemptLoad = useCallback(() => {
-        if (!analyticsEnabled || !isValidId || !measurementId) return;
-        if (hasAnalyticsConsent()) {
-            loadGoogleAnalytics(measurementId);
+        if (!analyticsEnabled) return;
+        
+        const tagsToLoad = [];
+        if (isValidGA && measurementId) tagsToLoad.push(measurementId);
+        if (isValidTag && googleTagId) tagsToLoad.push(googleTagId);
+
+        if (tagsToLoad.length > 0 && hasAnalyticsConsent()) {
+            loadGoogleTags(tagsToLoad);
         }
-    }, [analyticsEnabled, isValidId, measurementId]);
+    }, [analyticsEnabled, isValidGA, measurementId, isValidTag, googleTagId]);
 
     useEffect(() => {
-        if (!analyticsEnabled || !isValidId) return;
+        if (!analyticsEnabled || (!isValidGA && !isValidTag)) return;
 
         // Set default consent mode immediately
         setDefaultConsent();
@@ -111,8 +136,14 @@ export function GoogleAnalytics() {
         // Listen for consent updates from CookieConsent component
         const handleConsentUpdate = (event: Event) => {
             const detail = (event as CustomEvent<ConsentPreferences>).detail;
-            if (detail?.analytics && measurementId) {
-                loadGoogleAnalytics(measurementId);
+            if (detail?.analytics) {
+                const tagsToLoad = [];
+                if (isValidGA && measurementId) tagsToLoad.push(measurementId);
+                if (isValidTag && googleTagId) tagsToLoad.push(googleTagId);
+                
+                if (tagsToLoad.length > 0) {
+                    loadGoogleTags(tagsToLoad);
+                }
             }
         };
 
@@ -120,7 +151,7 @@ export function GoogleAnalytics() {
         return () => {
             window.removeEventListener('cookie-consent-updated', handleConsentUpdate);
         };
-    }, [analyticsEnabled, isValidId, measurementId, attemptLoad]);
+    }, [analyticsEnabled, isValidGA, measurementId, isValidTag, googleTagId, attemptLoad]);
 
     // This component renders nothing — it's purely a side-effect component
     return null;

@@ -161,6 +161,7 @@ class HandleInertiaRequests extends Middleware
                         return in_array(strtolower((string) $v), ['true', '1', 'yes', 'on'], true);
                     })($settings['analytics_enabled'] ?? null),
                     'google_analytics_id' => $settings['google_analytics_id'] ?? null,
+                    'google_tag_id' => $settings['google_tag_id'] ?? null,
                     'privacy_policy_url' => $settings['privacy_policy_page'] ?? '/privacy',
                     'terms_url' => $settings['terms_page'] ?? '/terms',
                     'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',

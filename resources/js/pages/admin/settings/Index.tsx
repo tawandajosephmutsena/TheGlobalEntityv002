@@ -114,9 +114,8 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'show_instagram', label: 'Show Instagram Icon', type: 'boolean', placeholder: 'true' },
     ],
     seo: [
-        { key: 'default_meta_title', label: 'Default Meta Title', type: 'text', placeholder: 'Avant-Garde Experience' },
-        { key: 'default_meta_description', label: 'Default Meta Description', type: 'textarea', placeholder: 'Default description for SEO...' },
         { key: 'google_analytics_id', label: 'Google Analytics ID', type: 'text', placeholder: 'G-XXXXXXXXXX', description: 'Your Google Analytics Measurement ID (e.g. G-XXXXXXXXXX). Also requires enabling Analytics in the Compliance tab.' },
+        { key: 'google_tag_id', label: 'Google Tag ID (gtag.js)', type: 'text', placeholder: 'AW-XXXXXXXXXX', description: 'Your Google Tag ID (e.g. AW-XXXXXXXXXX or G-XXXXXXXXXX). This is used for Google Ads and unified tracking.' },
     ],
     compliance: [
         { key: 'cookie_consent_enabled', label: 'Enable Cookie Consent Banner', type: 'boolean', placeholder: 'false', description: 'Show a GDPR/POPIA-compliant cookie consent banner to all visitors.' },
