@@ -142,42 +142,56 @@ export default function ConnectBlock({
                       {description}
                     </p>
                     <div className="mt-10 flex flex-wrap justify-center gap-4 md:justify-start">
-                      <Link
-                        href={ctaHref}
-                        className={cn(buttonVariants({ size: "lg" }), "rounded-full font-bold px-10 h-14 text-lg")}
-                      >
-                        {ctaText}
-                      </Link>
+                      {ctaHref.startsWith('http') || ctaHref.startsWith('#') || ctaHref.startsWith('mailto') ? (
+                          <a
+                            href={ctaHref}
+                            className={cn(buttonVariants({ size: "lg" }), "rounded-full font-bold px-10 h-14 text-lg")}
+                          >
+                            {ctaText}
+                          </a>
+                      ) : (
+                          <Link
+                            href={ctaHref}
+                            className={cn(buttonVariants({ size: "lg" }), "rounded-full font-bold px-10 h-14 text-lg")}
+                          >
+                            {ctaText}
+                          </Link>
+                      )}
                       
                       {email && (
-                        <Link
+                        <a
                             href={`mailto:${email}`}
+                            aria-label="Send an email"
+                            title="Send an email"
                             className={cn(
                             buttonVariants({
                                 variant: "outline",
                                 size: "icon",
                             }),
-                            "rounded-full h-12 w-12"
+                            "rounded-full h-12 w-12 inline-flex items-center justify-center shrink-0"
                             )}
                         >
                             <Mail className="h-5 w-5" />
-                        </Link>
+                        </a>
                       )}
 
                       {whatsapp && (
-                        <Link
+                        <a
                             href={`https://wa.me/${whatsapp.replace(/\D/g, "")}`}
                             target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Send a WhatsApp message"
+                            title="Send a WhatsApp message"
                             className={cn(
                             buttonVariants({
                                 variant: "outline",
                                 size: "icon",
                             }),
-                            "rounded-full h-12 w-12"
+                            "rounded-full h-12 w-12 inline-flex items-center justify-center shrink-0"
                             )}
                         >
                             <MessageCircle className="h-5 w-5" />
-                        </Link>
+                        </a>
                       )}
                     </div>
                   </div>
