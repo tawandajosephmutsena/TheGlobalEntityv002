@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { ArrowRight } from 'lucide-react';
 
@@ -36,13 +36,53 @@ export default function KimiHeroSection({
     ctaSecondaryLink,
     images,
     backgroundColor,
-    scrollSpeed = 30,
+    scrollSpeed = 30, // seconds for one full loop
 }: KimiHeroProps) {
     const carouselImages = images && images.length > 0 ? images : DEFAULT_IMAGES;
-    // Use 2 sets for CSS marquee (-50% transform)
-    const allImages = [...carouselImages, ...carouselImages];
+    // Triple the images for a perfectly seamless infinite loop
+    const allImages = [...carouselImages, ...carouselImages, ...carouselImages];
 
-    const duration = (scrollSpeed || 30) * 2; // Adjust duration based on scrollSpeed prop
+    const trackRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<number>(0);
+    const positionRef = useRef<number>(0);
+    const lastTimeRef = useRef<number>(0);
+
+    useEffect(() => {
+        function animate(time: number) {
+            if (!lastTimeRef.current) lastTimeRef.current = time;
+            const deltaTime = time - lastTimeRef.current;
+            lastTimeRef.current = time;
+
+            if (!trackRef.current) return;
+
+            // Use scrollSpeed (seconds for full loop) to compute pixels per second.
+            // We know we must traverse 1/3 of the track's scrollWidth over `scrollSpeed` seconds.
+            const singleSetWidth = trackRef.current.scrollWidth / 3;
+            
+            // Ensure scrollSpeed is valid
+            const validSpeed = scrollSpeed && scrollSpeed > 0 ? scrollSpeed : 30;
+            const pixelsPerSecond = singleSetWidth / validSpeed;
+
+            // Advance position based on delta time (milliseconds to seconds)
+            positionRef.current -= pixelsPerSecond * (deltaTime / 1000);
+
+            // Reset position seamlessly when we've scrolled past one full set
+            if (Math.abs(positionRef.current) >= singleSetWidth) {
+                positionRef.current += singleSetWidth;
+            }
+
+            // Apply updated position
+            trackRef.current.style.transform = `translateX(${positionRef.current}px)`;
+            animationRef.current = requestAnimationFrame(animate);
+        }
+
+        animationRef.current = requestAnimationFrame(animate);
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+            }
+        };
+    }, [scrollSpeed]);
 
     // Use theme CSS variable or fallback to provided prop or default
     const sectionBg = backgroundColor || 'var(--background)';
@@ -122,10 +162,10 @@ export default function KimiHeroSection({
                 {/* Carousel Container */}
                 <div className="kimi-carousel-container relative w-full overflow-hidden">
                     <div
-                        className="flex gap-6 sm:gap-8 lg:gap-10 animate-marquee"
+                        ref={trackRef}
+                        className="flex gap-6 sm:gap-8 lg:gap-10"
                         style={{ 
                             width: 'max-content',
-                            animation: `marquee ${duration}s linear infinite`,
                             willChange: 'transform'
                         }}
                     >
