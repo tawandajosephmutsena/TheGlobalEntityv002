@@ -301,6 +301,9 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
 
     // Plugin Management
     Route::resource('plugins', App\Http\Controllers\Admin\PluginController::class)->only(['index', 'store', 'update', 'destroy']);
+
+    // System Update
+    Route::post('system/update', [App\Http\Controllers\Admin\SystemUpdateController::class, 'update'])->name('system.update');
 });
 
 // Dynamic Pages (Catch-all)

@@ -4,12 +4,13 @@ import { SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
 import { Separator } from '@/components/ui/separator';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { cn } from '@/lib/utils';
-import { Head } from '@inertiajs/react';
-import React from 'react';
+import { Head, usePage, router } from '@inertiajs/react';
+import React, { useState } from 'react';
 import { BreadcrumbItem } from '@/types';
-import { Home } from 'lucide-react';
+import { Home, Download, Loader2 } from 'lucide-react';
 import ThemeStyles from '@/components/ThemeStyles';
 
+declare function route(name: string, params?: unknown, absolute?: boolean): string;
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -28,6 +29,18 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
     className,
     breadcrumbs = [],
 }) => {
+    const { app_version } = usePage().props as Record<string, unknown>;
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    const handleUpdate = () => {
+        if (confirm('Are you sure you want to pull the latest updates from GitHub? This will run migrations and clear caches.')) {
+            setIsUpdating(true);
+            router.post(route('admin.system.update'), {}, {
+                onFinish: () => setIsUpdating(false),
+            });
+        }
+    };
+
     return (
         <>
             <Head title={title ? `${title} - Admin` : 'Admin'} />
@@ -44,6 +57,19 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
                             <Breadcrumbs breadcrumbs={breadcrumbs} />
                         )}
                         <div className="ml-auto flex items-center gap-2">
+                            {app_version && (
+                                <span className="text-xs text-muted-foreground mr-2 border border-border px-2 py-1 rounded-md hidden md:inline-block">
+                                    Version: {app_version}
+                                </span>
+                            )}
+                            <button
+                                onClick={handleUpdate}
+                                disabled={isUpdating}
+                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-bold hover:bg-primary/90 transition-all disabled:opacity-50"
+                            >
+                                {isUpdating ? <Loader2 className="size-3 animate-spin" /> : <Download className="size-3" />}
+                                {isUpdating ? 'Updating...' : 'Update'}
+                            </button>
                              <a 
                                 href="/" 
                                 target="_blank" 

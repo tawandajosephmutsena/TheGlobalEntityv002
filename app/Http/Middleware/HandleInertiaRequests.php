@@ -255,6 +255,13 @@ class HandleInertiaRequests extends Middleware
                     ] : null,
                 ];
             })),
+            'app_version' => \Illuminate\Support\Facades\Cache::remember('app_version', 60 * 60 * 24, function () {
+                try {
+                    return trim(shell_exec('git log -1 --format="%h"'));
+                } catch (\Exception $e) {
+                    return 'unknown';
+                }
+            }),
             'flash' => [
                 'success' => $request->session()->get('success'),
                 'error' => $request->session()->get('error'),
