@@ -3,9 +3,12 @@ import MainLayout from '@/layouts/MainLayout';
 import { PortfolioItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { SeoHead } from '@/components/SeoHead';
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, Zap, ArrowUpRight } from 'lucide-react';
-import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
+import { Carousel } from '@/components/ui/apple-cards-carousel';
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 interface Props {
     portfolioItem: PortfolioItem;
@@ -13,22 +16,36 @@ interface Props {
 
 export default function PortfolioShow({ portfolioItem }: Props) {
     const { site } = usePage<{ site: { url: string; name: string } }>().props;
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const openLightbox = (index: number) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+    };
+
     const galleryCards = portfolioItem.gallery?.map((img, index) => (
-        <Card
+        <button
             key={index}
-            card={{
-                src: img,
-                title: `Gallery Image ${index + 1}`,
-                category: portfolioItem.title,
-                content: (
-                    <div className="flex justify-center items-center h-full">
-                         <img src={img} alt={`Gallery view ${index + 1}`} className="max-h-[80vh] w-auto object-contain rounded-xl" />
-                    </div>
-                ),
-            }}
-            index={index}
-            layout={true}
-        />
+            onClick={() => openLightbox(index)}
+            className="relative z-50 pointer-events-auto flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900 group cursor-pointer"
+            type="button"
+        >
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
+            <div className="relative z-40 p-8">
+                <p className="text-left font-sans text-sm font-medium text-white md:text-base">
+                    {portfolioItem.title}
+                </p>
+                <p className="mt-2 max-w-xs text-left font-sans text-xl font-semibold [text-wrap:balance] text-white md:text-3xl">
+                    Gallery Image {index + 1}
+                </p>
+            </div>
+            <img
+                src={img}
+                alt={`Gallery view ${index + 1}`}
+                className="absolute inset-0 w-full h-full z-10 object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+        </button>
     )) || [];
 
     return (
@@ -258,6 +275,21 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                     </Link>
                 </div>
             </section>
+            {/* Lightbox Implementation */}
+            {portfolioItem.gallery && portfolioItem.gallery.length > 0 && (
+                <Lightbox
+                    open={lightboxOpen}
+                    close={() => setLightboxOpen(false)}
+                    index={lightboxIndex}
+                    slides={portfolioItem.gallery.map(src => ({ src }))}
+                    plugins={[Zoom]}
+                    carousel={{ finite: portfolioItem.gallery.length <= 1 }}
+                    render={{
+                        iconZoomIn: () => <Zap className="w-5 h-5" />,
+                        iconZoomOut: () => <ArrowLeft className="w-5 h-5 -rotate-90" />,
+                    }}
+                />
+            )}
         </MainLayout>
     );
 }
