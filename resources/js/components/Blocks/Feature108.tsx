@@ -9,6 +9,7 @@ interface TabContent {
   title: string;
   description: string;
   buttonText: string;
+  buttonLink?: string;
   imageSrc: string;
   imageAlt: string;
 }
@@ -88,9 +89,17 @@ const Feature108 = ({
                   <p className="text-muted-foreground lg:text-xl leading-relaxed">
                     {tab.content.description}
                   </p>
-                  <Button className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
-                    {tab.content.buttonText}
-                  </Button>
+                  {tab.content.buttonLink ? (
+                    <Button asChild className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
+                      <a href={tab.content.buttonLink}>
+                        {tab.content.buttonText}
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
+                      {tab.content.buttonText}
+                    </Button>
+                  )}
                 </div>
                 <div className="relative w-full aspect-video lg:aspect-square overflow-hidden rounded-2xl">
                     <img

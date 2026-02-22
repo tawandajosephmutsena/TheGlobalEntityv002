@@ -10,6 +10,7 @@ interface FeatureItem {
     description: string;
     image?: string;
     icon?: string;
+    link?: string;
 }
 
 interface ParallaxFeaturesBlockProps {
@@ -156,15 +157,18 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
                                         {item.title}
                                     </h3>
                                 </div>
-                                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
-                                    {item.description}
-                                </p>
-                                <div className="pt-4">
-                                    <button className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors">
-                                        Learn More
-                                        <div className="w-8 h-[2px] bg-foreground group-hover:bg-primary group-hover:w-12 transition-all duration-300" />
-                                    </button>
-                                </div>
+                                <div 
+                                    className="prose prose-sm md:prose-base dark:prose-invert prose-p:text-muted-foreground prose-p:leading-relaxed max-w-xl"
+                                    dangerouslySetInnerHTML={{ __html: item.description }}
+                                />
+                                {item.link && (
+                                    <div className="pt-4">
+                                        <a href={item.link} className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors">
+                                            Learn More
+                                            <div className="w-8 h-[2px] bg-foreground group-hover:bg-primary group-hover:w-12 transition-all duration-300" />
+                                        </a>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

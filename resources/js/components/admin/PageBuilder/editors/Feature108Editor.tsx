@@ -30,6 +30,7 @@ const Feature108Editor = ({ content, onUpdate }: Feature108EditorProps) => {
                 title: 'New Title',
                 description: 'New Description',
                 buttonText: 'Click Me',
+                buttonLink: '',
                 imageSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80',
                 imageAlt: 'placeholder',
             },
@@ -152,6 +153,15 @@ const Feature108Editor = ({ content, onUpdate }: Feature108EditorProps) => {
                                         className="h-8 text-xs"
                                         value={tab.content.buttonText}
                                         onChange={(e) => updateTabContent(index, { buttonText: e.target.value })}
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <Label className="text-[10px]">Button Link</Label>
+                                    <Input
+                                        className="h-8 text-xs"
+                                        value={tab.content.buttonLink || ''}
+                                        onChange={(e) => updateTabContent(index, { buttonLink: e.target.value })}
+                                        placeholder="https://..."
                                     />
                                 </div>
                                 <div className="space-y-1">

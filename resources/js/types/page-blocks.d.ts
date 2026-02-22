@@ -293,6 +293,7 @@ export interface Feature108Block extends BaseBlock {
                 title: string;
                 description: string;
                 buttonText: string;
+                buttonLink?: string;
                 imageSrc: string;
                 imageAlt: string;
             };
@@ -412,6 +413,7 @@ export interface ParallaxFeaturesBlock extends BaseBlock {
             description: string;
             image?: string;
             icon?: string;
+            link?: string;
         }>;
     };
 }

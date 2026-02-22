@@ -28,7 +28,7 @@ interface TestimonialItem { text: string; name: string; role: string; image?: st
 interface LogoItem { name: string; url: string; }
 interface AppleCardItem { category: string; title: string; src: string; content: string; link: string; }
 interface CinematicSlide { title: string; subtitle?: string; tagline?: string; image?: string; }
-interface ParallaxItem { title: string; description: string; image: string; }
+interface ParallaxItem { title: string; description: string; image: string; link?: string; }
 interface HorizontalScrollItem { title: string; description: string; tag: string; image: string; }
 
 interface FormField {
@@ -1431,7 +1431,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                         <Trash className="h-3 w-3" />
                                     </button>
                                     <Input className="h-8 text-xs font-bold" value={item.title} onChange={(e) => { const n = [...items]; n[i] = { ...item, title: e.target.value }; updateContent({ items: n }); }} placeholder="Title" />
-                                    <Textarea className="h-16 text-xs" value={item.description} onChange={(e) => { const n = [...items]; n[i] = { ...item, description: e.target.value }; updateContent({ items: n }); }} placeholder="Description..." />
+                                    <div className="space-y-1">
+                                        <Label className="text-[10px] text-muted-foreground">Description</Label>
+                                        <RichTextEditor
+                                            content={item.description}
+                                            onChange={(content) => { const n = [...items]; n[i] = { ...item, description: content }; updateContent({ items: n }); }}
+                                            placeholder="Feature description..."
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label className="text-[10px]">Learn More Link</Label>
+                                        <Input className="h-8 text-xs" value={item.link || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, link: e.target.value }; updateContent({ items: n }); }} placeholder="https://... (Optional)" />
+                                    </div>
                                     <div className="space-y-2">
                                         <Label className="text-[10px]">Parallax Image</Label>
                                         <div className="flex gap-2">
