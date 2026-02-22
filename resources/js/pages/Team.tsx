@@ -112,9 +112,9 @@ export default function Team({ teamMembers }: Props) {
                                 </div>
                             </div>
                         </div>
-                        <div className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/10 text-white flex flex-col justify-center text-center">
-                            <span className="text-6xl font-black mb-4">100%</span>
-                            <span className="text-xs font-bold uppercase tracking-widest opacity-60">Human Centered</span>
+                        <div className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/5 text-agency-secondary dark:text-white flex flex-col justify-center text-center dark:border dark:border-white/10">
+                            <span className="text-6xl font-black mb-4 text-agency-secondary dark:text-white">100%</span>
+                            <span className="text-xs font-bold uppercase tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">Human Centered</span>
                         </div>
                     </div>
                 </div>
@@ -124,11 +124,11 @@ export default function Team({ teamMembers }: Props) {
             <section className="bg-agency-primary dark:bg-black py-40 relative">
                 <div className="mx-auto max-w-5xl px-4 text-center">
                     <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Careers</span>
-                    <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter mb-12">
+                    <h2 className="text-5xl md:text-8xl font-black text-agency-secondary dark:text-white uppercase tracking-tighter mb-12">
                         Be Part of <br/>
                         <span className="text-agency-accent italic">The Movement.</span>
                     </h2>
-                    <a href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-white text-agency-primary font-black text-lg uppercase tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
+                    <a href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-secondary dark:bg-white text-agency-primary font-black text-lg uppercase tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
                         JOIN OUR TEAM
                     </a>
                 </div>

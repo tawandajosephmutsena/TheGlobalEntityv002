@@ -43,10 +43,10 @@ const CultureBentoBlock: React.FC<CultureBentoBlockProps> = ({
                     
                     <AnimatedSection 
                         animation="slide-left"
-                        className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/10 text-white flex flex-col justify-center text-center"
+                        className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/5 text-agency-secondary dark:text-white flex flex-col justify-center text-center dark:border dark:border-white/10"
                     >
-                        <span className="text-6xl font-black mb-4">{statValue}</span>
-                        <span className="text-xs font-bold uppercase tracking-widest opacity-60">{statLabel}</span>
+                        <span className="text-6xl font-black mb-4 text-agency-secondary dark:text-white">{statValue}</span>
+                        <span className="text-xs font-bold uppercase tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">{statLabel}</span>
                     </AnimatedSection>
                 </div>
             </div>

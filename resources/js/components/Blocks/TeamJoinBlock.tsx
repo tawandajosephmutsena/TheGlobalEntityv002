@@ -19,7 +19,7 @@ const TeamJoinBlock: React.FC<TeamJoinBlockProps> = ({
             <div className="mx-auto max-w-5xl px-4 text-center">
                 <AnimatedSection animation="scale">
                     <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{subtitle}</span>
-                    <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter mb-12">
+                    <h2 className="text-5xl md:text-8xl font-black text-agency-secondary dark:text-white uppercase tracking-tighter mb-12">
                         {title.includes('Movement.') ? (
                             <>
                                 {title.replace('The Movement.', '')} <br/>
@@ -27,7 +27,7 @@ const TeamJoinBlock: React.FC<TeamJoinBlockProps> = ({
                             </>
                         ) : title}
                     </h2>
-                    <a href={ctaHref} className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-white text-agency-primary font-black text-lg uppercase tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
+                    <a href={ctaHref} className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-secondary dark:bg-white text-agency-primary font-black text-lg uppercase tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
                         {ctaText}
                     </a>
                 </AnimatedSection>
