@@ -548,7 +548,11 @@ export default function BlockRenderer({
                         return <TeamJoinBlock key={block.id} {...(block.content as TeamJoinBlockType['content'])} />;
 
                     default: {
-                        const unknownBlock = block as Record<string, unknown>;
+                        const unknownBlock = block as unknown as {
+                            type: string;
+                            id: string | number;
+                            content: Record<string, unknown>;
+                        };
                         const dynamicBlock = blockRegistry.get(unknownBlock.type);
                         if (dynamicBlock) {
                             const Renderer = dynamicBlock.renderer;
