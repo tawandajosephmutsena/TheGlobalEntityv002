@@ -18,15 +18,19 @@ class SystemUpdateController extends Controller
     {
         $basePath = base_path();
 
+        // Determine the HOME directory for Git to find .git-credentials
+        $home = env('HOME', isset($_SERVER['HOME']) ? $_SERVER['HOME'] : '/home/' . get_current_user());
+        $env = ['HOME' => $home];
+
         // 1. Git pull
         try {
             // First fetch
-            $process = new Process(['git', 'fetch', 'origin'], $basePath);
+            $process = new Process(['git', 'fetch', 'origin'], $basePath, $env);
             $process->setTimeout(120);
             $process->mustRun();
 
             // Then pull
-            $process = new Process(['git', 'pull', 'origin', 'main'], $basePath);
+            $process = new Process(['git', 'pull', 'origin', 'main'], $basePath, $env);
             $process->setTimeout(120);
             $process->mustRun();
         } catch (ProcessFailedException $exception) {
