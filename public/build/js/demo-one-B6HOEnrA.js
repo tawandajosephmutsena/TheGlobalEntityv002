@@ -1,1 +1,0 @@
-import{ag as o,j as m}from"./vendor-D_ylmYP-.js";import{T as r}from"./testimonial-v2-PixANSCG.js";import"./animations-vu8tErAD.js";function a(){const t=o.c(1);let e;return t[0]===Symbol.for("react.memo_cache_sentinel")?(e=m.jsx(r,{}),t[0]=e):e=t[0],e}export{a as default};

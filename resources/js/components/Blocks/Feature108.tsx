@@ -86,9 +86,10 @@ const Feature108 = ({
                   <h3 className="text-3xl font-semibold lg:text-5xl leading-tight">
                     {tab.content.title}
                   </h3>
-                  <p className="text-muted-foreground lg:text-xl leading-relaxed">
-                    {tab.content.description}
-                  </p>
+                  <div 
+                    className="prose dark:prose-invert prose-p:text-muted-foreground lg:prose-p:text-xl prose-p:leading-relaxed max-w-none"
+                    dangerouslySetInnerHTML={{ __html: tab.content.description }}
+                  />
                   {tab.content.buttonLink ? (
                     <Button asChild className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
                       <a href={tab.content.buttonLink}>

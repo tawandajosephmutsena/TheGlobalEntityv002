@@ -33,3 +33,4 @@ yarn-error.log
 /.zed
 /tests/Browser/screenshots
 /tests/Browser/console
+deploy-commands.md

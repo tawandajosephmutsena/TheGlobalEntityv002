@@ -5,6 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Plus, Trash, ImageIcon } from 'lucide-react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 import { MediaAsset } from '@/types';
 import { Feature108Block } from '@/types/page-blocks';
 
@@ -141,10 +142,9 @@ const Feature108Editor = ({ content, onUpdate }: Feature108EditorProps) => {
                                 </div>
                                 <div className="space-y-1">
                                     <Label className="text-[10px]">Content Description</Label>
-                                    <Textarea
-                                        className="h-16 text-xs"
-                                        value={tab.content.description}
-                                        onChange={(e) => updateTabContent(index, { description: e.target.value })}
+                                    <RichTextEditor
+                                        content={tab.content.description}
+                                        onChange={(content) => updateTabContent(index, { description: content })}
                                     />
                                 </div>
                                 <div className="space-y-1">
