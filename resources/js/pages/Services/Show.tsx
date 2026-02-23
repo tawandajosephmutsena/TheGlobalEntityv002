@@ -71,7 +71,7 @@ export default function ServiceShow({ service }: Props) {
                 <section className="bg-white dark:bg-agency-dark">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 -mt-20 relative z-20">
                         <AnimatedSection animation="scale" className="aspect-[21/9] rounded-[40px] overflow-hidden shadow-2xl border-8 border-white dark:border-agency-dark">
-                            <img src={service.featured_image} alt={service.title} className="w-full h-full object-cover" />
+                            <img src={service.featured_image} alt={service.title} fetchPriority="high" className="w-full h-full object-cover" />
                         </AnimatedSection>
                     </div>
                 </section>

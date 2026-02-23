@@ -8,86 +8,100 @@ Follow these steps to deploy OttoStart to Verpex cPanel hosting.
 ## Pre-Deployment (Local)
 
 // turbo
+
 1. Clear all caches:
-```bash
-php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear
-```
+
+   ```bash
+   php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear
+   ```
 
 // turbo
-2. Install production dependencies:
-```bash
-composer install --no-dev --optimize-autoloader
-```
+
+1. Install production dependencies:
+
+   ```bash
+   composer install --no-dev --optimize-autoloader
+   ```
 
 // turbo
-3. Build frontend assets:
-```bash
-npm ci && npm run build
-```
+
+1. Build frontend assets:
+
+   ```bash
+   npm ci && npm run build
+   ```
 
 // turbo
-4. Create deployment package:
-```bash
-./deploy/create-package.sh
-```
+
+1. Create deployment package:
+
+   ```bash
+   ./deploy/create-package.sh
+   ```
 
 ## Upload to Verpex cPanel
 
-5. Log into Verpex cPanel dashboard
+1. Log into Verpex cPanel dashboard
 
-6. Go to **Select PHP Version** and set PHP to 8.2+
+2. Go to **Select PHP Version** and set PHP to 8.2+
 
-7. Enable required extensions: ctype, curl, dom, fileinfo, filter, hash, mbstring, openssl, pcre, pdo, pdo_sqlite, session, tokenizer, xml, gd, zip, intl
+3. Enable required extensions: ctype, curl, dom, fileinfo, filter, hash, mbstring, openssl, pcre, pdo, pdo_sqlite, session, tokenizer, xml, gd, zip, intl
 
-8. Upload `ottostart_production.zip` to `/home/YOUR_USERNAME/` via File Manager
+4. Upload `ottostart_production.zip` to `/home/YOUR_USERNAME/` via File Manager
 
-9. Extract the archive
+5. Extract the archive
 
-10. If main domain: Move contents of `public/` to `public_html/`
+6. If main domain: Move contents of `public/` to `public_html/`
 
 ## Post-Upload Configuration (via SSH Terminal)
 
-11. Set permissions:
-```bash
-cd ~/public_html
-chmod -R 755 storage bootstrap/cache
-chmod 644 database/database.sqlite
-```
+1. Set permissions:
 
-12. Create storage symlink:
-```bash
-php artisan storage:link
-```
+   ```bash
+   cd ~/public_html
+   chmod -R 755 storage bootstrap/cache
+   chmod 644 database/database.sqlite
+   ```
 
-13. Optimize for production (caches config, routes, views, events):
-```bash
-php artisan optimize
-```
+2. Create storage symlink:
 
-14. Run migrations if needed:
-```bash
-php artisan migrate --force
-```
+   ```bash
+   php artisan storage:link
+   ```
 
-15. Restart SSR process (if SSR is enabled):
-```bash
-php artisan inertia:stop-ssr; php artisan inertia:start-ssr &
-```
+3. Optimize for production (caches config, routes, views, events):
+
+   ```bash
+   php artisan optimize
+   ```
+
+4. Run migrations if needed:
+
+   ```bash
+   php artisan migrate --force
+   ```
+
+5. Restart SSR process (if SSR is enabled):
+
+   ```bash
+   php artisan inertia:stop-ssr; php artisan inertia:start-ssr &
+   ```
 
 ## Verification
 
-16. Visit https://your-domain.com and verify the site loads
+1. Visit <https://your-domain.com> and verify the site loads
 
-17. Test login/authentication
+2. Test login/authentication
 
-18. Check that images and uploads work
+3. Check that images and uploads work
 
-19. Verify admin panel access
+4. Verify admin panel access
 
-20. Check SSR health (if enabled):
-```bash
-php artisan inertia:check-ssr
-```
+5. Check SSR health (if enabled):
+
+   ```bash
+   php artisan inertia:check-ssr
+   ```
 
 ## Troubleshooting
 

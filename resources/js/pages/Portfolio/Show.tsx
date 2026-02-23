@@ -43,6 +43,8 @@ export default function PortfolioShow({ portfolioItem }: Props) {
             <img
                 src={img}
                 alt={`Gallery view ${index + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full z-10 object-cover transition-transform duration-500 group-hover:scale-105"
             />
         </button>
@@ -147,6 +149,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                             <img 
                                 src={portfolioItem.featured_image} 
                                 alt={portfolioItem.title} 
+                                fetchPriority="high"
                                 className="w-full h-full object-cover grayscale-[0.2]"
                             />
                         </AnimatedSection>

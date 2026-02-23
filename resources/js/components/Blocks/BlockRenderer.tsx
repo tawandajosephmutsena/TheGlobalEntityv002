@@ -11,10 +11,6 @@ import {
     ImageBlock as ImageBlockType, 
     FeaturesBlock as FeaturesBlockType,
     AnimatedShaderHeroBlock,
-    HeroBlock as HeroBlockType, // Added alias to keep it available
-    StatsBlock as StatsBlockType, // Added alias
-    CinematicHeroBlock as CinematicHeroBlockType,
-    FormBlock as FormBlockType, // Added alias
     StoryBlock as StoryBlockType,
     ManifestoBlock as ManifestoBlockType,
     ProcessBlock as ProcessBlockType,
@@ -207,6 +203,8 @@ const ColumnRenderer = ({ column }: { column: NonNullable<TextBlockType['content
                     <img 
                         src={url} 
                         alt={(content?.alt as string) || 'Image'} 
+                        loading="lazy"
+                        decoding="async"
                         className="w-full rounded-2xl shadow-lg object-cover" 
                     />
                     {content?.caption && (
@@ -323,6 +321,8 @@ const ImageBlock = ({ content }: { content: ImageBlockType['content'] }) => {
                         <img 
                             src={url} 
                             alt={alt || 'Image'} 
+                            loading="lazy"
+                            decoding="async"
                             className="w-full rounded-[40px] shadow-2xl" 
                         />
                         {caption && (
@@ -548,7 +548,7 @@ export default function BlockRenderer({
                         return <TeamJoinBlock key={block.id} {...(block.content as TeamJoinBlockType['content'])} />;
 
                     default: {
-                        const unknownBlock = block as any;
+                        const unknownBlock = block as Record<string, unknown>;
                         const dynamicBlock = blockRegistry.get(unknownBlock.type);
                         if (dynamicBlock) {
                             const Renderer = dynamicBlock.renderer;

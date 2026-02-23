@@ -148,6 +148,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                             <img 
                                 src={backgroundImages[0] || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop'} 
                                 alt=""
+                                loading="lazy"
+                                fetchPriority="auto"
                                 className="absolute inset-0 !w-full !h-full object-cover transition-transform duration-700 hover:scale-110"
                             />
                         </div>
@@ -162,6 +164,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                             <img 
                                 src={backgroundImages[1] || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2670&auto=format&fit=crop'} 
                                 alt=""
+                                loading="lazy"
+                                fetchPriority="auto"
                                 className="absolute inset-0 !w-full !h-full object-cover transition-transform duration-700 hover:scale-110"
                             />
                         </div>
