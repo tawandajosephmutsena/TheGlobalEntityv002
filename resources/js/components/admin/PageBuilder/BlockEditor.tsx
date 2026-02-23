@@ -1190,7 +1190,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
         }
 
         case 'creative_grid': {
-            const items = (block.content.items as any[]) || [];
+            const items = (block.content.items as Record<string, unknown>[]) || [];
             const feedSource = (block.content.feedSource as string) || 'insights';
             const maxItems = Number(block.content.maxItems) || 6;
             const sourceCategory = String(block.content.sourceCategory || 'all');
@@ -1477,11 +1477,9 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                         <Label>Background Color</Label>
                         <div className="flex gap-2">
                             <Input className="h-9 font-mono" value={String(block.content.backgroundColor || '#0a0a0a')} onChange={(e) => updateContent({ backgroundColor: e.target.value })} placeholder="#000000" />
-                            <div className="h-9 w-9 rounded border shadow-sm">
-                                <div 
-                                    className="w-full h-full rounded-[inherit]" 
-                                    style={{ backgroundColor: String(block.content.backgroundColor || '#0a0a0a') }}
-                                />
+                            <div className="h-9 w-9 rounded border shadow-sm relative overflow-hidden">
+                                <span dangerouslySetInnerHTML={{ __html: `<style>.bg-preview-${block.id} { background-color: ${String(block.content.backgroundColor || '#0a0a0a')} !important; }</style>` }} />
+                                <div className={`w-full h-full rounded-[inherit] bg-preview-${block.id}`} />
                             </div>
                         </div>
                     </div>
@@ -1872,7 +1870,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             );
 
         case 'team_grid': {
-            const items = (block.content.items as any[]) || [];
+            const items = (block.content.items as Record<string, unknown>[]) || [];
             const feedSource = (block.content.feedSource as string) || 'team';
             const maxItems = Number(block.content.maxItems) || 8;
 
@@ -2002,17 +2000,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             );
 
         default: {
-            const blockAny = block as any;
-            const dynamicBlock = blockRegistry.get(blockAny.type);
+            const blockAny = block as Record<string, unknown>;
+            const blockType = String(blockAny.type || '');
+            const dynamicBlock = blockRegistry.get(blockType);
             if (dynamicBlock && dynamicBlock.editor) {
-                const Editor = dynamicBlock.editor as React.ComponentType<any>;
+                const Editor = dynamicBlock.editor as React.ComponentType<unknown>;
                 // Adapter: some editors (KimiHero, ScrollAnimation) call onUpdate
                 // with full block objects { ...block, content: {...} }, while others
                 // (Carousel) pass just the content. Detect and normalize.
-                const handleRegistryUpdate = (updated: any) => {
-                    if (updated && typeof updated === 'object' && updated.content && updated.type) {
+                const handleRegistryUpdate = (updated: unknown) => {
+                    if (updated && typeof updated === 'object' && 'content' in updated && 'type' in updated) {
                         // Full block object — extract content
-                        onUpdate(updated.content);
+                        onUpdate((updated as Record<string, unknown>).content);
                     } else {
                         // Content object — pass through
                         onUpdate(updated);

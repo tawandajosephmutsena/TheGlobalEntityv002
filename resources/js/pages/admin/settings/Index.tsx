@@ -635,8 +635,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                                 <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
                                                             </div>
                                                                 <div 
-                                                                    className="w-6 h-6 rounded-full border border-border/50"
-                                                                    style={{ '--bg-color': preset.light.accent || preset.light.secondary } as React.CSSProperties}
+                                                                    className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.accent || preset.light.secondary}]`}
                                                                     title="Accent"
                                                                 >
                                                                     <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />

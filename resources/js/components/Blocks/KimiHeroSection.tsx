@@ -86,11 +86,42 @@ export default function KimiHeroSection({
 
     // Use theme CSS variable or fallback to provided prop or default
     const sectionBg = backgroundColor || 'var(--background)';
+    const uid = React.useId().replace(/:/g, '');
+
+    const carouselStyles = allImages.map((src, index) => {
+        const position = index % carouselImages.length;
+        const centerIndex = carouselImages.length / 2;
+        const offset = position - centerIndex + 0.5;
+        const rotation = offset * 8;
+        const translateZ = Math.abs(offset) * -30;
+        const scale = 1 - Math.abs(offset) * 0.05;
+
+        return `.kimi-hero-${uid} .carousel-item-${index} {
+            transform: perspective(1000px) rotateY(${rotation}deg) translateZ(${translateZ}px) scale(${scale});
+        }`;
+    }).join('\n');
 
     return (
+        <React.Fragment>
+            <style dangerouslySetInnerHTML={{ __html: `
+                .kimi-hero-${uid} {
+                    --section-bg: ${sectionBg};
+                    --font-serif-local: var(--font-serif, Georgia, serif);
+                    --font-display-local: var(--font-display, sans-serif);
+                    --text-color-primary: var(--foreground);
+                    --text-color-muted: var(--muted-foreground);
+                    --btn-bg: var(--primary);
+                    --btn-text: var(--primary-foreground);
+                    --arrow-bg: var(--accent);
+                    --btn-border: var(--border);
+                    --mask-bg-right: linear-gradient(to right, ${sectionBg}, transparent);
+                    --mask-bg-left: linear-gradient(to left, ${sectionBg}, transparent);
+                    background-color: var(--section-bg);
+                }
+                ${carouselStyles}
+            ` }} />
         <section
-            className="kimi-hero-section overflow-hidden flex flex-col justify-center"
-            style={{ backgroundColor: sectionBg, minHeight: '100vh' }}
+            className={`kimi-hero-section overflow-hidden flex flex-col justify-center kimi-hero-${uid} min-h-[100vh]`}
         >
             {/* Main Content — uses global theme fonts & colors */}
             <div className="pt-32 sm:pt-40 pb-8 px-4 sm:px-6 lg:px-8">
@@ -98,14 +129,12 @@ export default function KimiHeroSection({
                     {/* Headline — uses --font-display and --foreground from the active theme */}
                     <h1 className="mb-4">
                         <span
-                            className="block text-4xl sm:text-5xl lg:text-6xl mb-1 italic"
-                            style={{ fontFamily: 'var(--font-serif, Georgia, serif)', color: 'var(--foreground)' }}
+                            className="block text-4xl sm:text-5xl lg:text-6xl mb-1 italic font-[family-name:var(--font-serif-local)] text-[color:var(--text-color-primary)]"
                         >
                             {title}
                         </span>
                         <span
-                            className="block font-bold text-4xl sm:text-5xl lg:text-6xl"
-                            style={{ fontFamily: 'var(--font-display, sans-serif)', color: 'var(--foreground)' }}
+                            className="block font-bold text-4xl sm:text-5xl lg:text-6xl font-[family-name:var(--font-display-local)] text-[color:var(--text-color-primary)]"
                         >
                             {subtitle}
                         </span>
@@ -113,8 +142,7 @@ export default function KimiHeroSection({
 
                     {/* Description — uses muted-foreground */}
                     <p
-                        className="text-base sm:text-lg max-w-xl mx-auto mb-8"
-                        style={{ color: 'var(--muted-foreground)' }}
+                        className="text-base sm:text-lg max-w-xl mx-auto mb-8 text-[color:var(--text-color-muted)]"
                     >
                         {description}
                     </p>
@@ -123,13 +151,11 @@ export default function KimiHeroSection({
                     <div className="flex flex-wrap items-center justify-center gap-4">
                         <a
                             href={ctaLink}
-                            className="group kimi-hero-cta inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-colors"
-                            style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}
+                            className="group kimi-hero-cta inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm transition-colors bg-[var(--btn-bg)] text-[color:var(--btn-text)]"
                         >
                             {ctaText}
                             <span
-                                className="kimi-hero-cta-arrow inline-flex items-center justify-center w-6 h-6 rounded-full"
-                                style={{ backgroundColor: 'var(--accent)' }}
+                                className="kimi-hero-cta-arrow inline-flex items-center justify-center w-6 h-6 rounded-full bg-[var(--arrow-bg)]"
                             >
                                 <ArrowRight className="w-3.5 h-3.5" />
                             </span>
@@ -137,8 +163,7 @@ export default function KimiHeroSection({
                         {ctaSecondaryText && (
                             <a
                                 href={ctaSecondaryLink || '#'}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm border-2 transition-colors"
-                                style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium text-sm border-2 transition-colors border-[var(--btn-border)] text-[color:var(--text-color-primary)]"
                             >
                                 {ctaSecondaryText}
                             </a>
@@ -151,41 +176,26 @@ export default function KimiHeroSection({
             <div className="relative py-12 overflow-hidden flex-1 flex items-center">
                 {/* Gradient Masks — blend into section background */}
                 <div
-                    className="absolute left-0 top-0 bottom-0 w-32 sm:w-48 lg:w-64 z-10 pointer-events-none"
-                    style={{ background: `linear-gradient(to right, ${sectionBg}, transparent)` }}
+                    className="absolute left-0 top-0 bottom-0 w-32 sm:w-48 lg:w-64 z-10 pointer-events-none bg-[image:var(--mask-bg-right)]"
                 />
                 <div
-                    className="absolute right-0 top-0 bottom-0 w-32 sm:w-48 lg:w-64 z-10 pointer-events-none"
-                    style={{ background: `linear-gradient(to left, ${sectionBg}, transparent)` }}
+                    className="absolute right-0 top-0 bottom-0 w-32 sm:w-48 lg:w-64 z-10 pointer-events-none bg-[image:var(--mask-bg-left)]"
                 />
 
                 {/* Carousel Container */}
                 <div className="kimi-carousel-container relative w-full overflow-hidden">
                     <div
                         ref={trackRef}
-                        className="flex gap-6 sm:gap-8 lg:gap-10"
-                        style={{ 
-                            width: 'max-content',
-                            willChange: 'transform'
-                        }}
+                        className="flex gap-6 sm:gap-8 lg:gap-10 w-max will-change-transform"
                     >
 
                         {allImages.map((src, index) => {
                             const position = index % carouselImages.length;
-                            const centerIndex = carouselImages.length / 2;
-                            const offset = position - centerIndex + 0.5;
-                            const rotation = offset * 8;
-                            const translateZ = Math.abs(offset) * -30;
-                            const scale = 1 - Math.abs(offset) * 0.05;
 
                             return (
                                 <div
                                     key={index}
-                                    className="flex-shrink-0"
-                                    style={{
-                                        transform: `perspective(1000px) rotateY(${rotation}deg) translateZ(${translateZ}px) scale(${scale})`,
-                                        transformStyle: 'preserve-3d',
-                                    }}
+                                    className={`flex-shrink-0 [transform-style:preserve-3d] carousel-item-${index}`}
                                 >
                                     <div className="relative w-48 h-64 sm:w-64 sm:h-80 lg:w-80 lg:h-[28rem] rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                                         <img
@@ -202,5 +212,6 @@ export default function KimiHeroSection({
                 </div>
             </div>
         </section>
+        </React.Fragment>
     );
 }
