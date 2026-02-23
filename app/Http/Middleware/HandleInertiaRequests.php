@@ -162,6 +162,7 @@ class HandleInertiaRequests extends Middleware
                     })($settings['analytics_enabled'] ?? null),
                     'google_analytics_id' => $settings['google_analytics_id'] ?? null,
                     'google_tag_id' => $settings['google_tag_id'] ?? null,
+                    'google_conversion_id' => $settings['google_conversion_id'] ?? null,
                     'privacy_policy_url' => $settings['privacy_policy_page'] ?? '/privacy',
                     'terms_url' => $settings['terms_page'] ?? '/terms',
                     'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',

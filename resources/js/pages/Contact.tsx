@@ -25,6 +25,16 @@ export default function Contact() {
         post('/contact', {
             onSuccess: () => {
                 setFormSubmitted(true);
+                
+                // Trigger Google Ads conversion tracking if configured
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const conversionId = (site?.compliance as any)?.google_conversion_id;
+                if (conversionId && typeof window !== 'undefined' && window.gtag) {
+                    window.gtag('event', 'conversion', {
+                        'send_to': conversionId
+                    });
+                }
+                
                 setTimeout(() => setFormSubmitted(false), 5000);
             },
         });

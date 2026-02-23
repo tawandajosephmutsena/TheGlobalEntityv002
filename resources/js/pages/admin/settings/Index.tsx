@@ -116,6 +116,7 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
     seo: [
         { key: 'google_analytics_id', label: 'Google Analytics ID', type: 'text', placeholder: 'G-XXXXXXXXXX', description: 'Your Google Analytics Measurement ID (e.g. G-XXXXXXXXXX). Also requires enabling Analytics in the Compliance tab.' },
         { key: 'google_tag_id', label: 'Google Tag ID (gtag.js)', type: 'text', placeholder: 'AW-XXXXXXXXXX', description: 'Your Google Tag ID (e.g. AW-XXXXXXXXXX or G-XXXXXXXXXX). This is used for Google Ads and unified tracking.' },
+        { key: 'google_conversion_id', label: 'Google Ads Conversion ID', type: 'text', placeholder: 'AW-XXXXXXXXXX/YYYYYYYYYYYYYY', description: 'Your Google Ads Conversion ID (Send to). Used to track conversions like form submissions.' },
     ],
     compliance: [
         { key: 'cookie_consent_enabled', label: 'Enable Cookie Consent Banner', type: 'boolean', placeholder: 'false', description: 'Show a GDPR/POPIA-compliant cookie consent banner to all visitors.' },

@@ -38,14 +38,15 @@ class SystemUpdateController extends Controller
         try {
             // we use php and composer.phar if possible, or just global composer
             // using an array here because composer might be aliased, but usually 'composer' works in modern setups
-            $composerPath = trim(shell_exec('which composer'));
-            if (!$composerPath) {
-                // fallback to composer.phar in base path if it exists
-                if (file_exists($basePath . '/composer.phar')) {
-                    $composerPath = 'php ' . $basePath . '/composer.phar';
-                } else {
-                    $composerPath = 'composer';
+            $composerPath = 'composer';
+            if (is_callable('shell_exec')) {
+                $path = trim(shell_exec('which composer') ?? '');
+                if ($path) {
+                    $composerPath = $path;
                 }
+            }
+            if ($composerPath === 'composer' && file_exists($basePath . '/composer.phar')) {
+                $composerPath = 'php ' . $basePath . '/composer.phar';
             }
 
             // A bit tricky to pass as array if it's "php composer.phar", so we use fromShellCommandline
