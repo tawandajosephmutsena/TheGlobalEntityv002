@@ -256,8 +256,12 @@ class HandleInertiaRequests extends Middleware
                 ];
             })),
             'app_version' => \Illuminate\Support\Facades\Cache::remember('app_version', 60 * 60 * 24, function () {
+                if (!function_exists('shell_exec')) {
+                    return 'unknown';
+                }
                 try {
-                    return trim(shell_exec('git log -1 --format="%h"'));
+                    $output = @shell_exec('git log -1 --format="%h" 2>/dev/null');
+                    return $output ? trim($output) : 'unknown';
                 } catch (\Exception $e) {
                     return 'unknown';
                 }
