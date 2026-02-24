@@ -138,16 +138,19 @@ function StatCard({
     title,
     icon: Icon,
     total,
-    published,
-    featured,
+    badges = [], // array of { label: string, value: number, colorClass: string, icon?: React.ReactNode }
     href,
     accentColor,
 }: {
     title: string;
     icon: React.ComponentType<{ className?: string }>;
     total: number;
-    published?: number;
-    featured?: number;
+    badges?: Array<{
+        label: string;
+        value: number;
+        colorClass?: string;
+        icon?: React.ReactNode;
+    }>;
     href: string;
     accentColor: string;
 }) {
@@ -176,18 +179,15 @@ function StatCard({
                         <AnimatedCounter value={total} />
                     </div>
                     <div className="flex gap-2 mt-3">
-                        {published !== undefined && (
-                            <Badge className="text-[10px] font-bold px-2.5 py-1 bg-emerald-500/15 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20">
-                                <Eye className="w-3 h-3 mr-1" />
-                                {published} published
+                        {badges.map((badge, index) => badge.value !== undefined ? (
+                            <Badge 
+                                key={index} 
+                                className={`text-[10px] font-bold px-2.5 py-1 ${badge.colorClass || 'bg-secondary/20 text-secondary-foreground border-secondary/30 hover:bg-secondary/30'}`}
+                            >
+                                {badge.icon && <span className="mr-1 inline-flex">{badge.icon}</span>}
+                                {badge.value} {badge.label}
                             </Badge>
-                        )}
-                        {featured !== undefined && (
-                            <Badge className="text-[10px] font-bold px-2.5 py-1 bg-amber-500/15 text-amber-400 border-amber-500/20 hover:bg-amber-500/20">
-                                <Star className="w-3 h-3 mr-1" />
-                                {featured} featured
-                            </Badge>
-                        )}
+                        ) : null)}
                     </div>
                     <Link href={href}>
                         <Button variant="ghost" size="sm" className="mt-3 w-full text-xs font-bold uppercase tracking-wider opacity-60 hover:opacity-100 transition-opacity">
@@ -375,8 +375,10 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                         title="Portfolio"
                         icon={FolderOpen}
                         total={stats.portfolio_items.total}
-                        published={stats.portfolio_items.published}
-                        featured={stats.portfolio_items.featured}
+                        badges={[
+                            { label: 'published', value: stats.portfolio_items.published, colorClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20', icon: <Eye className="w-3 h-3" /> },
+                            { label: 'featured', value: stats.portfolio_items.featured, colorClass: 'bg-amber-500/15 text-amber-400 border-amber-500/20 hover:bg-amber-500/20', icon: <Star className="w-3 h-3" /> }
+                        ]}
                         href="/admin/portfolio"
                         accentColor="#C25E2E"
                     />
@@ -384,8 +386,10 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                         title="Services"
                         icon={Briefcase}
                         total={stats.services.total}
-                        published={stats.services.published}
-                        featured={stats.services.featured}
+                        badges={[
+                            { label: 'published', value: stats.services.published, colorClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20', icon: <Eye className="w-3 h-3" /> },
+                            { label: 'featured', value: stats.services.featured, colorClass: 'bg-amber-500/15 text-amber-400 border-amber-500/20 hover:bg-amber-500/20', icon: <Star className="w-3 h-3" /> }
+                        ]}
                         href="/admin/services"
                         accentColor="#3b82f6"
                     />
@@ -393,8 +397,10 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                         title="Insights"
                         icon={FileText}
                         total={stats.insights.total}
-                        published={stats.insights.published}
-                        featured={stats.insights.featured}
+                        badges={[
+                            { label: 'published', value: stats.insights.published, colorClass: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20', icon: <Eye className="w-3 h-3" /> },
+                            { label: 'featured', value: stats.insights.featured, colorClass: 'bg-amber-500/15 text-amber-400 border-amber-500/20 hover:bg-amber-500/20', icon: <Star className="w-3 h-3" /> }
+                        ]}
                         href="/admin/insights"
                         accentColor="#a855f7"
                     />
@@ -402,8 +408,10 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                         title="Inquiries"
                         icon={MessageSquare}
                         total={stats.contact_inquiries.total}
-                        published={stats.contact_inquiries.unread}
-                        featured={stats.contact_inquiries.new}
+                        badges={[
+                            { label: 'unread', value: stats.contact_inquiries.unread, colorClass: 'bg-blue-500/15 text-blue-400 border-blue-500/20 hover:bg-blue-500/20', icon: <MessageSquare className="w-3 h-3" /> },
+                            { label: 'new', value: stats.contact_inquiries.new, colorClass: 'bg-rose-500/15 text-rose-400 border-rose-500/20 hover:bg-rose-500/20', icon: <Sparkles className="w-3 h-3" /> }
+                        ]}
                         href="/admin/contact-inquiries"
                         accentColor="#f43f5e"
                     />

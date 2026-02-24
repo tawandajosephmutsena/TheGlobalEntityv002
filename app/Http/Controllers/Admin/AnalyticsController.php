@@ -57,49 +57,41 @@ class AnalyticsController extends Controller
             ->get();
 
         // 4. Device Breakdown
-        $visits = Visit::excludeBots()->get();
-        $devices = [
-            'Mobile' => 0,
-            'Desktop' => 0,
-            'Tablet' => 0,
-            'Other' => 0
-        ];
+        $devicesQuery = Visit::excludeBots()
+            ->selectRaw("
+                CASE 
+                    WHEN LOWER(user_agent) LIKE '%mobile%' OR LOWER(user_agent) LIKE '%android%' OR LOWER(user_agent) LIKE '%iphone%' THEN 'Mobile'
+                    WHEN LOWER(user_agent) LIKE '%tablet%' OR LOWER(user_agent) LIKE '%ipad%' THEN 'Tablet'
+                    ELSE 'Desktop'
+                END as device_name,
+                COUNT(*) as count
+            ")
+            ->groupBy('device_name')
+            ->get();
 
-        foreach ($visits as $visit) {
-            $ua = strtolower($visit->user_agent);
-            if (str_contains($ua, 'mobile') || str_contains($ua, 'android') || str_contains($ua, 'iphone')) {
-                $devices['Mobile']++;
-            } elseif (str_contains($ua, 'tablet') || str_contains($ua, 'ipad')) {
-                $devices['Tablet']++;
-            } else {
-                $devices['Desktop']++;
-            }
-        }
-
-        // Normalize device stats
         $deviceData = [];
-        foreach ($devices as $name => $count) {
-            if ($count > 0) {
-                $deviceData[] = ['name' => $name, 'value' => $count];
-            }
+        foreach ($devicesQuery as $device) {
+            $deviceData[] = ['name' => $device->device_name, 'value' => $device->count];
         }
 
         // 5. Browser Breakdown
-        $browsers = [];
-        foreach ($visits as $visit) {
-            $ua = strtolower($visit->user_agent);
-            $browser = 'Other';
-            if (str_contains($ua, 'chrome')) $browser = 'Chrome';
-            elseif (str_contains($ua, 'firefox')) $browser = 'Firefox';
-            elseif (str_contains($ua, 'safari') && !str_contains($ua, 'chrome')) $browser = 'Safari';
-            elseif (str_contains($ua, 'edge')) $browser = 'Edge';
-            
-            $browsers[$browser] = ($browsers[$browser] ?? 0) + 1;
-        }
+        $browsersQuery = Visit::excludeBots()
+            ->selectRaw("
+                CASE 
+                    WHEN LOWER(user_agent) LIKE '%chrome%' THEN 'Chrome'
+                    WHEN LOWER(user_agent) LIKE '%firefox%' THEN 'Firefox'
+                    WHEN LOWER(user_agent) LIKE '%safari%' AND LOWER(user_agent) NOT LIKE '%chrome%' THEN 'Safari'
+                    WHEN LOWER(user_agent) LIKE '%edge%' THEN 'Edge'
+                    ELSE 'Other'
+                END as browser_name,
+                COUNT(*) as count
+            ")
+            ->groupBy('browser_name')
+            ->get();
 
         $browserData = [];
-        foreach ($browsers as $name => $count) {
-            $browserData[] = ['name' => $name, 'value' => $count];
+        foreach ($browsersQuery as $browser) {
+            $browserData[] = ['name' => $browser->browser_name, 'value' => $browser->count];
         }
 
         // 6. Interaction Density (Heatmap-ish)
