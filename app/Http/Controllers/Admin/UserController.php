@@ -76,6 +76,7 @@ class UserController extends Controller
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
             'is_active' => $validated['is_active'] ?? true,
+            'email_verified_at' => now(),
         ]);
 
         $user->roles()->sync($validated['roles']);
