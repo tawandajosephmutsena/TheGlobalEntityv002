@@ -3,19 +3,21 @@
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
+use function Pest\Laravel\post;
 
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
     // Seed RBAC roles
-    $this->seed(\Database\Seeders\RBACSeeder::class);
+    Artisan::call('db:seed', ['--class' => \Database\Seeders\RBACSeeder::class]);
 });
 
 test('newly registered user in local environment is auto-verified and has RBAC role', function () {
     // Ensure we are in local environment
     config(['app.env' => 'local']);
 
-    $response = $this->post('/register', [
+    $response = post('/register', [
         'name' => 'New User',
         'email' => 'newuser@example.com',
         'password' => 'password',
@@ -40,7 +42,7 @@ test('newly registered user with specific role is synced to RBAC', function () {
     // This simulates a registration where role might be passed (if allowed by UI/API)
     config(['app.env' => 'local']);
     
-    $response = $this->post('/register', [
+    $response = post('/register', [
         'name' => 'Editor User',
         'email' => 'editor_new@example.com',
         'password' => 'password',

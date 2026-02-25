@@ -43,7 +43,7 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    const { auth } = usePage().props as any;
+    const { auth } = usePage().props as unknown as { auth: { user: { role?: string; [key: string]: unknown } } };
     const user = auth.user;
 
     const filteredNavItems = mainNavItems.filter(item => {

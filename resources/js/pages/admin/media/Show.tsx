@@ -13,7 +13,9 @@ import {
     HardDrive, 
     Folder, 
     FileType, 
-    Tag as TagIcon 
+    Tag as TagIcon,
+    Link2,
+    Copy 
 } from 'lucide-react';
 import React from 'react';
 
@@ -145,6 +147,25 @@ export default function Show({ mediaAsset }: Props) {
                                     <p className="text-sm">
                                         {new Date(mediaAsset.created_at).toLocaleString()}
                                     </p>
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                                        <Link2 className="h-3 w-3" /> Asset URL
+                                    </label>
+                                    <div className="flex items-center justify-between gap-2 overflow-hidden bg-muted/50 p-1.5 rounded-md">
+                                        <a href={mediaAsset.url} target="_blank" rel="noreferrer" className="text-xs truncate text-muted-foreground hover:text-foreground transition-colors" title={mediaAsset.url}>
+                                            {mediaAsset.url}
+                                        </a>
+                                        <Button 
+                                            variant="ghost" 
+                                            size="icon" 
+                                            className="h-6 w-6 flex-shrink-0 bg-background/50 hover:bg-background" 
+                                            onClick={() => navigator.clipboard.writeText(mediaAsset.url)}
+                                            title="Copy URL"
+                                        >
+                                            <Copy className="h-3 w-3" />
+                                        </Button>
+                                    </div>
                                 </div>
                                 
                                 <div className="pt-4 border-t">

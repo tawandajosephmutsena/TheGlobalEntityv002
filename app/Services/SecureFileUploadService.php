@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -148,12 +149,15 @@ class SecureFileUploadService
             'stored_path' => $storedPath,
             'size' => $file->getSize(),
             'mime_type' => $file->getMimeType(),
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
         ]);
+
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        $disk = Storage::disk('public');
 
         return [
             'path' => $storedPath,
-            'url' => Storage::disk('public')->url($storedPath),
+            'url' => $disk->url($storedPath),
             'filename' => $filename,
             'original_name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
@@ -383,8 +387,10 @@ class SecureFileUploadService
     {
         try {
             // Use Imagick for efficient EXIF stripping without memory bloat
-            if (class_exists(\Imagick::class)) {
-                $img = new \Imagick($filePath);
+            if (class_exists('\Imagick')) {
+                $imagickClass = '\Imagick';
+                /** @var mixed $img */
+                $img = new $imagickClass($filePath);
                 $img->stripImage(); // Removes all profiles and comments
                 $img->writeImage($filePath);
                 $img->clear();
@@ -404,7 +410,7 @@ class SecureFileUploadService
                     $image = imagecreatefromjpeg($filePath);
                     if ($image) {
                         imagejpeg($image, $filePath, 90);
-                        imagedestroy($image);
+                        unset($image);
                     }
                     break;
                     
@@ -412,7 +418,7 @@ class SecureFileUploadService
                     $image = imagecreatefrompng($filePath);
                     if ($image) {
                         imagepng($image, $filePath, 9);
-                        imagedestroy($image);
+                        unset($image);
                     }
                     break;
             }
@@ -454,7 +460,7 @@ class SecureFileUploadService
             Log::error('Virus detected in uploaded file', [
                 'file' => $filePath,
                 'scan_output' => implode("\n", $output),
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
             ]);
             
             throw new \RuntimeException('File failed virus scan and has been deleted');
@@ -484,12 +490,15 @@ class SecureFileUploadService
 
         $fullPath = Storage::disk('public')->path($path);
         
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        $disk = Storage::disk('public');
+
         return [
             'path' => $path,
-            'url' => Storage::disk('public')->url($path),
-            'size' => Storage::disk('public')->size($path),
-            'mime_type' => Storage::disk('public')->mimeType($path),
-            'last_modified' => Storage::disk('public')->lastModified($path),
+            'url' => $disk->url($path),
+            'size' => $disk->size($path),
+            'mime_type' => $disk->mimeType($path),
+            'last_modified' => $disk->lastModified($path),
             'exists' => true,
         ];
     }

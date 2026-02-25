@@ -482,7 +482,7 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                                         { label: 'Services', color: '#3b82f6' },
                                     ].map((entry) => (
                                         <div key={entry.label} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
+                                            <span className="w-2 h-2 rounded-full bg-[var(--item-bg)]" style={{ '--item-bg': entry.color } as React.CSSProperties} />
                                             {entry.label}
                                         </div>
                                     ))}
@@ -539,7 +539,7 @@ export default function Dashboard({ stats, recent_activity, seo_stats, content_d
                                 <div className="grid grid-cols-2 gap-2 mt-2">
                                     {content_distribution.map((entry) => (
                                         <div key={entry.name} className="flex items-center gap-2 text-xs">
-                                            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: entry.color }} />
+                                            <span className="w-2 h-2 rounded-full shrink-0 bg-[var(--item-bg)]" style={{ '--item-bg': entry.color } as React.CSSProperties} />
                                             <span className="text-muted-foreground font-medium truncate">{entry.name}</span>
                                             <span className="font-black ml-auto">{entry.value}</span>
                                         </div>

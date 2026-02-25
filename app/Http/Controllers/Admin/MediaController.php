@@ -233,7 +233,9 @@ class MediaController extends Controller
 
         switch ($validated['action']) {
             case 'move':
-                foreach ($items->get() as $item) {
+                /** @var \App\Models\MediaAsset[]|\Illuminate\Database\Eloquent\Collection $assets */
+                $assets = $items->get();
+                foreach ($assets as $item) {
                     $oldPath = 'public/' . $item->path;
                     $newPath = 'public/' . $validated['folder'] . '/' . $item->filename;
 
@@ -252,7 +254,9 @@ class MediaController extends Controller
                 $message = 'Media assets tagged successfully.';
                 break;
             case 'delete':
-                foreach ($items->get() as $item) {
+                /** @var \App\Models\MediaAsset[]|\Illuminate\Database\Eloquent\Collection $assets */
+                $assets = $items->get();
+                foreach ($assets as $item) {
                     $filePath = 'public/' . $item->path;
                     if (Storage::exists($filePath)) {
                         Storage::delete($filePath);
