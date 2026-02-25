@@ -31,11 +31,22 @@ class CreateNewUser implements CreatesNewUsers
             'role' => ['sometimes', 'string', Rule::in(['admin', 'editor', 'viewer'])],
         ])->validate();
 
-        return User::create([
+        $role = $input['role'] ?? 'viewer';
+
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
-            'role' => $input['role'] ?? 'viewer',
+            'role' => $role,
+            'email_verified_at' => config('app.env') === 'local' ? now() : null,
         ]);
+
+        // Sync to RBAC roles table
+        $roleModel = \App\Models\Role::where('slug', $role)->first();
+        if ($roleModel) {
+            $user->roles()->sync([$roleModel->id]);
+        }
+
+        return $user;
     }
 }

@@ -39,7 +39,7 @@ import AppLogo from '@/components/app-logo';
 const mainNavItems = [
     {
         title: 'Dashboard',
-        href: '/admin',
+        href: '/dashboard',
         icon: LayoutDashboard,
     },
     {
@@ -152,8 +152,8 @@ export function AdminSidebar() {
 
 
     const isActive = (href: string) => {
-        if (href === '/admin') {
-            return url === '/admin';
+        if (href === '/admin' || href === '/dashboard') {
+            return url === '/admin' || url === '/dashboard';
         }
         return url.startsWith(href);
     };
@@ -164,7 +164,7 @@ export function AdminSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/admin" className="flex items-center justify-center bg-transparent">
+                            <Link href="/dashboard" className="flex items-center justify-center bg-transparent">
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>

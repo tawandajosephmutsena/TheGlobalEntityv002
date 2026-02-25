@@ -28,7 +28,8 @@ class InteractionController extends Controller
             ->first();
 
         if (!$visit) {
-            return response()->json(['status' => 'error', 'message' => 'Visit not found'], 404);
+            // Silently ignore if no parent visit exists (e.g., on admin routes where tracking is disabled)
+            return response()->json(['status' => 'ignored', 'message' => 'Tracking ignored for this visit'], 200);
         }
 
         Interaction::create([

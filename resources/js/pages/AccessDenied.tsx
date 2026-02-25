@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import { AdminLayout } from '@/layouts/AdminLayout';
+import { logout, dashboard } from '@/routes';
 import { Button } from '@/components/ui/button';
-import { ShieldAlert, Home, ArrowLeft } from 'lucide-react';
+import { ShieldAlert, Home, ArrowLeft, LogOut } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-// @ts-ignore
-declare const route: any;
+
 
 interface AccessDeniedProps {
     message?: string;
@@ -95,10 +95,19 @@ export default function AccessDenied({ message }: AccessDeniedProps) {
                             asChild
                             className="gap-2"
                         >
-                            <Link href={route('admin.dashboard')}>
+                            <Link href={dashboard().url}>
                                 <Home className="size-4" />
                                 Dashboard
                             </Link>
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="lg"
+                            onClick={() => router.post(logout().url)}
+                            className="gap-2 text-muted-foreground hover:text-destructive"
+                        >
+                            <LogOut className="size-4" />
+                            Log out
                         </Button>
                     </motion.div>
 

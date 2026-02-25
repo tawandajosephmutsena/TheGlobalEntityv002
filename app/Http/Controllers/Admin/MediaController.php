@@ -121,16 +121,9 @@ class MediaController extends Controller
 
                 $uploadedFiles[] = $mediaAsset;
 
-                // Trigger image optimization if it's an image
+                // Dispatch background image optimization if it's an image
                 if ($mediaAsset->is_image && $mediaAsset->mime_type !== 'image/svg+xml') {
-                    try {
-                        app(\App\Services\ImageOptimizationService::class)->optimizeAsset($mediaAsset);
-                    } catch (\Exception $e) {
-                        Log::warning('Image optimization failed during upload', [
-                            'asset_id' => $mediaAsset->id,
-                            'error' => $e->getMessage()
-                        ]);
-                    }
+                    \App\Jobs\OptimizeImageJob::dispatch($mediaAsset);
                 }
                 
             } catch (\Exception $e) {

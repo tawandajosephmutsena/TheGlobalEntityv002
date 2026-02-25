@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Imagick\Driver;
 
 class ImageOptimizationService
 {
@@ -56,9 +56,6 @@ class ImageOptimizationService
     public function optimizeAsset(MediaAsset $asset): array
     {
         try {
-            // Temporarily increase memory limit for image processing
-            ini_set('memory_limit', '512M');
-
             if (!$asset->is_image || $asset->mime_type === 'image/svg+xml') {
                 return [];
             }
@@ -134,9 +131,6 @@ class ImageOptimizationService
     public function optimizeImage(UploadedFile $file, string $directory = 'images'): array
     {
         try {
-            // Temporarily increase memory limit for image processing
-            ini_set('memory_limit', '512M');
-
             $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $slug = Str::slug($originalName);
             $timestamp = now()->format('Y/m/d');

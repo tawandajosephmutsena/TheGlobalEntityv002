@@ -1,11 +1,10 @@
 // Components
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
 import { logout } from '@/routes';
 import { send } from '@/routes/verification';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, router } from '@inertiajs/react';
 
 export default function VerifyEmail({ status }: { status?: string }) {
     return (
@@ -30,12 +29,14 @@ export default function VerifyEmail({ status }: { status?: string }) {
                             Resend verification email
                         </Button>
 
-                        <TextLink
-                            href={logout()}
-                            className="mx-auto block text-sm"
+                        <Button
+                            variant="link"
+                            size="sm"
+                            className="text-muted-foreground hover:text-foreground"
+                            onClick={() => router.post(logout().url)}
                         >
                             Log out
-                        </TextLink>
+                        </Button>
                     </>
                 )}
             </Form>

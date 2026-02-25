@@ -381,17 +381,24 @@ class SecureFileUploadService
      */
     private function stripExifData(string $filePath): void
     {
-        $imageInfo = getimagesize($filePath);
-        if (!$imageInfo) {
-            return;
-        }
-
-        $imageType = $imageInfo[2];
-        
         try {
-            // Temporarily increase memory limit to prevent allowed memory size exhausted fatal errors
-            ini_set('memory_limit', '512M');
+            // Use Imagick for efficient EXIF stripping without memory bloat
+            if (class_exists(\Imagick::class)) {
+                $img = new \Imagick($filePath);
+                $img->stripImage(); // Removes all profiles and comments
+                $img->writeImage($filePath);
+                $img->clear();
+                $img->destroy();
+                return;
+            }
 
+            // Fallback to GD if Imagick is somehow unavailable
+            $imageInfo = getimagesize($filePath);
+            if (!$imageInfo) {
+                return;
+            }
+
+            $imageType = $imageInfo[2];
             switch ($imageType) {
                 case IMAGETYPE_JPEG:
                     $image = imagecreatefromjpeg($filePath);

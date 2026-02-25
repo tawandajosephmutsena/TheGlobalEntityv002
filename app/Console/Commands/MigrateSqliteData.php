@@ -100,8 +100,8 @@ class MigrateSqliteData extends Command
                     unset($pData['id']);
                     $presetInsertData[] = $pData;
                 }
-                $newDb->table($table)->insertOrIgnore($presetInsertData);
-                $this->info("Re-inserted " . count($presetInsertData) . " preset rows for table '{$table}' (ignored duplicates).");
+                $newDb->table($table)->insert($presetInsertData);
+                $this->info("Re-inserted " . count($presetInsertData) . " preset rows for table '{$table}'.");
             }
         }
 

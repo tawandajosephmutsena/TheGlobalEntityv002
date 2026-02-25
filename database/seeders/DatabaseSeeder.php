@@ -26,13 +26,20 @@ class DatabaseSeeder extends Seeder
 
         // User::factory(10)->create();
 
-        User::firstOrCreate(
+        $testUser = User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
                 'password' => 'password',
                 'email_verified_at' => now(),
+                'role' => 'viewer',
             ]
         );
+
+        // Sync test user to RBAC
+        $viewerRole = \App\Models\Role::where('slug', 'viewer')->first();
+        if ($viewerRole) {
+            $testUser->roles()->syncWithoutDetaching([$viewerRole->id]);
+        }
     }
 }
