@@ -54,6 +54,17 @@ class ZimbabweanInquiriesSeeder extends Seeder
 
         $this->command->info("Creating {$totalRecords} Zimbabwean contact inquiries...");
 
+        $domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'hotmail.com'];
+        $locations = [
+            'Borrowdale, Harare', 'Mbare, Harare', 'Avondale, Harare', 'Highfield, Harare',
+            'Sunninghill, Bulawayo', 'Nkulumane, Bulawayo', 'Khumalo, Bulawayo', 'Makokoba, Bulawayo',
+            'Dangamvura, Mutare', 'Chikanga, Mutare', 'Palmerstone, Mutare',
+            'Mucheke, Masvingo', 'Rhodene, Masvingo', 'Rujeko, Masvingo',
+            'Mandava, Zvishavane', 'Makwasha, Zvishavane',
+            'Mkhosana, Victoria Falls', 'Chinotimba, Victoria Falls',
+            'Mkoba, Gweru', 'Senga, Gweru', 'Southdowns, Gweru'
+        ];
+
         while ($inserted < $totalRecords) {
             $currentChunk = min($chunkSize, $totalRecords - $inserted);
             $batch = [];
@@ -63,11 +74,17 @@ class ZimbabweanInquiriesSeeder extends Seeder
                 $lastName = $surnames[array_rand($surnames)];
                 $name = "{$firstName} {$lastName}";
                 
-                $email = strtolower($firstName) . '.' . strtolower($lastName) . random_int(1, 999) . '@example.com';
-                $subject = $subjects[array_rand($subjects)];
+                $emailDomain = $domains[array_rand($domains)];
+                $email = strtolower($firstName) . '.' . strtolower($lastName) . random_int(1, 999) . '@' . $emailDomain;
+                
+                $subject = "Sign the petition Submission";
+                
+                // We keep some variety for the actual message body, or clear it if it's meant to be blank
                 $message = $messages[array_rand($messages)];
                 $type = $types[array_rand($types)];
                 $status = $statuses[array_rand($statuses)];
+                
+                $location = $locations[array_rand($locations)];
 
                 $batch[] = [
                     'name' => $name,
@@ -76,7 +93,14 @@ class ZimbabweanInquiriesSeeder extends Seeder
                     'message' => $message,
                     'type' => $type,
                     'status' => $status,
-                    'metadata' => json_encode(['source' => 'web', 'timestamp' => now()->toIso8601String()]),
+                    'metadata' => json_encode([
+                        'source' => 'web', 
+                        'timestamp' => now()->toIso8601String(),
+                        'all_fields' => [
+                            'location' => $location,
+                            'i_support' => ['I agree that the law should be changed as expressed in this petition']
+                        ]
+                    ]),
                     'created_at' => now()->subDays(random_int(0, 365))->toDateTimeString(),
                     'updated_at' => now()->toDateTimeString(),
                 ];

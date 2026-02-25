@@ -229,6 +229,7 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
     Route::post('media/bulk-delete', [App\Http\Controllers\Admin\MediaController::class, 'bulkDelete'])->name('media.bulk-delete');
 
     // Contact Inquiries management
+    Route::post('contact-inquiries/bulk-action', [App\Http\Controllers\Admin\ContactInquiryController::class, 'bulkAction'])->name('contact-inquiries.bulk-action');
     Route::resource('contact-inquiries', App\Http\Controllers\Admin\ContactInquiryController::class);
 
     // Page management

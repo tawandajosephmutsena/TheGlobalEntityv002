@@ -389,6 +389,9 @@ class SecureFileUploadService
         $imageType = $imageInfo[2];
         
         try {
+            // Temporarily increase memory limit to prevent allowed memory size exhausted fatal errors
+            ini_set('memory_limit', '512M');
+
             switch ($imageType) {
                 case IMAGETYPE_JPEG:
                     $image = imagecreatefromjpeg($filePath);

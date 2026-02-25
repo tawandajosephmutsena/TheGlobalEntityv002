@@ -17,8 +17,15 @@ class ContactInquiryController extends Controller
         $inquiries = ContactInquiry::latest()
             ->paginate(15);
 
+        $stats = [
+            'total' => ContactInquiry::count(),
+            'new' => ContactInquiry::where('status', 'new')->count(),
+            'replied' => ContactInquiry::where('status', 'replied')->count(),
+        ];
+
         return Inertia::render('admin/contact-inquiries/Index', [
-            'inquiries' => $inquiries
+            'inquiries' => $inquiries,
+            'stats' => $stats
         ]);
     }
 
@@ -59,5 +66,36 @@ class ContactInquiryController extends Controller
 
         return redirect()->route('admin.contact-inquiries.index')
             ->with('success', 'Inquiry deleted successfully.');
+    }
+
+    /**
+     * Perform bulk actions on multiple inquiries.
+     */
+    public function bulkAction(Request $request)
+    {
+        $validated = $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:contact_inquiries,id',
+            'action' => 'required|string|in:mark_read,mark_replied,delete',
+        ]);
+
+        $inquiries = ContactInquiry::whereIn('id', $validated['ids']);
+
+        switch ($validated['action']) {
+            case 'mark_read':
+                $inquiries->update(['status' => 'read']);
+                $message = 'Selected inquiries marked as read.';
+                break;
+            case 'mark_replied':
+                $inquiries->update(['status' => 'replied']);
+                $message = 'Selected inquiries marked as replied.';
+                break;
+            case 'delete':
+                $inquiries->delete();
+                $message = 'Selected inquiries deleted successfully.';
+                break;
+        }
+
+        return back()->with('success', $message ?? 'Bulk action completed.');
     }
 }

@@ -56,6 +56,9 @@ class ImageOptimizationService
     public function optimizeAsset(MediaAsset $asset): array
     {
         try {
+            // Temporarily increase memory limit for image processing
+            ini_set('memory_limit', '512M');
+
             if (!$asset->is_image || $asset->mime_type === 'image/svg+xml') {
                 return [];
             }
@@ -131,6 +134,9 @@ class ImageOptimizationService
     public function optimizeImage(UploadedFile $file, string $directory = 'images'): array
     {
         try {
+            // Temporarily increase memory limit for image processing
+            ini_set('memory_limit', '512M');
+
             $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $slug = Str::slug($originalName);
             $timestamp = now()->format('Y/m/d');

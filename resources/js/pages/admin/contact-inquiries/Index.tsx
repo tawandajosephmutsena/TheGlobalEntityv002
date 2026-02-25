@@ -1,13 +1,22 @@
 import AdminLayout from '@/layouts/AdminLayout';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Link, router } from '@inertiajs/react';
-import { MessageSquare, Eye, Trash2, Mail, Calendar } from 'lucide-react';
-import React from 'react';
+import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation } from 'lucide-react';
+import React, { useState } from 'react';
 import { PaginatedData } from '@/types';
 import { cn } from '@/lib/utils';
 import DOMPurify from 'dompurify';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 interface ContactInquiry {
     id: number;
@@ -19,11 +28,20 @@ interface ContactInquiry {
     created_at: string;
 }
 
-interface Props {
-    inquiries: PaginatedData<ContactInquiry>;
+interface Stats {
+    total: number;
+    new: number;
+    replied: number;
 }
 
-export default function ContactInquiriesIndex({ inquiries }: Props) {
+interface Props {
+    inquiries: PaginatedData<ContactInquiry>;
+    stats: Stats;
+}
+
+export default function ContactInquiriesIndex({ inquiries, stats }: Props) {
+    const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Inquiries', href: '/admin/contact-inquiries' },
@@ -35,11 +53,90 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
         }
     };
 
+    const handleBulkAction = (action: string) => {
+        if (selectedIds.length === 0) return;
+        
+        let confirmMessage = 'Are you sure you want to perform this action?';
+        if (action === 'delete') confirmMessage = 'Are you sure you want to delete the selected inquiries?';
+
+        if (confirm(confirmMessage)) {
+            router.post('/admin/contact-inquiries/bulk-action', {
+                ids: selectedIds,
+                action: action,
+            }, {
+                onSuccess: () => setSelectedIds([]) // Clear selection on success
+            });
+        }
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedIds.length === inquiries.data.length && inquiries.data.length > 0) {
+            setSelectedIds([]);
+        } else {
+            setSelectedIds(inquiries.data.map(i => i.id));
+        }
+    };
+
+    const toggleSelect = (id: number) => {
+        setSelectedIds(prev => 
+            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
+        );
+    };
+
+    const exportCSV = () => {
+        const rowsToExport = inquiries.data.filter(i => selectedIds.includes(i.id));
+        if (rowsToExport.length === 0) return;
+
+        const headers = ['ID', 'Name', 'Email', 'Subject', 'Status', 'Date'];
+        const csvRows = [
+            headers.join(','), // header row
+            ...rowsToExport.map(row => [
+                row.id,
+                `"${row.name.replace(/"/g, '""')}"`,
+                `"${row.email.replace(/"/g, '""')}"`,
+                `"${row.subject.replace(/"/g, '""')}"`,
+                row.status,
+                new Date(row.created_at).toLocaleDateString()
+            ].join(','))
+        ];
+
+        const csvString = csvRows.join('\n');
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute('download', 'inquiries_export.csv');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    const exportPDF = () => {
+        const rowsToExport = inquiries.data.filter(i => selectedIds.includes(i.id));
+        if (rowsToExport.length === 0) return;
+
+        const doc = new jsPDF();
+        doc.text('Contact Inquiries Export', 14, 15);
+        
+        autoTable(doc, {
+            startY: 20,
+            head: [['Name', 'Email', 'Subject', 'Status', 'Date']],
+            body: rowsToExport.map(row => [
+                row.name,
+                row.email,
+                row.subject,
+                row.status,
+                new Date(row.created_at).toLocaleDateString()
+            ]),
+        });
+
+        doc.save('inquiries_export.pdf');
+    };
+
     const getStatusBadge = (status: string) => {
         switch (status) {
             case 'new': return <Badge variant="destructive">New</Badge>;
             case 'read': return <Badge variant="secondary">Read</Badge>;
-            case 'replied': return <Badge variant="default" className="bg-green-500">Replied</Badge>;
+            case 'replied': return <Badge variant="default" className="bg-green-500 hover:bg-green-600">Replied</Badge>;
             case 'archived': return <Badge variant="outline">Archived</Badge>;
             default: return <Badge variant="outline">{status}</Badge>;
         }
@@ -57,12 +154,102 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
                     </div>
                 </div>
 
+                {/* Stats Cards */}
+                <div className="grid gap-4 md:grid-cols-3">
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">Total Inquiries</CardTitle>
+                            <MessageSquare className="size-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{stats?.total ?? 0}</div>
+                            <p className="text-xs text-muted-foreground">
+                                All time messages
+                            </p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">New Messages</CardTitle>
+                            <Mail className="size-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{stats?.new ?? 0}</div>
+                            <p className="text-xs text-muted-foreground">
+                                Unread inquiries
+                            </p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                            <CardTitle className="text-sm font-medium">Replied</CardTitle>
+                            <CheckCircle className="size-4 text-muted-foreground" />
+                        </CardHeader>
+                        <CardContent>
+                            <div className="text-2xl font-bold">{stats?.replied ?? 0}</div>
+                            <p className="text-xs text-muted-foreground">
+                                Successfully addressed
+                            </p>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Actions Toolbar */}
+                {selectedIds.length > 0 && (
+                    <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg border border-border">
+                        <span className="text-sm font-medium px-2">
+                            {selectedIds.length} selected
+                        </span>
+                        
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm" className="ml-auto">
+                                    <MoreHorizontal className="size-4 mr-2" />
+                                    Bulk Actions
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => handleBulkAction('mark_read')}>
+                                    <Eye className="size-4 mr-2" /> Mark as Read
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleBulkAction('mark_replied')}>
+                                    <Navigation className="size-4 mr-2" /> Mark as Replied
+                                </DropdownMenuItem>
+                                <DropdownMenuItem 
+                                    onClick={() => handleBulkAction('delete')}
+                                    className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+                                >
+                                    <Trash2 className="size-4 mr-2" /> Delete Selected
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                        <div className="h-4 w-px bg-border mx-1" />
+
+                        <Button variant="outline" size="sm" onClick={exportCSV}>
+                            <Download className="size-4 mr-2" />
+                            CSV
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={exportPDF}>
+                            <Download className="size-4 mr-2" />
+                            PDF
+                        </Button>
+                    </div>
+                )}
+
                 <Card>
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left text-sm">
                                 <thead className="bg-muted/50 border-b">
                                     <tr>
+                                        <th className="p-4 w-12">
+                                            <Checkbox 
+                                                checked={selectedIds.length === inquiries.data.length && inquiries.data.length > 0}
+                                                onCheckedChange={toggleSelectAll}
+                                                aria-label="Select all"
+                                            />
+                                        </th>
                                         <th className="p-4 font-bold">Contact</th>
                                         <th className="p-4 font-bold">Subject</th>
                                         <th className="p-4 font-bold">Status</th>
@@ -73,7 +260,20 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
                                 <tbody>
                                     {inquiries.data.length > 0 ? (
                                         inquiries.data.map((inquiry) => (
-                                            <tr key={inquiry.id} className="border-b hover:bg-muted/30 transition-colors">
+                                            <tr 
+                                                key={inquiry.id} 
+                                                className={cn(
+                                                    "border-b transition-colors hover:bg-muted/30",
+                                                    selectedIds.includes(inquiry.id) && "bg-muted/50"
+                                                )}
+                                            >
+                                                <td className="p-4">
+                                                    <Checkbox 
+                                                        checked={selectedIds.includes(inquiry.id)}
+                                                        onCheckedChange={() => toggleSelect(inquiry.id)}
+                                                        aria-label={`Select inquiry from ${inquiry.name}`}
+                                                    />
+                                                </td>
                                                 <td className="p-4">
                                                     <div className="font-bold">{inquiry.name}</div>
                                                     <div className="text-xs text-muted-foreground flex items-center gap-1">
@@ -110,7 +310,7 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                                            <td colSpan={6} className="p-8 text-center text-muted-foreground">
                                                 <div className="flex flex-col items-center gap-2">
                                                     <MessageSquare className="size-8 opacity-20" />
                                                     <p>No inquiries found.</p>
@@ -145,4 +345,3 @@ export default function ContactInquiriesIndex({ inquiries }: Props) {
         </AdminLayout>
     );
 }
-
