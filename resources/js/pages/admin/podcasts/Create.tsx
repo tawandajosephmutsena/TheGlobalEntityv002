@@ -10,9 +10,11 @@ import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import MediaLibrary from '@/components/admin/MediaLibrary';
+import { MediaAsset } from '@/types';
 import {
     Upload, X, Mic, Video, Image as ImageIcon, Tag,
-    ChevronRight, ChevronLeft, Check, Rocket, Loader2, AlertCircle
+    ChevronRight, ChevronLeft, Check, Rocket, Loader2, AlertCircle, Link
 } from 'lucide-react';
 
 declare function route(name: string, params?: unknown, absolute?: boolean): string;
@@ -35,7 +37,9 @@ export default function PodcastCreate({ categories }: Props) {
         title: '',
         description: '',
         content: '',
+        media_url: '',
         media_type: 'audio' as 'audio' | 'video',
+        thumbnail: '',
         podcast_category_id: '',
         season_number: '',
         episode_number: '',
@@ -44,45 +48,33 @@ export default function PodcastCreate({ categories }: Props) {
         published_at: '',
         duration: 0,
     });
-    const [mediaFile, setMediaFile] = useState<File | null>(null);
-    const [thumbnail, setThumbnail] = useState<File | null>(null);
-    const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
+    const [mediaSource, setMediaSource] = useState<'upload' | 'link'>('upload');
+    const [mediaFileName, setMediaFileName] = useState('');
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleMediaDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        const file = e.dataTransfer.files[0];
-        if (file) handleMediaSelect(file);
-    }, []);
-
-    const handleMediaSelect = (file: File) => {
-        setMediaFile(file);
-        // Auto-detect media type
-        if (file.type.startsWith('video/')) {
-            setFormData(prev => ({ ...prev, media_type: 'video' }));
-        } else {
-            setFormData(prev => ({ ...prev, media_type: 'audio' }));
-        }
+    const handleMediaSelect = (asset: MediaAsset) => {
+        setFormData(prev => ({ 
+            ...prev, 
+            media_url: asset.url,
+            media_type: asset.is_video ? 'video' : 'audio',
+        }));
+        setMediaFileName(asset.original_name);
 
         // Try to get duration from the file
-        const url = URL.createObjectURL(file);
-        const media = document.createElement(file.type.startsWith('video/') ? 'video' : 'audio');
+        const url = asset.url;
+        const media = document.createElement(asset.is_video ? 'video' : 'audio');
         media.preload = 'metadata';
         media.onloadedmetadata = () => {
             if (media.duration && isFinite(media.duration)) {
                 setFormData(prev => ({ ...prev, duration: Math.round(media.duration) }));
             }
-            URL.revokeObjectURL(url);
         };
         media.src = url;
     };
 
-    const handleThumbnailSelect = (file: File) => {
-        setThumbnail(file);
-        const reader = new FileReader();
-        reader.onloadend = () => setThumbnailPreview(reader.result as string);
-        reader.readAsDataURL(file);
+    const handleThumbnailSelect = (asset: MediaAsset) => {
+        setFormData(prev => ({ ...prev, thumbnail: asset.url }));
     };
 
     const addTag = () => {
@@ -98,42 +90,17 @@ export default function PodcastCreate({ categories }: Props) {
     };
 
     const handleSubmit = () => {
-        const data = new FormData();
-        data.append('title', formData.title);
-        data.append('description', formData.description);
-        data.append('content', formData.content);
-        data.append('media_type', formData.media_type);
-        data.append('is_published', formData.is_published ? '1' : '0');
-        data.append('duration', String(formData.duration));
-
-        if (mediaFile) data.append('media_file', mediaFile);
-        if (thumbnail) data.append('thumbnail', thumbnail);
-        if (formData.podcast_category_id) data.append('podcast_category_id', formData.podcast_category_id);
-        if (formData.season_number) data.append('season_number', formData.season_number);
-        if (formData.episode_number) data.append('episode_number', formData.episode_number);
-        if (formData.published_at) data.append('published_at', formData.published_at);
-        formData.tags.forEach((tag, i) => data.append(`tags[${i}]`, tag));
-
         setIsSubmitting(true);
-        router.post(route('admin.podcasts.store'), data as any, {
-            forceFormData: true,
+        router.post(route('admin.podcasts.store'), formData as any, {
             onError: (errs) => {
                 setErrors(errs);
                 setIsSubmitting(false);
                 // Go to step with error
-                if (errs.media_file || errs.title) setStep(1);
+                if (errs.media_url || errs.title) setStep(1);
                 else if (errs.podcast_category_id) setStep(2);
             },
             onSuccess: () => setIsSubmitting(false),
         });
-    };
-
-    const formatFileSize = (bytes: number) => {
-        if (bytes === 0) return '0 B';
-        const k = 1024;
-        const sizes = ['B', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     };
 
     const steps = [
@@ -173,52 +140,70 @@ export default function PodcastCreate({ categories }: Props) {
                         {/* Step 1: File & Metadata */}
                         {step === 1 && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                {/* File upload */}
-                                <div
-                                    className="rounded-2xl border-2 border-dashed border-border hover:border-primary/50 transition-all p-8 text-center cursor-pointer group"
-                                    onDragOver={(e) => e.preventDefault()}
-                                    onDrop={handleMediaDrop}
-                                    onClick={() => document.getElementById('media-input')?.click()}
-                                >
-                                    <input
-                                        id="media-input"
-                                        type="file"
-                                        accept="audio/*,video/*"
-                                        className="hidden"
-                                        onChange={(e) => e.target.files?.[0] && handleMediaSelect(e.target.files[0])}
-                                    />
-
-                                    {mediaFile ? (
-                                        <div className="space-y-3">
-                                            <div className="size-14 mx-auto rounded-full bg-green-500/10 flex items-center justify-center">
-                                                <Check className="size-6 text-green-500" />
-                                            </div>
-                                            <div>
-                                                <p className="font-bold">{mediaFile.name}</p>
-                                                <p className="text-sm text-muted-foreground">{formatFileSize(mediaFile.size)}</p>
-                                            </div>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                onClick={(e) => { e.stopPropagation(); setMediaFile(null); }}
-                                            >
-                                                <X className="size-3 mr-1" /> Remove
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-4">
-                                            <div className="size-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                                                <Upload className="size-7 text-primary" />
-                                            </div>
-                                            <div>
-                                                <p className="font-bold">Drag & drop your media file</p>
-                                                <p className="text-sm text-muted-foreground mt-1">Supports MP3, WAV, M4A, MP4, WebM up to 500MB</p>
-                                            </div>
-                                            <Button variant="outline" type="button">Browse Files</Button>
-                                        </div>
-                                    )}
+                                {/* File Source Tabs */}
+                                <div className="flex gap-4 mb-4">
+                                    <Button variant={mediaSource === 'upload' ? 'default' : 'outline'} onClick={() => { setMediaSource('upload'); setFormData(prev => ({...prev, media_url: ''})); }} type="button">
+                                        <Upload className="size-4 mr-2" /> Select from Library
+                                    </Button>
+                                    <Button variant={mediaSource === 'link' ? 'default' : 'outline'} onClick={() => { setMediaSource('link'); setFormData(prev => ({...prev, media_url: ''})); }} type="button">
+                                        <Link className="size-4 mr-2" /> External Link
+                                    </Button>
                                 </div>
-                                {errors.media_file && <p className="text-sm text-destructive">{errors.media_file}</p>}
+
+                                {mediaSource === 'upload' ? (
+                                    <MediaLibrary
+                                        type="all"
+                                        onSelect={handleMediaSelect}
+                                        trigger={
+                                            <div className="rounded-2xl border-2 border-dashed border-border hover:border-primary/50 transition-all p-8 text-center cursor-pointer group">
+                                                {formData.media_url && !formData.media_url.startsWith('http') ? (
+                                                    <div className="space-y-3">
+                                                        <div className="size-14 mx-auto rounded-full bg-green-500/10 flex items-center justify-center">
+                                                            <Check className="size-6 text-green-500" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold">{mediaFileName || 'Media Selected'}</p>
+                                                        </div>
+                                                        <Button variant="outline" size="sm" onClick={(e) => { e.stopPropagation(); setFormData(prev => ({ ...prev, media_url: '' })); setMediaFileName(''); }} type="button">
+                                                            <X className="size-3 mr-1" /> Remove
+                                                        </Button>
+                                                    </div>
+                                                ) : (
+                                                    <div className="space-y-4">
+                                                        <div className="size-16 mx-auto rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                                            <Upload className="size-7 text-primary" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold">Select media from library</p>
+                                                            <p className="text-sm text-muted-foreground mt-1">Supports MP3, WAV, M4A, MP4, WebM</p>
+                                                        </div>
+                                                        <Button variant="outline" type="button">Browse Library</Button>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        }
+                                    />
+                                ) : (
+                                    <div className="space-y-4 rounded-2xl border bg-muted/20 p-6">
+                                        <div>
+                                            <Label htmlFor="media_url">External URL</Label>
+                                            <Input
+                                                id="media_url"
+                                                placeholder="e.g. https://www.youtube.com/watch?v=..."
+                                                value={formData.media_url}
+                                                onChange={(e) => {
+                                                    const url = e.target.value;
+                                                    setFormData(prev => ({ 
+                                                        ...prev, 
+                                                        media_url: url,
+                                                        media_type: url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com') ? 'video' : prev.media_type
+                                                    }));
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+                                {errors.media_url && <p className="text-sm text-destructive">{errors.media_url}</p>}
 
                                 {/* Title & Description */}
                                 <div className="space-y-4">
@@ -246,7 +231,7 @@ export default function PodcastCreate({ categories }: Props) {
                                 </div>
 
                                 <div className="flex justify-end">
-                                    <Button onClick={() => setStep(2)} disabled={!formData.title || !mediaFile}>
+                                    <Button onClick={() => setStep(2)} disabled={!formData.title || !formData.media_url}>
                                         Next: Details <ChevronRight className="size-4 ml-1" />
                                     </Button>
                                 </div>
@@ -260,26 +245,22 @@ export default function PodcastCreate({ categories }: Props) {
                                     {/* Thumbnail */}
                                     <div className="space-y-3">
                                         <Label>Episode Artwork</Label>
-                                        <div
-                                            className="aspect-square max-w-[200px] rounded-xl border-2 border-dashed border-border hover:border-primary/50 transition-all cursor-pointer flex items-center justify-center overflow-hidden"
-                                            onClick={() => document.getElementById('thumb-input')?.click()}
-                                        >
-                                            <input
-                                                id="thumb-input"
-                                                type="file"
-                                                accept="image/*"
-                                                className="hidden"
-                                                onChange={(e) => e.target.files?.[0] && handleThumbnailSelect(e.target.files[0])}
-                                            />
-                                            {thumbnailPreview ? (
-                                                <img src={thumbnailPreview} alt="Thumbnail" className="w-full h-full object-cover" />
-                                            ) : (
-                                                <div className="text-center p-4">
-                                                    <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
-                                                    <p className="text-xs text-muted-foreground">Upload artwork</p>
+                                        <MediaLibrary
+                                            type="image"
+                                            onSelect={handleThumbnailSelect}
+                                            trigger={
+                                                <div className="aspect-square max-w-[200px] rounded-xl border-2 border-dashed border-border hover:border-primary/50 transition-all cursor-pointer flex items-center justify-center overflow-hidden">
+                                                    {formData.thumbnail ? (
+                                                        <img src={formData.thumbnail.startsWith('http') ? formData.thumbnail : `/storage/${formData.thumbnail}`} alt="Thumbnail" className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <div className="text-center p-4">
+                                                            <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
+                                                            <p className="text-xs text-muted-foreground">Select artwork</p>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            )}
-                                        </div>
+                                            }
+                                        />
                                     </div>
 
                                     {/* Tags */}
@@ -393,8 +374,8 @@ export default function PodcastCreate({ categories }: Props) {
                                             <p className="font-medium capitalize">{formData.media_type}</p>
                                         </div>
                                         <div>
-                                            <p className="text-muted-foreground">File</p>
-                                            <p className="font-medium truncate">{mediaFile?.name || '—'}</p>
+                                            <p className="text-muted-foreground">Media Source</p>
+                                            <p className="font-medium truncate">{mediaSource === 'link' ? formData.media_url : mediaFileName || 'Library Media'}</p>
                                         </div>
                                         <div>
                                             <p className="text-muted-foreground">Category</p>

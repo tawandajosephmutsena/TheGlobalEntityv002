@@ -10,8 +10,10 @@ import { Badge } from '@/components/ui/badge';
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
+import MediaLibrary from '@/components/admin/MediaLibrary';
+import { MediaAsset } from '@/types';
 import {
-    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle
+    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check, Mic, Video
 } from 'lucide-react';
 
 declare function route(name: string, params?: unknown, absolute?: boolean): string;
@@ -56,7 +58,9 @@ export default function PodcastEdit({ podcast, categories }: Props) {
         title: podcast.title,
         description: podcast.description || '',
         content: podcast.content || '',
+        media_url: podcast.media_url,
         media_type: podcast.media_type,
+        thumbnail: podcast.thumbnail || '',
         podcast_category_id: podcast.podcast_category_id ? String(podcast.podcast_category_id) : '',
         season_number: podcast.season_number ? String(podcast.season_number) : '',
         episode_number: podcast.episode_number ? String(podcast.episode_number) : '',
@@ -65,17 +69,37 @@ export default function PodcastEdit({ podcast, categories }: Props) {
         published_at: podcast.published_at ? new Date(podcast.published_at).toISOString().slice(0, 16) : '',
         duration: podcast.duration,
     });
-    const [mediaFile, setMediaFile] = useState<File | null>(null);
-    const [thumbnail, setThumbnail] = useState<File | null>(null);
-    const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(podcast.thumbnail_url);
+    
+    // Check if current media is external
+    const isUrl = podcast.media_url && (podcast.media_url.startsWith('http://') || podcast.media_url.startsWith('https://'));
+    const [mediaSource, setMediaSource] = useState<'upload' | 'link'>(isUrl ? 'link' : 'upload');
+    const [mediaFileName, setMediaFileName] = useState(podcast.media_url ? podcast.media_url.split('/').pop() || 'Media File' : '');
+    
     const [tagInput, setTagInput] = useState('');
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleThumbnailSelect = (file: File) => {
-        setThumbnail(file);
-        const reader = new FileReader();
-        reader.onloadend = () => setThumbnailPreview(reader.result as string);
-        reader.readAsDataURL(file);
+    const handleMediaSelect = (asset: MediaAsset) => {
+        setFormData(prev => ({ 
+            ...prev, 
+            media_url: asset.url,
+            media_type: asset.is_video ? 'video' : 'audio',
+        }));
+        setMediaFileName(asset.original_name);
+        
+        // Try to estimate duration
+        const url = asset.url;
+        const media = document.createElement(asset.is_video ? 'video' : 'audio');
+        media.preload = 'metadata';
+        media.onloadedmetadata = () => {
+            if (media.duration && isFinite(media.duration)) {
+                setFormData(prev => ({ ...prev, duration: Math.round(media.duration) }));
+            }
+        };
+        media.src = url;
+    };
+
+    const handleThumbnailSelect = (asset: MediaAsset) => {
+        setFormData(prev => ({ ...prev, thumbnail: asset.url }));
     };
 
     const addTag = () => {
@@ -91,26 +115,8 @@ export default function PodcastEdit({ podcast, categories }: Props) {
     };
 
     const handleSubmit = () => {
-        const data = new FormData();
-        data.append('_method', 'PUT');
-        data.append('title', formData.title);
-        data.append('description', formData.description);
-        data.append('content', formData.content);
-        data.append('media_type', formData.media_type);
-        data.append('is_published', formData.is_published ? '1' : '0');
-        data.append('duration', String(formData.duration));
-
-        if (mediaFile) data.append('media_file', mediaFile);
-        if (thumbnail) data.append('thumbnail', thumbnail);
-        if (formData.podcast_category_id) data.append('podcast_category_id', formData.podcast_category_id);
-        if (formData.season_number) data.append('season_number', formData.season_number);
-        if (formData.episode_number) data.append('episode_number', formData.episode_number);
-        if (formData.published_at) data.append('published_at', formData.published_at);
-        formData.tags.forEach((tag, i) => data.append(`tags[${i}]`, tag));
-
         setIsSubmitting(true);
-        router.post(route('admin.podcasts.update', { podcast: podcast.id }), data as any, {
-            forceFormData: true,
+        router.put(route('admin.podcasts.update', { podcast: podcast.id }), formData as any, {
             onError: (errs) => {
                 setErrors(errs);
                 setIsSubmitting(false);
@@ -182,19 +188,74 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                         </div>
 
                         {/* Replace Media */}
-                        <div className="rounded-xl border border-border p-4 space-y-3">
-                            <h3 className="font-bold text-sm">Replace Media File</h3>
-                            <p className="text-xs text-muted-foreground">
-                                Current: {podcast.media_type === 'video' ? '🎥' : '🎧'} {podcast.formatted_duration}
-                            </p>
-                            <Input
-                                type="file"
-                                accept="audio/*,video/*"
-                                onChange={(e) => e.target.files?.[0] && setMediaFile(e.target.files[0])}
-                            />
-                            {mediaFile && (
-                                <p className="text-xs text-green-600">New file: {mediaFile.name}</p>
+                        <div className="rounded-xl border border-border p-6 space-y-4">
+                            <div className="flex items-center justify-between mb-2">
+                                <div>
+                                    <h3 className="font-bold text-sm">Media File</h3>
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                        Current format: {podcast.media_type === 'video' ? '🎥' : '🎧'} {podcast.formatted_duration || 'Unknown Runtime'}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-4 mb-4">
+                                <Button variant={mediaSource === 'upload' ? 'default' : 'outline'} onClick={() => { setMediaSource('upload'); }} type="button">
+                                    <Upload className="size-4 mr-2" /> Select from Library
+                                </Button>
+                                <Button variant={mediaSource === 'link' ? 'default' : 'outline'} onClick={() => { setMediaSource('link'); }} type="button">
+                                    <Link className="size-4 mr-2" /> External Link
+                                </Button>
+                            </div>
+
+                            {mediaSource === 'upload' ? (
+                                <MediaLibrary
+                                    type="all"
+                                    onSelect={handleMediaSelect}
+                                    trigger={
+                                        <div className="rounded-xl border-2 border-dashed border-border hover:border-primary/50 transition-all p-6 text-center cursor-pointer group">
+                                            {formData.media_url && !formData.media_url.startsWith('http') ? (
+                                                <div className="space-y-3">
+                                                    <div className="size-12 mx-auto rounded-full bg-green-500/10 flex items-center justify-center">
+                                                        <Check className="size-5 text-green-500" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-sm truncate max-w-[200px] mx-auto">{mediaFileName || 'Media Selected'}</p>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="space-y-3">
+                                                    <div className="size-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                                        <Upload className="size-5 text-primary" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="font-bold text-sm">Select media from library</p>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    }
+                                />
+                            ) : (
+                                <div className="space-y-4 rounded-2xl border bg-muted/20 p-6">
+                                    <div>
+                                        <Label htmlFor="media_url">External URL</Label>
+                                        <Input
+                                            id="media_url"
+                                            placeholder="e.g. https://www.youtube.com/watch?v=..."
+                                            value={formData.media_url}
+                                            onChange={(e) => {
+                                                const url = e.target.value;
+                                                setFormData(prev => ({ 
+                                                    ...prev, 
+                                                    media_url: url,
+                                                    media_type: url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com') ? 'video' : prev.media_type
+                                                }));
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                             )}
+                            {errors.media_url && <p className="text-sm text-destructive">{errors.media_url}</p>}
                         </div>
 
                         {/* Tags */}
@@ -229,25 +290,24 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                         {/* Thumbnail */}
                         <div className="rounded-xl border border-border bg-card p-4 space-y-3">
                             <h3 className="font-bold text-sm">Episode Artwork</h3>
-                            <div
-                                className="aspect-square rounded-lg border border-dashed border-border overflow-hidden cursor-pointer hover:border-primary/50 transition-all"
-                                onClick={() => document.getElementById('thumb-input')?.click()}
-                            >
-                                <input
-                                    id="thumb-input"
-                                    type="file"
-                                    accept="image/*"
-                                    className="hidden"
-                                    onChange={(e) => e.target.files?.[0] && handleThumbnailSelect(e.target.files[0])}
-                                />
-                                {thumbnailPreview ? (
-                                    <img src={thumbnailPreview} alt="" className="w-full h-full object-cover" />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center">
-                                        <ImageIcon className="size-8 text-muted-foreground" />
+                            <MediaLibrary
+                                type="image"
+                                onSelect={handleThumbnailSelect}
+                                trigger={
+                                    <div className="aspect-square rounded-lg border border-dashed border-border overflow-hidden cursor-pointer hover:border-primary/50 transition-all">
+                                        {formData.thumbnail ? (
+                                            <img src={formData.thumbnail.startsWith('http') ? formData.thumbnail : `/storage/${formData.thumbnail}`} alt="Thumbnail" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center p-4 text-center">
+                                                <div>
+                                                    <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
+                                                    <p className="text-xs text-muted-foreground">Select artwork</p>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
+                                }
+                            />
                         </div>
 
                         {/* Settings */}

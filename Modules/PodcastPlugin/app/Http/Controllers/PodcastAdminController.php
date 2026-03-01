@@ -5,6 +5,7 @@ namespace Modules\PodcastPlugin\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -67,14 +68,14 @@ class PodcastAdminController extends Controller
 
     public function store(Request $request)
     {
-        \Log::info("Podcast store hit", $request->all());
+        Log::info("Podcast store hit", $request->all());
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
             'content' => 'nullable|string',
-            'media_file' => 'required|file|max:512000', // 500MB
+            'media_url' => 'required|string',
             'media_type' => 'required|in:audio,video',
-            'thumbnail' => 'nullable|image|max:5120',
+            'thumbnail' => 'nullable|string',
             'podcast_category_id' => 'nullable|exists:podcast_categories,id',
             'season_number' => 'nullable|integer|min:1',
             'episode_number' => 'nullable|integer|min:1',
@@ -82,28 +83,18 @@ class PodcastAdminController extends Controller
             'tags.*' => 'string|max:50',
             'is_published' => 'boolean',
             'published_at' => 'nullable|date',
+            'duration' => 'nullable|numeric',
         ]);
-
-        // Handle media upload
-        $mediaFile = $request->file('media_file');
-        $mediaPath = $mediaFile->store('podcasts/media', 'public');
-        $duration = 0; // Will be set by frontend or ffprobe later
-
-        // Handle thumbnail upload
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail')) {
-            $thumbnailPath = $request->file('thumbnail')->store('podcasts/thumbnails', 'public');
-        }
 
         $podcast = Podcast::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'content' => $validated['content'] ?? null,
-            'media_url' => $mediaPath,
+            'media_url' => $validated['media_url'],
             'media_type' => $validated['media_type'],
-            'thumbnail' => $thumbnailPath,
-            'duration' => $request->input('duration', 0),
-            'file_size' => $mediaFile->getSize(),
+            'thumbnail' => $validated['thumbnail'] ?? null,
+            'duration' => $validated['duration'] ?? 0,
+            'file_size' => 0,
             'podcast_category_id' => $validated['podcast_category_id'] ?? null,
             'author_id' => Auth::id(),
             'season_number' => $validated['season_number'] ?? null,
@@ -136,9 +127,9 @@ class PodcastAdminController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
             'content' => 'nullable|string',
-            'media_file' => 'nullable|file|max:512000',
+            'media_url' => 'required|string',
             'media_type' => 'required|in:audio,video',
-            'thumbnail' => 'nullable|image|max:5120',
+            'thumbnail' => 'nullable|string',
             'podcast_category_id' => 'nullable|exists:podcast_categories,id',
             'season_number' => 'nullable|integer|min:1',
             'episode_number' => 'nullable|integer|min:1',
@@ -146,33 +137,17 @@ class PodcastAdminController extends Controller
             'tags.*' => 'string|max:50',
             'is_published' => 'boolean',
             'published_at' => 'nullable|date',
+            'duration' => 'nullable|numeric',
         ]);
-
-        // Handle media re-upload
-        if ($request->hasFile('media_file')) {
-            // Delete old media
-            if ($podcast->media_url) {
-                Storage::disk('public')->delete($podcast->media_url);
-            }
-            $mediaFile = $request->file('media_file');
-            $podcast->media_url = $mediaFile->store('podcasts/media', 'public');
-            $podcast->file_size = $mediaFile->getSize();
-        }
-
-        // Handle thumbnail re-upload
-        if ($request->hasFile('thumbnail')) {
-            if ($podcast->thumbnail) {
-                Storage::disk('public')->delete($podcast->thumbnail);
-            }
-            $podcast->thumbnail = $request->file('thumbnail')->store('podcasts/thumbnails', 'public');
-        }
 
         $podcast->fill([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']),
             'description' => $validated['description'] ?? null,
             'content' => $validated['content'] ?? null,
+            'media_url' => $validated['media_url'],
             'media_type' => $validated['media_type'],
+            'thumbnail' => $validated['thumbnail'] ?? null,
             'podcast_category_id' => $validated['podcast_category_id'] ?? null,
             'season_number' => $validated['season_number'] ?? null,
             'episode_number' => $validated['episode_number'] ?? null,
@@ -181,8 +156,8 @@ class PodcastAdminController extends Controller
             'published_at' => ($validated['is_published'] ?? false) ? ($validated['published_at'] ?? now()) : ($validated['published_at'] ?? null),
         ]);
 
-        if ($request->has('duration')) {
-            $podcast->duration = (int) $request->input('duration');
+        if (isset($validated['duration'])) {
+            $podcast->duration = (int) $validated['duration'];
         }
 
         $podcast->save();
