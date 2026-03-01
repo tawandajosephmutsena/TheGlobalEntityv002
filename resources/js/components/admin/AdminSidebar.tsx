@@ -30,6 +30,7 @@ import {
     Palette,
     Package,
     Tags,
+    Mic,
 } from 'lucide-react';
 
 import { usePermissions } from '@/hooks/use-permissions';
@@ -89,6 +90,11 @@ const contentNavItems = [
         title: 'Categories',
         href: '/admin/categories',
         icon: Tags,
+    },
+    {
+        title: 'Podcasts',
+        href: '/admin/podcasts',
+        icon: Mic,
     },
 ];
 

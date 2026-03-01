@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Podcast UI Component Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7f13ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#191022",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-primary/20 flex flex-col bg-background-light dark:bg-background-dark shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">podcasts</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">PodCastly</h2>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<p class="px-3 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-4">Main Menu</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span>Episodes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors" href="#">
+<span class="material-symbols-outlined">share</span>
+<span>Distribution</span>
+</a>
+<p class="px-3 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider py-4">Library</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors" href="#">
+<span class="material-symbols-outlined">folder_open</span>
+<span>All Assets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-primary/5 transition-colors" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Monetization</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-primary/20">
+<div class="flex items-center gap-3 p-2">
+<div class="size-10 rounded-full bg-primary/20 bg-cover bg-center" data-alt="User profile avatar with colorful background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNS1dn_ubYSCAyfYLGsMFRsshWSbpQzHrYmQ_I6rzrcbuXhNR1rPEndhckNWw7bP7mbigRUKXeEs9g59BNFhnGG3arizhphoT_E_phCNq7bOJ3rEekXbV_tEciItQZYUdi7Q_Vf32TzybqHFjZlbDCARpS9kRFxy5bplzyPSOhgdZB-H8R1mQdQsnAY4HPiOxLQZhUgbaGk5YbFQ20dkK1_4XX0WGdxWj9WCsOw2BWJ2ubnXG8LdWhPh_LnU3JEEyENyMA5vsy-iP4')"></div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">Alex Rivera</p>
+<p class="text-xs text-slate-500 truncate">Creator Pro</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto scroll-smooth">
+<!-- Top Nav -->
+<header class="h-16 border-b border-slate-200 dark:border-primary/20 flex items-center justify-between px-8 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-10">
+<div class="flex-1 max-w-xl">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="w-full bg-slate-100 dark:bg-primary/5 border-none rounded-lg pl-11 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/50 text-slate-900 dark:text-slate-100" placeholder="Search components..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white rounded-lg text-sm font-bold transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>Create New</span>
+</button>
+</div>
+</header>
+<!-- Component Gallery Content -->
+<div class="p-8 max-w-6xl mx-auto space-y-12 pb-24">
+<!-- Hero Header -->
+<section class="space-y-4">
+<h1 class="text-4xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-violet-400">Component Library</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl">A collection of modern, neon-accented UI elements designed for professional podcast hosting and distribution platforms.</p>
+</section>
+<!-- Color Palette -->
+<section class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">palette</span>
+<h2 class="text-2xl font-bold">Color Palette</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+<div class="space-y-2">
+<div class="h-24 w-full rounded-xl bg-background-dark border border-primary/20 shadow-inner"></div>
+<p class="text-xs font-medium text-center">Background Dark</p>
+</div>
+<div class="space-y-2">
+<div class="h-24 w-full rounded-xl bg-primary shadow-lg shadow-primary/30"></div>
+<p class="text-xs font-medium text-center">Primary Violet</p>
+</div>
+<div class="space-y-2">
+<div class="h-24 w-full rounded-xl bg-violet-900"></div>
+<p class="text-xs font-medium text-center">Deep Navy</p>
+</div>
+<div class="space-y-2">
+<div class="h-24 w-full rounded-xl bg-slate-800"></div>
+<p class="text-xs font-medium text-center">Charcoal</p>
+</div>
+<div class="space-y-2">
+<div class="h-24 w-full rounded-xl bg-primary/20 border border-primary/40 backdrop-blur-sm"></div>
+<p class="text-xs font-medium text-center">Glass Primary</p>
+</div>
+</div>
+</section>
+<!-- Audio Player Component -->
+<section class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">play_circle</span>
+<h2 class="text-2xl font-bold">Audio Player &amp; Waveform</h2>
+</div>
+<div class="p-8 rounded-3xl bg-slate-100 dark:bg-primary/5 border border-slate-200 dark:border-primary/10 backdrop-blur-xl">
+<div class="flex flex-col md:flex-row items-center gap-8">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-violet-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<div class="relative size-48 rounded-xl bg-cover bg-center shadow-2xl" data-alt="Detailed abstract podcast episode cover art" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADU7FgncLoe7qfHDLL0C34qABTKG6vRk5mBhSSfQdOGV_dVs1XJa41yr_HdGj2n4jcdtY-fTamlacz7SLzQMrIfojqVkCvCIQUx0WJn853HfT-ciAdUzA84OVPAsRgNcNfFVkpgYLJM64ujuhHk8Fbx7wGXNCVXBrf_RHZ-jO2B9lAQSgBK_JT22VyWV6FzFkFVSjEMmumUWSuQV88S_UjoBo7ri_kN8OpRmTGK0tQlFFV4ADpDZox627fP-4Ven2r74WocSnHwB1J')"></div>
+</div>
+<div class="flex-1 w-full space-y-6">
+<div>
+<h3 class="text-2xl font-bold">The Future of AI Systems</h3>
+<p class="text-slate-500 dark:text-primary/60 font-medium">Tech Talk Daily • Episode 42</p>
+</div>
+<!-- Waveform Visualization -->
+<div class="flex items-end gap-[2px] h-16 w-full">
+<div class="w-1 h-3/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-5/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-6/6 bg-primary rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary rounded-full"></div>
+<div class="w-1 h-2/6 bg-primary rounded-full"></div>
+<div class="w-1 h-5/6 bg-primary rounded-full"></div>
+<div class="w-1 h-3/6 bg-primary rounded-full"></div>
+<div class="w-1 h-6/6 bg-primary rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary rounded-full"></div>
+<div class="w-1 h-3/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-5/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-2/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-5/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-6/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-3/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-1/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-4/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-2/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-5/6 bg-primary/20 rounded-full"></div>
+<div class="w-1 h-6/6 bg-primary/20 rounded-full"></div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">replay_10</span>
+</button>
+<button class="size-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/40 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl fill-current">play_arrow</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">forward_30</span>
+</button>
+</div>
+<div class="flex items-center gap-2 min-w-32">
+<span class="material-symbols-outlined text-slate-400">volume_up</span>
+<div class="flex-1 h-1.5 bg-slate-200 dark:bg-primary/20 rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Buttons & Controls -->
+<div class="grid md:grid-cols-2 gap-12">
+<section class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">toggle_on</span>
+<h2 class="text-2xl font-bold">Button Variants</h2>
+</div>
+<div class="flex flex-wrap gap-4 p-6 rounded-2xl bg-slate-100 dark:bg-primary/5 border border-slate-200 dark:border-primary/10">
+<button class="px-6 py-2.5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold shadow-lg shadow-primary/20 transition-all">Primary Action</button>
+<button class="px-6 py-2.5 border border-primary/40 text-primary hover:bg-primary/5 rounded-lg font-bold transition-all">Outline</button>
+<button class="px-6 py-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 rounded-lg font-bold transition-all">Secondary</button>
+<button class="px-6 py-2.5 text-slate-500 hover:text-primary transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-xl">delete</span>
+<span>Ghost</span>
+</button>
+</div>
+</section>
+<section class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_square</span>
+<h2 class="text-2xl font-bold">Input Fields</h2>
+</div>
+<div class="space-y-4 p-6 rounded-2xl bg-slate-100 dark:bg-primary/5 border border-slate-200 dark:border-primary/10">
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Podcast Title</label>
+<input class="w-full bg-white dark:bg-background-dark border-slate-200 dark:border-primary/20 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 transition-all" placeholder="e.g. The Morning Brew" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Category</label>
+<select class="w-full bg-white dark:bg-background-dark border-slate-200 dark:border-primary/20 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-primary/50 transition-all">
+<option>Technology</option>
+<option>Business</option>
+<option>Entertainment</option>
+</select>
+</div>
+</div>
+</section>
+</div>
+<!-- Glassmorphism Cards -->
+<section class="space-y-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">grid_view</span>
+<h2 class="text-2xl font-bold">Analytics Cards</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="p-6 rounded-2xl bg-white/50 dark:bg-primary/5 border border-white/20 dark:border-primary/10 backdrop-blur-md">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<span class="text-green-500 text-xs font-bold px-2 py-1 bg-green-500/10 rounded-full">+12.5%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Listeners</p>
+<h4 class="text-3xl font-black mt-1">42.8K</h4>
+</div>
+<div class="p-6 rounded-2xl bg-white/50 dark:bg-primary/5 border border-white/20 dark:border-primary/10 backdrop-blur-md">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-500">
+<span class="material-symbols-outlined">headphones</span>
+</div>
+<span class="text-slate-400 text-xs font-bold px-2 py-1 bg-slate-500/10 rounded-full">Steady</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Avg. Listen Time</p>
+<h4 class="text-3xl font-black mt-1">24m 15s</h4>
+</div>
+<div class="p-6 rounded-2xl bg-gradient-to-br from-primary to-violet-800 border border-primary/20 text-white overflow-hidden relative">
+<div class="absolute -right-4 -bottom-4 size-32 bg-white/10 rounded-full blur-2xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-4">
+<div class="size-10 rounded-lg bg-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined">stars</span>
+</div>
+</div>
+<p class="text-white/70 text-sm font-medium">Monthly Revenue</p>
+<h4 class="text-3xl font-black mt-1">$3,420.00</h4>
+<button class="mt-4 w-full py-2 bg-white/20 hover:bg-white/30 rounded-lg text-xs font-bold transition-all uppercase tracking-widest">Withdraw Funds</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

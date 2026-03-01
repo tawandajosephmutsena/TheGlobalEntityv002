@@ -1,4 +1,5 @@
 {
     "DemoPlugin": false,
-    "ComponentImporter": true
+    "ComponentImporter": true,
+    "PodcastPlugin": true
 }

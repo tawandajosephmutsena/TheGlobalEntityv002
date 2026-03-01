@@ -1,0 +1,280 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7f13ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#0a080d",
+                        "card-dark": "#16121d",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(22, 18, 29, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(127, 19, 236, 0.1);
+        }
+        .waveform-bar {
+            width: 3px;
+            background: #7f13ec;
+            margin: 0 1px;
+            border-radius: 1px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<nav class="sticky top-0 z-50 glass border-b border-primary/10 px-6 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl">podcasts</span>
+<h2 class="text-xl font-bold tracking-tight dark:text-white">PodStream</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Discover</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Trending</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Creators</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="bg-primary/5 border-primary/10 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-primary focus:border-primary w-64" placeholder="Search episodes..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 rounded-lg text-sm font-bold transition-all">Sign In</button>
+</div>
+</div>
+</nav>
+<main class="pb-32">
+<header class="relative w-full h-[500px] overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover blur-3xl opacity-40" data-alt="Abstract cinematic purple and blue studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANBU452jqB0Jy07Mp9x1Z3WAw3heOhHno40iz6kaDL0aiievzEzJ5OaWhv2XIUzyvP-cXe45YgSWLHFO1KAV-XO19qH4PFXc5GgW2Whhj0ZAGvG2gt5JnmNygbhqZIdnKPoT9LEDJ4u2iXnKVb5IJXanFYlCEFLU4HrlHKPnGacUSuvZnq11C4xVckM8P2kh86BbsxljhrzbvpwK5SL-CgaTJI3njTTD0LmCLICQn-5M_xOKbK9Rec6wcabqP_Q-uQAbHMedWEkoB0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-7xl mx-auto px-6 h-full flex flex-col justify-end pb-12">
+<div class="flex flex-col md:flex-row gap-8 items-end">
+<div class="w-64 h-64 rounded-2xl shadow-2xl shadow-primary/20 overflow-hidden border-2 border-primary/20 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Podcast cover art showing a stylized vintage microphone" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb4z1NLink03yucSojUvgpGvOXGEYrlHXDFCvgmkXTlsoSMtoaaGTEmvuoFoRAOtqvi6Qn4cLbi47qNOv96BI6FH0eCSS2SbEmhbTMsp2EL18FJTpHRFh1Ig-KUN-6oaGyc499ysNdnNS793g4uhLz1_dqlpinKgIxg2qjRdU-fJAyN3rLf3puZYTNtglqiI2GoRTg658hnVo7Gbj82Ts5djJGTRcUcat4GlHdctmlW3e2v8OAcpOfR7tp7B6GLz1RluqkBeHH-m4j"/>
+</div>
+<div class="flex-1 pb-2">
+<div class="flex items-center gap-2 text-primary mb-4">
+<span class="bg-primary/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Technology</span>
+<span class="text-slate-400">•</span>
+<span class="text-slate-400 text-sm">Weekly Episodes</span>
+</div>
+<h1 class="text-5xl md:text-6xl font-bold dark:text-white mb-4 tracking-tight">The Neural Frontier</h1>
+<p class="text-slate-400 text-lg max-w-2xl mb-8 leading-relaxed">Exploring the intersection of artificial intelligence, neurobiology, and the future of human consciousness with industry pioneers.</p>
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 bg-primary hover:scale-105 transition-transform text-white px-8 py-4 rounded-xl font-bold">
+<span class="material-symbols-outlined fill-1">play_arrow</span>
+                                Play Latest Episode
+                            </button>
+<button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 px-8 py-4 rounded-xl font-bold transition-all">
+<span class="material-symbols-outlined">add</span>
+                                Follow Show
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-6 mt-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-8">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-bold dark:text-white">Recent Episodes</h3>
+<div class="flex bg-primary/5 rounded-lg p-1">
+<button class="px-4 py-1.5 rounded-md bg-primary text-white text-sm font-medium">Latest</button>
+<button class="px-4 py-1.5 rounded-md text-slate-400 text-sm font-medium hover:text-white">Popular</button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="group flex gap-6 p-6 rounded-2xl hover:bg-primary/5 transition-all border border-transparent hover:border-primary/10">
+<div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Close up of a futuristic robot eye" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFwtUVR0rczgcxOMsfEWRHkQr414FjiTEoEUEbngd3dhRX-FNDSjyYYFWTrrUz6uXM1-4lhtZthLPFrLpz8_bfXNzddckwPNL9KkQAoR29_WB0tu-0611ed2LiMw-s0rMscAj_1XbLgKlQrCerqWKijYnZN0VyfMPlt5x_Y6ekDrmWMvG88ksftrudKeuvq5AizHf9sjUCJk-MFK2-9PKuH6hE0NP1Z0fsotbbthKpQa94Nk4h3jPl27rGJDn8SPytRnPSodCpbY-K"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-bold text-primary">S2 • EP 42</span>
+<span class="text-xs text-slate-500">Oct 24, 2023</span>
+</div>
+<h4 class="text-xl font-bold dark:text-white group-hover:text-primary transition-colors mb-2">Can AI Dream of Digital Souls?</h4>
+<p class="text-slate-400 text-sm line-clamp-2 mb-4">In this deep dive, we sit down with Dr. Aris Thorne to discuss the emerging field of digital consciousness and what it means for the next decade of LLM development.</p>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-primary text-sm font-bold">
+<span class="material-symbols-outlined text-lg fill-1">play_circle</span>
+                                    48 min
+                                </button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">share</span>
+</button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group flex gap-6 p-6 rounded-2xl hover:bg-primary/5 transition-all border border-transparent hover:border-primary/10">
+<div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Blue glowing brain neural network" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrONSpO9iCYGIpc-jGu4hJmqekX8iqqo4DuAEUy524p8CzxnGUqeAog6usQlAzeIX0Akzp-MEEN6NMdJaKguo5-vI3sPO8svkkmyr14fPAWXr0b04Y4rSN6f9z0f8pDm9sQW-hVqm-L3DMbyD-kv8tXJ4Pxn7_xdqj1gUCJnAoIMtiQf4jZ5mHXv9jfL8nhFWJTVS0X61p5GYqUn-WldGpp8b-8T5YTAg7HANNZLqrHU1H3RfpGDSTedW0xhhfSn3W76HnJ4eS4rNh"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-bold text-primary">S2 • EP 41</span>
+<span class="text-xs text-slate-500">Oct 17, 2023</span>
+</div>
+<h4 class="text-xl font-bold dark:text-white group-hover:text-primary transition-colors mb-2">The Ethics of Neural Implants</h4>
+<p class="text-slate-400 text-sm line-clamp-2 mb-4">The bridge between biology and hardware is getting shorter. We explore the legal and ethical ramifications of the latest human trials in brain-computer interfaces.</p>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-primary text-sm font-bold">
+<span class="material-symbols-outlined text-lg fill-1">play_circle</span>
+                                    56 min
+                                </button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">share</span>
+</button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group flex gap-6 p-6 rounded-2xl hover:bg-primary/5 transition-all border border-transparent hover:border-primary/10">
+<div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Circuit board with green glowing lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAyzEwIDL1lvUlXzrIrGSL6sS1P0LCGVtvU12MSEGDIwfR5UwkSSFOr220wEYmaq6Lfime12h9cRxk8tIYAW-m4oxmFxMB2RPes7jgMQMso5AsE_zXeUofVhTBuEfwmxBRXpbTjutSgpwWJOJ9ljZpQrjk1AFjYvBpoSqpABU3MLo-Ofs6fBSVg39kcbFxnX23VxTawLW5uBDgkb4Mv3vsILUjbKNld4OQnju2koLH9g2PWvdXGItgC1JRj3BKRSoK708KHJgcBzFr"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-bold text-primary">S2 • EP 40</span>
+<span class="text-xs text-slate-500">Oct 10, 2023</span>
+</div>
+<h4 class="text-xl font-bold dark:text-white group-hover:text-primary transition-colors mb-2">Quantifying Intuition</h4>
+<p class="text-slate-400 text-sm line-clamp-2 mb-4">How do humans make split-second decisions without data? Can we teach machines to have "gut feelings" through advanced heuristics?</p>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-1.5 text-primary text-sm font-bold">
+<span class="material-symbols-outlined text-lg fill-1">play_circle</span>
+                                    42 min
+                                </button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">share</span>
+</button>
+<button class="text-slate-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center">
+<button class="bg-primary/10 hover:bg-primary/20 text-primary px-8 py-3 rounded-xl font-bold transition-all">Load More Episodes</button>
+</div>
+</div>
+<aside class="lg:col-span-4 space-y-8">
+<section class="p-6 rounded-2xl bg-card-dark border border-primary/10">
+<h5 class="text-lg font-bold dark:text-white mb-6">Subscribe Everywhere</h5>
+<div class="space-y-3">
+<a class="flex items-center gap-3 w-full p-3 rounded-xl bg-green-500/10 hover:bg-green-500/20 text-green-500 transition-all border border-green-500/10 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">podcasts</span>
+<span class="font-bold">Spotify</span>
+<span class="material-symbols-outlined ml-auto text-sm">open_in_new</span>
+</a>
+<a class="flex items-center gap-3 w-full p-3 rounded-xl bg-pink-500/10 hover:bg-pink-500/20 text-pink-500 transition-all border border-pink-500/10 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">ios</span>
+<span class="font-bold">Apple Podcasts</span>
+<span class="material-symbols-outlined ml-auto text-sm">open_in_new</span>
+</a>
+<a class="flex items-center gap-3 w-full p-3 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 transition-all border border-orange-500/10 group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">rss_feed</span>
+<span class="font-bold">RSS Feed</span>
+<span class="material-symbols-outlined ml-auto text-sm">open_in_new</span>
+</a>
+</div>
+</section>
+<section class="p-6 rounded-2xl bg-card-dark border border-primary/10">
+<h5 class="text-lg font-bold dark:text-white mb-6">About the Host</h5>
+<div class="flex items-center gap-4 mb-4">
+<img class="size-16 rounded-full object-cover" data-alt="Portrait of a smiling professional man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7WMtEoVQxtzV0UVb_-Ox75Trk11wWiwj_rFzAVIVK5BcxNXHugvfouxgDwpINlSnJbegwJKHt_gOpaTwwg-kp_2YZnwcnXMTIaf-J609KotVbDbs9CCzItJoeMb71RNRKHN5lEj2rMJaVYYY79oliYD5Gm-1ZwgcConoDtgw630UCVW1YkCm8sT4MivhbIIV_SxOQlqp1ct_IgReBj7s1f7LzO0gw3NTJRXCa_15KvdOHZCHSrTsys9WPVQnQDHK1CYf5_txZb6LP"/>
+<div>
+<p class="font-bold dark:text-white">Marcus Sterling</p>
+<p class="text-xs text-primary font-medium">Tech Futurist &amp; Author</p>
+</div>
+</div>
+<p class="text-slate-400 text-sm leading-relaxed mb-4">Marcus has spent two decades analyzing the impact of emerging tech on society. He's a frequent speaker at TED and CES.</p>
+<div class="flex gap-4">
+<a class="text-slate-500 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-lg">public</span></a>
+<a class="text-slate-500 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-lg">alternate_email</span></a>
+</div>
+</section>
+<section class="p-6 rounded-2xl bg-card-dark border border-primary/10">
+<h5 class="text-lg font-bold dark:text-white mb-6">Top Listeners</h5>
+<div class="flex -space-x-3 mb-4">
+<img class="size-10 rounded-full border-2 border-card-dark object-cover" data-alt="Listener avatar 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCewy385Ze88NgDFSQUHdae6I2AsXfbA--bP-BN3E_gNelKXCn4XRS3bDN9XaRyRq11c3qdHm3OKr2mZovIw-nbFz8ZJgCam7HnGyoIzAC5OMxeRqNc2rZvbaIxt_WtCdcZYU-GjapDGpb9bkV-nCK6GEklHeh0nDnniE4iL8HbcCPFRJqnavfEjwGmtjPLXgDW9_XGQG2zbm67cmrbun_IQ3h8i0RWhz8VFTrWRPlWV0H9LgMcVNT6jJAKuYS5aNQxKpRz_gxVrl7n"/>
+<img class="size-10 rounded-full border-2 border-card-dark object-cover" data-alt="Listener avatar 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuXiJyklKoo0SJdJDw2VL7hzGUlh3iXG-Frx7_icikGr5-nfy6IPgn1kyqQHaNJ6FrbxUjeTnqn9OuTvf84FeOEDox9tVxCd5sLWazVsrMSwGwaEZUK0TxLpgG_hzWXGZ54DWL7Mpu3IoKmFhD2lrr_X8kBjzESSx3cxfSgggU5SiKJ1Q45LaCMeaVXOW-EYpPaeehdbkyTfXT8kOs99CIvX67UBroY2pK5JH-i3oylKqWEV3H0ngIGAvCPhYtWvwz_HCR9bDRV5PX"/>
+<img class="size-10 rounded-full border-2 border-card-dark object-cover" data-alt="Listener avatar 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_4y-FY3blb1-P8PVNlifjprNodFx7dAbJEjOucn9tk6-YC4Nw98Dmi4kkPBN2WPjgx0Ic9mPD5Zq6aeMautc1grMUMUe_08EZlsyJ9TKFMwZgooGW5efFHLYYBhrOqt9bl1jJwi66LYe9DsF6R81bBvJ__EL_NsWVjYdD96iO3FBeyMN5b1zFzlxQpP7oIAxEb9knBVcn_o1K-5oom9UtwC1UNVnl4DRE3K_GrBSIPC1oWeQQy9zI4DQ6aheO1HYMUyomXfkbKqsW"/>
+<img class="size-10 rounded-full border-2 border-card-dark object-cover" data-alt="Listener avatar 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEec3AmL6YLc7shccBpTM9JFzk1fbBjlEPRyk63dvWWXVMym4rz2XF41SnxPTU03uFUIaEnefOYIXKmKMIu5pIQesuMZrPWipTxPthaugJ3hZgJIYg2BXxcIrV5zTlBii_RoYNZXRuYH-We4a3_at0Nmnu3pKt6Whhht4v2ffyddBBfzbGAeIpe5lorBeg3Ey_WEf87wjLZZjbt7FOv3ZcKucPCNmq0qT5WuePuZL5oSqB70i9gxo6_fYe3ukeU0XN2jq3jefVNHOU"/>
+<div class="size-10 rounded-full border-2 border-card-dark bg-primary/20 flex items-center justify-center text-[10px] font-bold text-primary">+12k</div>
+</div>
+<p class="text-slate-400 text-xs leading-relaxed">Join 12,402 other pioneers receiving early access to transcripts and guest Q&amp;A sessions.</p>
+</section>
+</aside>
+</div>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-[60] glass border-t border-primary/20 p-4 md:px-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 md:gap-12">
+<div class="hidden md:flex items-center gap-4 w-1/4">
+<img class="size-12 rounded-lg object-cover" data-alt="Currently playing episode thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWFFu5Ez_srW_i76GGKIp7jA737FNVRKyHLB05YrI2gGgw2E7ceZpcoDnJPTdk3BjYH-FyLMZDF-4_IvZqcxT0bnnv3xMktbScK5x0OvMUD3jN7zwl9pxkIbFHhfC0Yo2KwzabogOncN2ZNlZfhsnZMKVoCgA8JORwJODN-VOHQCjDBfAsGlPrYpO7x0SyljVDFkryLP8EucGGjzoY4xZfE0ULwHLGRJC7RHfYuXAN57utlLxm3GPR0JRGINS1w2bExt_vQTQ_ZlOp"/>
+<div class="overflow-hidden">
+<p class="text-sm font-bold truncate dark:text-white">Can AI Dream of Digital Souls?</p>
+<p class="text-xs text-slate-500">The Neural Frontier</p>
+</div>
+</div>
+<div class="flex-1 w-full max-w-2xl">
+<div class="flex items-center justify-center gap-6 mb-2">
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined">shuffle</span></button>
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined text-3xl">skip_previous</span></button>
+<button class="size-12 bg-primary text-white rounded-full flex items-center justify-center hover:scale-105 transition-transform"><span class="material-symbols-outlined text-4xl fill-1">pause</span></button>
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined text-3xl">skip_next</span></button>
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined">repeat</span></button>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-[10px] text-slate-500 font-medium">12:45</span>
+<div class="flex-1 h-1.5 bg-slate-800 rounded-full relative group cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 bg-primary rounded-full w-[35%]"></div>
+<div class="absolute left-[35%] top-1/2 -translate-y-1/2 size-3 bg-white rounded-full shadow-[0_0_10px_#7f13ec] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<span class="text-[10px] text-slate-500 font-medium">48:00</span>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-end gap-6 w-1/4">
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined text-xl">playlist_play</span></button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400 text-xl">volume_up</span>
+<div class="w-24 h-1 bg-slate-800 rounded-full">
+<div class="w-2/3 h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<button class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined text-xl">fullscreen</span></button>
+</div>
+</div>
+<div class="hidden md:flex justify-center mt-2 h-6 gap-0.5 items-end opacity-20 pointer-events-none">
+<div class="waveform-bar h-1"></div><div class="waveform-bar h-2"></div><div class="waveform-bar h-4"></div><div class="waveform-bar h-3"></div><div class="waveform-bar h-5"></div><div class="waveform-bar h-6"></div><div class="waveform-bar h-4"></div><div class="waveform-bar h-2"></div><div class="waveform-bar h-3"></div><div class="waveform-bar h-5"></div><div class="waveform-bar h-3"></div><div class="waveform-bar h-2"></div><div class="waveform-bar h-1"></div><div class="waveform-bar h-4"></div><div class="waveform-bar h-6"></div><div class="waveform-bar h-5"></div><div class="waveform-bar h-2"></div><div class="waveform-bar h-4"></div><div class="waveform-bar h-3"></div><div class="waveform-bar h-1"></div>
+</div>
+</div>
+
+```</body></html>

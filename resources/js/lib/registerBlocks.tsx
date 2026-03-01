@@ -1,7 +1,7 @@
 import React from 'react';
-import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType } from '@/types/page-blocks';
+import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -18,6 +18,14 @@ const FlipRevealBlockEditor = React.lazy(() => import('@/components/admin/PageBu
 const Connect = React.lazy(() => import('@/components/Blocks/ConnectBlock'));
 const ConnectEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ConnectEditor'));
 
+// Podcast blocks
+const PodcastGridBlockComponent = React.lazy(() => import('@/components/Blocks/PodcastGridBlock'));
+const PodcastGridEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastGridEditor'));
+const PodcastFeaturedBlockComponent = React.lazy(() => import('@/components/Blocks/PodcastFeaturedBlock'));
+const PodcastFeaturedEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastFeaturedEditor'));
+const PodcastPlayerBlockComponent = React.lazy(() => import('@/components/Blocks/PodcastPlayerBlock'));
+const PodcastPlayerEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastPlayerEditor'));
+
 export function registerBlocks() {
     blockRegistry.register({
         type: 'scroll_animation',
@@ -25,12 +33,12 @@ export function registerBlocks() {
         icon: <Layout className="h-4 w-4" />,
         desc: 'A premium 3D perspective scroll animation for images.',
         category: 'Animations',
-        renderer: (props: any) => (
+        renderer: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="h-screen bg-muted animate-pulse" />}>
                 <ScrollAnimationBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: any) => (
+        editor: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ScrollAnimationEditor {...props} />
             </React.Suspense>
@@ -43,12 +51,12 @@ export function registerBlocks() {
         icon: <Layout className="h-4 w-4" />,
         desc: 'Auto-scrolling marquee carousel with customizable speed and direction.',
         category: 'Media',
-        renderer: (props: any) => (
+        renderer: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse" />}>
                 <CarouselBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: any) => (
+        editor: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <CarouselEditor {...props} />
             </React.Suspense>
@@ -61,12 +69,12 @@ export function registerBlocks() {
         icon: <Sparkles className="h-4 w-4" />,
         desc: 'A premium hero with 3D scrolling image carousel — automatically uses your active theme.',
         category: 'Heroes',
-        renderer: (props: any) => (
+        renderer: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="h-screen bg-muted animate-pulse" />}>
                 <KimiHeroSection {...props} />
             </React.Suspense>
         ),
-        editor: (props: any) => (
+        editor: (props: Record<string, unknown>) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <KimiHeroEditor {...props} />
             </React.Suspense>
@@ -84,7 +92,7 @@ export function registerBlocks() {
                 <Feature108 {...props} />
             </React.Suspense>
         ),
-        editor: (props: { content: Feature108Block['content']; onUpdate: (updates: any) => void }) => (
+        editor: (props: { content: Feature108Block['content']; onUpdate: (updates: Partial<Feature108Block['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <Feature108Editor {...props} />
             </React.Suspense>
@@ -108,6 +116,7 @@ export function registerBlocks() {
             </React.Suspense>
         )
     });
+
     blockRegistry.register({
         type: 'connect',
         label: 'Connect (Highlighter)',
@@ -122,6 +131,62 @@ export function registerBlocks() {
         editor: (props: { content: ConnectBlock['content']; onUpdate: (updates: Partial<ConnectBlock['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ConnectEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    // ── Podcast Blocks ──────────────────────────────────────────────────
+
+    blockRegistry.register({
+        type: 'podcast_grid',
+        label: 'Podcast Episode Grid',
+        icon: <Mic className="h-4 w-4" />,
+        desc: 'A browseable grid of podcast episodes with search and category filters.',
+        category: 'Podcasts',
+        renderer: (props: PodcastGridBlock['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <PodcastGridBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: PodcastGridBlock['content']; onUpdate: (updates: Partial<PodcastGridBlock['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <PodcastGridEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'podcast_featured',
+        label: 'Featured Podcasts',
+        icon: <Headphones className="h-4 w-4" />,
+        desc: 'Showcase featured podcast episodes in hero, card, or list layout.',
+        category: 'Podcasts',
+        renderer: (props: PodcastFeaturedBlock['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <PodcastFeaturedBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: PodcastFeaturedBlock['content']; onUpdate: (updates: Partial<PodcastFeaturedBlock['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <PodcastFeaturedEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'podcast_player',
+        label: 'Podcast Episode Player',
+        icon: <PlayCircle className="h-4 w-4" />,
+        desc: 'Embed a specific podcast episode with full player, share buttons, and related episodes.',
+        category: 'Podcasts',
+        renderer: (props: PodcastPlayerBlock['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <PodcastPlayerBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: PodcastPlayerBlock['content']; onUpdate: (updates: Partial<PodcastPlayerBlock['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <PodcastPlayerEditor {...props} />
             </React.Suspense>
         )
     });

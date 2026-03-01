@@ -1,0 +1,28 @@
+{
+    "name": "ottostart/podcastplugin",
+    "description": "Podcast management module for OttoStart",
+    "authors": [
+        {
+            "name": "OttoStart",
+            "email": "admin@ottostart.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\PodcastPlugin\\": "app/",
+            "Modules\\PodcastPlugin\\Database\\Factories\\": "database/factories/",
+            "Modules\\PodcastPlugin\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\PodcastPlugin\\Tests\\": "tests/"
+        }
+    }
+}

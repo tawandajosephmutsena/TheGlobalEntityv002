@@ -300,3 +300,56 @@ export interface Page {
     created_at: string;
     updated_at: string;
 }
+
+export interface PodcastCategory {
+    id: number;
+    name: string;
+    slug: string;
+    description: string | null;
+    color: string;
+    icon: string | null;
+    sort_order: number;
+    is_active: boolean;
+    podcasts_count?: number;
+}
+
+export interface Podcast {
+    id: number;
+    title: string;
+    slug: string;
+    description: string | null;
+    content: string | null;
+    media_url: string;
+    media_full_url: string;
+    media_type: 'audio' | 'video';
+    thumbnail: string | null;
+    thumbnail_url: string | null;
+    duration: number;
+    formatted_duration: string;
+    file_size: number;
+    formatted_file_size: string;
+    podcast_category_id: number | null;
+    author_id: number | null;
+    season_number: number | null;
+    episode_number: number | null;
+    tags: string[] | null;
+    is_published: boolean;
+    is_featured: boolean;
+    published_at: string | null;
+    play_count: number;
+    share_count: number;
+    created_at: string;
+    updated_at: string;
+    category?: PodcastCategory | null;
+    author?: User | null;
+}
+
+export interface PodcastPlay {
+    id: number;
+    podcast_id: number;
+    ip_address: string | null;
+    user_agent: string | null;
+    played_at: string;
+    duration_listened: number;
+}
+

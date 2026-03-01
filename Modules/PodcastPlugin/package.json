@@ -1,0 +1,7 @@
+{
+    "private": true,
+    "type": "module",
+    "name": "podcastplugin",
+    "description": "Podcast management module",
+    "version": "1.0.0"
+}

@@ -33,11 +33,12 @@ interface HorizontalScrollItem { title: string; description: string; tag: string
 
 interface FormField {
     label: string;
-    type: 'text' | 'email' | 'number' | 'tel' | 'textarea' | 'select' | 'radio' | 'checkbox';
+    type: 'text' | 'email' | 'number' | 'tel' | 'textarea' | 'select' | 'radio' | 'checkbox' | 'file';
     name: string;
     required?: boolean;
     placeholder?: string;
     options?: string[];
+    accept?: string;
 }
 interface FormStep {
     id: string;
@@ -1739,6 +1740,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                                                     <SelectItem value="select">Dropdown</SelectItem>
                                                                     <SelectItem value="radio">Radio Buttons</SelectItem>
                                                                     <SelectItem value="checkbox">Checkboxes</SelectItem>
+                                                                    <SelectItem value="file">File Upload</SelectItem>
                                                                 </SelectContent>
                                                             </Select>
                                                         </div>

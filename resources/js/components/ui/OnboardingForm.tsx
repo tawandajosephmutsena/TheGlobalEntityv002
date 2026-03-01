@@ -29,11 +29,12 @@ import { cn } from "@/lib/utils";
 
 export interface FormField {
   label: string;
-  type: "text" | "email" | "number" | "tel" | "textarea" | "select" | "radio" | "checkbox";
+  type: "text" | "email" | "number" | "tel" | "textarea" | "select" | "radio" | "checkbox" | "file";
   name: string;
   required?: boolean;
   placeholder?: string;
   options?: string[];
+  accept?: string;
 }
 
 export interface FormStep {
@@ -99,18 +100,24 @@ const OnboardingForm = ({
   
   // Initialize formData dynamically based on steps
   const initialData = useMemo(() => {
-    const data: Record<string, string | string[]> = {};
+    const data: Record<string, string | string[] | File | null> = {};
     steps.forEach((step) => {
       step.fields.forEach((field) => {
-        data[field.name] = field.type === "checkbox" ? [] : "";
+        if (field.type === "checkbox") {
+          data[field.name] = [];
+        } else if (field.type === "file") {
+          data[field.name] = null;
+        } else {
+          data[field.name] = "";
+        }
       });
     });
     return data;
   }, [steps]);
 
-  const [formData, setFormData] = useState<Record<string, string | string[]>>(initialData);
+  const [formData, setFormData] = useState<Record<string, string | string[] | File | null>>(initialData);
 
-  const updateFormData = (field: string, value: string | string[]) => {
+  const updateFormData = (field: string, value: string | string[] | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -141,6 +148,9 @@ const OnboardingForm = ({
     if (e) e.preventDefault();
     setIsSubmitting(true);
 
+    // Check if there are any files to ensure Inertia sends as FormData
+    const hasFiles = Object.values(formData).some((val) => val instanceof File);
+
     import('@inertiajs/react').then(({ router }) => {
       router.post('/contact', {
         ...formData,
@@ -152,6 +162,7 @@ const OnboardingForm = ({
       }, {
         preserveScroll: true,
         preserveState: true,
+        forceFormData: hasFiles,
         onSuccess: () => {
           toast.success(successMessage || "Form submitted successfully!");
           setIsSubmitting(false);
@@ -173,6 +184,9 @@ const OnboardingForm = ({
       const value = formData[field.name];
       if (field.type === "checkbox") {
         return Array.isArray(value) && value.length > 0;
+      }
+      if (field.type === "file") {
+        return value !== null && value !== undefined;
       }
       return value !== undefined && value !== null && value.toString().trim() !== "";
     });
@@ -275,13 +289,13 @@ const OnboardingForm = ({
                       <Textarea
                         id={field.name}
                         placeholder={field.placeholder}
-                        value={formData[field.name] || ""}
+                        value={(formData[field.name] as string) || ""}
                         onChange={(e) => updateFormData(field.name, e.target.value)}
                         className="min-h-[80px] transition-all duration-300 focus:ring-2 focus:ring-primary/20 focus:border-primary"
                       />
                     ) : field.type === "select" ? (
                       <Select
-                        value={formData[field.name] as string || ""}
+                        value={(formData[field.name] as string | undefined) || ""}
                         onValueChange={(value: string) => updateFormData(field.name, value)}
                         {...({ modal: false } as { modal: boolean })}
                       >
@@ -301,7 +315,7 @@ const OnboardingForm = ({
                       </Select>
                     ) : field.type === "radio" ? (
                       <RadioGroup
-                        value={formData[field.name] as string || ""}
+                        value={(formData[field.name] as string) || ""}
                         onValueChange={(value) => updateFormData(field.name, value)}
                         className="space-y-2"
                       >
@@ -339,7 +353,7 @@ const OnboardingForm = ({
                           >
                             <Checkbox
                               id={`${field.name}-${i}`}
-                              checked={(formData[field.name] || []).includes(option.toLowerCase().replace(/\s+/g, '-'))}
+                              checked={Array.isArray(formData[field.name]) ? (formData[field.name] as string[]).includes(option.toLowerCase().replace(/\s+/g, '-')) : false}
                               onCheckedChange={() => toggleCheckboxValue(field.name, option.toLowerCase().replace(/\s+/g, '-'))}
                             />
                             <Label
@@ -351,12 +365,30 @@ const OnboardingForm = ({
                           </motion.div>
                         ))}
                       </div>
+                    ) : field.type === "file" ? (
+                      <div className="flex flex-col space-y-2">
+                        <Input
+                          id={field.name}
+                          type="file"
+                          accept={field.accept}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0] || null;
+                            updateFormData(field.name, file);
+                          }}
+                          className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all duration-300 focus:ring-2 focus:ring-agency-accent/20 focus:border-agency-accent"
+                        />
+                        {formData[field.name] && formData[field.name] instanceof File && (
+                          <span className="text-xs text-muted-foreground ml-2">
+                            Selected: {(formData[field.name] as File).name}
+                          </span>
+                        )}
+                      </div>
                     ) : (
                       <Input
                         id={field.name}
                         type={field.type}
                         placeholder={field.placeholder}
-                        value={formData[field.name] as string || ""}
+                        value={(formData[field.name] as string) || ""}
                         onChange={(e) => updateFormData(field.name, e.target.value)}
                         className="h-12 px-4 rounded-xl transition-all duration-300 focus:ring-2 focus:ring-agency-accent/20 focus:border-agency-accent"
                       />

@@ -1,0 +1,11 @@
+{
+    "name": "PodcastPlugin",
+    "alias": "podcastplugin",
+    "description": "Complete podcast management module with admin upload/publish and public discovery/player features",
+    "keywords": ["podcast", "audio", "video", "media", "player"],
+    "priority": 0,
+    "providers": [
+        "Modules\\PodcastPlugin\\Providers\\PodcastPluginServiceProvider"
+    ],
+    "files": []
+}

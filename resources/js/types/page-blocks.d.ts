@@ -275,7 +275,10 @@ export type PageBlock =
     | Feature108Block
     | ScrollAnimationBlock
     | FlipRevealBlock
-    | ConnectBlock;
+    | ConnectBlock
+    | PodcastGridBlock
+    | PodcastFeaturedBlock
+    | PodcastPlayerBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -535,3 +538,46 @@ export interface ConnectBlock extends BaseBlock {
         whatsapp?: string;
     };
 }
+
+export interface PodcastGridBlock extends BaseBlock {
+    type: 'podcast_grid';
+    content: {
+        title?: string;
+        subtitle?: string;
+        limit?: number;
+        showSearch?: boolean;
+        showCategories?: boolean;
+        showFeatured?: boolean;
+        columns?: 2 | 3 | 4;
+        ctaText?: string;
+        ctaHref?: string;
+    };
+}
+
+export interface PodcastFeaturedBlock extends BaseBlock {
+    type: 'podcast_featured';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        limit?: number;
+        layout?: 'hero' | 'cards' | 'list';
+        showPlayButton?: boolean;
+        ctaText?: string;
+        ctaHref?: string;
+    };
+}
+
+export interface PodcastPlayerBlock extends BaseBlock {
+    type: 'podcast_player';
+    content: {
+        podcastSlug?: string;
+        title?: string;
+        description?: string;
+        variant?: 'compact' | 'basic' | 'expanded';
+        showRelated?: boolean;
+        relatedLimit?: number;
+        autoplay?: boolean;
+    };
+}
+
