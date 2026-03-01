@@ -1,4 +1,5 @@
 import AdminLayout from '@/layouts/AdminLayout';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,7 +10,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link, router } from '@inertiajs/react';
 import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation } from 'lucide-react';
 import React, { useState } from 'react';
@@ -147,6 +147,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
 
     return (
         <AdminLayout title="Contact Inquiries" breadcrumbs={breadcrumbs}>
+            <ErrorBoundary>
             <div className="space-y-6">
                 <div className="flex items-center justify-between">
                     <div>
@@ -157,28 +158,39 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                     </div>
                 </div>
 
-                <Tabs 
-                    defaultValue={currentForm || 'all'} 
-                    onValueChange={(value) => {
-                        const url = value === 'all' 
-                            ? '/admin/contact-inquiries' 
-                            : `/admin/contact-inquiries?form_subject=${encodeURIComponent(value)}`;
-                        router.get(url, {}, { preserveState: true });
-                    }}
-                    className="space-y-6"
-                >
-                    {forms?.length > 0 && (
+                <div className="space-y-6">
+                    {forms && forms.length > 0 && (
                         <div className="w-full overflow-x-auto pb-2">
-                            <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
-                                <TabsTrigger value="all">All Inquiries</TabsTrigger>
+                            <div className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+                                <button 
+                                    onClick={() => router.get('/admin/contact-inquiries', {}, { preserveState: true })}
+                                    className={cn(
+                                        "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+                                        (!currentForm || currentForm === 'all') 
+                                            ? "bg-background text-foreground shadow-sm" 
+                                            : "hover:bg-background/50 hover:text-foreground"
+                                    )}
+                                >
+                                    All Inquiries
+                                </button>
                                 {forms.map(form => (
-                                    <TabsTrigger key={form.value} value={form.value}>
+                                    <button 
+                                        key={form.value}
+                                        onClick={() => router.get(`/admin/contact-inquiries?form_name=${encodeURIComponent(form.value)}`, {}, { preserveState: true })}
+                                        className={cn(
+                                            "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+                                            currentForm === form.value 
+                                                ? "bg-background text-foreground shadow-sm" 
+                                                : "hover:bg-background/50 hover:text-foreground"
+                                        )}
+                                    >
                                         {form.label}
-                                    </TabsTrigger>
+                                    </button>
                                 ))}
-                            </TabsList>
+                            </div>
                         </div>
                     )}
+                </div>
 
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-3">
@@ -367,8 +379,8 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                         ))}
                     </div>
                 )}
-                </Tabs>
             </div>
+            </ErrorBoundary>
         </AdminLayout>
     );
 }

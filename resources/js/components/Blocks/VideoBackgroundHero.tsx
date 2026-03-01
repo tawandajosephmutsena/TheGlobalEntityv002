@@ -124,7 +124,7 @@ export default function VideoBackgroundHero({
                                 size="lg"
                                 className="h-14 px-8 rounded-full text-lg font-bold group bg-primary hover:bg-primary/90 text-primary-foreground border-none"
                             >
-                                <Link href={ctaLink1}>
+                                <Link href={ctaLink1 || '#'}>
                                     {ctaText1}
                                     <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                 </Link>
@@ -135,7 +135,7 @@ export default function VideoBackgroundHero({
                                 variant="outline"
                                 className="h-14 px-8 rounded-full text-lg font-bold border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black hover:border-white transition-all"
                             >
-                                <Link href={ctaLink2}>
+                                <Link href={ctaLink2 || '#'}>
                                     {ctaText2}
                                 </Link>
                             </Button>

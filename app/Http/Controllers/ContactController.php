@@ -95,11 +95,20 @@ class ContactController extends Controller
                 $message = implode("\n", $summaryLines);
             }
 
+            // Find an explicit subject if one was passed in the forms data
+            $explicitSubject = null;
+            if (isset($data['Subject'])) {
+                $explicitSubject = $data['Subject'];
+            } elseif (isset($data['subject'])) {
+                $explicitSubject = $data['subject'];
+            }
+
             // Store with additional security metadata
             ContactInquiry::create([
                 'name' => strip_tags($name),
                 'email' => $email,
-                'subject' => $type . ' Submission',
+                'subject' => strip_tags($explicitSubject ?? ($type . ' Submission')),
+                'form_name' => $type,
                 'message' => strip_tags($message),
                 'status' => 'new',
                 'metadata' => [

@@ -8,7 +8,7 @@ import { usePerformanceDebugger } from '@/hooks/useAnimationPerformance';
 export const AnimationPerformanceDebugger: React.FC = () => {
     const { debugInfo, isVisible, setIsVisible, recommendations } = usePerformanceDebugger();
 
-    if (process.env.NODE_ENV !== 'development' || !isVisible || !debugInfo) {
+    if (!import.meta.env.DEV || !isVisible || !debugInfo) {
         return null;
     }
 

@@ -93,7 +93,7 @@ export const usePerformanceDebugger = () => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        if (process.env.NODE_ENV !== 'development') return;
+        if (!import.meta.env.DEV) return;
 
         const updateDebugInfo = () => {
             setDebugInfo(animationPerformanceMonitor.getPerformanceReport());

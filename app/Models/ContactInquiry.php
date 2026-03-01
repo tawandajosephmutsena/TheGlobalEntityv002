@@ -13,6 +13,7 @@ class ContactInquiry extends Model
         'name',
         'email',
         'subject',
+        'form_name',
         'message',
         'type',
         'status',

@@ -18,7 +18,7 @@ const CtaBlock: React.FC<CtaBlockProps> = ({ title, subtitle, ctaText, ctaHref, 
                     {title}
                 </h2>
                 <div className="flex flex-col sm:flex-row items-center gap-8">
-                    <Link href={ctaHref} className="group relative inline-flex items-center justify-center size-48 md:size-64 rounded-full bg-agency-accent text-agency-primary font-black text-xl tracking-tighter hover:scale-105 transition-all shadow-2xl shadow-agency-accent/30">
+                    <Link href={ctaHref || '#'} className="group relative inline-flex items-center justify-center size-48 md:size-64 rounded-full bg-agency-accent text-agency-primary font-black text-xl tracking-tighter hover:scale-105 transition-all shadow-2xl shadow-agency-accent/30">
                         <span className="relative z-10">{ctaText}</span>
                     </Link>
                     <div className="text-left">

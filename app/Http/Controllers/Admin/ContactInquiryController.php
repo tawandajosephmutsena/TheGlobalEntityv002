@@ -14,19 +14,17 @@ class ContactInquiryController extends Controller
      */
     public function index(Request $request)
     {
-        $currentForm = $request->query('form_subject');
+        $currentForm = $request->query('form_name');
 
-        // Extract available forms by splitting " Submission" from subject
-        $forms = ContactInquiry::select('subject')
+        // Extract available forms by fetching distinct form_name
+        $forms = ContactInquiry::select('form_name')
             ->distinct()
-            ->whereNotNull('subject')
-            ->get()
-            ->map(function ($inquiry) {
-                // Return 'label' without " Submission" and 'value' as the literal db subject
-                $label = preg_replace('/ Submission$/', '', $inquiry->subject);
+            ->whereNotNull('form_name')
+            ->pluck('form_name')
+            ->map(function ($formName) {
                 return [
-                    'label' => $label,
-                    'value' => $inquiry->subject
+                    'label' => $formName,
+                    'value' => $formName
                 ];
             })
             ->sortBy('label')
@@ -36,15 +34,15 @@ class ContactInquiryController extends Controller
         $query = ContactInquiry::latest();
 
         if ($currentForm) {
-            $query->where('subject', $currentForm);
+            $query->where('form_name', $currentForm);
         }
 
         $inquiries = $query->paginate(15)->withQueryString();
 
         $stats = [
-            'total' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->count(),
-            'new' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->where('status', 'new')->count(),
-            'replied' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->where('status', 'replied')->count(),
+            'total' => ContactInquiry::when($currentForm, fn($q) => $q->where('form_name', $currentForm))->count(),
+            'new' => ContactInquiry::when($currentForm, fn($q) => $q->where('form_name', $currentForm))->where('status', 'new')->count(),
+            'replied' => ContactInquiry::when($currentForm, fn($q) => $q->where('form_name', $currentForm))->where('status', 'replied')->count(),
         ];
 
         return Inertia::render('admin/contact-inquiries/Index', [
