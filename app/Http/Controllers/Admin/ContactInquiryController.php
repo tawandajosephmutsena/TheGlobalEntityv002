@@ -12,20 +12,46 @@ class ContactInquiryController extends Controller
     /**
      * Display a listing of the inquiries.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $inquiries = ContactInquiry::latest()
-            ->paginate(15);
+        $currentForm = $request->query('form_subject');
+
+        // Extract available forms by splitting " Submission" from subject
+        $forms = ContactInquiry::select('subject')
+            ->distinct()
+            ->whereNotNull('subject')
+            ->get()
+            ->map(function ($inquiry) {
+                // Return 'label' without " Submission" and 'value' as the literal db subject
+                $label = preg_replace('/ Submission$/', '', $inquiry->subject);
+                return [
+                    'label' => $label,
+                    'value' => $inquiry->subject
+                ];
+            })
+            ->sortBy('label')
+            ->values()
+            ->all();
+
+        $query = ContactInquiry::latest();
+
+        if ($currentForm) {
+            $query->where('subject', $currentForm);
+        }
+
+        $inquiries = $query->paginate(15)->withQueryString();
 
         $stats = [
-            'total' => ContactInquiry::count(),
-            'new' => ContactInquiry::where('status', 'new')->count(),
-            'replied' => ContactInquiry::where('status', 'replied')->count(),
+            'total' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->count(),
+            'new' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->where('status', 'new')->count(),
+            'replied' => ContactInquiry::when($currentForm, fn($q) => $q->where('subject', $currentForm))->where('status', 'replied')->count(),
         ];
 
         return Inertia::render('admin/contact-inquiries/Index', [
             'inquiries' => $inquiries,
-            'stats' => $stats
+            'stats' => $stats,
+            'forms' => $forms,
+            'currentForm' => $currentForm
         ]);
     }
 

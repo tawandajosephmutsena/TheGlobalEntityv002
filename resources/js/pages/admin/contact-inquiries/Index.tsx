@@ -9,6 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link, router } from '@inertiajs/react';
 import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation } from 'lucide-react';
 import React, { useState } from 'react';
@@ -37,9 +38,11 @@ interface Stats {
 interface Props {
     inquiries: PaginatedData<ContactInquiry>;
     stats: Stats;
+    forms: { label: string; value: string }[];
+    currentForm: string | null;
 }
 
-export default function ContactInquiriesIndex({ inquiries, stats }: Props) {
+export default function ContactInquiriesIndex({ inquiries, stats, forms, currentForm }: Props) {
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
     const breadcrumbs = [
@@ -153,6 +156,29 @@ export default function ContactInquiriesIndex({ inquiries, stats }: Props) {
                         </p>
                     </div>
                 </div>
+
+                <Tabs 
+                    defaultValue={currentForm || 'all'} 
+                    onValueChange={(value) => {
+                        const url = value === 'all' 
+                            ? '/admin/contact-inquiries' 
+                            : `/admin/contact-inquiries?form_subject=${encodeURIComponent(value)}`;
+                        router.get(url, {}, { preserveState: true });
+                    }}
+                    className="space-y-6"
+                >
+                    {forms?.length > 0 && (
+                        <div className="w-full overflow-x-auto pb-2">
+                            <TabsList className="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground">
+                                <TabsTrigger value="all">All Inquiries</TabsTrigger>
+                                {forms.map(form => (
+                                    <TabsTrigger key={form.value} value={form.value}>
+                                        {form.label}
+                                    </TabsTrigger>
+                                ))}
+                            </TabsList>
+                        </div>
+                    )}
 
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-3">
@@ -341,6 +367,7 @@ export default function ContactInquiriesIndex({ inquiries, stats }: Props) {
                         ))}
                     </div>
                 )}
+                </Tabs>
             </div>
         </AdminLayout>
     );
