@@ -1,7 +1,7 @@
 import React from 'react';
-import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock, CommunityReviewBlock } from '@/types/page-blocks';
+import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock, CommunityReviewBlock, FestivalMapBlock as FestivalMapBlockType, FestivalCardBlock as FestivalCardBlockType } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -28,6 +28,12 @@ const PodcastPlayerEditor = React.lazy(() => import('@/components/admin/PageBuil
 
 const CommunityReviewBlock = React.lazy(() => import('@/components/Blocks/CommunityReviewBlock'));
 const CommunityReviewEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/CommunityReviewEditor'));
+
+const FestivalMapBlock = React.lazy(() => import('@/components/Blocks/FestivalMapBlock'));
+const FestivalMapEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FestivalMapEditor'));
+
+const FestivalCardBlock = React.lazy(() => import('@/components/Blocks/FestivalCardBlock'));
+const FestivalCardEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FestivalCardEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -208,6 +214,42 @@ export function registerBlocks() {
         editor: (props: { content: CommunityReviewBlock['content']; onUpdate: (updates: Partial<CommunityReviewBlock['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <CommunityReviewEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'festival_map',
+        label: 'Festival Map Radar',
+        icon: <Globe className="h-4 w-4" />,
+        desc: 'Interactive map displaying festivals and sustainable hubs with dreamy styling.',
+        category: 'Travel',
+        renderer: (props: FestivalMapBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-[600px] bg-muted animate-pulse rounded-3xl" />}>
+                <FestivalMapBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: FestivalMapBlockType['content']; onUpdate: (updates: Partial<FestivalMapBlockType['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <FestivalMapEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'festival_card',
+        label: 'Festival Card',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Elegant festival card with slow-travel aesthetics.',
+        category: 'Travel',
+        renderer: (props: FestivalCardBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-3xl" />}>
+                <FestivalCardBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: FestivalCardBlockType['content']; onUpdate: (updates: Partial<FestivalCardBlockType['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <FestivalCardEditor {...props} />
             </React.Suspense>
         )
     });

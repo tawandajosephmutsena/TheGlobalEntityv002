@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import type { CommunityReviewBlock as CommunityReviewBlockType } from '@/types/page-blocks';
 
 const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
@@ -46,10 +47,11 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
 
     return (
         <section className="py-24 relative overflow-hidden bg-background">
-            {/* Dreamy watercolor background effect */}
-            <div className="absolute inset-0 pointer-events-none opacity-20 overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[oklch(0.52_0.20_334)] rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[oklch(0.68_0.12_210)] rounded-full blur-[120px]" />
+            {/* Dreamy watercolor background effect using theme variables */}
+            <div className="absolute inset-0 pointer-events-none opacity-30 overflow-hidden">
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[140px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/20 rounded-full blur-[140px]" />
+                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-secondary/15 rounded-full blur-[100px]" />
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
@@ -58,71 +60,78 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <Badge variant="outline" className="mb-4 font-mono uppercase tracking-wider text-primary border-primary/20 bg-primary/5">
-                            Reviews
+                            Community Feedback
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl font-display mb-4 text-foreground">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-6 text-foreground tracking-tight">
                             {title}
                         </h2>
-                        {subtitle && <p className="text-xl text-muted-foreground">{subtitle}</p>}
-                        {description && <p className="mt-4 text-muted-foreground">{description}</p>}
+                        {subtitle && <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">{subtitle}</p>}
+                        {description && <p className="mt-6 text-lg text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto">{description}</p>}
                     </motion.div>
                 </div>
 
                 <div className={cn(
-                    "grid gap-8",
-                    layout === 'grid' ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"
+                    "grid gap-8 auto-rows-fr",
+                    layout === 'grid' ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-4xl mx-auto"
                 )}>
                     {mockReviews.map((review, index) => (
                         <motion.div
                             key={review.id}
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                         >
-                            <Card className="h-full border-primary/10 bg-white/40 backdrop-blur-md shadow-xl hover:shadow-2xl transition-all duration-300 group overflow-hidden">
-                                <CardContent className="p-8 relative">
-                                    <Quote className="absolute top-4 right-8 w-12 h-12 text-primary/5 -mt-2 -mr-2 group-hover:scale-110 transition-transform duration-500" />
+                            <Card className="h-full border-primary/10 bg-white/30 dark:bg-black/20 backdrop-blur-xl shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-500 group overflow-hidden flex flex-col">
+                                <CardContent className="p-10 relative flex-1 flex flex-col">
+                                    <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/5 group-hover:text-primary/10 group-hover:scale-110 transition-all duration-700 ease-out" />
                                     
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center border border-primary/10">
-                                            <span className="font-display text-primary text-xl">
+                                    <div className="flex items-center gap-5 mb-8">
+                                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center border border-white/20 shadow-inner group-hover:rotate-3 transition-transform duration-500">
+                                            <span className="font-display text-primary text-2xl drop-shadow-sm">
                                                 {review.user.charAt(0)}
                                             </span>
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-foreground">{review.user}</h4>
-                                            <p className="text-xs text-muted-foreground font-mono">{review.date}</p>
+                                            <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">{review.user}</h4>
+                                            <p className="text-xs text-muted-foreground font-mono font-medium tracking-tight opacity-70 italic">{review.date}</p>
                                         </div>
                                     </div>
 
                                     {showRatings && (
-                                        <div className="flex flex-wrap gap-4 mb-6">
-                                            <div className="flex flex-col gap-1">
-                                                <span className="text-[10px] uppercase font-bold text-muted-foreground">Vibe</span>
-                                                <div className="flex gap-0.5">
+                                        <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                                            <div className="flex flex-col gap-1.5">
+                                                <span className="text-[10px] uppercase font-bold tracking-widest text-primary/70">Vibe</span>
+                                                <div className="flex gap-1">
                                                     {[...Array(5)].map((_, i) => (
-                                                        <Star key={i} className={cn("w-3 h-3", i < review.vibe ? "text-primary fill-primary" : "text-muted")} />
+                                                        <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.vibe ? "text-primary fill-primary scale-110" : "text-primary/20")} />
                                                     ))}
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col gap-1">
-                                                <span className="text-[10px] uppercase font-bold text-muted-foreground">Safety</span>
-                                                <div className="flex gap-0.5">
+                                            <div className="flex flex-col gap-1.5">
+                                                <span className="text-[10px] uppercase font-bold tracking-widest text-accent/70">Safety</span>
+                                                <div className="flex gap-1">
                                                     {[...Array(5)].map((_, i) => (
-                                                        <Star key={i} className={cn("w-3 h-3", i < review.safety ? "text-secondary fill-secondary" : "text-muted")} />
+                                                        <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.safety ? "text-accent fill-accent scale-110" : "text-accent/20")} />
                                                     ))}
                                                 </div>
                                             </div>
                                         </div>
                                     )}
 
-                                    <p className="text-foreground/80 leading-relaxed italic">
-                                        "{review.body}"
-                                    </p>
+                                    <div className="relative flex-1">
+                                        <p className="text-lg text-foreground/80 leading-relaxed italic font-serif">
+                                            "{review.body}"
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Verified Guest</span>
+                                        <Badge variant="secondary" className="text-[10px] h-5 bg-primary/5 text-primary hover:bg-primary/10">Slow Travel</Badge>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </motion.div>
@@ -132,10 +141,5 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
         </section>
     );
 };
-
-// Simple helper function for class merging if cn is not imported correctly, though OttoStart uses it
-function cn(...inputs: (string | boolean | undefined | null)[]) {
-    return inputs.filter(Boolean).join(" ");
-}
 
 export default CommunityReviewBlock;

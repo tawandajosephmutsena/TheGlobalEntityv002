@@ -279,7 +279,9 @@ export type PageBlock =
     | PodcastGridBlock
     | PodcastFeaturedBlock
     | PodcastPlayerBlock
-    | CommunityReviewBlock;
+    | CommunityReviewBlock
+    | FestivalMapBlock
+    | FestivalCardBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -593,6 +595,31 @@ export interface CommunityReviewBlock extends BaseBlock {
         showRatings?: boolean;
         limit?: number;
         layout?: 'list' | 'grid' | 'carousel';
+    };
+}
+
+export interface FestivalMapBlock extends BaseBlock {
+    type: 'festival_map';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        center?: { lat: number; lng: number };
+        zoom?: number;
+        showSearch?: boolean;
+        theme?: 'light' | 'dark' | 'fairy-pirate';
+        limit?: number;
+    };
+}
+
+export interface FestivalCardBlock extends BaseBlock {
+    type: 'festival_card';
+    content: {
+        festivalId?: number;
+        variant?: 'elegant' | 'compact' | 'dreamy';
+        showActivities?: boolean;
+        showTags?: boolean;
+        ctaText?: string;
     };
 }
 

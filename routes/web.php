@@ -228,11 +228,15 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
     Route::post('media/bulk-action', [App\Http\Controllers\Admin\MediaController::class, 'bulkAction'])->name('media.bulk-action');
     Route::post('media/bulk-delete', [App\Http\Controllers\Admin\MediaController::class, 'bulkDelete'])->name('media.bulk-delete');
 
+    // TGE Management
+    Route::resource('festivals', App\Http\Controllers\Admin\FestivalController::class);
+    Route::post('festivals/{festival}/toggle-published', [App\Http\Controllers\Admin\FestivalController::class, 'togglePublished'])->name('festivals.toggle-published');
+    
+    Route::resource('reviews', App\Http\Controllers\Admin\ReviewController::class)->only(['index', 'update', 'destroy']);
+    Route::post('reviews/{review}/approve', [App\Http\Controllers\Admin\ReviewController::class, 'approve'])->name('reviews.approve');
+    Route::post('reviews/{review}/reject', [App\Http\Controllers\Admin\ReviewController::class, 'reject'])->name('reviews.reject');
+
     // Contact Inquiries management
-    Route::get('contact-inquiries/export', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportFiltered'])->name('contact-inquiries.export');
-    Route::get('contact-inquiries/export-pdf', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportPdfFiltered'])->name('contact-inquiries.export-pdf');
-    Route::post('contact-inquiries/bulk-action', [App\Http\Controllers\Admin\ContactInquiryController::class, 'bulkAction'])->name('contact-inquiries.bulk-action');
-    Route::resource('contact-inquiries', App\Http\Controllers\Admin\ContactInquiryController::class);
 
     // Page management
     Route::resource('pages', App\Http\Controllers\Admin\PageController::class);

@@ -780,11 +780,11 @@ return [
                 'foreground' => 'oklch(0.25 0.02 334)',
                 'primary' => 'oklch(0.52 0.20 334)', // Magenta Pink
                 'primary-foreground' => 'oklch(1 0 0)',
-                'secondary' => 'oklch(0.78 0.18 55)', // Orange
+                'secondary' => 'oklch(0.72 0.18 50)', // Orange
                 'secondary-foreground' => 'oklch(1 0 0)',
                 'accent' => 'oklch(0.68 0.12 210)', // Turquoise
                 'accent-foreground' => 'oklch(1 0 0)',
-                'muted' => 'oklch(0.96 0.05 115)', // Light Lime
+                'muted' => 'oklch(0.85 0.20 110)', // Lime Green
                 'muted-foreground' => 'oklch(0.35 0.10 115)',
                 'destructive' => 'oklch(0.60 0.15 30)',
                 'border' => 'oklch(0.90 0.05 334)',
@@ -796,11 +796,11 @@ return [
                 'foreground' => 'oklch(0.95 0.01 334)',
                 'primary' => 'oklch(0.65 0.18 334)', // Brighter Magenta for contrast
                 'primary-foreground' => 'oklch(1 0 0)',
-                'secondary' => 'oklch(0.75 0.15 55)', // Soft Orange
+                'secondary' => 'oklch(0.75 0.15 50)', // Soft Orange
                 'secondary-foreground' => 'oklch(0.1 0 0)',
                 'accent' => 'oklch(0.70 0.10 210)', // Turquoise
                 'accent-foreground' => 'oklch(0.1 0 0)',
-                'muted' => 'oklch(0.20 0.05 115)',
+                'muted' => 'oklch(0.25 0.15 110)', // Dark Lime
                 'muted-foreground' => 'oklch(0.85 0.05 115)',
                 'destructive' => 'oklch(0.50 0.15 30)',
                 'border' => 'oklch(0.25 0.05 334)',

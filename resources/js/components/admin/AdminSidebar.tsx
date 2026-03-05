@@ -31,6 +31,8 @@ import {
     Package,
     Tags,
     Mic,
+    Map,
+    Star,
 } from 'lucide-react';
 
 import { usePermissions } from '@/hooks/use-permissions';
@@ -95,6 +97,19 @@ const contentNavItems = [
         title: 'Podcasts',
         href: '/admin/podcasts',
         icon: Mic,
+    },
+];
+
+const tgeNavItems = [
+    {
+        title: 'Festivals',
+        href: '/admin/festivals',
+        icon: Map,
+    },
+    {
+        title: 'Reviews',
+        href: '/admin/reviews',
+        icon: Star,
     },
 ];
 
@@ -207,6 +222,29 @@ export function AdminSidebar() {
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {contentNavItems.map((item) => (
+                                <SidebarMenuItem key={item.title}>
+                                    <SidebarMenuButton
+                                        asChild
+                                        isActive={isActive(item.href)}
+                                        tooltip={item.title}
+                                    >
+                                        <Link href={item.href}>
+                                            <item.icon />
+                                            <span>{item.title}</span>
+                                        </Link>
+                                    </SidebarMenuButton>
+                                </SidebarMenuItem>
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+
+                {/* Global Entity Platform */}
+                <SidebarGroup>
+                    <SidebarGroupLabel>Global Entity</SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {tgeNavItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
                                         asChild
