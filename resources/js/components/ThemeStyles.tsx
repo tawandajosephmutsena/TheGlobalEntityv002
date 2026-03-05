@@ -128,11 +128,11 @@ export default function ThemeStyles() {
         if (fontsToLoad.length === 0) return null;
 
         const formattedFonts = fontsToLoad.map(font => {
-            const normalized = font.trim().replace(/\s+/g, '+');
-            return `family=${normalized}:wght@400;500;600;700`;
-        }).join('&');
+            const normalized = font.toLowerCase().replace(/\s+/g, '-');
+            return `${normalized}:400,500,600,700`;
+        }).join('|');
 
-        return `https://fonts.googleapis.com/css2?${formattedFonts}&display=swap`;
+        return `https://fonts.bunny.net/css?family=${formattedFonts}&display=swap`;
     };
 
     const fontUrl = generateFontUrl();
@@ -150,7 +150,6 @@ export default function ThemeStyles() {
             'card-foreground': fg,
             'popover': bg,
             'popover-foreground': fg,
-            'primary-foreground': 'oklch(0.98 0 0)',
             'secondary-foreground': 'oklch(0.25 0 0)',
             'muted-foreground': 'oklch(0.45 0 0)',
             'accent-foreground': 'oklch(0.25 0 0)',
@@ -163,7 +162,6 @@ export default function ThemeStyles() {
             'card-foreground': fg,
             'popover': bg,
             'popover-foreground': fg,
-            'primary-foreground': 'oklch(0.98 0 0)',
             'secondary-foreground': 'oklch(0.95 0 0)',
             'muted-foreground': 'oklch(0.70 0 0)',
             'accent-foreground': 'oklch(0.95 0 0)',

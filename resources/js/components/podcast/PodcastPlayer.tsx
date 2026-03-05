@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Maximize2, Minimize2 } from 'lucide-react';
-import ReactPlayer from 'react-player';
 import { cn } from '@/lib/utils';
 import { WaveformVisualizer } from './WaveformVisualizer';
 
@@ -29,9 +28,7 @@ export function PodcastPlayer({
     onPlay,
     className,
 }: PodcastPlayerProps) {
-    const audioRef = useRef<HTMLAudioElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const videoRef = useRef<any>(null);
+    const mediaRef = useRef<HTMLAudioElement | HTMLVideoElement>(null);
     const progressRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -41,15 +38,11 @@ export function PodcastPlayer({
     const [playbackRate, setPlaybackRate] = useState(1);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [hasPlayed, setHasPlayed] = useState(false);
-    const [isVideoReady, setIsVideoReady] = useState(false);
 
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
-    // Audio-specific event listeners
     useEffect(() => {
-        if (mediaType !== 'audio') return;
-        
-        const media = audioRef.current;
+        const media = mediaRef.current;
         if (!media) return;
 
         const handleTimeUpdate = () => setCurrentTime(media.currentTime);
@@ -77,91 +70,71 @@ export function PodcastPlayer({
             media.removeEventListener('play', handlePlayEvent);
             media.removeEventListener('pause', handlePauseEvent);
         };
-    }, [mediaType]);
+    }, []);
 
     const togglePlay = useCallback(async () => {
+        const media = mediaRef.current;
+        if (!media) return;
+
         try {
-            if (mediaType === 'audio') {
-                const media = audioRef.current;
-                if (!media) return;
-                
-                if (isPlaying) {
-                    media.pause();
-                } else {
-                    await media.play();
-                    if (!hasPlayed) {
-                        setHasPlayed(true);
-                        onPlay?.();
-                    }
-                }
+            if (isPlaying) {
+                media.pause();
             } else {
-                // Video handling via ReactPlayer state
-                setIsPlaying(!isPlaying);
-                if (!isPlaying && !hasPlayed) {
+                await media.play();
+                if (!hasPlayed) {
                     setHasPlayed(true);
                     onPlay?.();
                 }
             }
         } catch (error) {
             console.error('Playback failed:', error);
+            // Fallback for browsers blocking autoplay or unexpected errors
             setIsPlaying(false);
         }
-    }, [isPlaying, hasPlayed, onPlay, mediaType]);
+    }, [isPlaying, hasPlayed, onPlay]);
 
     const skip = useCallback((seconds: number) => {
-        if (mediaType === 'audio') {
-            const media = audioRef.current;
-            if (!media) return;
-            media.currentTime = Math.max(0, Math.min(media.currentTime + seconds, duration));
-        } else {
-            const media = videoRef.current;
-            if (!media) return;
-            media.seekTo(Math.max(0, Math.min(currentTime + seconds, duration)), 'seconds');
-        }
-    }, [duration, mediaType, currentTime]);
+        const media = mediaRef.current;
+        if (!media) return;
+        media.currentTime = Math.max(0, Math.min(media.currentTime + seconds, duration));
+    }, [duration]);
 
     const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        const media = mediaRef.current;
         const progressBar = progressRef.current;
-        if (!progressBar) return;
+        if (!media || !progressBar) return;
 
         const rect = progressBar.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
-        const newTime = pos * duration;
-        
-        if (mediaType === 'audio') {
-            if (audioRef.current) audioRef.current.currentTime = newTime;
-        } else {
-            if (videoRef.current) videoRef.current.seekTo(newTime, 'seconds');
-        }
-    }, [duration, mediaType]);
+        media.currentTime = pos * duration;
+    }, [duration]);
 
     const toggleMute = useCallback(() => {
-        if (mediaType === 'audio') {
-            if (audioRef.current) audioRef.current.muted = !isMuted;
-        }
+        const media = mediaRef.current;
+        if (!media) return;
+        media.muted = !isMuted;
         setIsMuted(!isMuted);
-    }, [isMuted, mediaType]);
+    }, [isMuted]);
 
     const handleVolumeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        const media = mediaRef.current;
+        if (!media) return;
         const vol = parseFloat(e.target.value);
-        if (mediaType === 'audio') {
-            if (audioRef.current) audioRef.current.volume = vol;
-        }
+        media.volume = vol;
         setVolume(vol);
         if (vol === 0) setIsMuted(true);
         else if (isMuted) setIsMuted(false);
-    }, [isMuted, mediaType]);
+    }, [isMuted]);
 
     const cyclePlaybackRate = useCallback(() => {
         const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
         const currentIndex = rates.indexOf(playbackRate);
         const nextRate = rates[(currentIndex + 1) % rates.length];
-        
-        if (mediaType === 'audio' && audioRef.current) {
-            audioRef.current.playbackRate = nextRate;
+        if (mediaRef.current) {
+            mediaRef.current.playbackRate = nextRate;
         }
         setPlaybackRate(nextRate);
-    }, [playbackRate, mediaType]);
+    }, [playbackRate]);
 
     const formatTime = (seconds: number): string => {
         if (!seconds || !isFinite(seconds)) return '0:00';
@@ -176,36 +149,19 @@ export function PodcastPlayer({
         <div className={cn('rounded-2xl bg-card border border-border overflow-hidden', className)}>
             {/* Video element (hidden for audio) */}
             {mediaType === 'video' ? (
-                <div className={cn('relative bg-black transition-all duration-300', isFullscreen ? 'fixed inset-0 z-[100]' : 'aspect-video')}>
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    {/* @ts-ignore - React 19 class components mismatch */}
-                    <ReactPlayer
-                        ref={videoRef}
-                        url={src}
-                        width="100%"
-                        height="100%"
-                        playing={isPlaying}
-                        volume={volume}
-                        muted={isMuted}
-                        playbackRate={playbackRate}
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        onProgress={(state: any) => setCurrentTime(state.playedSeconds)}
-                        onDuration={(d: number) => setDuration(d)}
-                        onEnded={() => setIsPlaying(false)}
-                        onPlay={() => setIsPlaying(true)}
-                        onPause={() => setIsPlaying(false)}
-                        onReady={() => setIsVideoReady(true)}
-                        config={
-                            {
-                                youtube: { playerVars: { showinfo: 1, controls: 0 } },
-                                vimeo: { playerOptions: { byline: false, portrait: false, title: false, controls: false } }
-                            } as any
-                        }
+                <div className={cn('relative bg-black', isFullscreen ? 'fixed inset-0 z-50' : 'aspect-video')}>
+                    <video
+                        ref={mediaRef as React.RefObject<HTMLVideoElement>}
+                        src={src}
+                        className="w-full h-full object-contain"
+                        playsInline
+                        preload="metadata"
+                        controls={false}
                     />
-                    {(!isPlaying || !isVideoReady) && (
+                    {!isPlaying && (
                         <button
                             onClick={togglePlay}
-                            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
+                            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40"
                             aria-label="Play video"
                         >
                             <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
@@ -215,14 +171,14 @@ export function PodcastPlayer({
                     )}
                     <button
                         onClick={() => setIsFullscreen(!isFullscreen)}
-                        className="absolute top-4 right-4 p-2 rounded-lg bg-black/50 text-white hover:bg-black/70 transition-colors z-20"
+                        className="absolute top-4 right-4 p-2 rounded-lg bg-black/50 text-white hover:bg-black/70 transition-colors"
                         aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
                     >
                         {isFullscreen ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
                     </button>
                 </div>
             ) : (
-                <audio ref={audioRef} src={src} preload="metadata" />
+                <audio ref={mediaRef as React.RefObject<HTMLAudioElement>} src={src} preload="metadata" />
             )}
 
             {/* Player controls */}
