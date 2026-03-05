@@ -7,6 +7,7 @@ use App\Models\ContactInquiry;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContactInquiryController extends Controller
 {
@@ -222,17 +223,26 @@ class ContactInquiryController extends Controller
 
         return response()->streamDownload(function () use ($query) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['ID', 'Name', 'Email', 'Subject', 'Form', 'Message', 'Status', 'Date']);
+            fputcsv($handle, ['ID', 'Name', 'Email', 'Subject', 'Form', 'Type', 'Message', 'Additional Data', 'Status', 'Date']);
 
             $query->chunk(500, function ($inquiries) use ($handle) {
                 foreach ($inquiries as $inquiry) {
+                    $metadata = '';
+                    if (!empty($inquiry->metadata['formatted_fields'])) {
+                        $metadata = collect($inquiry->metadata['formatted_fields'])
+                            ->map(fn($v, $k) => "$k: " . (is_array($v) ? implode(', ', $v) : $v))
+                            ->implode(' | ');
+                    }
+
                     fputcsv($handle, [
                         $inquiry->id,
                         $inquiry->name,
                         $inquiry->email,
                         $inquiry->subject,
                         $inquiry->form_name,
+                        $inquiry->type,
                         $inquiry->message,
+                        $metadata,
                         $inquiry->status,
                         $inquiry->created_at->format('Y-m-d H:i:s'),
                     ]);
@@ -243,5 +253,27 @@ class ContactInquiryController extends Controller
         }, $filename, [
             'Content-Type' => 'text/csv',
         ]);
+    }
+
+    /**
+     * Export filtered inquiries as PDF.
+     */
+    public function exportPdfFiltered(Request $request)
+    {
+        $query = $this->applyFilters($request);
+
+        // If specific IDs are provided, limit to those
+        if ($request->filled('ids')) {
+            $ids = explode(',', $request->query('ids'));
+            $query->whereIn('id', $ids);
+        }
+
+        $inquiries = $query->get();
+
+        $pdf = Pdf::loadView('admin.exports.inquiries-pdf', [
+            'inquiries' => $inquiries
+        ]);
+
+        return $pdf->download('inquiries_export_' . date('Y-m-d_His') . '.pdf');
     }
 }

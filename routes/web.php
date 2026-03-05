@@ -230,6 +230,7 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
 
     // Contact Inquiries management
     Route::get('contact-inquiries/export', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportFiltered'])->name('contact-inquiries.export');
+    Route::get('contact-inquiries/export-pdf', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportPdfFiltered'])->name('contact-inquiries.export-pdf');
     Route::post('contact-inquiries/bulk-action', [App\Http\Controllers\Admin\ContactInquiryController::class, 'bulkAction'])->name('contact-inquiries.bulk-action');
     Route::resource('contact-inquiries', App\Http\Controllers\Admin\ContactInquiryController::class);
 

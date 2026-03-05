@@ -20,12 +20,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Link, router } from '@inertiajs/react';
 import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation, Archive, X, Search } from 'lucide-react';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { PaginatedData } from '@/types';
 import { cn } from '@/lib/utils';
 import DOMPurify from 'dompurify';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 
 interface ContactInquiry {
     id: number;
@@ -72,29 +70,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         { title: 'Inquiries', href: '/admin/contact-inquiries' },
     ];
 
-    // Debounced search and filter updates
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            const currentFilters = {
-                search: filters?.search || '',
-                status: filters?.status || 'all',
-                date_from: filters?.date_from || '',
-                date_to: filters?.date_to || '',
-            };
-
-            if (
-                search !== currentFilters.search ||
-                statusFilter !== currentFilters.status ||
-                dateFrom !== currentFilters.date_from ||
-                dateTo !== currentFilters.date_to
-            ) {
-                applyFilters();
-            }
-        }, 300);
-        return () => clearTimeout(timeout);
-    }, [search, statusFilter, dateFrom, dateTo]);
-
-    const applyFilters = () => {
+    const applyFilters = useCallback(() => {
         const query: Record<string, string> = {};
         
         if (currentForm) query.form_name = currentForm;
@@ -107,12 +83,35 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
             preserveState: true,
             preserveScroll: true,
             replace: true,
+            only: ['inquiries', 'filters'],
             onSuccess: () => {
                 setSelectedIds([]);
                 setSelectAllFiltered(false);
             }
         });
-    };
+    }, [search, statusFilter, dateFrom, dateTo, currentForm]);
+
+    // Debounced search and filter updates
+    useEffect(() => {
+        const currentFilters = {
+            search: filters?.search || '',
+            status: filters?.status || 'all',
+            date_from: filters?.date_from || '',
+            date_to: filters?.date_to || '',
+        };
+
+        const timeout = setTimeout(() => {
+            if (
+                search !== currentFilters.search ||
+                statusFilter !== currentFilters.status ||
+                dateFrom !== currentFilters.date_from ||
+                dateTo !== currentFilters.date_to
+            ) {
+                applyFilters();
+            }
+        }, 300);
+        return () => clearTimeout(timeout);
+    }, [search, statusFilter, dateFrom, dateTo, filters, applyFilters]);
 
     const clearFilters = () => {
         setSearch('');
@@ -204,30 +203,19 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
     };
 
     const exportPDF = () => {
-        if (selectAllFiltered) {
-            alert("PDF export is currently only supported for the current page selection. Please use CSV to export all matching results.");
-            return;
+        const params = new URLSearchParams();
+        if (currentForm) params.append('form_name', currentForm);
+        if (filters?.search) params.append('search', filters.search);
+        if (filters?.status && filters.status !== 'all') params.append('status', filters.status);
+        if (filters?.date_from) params.append('date_from', filters.date_from);
+        if (filters?.date_to) params.append('date_to', filters.date_to);
+        
+        if (!selectAllFiltered) {
+            if (selectedIds.length === 0) return;
+            params.append('ids', selectedIds.join(','));
         }
 
-        const rowsToExport = inquiries.data.filter(i => selectedIds.includes(i.id));
-        if (rowsToExport.length === 0) return;
-
-        const doc = new jsPDF();
-        doc.text('Contact Inquiries Export', 14, 15);
-        
-        autoTable(doc, {
-            startY: 20,
-            head: [['Name', 'Email', 'Subject', 'Status', 'Date']],
-            body: rowsToExport.map(row => [
-                row.name,
-                row.email,
-                row.subject,
-                row.status,
-                new Date(row.created_at).toLocaleDateString()
-            ]),
-        });
-
-        doc.save('inquiries_export.pdf');
+        window.location.href = `/admin/contact-inquiries/export-pdf?${params.toString()}`;
     };
 
     const getStatusBadge = (status: string) => {
