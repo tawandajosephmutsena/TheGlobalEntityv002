@@ -35,6 +35,7 @@ export const WaveformVisualizer = forwardRef<HTMLDivElement, WaveformVisualizerP
                 aria-valuenow={Math.round(progress)}
                 aria-valuemin={0}
                 aria-valuemax={100}
+                aria-label="Playback progress"
             >
                 {barHeights.map((height, i) => {
                     const barProgress = (i / barCount) * 100;

@@ -82,6 +82,8 @@ function CategoryForm({
                             value={form.color}
                             onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
                             className="size-8 rounded border border-border cursor-pointer"
+                            title="Category color"
+                            aria-label="Category color"
                         />
                         <Input
                             value={form.color}

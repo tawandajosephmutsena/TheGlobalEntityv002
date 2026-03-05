@@ -13,7 +13,7 @@ import {
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import { MediaAsset } from '@/types';
 import {
-    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check, Mic, Video
+    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check
 } from 'lucide-react';
 
 declare function route(name: string, params?: unknown, absolute?: boolean): string;
@@ -116,7 +116,7 @@ export default function PodcastEdit({ podcast, categories }: Props) {
 
     const handleSubmit = () => {
         setIsSubmitting(true);
-        router.put(route('admin.podcasts.update', { podcast: podcast.id }), formData as any, {
+        router.put(route('admin.podcasts.update', { podcast: podcast.id }), formData as unknown as Record<string, string>, {
             onError: (errs) => {
                 setErrors(errs);
                 setIsSubmitting(false);
@@ -268,7 +268,7 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                                     placeholder="Add a tag..."
                                     onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                                 />
-                                <Button variant="outline" size="icon" onClick={addTag} type="button">
+                                <Button variant="outline" size="icon" onClick={addTag} type="button" title="Add tag" aria-label="Add tag">
                                     <Tag className="size-4" />
                                 </Button>
                             </div>
@@ -276,7 +276,7 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                                 {formData.tags.map(tag => (
                                     <Badge key={tag} variant="secondary" className="gap-1">
                                         {tag}
-                                        <button onClick={() => removeTag(tag)} className="ml-1 hover:text-destructive">
+                                        <button onClick={() => removeTag(tag)} className="ml-1 hover:text-destructive" title={`Remove tag ${tag}`} aria-label={`Remove tag ${tag}`}>
                                             <X className="size-3" />
                                         </button>
                                     </Badge>

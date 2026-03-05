@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Head, router, usePage } from '@inertiajs/react';
+import React, { useState } from 'react';
+import { router } from '@inertiajs/react';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -91,7 +91,7 @@ export default function PodcastCreate({ categories }: Props) {
 
     const handleSubmit = () => {
         setIsSubmitting(true);
-        router.post(route('admin.podcasts.store'), formData as any, {
+        router.post(route('admin.podcasts.store'), formData as unknown as Record<string, string>, {
             onError: (errs) => {
                 setErrors(errs);
                 setIsSubmitting(false);
@@ -273,7 +273,7 @@ export default function PodcastCreate({ categories }: Props) {
                                                 placeholder="Add a tag..."
                                                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                                             />
-                                            <Button variant="outline" size="icon" onClick={addTag} type="button">
+                                            <Button variant="outline" size="icon" onClick={addTag} type="button" title="Add tag" aria-label="Add tag">
                                                 <Tag className="size-4" />
                                             </Button>
                                         </div>
@@ -281,7 +281,7 @@ export default function PodcastCreate({ categories }: Props) {
                                             {formData.tags.map(tag => (
                                                 <Badge key={tag} variant="secondary" className="gap-1">
                                                     {tag}
-                                                    <button onClick={() => removeTag(tag)} className="ml-1 hover:text-destructive">
+                                                    <button onClick={() => removeTag(tag)} className="ml-1 hover:text-destructive" title={`Remove tag ${tag}`} aria-label={`Remove tag ${tag}`}>
                                                         <X className="size-3" />
                                                     </button>
                                                 </Badge>

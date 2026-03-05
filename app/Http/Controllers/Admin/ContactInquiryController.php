@@ -6,9 +6,46 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactInquiry;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ContactInquiryController extends Controller
 {
+    /**
+     * Build the base query with all applicable filters.
+     */
+    private function applyFilters(Request $request)
+    {
+        $query = ContactInquiry::latest();
+
+        if ($request->filled('form_name')) {
+            $query->where('form_name', $request->query('form_name'));
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->query('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('subject', 'like', "%{$search}%")
+                  ->orWhere('message', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->query('status'));
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->query('date_from'));
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->query('date_to'));
+        }
+
+        return $query;
+    }
+
     /**
      * Display a listing of the inquiries.
      */
@@ -31,11 +68,9 @@ class ContactInquiryController extends Controller
             ->values()
             ->all();
 
-        $query = ContactInquiry::latest();
+        $query = $this->applyFilters($request);
 
-        if ($currentForm) {
-            $query->where('form_name', $currentForm);
-        }
+        $totalFiltered = $query->count();
 
         $inquiries = $query->paginate(15)->withQueryString();
 
@@ -45,11 +80,20 @@ class ContactInquiryController extends Controller
             'replied' => ContactInquiry::when($currentForm, fn($q) => $q->where('form_name', $currentForm))->where('status', 'replied')->count(),
         ];
 
+        $filters = [
+            'search' => $request->query('search', ''),
+            'status' => $request->query('status', ''),
+            'date_from' => $request->query('date_from', ''),
+            'date_to' => $request->query('date_to', ''),
+        ];
+
         return Inertia::render('admin/contact-inquiries/Index', [
             'inquiries' => $inquiries,
             'stats' => $stats,
             'forms' => $forms,
-            'currentForm' => $currentForm
+            'currentForm' => $currentForm,
+            'filters' => $filters,
+            'totalFiltered' => $totalFiltered,
         ]);
     }
 
@@ -98,12 +142,46 @@ class ContactInquiryController extends Controller
     public function bulkAction(Request $request)
     {
         $validated = $request->validate([
-            'ids' => 'required|array',
+            'ids' => 'required_without:select_all_filtered|array',
             'ids.*' => 'exists:contact_inquiries,id',
-            'action' => 'required|string|in:mark_read,mark_replied,delete',
+            'action' => 'required|string|in:mark_read,mark_replied,archive,delete',
+            'select_all_filtered' => 'sometimes|boolean',
+            // Filter params for select-all-filtered
+            'form_name' => 'sometimes|string|nullable',
+            'search' => 'sometimes|string|nullable',
+            'status_filter' => 'sometimes|string|nullable',
+            'date_from' => 'sometimes|string|nullable',
+            'date_to' => 'sometimes|string|nullable',
         ]);
 
-        $inquiries = ContactInquiry::whereIn('id', $validated['ids']);
+        if (!empty($validated['select_all_filtered'])) {
+            // Build query from filters
+            $inquiries = ContactInquiry::latest();
+
+            if (!empty($validated['form_name'])) {
+                $inquiries->where('form_name', $validated['form_name']);
+            }
+            if (!empty($validated['search'])) {
+                $search = $validated['search'];
+                $inquiries->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%")
+                      ->orWhere('subject', 'like', "%{$search}%")
+                      ->orWhere('message', 'like', "%{$search}%");
+                });
+            }
+            if (!empty($validated['status_filter'])) {
+                $inquiries->where('status', $validated['status_filter']);
+            }
+            if (!empty($validated['date_from'])) {
+                $inquiries->whereDate('created_at', '>=', $validated['date_from']);
+            }
+            if (!empty($validated['date_to'])) {
+                $inquiries->whereDate('created_at', '<=', $validated['date_to']);
+            }
+        } else {
+            $inquiries = ContactInquiry::whereIn('id', $validated['ids']);
+        }
 
         switch ($validated['action']) {
             case 'mark_read':
@@ -114,6 +192,10 @@ class ContactInquiryController extends Controller
                 $inquiries->update(['status' => 'replied']);
                 $message = 'Selected inquiries marked as replied.';
                 break;
+            case 'archive':
+                $inquiries->update(['status' => 'archived']);
+                $message = 'Selected inquiries archived.';
+                break;
             case 'delete':
                 $inquiries->delete();
                 $message = 'Selected inquiries deleted successfully.';
@@ -121,5 +203,45 @@ class ContactInquiryController extends Controller
         }
 
         return back()->with('success', $message ?? 'Bulk action completed.');
+    }
+
+    /**
+     * Export filtered inquiries as CSV.
+     */
+    public function exportFiltered(Request $request): StreamedResponse
+    {
+        $query = $this->applyFilters($request);
+
+        // If specific IDs are provided, limit to those
+        if ($request->filled('ids')) {
+            $ids = explode(',', $request->query('ids'));
+            $query->whereIn('id', $ids);
+        }
+
+        $filename = 'inquiries_export_' . date('Y-m-d_His') . '.csv';
+
+        return response()->streamDownload(function () use ($query) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['ID', 'Name', 'Email', 'Subject', 'Form', 'Message', 'Status', 'Date']);
+
+            $query->chunk(500, function ($inquiries) use ($handle) {
+                foreach ($inquiries as $inquiry) {
+                    fputcsv($handle, [
+                        $inquiry->id,
+                        $inquiry->name,
+                        $inquiry->email,
+                        $inquiry->subject,
+                        $inquiry->form_name,
+                        $inquiry->message,
+                        $inquiry->status,
+                        $inquiry->created_at->format('Y-m-d H:i:s'),
+                    ]);
+                }
+            });
+
+            fclose($handle);
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+        ]);
     }
 }

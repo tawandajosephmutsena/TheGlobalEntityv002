@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import Navigation from '@/components/Navigation';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { useGSAPInit, useSmoothScroll } from '@/hooks/useAnimations';
+import { GlobalPodcastPlayer } from '@/components/podcast/GlobalPodcastPlayer';
 import { usePerformanceMonitoring } from '@/lib/performanceMonitor';
 import { cn } from '@/lib/utils';
 import { Head, usePage } from '@inertiajs/react';
@@ -191,13 +192,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 )}
             </div>
 
+            {/* Global persistent podcast player */}
+            <GlobalPodcastPlayer />
+
             {/* Compliance components */}
             <GoogleAnalytics />
             <CookieConsent />
 
             {/* Web Core Vitals: Performance monitoring script */}
             <script
-                nonce={nonce}
+                nonce={nonce as string | undefined}
                 dangerouslySetInnerHTML={{
                     __html: `
                         // Web Core Vitals: Enhanced performance monitoring

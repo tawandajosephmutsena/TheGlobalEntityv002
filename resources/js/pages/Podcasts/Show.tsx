@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import {
     ArrowLeft, Calendar, Clock, Play, Tag, User, Headphones, Video,
 } from 'lucide-react';
 import { PodcastPlayer } from '@/components/podcast/PodcastPlayer';
+import { usePodcastPlayer } from '@/contexts/PodcastPlayerContext';
 import { PodcastCard } from '@/components/podcast/PodcastCard';
 import { PodcastCategoryBadge } from '@/components/podcast/PodcastCategoryBadge';
 import { ShareButtons } from '@/components/podcast/ShareButtons';
@@ -55,8 +56,26 @@ interface Props {
 export default function PodcastShow({ podcast, related }: Props) {
     const { props } = usePage<SharedData>();
     const site = props.site;
+    const { playTrack, currentTrack, togglePlay } = usePodcastPlayer();
 
     const handlePlay = useCallback(() => {
+        // If this podcast is already loaded in the global player, just toggle
+        if (currentTrack?.src === podcast.media_full_url) {
+            togglePlay();
+            return;
+        }
+
+        // Launch in global persistent player
+        playTrack({
+            src: podcast.media_full_url,
+            title: podcast.title,
+            artist: podcast.author?.name,
+            thumbnail: podcast.thumbnail_url,
+            mediaType: podcast.media_type,
+            podcastId: podcast.id,
+            slug: podcast.slug,
+        });
+
         // Track play via API
         fetch(`/api/podcasts/${podcast.id}/play`, {
             method: 'POST',
@@ -65,7 +84,7 @@ export default function PodcastShow({ podcast, related }: Props) {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
             },
         }).catch(() => { /* silent fail */ });
-    }, [podcast.id]);
+    }, [podcast, currentTrack, playTrack, togglePlay]);
 
     const publishedDate = podcast.published_at
         ? new Date(podcast.published_at).toLocaleDateString('en-US', {

@@ -44,7 +44,7 @@ export default function MediaUpload({
     onSuccess,
     maxFiles = 20,
     maxFileSize = 200,
-    acceptedTypes = ['image/*', 'video/*', 'application/pdf'],
+    acceptedTypes = ['image/*', 'video/*', 'audio/*', 'application/pdf'],
     enableTagging = true,
     enableFolders = true
 }: Props) {
@@ -64,7 +64,8 @@ export default function MediaUpload({
         }
 
         // Define allowed extensions for each category
-        const videoExtensions = ['mp4', 'mov', 'webm', 'avi', 'mkv', 'wmv', 'flv', 'm4v', '3gp', 'mpeg', 'mpg', 'ogv', 'm4a'];
+        const videoExtensions = ['mp4', 'mov', 'webm', 'avi', 'mkv', 'wmv', 'flv', 'm4v', '3gp', 'mpeg', 'mpg', 'ogv'];
+        const audioExtensions = ['mp3', 'wav', 'ogg', 'aac', 'flac', 'm4a', 'wma', 'opus', 'webm'];
         const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'ico', 'avif', 'heic', 'heif'];
         const docExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'];
         
@@ -74,12 +75,18 @@ export default function MediaUpload({
         
         // Check which types are accepted
         const videoAccepted = acceptedTypes.some(t => t.includes('video'));
+        const audioAccepted = acceptedTypes.some(t => t.includes('audio'));
         const imageAccepted = acceptedTypes.some(t => t.includes('image'));
         const docAccepted = acceptedTypes.some(t => t.includes('pdf') || t.includes('application'));
         
         // Primary validation: Check by file extension (most reliable)
         if (videoAccepted && videoExtensions.includes(ext)) {
             console.log(`Validated by video extension: .${ext}`);
+            return null;
+        }
+        
+        if (audioAccepted && audioExtensions.includes(ext)) {
+            console.log(`Validated by audio extension: .${ext}`);
             return null;
         }
         

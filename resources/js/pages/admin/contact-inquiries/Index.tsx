@@ -4,6 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,8 +19,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link, router } from '@inertiajs/react';
-import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation } from 'lucide-react';
-import React, { useState } from 'react';
+import { MessageSquare, Eye, Trash2, Mail, Calendar, Download, MoreHorizontal, CheckCircle, Navigation, Archive, X, Search } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import { PaginatedData } from '@/types';
 import { cn } from '@/lib/utils';
 import DOMPurify from 'dompurify';
@@ -40,15 +48,90 @@ interface Props {
     stats: Stats;
     forms: { label: string; value: string }[];
     currentForm: string | null;
+    filters?: {
+        search: string;
+        status: string;
+        date_from: string;
+        date_to: string;
+    };
+    totalFiltered: number;
 }
 
-export default function ContactInquiriesIndex({ inquiries, stats, forms, currentForm }: Props) {
+export default function ContactInquiriesIndex({ inquiries, stats, forms, currentForm, filters, totalFiltered }: Props) {
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
+    const [selectAllFiltered, setSelectAllFiltered] = useState(false);
+
+    // Local filter state
+    const [search, setSearch] = useState(filters?.search || '');
+    const [statusFilter, setStatusFilter] = useState(filters?.status || 'all');
+    const [dateFrom, setDateFrom] = useState(filters?.date_from || '');
+    const [dateTo, setDateTo] = useState(filters?.date_to || '');
 
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Inquiries', href: '/admin/contact-inquiries' },
     ];
+
+    // Debounced search and filter updates
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            const currentFilters = {
+                search: filters?.search || '',
+                status: filters?.status || 'all',
+                date_from: filters?.date_from || '',
+                date_to: filters?.date_to || '',
+            };
+
+            if (
+                search !== currentFilters.search ||
+                statusFilter !== currentFilters.status ||
+                dateFrom !== currentFilters.date_from ||
+                dateTo !== currentFilters.date_to
+            ) {
+                applyFilters();
+            }
+        }, 300);
+        return () => clearTimeout(timeout);
+    }, [search, statusFilter, dateFrom, dateTo]);
+
+    const applyFilters = () => {
+        const query: Record<string, string> = {};
+        
+        if (currentForm) query.form_name = currentForm;
+        if (search) query.search = search;
+        if (statusFilter && statusFilter !== 'all') query.status = statusFilter;
+        if (dateFrom) query.date_from = dateFrom;
+        if (dateTo) query.date_to = dateTo;
+
+        router.get('/admin/contact-inquiries', query, {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+            onSuccess: () => {
+                setSelectedIds([]);
+                setSelectAllFiltered(false);
+            }
+        });
+    };
+
+    const clearFilters = () => {
+        setSearch('');
+        setStatusFilter('all');
+        setDateFrom('');
+        setDateTo('');
+        
+        router.get('/admin/contact-inquiries', currentForm ? { form_name: currentForm } : {}, {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+            onSuccess: () => {
+                setSelectedIds([]);
+                setSelectAllFiltered(false);
+            }
+        });
+    };
+
+    const hasActiveFilters = search || (statusFilter && statusFilter !== 'all') || dateFrom || dateTo;
 
     const handleDelete = (id: number) => {
         if (confirm('Are you sure you want to delete this inquiry?')) {
@@ -57,17 +140,30 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
     };
 
     const handleBulkAction = (action: string) => {
-        if (selectedIds.length === 0) return;
+        if (selectedIds.length === 0 && !selectAllFiltered) return;
         
         let confirmMessage = 'Are you sure you want to perform this action?';
-        if (action === 'delete') confirmMessage = 'Are you sure you want to delete the selected inquiries?';
+        if (action === 'delete') {
+            confirmMessage = selectAllFiltered 
+                ? `Are you sure you want to delete ALL ${totalFiltered} matching inquiries? This cannot be undone.` 
+                : 'Are you sure you want to delete the selected inquiries?';
+        }
 
         if (confirm(confirmMessage)) {
             router.post('/admin/contact-inquiries/bulk-action', {
-                ids: selectedIds,
+                ids: selectAllFiltered ? [] : selectedIds,
                 action: action,
+                select_all_filtered: selectAllFiltered,
+                form_name: currentForm,
+                search: filters?.search,
+                status_filter: filters?.status && filters.status !== 'all' ? filters.status : null,
+                date_from: filters?.date_from,
+                date_to: filters?.date_to,
             }, {
-                onSuccess: () => setSelectedIds([]) // Clear selection on success
+                onSuccess: () => {
+                    setSelectedIds([]);
+                    setSelectAllFiltered(false);
+                }
             });
         }
     };
@@ -75,45 +171,44 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
     const toggleSelectAll = () => {
         if (selectedIds.length === inquiries.data.length && inquiries.data.length > 0) {
             setSelectedIds([]);
+            setSelectAllFiltered(false);
         } else {
             setSelectedIds(inquiries.data.map(i => i.id));
         }
     };
 
     const toggleSelect = (id: number) => {
-        setSelectedIds(prev => 
-            prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-        );
+        setSelectedIds(prev => {
+            const newSelection = prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id];
+            if (newSelection.length < inquiries.data.length) {
+                setSelectAllFiltered(false);
+            }
+            return newSelection;
+        });
     };
 
     const exportCSV = () => {
-        const rowsToExport = inquiries.data.filter(i => selectedIds.includes(i.id));
-        if (rowsToExport.length === 0) return;
+        const params = new URLSearchParams();
+        if (currentForm) params.append('form_name', currentForm);
+        if (filters?.search) params.append('search', filters.search);
+        if (filters?.status && filters.status !== 'all') params.append('status', filters.status);
+        if (filters?.date_from) params.append('date_from', filters.date_from);
+        if (filters?.date_to) params.append('date_to', filters.date_to);
+        
+        if (!selectAllFiltered) {
+            if (selectedIds.length === 0) return;
+            params.append('ids', selectedIds.join(','));
+        }
 
-        const headers = ['ID', 'Name', 'Email', 'Subject', 'Status', 'Date'];
-        const csvRows = [
-            headers.join(','), // header row
-            ...rowsToExport.map(row => [
-                row.id,
-                `"${row.name.replace(/"/g, '""')}"`,
-                `"${row.email.replace(/"/g, '""')}"`,
-                `"${row.subject.replace(/"/g, '""')}"`,
-                row.status,
-                new Date(row.created_at).toLocaleDateString()
-            ].join(','))
-        ];
-
-        const csvString = csvRows.join('\n');
-        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute('download', 'inquiries_export.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        window.location.href = `/admin/contact-inquiries/export?${params.toString()}`;
     };
 
     const exportPDF = () => {
+        if (selectAllFiltered) {
+            alert("PDF export is currently only supported for the current page selection. Please use CSV to export all matching results.");
+            return;
+        }
+
         const rowsToExport = inquiries.data.filter(i => selectedIds.includes(i.id));
         if (rowsToExport.length === 0) return;
 
@@ -192,6 +287,55 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                     )}
                 </div>
 
+                {/* Filter Bar */}
+                <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            type="search"
+                            placeholder="Search name, email, subject..."
+                            className="pl-9"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </div>
+                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                        <SelectTrigger className="w-full sm:w-[150px]">
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">All Statuses</SelectItem>
+                            <SelectItem value="new">New</SelectItem>
+                            <SelectItem value="read">Read</SelectItem>
+                            <SelectItem value="replied">Replied</SelectItem>
+                            <SelectItem value="archived">Archived</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <Input
+                            type="date"
+                            value={dateFrom}
+                            onChange={(e) => setDateFrom(e.target.value)}
+                            className="w-full sm:w-[140px]"
+                            title="Date From"
+                        />
+                        <span className="text-muted-foreground">-</span>
+                        <Input
+                            type="date"
+                            value={dateTo}
+                            onChange={(e) => setDateTo(e.target.value)}
+                            className="w-full sm:w-[140px]"
+                            title="Date To"
+                        />
+                    </div>
+                    {hasActiveFilters && (
+                        <Button variant="ghost" onClick={clearFilters} className="px-3">
+                            <X className="h-4 w-4 mr-2" />
+                            Clear
+                        </Button>
+                    )}
+                </div>
+
                 {/* Stats Cards */}
                 <div className="grid gap-4 md:grid-cols-3">
                     <Card>
@@ -232,11 +376,32 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                     </Card>
                 </div>
 
+                {/* Select All Filtered Banner */}
+                {selectedIds.length === inquiries.data.length && inquiries.data.length > 0 && totalFiltered > inquiries.data.length && (
+                    <div className="bg-primary/10 border border-primary/20 rounded-md p-3 mb-4 flex items-center justify-center text-sm">
+                        {selectAllFiltered ? (
+                            <span>
+                                All <strong>{totalFiltered}</strong> matching inquiries are selected. 
+                                <button onClick={() => setSelectAllFiltered(false)} className="ml-2 px-2 py-0.5 text-primary hover:underline font-medium">
+                                    Clear selection
+                                </button>
+                            </span>
+                        ) : (
+                            <span>
+                                All {selectedIds.length} inquiries on this page are selected.
+                                <button onClick={() => setSelectAllFiltered(true)} className="ml-2 px-2 py-0.5 text-primary hover:underline font-medium">
+                                    Select all {totalFiltered} matching inquiries
+                                </button>
+                            </span>
+                        )}
+                    </div>
+                )}
+
                 {/* Actions Toolbar */}
                 {selectedIds.length > 0 && (
                     <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-lg border border-border">
                         <span className="text-sm font-medium px-2">
-                            {selectedIds.length} selected
+                            {selectAllFiltered ? totalFiltered : selectedIds.length} selected
                         </span>
                         
                         <DropdownMenu>
@@ -252,6 +417,9 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => handleBulkAction('mark_replied')}>
                                     <Navigation className="size-4 mr-2" /> Mark as Replied
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleBulkAction('archive')}>
+                                    <Archive className="size-4 mr-2" /> Archive Selected
                                 </DropdownMenuItem>
                                 <DropdownMenuItem 
                                     onClick={() => handleBulkAction('delete')}
@@ -350,8 +518,13 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                                         <tr>
                                             <td colSpan={6} className="p-8 text-center text-muted-foreground">
                                                 <div className="flex flex-col items-center gap-2">
-                                                    <MessageSquare className="size-8 opacity-20" />
-                                                    <p>No inquiries found.</p>
+                                                    <Search className="size-8 opacity-20" />
+                                                    <p>No inquiries found matching your filters.</p>
+                                                    {hasActiveFilters && (
+                                                        <Button variant="link" onClick={clearFilters}>
+                                                            Clear all filters
+                                                        </Button>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>
@@ -365,18 +538,31 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                 {/* Pagination */}
                 {inquiries.links.length > 3 && (
                     <div className="flex justify-center gap-1">
-                        {inquiries.links.map((link, i) => (
-                            <Link
-                                key={i}
-                                href={link.url || '#'}
-                                className={cn(
-                                    "px-4 py-2 text-sm rounded-md transition-colors",
-                                    link.active ? "bg-agency-accent text-agency-primary font-bold" : "bg-muted hover:bg-muted/80 text-muted-foreground",
-                                    !link.url && "opacity-50 cursor-not-allowed"
-                                )}
-                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
-                            />
-                        ))}
+                        {inquiries.links.map((link, i) => {
+                            // Preserve active filters in pagination links
+                            let url = link.url;
+                            if (url && hasActiveFilters) {
+                                const urlObj = new URL(url, window.location.origin);
+                                if (search) urlObj.searchParams.set('search', search);
+                                if (statusFilter && statusFilter !== 'all') urlObj.searchParams.set('status', statusFilter);
+                                if (dateFrom) urlObj.searchParams.set('date_from', dateFrom);
+                                if (dateTo) urlObj.searchParams.set('date_to', dateTo);
+                                url = urlObj.toString().replace(window.location.origin, '');
+                            }
+
+                            return (
+                                <Link
+                                    key={i}
+                                    href={url || '#'}
+                                    className={cn(
+                                        "px-4 py-2 text-sm rounded-md transition-colors",
+                                        link.active ? "bg-agency-accent text-agency-primary font-bold" : "bg-muted hover:bg-muted/80 text-muted-foreground",
+                                        !link.url && "opacity-50 cursor-not-allowed"
+                                    )}
+                                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
+                                />
+                            );
+                        })}
                     </div>
                 )}
             </div>

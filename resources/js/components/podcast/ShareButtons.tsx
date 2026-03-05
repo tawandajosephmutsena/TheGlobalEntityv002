@@ -72,6 +72,8 @@ export function ShareButtons({ url, title, className, variant = 'default' }: Sha
                                     href={link.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title={`Share on ${link.name}`}
+                                    aria-label={`Share on ${link.name}`}
                                     className={cn(
                                         'p-2 rounded-lg text-muted-foreground transition-all duration-200',
                                         link.color

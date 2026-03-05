@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
+import ReactPlayer from 'react-player';
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Maximize2, Minimize2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { WaveformVisualizer } from './WaveformVisualizer';
@@ -28,7 +29,7 @@ export function PodcastPlayer({
     onPlay,
     className,
 }: PodcastPlayerProps) {
-    const mediaRef = useRef<HTMLAudioElement | HTMLVideoElement>(null);
+    const playerRef = useRef<HTMLVideoElement | null>(null);
     const progressRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -41,86 +42,56 @@ export function PodcastPlayer({
 
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
-    useEffect(() => {
-        const media = mediaRef.current;
-        if (!media) return;
-
-        const handleTimeUpdate = () => setCurrentTime(media.currentTime);
-        const handleDurationChange = () => {
-            if (media.duration && isFinite(media.duration)) {
-                setDuration(media.duration);
+    const togglePlay = useCallback(() => {
+        setIsPlaying(prev => {
+            const next = !prev;
+            if (next && !hasPlayed) {
+                setHasPlayed(true);
+                onPlay?.();
             }
-        };
-        const handleEnded = () => setIsPlaying(false);
-        const handlePlayEvent = () => setIsPlaying(true);
-        const handlePauseEvent = () => setIsPlaying(false);
+            return next;
+        });
+    }, [hasPlayed, onPlay]);
 
-        media.addEventListener('timeupdate', handleTimeUpdate);
-        media.addEventListener('durationchange', handleDurationChange);
-        media.addEventListener('loadedmetadata', handleDurationChange);
-        media.addEventListener('ended', handleEnded);
-        media.addEventListener('play', handlePlayEvent);
-        media.addEventListener('pause', handlePauseEvent);
-
-        return () => {
-            media.removeEventListener('timeupdate', handleTimeUpdate);
-            media.removeEventListener('durationchange', handleDurationChange);
-            media.removeEventListener('loadedmetadata', handleDurationChange);
-            media.removeEventListener('ended', handleEnded);
-            media.removeEventListener('play', handlePlayEvent);
-            media.removeEventListener('pause', handlePauseEvent);
-        };
+    const handleTimeUpdate = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
+        setCurrentTime(e.currentTarget.currentTime);
     }, []);
 
-    const togglePlay = useCallback(async () => {
-        const media = mediaRef.current;
-        if (!media) return;
-
-        try {
-            if (isPlaying) {
-                media.pause();
-            } else {
-                await media.play();
-                if (!hasPlayed) {
-                    setHasPlayed(true);
-                    onPlay?.();
-                }
-            }
-        } catch (error) {
-            console.error('Playback failed:', error);
-            // Fallback for browsers blocking autoplay or unexpected errors
-            setIsPlaying(false);
+    const handleDurationChange = useCallback((e: React.SyntheticEvent<HTMLVideoElement>) => {
+        const dur = e.currentTarget.duration;
+        if (dur && isFinite(dur)) {
+            setDuration(dur);
         }
-    }, [isPlaying, hasPlayed, onPlay]);
+    }, []);
+
+    const handleEnded = useCallback(() => {
+        setIsPlaying(false);
+    }, []);
 
     const skip = useCallback((seconds: number) => {
-        const media = mediaRef.current;
-        if (!media) return;
-        media.currentTime = Math.max(0, Math.min(media.currentTime + seconds, duration));
+        const el = playerRef.current;
+        if (!el) return;
+        const newTime = Math.max(0, Math.min(el.currentTime + seconds, duration));
+        el.currentTime = newTime;
+        setCurrentTime(newTime);
     }, [duration]);
 
     const handleProgressClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-        const media = mediaRef.current;
         const progressBar = progressRef.current;
-        if (!media || !progressBar) return;
+        const el = playerRef.current;
+        if (!el || !progressBar) return;
 
         const rect = progressBar.getBoundingClientRect();
         const pos = (e.clientX - rect.left) / rect.width;
-        media.currentTime = pos * duration;
+        el.currentTime = pos * duration;
     }, [duration]);
 
     const toggleMute = useCallback(() => {
-        const media = mediaRef.current;
-        if (!media) return;
-        media.muted = !isMuted;
-        setIsMuted(!isMuted);
-    }, [isMuted]);
+        setIsMuted(prev => !prev);
+    }, []);
 
     const handleVolumeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const media = mediaRef.current;
-        if (!media) return;
         const vol = parseFloat(e.target.value);
-        media.volume = vol;
         setVolume(vol);
         if (vol === 0) setIsMuted(true);
         else if (isMuted) setIsMuted(false);
@@ -130,9 +101,6 @@ export function PodcastPlayer({
         const rates = [0.5, 0.75, 1, 1.25, 1.5, 2];
         const currentIndex = rates.indexOf(playbackRate);
         const nextRate = rates[(currentIndex + 1) % rates.length];
-        if (mediaRef.current) {
-            mediaRef.current.playbackRate = nextRate;
-        }
         setPlaybackRate(nextRate);
     }, [playbackRate]);
 
@@ -145,23 +113,31 @@ export function PodcastPlayer({
         return `${m}:${s.toString().padStart(2, '0')}`;
     };
 
+    // Note: ReactPlayer handles both local files and external URLs (YouTube, Vimeo) automatically
+
     return (
         <div className={cn('rounded-2xl bg-card border border-border overflow-hidden', className)}>
-            {/* Video element (hidden for audio) */}
+            {/* Video display area */}
             {mediaType === 'video' ? (
                 <div className={cn('relative bg-black', isFullscreen ? 'fixed inset-0 z-50' : 'aspect-video')}>
-                    <video
-                        ref={mediaRef as React.RefObject<HTMLVideoElement>}
+                    <ReactPlayer
+                        ref={playerRef}
                         src={src}
-                        className="w-full h-full object-contain"
+                        playing={isPlaying}
+                        volume={isMuted ? 0 : volume}
+                        playbackRate={playbackRate}
+                        onTimeUpdate={handleTimeUpdate}
+                        onDurationChange={handleDurationChange}
+                        onEnded={handleEnded as unknown as React.ReactEventHandler<HTMLVideoElement>}
+                        width="100%"
+                        height="100%"
+                        style={{ position: 'absolute', top: 0, left: 0 }}
                         playsInline
-                        preload="metadata"
-                        controls={false}
                     />
                     {!isPlaying && (
                         <button
                             onClick={togglePlay}
-                            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40"
+                            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
                             aria-label="Play video"
                         >
                             <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
@@ -171,14 +147,27 @@ export function PodcastPlayer({
                     )}
                     <button
                         onClick={() => setIsFullscreen(!isFullscreen)}
-                        className="absolute top-4 right-4 p-2 rounded-lg bg-black/50 text-white hover:bg-black/70 transition-colors"
+                        className="absolute top-4 right-4 p-2 rounded-lg bg-black/50 text-white hover:bg-black/70 transition-colors z-10"
                         aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
                     >
                         {isFullscreen ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
                     </button>
                 </div>
             ) : (
-                <audio ref={mediaRef as React.RefObject<HTMLAudioElement>} src={src} preload="metadata" />
+                /* Hidden audio player — ReactPlayer handles both local files and external URLs */
+                <ReactPlayer
+                    ref={playerRef}
+                    src={src}
+                    playing={isPlaying}
+                    volume={isMuted ? 0 : volume}
+                    playbackRate={playbackRate}
+                    onTimeUpdate={handleTimeUpdate}
+                    onDurationChange={handleDurationChange}
+                    onEnded={handleEnded as unknown as React.ReactEventHandler<HTMLVideoElement>}
+                    width="0"
+                    height="0"
+                    style={{ display: 'none' }}
+                />
             )}
 
             {/* Player controls */}
@@ -280,7 +269,7 @@ export function PodcastPlayer({
                                         onClick={toggleMute} 
                                         className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-1"
                                         aria-label={isMuted ? 'Unmute' : 'Mute'}
-                                        title="Toggle Mite"
+                                        title="Toggle Mute"
                                     >
                                         {isMuted || volume === 0 ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
                                     </button>

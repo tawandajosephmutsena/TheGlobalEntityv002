@@ -22,6 +22,7 @@ import { initPerformanceMonitoring } from './lib/performanceMonitor';
 import { registerServiceWorker, showUpdateAvailableNotification } from './lib/serviceWorker';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { registerBlocks } from './lib/registerBlocks';
+import { PodcastPlayerProvider } from '@/contexts/PodcastPlayerContext';
 
 // Initialize GSAP and animation system
 import { gsap } from 'gsap';
@@ -115,9 +116,11 @@ createInertiaApp({
 
         root.render(
             <ErrorBoundary>
-                <StrictMode>
-                    <App {...props} />
-                </StrictMode>
+                <PodcastPlayerProvider>
+                    <StrictMode>
+                        <App {...props} />
+                    </StrictMode>
+                </PodcastPlayerProvider>
             </ErrorBoundary>,
         );
 

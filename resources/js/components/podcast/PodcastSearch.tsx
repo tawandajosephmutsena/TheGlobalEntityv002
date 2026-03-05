@@ -101,6 +101,8 @@ export function PodcastSearch({ className, placeholder = 'Search podcasts...' }:
                     <button
                         onClick={() => { setQuery(''); setResults([]); setIsOpen(false); }}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        title="Clear search"
+                        aria-label="Clear search"
                     >
                         <X className="size-4" />
                     </button>
