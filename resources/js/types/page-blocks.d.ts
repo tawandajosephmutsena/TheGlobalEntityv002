@@ -278,7 +278,8 @@ export type PageBlock =
     | ConnectBlock
     | PodcastGridBlock
     | PodcastFeaturedBlock
-    | PodcastPlayerBlock;
+    | PodcastPlayerBlock
+    | CommunityReviewBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -578,6 +579,20 @@ export interface PodcastPlayerBlock extends BaseBlock {
         showRelated?: boolean;
         relatedLimit?: number;
         autoplay?: boolean;
+    };
+}
+
+export interface CommunityReviewBlock extends BaseBlock {
+    type: 'community_review';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        reviewableType?: string;
+        reviewableId?: number;
+        showRatings?: boolean;
+        limit?: number;
+        layout?: 'list' | 'grid' | 'carousel';
     };
 }
 

@@ -15,6 +15,13 @@ class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_EDITOR = 'editor';
+    public const ROLE_VIEWER = 'viewer';
+    public const ROLE_SUBSCRIBER = 'subscriber';
+    public const ROLE_REVIEWER = 'reviewer';
+    public const ROLE_FESTIVAL_ORGANIZER = 'festival_organizer';
 
     /**
      * The attributes that are mass assignable.

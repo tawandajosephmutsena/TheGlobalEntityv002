@@ -1,7 +1,7 @@
 import React from 'react';
-import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock } from '@/types/page-blocks';
+import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock, CommunityReviewBlock } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles, Mic, Headphones, PlayCircle } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -25,6 +25,9 @@ const PodcastFeaturedBlockComponent = React.lazy(() => import('@/components/Bloc
 const PodcastFeaturedEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastFeaturedEditor'));
 const PodcastPlayerBlockComponent = React.lazy(() => import('@/components/Blocks/PodcastPlayerBlock'));
 const PodcastPlayerEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastPlayerEditor'));
+
+const CommunityReviewBlock = React.lazy(() => import('@/components/Blocks/CommunityReviewBlock'));
+const CommunityReviewEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/CommunityReviewEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -187,6 +190,24 @@ export function registerBlocks() {
         editor: (props: { content: PodcastPlayerBlock['content']; onUpdate: (updates: Partial<PodcastPlayerBlock['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <PodcastPlayerEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'community_review',
+        label: 'Community Reviews',
+        icon: <Star className="h-4 w-4" />,
+        desc: 'Display community feedback and ratings with dreamy watercolor styling.',
+        category: 'Travel',
+        renderer: (props: CommunityReviewBlock['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <CommunityReviewBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: CommunityReviewBlock['content']; onUpdate: (updates: Partial<CommunityReviewBlock['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <CommunityReviewEditor {...props} />
             </React.Suspense>
         )
     });
