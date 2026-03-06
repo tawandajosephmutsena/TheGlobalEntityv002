@@ -186,7 +186,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         });
     };
 
-    const exportCSV = () => {
+    const exportCSV = (exportOnlySelected = false) => {
         const params = new URLSearchParams();
         if (currentForm) params.append('form_name', currentForm);
         if (filters?.search) params.append('search', filters.search);
@@ -194,15 +194,14 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         if (filters?.date_from) params.append('date_from', filters.date_from);
         if (filters?.date_to) params.append('date_to', filters.date_to);
         
-        if (!selectAllFiltered) {
-            if (selectedIds.length === 0) return;
+        if (exportOnlySelected && !selectAllFiltered && selectedIds.length > 0) {
             params.append('ids', selectedIds.join(','));
         }
 
         window.location.href = `/admin/contact-inquiries/export?${params.toString()}`;
     };
 
-    const exportPDF = () => {
+    const exportPDF = (exportOnlySelected = false) => {
         const params = new URLSearchParams();
         if (currentForm) params.append('form_name', currentForm);
         if (filters?.search) params.append('search', filters.search);
@@ -210,8 +209,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         if (filters?.date_from) params.append('date_from', filters.date_from);
         if (filters?.date_to) params.append('date_to', filters.date_to);
         
-        if (!selectAllFiltered) {
-            if (selectedIds.length === 0) return;
+        if (exportOnlySelected && !selectAllFiltered && selectedIds.length > 0) {
             params.append('ids', selectedIds.join(','));
         }
 
@@ -232,12 +230,22 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         <AdminLayout title="Contact Inquiries" breadcrumbs={breadcrumbs}>
             <ErrorBoundary>
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Contact Inquiries</h1>
                         <p className="text-muted-foreground">
                             Manage and respond to messages from your website visitors.
                         </p>
+                    </div>
+                    <div className="flex gap-2 w-full sm:w-auto">
+                        <Button variant="outline" onClick={() => exportCSV(false)}>
+                            <Download className="size-4 mr-2" />
+                            Export CSV
+                        </Button>
+                        <Button variant="outline" onClick={() => exportPDF(false)}>
+                            <Download className="size-4 mr-2" />
+                            Export PDF
+                        </Button>
                     </div>
                 </div>
 
@@ -430,11 +438,11 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
 
                         <div className="h-4 w-px bg-border mx-1" />
 
-                        <Button variant="outline" size="sm" onClick={exportCSV}>
+                        <Button variant="outline" size="sm" onClick={() => exportCSV(true)}>
                             <Download className="size-4 mr-2" />
                             CSV
                         </Button>
-                        <Button variant="outline" size="sm" onClick={exportPDF}>
+                        <Button variant="outline" size="sm" onClick={() => exportPDF(true)}>
                             <Download className="size-4 mr-2" />
                             PDF
                         </Button>
