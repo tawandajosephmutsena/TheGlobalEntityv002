@@ -54,15 +54,17 @@ class ContactInquiryController extends Controller
     {
         $currentForm = $request->query('form_name');
 
-        // Extract available forms by fetching distinct form_name
-        $forms = ContactInquiry::select('form_name')
-            ->distinct()
+        // Extract available forms by fetching distinct form_name with their counts
+        $forms = ContactInquiry::selectRaw("form_name, COUNT(*) as total_count, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_count")
             ->whereNotNull('form_name')
-            ->pluck('form_name')
-            ->map(function ($formName) {
+            ->groupBy('form_name')
+            ->get()
+            ->map(function ($form) {
                 return [
-                    'label' => $formName,
-                    'value' => $formName
+                    'label' => $form->form_name,
+                    'value' => $form->form_name,
+                    'count' => (int) $form->total_count,
+                    'new_count' => (int) $form->new_count,
                 ];
             })
             ->sortBy('label')

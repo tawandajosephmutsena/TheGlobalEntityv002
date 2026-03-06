@@ -44,7 +44,7 @@ interface Stats {
 interface Props {
     inquiries: PaginatedData<ContactInquiry>;
     stats: Stats;
-    forms: { label: string; value: string }[];
+    forms: { label: string; value: string; count?: number; new_count?: number }[];
     currentForm: string | null;
     filters?: {
         search: string;
@@ -261,13 +261,23 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                                         key={form.value}
                                         onClick={() => router.get(`/admin/contact-inquiries?form_name=${encodeURIComponent(form.value)}`, {}, { preserveState: true })}
                                         className={cn(
-                                            "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+                                            "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
                                             currentForm === form.value 
                                                 ? "bg-background text-foreground shadow-sm" 
                                                 : "hover:bg-background/50 hover:text-foreground"
                                         )}
                                     >
-                                        {form.label}
+                                        <span>{form.label}</span>
+                                        {form.count !== undefined && (
+                                            <span className={cn(
+                                                "px-2 py-0.5 rounded-full text-xs font-bold",
+                                                form.new_count && form.new_count > 0 
+                                                    ? "bg-destructive text-destructive-foreground" 
+                                                    : (currentForm === form.value ? "bg-muted text-muted-foreground" : "bg-background/50 text-muted-foreground")
+                                            )}>
+                                                {form.new_count && form.new_count > 0 ? `${form.new_count} new` : form.count}
+                                            </span>
+                                        )}
                                     </button>
                                 ))}
                             </div>

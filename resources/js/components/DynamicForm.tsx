@@ -57,6 +57,10 @@ export default function DynamicForm({
     if (allowMultipleSubmissions !== undefined) {
         initialData.allow_multiple_submissions = String(allowMultipleSubmissions);
     }
+    if (typeof window !== 'undefined') {
+        initialData.page_title = document.title;
+        initialData.page_url = window.location.href;
+    }
     fields.forEach(field => {
         initialData[field.name || field.label.toLowerCase().replace(/\s+/g, '_')] = '';
     });
