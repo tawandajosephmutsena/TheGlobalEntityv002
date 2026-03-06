@@ -6,6 +6,7 @@ use App\Traits\HasVersions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Festival extends Model
@@ -21,7 +22,16 @@ class Festival extends Model
         'social_tags',
         'is_published',
         'author_id',
+        'category_id',
     ];
+
+    /**
+     * Get the category that the festival belongs to.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     protected $casts = [
         'location' => 'array',
@@ -45,5 +55,13 @@ class Festival extends Model
     public function reviews(): MorphMany
     {
         return $this->morphMany(Review::class, 'reviewable');
+    }
+
+    /**
+     * Get the activities for the festival.
+     */
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class);
     }
 }

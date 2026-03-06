@@ -14,8 +14,13 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'type',
+        'type', // insight, service, portfolio, festival
     ];
+
+    public function festivals(): HasMany
+    {
+        return $this->hasMany(Festival::class);
+    }
 
     public function insights(): HasMany
     {

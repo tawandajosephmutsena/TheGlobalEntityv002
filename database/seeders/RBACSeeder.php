@@ -35,6 +35,11 @@ class RBACSeeder extends Seeder
             'analytics.view' => 'Can view analytics dashboard',
             'settings.manage' => 'Can manage site settings',
             'media.manage' => 'Can manage media library',
+
+            // Global Entity (TGE)
+            'festivals.view' => 'Can view festivals',
+            'festivals.manage' => 'Can manage festivals',
+            'reviews.manage' => 'Can manage reviews',
         ];
 
         $permissionModels = [];

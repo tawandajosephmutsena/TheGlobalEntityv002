@@ -247,7 +247,53 @@ export interface Category {
     name: string;
     slug: string;
     description: string | null;
-    type: 'insight' | 'service' | 'portfolio';
+    type: 'insight' | 'service' | 'portfolio' | 'festival';
+}
+
+export interface Review {
+    id: number;
+    user_id: number;
+    rating: number;
+    comment: string;
+    is_published: boolean;
+    created_at: string;
+    updated_at: string;
+    user?: User;
+}
+
+export interface Activity {
+    id: number;
+    name: string;
+    slug: string;
+    description: string;
+    category: string;
+    start_time: string;
+    end_time: string;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface Festival {
+    id: number;
+    name: string;
+    slug: string;
+    location: {
+        address?: string;
+        lat?: number;
+        lng?: number;
+    } | string | null;
+    start_date: string;
+    end_date: string | null;
+    social_tags: string[] | null;
+    is_published: boolean;
+    author_id: number | null;
+    category_id: number | null;
+    created_at: string;
+    updated_at: string;
+    author?: User;
+    category?: Category;
+    reviews?: Review[];
+    activities?: Activity[];
 }
 
 

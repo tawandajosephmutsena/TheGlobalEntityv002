@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Festival;
 use App\Models\User;
+use App\Models\Category;
 use App\Http\Requests\Admin\FestivalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -44,6 +45,7 @@ class FestivalController extends Controller
         return Inertia::render('admin/festivals/Index', [
             'festivals' => $festivals,
             'filters' => $request->only(['search', 'status']),
+            'categories' => Category::where('type', 'festival')->get(['id', 'name']),
             'stats' => [
                 'total' => Festival::count(),
                 'published' => Festival::where('is_published', true)->count(),
@@ -57,9 +59,11 @@ class FestivalController extends Controller
     public function create(): Response
     {
         $authors = User::whereIn('role', ['admin', 'editor'])->get(['id', 'name']);
+        $categories = Category::where('type', 'festival')->get(['id', 'name']);
 
         return Inertia::render('admin/festivals/Create', [
             'authors' => $authors,
+            'categories' => $categories,
         ]);
     }
 
@@ -95,10 +99,12 @@ class FestivalController extends Controller
     {
         $festival->load(['author']);
         $authors = User::whereIn('role', ['admin', 'editor'])->get(['id', 'name']);
+        $categories = Category::where('type', 'festival')->get(['id', 'name']);
 
         return Inertia::render('admin/festivals/Edit', [
             'festival' => $festival,
             'authors' => $authors,
+            'categories' => $categories,
         ]);
     }
 

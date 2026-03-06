@@ -40,6 +40,7 @@ class CategoryController extends Controller
                 'insights' => Category::where('type', 'insight')->count(),
                 'services' => Category::where('type', 'service')->count(),
                 'portfolio' => Category::where('type', 'portfolio')->count(),
+                'festivals' => Category::where('type', 'festival')->count(),
             ],
         ]);
     }
@@ -53,7 +54,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:categories,slug',
             'description' => 'nullable|string',
-            'type' => 'required|in:insight,service,portfolio',
+            'type' => 'required|in:insight,service,portfolio,festival',
         ]);
 
         if (empty($validated['slug'])) {
@@ -74,7 +75,7 @@ class CategoryController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
             'description' => 'nullable|string',
-            'type' => 'required|in:insight,service,portfolio',
+            'type' => 'required|in:insight,service,portfolio,festival',
         ]);
 
         $category->update($validated);
@@ -90,7 +91,8 @@ class CategoryController extends Controller
         // Check if category has items
         $hasItems = $category->insights()->exists() || 
                     $category->services()->exists() || 
-                    $category->portfolioItems()->exists();
+                    $category->portfolioItems()->exists() ||
+                    $category->festivals()->exists();
 
         if ($hasItems) {
             return back()->with('error', 'Cannot delete category that has items assigned to it.');

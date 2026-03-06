@@ -108,6 +108,12 @@ class AnalyticsController extends Controller
             ->distinct('session_id')
             ->count();
 
+        // 8. Festival Stats
+        $totalFestivals = \App\Models\Festival::count();
+        $upcomingFestivals = \App\Models\Festival::where('start_date', '>', now())->count();
+        $totalReviews = \App\Models\Review::count();
+        $pendingReviews = \App\Models\Review::where('status', 'pending')->count();
+
         return Inertia::render('admin/Analytics', [
             'chartData' => $chartData,
             'topPages' => $topPages,
@@ -118,6 +124,12 @@ class AnalyticsController extends Controller
             'activeNow' => $activeNow,
             'totalVisits' => Visit::excludeBots()->count(),
             'uniqueVisitors' => Visit::excludeBots()->distinct('session_id')->count(),
+            'festivalStats' => [
+                'total' => $totalFestivals,
+                'upcoming' => $upcomingFestivals,
+                'reviews' => $totalReviews, // Match Analytics.tsx expectations
+                'pending' => $pendingReviews,
+            ],
         ]);
     }
 }
