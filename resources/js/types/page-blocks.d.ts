@@ -280,7 +280,13 @@ export type PageBlock =
     | PodcastFeaturedBlock
     | PodcastPlayerBlock
     | GlassmorphismPricingBlock
-    | NewsletterSignupBlock;
+    | NewsletterSignupBlock
+    | EcosystemContentBlock
+    | EnterprisePricingBlock
+    | FaqSectionBlock
+    | AiFeaturesBlock
+    | StackingCardsBlock
+    | ProductCardStackBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -614,5 +620,91 @@ export interface NewsletterSignupBlock extends BaseBlock {
         successDescription?: string;
         trustIndicatorNumber?: string;
         trustIndicatorText?: string;
+    };
+}
+
+export interface EcosystemContentBlock extends BaseBlock {
+    type: 'ecosystem_content';
+    content: {
+        heading?: string;
+        imageDarkSrc?: string;
+        imageLightSrc?: string;
+        imageAlt?: string;
+        description1?: string;
+        description2?: string;
+        quoteText?: string;
+        quoteAuthor?: string;
+    };
+}
+
+export interface EnterprisePricingBlock extends BaseBlock {
+    type: 'enterprise_pricing';
+    content: {
+        heading?: string;
+        planName?: string;
+        planDescription?: string;
+        priceAmount?: string;
+        priceCurrency?: string;
+        buttonText?: string;
+        buttonLink?: string;
+        featuresText?: string;
+        features?: Array<{ text: string }>;
+        trustedText?: string;
+    };
+}
+
+export interface FaqSectionBlock extends BaseBlock {
+    type: 'faq_section';
+    content: {
+        heading?: string;
+        description?: string;
+        faqs?: Array<{
+            id: string;
+            icon: string;
+            question: string;
+            answer: string;
+        }>;
+    };
+}
+
+export interface AiFeaturesBlock extends BaseBlock {
+    type: 'ai_features';
+    content: {
+        heading?: string;
+        description?: string;
+        features?: Array<{
+            id: string;
+            icon: string;
+            title: string;
+            description: string;
+            imageSrc: string;
+        }>;
+    };
+}
+
+export interface StackingCardsBlock extends BaseBlock {
+    type: 'stacking_cards';
+    content: {
+        scrollText?: string;
+        footerText?: string;
+        cards?: Array<{
+            bgColor: string;
+            title: string;
+            description: string;
+            imageSrc: string;
+        }>;
+    };
+}
+
+export interface ProductCardStackBlock extends BaseBlock {
+    type: 'product_card_stack';
+    content: {
+        cards?: Array<{
+            id: string;
+            title: string;
+            subtitle: string;
+            imageSrc: string;
+            specs?: Array<{ label: string; value: string }>;
+        }>;
     };
 }

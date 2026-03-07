@@ -1,7 +1,11 @@
 import React from 'react';
-import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock } from '@/types/page-blocks';
+import type { 
+    PodcastGridBlock, 
+    PodcastFeaturedBlock, 
+    PodcastPlayerBlock,
+} from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles, Mic, Headphones, PlayCircle, Mail } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle, Mail, HelpCircle, Layers } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -32,6 +36,24 @@ const GlassmorphismPricingEditor = React.lazy(() => import('@/components/admin/P
 const NewsletterSignupBlock = React.lazy(() => import('@/components/Blocks/NewsletterSignupBlock'));
 const NewsletterSignupEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/NewsletterSignupEditor'));
 
+const EcosystemContentBlockComponent = React.lazy(() => import('@/components/Blocks/EcosystemContentBlock'));
+const EcosystemContentBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/EcosystemContentBlockEditor'));
+
+const EnterprisePricingBlockComponent = React.lazy(() => import('@/components/Blocks/EnterprisePricingBlock'));
+const EnterprisePricingBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/EnterprisePricingBlockEditor'));
+
+const FaqSectionBlockComponent = React.lazy(() => import('@/components/Blocks/FaqSectionBlock'));
+const FaqSectionBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FaqSectionBlockEditor'));
+
+const AiFeaturesBlockComponent = React.lazy(() => import('@/components/Blocks/AiFeaturesBlock'));
+const AiFeaturesBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/AiFeaturesBlockEditor'));
+
+const StackingCardsBlockComponent = React.lazy(() => import('@/components/Blocks/StackingCardsBlock'));
+const StackingCardsBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/StackingCardsBlockEditor'));
+
+const ProductCardStackBlockComponent = React.lazy(() => import('@/components/Blocks/ProductCardStackBlock'));
+const ProductCardStackBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ProductCardStackBlockEditor'));
+
 export function registerBlocks() {
     blockRegistry.register({
         type: 'scroll_animation',
@@ -44,7 +66,7 @@ export function registerBlocks() {
                 <ScrollAnimationBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: Record<string, unknown>) => (
+        editor: (props: { block: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ScrollAnimationEditor {...props} />
             </React.Suspense>
@@ -62,7 +84,7 @@ export function registerBlocks() {
                 <CarouselBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: Record<string, unknown>) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <CarouselEditor {...props} />
             </React.Suspense>
@@ -80,7 +102,7 @@ export function registerBlocks() {
                 <KimiHeroSection {...props} />
             </React.Suspense>
         ),
-        editor: (props: Record<string, unknown>) => (
+        editor: (props: { block: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <KimiHeroEditor {...props} />
             </React.Suspense>
@@ -93,12 +115,12 @@ export function registerBlocks() {
         icon: <Sparkles className="h-4 w-4" />,
         desc: 'A collection of components built with Shadcn & Tailwind, featuring tabs with icons.',
         category: 'Content',
-        renderer: (props: Feature108Block['content']) => (
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
                 <Feature108 {...props} />
             </React.Suspense>
         ),
-        editor: (props: { content: Feature108Block['content']; onUpdate: (updates: Partial<Feature108Block['content']>) => void }) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <Feature108Editor {...props} />
             </React.Suspense>
@@ -110,13 +132,13 @@ export function registerBlocks() {
         label: 'Flip Reveal Gallery',
         icon: <Layout className="h-4 w-4" />,
         desc: 'An animated, filterable gallery using GSAP Flip.',
-        category: 'Showcase',
-        renderer: (props: FlipRevealBlockType['content']) => (
+        category: 'Content',
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
                 <FlipRevealBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: { content: FlipRevealBlockType['content']; onUpdate: (updates: Partial<FlipRevealBlockType['content']>) => void }) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <FlipRevealBlockEditor {...props} />
             </React.Suspense>
@@ -129,12 +151,12 @@ export function registerBlocks() {
         icon: <Sparkles className="h-4 w-4" />,
         desc: 'Interactive connection section with mouse-following effects and floating labels.',
         category: 'Content',
-        renderer: (props: ConnectBlock['content']) => (
+        renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
                 <Connect {...props} />
             </React.Suspense>
         ),
-        editor: (props: { content: ConnectBlock['content']; onUpdate: (updates: Partial<ConnectBlock['content']>) => void }) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ConnectEditor {...props} />
             </React.Suspense>
@@ -204,13 +226,13 @@ export function registerBlocks() {
         label: 'Glassmorphism Pricing',
         icon: <Layout className="h-4 w-4" />,
         desc: 'A premium, semi-transparent pricing cards section with features list.',
-        category: 'Content',
+        category: 'Pricing',
         renderer: (props: any) => (
             <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
                 <GlassmorphismPricingBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <GlassmorphismPricingEditor {...props} />
             </React.Suspense>
@@ -228,9 +250,117 @@ export function registerBlocks() {
                 <NewsletterSignupBlock {...props} />
             </React.Suspense>
         ),
-        editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <NewsletterSignupEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'ecosystem_content',
+        label: 'Ecosystem Content',
+        icon: <Layout className="h-4 w-4" />,
+        desc: 'Hero content block showing ecosystem details.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <EcosystemContentBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <EcosystemContentBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'enterprise_pricing',
+        label: 'Enterprise Pricing',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Advanced pricing tier block with features.',
+        category: 'Pricing',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <EnterprisePricingBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <EnterprisePricingBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'faq_section',
+        label: 'FAQ Section',
+        icon: <HelpCircle className="h-4 w-4" />,
+        desc: 'Frequently asked questions with accordion.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <FaqSectionBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <FaqSectionBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'ai_features',
+        label: 'AI Features',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Animated AI features list with changing images.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <AiFeaturesBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <AiFeaturesBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'stacking_cards',
+        label: 'Stacking Cards',
+        icon: <Layers className="h-4 w-4" />,
+        desc: 'Cards that stack on top of each other on scroll.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <StackingCardsBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <StackingCardsBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'product_card_stack',
+        label: 'Product Card Stack',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Product cards that animate back into a stack.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <ProductCardStackBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <ProductCardStackBlockEditor {...props} />
             </React.Suspense>
         )
     });

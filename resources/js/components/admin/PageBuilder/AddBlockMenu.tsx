@@ -113,7 +113,10 @@ export default function AddBlockMenu({ onAddBlock }: AddBlockMenuProps) {
                 <div className="flex-1 overflow-y-auto p-8">
                     <div className="space-y-12 pb-8">
                         {CATEGORIES.map((category) => {
-                            const dynamicBlocksForCategory = blockRegistry.getAll()
+                            const registeredBlocks = blockRegistry.getAll();
+                            console.log('DEBUG: Registered Blocks:', registeredBlocks.map(b => `${b.type} (${b.category})`));
+                            
+                            const dynamicBlocksForCategory = registeredBlocks
                                 .filter(b => b.category === category.name)
                                 .map(b => ({
                                     type: b.type,
@@ -121,6 +124,8 @@ export default function AddBlockMenu({ onAddBlock }: AddBlockMenuProps) {
                                     icon: b.icon,
                                     desc: b.desc
                                 }));
+                            
+                            console.log(`DEBUG: Category ${category.name} dynamic blocks:`, dynamicBlocksForCategory.map(b => b.type));
                             
                             const allBlocks = [...category.blocks, ...dynamicBlocksForCategory];
 
