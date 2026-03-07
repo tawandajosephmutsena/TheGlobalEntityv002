@@ -278,7 +278,9 @@ export type PageBlock =
     | ConnectBlock
     | PodcastGridBlock
     | PodcastFeaturedBlock
-    | PodcastPlayerBlock;
+    | PodcastPlayerBlock
+    | GlassmorphismPricingBlock
+    | NewsletterSignupBlock;
 
 
 export interface Feature108Block extends BaseBlock {
@@ -581,3 +583,36 @@ export interface PodcastPlayerBlock extends BaseBlock {
     };
 }
 
+export interface GlassmorphismPricingBlock extends BaseBlock {
+    type: 'glassmorphism_pricing';
+    content: {
+        title?: string;
+        subtitle?: string;
+        plans?: Array<{
+            name: string;
+            price: string;
+            description: string;
+            features: string[];
+            popular: boolean;
+            buttonText?: string;
+            buttonLink?: string;
+        }>;
+    };
+}
+
+export interface NewsletterSignupBlock extends BaseBlock {
+    type: 'newsletter_signup';
+    content: {
+        badgeText?: string;
+        title?: string;
+        description?: string;
+        features?: string[];
+        placeholderText?: string;
+        buttonText?: string;
+        footerText?: string;
+        successTitle?: string;
+        successDescription?: string;
+        trustIndicatorNumber?: string;
+        trustIndicatorText?: string;
+    };
+}

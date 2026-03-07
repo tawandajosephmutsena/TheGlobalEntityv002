@@ -77,18 +77,21 @@ blockRegistry.register({
     icon: <Sparkles className="h-4 w-4" />,
     desc: 'Description shown in the menu.',
     category: 'Features', // or Heroes, Media, Content, etc.
-    renderer: (props: MyNewBlock['content']) => (
+    renderer: (props: any) => (
         <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
             <MyNewBlock {...props} />
         </React.Suspense>
     ),
-    editor: (props: { content: MyNewBlock['content']; onUpdate: (updates: any) => void }) => (
+    editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
         <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
             <MyNewBlockEditor {...props} />
         </React.Suspense>
     )
 });
 ```
+
+> [!WARNING]
+> **CRITICAL**: Do NOT use inline type imports (e.g. `import('@/types/...').Block`) inside `registerBlocks.tsx` as it causes silent failures in Vite/esbuild where blocks randomly disappear from the registry. Always use `any` types for the `renderer` and `editor` props arrays directly in the registry file.
 
 ## Best Practices
 

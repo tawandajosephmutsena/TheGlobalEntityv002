@@ -194,18 +194,21 @@ blockRegistry.register({
     icon: <Sparkles className="h-4 w-4" />, // Choose relevant lucide-react icon
     desc: 'Display dynamic features with rich text descriptions, links, and media.',
     category: 'Features', // Use existing category! Only create new if strictly needed.
-    renderer: (props: MyNewDynamicBlock['content']) => (
+    renderer: (props: any) => (
         <React.Suspense fallback={<div className="h-48 bg-muted animate-pulse rounded-2xl" />}>
             <MyNewDynamicBlock {...props} />
         </React.Suspense>
     ),
-    editor: (props: any) => (
+    editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
         <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
             <MyNewDynamicBlockEditor {...props} />
         </React.Suspense>
     )
 });
 ```
+
+> [!WARNING]
+> **CRITICAL**: Do NOT use inline type imports (e.g. `import('@/types/...').Block`) inside `registerBlocks.tsx` as it causes silent failures in Vite/esbuild where blocks randomly disappear from the registry. Always use `any` types for the `renderer` and `editor` props arrays directly in the registry file.
 
 ## Best Practices
 - **Rich Text is Crucial**: Anytime an editor might want to bold, bullet, or format text, use `<RichTextEditor />` instead of `<Textarea />`.

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles, Mic, Headphones, PlayCircle } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle, Mail } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -25,6 +25,12 @@ const PodcastFeaturedBlockComponent = React.lazy(() => import('@/components/Bloc
 const PodcastFeaturedEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastFeaturedEditor'));
 const PodcastPlayerBlockComponent = React.lazy(() => import('@/components/Blocks/PodcastPlayerBlock'));
 const PodcastPlayerEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/PodcastPlayerEditor'));
+
+const GlassmorphismPricingBlock = React.lazy(() => import('@/components/Blocks/GlassmorphismPricingBlock'));
+const GlassmorphismPricingEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/GlassmorphismPricingBlockEditor'));
+
+const NewsletterSignupBlock = React.lazy(() => import('@/components/Blocks/NewsletterSignupBlock'));
+const NewsletterSignupEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/NewsletterSignupEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -187,6 +193,44 @@ export function registerBlocks() {
         editor: (props: { content: PodcastPlayerBlock['content']; onUpdate: (updates: Partial<PodcastPlayerBlock['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <PodcastPlayerEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    // ── Pricing Blocks ──────────────────────────────────────────────────
+
+    blockRegistry.register({
+        type: 'glassmorphism_pricing',
+        label: 'Glassmorphism Pricing',
+        icon: <Layout className="h-4 w-4" />,
+        desc: 'A premium, semi-transparent pricing cards section with features list.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <GlassmorphismPricingBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <GlassmorphismPricingEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'newsletter_signup',
+        label: 'Newsletter Signup',
+        icon: <Mail className="h-4 w-4" />,
+        desc: 'A premium newsletter signup section with animated background and features list.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <NewsletterSignupBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { block: any; content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <NewsletterSignupEditor {...props} />
             </React.Suspense>
         )
     });
