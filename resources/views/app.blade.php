@@ -124,9 +124,9 @@
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         {{-- Web Core Vitals: Optimized favicon loading --}}
-        <link rel="icon" href="/favicon.ico" sizes="32x32">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
+        <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 
         {{-- Web Core Vitals: Non-render-blocking font loading --}}
         <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />

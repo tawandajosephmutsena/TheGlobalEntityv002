@@ -369,8 +369,11 @@ class SecureFileUploadService
         // Set secure file permissions
         chmod($filePath, 0644);
 
-        // For images, strip EXIF data that might contain sensitive information
-        if ($category === 'image' && function_exists('exif_read_data')) {
+        $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+        // For images (except SVGs), strip EXIF data that might contain sensitive information
+        // SVGs are XML files and do not contain EXIF data. Modifying them with Imagick/GD corrupts them.
+        if ($category === 'image' && $extension !== 'svg' && function_exists('exif_read_data')) {
             $this->stripExifData($filePath);
         }
 
