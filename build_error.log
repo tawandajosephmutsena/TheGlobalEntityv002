@@ -1,0 +1,70 @@
+
+> build
+> vite build
+
+vite v7.3.1 building client environment for production...
+[plugin @laravel/vite-plugin-wayfinder] Types generated for actions, routes, form variants
+transforming...
+✓ 5 modules transformed.
+✗ Build failed in 7.63s
+error during build:
+[vite:react-babel] /Users/mac/Herd/tge/resources/js/pages/admin/pages/Edit.tsx: Unexpected token (21:1)
+
+  19 | }
+  20 |
+> 21 | <<<<<<< HEAD
+     |  ^
+  22 | export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | (string & {});
+  23 | =======
+  24 | export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | (string & {});
+file: /Users/mac/Herd/tge/resources/js/pages/admin/pages/Edit.tsx:21:1
+    at constructor (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:365:19)
+    at TypeScriptParserMixin.raise (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:6599:19)
+    at TypeScriptParserMixin.unexpected (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:6619:16)
+    at TypeScriptParserMixin.jsxParseIdentifier (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4569:12)
+    at TypeScriptParserMixin.jsxParseNamespacedName (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4576:23)
+    at TypeScriptParserMixin.jsxParseElementName (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4585:21)
+    at TypeScriptParserMixin.jsxParseOpeningElementAt (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4661:22)
+    at TypeScriptParserMixin.jsxParseElementAt (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4686:33)
+    at TypeScriptParserMixin.jsxParseElement (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4749:17)
+    at TypeScriptParserMixin.parseExprAtom (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:4762:19)
+    at TypeScriptParserMixin.parseExprSubscripts (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:11071:23)
+    at TypeScriptParserMixin.parseUpdate (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:11056:21)
+    at TypeScriptParserMixin.parseMaybeUnary (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:11036:23)
+    at TypeScriptParserMixin.parseMaybeUnary (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:9827:18)
+    at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10889:61)
+    at TypeScriptParserMixin.parseExprOps (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10894:23)
+    at TypeScriptParserMixin.parseMaybeConditional (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10871:23)
+    at TypeScriptParserMixin.parseMaybeAssign (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10821:21)
+    at /Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:9765:39
+    at TypeScriptParserMixin.tryParse (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:6907:20)
+    at TypeScriptParserMixin.parseMaybeAssign (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:9765:18)
+    at TypeScriptParserMixin.parseExpressionBase (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10774:23)
+    at /Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10770:39
+    at TypeScriptParserMixin.allowInAnd (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12411:16)
+    at TypeScriptParserMixin.parseExpression (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10770:17)
+    at TypeScriptParserMixin.parseStatementContent (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12885:23)
+    at TypeScriptParserMixin.parseStatementContent (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:9508:18)
+    at TypeScriptParserMixin.parseStatementLike (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12757:17)
+    at TypeScriptParserMixin.parseModuleItem (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12734:17)
+    at TypeScriptParserMixin.parseBlockOrModuleBlockBody (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:13306:36)
+    at TypeScriptParserMixin.parseBlockBody (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:13299:10)
+    at TypeScriptParserMixin.parseProgram (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12612:10)
+    at TypeScriptParserMixin.parseTopLevel (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:12602:25)
+    at TypeScriptParserMixin.parse (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:14478:25)
+    at TypeScriptParserMixin.parse (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:10116:18)
+    at parse (/Users/mac/Herd/tge/node_modules/@babel/parser/lib/index.js:14512:38)
+    at parser (/Users/mac/Herd/tge/node_modules/@babel/core/lib/parser/index.js:41:34)
+    at parser.next (<anonymous>)
+    at normalizeFile (/Users/mac/Herd/tge/node_modules/@babel/core/lib/transformation/normalize-file.js:64:37)
+    at normalizeFile.next (<anonymous>)
+    at run (/Users/mac/Herd/tge/node_modules/@babel/core/lib/transformation/index.js:22:50)
+    at run.next (<anonymous>)
+    at transform (/Users/mac/Herd/tge/node_modules/@babel/core/lib/transform.js:22:33)
+    at transform.next (<anonymous>)
+    at step (/Users/mac/Herd/tge/node_modules/gensync/index.js:261:32)
+    at evaluateAsync (/Users/mac/Herd/tge/node_modules/gensync/index.js:291:5)
+    at /Users/mac/Herd/tge/node_modules/gensync/index.js:93:9
+    at new Promise (<anonymous>)
+    at async (/Users/mac/Herd/tge/node_modules/gensync/index.js:92:14)
+    at stopHiding - secret - don't use this - v1 (/Users/mac/Herd/tge/node_modules/@babel/core/lib/errors/rewrite-stack-trace.js:47:12)

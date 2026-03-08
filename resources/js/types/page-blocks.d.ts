@@ -279,6 +279,7 @@ export type PageBlock =
     | PodcastGridBlock
     | PodcastFeaturedBlock
     | PodcastPlayerBlock
+<<<<<<< HEAD
     | CommunityReviewBlock
     | FestivalMapBlock
     | FestivalCardBlock
@@ -301,6 +302,16 @@ export interface CTAHeroBlock extends BaseBlock {
         imageLink?: string;
     };
 }
+=======
+    | GlassmorphismPricingBlock
+    | NewsletterSignupBlock
+    | EcosystemContentBlock
+    | EnterprisePricingBlock
+    | FaqSectionBlock
+    | AiFeaturesBlock
+    | StackingCardsBlock
+    | ProductCardStackBlock;
+>>>>>>> origin/main
 
 
 export interface Feature108Block extends BaseBlock {
@@ -642,3 +653,123 @@ export interface FestivalCardBlock extends BaseBlock {
     };
 }
 
+export interface GlassmorphismPricingBlock extends BaseBlock {
+    type: 'glassmorphism_pricing';
+    content: {
+        title?: string;
+        subtitle?: string;
+        plans?: Array<{
+            name: string;
+            price: string;
+            description: string;
+            features: string[];
+            popular: boolean;
+            buttonText?: string;
+            buttonLink?: string;
+        }>;
+    };
+}
+
+export interface NewsletterSignupBlock extends BaseBlock {
+    type: 'newsletter_signup';
+    content: {
+        badgeText?: string;
+        title?: string;
+        description?: string;
+        features?: string[];
+        placeholderText?: string;
+        buttonText?: string;
+        footerText?: string;
+        successTitle?: string;
+        successDescription?: string;
+        trustIndicatorNumber?: string;
+        trustIndicatorText?: string;
+    };
+}
+
+export interface EcosystemContentBlock extends BaseBlock {
+    type: 'ecosystem_content';
+    content: {
+        heading?: string;
+        imageDarkSrc?: string;
+        imageLightSrc?: string;
+        imageAlt?: string;
+        description1?: string;
+        description2?: string;
+        quoteText?: string;
+        quoteAuthor?: string;
+    };
+}
+
+export interface EnterprisePricingBlock extends BaseBlock {
+    type: 'enterprise_pricing';
+    content: {
+        heading?: string;
+        planName?: string;
+        planDescription?: string;
+        priceAmount?: string;
+        priceCurrency?: string;
+        buttonText?: string;
+        buttonLink?: string;
+        featuresText?: string;
+        features?: Array<{ text: string }>;
+        trustedText?: string;
+    };
+}
+
+export interface FaqSectionBlock extends BaseBlock {
+    type: 'faq_section';
+    content: {
+        heading?: string;
+        description?: string;
+        faqs?: Array<{
+            id: string;
+            icon: string;
+            question: string;
+            answer: string;
+        }>;
+    };
+}
+
+export interface AiFeaturesBlock extends BaseBlock {
+    type: 'ai_features';
+    content: {
+        heading?: string;
+        description?: string;
+        features?: Array<{
+            id: string;
+            icon: string;
+            title: string;
+            description: string;
+            imageSrc: string;
+        }>;
+    };
+}
+
+export interface StackingCardsBlock extends BaseBlock {
+    type: 'stacking_cards';
+    content: {
+        scrollText?: string;
+        footerText?: string;
+        cards?: Array<{
+            bgColor: string;
+            title: string;
+            description: string;
+            imageSrc: string;
+        }>;
+    };
+}
+
+export interface ProductCardStackBlock extends BaseBlock {
+    type: 'product_card_stack';
+    content: {
+        cards?: Array<{
+            id: string;
+            title: string;
+            subtitle: string;
+            imageSrc: string;
+            specs?: Array<{ label: string; value: string }>;
+        }>;
+    };
+}
+>>>>>>> origin/main

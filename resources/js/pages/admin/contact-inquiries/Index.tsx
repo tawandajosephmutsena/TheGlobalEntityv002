@@ -44,7 +44,7 @@ interface Stats {
 interface Props {
     inquiries: PaginatedData<ContactInquiry>;
     stats: Stats;
-    forms: { label: string; value: string }[];
+    forms: { label: string; value: string; count?: number; new_count?: number }[];
     currentForm: string | null;
     filters?: {
         search: string;
@@ -186,7 +186,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         });
     };
 
-    const exportCSV = () => {
+    const exportCSV = (exportOnlySelected = false) => {
         const params = new URLSearchParams();
         if (currentForm) params.append('form_name', currentForm);
         if (filters?.search) params.append('search', filters.search);
@@ -194,15 +194,14 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         if (filters?.date_from) params.append('date_from', filters.date_from);
         if (filters?.date_to) params.append('date_to', filters.date_to);
         
-        if (!selectAllFiltered) {
-            if (selectedIds.length === 0) return;
+        if (exportOnlySelected && !selectAllFiltered && selectedIds.length > 0) {
             params.append('ids', selectedIds.join(','));
         }
 
         window.location.href = `/admin/contact-inquiries/export?${params.toString()}`;
     };
 
-    const exportPDF = () => {
+    const exportPDF = (exportOnlySelected = false) => {
         const params = new URLSearchParams();
         if (currentForm) params.append('form_name', currentForm);
         if (filters?.search) params.append('search', filters.search);
@@ -210,8 +209,7 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         if (filters?.date_from) params.append('date_from', filters.date_from);
         if (filters?.date_to) params.append('date_to', filters.date_to);
         
-        if (!selectAllFiltered) {
-            if (selectedIds.length === 0) return;
+        if (exportOnlySelected && !selectAllFiltered && selectedIds.length > 0) {
             params.append('ids', selectedIds.join(','));
         }
 
@@ -232,12 +230,22 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
         <AdminLayout title="Contact Inquiries" breadcrumbs={breadcrumbs}>
             <ErrorBoundary>
             <div className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Contact Inquiries</h1>
                         <p className="text-muted-foreground">
                             Manage and respond to messages from your website visitors.
                         </p>
+                    </div>
+                    <div className="flex gap-2 w-full sm:w-auto">
+                        <Button variant="outline" onClick={() => exportCSV(false)}>
+                            <Download className="size-4 mr-2" />
+                            Export CSV
+                        </Button>
+                        <Button variant="outline" onClick={() => exportPDF(false)}>
+                            <Download className="size-4 mr-2" />
+                            Export PDF
+                        </Button>
                     </div>
                 </div>
 
@@ -261,13 +269,23 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
                                         key={form.value}
                                         onClick={() => router.get(`/admin/contact-inquiries?form_name=${encodeURIComponent(form.value)}`, {}, { preserveState: true })}
                                         className={cn(
-                                            "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+                                            "inline-flex h-[calc(100%-1px)] items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
                                             currentForm === form.value 
                                                 ? "bg-background text-foreground shadow-sm" 
                                                 : "hover:bg-background/50 hover:text-foreground"
                                         )}
                                     >
-                                        {form.label}
+                                        <span>{form.label}</span>
+                                        {form.count !== undefined && (
+                                            <span className={cn(
+                                                "px-2 py-0.5 rounded-full text-xs font-bold",
+                                                form.new_count && form.new_count > 0 
+                                                    ? "bg-destructive text-destructive-foreground" 
+                                                    : (currentForm === form.value ? "bg-muted text-muted-foreground" : "bg-background/50 text-muted-foreground")
+                                            )}>
+                                                {form.new_count && form.new_count > 0 ? `${form.new_count} new` : form.count}
+                                            </span>
+                                        )}
                                     </button>
                                 ))}
                             </div>
@@ -420,11 +438,11 @@ export default function ContactInquiriesIndex({ inquiries, stats, forms, current
 
                         <div className="h-4 w-px bg-border mx-1" />
 
-                        <Button variant="outline" size="sm" onClick={exportCSV}>
+                        <Button variant="outline" size="sm" onClick={() => exportCSV(true)}>
                             <Download className="size-4 mr-2" />
                             CSV
                         </Button>
-                        <Button variant="outline" size="sm" onClick={exportPDF}>
+                        <Button variant="outline" size="sm" onClick={() => exportPDF(true)}>
                             <Download className="size-4 mr-2" />
                             PDF
                         </Button>

@@ -21,7 +21,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->except(['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions']);
+            $data = $request->except(['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions', 'page_title', 'page_url']);
             $formTitle = $request->input('form_title', 'Multi-step Form');
             $adminEmail = $request->input('admin_email');
             $replyToEmail = $request->input('reply_to_email');
@@ -30,7 +30,7 @@ class ContactController extends Controller
             
             // Format all fields for clean display
             $formattedFields = [];
-            $excludeFromFormatted = ['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions', 'custom_confirmation_body'];
+            $excludeFromFormatted = ['_token', 'form_title', 'admin_email', 'reply_to_email', 'confirmation_email_body', 'allow_multiple_submissions', 'custom_confirmation_body', 'page_title', 'page_url'];
             
             foreach ($data as $fieldName => $value) {
                 if (in_array($fieldName, $excludeFromFormatted)) continue;
@@ -66,7 +66,12 @@ class ContactController extends Controller
             // Fallback values
             $name = $name ?? 'Form Submission';
             $email = $email ?? 'no-email@provided.com';
-            $type = $formTitle;
+            $pageTitle = $request->input('page_title');
+            if ($pageTitle) {
+                // Remove common suffixes like " - OttoStart" to keep categories clean
+                $pageTitle = preg_replace('/ - .*$/', '', $pageTitle);
+            }
+            $type = $pageTitle ?: $formTitle;
 
             // Check for multiple submissions if restricted
             if (!$allowMultiple && $email !== 'no-email@provided.com') {

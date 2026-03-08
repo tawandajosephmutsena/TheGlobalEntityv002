@@ -2011,18 +2011,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
         }
 
         default: {
-            const blockAny = block as Record<string, unknown>;
+            const blockAny = block as any;
             const blockType = String(blockAny.type || '');
             const dynamicBlock = blockRegistry.get(blockType);
             if (dynamicBlock && dynamicBlock.editor) {
-                const Editor = dynamicBlock.editor as React.ComponentType<unknown>;
+                const Editor = dynamicBlock.editor as React.ComponentType<any>;
                 // Adapter: some editors (KimiHero, ScrollAnimation) call onUpdate
                 // with full block objects { ...block, content: {...} }, while others
                 // (Carousel) pass just the content. Detect and normalize.
-                const handleRegistryUpdate = (updated: unknown) => {
+                const handleRegistryUpdate = (updated: any) => {
                     if (updated && typeof updated === 'object' && 'content' in updated && 'type' in updated) {
                         // Full block object — extract content
-                        onUpdate((updated as Record<string, unknown>).content);
+                        onUpdate((updated as Record<string, any>).content);
                     } else {
                         // Content object — pass through
                         onUpdate(updated);

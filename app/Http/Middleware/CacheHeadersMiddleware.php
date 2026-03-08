@@ -70,13 +70,24 @@ class CacheHeadersMiddleware
     }
 
     /**
+     * Helper to apply headers to any type of Response safely
+     */
+    private function applyHeaders(Response $response, array $headers): Response
+    {
+        foreach ($headers as $key => $value) {
+            $response->headers->set($key, $value);
+        }
+        return $response;
+    }
+
+    /**
      * Set headers for static assets (CSS, JS, fonts)
      */
     private function setStaticAssetHeaders(Response $response): Response
     {
         $maxAge = 31536000; // 1 year
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}, immutable",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding',
@@ -90,7 +101,7 @@ class CacheHeadersMiddleware
     {
         $maxAge = 2592000; // 30 days
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding',
@@ -104,7 +115,7 @@ class CacheHeadersMiddleware
     {
         $maxAge = 300; // 5 minutes
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}, must-revalidate",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding, Accept, X-Inertia',
@@ -119,7 +130,7 @@ class CacheHeadersMiddleware
     {
         $maxAge = 3600; // 1 hour
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}, must-revalidate",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding, Accept, X-Inertia',
@@ -134,7 +145,7 @@ class CacheHeadersMiddleware
     {
         $maxAge = 300; // 5 minutes
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding, X-Inertia',
@@ -148,7 +159,7 @@ class CacheHeadersMiddleware
     {
         $maxAge = 86400; // 1 day
         
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => "public, max-age={$maxAge}",
             'Expires' => gmdate('D, d M Y H:i:s', time() + $maxAge) . ' GMT',
             'Vary' => 'Accept-Encoding, X-Inertia',
@@ -160,7 +171,7 @@ class CacheHeadersMiddleware
      */
     private function setNoCacheHeaders(Response $response): Response
     {
-        return $response->withHeaders([
+        return $this->applyHeaders($response, [
             'Cache-Control' => 'no-cache, no-store, must-revalidate, private',
             'Pragma' => 'no-cache',
             'Expires' => '0',

@@ -54,15 +54,17 @@ class ContactInquiryController extends Controller
     {
         $currentForm = $request->query('form_name');
 
-        // Extract available forms by fetching distinct form_name
-        $forms = ContactInquiry::select('form_name')
-            ->distinct()
+        // Extract available forms by fetching distinct form_name with their counts
+        $forms = ContactInquiry::selectRaw("form_name, COUNT(*) as total_count, SUM(CASE WHEN status = 'new' THEN 1 ELSE 0 END) as new_count")
             ->whereNotNull('form_name')
-            ->pluck('form_name')
-            ->map(function ($formName) {
+            ->groupBy('form_name')
+            ->get()
+            ->map(function ($form) {
                 return [
-                    'label' => $formName,
-                    'value' => $formName
+                    'label' => $form->form_name,
+                    'value' => $form->form_name,
+                    'count' => (int) $form->total_count,
+                    'new_count' => (int) $form->new_count,
                 ];
             })
             ->sortBy('label')
@@ -223,18 +225,29 @@ class ContactInquiryController extends Controller
 
         return response()->streamDownload(function () use ($query) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['ID', 'Name', 'Email', 'Subject', 'Form', 'Type', 'Message', 'Additional Data', 'Status', 'Date']);
-
-            $query->chunk(500, function ($inquiries) use ($handle) {
-                foreach ($inquiries as $inquiry) {
-                    $metadata = '';
-                    if (!empty($inquiry->metadata['formatted_fields'])) {
-                        $metadata = collect($inquiry->metadata['formatted_fields'])
-                            ->map(fn($v, $k) => "$k: " . (is_array($v) ? implode(', ', $v) : $v))
-                            ->implode(' | ');
+            
+            // Extract all unique dynamic field names for headers
+            $allFormattedFields = [];
+            $headerQuery = clone $query;
+            $inquiriesForHeaders = $headerQuery->select('metadata')->get();
+            
+            foreach ($inquiriesForHeaders as $inq) {
+                if (!empty($inq->metadata['formatted_fields'])) {
+                    foreach (array_keys($inq->metadata['formatted_fields']) as $key) {
+                        $allFormattedFields[$key] = true;
                     }
+                }
+            }
+            
+            $dynamicHeaders = array_keys($allFormattedFields);
+            $baseHeaders = ['ID', 'Name', 'Email', 'Subject', 'Form', 'Type', 'Message', 'Status', 'Date'];
+            
+            // Combine base headers and dynamic headers
+            fputcsv($handle, array_merge($baseHeaders, $dynamicHeaders));
 
-                    fputcsv($handle, [
+            $query->chunk(500, function ($inquiries) use ($handle, $dynamicHeaders) {
+                foreach ($inquiries as $inquiry) {
+                    $row = [
                         $inquiry->id,
                         $inquiry->name,
                         $inquiry->email,
@@ -242,10 +255,18 @@ class ContactInquiryController extends Controller
                         $inquiry->form_name,
                         $inquiry->type,
                         $inquiry->message,
-                        $metadata,
                         $inquiry->status,
                         $inquiry->created_at->format('Y-m-d H:i:s'),
-                    ]);
+                    ];
+                    
+                    $formattedFields = $inquiry->metadata['formatted_fields'] ?? [];
+                    
+                    foreach ($dynamicHeaders as $header) {
+                        $val = $formattedFields[$header] ?? '';
+                        $row[] = is_array($val) ? implode(', ', $val) : $val;
+                    }
+
+                    fputcsv($handle, $row);
                 }
             });
 

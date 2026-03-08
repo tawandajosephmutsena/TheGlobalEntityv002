@@ -18,7 +18,7 @@ interface Props {
     page: Page;
 }
 
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | (string & {});
 
 
 
@@ -403,6 +403,119 @@ const getDefaultContentForType = (type: BlockType) => {
             ],
             image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
             imageLink: ''
+        };
+        case 'ecosystem_content': return {
+            heading: 'The Lyra ecosystem brings together our models.',
+            imageDarkSrc: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2690&auto=format&fit=crop',
+            imageLightSrc: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2690&auto=format&fit=crop',
+            imageAlt: 'Lyra Ecosystem Illustration',
+            description1: 'Lyra integrates our most advanced models into a unified ecosystem.',
+            description2: 'Developed by a world-class team, our AI components are designed to work seamlessly together.',
+            quoteText: 'Lyra has fundamentally changed how we build and scale AI experiences.',
+            quoteAuthor: 'Sarah Chen, CTO at TechFlow'
+        };
+        case 'enterprise_pricing': return {
+            heading: 'Start managing your company smarter today',
+            planName: 'Suite Enterprise',
+            planDescription: 'For your company of any size',
+            priceAmount: '234',
+            priceCurrency: '$',
+            buttonText: 'Get started',
+            buttonLink: '#',
+            featuresText: 'Includes : Security, Unlimited Storage, Payment, Search engine, and all features',
+            features: [
+                { text: 'First premium advantage' },
+                { text: 'Second advantage weekly' },
+                { text: 'Third advantage donate to project' },
+                { text: 'Fourth, access to all components weekly' }
+            ],
+            trustedText: 'Team can be any size, and you can add or switch members as needed.'
+        };
+        case 'faq_section': return {
+            heading: 'Frequently Asked Questions',
+            description: 'Can\'t find what you\'re looking for? Contact our <a href="#" class="text-primary font-medium hover:underline">customer support team</a>',
+            faqs: [
+                {
+                    id: 'item-1',
+                    icon: 'clock',
+                    question: 'What are your business hours?',
+                    answer: 'Our customer service team is available Monday through Friday from 9:00 AM to 8:00 PM EST.',
+                },
+                {
+                    id: 'item-2',
+                    icon: 'credit-card',
+                    question: 'How do subscription payments work?',
+                    answer: 'Subscription payments are automatically charged to your default payment method.',
+                },
+                {
+                    id: 'item-3',
+                    icon: 'shield-check',
+                    question: 'Is my data secure?',
+                    answer: 'We use industry-standard encryption and security protocols to project your sensitive information.',
+                }
+            ]
+        };
+        case 'ai_features': return {
+            heading: 'Enhanced Intelligence',
+            description: 'Our AI features empower you to focus on high-impact work.',
+            features: [
+                {
+                    id: 'f1',
+                    icon: 'sparkles',
+                    title: 'Smart Analytics',
+                    description: 'Extract deep insights from your data with advanced neural processing.',
+                    imageSrc: 'https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=2670&auto=format&fit=crop'
+                },
+                {
+                    id: 'f2',
+                    icon: 'zap',
+                    title: 'Real-time Processing',
+                    description: 'Process millions of requests per second with ultra-low latency.',
+                    imageSrc: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop'
+                }
+            ]
+        };
+        case 'stacking_cards': return {
+            scrollText: 'Scroll to explore',
+            footerText: 'Ready to join us?',
+            cards: [
+                {
+                    bgColor: '#fcd34d',
+                    title: 'Innovation First',
+                    description: 'We prioritize groundbreaking solutions for complex problems.',
+                    imageSrc: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop'
+                },
+                {
+                    bgColor: '#60a5fa',
+                    title: 'Strategic Growth',
+                    description: 'Data-driven insights that drive sustainable business growth.',
+                    imageSrc: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop'
+                }
+            ]
+        };
+        case 'product_card_stack': return {
+            cards: [
+                {
+                    id: 'c1',
+                    title: 'Vision Pro',
+                    subtitle: 'Beyond Reality',
+                    imageSrc: 'https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop',
+                    specs: [
+                        { label: 'Display', value: '4K Micro-OLED' },
+                        { label: 'Chip', value: 'M2 & R1' }
+                    ]
+                },
+                {
+                    id: 'c2',
+                    title: 'Macbook Pro',
+                    subtitle: 'Pure Power',
+                    imageSrc: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=2626&auto=format&fit=crop',
+                    specs: [
+                        { label: 'Display', value: 'Liquid Retina XDR' },
+                        { label: 'Battery', value: 'Up to 22h' }
+                    ]
+                }
+            ]
         };
         default: return {};
 
