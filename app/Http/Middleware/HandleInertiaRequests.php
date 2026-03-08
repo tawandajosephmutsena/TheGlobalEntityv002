@@ -101,7 +101,7 @@ class HandleInertiaRequests extends Middleware
                 'logo' => ($settings['site_logo'] ?? null)
                     ? (str_starts_with($settings['site_logo'], 'http') || str_starts_with($settings['site_logo'], '/')
                         ? $settings['site_logo']
-                        : '/' . $settings['site_logo'])
+                        : asset('storage/' . $settings['site_logo']))
                     : asset('logo.svg'),
                 'social' => [
                     'twitter' => $settings['twitter_url'] ?? 'https://twitter.com/ottomate',
@@ -198,7 +198,9 @@ class HandleInertiaRequests extends Middleware
                 'site_name' => $settings['site_name'] ?? 'Ottomate',
                 'default_description' => $settings['site_description'] ?? 'High-Performance Website Platform',
                 'site_url' => config('app.url'),
-                'default_og_image' => ($settings['site_logo'] ?? null) ? asset($settings['site_logo']) : asset('logo.svg'),
+                'default_og_image' => ($settings['site_logo'] ?? null)
+                    ? (str_starts_with($settings['site_logo'], 'http') || str_starts_with($settings['site_logo'], '/') ? asset($settings['site_logo']) : asset('storage/' . $settings['site_logo']))
+                    : asset('logo.svg'),
                 'twitter_handle' => $settings['twitter_handle'] ?? '@ottomate',
             ]),
             'nonce' => \Illuminate\Support\Facades\Vite::cspNonce(),

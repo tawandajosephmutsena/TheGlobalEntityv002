@@ -20,14 +20,14 @@ interface VideoBackgroundHeroProps {
 }
 
 const DEFAULT_LOGOS = [
-    { name: "Nvidia", url: "https://html.tailus.io/blocks/customers/nvidia.svg" },
-    { name: "Column", url: "https://html.tailus.io/blocks/customers/column.svg" },
-    { name: "GitHub", url: "https://html.tailus.io/blocks/customers/github.svg" },
-    { name: "Nike", url: "https://html.tailus.io/blocks/customers/nike.svg" },
-    { name: "LemonSqueezy", url: "https://html.tailus.io/blocks/customers/lemonsqueezy.svg" },
-    { name: "Laravel", url: "https://html.tailus.io/blocks/customers/laravel.svg" },
-    { name: "Lilly", url: "https://html.tailus.io/blocks/customers/lilly.svg" },
-    { name: "OpenAI", url: "https://html.tailus.io/blocks/customers/openai.svg" }
+    { name: "Nvidia", url: "https://cdn.simpleicons.org/nvidia/000000" },
+    { name: "Vercel", url: "https://cdn.simpleicons.org/vercel/000000" },
+    { name: "GitHub", url: "https://cdn.simpleicons.org/github/000000" },
+    { name: "Nike", url: "https://cdn.simpleicons.org/nike/000000" },
+    { name: "LemonSqueezy", url: "https://cdn.simpleicons.org/lemonsqueezy/000000" },
+    { name: "Laravel", url: "https://cdn.simpleicons.org/laravel/000000" },
+    { name: "Supabase", url: "https://cdn.simpleicons.org/supabase/000000" },
+    { name: "OpenAI", url: "https://cdn.simpleicons.org/openai/000000" }
 ];
 
 const getEmbedUrl = (url: string) => {
