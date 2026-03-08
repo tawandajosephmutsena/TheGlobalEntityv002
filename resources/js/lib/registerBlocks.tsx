@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock, CommunityReviewBlock, FestivalMapBlock as FestivalMapBlockType, FestivalCardBlock as FestivalCardBlockType } from '@/types/page-blocks';
+import type { Feature108Block, ConnectBlock, FlipRevealBlock as FlipRevealBlockType, PodcastGridBlock, PodcastFeaturedBlock, PodcastPlayerBlock, CommunityReviewBlock, FestivalMapBlock as FestivalMapBlockType, FestivalCardBlock as FestivalCardBlockType, CTAHeroBlock as CTAHeroBlockType } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
 import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe } from 'lucide-react';
 
@@ -14,6 +14,8 @@ const Feature108 = React.lazy(() => import('@/components/Blocks/Feature108'));
 const Feature108Editor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Feature108Editor'));
 const FlipRevealBlock = React.lazy(() => import('@/components/Blocks/FlipRevealBlock'));
 const FlipRevealBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FlipRevealBlockEditor'));
+const CTAHeroBlock = React.lazy(() => import('@/components/Blocks/CTAHeroBlock'));
+const CTAHeroBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/CTAHeroBlockEditor'));
 
 const Connect = React.lazy(() => import('@/components/Blocks/ConnectBlock'));
 const ConnectEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ConnectEditor'));
@@ -250,6 +252,24 @@ export function registerBlocks() {
         editor: (props: { content: FestivalCardBlockType['content']; onUpdate: (updates: Partial<FestivalCardBlockType['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <FestivalCardEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'cta_hero',
+        label: 'CTA Hero Section',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'A premium hero section with integrated call-to-action and animated background.',
+        category: 'Heroes',
+        renderer: (props: CTAHeroBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-screen bg-muted animate-pulse" />}>
+                <CTAHeroBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: CTAHeroBlockType['content']; onUpdate: (updates: Partial<CTAHeroBlockType['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <CTAHeroBlockEditor {...props} />
             </React.Suspense>
         )
     });

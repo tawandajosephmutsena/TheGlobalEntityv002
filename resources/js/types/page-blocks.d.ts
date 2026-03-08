@@ -281,7 +281,26 @@ export type PageBlock =
     | PodcastPlayerBlock
     | CommunityReviewBlock
     | FestivalMapBlock
-    | FestivalCardBlock;
+    | FestivalCardBlock
+    | CTAHeroBlock;
+
+export interface CTAHeroBlock extends BaseBlock {
+    type: 'cta_hero';
+    content: {
+        badge?: string;
+        titlePrefix?: string;
+        titleHighlight?: string;
+        description?: string;
+        emailPlaceholder?: string;
+        buttonText?: string;
+        buttonLink?: string;
+        benefits?: string[];
+        statsValue?: string;
+        statsLabel?: string;
+        image?: string;
+        imageLink?: string;
+    };
+}
 
 
 export interface Feature108Block extends BaseBlock {

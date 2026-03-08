@@ -2001,6 +2001,15 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                 </div>
             );
 
+        case 'cta_hero': {
+            const dynamicBlock = blockRegistry.get('cta_hero');
+            if (dynamicBlock && dynamicBlock.editor) {
+                const Editor = dynamicBlock.editor as React.ComponentType<any>;
+                return <Editor content={block.content} onUpdate={updateContent} />;
+            }
+            return null;
+        }
+
         default: {
             const blockAny = block as Record<string, unknown>;
             const blockType = String(blockAny.type || '');

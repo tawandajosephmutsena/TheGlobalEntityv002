@@ -18,7 +18,7 @@ interface Props {
     page: Page;
 }
 
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | (string & {});
 
 
 
@@ -382,6 +382,27 @@ const getDefaultContentForType = (type: BlockType) => {
             subtitle: 'JOIN OUR TRIBE',
             ctaText: 'View Openings',
             ctaHref: '/careers'
+        };
+        case 'cta_hero': return {
+            badge: 'New Feature',
+            title: 'Experience the Future of UI',
+            subtitle: 'Building Beautiful Interfaces',
+            description: 'Our platform provides everything you need to build stunning digital experiences that convert.',
+            emailPlaceholder: 'Enter your work email...',
+            buttonText: 'Get Started Now',
+            buttonHref: '#',
+            benefits: [
+                'No credit card required',
+                'Cancel anytime',
+                'Free 14-day trial'
+            ],
+            stats: [
+                { value: '99.9%', label: 'Uptime' },
+                { value: '24/7', label: 'Support' },
+                { value: '100k+', label: 'Users' }
+            ],
+            image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop',
+            imageLink: ''
         };
         default: return {};
 
