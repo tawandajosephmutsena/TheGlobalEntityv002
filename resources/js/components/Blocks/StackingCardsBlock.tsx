@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 // Assuming the CLI installs this to @/components/fancy/blocks/stacking-cards or @/components/ui/stacking-cards
 import StackingCards, { StackingCardItem } from '@/components/fancy/blocks/stacking-cards';
@@ -8,10 +8,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import { StackingCardsBlock } from '@/types/page-blocks';
 
 const sanitizeImageUrl = (url: string | undefined, fallback: string) => {
-    if (!url || typeof url !== 'string' || url.startsWith('/') || url.includes('placeholder') || url.includes('.png') || url.includes('.jpg')) {
-        if (url && typeof url === 'string' && (url.startsWith('http') || url.startsWith('https')) && !url.includes('placeholder')) {
-             return url;
-        }
+    if (!url || typeof url !== 'string' || url.startsWith('/') || url.includes('placeholder')) {
         return fallback;
     }
     return url;
@@ -31,31 +28,28 @@ export default function StackingCardsBlockRenderer(props: StackingCardsBlock['co
         ]
     } = props || {};
 
-    const container = useRef<HTMLDivElement>(null);
 
     return (
         <AnimatedSection className="w-full">
             <div
-                className="h-[620px] bg-background overflow-auto text-white w-full"
-                ref={container}
+                className="bg-background text-white w-full"
             >
                 {cards.length > 0 ? (
                     <StackingCards
                         totalCards={cards.length}
-                        scrollOptions={{ container: container }}
                     >
                         {scrollText && (
-                            <div className="relative font-calendas h-[620px] w-full z-10 text-2xl md:text-7xl font-bold uppercase flex justify-center items-center text-[#ff5941] whitespace-pre">
+                            <div className="relative font-calendas h-screen w-full z-10 text-2xl md:text-7xl font-bold uppercase flex justify-center items-center text-[#ff5941] whitespace-pre">
                                 {scrollText}
                             </div>
                         )}
                         {cards.map(({ bgColor, description, imageSrc, title }, index) => {
                             return (
-                                <StackingCardItem key={index} index={index} className="h-[620px]">
+                                <StackingCardItem key={index} index={index} className="h-screen">
                                     <div
                                         className={cn(
                                             bgColor,
-                                            "h-[80%] sm:h-[70%] flex-col sm:flex-row aspect-video px-8 py-10 flex w-11/12 rounded-3xl mx-auto relative"
+                                            "h-[80%] sm:h-[70%] flex-col sm:flex-row aspect-video px-8 py-10 flex w-11/12 rounded-3xl mx-auto relative shadow-2xl"
                                         )}
                                     >
                                         <div className="flex-1 flex flex-col justify-center">

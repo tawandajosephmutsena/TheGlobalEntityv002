@@ -33,8 +33,8 @@
       "_utils-C5tkloDO.js"
     ]
   },
-  "_BlockRenderer-ChFtJr1d.js": {
-    "file": "js/BlockRenderer-ChFtJr1d.js",
+  "_BlockRenderer-Diu30bmy.js": {
+    "file": "js/BlockRenderer-Diu30bmy.js",
     "name": "BlockRenderer",
     "imports": [
       "_vendor-CEaxvEcn.js",
@@ -44,7 +44,7 @@
       "_button-Bz4WGGue.js",
       "_animations-DzGwddfm.js",
       "_icons-CHePV16u.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_useAnimations-DrkQ0btm.js",
       "_accessibilityManager-B8glcpdm.js",
       "_gsap-BEVD0nvf.js",
@@ -62,8 +62,8 @@
       "_vendor-CEaxvEcn.js"
     ]
   },
-  "_MainLayout-BPRNYi8F.js": {
-    "file": "js/MainLayout-BPRNYi8F.js",
+  "_MainLayout-Dkmix8PO.js": {
+    "file": "js/MainLayout-Dkmix8PO.js",
     "name": "MainLayout",
     "imports": [
       "_vendor-CEaxvEcn.js",
@@ -209,8 +209,8 @@
       "_utils-C5tkloDO.js"
     ]
   },
-  "_animated-shader-hero-Bevt4ss8.js": {
-    "file": "js/animated-shader-hero-Bevt4ss8.js",
+  "_animated-shader-hero-CLapnZc1.js": {
+    "file": "js/animated-shader-hero-CLapnZc1.js",
     "name": "animated-shader-hero",
     "imports": [
       "_vendor-CEaxvEcn.js",
@@ -561,7 +561,7 @@
     ]
   },
   "resources/css/app.css": {
-    "file": "css/app-3VL0cywL.css",
+    "file": "css/app-kHSmuiFy.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -570,7 +570,7 @@
     ]
   },
   "resources/js/app.tsx": {
-    "file": "js/app-CxOiNQoI.js",
+    "file": "js/app-CwGbvrgD.js",
     "name": "app",
     "src": "resources/js/app.tsx",
     "isEntry": true,
@@ -693,7 +693,7 @@
       "resources/js/pages/settings/two-factor.tsx"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/components/Blocks/AiFeaturesBlock.tsx": {
@@ -939,7 +939,7 @@
     ]
   },
   "resources/js/components/Blocks/StackingCardsBlock.tsx": {
-    "file": "js/StackingCardsBlock-BQRJMLGR.js",
+    "file": "js/StackingCardsBlock-Co2_rFku.js",
     "name": "StackingCardsBlock",
     "src": "resources/js/components/Blocks/StackingCardsBlock.tsx",
     "isDynamicEntry": true,
@@ -1349,17 +1349,17 @@
     ]
   },
   "resources/js/pages/Blog.tsx": {
-    "file": "js/Blog-CnJpWPvG.js",
+    "file": "js/Blog-bEuIiW-c.js",
     "name": "Blog",
     "src": "resources/js/pages/Blog.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_utils-C5tkloDO.js",
-      "_BlockRenderer-ChFtJr1d.js",
+      "_BlockRenderer-Diu30bmy.js",
       "_icons-CHePV16u.js",
       "_useAnimations-DrkQ0btm.js",
       "_gsap-BEVD0nvf.js",
@@ -1369,7 +1369,7 @@
       "_PageTransition-BzqULN9C.js",
       "_animations-DzGwddfm.js",
       "_button-Bz4WGGue.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_card-D5Yis5yR.js",
       "_input-DTMcTkqz.js",
       "_label-Ww_o7uFm.js",
@@ -1381,11 +1381,11 @@
       "_apple-cards-carousel-CLVAq1dP.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Blog/Show.tsx": {
-    "file": "js/Show-B-tjT_t3.js",
+    "file": "js/Show-DsG0Hs4j.js",
     "name": "Show",
     "src": "resources/js/pages/Blog/Show.tsx",
     "isDynamicEntry": true,
@@ -1393,7 +1393,7 @@
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
       "_icons-CHePV16u.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_useAnimations-DrkQ0btm.js",
       "_gsap-BEVD0nvf.js",
@@ -1405,18 +1405,18 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Contact.tsx": {
-    "file": "js/Contact-GCtp6LRl.js",
+    "file": "js/Contact-yPl1FlO3.js",
     "name": "Contact",
     "src": "resources/js/pages/Contact.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_icons-CHePV16u.js",
       "_useAnimations-DrkQ0btm.js",
@@ -1429,7 +1429,7 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Dashboard.tsx": {
@@ -1455,13 +1455,13 @@
     ]
   },
   "resources/js/pages/Documentation.tsx": {
-    "file": "js/Documentation-DdtzkgUl.js",
+    "file": "js/Documentation-CcKCtSlA.js",
     "name": "Documentation",
     "src": "resources/js/pages/Documentation.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_utils-C5tkloDO.js",
       "_icons-CHePV16u.js",
       "_ThemeStyles-BLx2E52-.js",
@@ -1473,19 +1473,19 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/DynamicPage.tsx": {
-    "file": "js/DynamicPage-C8NrhLE9.js",
+    "file": "js/DynamicPage-BluH5Rrp.js",
     "name": "DynamicPage",
     "src": "resources/js/pages/DynamicPage.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
-      "_BlockRenderer-ChFtJr1d.js",
+      "_BlockRenderer-Diu30bmy.js",
       "_utils-C5tkloDO.js",
       "_ThemeStyles-BLx2E52-.js",
       "_icons-CHePV16u.js",
@@ -1497,7 +1497,7 @@
       "_animations-DzGwddfm.js",
       "_AnimatedSection-tH0gVlVP.js",
       "_button-Bz4WGGue.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_card-D5Yis5yR.js",
       "_input-DTMcTkqz.js",
       "_label-Ww_o7uFm.js",
@@ -1509,18 +1509,18 @@
       "_apple-cards-carousel-CLVAq1dP.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Error.tsx": {
-    "file": "js/Error-BflnvMmx.js",
+    "file": "js/Error-DpgtV5rf.js",
     "name": "Error",
     "src": "resources/js/pages/Error.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_gsap-BEVD0nvf.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_icons-CHePV16u.js",
       "_utils-C5tkloDO.js",
       "_ThemeStyles-BLx2E52-.js",
@@ -1531,19 +1531,19 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Home.tsx": {
-    "file": "js/Home-Dz3YBZnG.js",
+    "file": "js/Home-DnThAOc4.js",
     "name": "Home",
     "src": "resources/js/pages/Home.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
-      "_BlockRenderer-ChFtJr1d.js",
+      "_BlockRenderer-Diu30bmy.js",
       "_utils-C5tkloDO.js",
       "_ThemeStyles-BLx2E52-.js",
       "_icons-CHePV16u.js",
@@ -1555,7 +1555,7 @@
       "_animations-DzGwddfm.js",
       "_AnimatedSection-tH0gVlVP.js",
       "_button-Bz4WGGue.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_card-D5Yis5yR.js",
       "_input-DTMcTkqz.js",
       "_label-Ww_o7uFm.js",
@@ -1567,11 +1567,11 @@
       "_apple-cards-carousel-CLVAq1dP.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Podcasts.tsx": {
-    "file": "js/Podcasts-Dnvex9_Q.js",
+    "file": "js/Podcasts-DErJFltl.js",
     "name": "Podcasts",
     "src": "resources/js/pages/Podcasts.tsx",
     "isDynamicEntry": true,
@@ -1581,7 +1581,7 @@
       "_PodcastSearch-D1dbdxuy.js",
       "_button-Bz4WGGue.js",
       "_utils-C5tkloDO.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_icons-CHePV16u.js",
       "_PodcastCategoryBadge-B67SkFto.js",
@@ -1594,11 +1594,11 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Podcasts/Show.tsx": {
-    "file": "js/Show-Bc6FbsAN.js",
+    "file": "js/Show-B0IW-mRQ.js",
     "name": "Show",
     "src": "resources/js/pages/Podcasts/Show.tsx",
     "isDynamicEntry": true,
@@ -1610,7 +1610,7 @@
       "_PodcastCategoryBadge-B67SkFto.js",
       "_button-Bz4WGGue.js",
       "_badge-DJSMIGM_.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_icons-CHePV16u.js",
       "_utils-C5tkloDO.js",
@@ -1623,20 +1623,20 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Portfolio.tsx": {
-    "file": "js/Portfolio-Z0YSgKML.js",
+    "file": "js/Portfolio-xs65q8qj.js",
     "name": "Portfolio",
     "src": "resources/js/pages/Portfolio.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
-      "_BlockRenderer-ChFtJr1d.js",
+      "_BlockRenderer-Diu30bmy.js",
       "_useAnimations-DrkQ0btm.js",
       "_gsap-BEVD0nvf.js",
       "_accessibilityManager-B8glcpdm.js",
@@ -1647,7 +1647,7 @@
       "_PageTransition-BzqULN9C.js",
       "_animations-DzGwddfm.js",
       "_button-Bz4WGGue.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_card-D5Yis5yR.js",
       "_input-DTMcTkqz.js",
       "_label-Ww_o7uFm.js",
@@ -1659,18 +1659,18 @@
       "_apple-cards-carousel-CLVAq1dP.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Portfolio/Show.tsx": {
-    "file": "js/Show-CHiQgaxn.js",
+    "file": "js/Show-D_uJ3efj.js",
     "name": "Show",
     "src": "resources/js/pages/Portfolio/Show.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_apple-cards-carousel-CLVAq1dP.js",
       "_icons-CHePV16u.js",
@@ -1684,20 +1684,20 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Services.tsx": {
-    "file": "js/Services-D21B2bT1.js",
+    "file": "js/Services-ClsRYIgg.js",
     "name": "Services",
     "src": "resources/js/pages/Services.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
-      "_BlockRenderer-ChFtJr1d.js",
+      "_BlockRenderer-Diu30bmy.js",
       "_icons-CHePV16u.js",
       "_useAnimations-DrkQ0btm.js",
       "_gsap-BEVD0nvf.js",
@@ -1708,7 +1708,7 @@
       "_PageTransition-BzqULN9C.js",
       "_animations-DzGwddfm.js",
       "_button-Bz4WGGue.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_card-D5Yis5yR.js",
       "_input-DTMcTkqz.js",
       "_label-Ww_o7uFm.js",
@@ -1720,18 +1720,18 @@
       "_apple-cards-carousel-CLVAq1dP.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Services/Show.tsx": {
-    "file": "js/Show-DG5DXUJl.js",
+    "file": "js/Show-BtNe4TXU.js",
     "name": "Show",
     "src": "resources/js/pages/Services/Show.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_icons-CHePV16u.js",
       "_useAnimations-DrkQ0btm.js",
@@ -1744,18 +1744,18 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/Team.tsx": {
-    "file": "js/Team-BiIO0Sd0.js",
+    "file": "js/Team-8ghnpAnw.js",
     "name": "Team",
     "src": "resources/js/pages/Team.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
       "_AnimatedSection-tH0gVlVP.js",
-      "_MainLayout-BPRNYi8F.js",
+      "_MainLayout-Dkmix8PO.js",
       "_SeoHead-B74udDh2.js",
       "_icons-CHePV16u.js",
       "_useAnimations-DrkQ0btm.js",
@@ -1768,7 +1768,7 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/admin/Analytics.tsx": {
@@ -1849,7 +1849,7 @@
     ]
   },
   "resources/js/pages/admin/contact-inquiries/Index.tsx": {
-    "file": "js/Index-BIV8Jsvn.js",
+    "file": "js/Index-DZUiXE9_.js",
     "name": "Index",
     "src": "resources/js/pages/admin/contact-inquiries/Index.tsx",
     "isDynamicEntry": true,
@@ -1875,7 +1875,7 @@
       "_gsap-BEVD0nvf.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/admin/contact-inquiries/Show.tsx": {
@@ -2187,7 +2187,7 @@
     ]
   },
   "resources/js/pages/admin/pages/Edit.tsx": {
-    "file": "js/Edit-B8Pbv28q.js",
+    "file": "js/Edit-CQfJ8m0d.js",
     "name": "Edit",
     "src": "resources/js/pages/admin/pages/Edit.tsx",
     "isDynamicEntry": true,
@@ -2225,7 +2225,7 @@
       "_alert-DiXO4CO9.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/admin/pages/Index.tsx": {
@@ -3249,24 +3249,24 @@
     ]
   },
   "resources/js/pages/demo/AnimatedShaderHeroDemo.tsx": {
-    "file": "js/AnimatedShaderHeroDemo-CLfwx-72.js",
+    "file": "js/AnimatedShaderHeroDemo-CSW3E5iM.js",
     "name": "AnimatedShaderHeroDemo",
     "src": "resources/js/pages/demo/AnimatedShaderHeroDemo.tsx",
     "isDynamicEntry": true,
     "imports": [
       "_vendor-CEaxvEcn.js",
-      "_animated-shader-hero-Bevt4ss8.js",
+      "_animated-shader-hero-CLapnZc1.js",
       "_utils-C5tkloDO.js",
       "resources/js/app.tsx",
       "_icons-CHePV16u.js",
       "_gsap-BEVD0nvf.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/settings/appearance.tsx": {
-    "file": "js/appearance-DegHm7XK.js",
+    "file": "js/appearance-D1LldmHB.js",
     "name": "appearance",
     "src": "resources/js/pages/settings/appearance.tsx",
     "isDynamicEntry": true,
@@ -3293,7 +3293,7 @@
       "_animations-DzGwddfm.js"
     ],
     "css": [
-      "css/app-3VL0cywL.css"
+      "css/app-kHSmuiFy.css"
     ]
   },
   "resources/js/pages/settings/password.tsx": {
