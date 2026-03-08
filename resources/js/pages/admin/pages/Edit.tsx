@@ -18,7 +18,7 @@ interface Props {
     page: Page;
 }
 
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | (string & {});
 
 
 
@@ -516,6 +516,16 @@ const getDefaultContentForType = (type: BlockType) => {
                     ]
                 }
             ]
+        };
+        case 'stacked_cards': return {
+            collection: 'insights',
+            limit: 5,
+            title: 'Discover More',
+            description: 'Explore our latest updates and insights.',
+        };
+        case 'cards_slider': return {
+            collection: 'insights',
+            limit: 5,
         };
         default: return {};
 

@@ -56,6 +56,7 @@ const CATEGORIES = [
             { type: 'stats', label: 'Statistics', icon: <Activity className="h-5 w-5" />, desc: 'Animated counter grid' },
             { type: 'features', label: 'Features', icon: <Layers className="h-5 w-5" />, desc: 'Feature grid with icons' },
             { type: 'parallax_features', label: 'Parallax Features', icon: <Activity className="h-5 w-5" />, desc: 'High-end scroll animated features' },
+            { type: 'cards_slider', label: 'Cards Slider', icon: <Layers className="h-5 w-5" />, desc: 'Horizontal slider of dynamic cards' },
         ]
     },
     {

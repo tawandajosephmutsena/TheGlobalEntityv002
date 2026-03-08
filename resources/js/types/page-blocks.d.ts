@@ -273,17 +273,26 @@ export type PageBlock =
     | CultureBentoBlock
     | TeamJoinBlock
     | Feature108Block
+    | StackedCardsBlock
     | ScrollAnimationBlock
     | FlipRevealBlock
     | ConnectBlock
     | PodcastGridBlock
     | PodcastFeaturedBlock
     | PodcastPlayerBlock
-<<<<<<< HEAD
     | CommunityReviewBlock
     | FestivalMapBlock
     | FestivalCardBlock
-    | CTAHeroBlock;
+    | CTAHeroBlock
+    | GlassmorphismPricingBlock
+    | NewsletterSignupBlock
+    | EcosystemContentBlock
+    | EnterprisePricingBlock
+    | FaqSectionBlock
+    | AiFeaturesBlock
+    | StackingCardsBlock
+    | ProductCardStackBlock
+    | CardsSliderBlock;
 
 export interface CTAHeroBlock extends BaseBlock {
     type: 'cta_hero';
@@ -302,16 +311,6 @@ export interface CTAHeroBlock extends BaseBlock {
         imageLink?: string;
     };
 }
-=======
-    | GlassmorphismPricingBlock
-    | NewsletterSignupBlock
-    | EcosystemContentBlock
-    | EnterprisePricingBlock
-    | FaqSectionBlock
-    | AiFeaturesBlock
-    | StackingCardsBlock
-    | ProductCardStackBlock;
->>>>>>> origin/main
 
 
 export interface Feature108Block extends BaseBlock {
@@ -772,4 +771,21 @@ export interface ProductCardStackBlock extends BaseBlock {
         }>;
     };
 }
->>>>>>> origin/main
+
+export interface StackedCardsBlock extends BaseBlock {
+    type: 'stacked_cards';
+    content: {
+        collection?: string; // 'insights', 'portfolio', 'services'
+        limit?: number;
+        title?: string;
+        description?: string;
+    };
+}
+
+export interface CardsSliderBlock extends BaseBlock {
+    type: 'cards_slider';
+    content: {
+        collection?: string; // 'insights', 'portfolio', 'services'
+        limit?: number;
+    };
+}

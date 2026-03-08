@@ -9,7 +9,8 @@ import type {
     CommunityReviewBlock, 
     FestivalMapBlock as FestivalMapBlockType, 
     FestivalCardBlock as FestivalCardBlockType, 
-    CTAHeroBlock as CTAHeroBlockType 
+    CTAHeroBlock as CTAHeroBlockType,
+    StackedCardsBlock as StackedCardsBlockType
 } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
 import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe, Mail, HelpCircle, Layers } from 'lucide-react';
@@ -71,6 +72,11 @@ const StackingCardsBlockEditor = React.lazy(() => import('@/components/admin/Pag
 
 const ProductCardStackBlockComponent = React.lazy(() => import('@/components/Blocks/ProductCardStackBlock'));
 const ProductCardStackBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/ProductCardStackBlockEditor'));
+
+const StackedCardsBlockComponent = React.lazy(() => import('@/components/Blocks/StackedCardsBlock'));
+const StackedCardsBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/StackedCardsBlockEditor'));
+const CardsSliderBlockComponent = React.lazy(() => import('@/components/Blocks/CardsSliderBlock'));
+const CardsSliderBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/CardsSliderBlockEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -451,6 +457,42 @@ export function registerBlocks() {
         editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <ProductCardStackBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'stacked_cards',
+        label: 'Dynamic Stacked Cards',
+        icon: <Layers className="h-4 w-4" />,
+        desc: 'Dynamic cards that stack on top of each other, pulling from selected collections.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <StackedCardsBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <StackedCardsBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'cards_slider',
+        label: 'Cards Slider',
+        icon: <Layers className="h-4 w-4" />,
+        desc: 'Horizontal slider of dynamic cards, pulling from selected collections.',
+        category: 'Content',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <CardsSliderBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <CardsSliderBlockEditor {...props} />
             </React.Suspense>
         )
     });
