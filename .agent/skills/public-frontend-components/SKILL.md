@@ -10,6 +10,7 @@ Use this skill when you need to create or add components (blocks) to the public-
 ## Workflow Steps
 
 ### 1. Update Type Definitions
+
 Define the data structure of the block's content required by the page builder backend.
 
 - **File**: `resources/js/types/page-blocks.d.ts`
@@ -38,15 +39,16 @@ export interface MyNewDynamicBlock extends BaseBlock {
 ```
 
 ### 2. Create the Block Renderer (Frontend)
+
 Build the frontend presence of the block, using existing theme colors, typography, spacing, and styling conventions.
 
 - **Directory**: `resources/js/components/Blocks/`
 - **Conventions**:
-    - **Styles & Themes**: Use existing Tailwind theme colors (e.g., `bg-background`, `text-foreground`, `text-primary`, `bg-muted`). 
-    - **Buttons and Links**: Use shadcn/ui components like `Button` or custom `Link` components where feasible.
-    - **Rich Text Rendering**: Since `description` or larger text fields are rich text, you must render them safely using `dangerouslySetInnerHTML`. Add Tailwind's `prose` class or appropriate margin/typography classes to style the HTML correctly (e.g., `className="prose prose-sm dark:prose-invert"`).
-    - **Media**: Handle images gracefully. Use `img` with appropriate `src`, `alt`, `className`, and default placeholders.
-    - Handle null/undefined values dynamically to avoid crashes if fields are empty.
+  - **Styles & Themes**: Use existing Tailwind theme colors (e.g., `bg-background`, `text-foreground`, `text-primary`, `bg-muted`).
+  - **Buttons and Links**: Use shadcn/ui components like `Button` or custom `Link` components where feasible.
+  - **Rich Text Rendering**: Since `description` or larger text fields are rich text, you must render them safely using `dangerouslySetInnerHTML`. Add Tailwind's `prose` class or appropriate margin/typography classes to style the HTML correctly (e.g., `className="prose prose-sm dark:prose-invert"`).
+  - **Media**: Handle images gracefully. Use `img` with appropriate `src`, `alt`, `className`, and default placeholders.
+  - Handle null/undefined values dynamically to avoid crashes if fields are empty.
 
 ```tsx
 import React from 'react';
@@ -85,14 +87,15 @@ export default MyNewDynamicBlockRenderer;
 ```
 
 ### 3. Create the Block Editor (Admin)
+
 Create the editor component in the admin interface to allow users to update the block dynamically.
 
 - **Directory**: `resources/js/components/admin/PageBuilder/editors/`
 - **Conventions**:
-    - Use `Input` for short text fields (badge, heading, button text, links).
-    - Use `MediaLibrary` for selecting or managing dynamic media (images, videos).
-    - Use **`RichTextEditor`** for `description` or any larger, multi-line text fields so the user can format their content.
-    - Update changes using the provided `onUpdate` prop.
+  - Use `Input` for short text fields (badge, heading, button text, links).
+  - Use `MediaLibrary` for selecting or managing dynamic media (images, videos).
+  - Use **`RichTextEditor`** for `description` or any larger, multi-line text fields so the user can format their content.
+  - Update changes using the provided `onUpdate` prop.
 
 ```tsx
 import React from 'react';
@@ -174,12 +177,13 @@ export default MyNewDynamicBlockEditor;
 ```
 
 ### 4. Register the Block
-Ensure your block appears in the "Add Component" modal. 
+
+Ensure your block appears in the "Add Component" modal.
 
 - **File**: `resources/js/lib/registerBlocks.tsx`
 - **Conventions**:
-    - Evaluate the existing categories (e.g., `'Heroes'`, `'Features'`, `'Testimonials'`, `'Media'`, `'Content'`) and add the block to the **most relevant existing category**. Only create a new category if the block represents an entirely new domain.
-    - Provide a distinct `icon`, a descriptive `label`, and a helpful `desc`.
+  - Evaluate the existing categories (e.g., `'Heroes'`, `'Features'`, `'Testimonials'`, `'Media'`, `'Content'`) and add the block to the **most relevant existing category**. Only create a new category if the block represents an entirely new domain.
+  - Provide a distinct `icon`, a descriptive `label`, and a helpful `desc`.
 
 ```tsx
 // Inside registerBlocks.tsx
@@ -211,12 +215,14 @@ blockRegistry.register({
 > **CRITICAL**: Do NOT use inline type imports (e.g. `import('@/types/...').Block`) inside `registerBlocks.tsx` as it causes silent failures in Vite/esbuild where blocks randomly disappear from the registry. Always use `any` types for the `renderer` and `editor` props arrays directly in the registry file.
 
 ## Best Practices
+
 - **Rich Text is Crucial**: Anytime an editor might want to bold, bullet, or format text, use `<RichTextEditor />` instead of `<Textarea />`.
 - **Theme Matching**: Use `text-primary`, `bg-muted`, `bg-background`, `border-border`, etc. Avoid hardcoding HEX/RGB colors unless specified. This allows seamless light/dark mode and brand theme integration.
 - **Data Validation**: Avoid rendering components that expect data if the data is not present (e.g. dont render an `<img>` tag if `imageSrc` is empty).
 - **Lazy Loading**: Use `React.lazy` on all new elements exported via block registry. Keep the main application chunk small.
 
 ## Verification Checklist
+
 - [ ] Block has definition defined in `page-blocks.d.ts`.
 - [ ] All inputs (text, button links, images) are fully dynamic.
 - [ ] Sub-sections or array-driven tabs are dynamically repeatable if needed.
