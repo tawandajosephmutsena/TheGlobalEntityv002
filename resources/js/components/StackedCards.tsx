@@ -35,10 +35,10 @@ export const StackedCards: React.FC<StackedCardsProps> = ({
                 <div
                     key={index}
                     className="relative z-10 transition-transform duration-300 hover:scale-105"
-                    style={{
+                    {...{ style: {
                         marginBottom:
                             index < children.length - 1 ? `${spacing}px` : 0,
-                    }}
+                    } }}
                 >
                     {child}
                 </div>

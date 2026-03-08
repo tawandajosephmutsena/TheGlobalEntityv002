@@ -211,10 +211,10 @@ export default function Analytics({
                                                 <div className="h-1.5 w-full bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
                                                     <div 
                                                         className="h-full transition-all duration-1000"
-                                                        style={{ 
+                                                        {...{ style: { 
                                                             width: `${device.value}%`,
                                                             backgroundColor: COLORS[idx % COLORS.length]
-                                                        }}
+                                                        } }}
                                                     />
                                                 </div>
                                             </div>
