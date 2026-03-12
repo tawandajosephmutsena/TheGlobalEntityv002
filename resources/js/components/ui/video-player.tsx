@@ -82,17 +82,25 @@ const getYouTubeThumbnail = (videoId: string): string =>
 
 /**
  * Build the embed URL — only called AFTER the user clicks play.
+ * Uses standard youtube.com/embed (not youtube-nocookie.com which aggressively blocks embeds).
+ * Does NOT use autoplay=1 to avoid triggering YouTube's bot detection.
  */
 const getEmbedUrl = (url: string): string => {
   const ytId = getYouTubeId(url);
   if (ytId) {
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    return `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
+    return `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&iv_load_policy=3`;
   }
   const vimeoId = getVimeoId(url);
   if (vimeoId) {
-    return `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+    return `https://player.vimeo.com/video/${vimeoId}`;
   }
+  return url;
+};
+
+/** Get the direct watch URL for opening in a new tab as a fallback */
+const getWatchUrl = (url: string): string => {
+  const ytId = getYouTubeId(url);
+  if (ytId) return `https://www.youtube.com/watch?v=${ytId}`;
   return url;
 };
 
@@ -102,6 +110,7 @@ const getEmbedUrl = (url: string): string => {
 // Only loads the actual iframe AFTER the user clicks play.
 const EmbedPlayer = ({ src }: { src: string }) => {
   const [activated, setActivated] = useState(false);
+  const [embedFailed, setEmbedFailed] = useState(false);
   const videoType = getVideoType(src);
   const ytId = getYouTubeId(src);
 
@@ -111,7 +120,7 @@ const EmbedPlayer = ({ src }: { src: string }) => {
     ? getYouTubeThumbnail(ytId)
     : null;
 
-  if (activated) {
+  if (activated && !embedFailed) {
     // User has clicked play — now we load the actual iframe
     return (
       <div className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-black shadow-[0_0_20px_rgba(0,0,0,0.2)] aspect-video">
@@ -119,10 +128,48 @@ const EmbedPlayer = ({ src }: { src: string }) => {
           title="Video Player"
           src={getEmbedUrl(src)}
           className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          onError={() => setEmbedFailed(true)}
         />
+        {/* Fallback link always visible at bottom */}
+        <a
+          href={getWatchUrl(src)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute bottom-3 right-3 z-10 text-xs text-white/60 hover:text-white bg-black/50 hover:bg-black/70 px-3 py-1.5 rounded-full backdrop-blur-sm transition-colors"
+        >
+          Watch on YouTube ↗
+        </a>
       </div>
+    );
+  }
+
+  // Embed failed — show a direct link to YouTube
+  if (embedFailed) {
+    return (
+      <motion.div
+        className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-black shadow-[0_0_20px_rgba(0,0,0,0.2)] aspect-video cursor-pointer group"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        {thumbnailUrl && (
+          <img src={thumbnailUrl} alt="Video thumbnail" className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-4">
+          <p className="text-white/70 text-sm">Embed unavailable</p>
+          <a
+            href={getWatchUrl(src)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors shadow-lg"
+          >
+            <Play className="w-5 h-5 fill-white" />
+            Watch on YouTube
+          </a>
+        </div>
+      </motion.div>
     );
   }
 
