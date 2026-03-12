@@ -1,71 +1,57 @@
-"use client";
+ "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import ReactPlayer from "react-player";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, Volume1, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const formatTime = (seconds: number) => {
-const minutes = Math.floor(seconds / 60);
-const remainingSeconds = Math.floor(seconds % 60);
-return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
 const CustomSlider = ({
-value,
-onChange,
-className,
+  value,
+  onChange,
+  className,
 }: {
-value: number;
-onChange: (value: number) => void;
-className?: string;
+  value: number;
+  onChange: (value: number) => void;
+  className?: string;
 }) => {
-return (
-  <motion.div
-    className={cn(
-      "relative w-full h-1 bg-white/20 rounded-full cursor-pointer",
-      className
-    )}
-    onClick={(e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percentage = (x / rect.width) * 100;
-      onChange(Math.min(Math.max(percentage, 0), 100));
-    }}
-  >
+  return (
     <motion.div
-      className="absolute top-0 left-0 h-full bg-white rounded-full"
-      style={{ width: `${value}%` }}
-      initial={{ width: 0 }}
-      animate={{ width: `${value}%` }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    />
-  </motion.div>
-);
+      className={cn(
+        "relative w-full h-1 bg-white/20 rounded-full cursor-pointer",
+        className
+      )}
+      onClick={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = (x / rect.width) * 100;
+        onChange(Math.min(Math.max(percentage, 0), 100));
+      }}
+    >
+      <motion.div
+        className="absolute top-0 left-0 h-full bg-white rounded-full"
+        style={{ width: `${value}%` }}
+        initial={{ width: 0 }}
+        animate={{ width: `${value}%` }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      />
+    </motion.div>
+  );
 };
 
-const getEmbedUrl = (url: string) => {
-  if (url.includes("youtube.com") || url.includes("youtu.be")) {
-    let videoId = "";
-    if (url.includes("youtu.be")) {
-      videoId = url.split("youtu.be/")[1]?.split("?")[0];
-    } else {
-      videoId = url.split("v=")[1]?.split("&")[0];
-    }
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=0&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
-  } else if (url.includes("vimeo.com")) {
-    const videoId = url.split("vimeo.com/")[1]?.split("?")[0];
-    return `https://player.vimeo.com/video/${videoId}?autoplay=1`;
-  }
-  return url;
-};
-
-const getVideoType = (url: string) => {
-  if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
-  if (url.includes("vimeo.com")) return "vimeo";
-  return "direct";
+/**
+ * Detect whether a URL is an external embed (YouTube, Vimeo, etc.)
+ * or a direct file (mp4, webm, uploaded).
+ */
+const isExternalVideo = (url: string) => {
+  return ReactPlayer.canPlay(url) && !url.match(/\.(mp4|webm|ogg|mov)(\?|$)/i);
 };
 
 const VideoPlayer = ({ src }: { src: string }) => {
@@ -79,24 +65,98 @@ const VideoPlayer = ({ src }: { src: string }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showOverlay, setShowOverlay] = useState(true);
+  const [posterUrl, setPosterUrl] = useState<string | null>(null);
 
-  const videoType = getVideoType(src);
-  console.log(`VideoPlayer src: ${src}, type: ${videoType}`);
+  const external = isExternalVideo(src);
 
-  if (videoType !== "direct") {
+  // Generate a poster from the first frame for direct videos
+  useEffect(() => {
+    if (external) return;
+
+    const video = document.createElement("video");
+    video.crossOrigin = "anonymous";
+    video.preload = "metadata";
+    video.muted = true;
+    video.src = src;
+
+    const handleLoaded = () => {
+      // Seek to 0.1s to get first visible frame (some videos have black at 0)
+      video.currentTime = 0.1;
+    };
+
+    const handleSeeked = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          setPosterUrl(canvas.toDataURL("image/jpeg", 0.7));
+        }
+      } catch {
+        // CORS or other failure — just fallback to no poster
+      }
+      video.remove();
+    };
+
+    video.addEventListener("loadeddata", handleLoaded);
+    video.addEventListener("seeked", handleSeeked);
+    video.load();
+
+    return () => {
+      video.removeEventListener("loadeddata", handleLoaded);
+      video.removeEventListener("seeked", handleSeeked);
+      video.remove();
+    };
+  }, [src, external]);
+
+  // ─── External video (YouTube, Vimeo, etc.) via ReactPlayer ───
+  if (external) {
     return (
       <div className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-[#11111198] shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm aspect-video">
-        <iframe
-          title="Video Player"
-          src={getEmbedUrl(src)}
-          className="w-full h-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
+        <ReactPlayer
+          url={src}
+          width="100%"
+          height="100%"
+          controls
+          light            // shows thumbnail first, plays on click — avoids login wall
+          playing={false}
+          playIcon={
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center pl-1 border border-white/30 text-white shadow-2xl"
+            >
+              <Play className="w-10 h-10 fill-white" />
+            </motion.div>
+          }
+          config={{
+            youtube: {
+              playerVars: {
+                modestbranding: 1,
+                rel: 0,
+                showinfo: 0,
+                iv_load_policy: 3,
+                origin: typeof window !== "undefined" ? window.location.origin : "",
+              },
+            },
+            vimeo: {
+              playerOptions: {
+                byline: false,
+                portrait: false,
+                title: false,
+              },
+            },
+          }}
         />
       </div>
     );
   }
 
+  // ─── Direct / uploaded video with custom controls ───
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -120,9 +180,9 @@ const VideoPlayer = ({ src }: { src: string }) => {
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      const progress =
+      const prog =
         (videoRef.current.currentTime / videoRef.current.duration) * 100;
-      setProgress(isFinite(progress) ? progress : 0);
+      setProgress(isFinite(prog) ? prog : 0);
       setCurrentTime(videoRef.current.currentTime);
       setDuration(videoRef.current.duration);
     }
@@ -170,6 +230,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
       <video
         ref={videoRef}
         className="w-full"
+        preload="metadata"
+        poster={posterUrl || undefined}
         onTimeUpdate={handleTimeUpdate}
         src={src}
         onClick={togglePlay}
