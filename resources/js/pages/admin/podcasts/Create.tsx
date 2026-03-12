@@ -201,6 +201,14 @@ export default function PodcastCreate({ categories }: Props) {
                                                 }}
                                             />
                                         </div>
+                                        <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3 text-xs space-y-1.5">
+                                            <p className="font-semibold text-blue-600 dark:text-blue-400">ℹ️ How video links work</p>
+                                            <ul className="text-muted-foreground space-y-1 list-disc list-inside">
+                                                <li><strong>YouTube / Vimeo:</strong> A thumbnail preview is shown. The video loads only when the viewer clicks play. A &quot;Watch on YouTube&quot; fallback link is also provided.</li>
+                                                <li><strong>Direct files</strong> (MP4, WebM): The browser&apos;s native player is used with a poster frame from the first second.</li>
+                                                <li><strong>Best quality:</strong> For the smoothest playback, upload the video file directly via &quot;Select from Library&quot;.</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 )}
                                 {errors.media_url && <p className="text-sm text-destructive">{errors.media_url}</p>}

@@ -185,7 +185,10 @@ export function PodcastPlayerProvider({ children }: { children: React.ReactNode 
         <PodcastPlayerContext.Provider value={value}>
             {children}
             {/* Hidden ReactPlayer — always mounted so playback persists across navigations */}
-            {state.currentTrack && state.isVisible && (
+            {/* Skip YouTube URLs here — they can't play hidden and trigger bot checks.
+                YouTube videos are handled in-place by PodcastPlayer's iframe embed. */}
+            {state.currentTrack && state.isVisible && 
+             !(state.currentTrack.src.includes('youtube.com') || state.currentTrack.src.includes('youtu.be')) && (
                 <ReactPlayer
                     ref={playerRef}
                     src={state.currentTrack.src}
