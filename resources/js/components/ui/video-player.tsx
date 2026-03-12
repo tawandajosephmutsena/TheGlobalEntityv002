@@ -1,7 +1,6 @@
- "use client";
+"use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import ReactPlayer from "react-player";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Volume2, Volume1, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -46,15 +45,134 @@ const CustomSlider = ({
   );
 };
 
-/**
- * Detect whether a URL is an external embed (YouTube, Vimeo, etc.)
- * or a direct file (mp4, webm, uploaded).
- */
-const isExternalVideo = (url: string) => {
-  return ReactPlayer.canPlay(url) && !url.match(/\.(mp4|webm|ogg|mov)(\?|$)/i);
+// ─── YouTube / Vimeo helpers ───
+
+/** Extract the YouTube video ID from any common YouTube URL format */
+const getYouTubeId = (url: string): string | null => {
+  if (url.includes("youtu.be")) {
+    return url.split("youtu.be/")[1]?.split(/[?&#]/)[0] || null;
+  }
+  if (url.includes("youtube.com")) {
+    const match = url.match(/[?&]v=([^&#]+)/);
+    return match?.[1] || null;
+  }
+  return null;
 };
 
-const VideoPlayer = ({ src }: { src: string }) => {
+/** Extract the Vimeo video ID */
+const getVimeoId = (url: string): string | null => {
+  if (url.includes("vimeo.com")) {
+    return url.split("vimeo.com/")[1]?.split(/[?&#]/)[0] || null;
+  }
+  return null;
+};
+
+const getVideoType = (url: string): "youtube" | "vimeo" | "direct" => {
+  if (url.includes("youtube.com") || url.includes("youtu.be")) return "youtube";
+  if (url.includes("vimeo.com")) return "vimeo";
+  return "direct";
+};
+
+/**
+ * Get a YouTube thumbnail URL without touching any YouTube embed/API.
+ * This is a plain image CDN and does NOT trigger bot checks.
+ */
+const getYouTubeThumbnail = (videoId: string): string =>
+  `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+/**
+ * Build the embed URL — only called AFTER the user clicks play.
+ */
+const getEmbedUrl = (url: string): string => {
+  const ytId = getYouTubeId(url);
+  if (ytId) {
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    return `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=0&rel=0&modestbranding=1&showinfo=0&iv_load_policy=3&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
+  }
+  const vimeoId = getVimeoId(url);
+  if (vimeoId) {
+    return `https://player.vimeo.com/video/${vimeoId}?autoplay=1`;
+  }
+  return url;
+};
+
+
+// ─── Embed Player (YouTube / Vimeo) ───
+// Shows a static thumbnail with a play button.
+// Only loads the actual iframe AFTER the user clicks play.
+const EmbedPlayer = ({ src }: { src: string }) => {
+  const [activated, setActivated] = useState(false);
+  const videoType = getVideoType(src);
+  const ytId = getYouTubeId(src);
+
+  // For YouTube we can get a thumbnail without loading the iframe.
+  // For Vimeo we show a minimal dark preview (Vimeo thumbnails require API call).
+  const thumbnailUrl = videoType === "youtube" && ytId
+    ? getYouTubeThumbnail(ytId)
+    : null;
+
+  if (activated) {
+    // User has clicked play — now we load the actual iframe
+    return (
+      <div className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-black shadow-[0_0_20px_rgba(0,0,0,0.2)] aspect-video">
+        <iframe
+          title="Video Player"
+          src={getEmbedUrl(src)}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+
+  // Pre-click state — show thumbnail + play button, NO iframe loaded
+  return (
+    <motion.div
+      className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-black shadow-[0_0_20px_rgba(0,0,0,0.2)] aspect-video cursor-pointer group"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      onClick={() => setActivated(true)}
+    >
+      {/* Thumbnail background */}
+      {thumbnailUrl ? (
+        <img
+          src={thumbnailUrl}
+          alt="Video thumbnail"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800" />
+      )}
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+
+      {/* Play button */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center pl-1 border border-white/30 text-white shadow-2xl"
+        >
+          <Play className="w-10 h-10 fill-white" />
+        </motion.div>
+      </div>
+
+      {/* Platform badge */}
+      <div className="absolute bottom-4 right-4 text-white/50 text-xs font-medium uppercase tracking-wider">
+        {videoType === "youtube" ? "YouTube" : "Vimeo"}
+      </div>
+    </motion.div>
+  );
+};
+
+
+// ─── Direct Video Player (uploaded files) ───
+const DirectVideoPlayer = ({ src }: { src: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -67,12 +185,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
   const [showOverlay, setShowOverlay] = useState(true);
   const [posterUrl, setPosterUrl] = useState<string | null>(null);
 
-  const external = isExternalVideo(src);
-
-  // Generate a poster from the first frame for direct videos
+  // Generate a poster from the first frame of the video
   useEffect(() => {
-    if (external) return;
-
     const video = document.createElement("video");
     video.crossOrigin = "anonymous";
     video.preload = "metadata";
@@ -80,10 +194,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
     video.src = src;
 
     const handleLoaded = () => {
-      // Seek to 0.1s to get first visible frame (some videos have black at 0)
       video.currentTime = 0.1;
     };
-
     const handleSeeked = () => {
       try {
         const canvas = document.createElement("canvas");
@@ -95,7 +207,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
           setPosterUrl(canvas.toDataURL("image/jpeg", 0.7));
         }
       } catch {
-        // CORS or other failure — just fallback to no poster
+        // CORS or other failure — fall back to no poster
       }
       video.remove();
     };
@@ -109,54 +221,8 @@ const VideoPlayer = ({ src }: { src: string }) => {
       video.removeEventListener("seeked", handleSeeked);
       video.remove();
     };
-  }, [src, external]);
+  }, [src]);
 
-  // ─── External video (YouTube, Vimeo, etc.) via ReactPlayer ───
-  if (external) {
-    return (
-      <div className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-[#11111198] shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm aspect-video">
-        <ReactPlayer
-          url={src}
-          width="100%"
-          height="100%"
-          controls
-          light            // shows thumbnail first, plays on click — avoids login wall
-          playing={false}
-          playIcon={
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center pl-1 border border-white/30 text-white shadow-2xl"
-            >
-              <Play className="w-10 h-10 fill-white" />
-            </motion.div>
-          }
-          config={{
-            youtube: {
-              playerVars: {
-                modestbranding: 1,
-                rel: 0,
-                showinfo: 0,
-                iv_load_policy: 3,
-                origin: typeof window !== "undefined" ? window.location.origin : "",
-              },
-            },
-            vimeo: {
-              playerOptions: {
-                byline: false,
-                portrait: false,
-                title: false,
-              },
-            },
-          }}
-        />
-      </div>
-    );
-  }
-
-  // ─── Direct / uploaded video with custom controls ───
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -236,37 +302,37 @@ const VideoPlayer = ({ src }: { src: string }) => {
         src={src}
         onClick={togglePlay}
         onEnded={() => {
-            setIsPlaying(false);
-            setShowOverlay(true);
+          setIsPlaying(false);
+          setShowOverlay(true);
         }}
         onPlay={() => {
-            setIsPlaying(true);
-            setShowOverlay(false);
+          setIsPlaying(true);
+          setShowOverlay(false);
         }}
         onPause={() => {
-            setIsPlaying(false);
-            setShowOverlay(true);
+          setIsPlaying(false);
+          setShowOverlay(true);
         }}
       />
-      
+
       <AnimatePresence>
         {!isPlaying && showOverlay && (
-          <motion.div 
-              className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors cursor-pointer"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={togglePlay}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={togglePlay}
           >
-              <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center pl-1 border border-white/30 text-white shadow-2xl"
-              >
-                  <Play className="w-10 h-10 fill-white" />
-              </motion.div>
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center pl-1 border border-white/30 text-white shadow-2xl"
+            >
+              <Play className="w-10 h-10 fill-white" />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -368,6 +434,18 @@ const VideoPlayer = ({ src }: { src: string }) => {
       </AnimatePresence>
     </motion.div>
   );
+};
+
+
+// ─── Main VideoPlayer ───
+const VideoPlayer = ({ src }: { src: string }) => {
+  const videoType = getVideoType(src);
+
+  if (videoType !== "direct") {
+    return <EmbedPlayer src={src} />;
+  }
+
+  return <DirectVideoPlayer src={src} />;
 };
 
 export default VideoPlayer;

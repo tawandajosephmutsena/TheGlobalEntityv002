@@ -30,23 +30,15 @@ const DEFAULT_LOGOS = [
     { name: "OpenAI", url: "https://cdn.simpleicons.org/openai/000000" }
 ];
 
-const getEmbedUrl = (url: string) => {
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
-        let videoId = "";
-        if (url.includes("youtu.be")) {
-            videoId = url.split("youtu.be/")[1]?.split("?")[0];
-        } else {
-            videoId = url.split("v=")[1]?.split("&")[0];
-        }
-        const origin = typeof window !== "undefined" ? window.location.origin : "";
-        // YouTube background params: autoplay, mute, loop, controls=0, disablekb=1, playlist (required for loop)
-        return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&disablekb=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1${origin ? `&origin=${origin}` : ""}`;
-    } else if (url.includes("vimeo.com")) {
-        const videoId = url.split("vimeo.com/")[1]?.split("?")[0];
-        // Vimeo background params: autoplay, background=1, loop, muted, byline=0, portrait=0, title=0
-        return `https://player.vimeo.com/video/${videoId}?autoplay=1&background=1&loop=1&muted=1&byline=0&portrait=0&title=0`;
+const getYouTubeId = (url: string): string | null => {
+    if (url.includes("youtu.be")) {
+        return url.split("youtu.be/")[1]?.split(/[?&#]/)[0] || null;
     }
-    return url;
+    if (url.includes("youtube.com")) {
+        const match = url.match(/[?&]v=([^&#]+)/);
+        return match?.[1] || null;
+    }
+    return null;
 };
 
 const getVideoType = (url: string) => {
@@ -54,6 +46,13 @@ const getVideoType = (url: string) => {
     if (url.includes("vimeo.com")) return "vimeo";
     return "direct";
 };
+
+/**
+ * Get a YouTube thumbnail URL from YouTube's image CDN.
+ * This is a plain image request and does NOT trigger bot checks.
+ */
+const getYouTubeThumbnail = (videoId: string): string =>
+    `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
 export default function VideoBackgroundHero({
     title = "Build 10x Faster with NS",
@@ -70,10 +69,9 @@ export default function VideoBackgroundHero({
     const activeLogos = logos && logos.length > 0 ? logos : DEFAULT_LOGOS;
     const videoRef = useRef<HTMLVideoElement>(null);
     const videoType = getVideoType(videoUrl);
-    const embedUrl = getEmbedUrl(videoUrl);
+    const ytId = getYouTubeId(videoUrl);
 
     useEffect(() => {
-        console.log(`[VideoHero] Type: ${videoType}, URL: ${videoUrl}`);
         if (videoType === "direct" && videoRef.current) {
             videoRef.current.play().catch(err => console.error("[VideoHero] Play failed:", err));
         }
@@ -94,15 +92,16 @@ export default function VideoBackgroundHero({
                         src={videoUrl}
                         onError={(e) => console.error("[VideoHero] Source error:", e)}
                     />
+                ) : videoType === "youtube" && ytId ? (
+                    /* YouTube: use a static thumbnail image instead of iframe to avoid bot checks */
+                    <img
+                        src={getYouTubeThumbnail(ytId)}
+                        alt="Video background"
+                        className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
+                    />
                 ) : (
-                    <div className="absolute top-1/2 left-1/2 w-[300%] h-[300%] -translate-x-1/2 -translate-y-1/2">
-                        <iframe
-                            src={embedUrl}
-                            title="Background video"
-                            className="w-full h-full pointer-events-none opacity-60 border-none"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                        />
-                    </div>
+                    /* Vimeo or other: show a dark gradient fallback rather than risk bot check */
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black opacity-80" />
                 )}
                 {/* Gradient Overlay for better readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80 z-10" />
