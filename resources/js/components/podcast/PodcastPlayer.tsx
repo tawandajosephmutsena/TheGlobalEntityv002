@@ -1,8 +1,19 @@
 import React, { useRef, useState, useCallback } from 'react';
 import ReactPlayer from 'react-player';
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Maximize2, Minimize2 } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Maximize2, Minimize2, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { WaveformVisualizer } from './WaveformVisualizer';
+
+// ─── YouTube helpers ───
+const getYouTubeId = (url: string): string | null => {
+    if (url.includes('youtu.be')) return url.split('youtu.be/')[1]?.split(/[?&#]/)[0] || null;
+    if (url.includes('youtube.com')) { const m = url.match(/[?&]v=([^&#]+)/); return m?.[1] || null; }
+    return null;
+};
+const isYouTubeUrl = (url: string) => url.includes('youtube.com') || url.includes('youtu.be');
+const getYouTubeThumbnail = (id: string) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+const getYouTubeWatchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+const getYouTubeEmbedUrl = (id: string) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3`;
 
 interface PodcastPlayerProps {
     src: string;
@@ -115,35 +126,83 @@ export function PodcastPlayer({
 
     // Note: ReactPlayer handles both local files and external URLs (YouTube, Vimeo) automatically
 
+    const ytId = getYouTubeId(src);
+    const isYT = isYouTubeUrl(src);
+    const [ytActivated, setYtActivated] = useState(false);
+
     return (
         <div className={cn('rounded-2xl bg-card border border-border overflow-hidden', className)}>
             {/* Video display area */}
             {mediaType === 'video' ? (
                 <div className={cn('relative bg-black', isFullscreen ? 'fixed inset-0 z-50' : 'aspect-video')}>
-                    <ReactPlayer
-                        ref={playerRef}
-                        src={src}
-                        playing={isPlaying}
-                        volume={isMuted ? 0 : volume}
-                        playbackRate={playbackRate}
-                        onTimeUpdate={handleTimeUpdate}
-                        onDurationChange={handleDurationChange}
-                        onEnded={handleEnded as unknown as React.ReactEventHandler<HTMLVideoElement>}
-                        width="100%"
-                        height="100%"
-                        style={{ position: 'absolute', top: 0, left: 0 }}
-                        playsInline
-                    />
-                    {!isPlaying && (
-                        <button
-                            onClick={togglePlay}
-                            className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
-                            aria-label="Play video"
-                        >
-                            <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
-                                <Play className="size-7 ml-1" />
-                            </div>
-                        </button>
+                    {isYT && ytId ? (
+                        /* YouTube: show thumbnail first, embed on click to avoid bot checks */
+                        ytActivated ? (
+                            <>
+                                <iframe
+                                    title={title}
+                                    src={getYouTubeEmbedUrl(ytId)}
+                                    className="absolute inset-0 w-full h-full"
+                                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
+                                <a
+                                    href={getYouTubeWatchUrl(ytId)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="absolute bottom-3 right-3 z-10 text-xs text-white/60 hover:text-white bg-black/50 hover:bg-black/70 px-3 py-1.5 rounded-full backdrop-blur-sm transition-colors flex items-center gap-1"
+                                >
+                                    Watch on YouTube <ExternalLink className="size-3" />
+                                </a>
+                            </>
+                        ) : (
+                            <>
+                                <img
+                                    src={getYouTubeThumbnail(ytId)}
+                                    alt={title}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                                <button
+                                    onClick={() => setYtActivated(true)}
+                                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
+                                    aria-label="Play video"
+                                >
+                                    <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
+                                        <Play className="size-7 ml-1" />
+                                    </div>
+                                </button>
+                            </>
+                        )
+                    ) : (
+                        /* Direct video: use ReactPlayer as before */
+                        <>
+                            <ReactPlayer
+                                ref={playerRef}
+                                src={src}
+                                playing={isPlaying}
+                                volume={isMuted ? 0 : volume}
+                                playbackRate={playbackRate}
+                                onTimeUpdate={handleTimeUpdate}
+                                onDurationChange={handleDurationChange}
+                                onEnded={handleEnded as unknown as React.ReactEventHandler<HTMLVideoElement>}
+                                width="100%"
+                                height="100%"
+                                style={{ position: 'absolute', top: 0, left: 0 }}
+                                playsInline
+                            />
+                            {!isPlaying && (
+                                <button
+                                    onClick={togglePlay}
+                                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
+                                    aria-label="Play video"
+                                >
+                                    <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
+                                        <Play className="size-7 ml-1" />
+                                    </div>
+                                </button>
+                            )}
+                        </>
                     )}
                     <button
                         onClick={() => setIsFullscreen(!isFullscreen)}
