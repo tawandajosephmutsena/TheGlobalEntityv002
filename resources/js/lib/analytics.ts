@@ -1,4 +1,4 @@
-import { router } from '@inertiajs/react';
+
 
 /**
  * Advanced Analytics Tracker
@@ -77,7 +77,7 @@ class AnalyticsTracker {
     /**
      * Sends the interaction data to the server
      */
-    private async sendInteraction(data: any) {
+    private async sendInteraction(data: Record<string, any>) {
         try {
             // Using navigator.sendBeacon for better reliability on page unload
             // but fallback to fetch for standard interactions
@@ -90,9 +90,8 @@ class AnalyticsTracker {
                     'X-CSRF-TOKEN': token || '',
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify(data),
             });
-        } catch (error) {
+        } catch {
             // Silently fail to not interrupt user experience
         }
     }
@@ -105,8 +104,10 @@ class AnalyticsTracker {
         if (el === document.body) return 'body';
         
         let path = el.tagName.toLowerCase();
-        if (el.className) {
-            path += `.${el.className.split(' ').join('.')}`;
+        if (el.className && typeof el.className === 'string') {
+            path += `.${el.className.split(/\s+/).filter(Boolean).join('.')}`;
+        } else if (el.classList && el.classList.length > 0) {
+            path += `.${Array.from(el.classList).join('.')}`;
         }
         
         return el.parentElement ? `${this.getSelector(el.parentElement as HTMLElement)} > ${path}` : path;

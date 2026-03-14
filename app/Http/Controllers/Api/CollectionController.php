@@ -92,6 +92,38 @@ class CollectionController extends Controller
                 });
                 break;
                 
+            case 'festivals':
+                $items = \App\Models\Festival::where('is_published', true)
+                    ->when($request->has('featured'), function ($query) {
+                        return $query->where('is_featured', true);
+                    })
+                    ->with(['author', 'category', 'activities'])
+                    ->latest()
+                    ->take($limit)
+                    ->get();
+                    
+                $data = $items->map(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'title' => $item->name,
+                        'description' => $item->description ?? '',
+                        'category' => $item->category?->name ?? 'Festival',
+                        'image' => $item->image ?: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800',
+                        'author' => [
+                            'name' => $item->author?->name ?? 'Admin',
+                            'avatar' => $item->author?->avatar_url ?? 'https://github.com/shadcn.png'
+                        ],
+                        'date' => $item->start_date ? $item->start_date->format('M d, Y') : '',
+                        'locationAddress' => $item->location['address'] ?? 'Multiple Locations',
+                        'url' => route('festivals.show', $item->slug),
+                        'location' => $item->location,
+                        'social_tags' => $item->social_tags ?? [],
+                        'gallery' => $item->gallery ?? [],
+                        'activities' => $item->activities->pluck('name')->toArray(),
+                    ];
+                });
+                break;
+                
             default:
                 // Fallback empty data if collection is not found
                 $data = [];

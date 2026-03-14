@@ -283,6 +283,7 @@ export type PageBlock =
     | CommunityReviewBlock
     | FestivalMapBlock
     | FestivalCardBlock
+    | FeaturedFestivalsBlock
     | CTAHeroBlock
     | GlassmorphismPricingBlock
     | NewsletterSignupBlock
@@ -593,7 +594,7 @@ export interface PodcastFeaturedBlock extends BaseBlock {
         subtitle?: string;
         description?: string;
         limit?: number;
-        layout?: 'hero' | 'cards' | 'list';
+        layout?: 'hero' | 'cards' | 'list' | 'bento';
         showPlayButton?: boolean;
         ctaText?: string;
         ctaHref?: string;
@@ -782,10 +783,22 @@ export interface StackedCardsBlock extends BaseBlock {
     };
 }
 
+
 export interface CardsSliderBlock extends BaseBlock {
     type: 'cards_slider';
     content: {
         collection?: string; // 'insights', 'portfolio', 'services'
         limit?: number;
+    };
+}
+
+export interface FeaturedFestivalsBlock extends BaseBlock {
+    type: 'featured_festivals';
+    content: {
+        title?: string;
+        subtitle?: string;
+        limit?: number;
+        showViewAll?: boolean;
+        ctaText?: string;
     };
 }

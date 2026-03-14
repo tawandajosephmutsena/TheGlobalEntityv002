@@ -89,7 +89,7 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
   if (loading) {
      return (
         <div className="w-full max-w-6xl mx-auto p-8 flex items-center justify-center">
-            <div className="animate-pulse h-[420px] w-full bg-muted rounded-3xl"></div>
+            <div className="animate-pulse h-[340px] w-full bg-muted rounded-3xl"></div>
         </div>
      );
   }
@@ -135,12 +135,12 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
           {cards.map((card) => (
             <motion.div
               key={card.id}
-              className="min-w-[320px] max-w-[320px] h-[480px]"
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
+              className="min-w-[300px] max-w-[300px] h-[340px]"
+              whileHover={{ y: -5, transition: { duration: 0.3 } }}
             >
-              <Card className="group relative h-full overflow-hidden rounded-3xl border-border/50 bg-card/30 backdrop-blur-md transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
+              <Card className="group relative h-full flex flex-col overflow-hidden rounded-3xl border-border/50 bg-card/30 backdrop-blur-md transition-all duration-500 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
                 {/* Image Section */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-32 overflow-hidden shrink-0">
                   <motion.img
                     src={card.image}
                     alt={card.title}
@@ -151,7 +151,7 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
                   <div className="absolute top-4 left-4">
                     <Badge
                       variant="secondary"
-                      className="bg-background/90 backdrop-blur-md border-white/10 text-xs font-medium px-3 py-1 text-foreground"
+                      className="bg-background/90 backdrop-blur-md border-white/10 text-[10px] font-medium px-2 py-0.5 text-foreground"
                     >
                       {card.category}
                     </Badge>
@@ -164,7 +164,7 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
                             <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-black shadow-lg"
+                            className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-black shadow-lg"
                             >
                             View Details
                             </motion.button>
@@ -173,7 +173,7 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
                         <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-sm font-semibold text-black shadow-lg"
+                        className="flex items-center gap-2 rounded-full bg-white/90 px-4 py-1.5 text-xs font-semibold text-black shadow-lg"
                         >
                         View Details
                         </motion.button>
@@ -182,27 +182,27 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
                 </div>
 
                 {/* Content Section */}
-                <div className="p-6 flex flex-col h-[calc(100%-12rem)] justify-between">
-                  <div className="space-y-3">
+                <div className="p-4 flex flex-col flex-1 min-h-0">
+                  <div className="flex-1 min-h-0">
                     {card.url ? (
                         <a href={card.url} className="hover:underline">
-                            <h3 className="text-xl font-bold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
+                            <h3 className="text-base font-bold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary line-clamp-2 mb-1">
                             {card.title}
                             </h3>
                         </a>
                     ) : (
-                        <h3 className="text-xl font-bold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary">
+                        <h3 className="text-base font-bold leading-tight tracking-tight text-foreground transition-colors group-hover:text-primary line-clamp-2 mb-1">
                         {card.title}
                         </h3>
                     )}
-                    <p className="line-clamp-3 text-sm text-muted-foreground leading-relaxed">
+                    <p className="line-clamp-2 text-xs text-muted-foreground leading-relaxed">
                       {card.description}
                     </p>
                   </div>
 
-                  <div className="pt-4 mt-auto border-t border-border/50 flex items-center justify-between">
+                  <div className="pt-3 mt-3 border-t border-border/50 flex items-center justify-between shrink-0">
                     <div className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer">
-                      <Avatar className="h-8 w-8 border border-border/50 ring-2 ring-background">
+                      <Avatar className="h-6 w-6 border border-border/50 ring-2 ring-background">
                         <AvatarImage
                           src={card.author.avatar}
                           alt={card.author.name}
@@ -210,16 +210,16 @@ export default function CardsSliderBlockRenderer(props: CardsSliderBlock["conten
                         <AvatarFallback>{card.author.name[0]}</AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col">
-                        <span className="text-xs font-semibold text-foreground">
+                        <span className="text-[10px] font-semibold text-foreground leading-tight">
                           {card.author.name}
                         </span>
-                        <span className="text-[10px] text-muted-foreground flex items-center gap-1.5">
-                          <Clock className="h-3 w-3" />
+                        <span className="text-[8px] text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-2 w-2" />
                           {card.date}
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary/50 px-2.5 py-1 rounded-full">
+                    <div className="flex items-center gap-1.5 text-[9px] font-medium text-muted-foreground bg-secondary/50 px-1.5 py-0.5 rounded-full">
                       <span>{card.readTime}</span>
                     </div>
                   </div>

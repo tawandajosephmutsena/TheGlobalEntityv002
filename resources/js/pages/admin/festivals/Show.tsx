@@ -94,10 +94,10 @@ export default function Show({ festival }: Props) {
                     <Card className="md:col-span-2 border-agency-accent/10 bg-agency-primary/5">
                         <CardHeader>
                             <CardTitle className="text-sm font-bold uppercase tracking-widest opacity-50 flex items-center gap-2">
-                                <Calendar className="h-4 w-4" /> Timeline & Origin
+                                <Calendar className="h-4 w-4" /> Timeline & Mission Brief
                             </CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="space-y-6">
                             <div className="grid grid-cols-2 gap-8">
                                 <div>
                                     <p className="text-[10px] font-bold uppercase opacity-40 mb-1">Start Date</p>
@@ -120,6 +120,28 @@ export default function Show({ festival }: Props) {
                                     </p>
                                 </div>
                                 <div>
+                                    <p className="text-[10px] font-bold uppercase opacity-40 mb-1">Festival Type</p>
+                                    <p className="font-bold italic text-agency-accent uppercase tracking-tighter">
+                                        {festival.type || 'N/A'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase opacity-40 mb-1">Category</p>
+                                    <Badge variant="outline" className="mt-1 border-agency-accent/30 text-agency-accent">
+                                        {festival.category?.name || 'Unclassified'}
+                                    </Badge>
+                                </div>
+                            </div>
+
+                            <div className="pt-4 border-t border-agency-accent/10">
+                                <p className="text-[10px] font-bold uppercase opacity-40 mb-2">About the Festival</p>
+                                <div className="text-sm leading-relaxed opacity-80 whitespace-pre-line">
+                                    {festival.description || 'No description available for this festival radar.'}
+                                </div>
+                            </div>
+
+                            <div className="pt-4 border-t border-agency-accent/10 flex items-center gap-4">
+                                <div>
                                     <p className="text-[10px] font-bold uppercase opacity-40 mb-1">Designated Agent</p>
                                     <div className="flex items-center gap-2 mt-1">
                                         <div className="w-8 h-8 rounded-full bg-agency-accent/20 flex items-center justify-center">
@@ -127,12 +149,6 @@ export default function Show({ festival }: Props) {
                                         </div>
                                         <p className="font-bold">{festival.author?.name || 'Unassigned'}</p>
                                     </div>
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-bold uppercase opacity-40 mb-1">Category</p>
-                                    <Badge variant="outline" className="mt-1 border-agency-accent/30 text-agency-accent">
-                                        {festival.category?.name || 'Unclassified'}
-                                    </Badge>
                                 </div>
                             </div>
                         </CardContent>

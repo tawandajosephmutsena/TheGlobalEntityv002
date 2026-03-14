@@ -51,9 +51,10 @@ export default function PodcastFeaturedEditor({ content, onUpdate }: PodcastFeat
                         title="Layout style"
                         className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         value={content.layout || 'hero'}
-                        onChange={(e) => onUpdate({ layout: e.target.value as 'hero' | 'cards' | 'list' })}
+                        onChange={(e) => onUpdate({ layout: e.target.value as 'hero' | 'cards' | 'list' | 'bento' })}
                     >
                         <option value="hero">Hero Spotlight</option>
+                        <option value="bento">Bento Grid (Premium)</option>
                         <option value="cards">Card Grid</option>
                         <option value="list">List View</option>
                     </select>

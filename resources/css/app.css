@@ -349,6 +349,12 @@
         font-display: swap;
         size-adjust: 100%;
     }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+    }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+    }
 }
 
 @layer utilities {
@@ -522,6 +528,33 @@
             transform: none;
         }
     }
+
+    /* Apple-Style Glassmorphism & Shadows */
+    .glass-effect {
+        @apply backdrop-blur-xl bg-background/60 border border-white/20 dark:border-white/10 shadow-2xl;
+    }
+
+    .glass-effect-hover {
+        @apply transition-all duration-500 hover:bg-background/80 hover:border-white/30 hover:shadow-primary/5;
+    }
+
+    .apple-shadow {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .apple-shadow-hover {
+        @apply transition-shadow duration-500;
+    }
+
+    .apple-shadow-hover:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Staggered Entrance Utilities */
+    .animate-stagger-1 { animation-delay: 100ms; }
+    .animate-stagger-2 { animation-delay: 200ms; }
+    .animate-stagger-3 { animation-delay: 300ms; }
+    .animate-stagger-4 { animation-delay: 400ms; }
 }
 
 /* Frontend Content Rendering - Prose Enhancements */

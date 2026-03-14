@@ -808,5 +808,155 @@ return [
                 'ring' => 'oklch(0.65 0.18 334)',
             ],
         ],
+
+        'global_noir' => [
+            'name' => 'Entity: Mystic Shore',
+            'description' => 'A pink-free sibling using turquoise and lime watercolor tones.',
+            'fonts' => ['sans' => 'Space Grotesk', 'serif' => 'serif', 'mono' => 'Fira Code', 'display' => 'Syne'],
+            'radius' => '0.5rem',
+            'light' => [
+                'background' => 'oklch(0.98 0.01 210)', // Soft Turquoise Tint
+                'foreground' => 'oklch(0.20 0.04 210)',
+                'primary' => 'oklch(0.68 0.12 210)', // Turquoise Primary
+                'primary-foreground' => 'oklch(1 0 0)',
+                'secondary' => 'oklch(0.85 0.15 110)', // Lime
+                'secondary-foreground' => 'oklch(0.25 0.10 110)',
+                'accent' => 'oklch(0.72 0.18 50)', // Orange
+                'accent-foreground' => 'oklch(1 0 0)',
+                'muted' => 'oklch(0.95 0.02 210)',
+                'muted-foreground' => 'oklch(0.40 0.05 210)',
+                'destructive' => 'oklch(0.60 0.15 30)',
+                'border' => 'oklch(0.88 0.04 210)',
+                'input' => 'oklch(0.92 0.02 210)',
+                'ring' => 'oklch(0.68 0.12 210)',
+            ],
+            'dark' => [
+                'background' => 'oklch(0.14 0.03 210)', // Deep Teal/Turquoise Dark
+                'foreground' => 'oklch(0.95 0.02 210)',
+                'primary' => 'oklch(0.72 0.12 210)',
+                'primary-foreground' => 'oklch(0.05 0 0)',
+                'secondary' => 'oklch(0.25 0.08 110)',
+                'secondary-foreground' => 'oklch(0.95 0.08 115)',
+                'accent' => 'oklch(0.75 0.15 50)',
+                'accent-foreground' => 'oklch(0.1 0 0)',
+                'muted' => 'oklch(0.18 0.04 210)',
+                'muted-foreground' => 'oklch(0.75 0.02 210)',
+                'destructive' => 'oklch(0.40 0.15 30)',
+                'border' => 'oklch(0.22 0.03 210)',
+                'input' => 'oklch(0.18 0.03 210)',
+                'ring' => 'oklch(0.72 0.12 210)',
+            ],
+        ],
+
+        'global_emerald' => [
+            'name' => 'Entity: Solar Horizon',
+            'description' => 'Golden hour sibling focusing on the orange and turquoise palette.',
+            'fonts' => ['sans' => 'Plus Jakarta Sans', 'serif' => 'Lora', 'mono' => 'JetBrains Mono', 'display' => 'Unbounded'],
+            'radius' => '0.5rem',
+            'light' => [
+                'background' => 'oklch(0.98 0.02 50)', // Soft Orange Tint
+                'foreground' => 'oklch(0.25 0.05 50)',
+                'primary' => 'oklch(0.72 0.18 50)', // Orange Primary
+                'primary-foreground' => 'oklch(1 0 0)',
+                'secondary' => 'oklch(0.68 0.12 210)', // Turquoise
+                'secondary-foreground' => 'oklch(1 0 0)',
+                'accent' => 'oklch(0.52 0.20 334)', // Pink Accent (Minor)
+                'accent-foreground' => 'oklch(1 0 0)',
+                'muted' => 'oklch(0.94 0.02 50)',
+                'muted-foreground' => 'oklch(0.45 0.05 50)',
+                'destructive' => 'oklch(0.60 0.15 30)',
+                'border' => 'oklch(0.88 0.05 50)',
+                'input' => 'oklch(0.92 0.03 50)',
+                'ring' => 'oklch(0.72 0.18 50)',
+            ],
+            'dark' => [
+                'background' => 'oklch(0.16 0.04 50)', // Warm Earth Dark
+                'foreground' => 'oklch(0.96 0.02 50)',
+                'primary' => 'oklch(0.78 0.15 50)',
+                'primary-foreground' => 'oklch(0.1 0 0)',
+                'secondary' => 'oklch(0.45 0.10 210)',
+                'secondary-foreground' => 'oklch(1 0 0)',
+                'accent' => 'oklch(0.65 0.18 334)',
+                'accent-foreground' => 'oklch(1 0 0)',
+                'muted' => 'oklch(0.22 0.04 50)',
+                'muted-foreground' => 'oklch(0.70 0.02 50)',
+                'destructive' => 'oklch(0.40 0.15 30)',
+                'border' => 'oklch(0.26 0.05 50)',
+                'input' => 'oklch(0.22 0.05 50)',
+                'ring' => 'oklch(0.78 0.15 50)',
+            ],
+        ],
+
+        'global_midnight' => [
+            'name' => 'Entity: Emerald Peak',
+            'description' => 'High-tech nature sibling centered around lime and orange.',
+            'fonts' => ['sans' => 'Outfit', 'serif' => 'serif', 'mono' => 'JetBrains Mono', 'display' => 'Bricolage Grotesque'],
+            'radius' => '0.5rem',
+            'light' => [
+                'background' => 'oklch(0.98 0.02 110)', // Soft Lime Tint
+                'foreground' => 'oklch(0.20 0.05 110)',
+                'primary' => 'oklch(0.85 0.20 110)', // Lime Primary
+                'primary-foreground' => 'oklch(0.25 0.10 115)',
+                'secondary' => 'oklch(0.72 0.18 50)', // Orange
+                'secondary-foreground' => 'oklch(1 0 0)',
+                'accent' => 'oklch(0.68 0.12 210)', // Turquoise
+                'accent-foreground' => 'oklch(1 0 0)',
+                'muted' => 'oklch(0.95 0.02 110)',
+                'muted-foreground' => 'oklch(0.45 0.08 115)',
+                'destructive' => 'oklch(0.60 0.15 30)',
+                'border' => 'oklch(0.88 0.08 110)',
+                'input' => 'oklch(0.92 0.04 110)',
+                'ring' => 'oklch(0.85 0.20 110)',
+            ],
+            'dark' => [
+                'background' => 'oklch(0.14 0.04 110)', // Forest Cyber Dark
+                'foreground' => 'oklch(0.94 0.08 115)',
+                'primary' => 'oklch(0.88 0.22 110)',
+                'primary-foreground' => 'oklch(0.1 0.1 110)',
+                'secondary' => 'oklch(0.75 0.15 50)',
+                'secondary-foreground' => 'oklch(0.1 0 0)',
+                'accent' => 'oklch(0.45 0.10 210)',
+                'accent-foreground' => 'oklch(1 0 0)',
+                'muted' => 'oklch(0.20 0.05 110)',
+                'muted-foreground' => 'oklch(0.75 0.10 115)',
+                'destructive' => 'oklch(0.40 0.15 30)',
+                'border' => 'oklch(0.24 0.08 110)',
+                'input' => 'oklch(0.20 0.05 110)',
+                'ring' => 'oklch(0.88 0.22 110)',
+            ],
+        ],
+
+        'global_slate' => [
+            'name' => 'Entity: Abyssal Depths',
+            'description' => 'A dark technical sibling focusing on deep purples and neon highlights.',
+            'fonts' => ['sans' => 'Space Grotesk', 'serif' => 'serif', 'mono' => 'JetBrains Mono', 'display' => 'Space Grotesk'],
+            'radius' => '0.5rem',
+            'light' => [
+                'background' => 'oklch(0.98 0.01 334)', // Soft Pink Tint (Stay aligned with original light mode)
+                'foreground' => 'oklch(0.15 0.02 334)',
+                'primary' => 'oklch(0.35 0.08 334)', // Decidedly darker/technical purple primary
+                'primary-foreground' => 'oklch(0.88 0.22 110)', // Lime Highlight
+                'secondary' => 'oklch(0.68 0.12 210)', // Turquoise
+                'accent' => 'oklch(0.72 0.18 50)', // Orange
+                'muted' => 'oklch(0.94 0.02 334)',
+                'muted-foreground' => 'oklch(0.45 0.05 334)',
+                'destructive' => 'oklch(0.60 0.15 30)',
+                'border' => 'oklch(0.88 0.04 334)',
+                'ring' => 'oklch(0.35 0.08 334)',
+            ],
+            'dark' => [
+                'background' => 'oklch(0.10 0.03 334)', // Darker, less saturated than original for a technical feel
+                'foreground' => 'oklch(0.98 0.01 110)',
+                'primary' => 'oklch(0.85 0.20 110)', // Toxic Lime highlights
+                'primary-foreground' => 'oklch(0.05 0 0)',
+                'secondary' => 'oklch(0.68 0.12 210)', // Turquoise
+                'accent' => 'oklch(0.72 0.18 50)', // Orange
+                'muted' => 'oklch(0.15 0.02 334)',
+                'muted-foreground' => 'oklch(0.70 0.01 110)',
+                'destructive' => 'oklch(0.40 0.15 30)',
+                'border' => 'oklch(0.20 0.02 334)',
+                'ring' => 'oklch(0.85 0.20 110)',
+            ],
+        ],
     ],
 ];

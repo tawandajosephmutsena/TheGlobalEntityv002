@@ -275,38 +275,64 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
 function oklchToHex(colorStr: string): string {
     if (!colorStr) return '#000000';
     
-    // If already hex, return as-is
-    if (colorStr.startsWith('#')) return colorStr;
+    const trimmed = colorStr.trim();
+    if (trimmed.startsWith('#')) return trimmed;
     
-    // If it's an oklch string, we need to convert it
-    // OKLCH format: oklch(L C H) where L is 0-1, C is 0-0.4, H is 0-360
-    const oklchMatch = colorStr.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+    // Improved regex to handle different spacing, optional commas, and percentage/deg units
+    // Matches oklch(L C H) or oklch(L, C, H) or oklch(L C H / A)
+    const oklchMatch = trimmed.match(/oklch\(([\d.%]+)[\s,]+([\d.]+)?[\s,]+([\d.deg]+)?(?:[\s/]+([\d.%]+))?\)/i);
+    
     if (oklchMatch) {
-        const [, l, c, h] = oklchMatch.map(Number);
-        // Convert OKLCH to approximate hex - simplified conversion
-        // For more accurate conversion, a color library would be needed
-        const lightness = Math.round(l * 255);
-        if (c < 0.02) {
-            // Near-grayscale
-            const gray = lightness.toString(16).padStart(2, '0');
+        let [, lStr, cStr, hStr] = oklchMatch;
+        
+        // Handle defaults if some values are missing in a partial match (rare)
+        if (!cStr) cStr = "0";
+        if (!hStr) hStr = "0";
+
+        // Parse Lightness (0-1 or 0-100%)
+        let l = 0;
+        if (lStr.endsWith('%')) {
+            l = parseFloat(lStr) / 100;
+        } else {
+            l = parseFloat(lStr);
+            // If it's > 1, assume it's 0-100 scale
+            if (l > 1) l /= 100;
+        }
+
+        // Parse Chroma (0-0.4)
+        let c = parseFloat(cStr);
+
+        // Parse Hue (0-360)
+        let h = parseFloat(hStr.replace('deg', ''));
+
+        // Clamp values
+        l = Math.max(0, Math.min(1, l));
+        c = Math.max(0, Math.min(0.4, c));
+        h = ((h % 360) + 360) % 360;
+
+        // Convert OKLCH to approximate hex
+        // For grayscale (chroma = 0), return gray hex
+        if (c < 0.001) {
+            const gray = Math.round(l * 255).toString(16).padStart(2, '0');
             return `#${gray}${gray}${gray}`;
         }
-        // For chromatic colors, approximate using HSL-like conversion
-        const hue = h || 0;
+
+        // Approximation for chromatic colors via HSL
+        const hue = h;
         const saturation = Math.min(c * 2.5, 1);
         return hslToHex(hue, saturation, l);
     }
     
-    // If RGB or other format, try to parse
-    if (colorStr.startsWith('rgb')) {
-        const match = colorStr.match(/rgba?\((\d+),?\s*(\d+),?\s*(\d+)/);
+    // Fallback for RGB
+    if (trimmed.startsWith('rgb')) {
+        const match = trimmed.match(/rgba?\((\d+)[\s,]+(\d+)[\s,]+(\d+)/);
         if (match) {
             const [, r, g, b] = match;
             return `#${parseInt(r).toString(16).padStart(2, '0')}${parseInt(g).toString(16).padStart(2, '0')}${parseInt(b).toString(16).padStart(2, '0')}`;
         }
     }
     
-    return colorStr;
+    return '#000000'; // Default fallback instead of returning invalid string
 }
 
 function hslToHex(h: number, s: number, l: number): string {
@@ -398,65 +424,77 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
     // Apply theme preview when preset changes - respects current dark/light mode
     // Apply theme preview when preset OR data changes
     useEffect(() => {
-        const root = document.documentElement;
+        if (typeof document === 'undefined') return;
         
-        // Function to apply a variable if it exists
-        const applyVar = (key: string, value: string | undefined | null) => {
-             if (value) root.style.setProperty(key, value);
+        const root = document.documentElement;
+        const applyVar = (name: string, value: string) => {
+            if (!value) {
+                root.style.removeProperty(name);
+                return;
+            }
+            // Use oklchToHex if it's not already oklch/rgb
+            const finalValue = (value.startsWith('oklch') || value.startsWith('rgb')) ? value : oklchToHex(value);
+            root.style.setProperty(name, finalValue);
         };
 
-        // 1. Apply Preset Base (if valid preset selected)
-        if (themePresets?.themes[selectedPreset]) {
-            const preset = themePresets.themes[selectedPreset];
-            const isDarkMode = root.classList.contains('dark');
-            const colors = isDarkMode ? preset.dark : preset.light;
-            
-            Object.entries(colors).forEach(([key, value]) => {
-                if (value) root.style.setProperty(`--${key}`, value);
-            });
-            root.style.setProperty('--radius', preset.radius);
-            root.style.setProperty('--font-sans', `${preset.fonts.sans}, sans-serif`);
-        }
-
-        // 2. Apply Custom Overrides from Form Data (takes precedence)
-        // We only apply if the field is not empty
+        // If we have custom overrides, they will override CSS classes due to specificity.
+        // We only apply them here for the "Live Preview" feel.
         if (data['brand_primary']) applyVar('--primary', data['brand_primary'] as string);
+        else root.style.removeProperty('--primary');
+
         if (data['brand_secondary']) applyVar('--secondary', data['brand_secondary'] as string);
+        else root.style.removeProperty('--secondary');
+
         if (data['brand_accent']) applyVar('--accent', data['brand_accent'] as string);
+        else root.style.removeProperty('--accent');
+
         if (data['brand_neutral']) applyVar('--muted', data['brand_neutral'] as string);
+        else root.style.removeProperty('--muted');
+
         if (data['brand_background']) applyVar('--background', data['brand_background'] as string);
+        else root.style.removeProperty('--background');
+
         if (data['brand_foreground']) applyVar('--foreground', data['brand_foreground'] as string);
+        else root.style.removeProperty('--foreground');
+
         if (data['brand_border']) applyVar('--border', data['brand_border'] as string);
+        else root.style.removeProperty('--border');
+
         if (data['brand_ring']) applyVar('--ring', data['brand_ring'] as string);
+        else root.style.removeProperty('--ring');
         
-        // Apply Radius Override
         if (data['border_radius']) root.style.setProperty('--radius', data['border_radius'] as string);
+        else root.style.removeProperty('--radius');
 
         return () => {
-             // Cleanup if needed, though usually next effect run overwrites
-             // We don't remove everything to avoid flashing defaults
+             // Clean up on unmount to restore site defaults
+             const vars = ['--primary', '--secondary', '--accent', '--muted', '--background', '--foreground', '--border', '--ring', '--radius'];
+             vars.forEach(v => root.style.removeProperty(v));
         };
-    }, [selectedPreset, themePresets, data]);
+    }, [data]);
 
 
     const handlePresetSelect = (presetKey: string) => {
         setSelectedPreset(presetKey);
-        setData('theme_preset', presetKey);
-        
-        // Clear custom color overrides so the preset colors are used directly.
-        // This ensures that dark mode works correctly by falling back to the preset's dark mode values.
-        // Users can still manually edit colors if they want to override.
-        setData('brand_primary', '');
-        setData('brand_secondary', '');
-        setData('brand_accent', '');
-        setData('brand_neutral', '');
-        setData('brand_dark', '');
-        setData('brand_background', '');
-        setData('brand_foreground', '');
-        setData('brand_border', '');
-        setData('brand_ring', '');
-        
-        toast.success(`Theme "${themePresets?.themes[presetKey].name}" applied! Save to make it permanent.`);
+        setData(prev => ({
+            ...prev,
+            theme_preset: presetKey,
+            // Clear overrides to follow preset defaults (restores dark mode)
+            brand_primary: '',
+            brand_secondary: '',
+            brand_accent: '',
+            brand_neutral: '',
+            brand_dark: '', // dark background
+            brand_background: '', // light background
+            brand_foreground: '',
+            brand_border: '',
+            brand_ring: '',
+            // Font settings
+            font_display: themePresets?.themes[presetKey]?.fonts.sans || '',
+            font_body: themePresets?.themes[presetKey]?.fonts.sans || '',
+            border_radius: themePresets?.themes[presetKey]?.radius || ''
+        }));
+        toast.success(`Theme "${themePresets?.themes[presetKey]?.name}" applied. Click Save to persist.`);
     };
     
     const handleReset = (group: keyof typeof SETTINGS_STRUCT) => {
@@ -598,7 +636,32 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                             )}
                                         </div>
                                     </CardHeader>
-                                    <CardContent className="space-y-6">
+                                    <CardContent className="pt-6">
+                                        {/* Global branding overrides header - only in theme tab */}
+                                        {group === 'theme' && (
+                                            <div className="flex justify-between items-center mb-6 px-1">
+                                                <h3 className="font-semibold">Custom Overrides</h3>
+                                                <Button 
+                                                    variant="outline" 
+                                                    size="sm" 
+                                                    className="h-8 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
+                                                    onClick={() => {
+                                                        if (confirm("Clear all custom color overrides? This will restore the theme's automatic Light/Dark mode behavior.")) {
+                                                            const overrides = [
+                                                                'brand_primary', 'brand_secondary', 'brand_accent', 
+                                                                'brand_neutral', 'brand_dark', 'brand_background', 
+                                                                'brand_foreground', 'brand_border', 'brand_ring'
+                                                            ];
+                                                            overrides.forEach(key => setData(key as any, ''));
+                                                            toast.info("Custom overrides cleared. Save to apply.");
+                                                        }
+                                                    }}
+                                                >
+                                                    <X className="w-3 h-3 mr-1.5" />
+                                                    Clear All Overrides
+                                                </Button>
+                                            </div>
+                                        )}
                                         {/* Theme Presets Grid - only shown in theme tab */}
                                         {group === 'theme' && themePresets && (
                                             <div className="space-y-4">
@@ -630,23 +693,26 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                             {/* Color swatches */}
                                                             <div className="flex gap-1 mb-2">
                                                                 <div 
-                                                                className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.primary}]`}
-                                                                title="Primary"
-                                                            >
-                                                                <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
-                                                            </div>
+                                                                    className="w-6 h-6 rounded-full border border-border/50"
+                                                                    style={{ '--bg-color': preset.light.primary } as React.CSSProperties}
+                                                                    title="Primary"
+                                                                >
+                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                                </div>
                                                                 <div 
-                                                                    className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.accent || preset.light.secondary}]`}
+                                                                    className="w-6 h-6 rounded-full border border-border/50"
+                                                                    style={{ '--bg-color': preset.light.accent || preset.light.secondary } as React.CSSProperties}
                                                                     title="Accent"
                                                                 >
                                                                     <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
                                                                 </div>
                                                                 <div 
-                                                                className={`w-6 h-6 rounded-full border border-border/50 [--bg-color:${preset.light.foreground}]`}
-                                                                title="Foreground"
-                                                            >
-                                                                <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
-                                                            </div>
+                                                                    className="w-6 h-6 rounded-full border border-border/50"
+                                                                    style={{ '--bg-color': preset.light.foreground } as React.CSSProperties}
+                                                                    title="Foreground"
+                                                                >
+                                                                    <div className="w-full h-full rounded-full bg-[var(--bg-color)]" />
+                                                                </div>
                                                             </div>
                                                             <p className="font-medium text-sm truncate">{preset.name}</p>
                                                             <p className="text-xs text-muted-foreground truncate">{preset.description}</p>
@@ -768,32 +834,43 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                     ) : (
                                                         <div className="flex items-center gap-2">
                                                             {isColor && (
-                                                                <div className="flex items-center gap-2 w-full">
-                                                                    <Input
-                                                                        id={item.key}
-                                                                        type="color"
-                                                                        className="w-10 h-8 p-0.5 border-none bg-transparent cursor-pointer shrink-0"
-                                                                        value={oklchToHex(data[item.key] as string)}
-                                                                        onChange={(e) => setData(item.key, e.target.value)}
-                                                                    />
-                                                                    <div className="relative flex-1">
-                                                                        <Input
-                                                                            type="text"
-                                                                            className="h-8 text-sm font-mono text-[11px] pr-8"
-                                                                            value={data[item.key] as string}
-                                                                            onChange={(e) => setData(item.key, e.target.value)}
-                                                                            placeholder={item.placeholder}
-                                                                        />
+                                                                <div className="flex flex-col gap-2 w-full">
+                                                                    <div className="flex justify-between items-center px-1">
                                                                         {data[item.key] && (
                                                                             <button 
                                                                                 type="button"
-                                                                                onClick={() => setData(item.key, '')}
-                                                                                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-0.5"
-                                                                                title="Clear override - use preset default"
+                                                                                onClick={() => setData(item.key as any, '')}
+                                                                                className="text-[10px] text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
                                                                             >
-                                                                                <X className="w-3 h-3" />
+                                                                                <X className="w-2.5 h-2.5" />
+                                                                                Reset to Default
                                                                             </button>
                                                                         )}
+                                                                    </div>
+                                                                    <div className="flex items-center gap-2">
+                                                                        <div className="relative flex-1">
+                                                                            <Input
+                                                                                id={item.key}
+                                                                                value={(data[item.key as keyof typeof data] as string) || (themePresets?.themes[data.theme_preset]?.light as any)?.[item.key.replace('brand_', '')] || ''}
+                                                                                onChange={(e) => setData(item.key as any, e.target.value)}
+                                                                                className="h-9 text-[11px] font-mono pl-9"
+                                                                                placeholder={item.placeholder}
+                                                                            />
+                                                                            <div 
+                                                                                className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-border"
+                                                                                style={{ 
+                                                                                    backgroundColor: (data[item.key as keyof typeof data] as string || (themePresets?.themes[data.theme_preset]?.light as any)?.[item.key.replace('brand_', '')] || '#000000')
+                                                                                }}
+                                                                            />
+                                                                        </div>
+                                                                        <div className="shrink-0">
+                                                                            <Input
+                                                                                type="color"
+                                                                                value={oklchToHex(data[item.key as keyof typeof data] as string || (themePresets?.themes[data.theme_preset]?.light as any)?.[item.key.replace('brand_', '')] || '#000000')}
+                                                                                onChange={(e) => setData(item.key as any, e.target.value)}
+                                                                                className="w-10 h-9 p-1 bg-transparent border rounded-md cursor-pointer"
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             )}
@@ -802,8 +879,8 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                                                                     id={item.key}
                                                                     type={item.type === 'email' ? 'email' : 'text'}
                                                                     className="h-8 text-sm"
-                                                                    value={data[item.key] as string}
-                                                                    onChange={(e) => setData(item.key, e.target.value)}
+                                                                    value={data[item.key as keyof typeof data] as string}
+                                                                    onChange={(e) => setData(item.key as any, e.target.value)}
                                                                     placeholder={item.placeholder}
                                                                 />
                                                             )}

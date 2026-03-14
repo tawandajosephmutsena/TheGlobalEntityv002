@@ -131,10 +131,10 @@ export function PodcastPlayer({
     const [ytActivated, setYtActivated] = useState(false);
 
     return (
-        <div className={cn('rounded-2xl bg-card border border-border overflow-hidden', className)}>
+        <div className={cn('rounded-3xl glass-effect apple-shadow apple-shadow-hover overflow-hidden transition-all duration-500', className)}>
             {/* Video display area */}
             {mediaType === 'video' ? (
-                <div className={cn('relative bg-black', isFullscreen ? 'fixed inset-0 z-50' : 'aspect-video')}>
+                <div className={cn('relative bg-black group/video', isFullscreen ? 'fixed inset-0 z-50' : 'aspect-video')}>
                     {isYT && ytId ? (
                         /* YouTube: show thumbnail first, embed on click to avoid bot checks */
                         ytActivated ? (
@@ -151,7 +151,7 @@ export function PodcastPlayer({
                                     href={getYouTubeWatchUrl(ytId)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="absolute bottom-3 right-3 z-10 text-xs text-white/60 hover:text-white bg-black/50 hover:bg-black/70 px-3 py-1.5 rounded-full backdrop-blur-sm transition-colors flex items-center gap-1"
+                                    className="absolute bottom-4 right-4 z-10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white bg-black/40 hover:bg-black/60 px-4 py-2 rounded-full backdrop-blur-md border border-white/5 transition-all flex items-center gap-2"
                                 >
                                     Watch on YouTube <ExternalLink className="size-3" />
                                 </a>
@@ -161,15 +161,15 @@ export function PodcastPlayer({
                                 <img
                                     src={getYouTubeThumbnail(ytId)}
                                     alt={title}
-                                    className="absolute inset-0 w-full h-full object-cover"
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover/video:scale-105"
                                 />
                                 <button
                                     onClick={() => setYtActivated(true)}
-                                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
+                                    className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/video:bg-black/40 transition-all duration-500 z-10 backdrop-blur-0 group-hover/video:backdrop-blur-[2px]"
                                     aria-label="Play video"
                                 >
-                                    <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
-                                        <Play className="size-7 ml-1" />
+                                    <div className="size-20 rounded-full bg-primary/95 flex items-center justify-center text-primary-foreground shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 group-hover/video:scale-100 scale-75">
+                                        <Play className="size-8 fill-current ml-1" />
                                     </div>
                                 </button>
                             </>
@@ -194,11 +194,11 @@ export function PodcastPlayer({
                             {!isPlaying && (
                                 <button
                                     onClick={togglePlay}
-                                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity hover:bg-black/40 z-10"
+                                    className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover/video:bg-black/40 transition-all duration-500 z-10 backdrop-blur-0 group-hover/video:backdrop-blur-[2px]"
                                     aria-label="Play video"
                                 >
-                                    <div className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/40 transition-transform hover:scale-110">
-                                        <Play className="size-7 ml-1" />
+                                    <div className="size-20 rounded-full bg-primary/95 flex items-center justify-center text-primary-foreground shadow-2xl transition-all duration-500 hover:scale-110 active:scale-95 group-hover/video:scale-100 scale-75">
+                                        <Play className="size-8 fill-current ml-1" />
                                     </div>
                                 </button>
                             )}
@@ -206,11 +206,17 @@ export function PodcastPlayer({
                     )}
                     <button
                         onClick={() => setIsFullscreen(!isFullscreen)}
-                        className="absolute top-4 right-4 p-2 rounded-lg bg-black/50 text-white hover:bg-black/70 transition-colors z-10"
+                        className="absolute top-6 right-6 p-3 rounded-2xl bg-black/40 text-white hover:bg-black/60 backdrop-blur-md border border-white/10 transition-all z-10"
                         aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
                     >
-                        {isFullscreen ? <Minimize2 className="size-4" /> : <Maximize2 className="size-4" />}
+                        {isFullscreen ? <Minimize2 className="size-5" /> : <Maximize2 className="size-5" />}
                     </button>
+                    {mediaType === 'video' && !isPlaying && (
+                         <div className="absolute bottom-6 left-6 z-10 px-4 py-2 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10">
+                            <h3 className="text-white font-black text-sm tracking-tight">{title}</h3>
+                            {artist && <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">{artist}</p>}
+                         </div>
+                    )}
                 </div>
             ) : (
                 /* Hidden audio player — ReactPlayer handles both local files and external URLs */
@@ -230,118 +236,121 @@ export function PodcastPlayer({
             )}
 
             {/* Player controls */}
-            <div className="p-6">
-                <div className="flex items-center gap-6">
+            <div className={cn("p-8 md:p-10", mediaType === 'video' && "pt-6")}>
+                <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
                     {/* Thumbnail */}
-                    {mediaType === 'audio' && variant !== 'compact' && (
-                        <div className="relative group shrink-0 hidden sm:block">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary/50 rounded-xl blur opacity-25 group-hover:opacity-50 transition-all duration-500" />
+                    {mediaType === 'audio' && variant !== 'compact' && thumbnail && (
+                        <div className="relative group shrink-0 self-center md:self-auto">
+                            <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-primary/0 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-1000" />
                             <div
-                                className="relative size-20 rounded-lg bg-muted bg-cover bg-center shadow-md overflow-hidden"
-                                style={thumbnail ? { backgroundImage: `url(${thumbnail})` } : undefined}
+                                className="relative size-32 md:size-40 rounded-2xl bg-muted bg-cover bg-center shadow-2xl overflow-hidden apple-shadow transition-transform duration-700 group-hover:scale-[1.02]"
+                                style={{ backgroundImage: `url(${thumbnail})` }}
                             >
-                                {!thumbnail && (
-                                    <div className="flex items-center justify-center h-full text-muted-foreground bg-secondary/50">
-                                        <Play className="size-8" />
-                                    </div>
-                                )}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                             </div>
                         </div>
                     )}
 
-                    <div className="flex-1 min-w-0 space-y-4">
+                    <div className="flex-1 min-w-0 flex flex-col justify-center">
                         {/* Title & artist */}
                         {variant !== 'compact' && (
-                            <div>
-                                <h3 className="text-lg font-bold truncate" title={title}>{title}</h3>
+                            <div className="space-y-1 mb-6 text-center md:text-left">
+                                <h3 className="text-2xl md:text-3xl font-black tracking-tighter leading-none truncate" title={title}>{title}</h3>
                                 {artist && (
-                                    <p className="text-sm text-muted-foreground truncate" title={artist}>{artist}</p>
+                                    <p className="text-sm md:text-base font-bold text-muted-foreground/60 uppercase tracking-widest truncate" title={artist}>{artist}</p>
                                 )}
                             </div>
                         )}
 
-                        {/* Description (Expanded variant only) */}
-                        {variant === 'expanded' && description && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
-                                {description}
-                            </p>
-                        )}
-
                         {/* Waveform / progress */}
-                        <div className="space-y-2 pt-2">
+                        <div className="space-y-4">
                             <WaveformVisualizer
                                 progress={progress}
                                 isPlaying={isPlaying}
                                 onClick={handleProgressClick}
                                 ref={progressRef}
+                                className="h-16"
+                                barCount={80}
                             />
 
                             {/* Time display */}
-                            <div className="flex items-center justify-between text-xs text-muted-foreground font-medium">
+                            <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-widest text-muted-foreground/40">
                                 <span>{formatTime(currentTime)}</span>
-                                <span>{formatTime(duration)}</span>
+                                <span>-{formatTime(duration - currentTime)}</span>
                             </div>
                         </div>
 
-                        {/* Controls */}
-                        <div className="flex items-center justify-between pt-2">
-                            <div className="flex items-center gap-4">
+                        {/* Main Controls Area */}
+                        <div className="flex flex-col sm:flex-row md:flex-row md:items-center gap-8 md:gap-10">
+                            {/* Playback Controls */}
+                            <div className="flex items-center gap-8">
                                 <button
                                     onClick={() => skip(-10)}
-                                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-1"
+                                    className="group relative text-muted-foreground hover:text-primary transition-colors p-2"
                                     title="Rewind 10s"
-                                    aria-label="Rewind 10 seconds"
                                 >
-                                    <SkipBack className="size-5" />
+                                    <SkipBack className="size-6 transition-transform group-active:scale-90" />
+                                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-black opacity-0 group-hover:opacity-100 transition-opacity">10</span>
                                 </button>
                                 <button
                                     onClick={togglePlay}
-                                    className="size-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-primary/20"
+                                    className="size-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-2xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all duration-300 group"
                                     aria-label={isPlaying ? 'Pause' : 'Play'}
                                 >
-                                    {isPlaying ? <Pause className="size-5" /> : <Play className="size-5 ml-0.5" />}
+                                    {isPlaying ? (
+                                        <Pause className="size-7 fill-current transition-transform group-hover:scale-110" />
+                                    ) : (
+                                        <Play className="size-7 fill-current ml-1 transition-transform group-hover:scale-110" />
+                                    )}
                                 </button>
                                 <button
                                     onClick={() => skip(30)}
-                                    className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-1"
+                                    className="group relative text-muted-foreground hover:text-primary transition-colors p-2"
                                     title="Forward 30s"
-                                    aria-label="Skip forward 30 seconds"
                                 >
-                                    <SkipForward className="size-5" />
+                                    <SkipForward className="size-6 transition-transform group-active:scale-90" />
+                                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-black opacity-0 group-hover:opacity-100 transition-opacity">30</span>
                                 </button>
                             </div>
 
-                            <div className="flex items-center gap-3 md:gap-4">
+                            {/* Secondary Controls Area */}
+                            <div className="flex items-center gap-6 w-full sm:w-auto justify-center sm:justify-end">
                                 {/* Playback speed */}
                                 <button
                                     onClick={cyclePlaybackRate}
-                                    className="text-xs font-bold px-2.5 py-1.5 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
-                                    aria-label="Change playback speed"
+                                    className="h-10 px-4 rounded-xl bg-secondary/50 text-[11px] font-black uppercase tracking-widest text-secondary-foreground hover:bg-secondary transition-all active:scale-95"
                                     title="Playback Speed"
                                 >
                                     {playbackRate}x
                                 </button>
 
                                 {/* Volume */}
-                                <div className="hidden sm:flex items-center gap-2">
-                                    <button 
-                                        onClick={toggleMute} 
-                                        className="text-muted-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-full p-1"
+                                <div className="flex items-center gap-3 group/volume">
+                                    <button
+                                        onClick={toggleMute}
+                                        className="text-muted-foreground/60 hover:text-primary transition-colors p-1"
                                         aria-label={isMuted ? 'Unmute' : 'Mute'}
-                                        title="Toggle Mute"
                                     >
-                                        {isMuted || volume === 0 ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
+                                        {isMuted || volume === 0 ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
                                     </button>
-                                    <input
-                                        type="range"
-                                        min="0"
-                                        max="1"
-                                        step="0.05"
-                                        value={isMuted ? 0 : volume}
-                                        onChange={handleVolumeChange}
-                                        className="w-20 h-1.5 rounded-full bg-secondary accent-primary cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
-                                        aria-label="Volume"
-                                    />
+                                    <div className="relative w-24 h-1.5 group-hover/volume:w-32 transition-all duration-500">
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="1"
+                                            step="0.05"
+                                            value={isMuted ? 0 : volume}
+                                            onChange={handleVolumeChange}
+                                            className="absolute inset-0 w-full opacity-0 cursor-pointer z-10"
+                                            aria-label="Volume"
+                                        />
+                                        <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
+                                            <div
+                                                className="h-full bg-primary/60 transition-all duration-300"
+                                                style={{ width: `${(isMuted ? 0 : volume) * 100}%` }}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

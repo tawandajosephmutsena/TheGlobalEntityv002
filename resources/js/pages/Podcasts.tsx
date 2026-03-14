@@ -1,6 +1,6 @@
 import React from 'react';
-import { Head, router, usePage } from '@inertiajs/react';
-import { Headphones, TrendingUp } from 'lucide-react';
+import { router, usePage } from '@inertiajs/react';
+import { Headphones, TrendingUp, Sparkles } from 'lucide-react';
 import { PodcastCard } from '@/components/podcast/PodcastCard';
 import { PodcastSearch } from '@/components/podcast/PodcastSearch';
 import { Button } from '@/components/ui/button';
@@ -50,157 +50,195 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
 
     return (
         <MainLayout title={`Podcasts - ${siteName}`}>
+            <div className="relative">
             <SeoHead
                 title="Podcasts"
                 description="Explore our collection of episodes — from engaging conversations to insightful deep dives."
             />
 
-            <main className="min-h-screen">
-                {/* Hero Section */}
-                <section className="relative py-20 md:py-28 overflow-hidden">
-                    {/* Background effects */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl opacity-30" />
-
-                    <div className="relative max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-8">
-                        {/* Badge */}
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold animate-in fade-in slide-in-from-bottom-4 duration-500">
-                            <Headphones className="size-3.5" />
-                            {siteName} Podcasts
+            <main className="min-h-screen pb-32">
+                {/* Immersive Hero Section */}
+                <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+                    {/* Apple-style Gradient Background */}
+                    <div className="absolute inset-0 bg-background" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl">
+                        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[120px] opacity-40 animate-pulse" />
+                        <div className="absolute bottom-[10%] right-[-5%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[100px] opacity-30" />
+                    </div>
+                    
+                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-12">
+                        {/* Status Badge */}
+                        <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-effect border border-white/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] shadow-xl animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-apple">
+                            <Sparkles className="size-3.5" />
+                            Premium Content
                         </div>
 
-                        {/* Title */}
-                        <h1 className="text-4xl md:text-6xl font-black tracking-tight leading-tight animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100">
-                            Listen. Learn.
-                            <span className="text-primary block md:inline"> Be Inspired.</span>
-                        </h1>
-
-                        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
-                            Explore our collection of episodes — from engaging conversations to insightful deep dives.
-                        </p>
-
-                        {/* Search */}
-                        <div className="max-w-lg mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
-                            <PodcastSearch />
+                        {/* High-impact Title */}
+                        <div className="space-y-4 max-w-4xl mx-auto">
+                            <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 ease-apple">
+                                Listen to the 
+                                <span className="block text-primary drop-shadow-sm">Future of Tech.</span>
+                            </h1>
+                            <p className="text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200 ease-apple opacity-80">
+                                Converging insights from the world's most innovative minds, delivered directly to your ears.
+                            </p>
                         </div>
 
-                        {/* Stats */}
-                        <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-4 duration-500 delay-400">
-                            <span className="flex items-center gap-1.5">
-                                <Headphones className="size-4 text-primary" />
-                                <strong className="text-foreground">{podcasts.total}</strong> Episodes
-                            </span>
-                            <span className="flex items-center gap-1.5">
-                                <TrendingUp className="size-4 text-primary" />
-                                <strong className="text-foreground">{categories.length}</strong> Categories
-                            </span>
+                        {/* Search & Discovery */}
+                        <div className="max-w-xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 ease-apple">
+                            <div className="apple-shadow-hover rounded-3xl overflow-hidden">
+                                <PodcastSearch />
+                            </div>
+                        </div>
+
+                        {/* Animated Performance Stats */}
+                        <div className="flex items-center justify-center gap-12 text-xs font-black uppercase tracking-widest text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400 ease-apple">
+                            <div className="flex flex-col items-center gap-2 group">
+                                <div className="size-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
+                                    <Headphones className="size-5" />
+                                </div>
+                                <span className="opacity-60">
+                                    <strong className="text-lg text-foreground block">{podcasts.total}</strong> 
+                                    Episodes
+                                </span>
+                            </div>
+                            <div className="h-10 w-px bg-border/40" />
+                            <div className="flex flex-col items-center gap-2 group">
+                                <div className="size-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
+                                    <TrendingUp className="size-5" />
+                                </div>
+                                <span className="opacity-60">
+                                    <strong className="text-lg text-foreground block">{categories.length}</strong> 
+                                    Categories
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-20 space-y-16">
-                    {/* Featured Episodes */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-24">
+                    {/* Featured Episodes - Larger Focus */}
                     {featured.length > 0 && (
-                        <section className="space-y-8">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <h2 className="text-2xl font-bold">Featured Episodes</h2>
-                                    <p className="text-sm text-muted-foreground mt-1">Hand-picked episodes we think you'll love</p>
+                        <section className="space-y-12">
+                            <div className="flex items-end justify-between border-b border-border/40 pb-8">
+                                <div className="space-y-2">
+                                    <h2 className="text-3xl md:text-4xl font-black tracking-tight">Editors' Picks</h2>
+                                    <p className="text-muted-foreground font-medium">Curated conversations for deeper exploration</p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {featured.map((podcast) => (
-                                    <PodcastCard key={podcast.id} podcast={podcast} variant="featured" />
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
-                    {/* Category filters */}
-                    {categories.length > 0 && (
-                        <section>
-                            <div className="flex flex-wrap items-center gap-2">
-                                <button
-                                    onClick={() => router.get('/podcasts', {}, { preserveState: true })}
-                                    className={cn(
-                                        'px-4 py-2 rounded-full text-sm font-bold transition-all',
-                                        !filters.category
-                                            ? 'bg-primary text-primary-foreground shadow-md shadow-primary/25'
-                                            : 'bg-muted hover:bg-accent text-muted-foreground'
-                                    )}
-                                >
-                                    All Episodes
-                                </button>
-                                {categories.map((cat) => (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => router.get('/podcasts', { category: cat.id }, { preserveState: true })}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                {featured.map((podcast, index) => (
+                                    <PodcastCard 
+                                        key={podcast.id} 
+                                        podcast={podcast} 
+                                        variant="featured" 
                                         className={cn(
-                                            'px-4 py-2 rounded-full text-sm font-bold transition-all',
-                                            filters.category === String(cat.id)
-                                                ? 'text-white shadow-md'
-                                                : 'bg-muted hover:bg-accent text-muted-foreground'
+                                            "animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-apple",
+                                            index === 0 ? "delay-0" : index === 1 ? "delay-150" : "delay-300"
                                         )}
-                                        style={
-                                            filters.category === String(cat.id)
-                                                ? { backgroundColor: cat.color, boxShadow: `0 4px 14px ${cat.color}40` }
-                                                : undefined
-                                        }
-                                    >
-                                        {cat.name}
-                                        <span className="ml-1.5 opacity-70">({cat.podcasts_count})</span>
-                                    </button>
+                                    />
                                 ))}
                             </div>
                         </section>
                     )}
 
-                    {/* Episodes Grid */}
-                    <section className="space-y-8">
-                        <h2 className="text-2xl font-bold">
-                            {filters.category
-                                ? `${categories.find(c => String(c.id) === filters.category)?.name || ''} Episodes`
-                                : 'All Episodes'
-                            }
-                        </h2>
+                    {/* Filter Bar with Horizontal Scroll on Mobile */}
+                    <section className="sticky top-24 z-30 py-4 glass-effect border-y border-white/5 apple-shadow">
+                        <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-hide px-4">
+                            <button
+                                onClick={() => router.get('/podcasts', {}, { preserveState: true })}
+                                className={cn(
+                                    'px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap',
+                                    !filters.category
+                                        ? 'bg-primary text-primary-foreground shadow-xl shadow-primary/20'
+                                        : 'bg-muted/50 hover:bg-muted text-muted-foreground'
+                                )}
+                            >
+                                All Library
+                            </button>
+                            {categories.map((cat) => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => router.get('/podcasts', { category: cat.id }, { preserveState: true })}
+                                    className={cn(
+                                        'px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap',
+                                        filters.category === String(cat.id)
+                                            ? 'text-white shadow-xl'
+                                            : 'bg-muted/50 hover:bg-muted text-muted-foreground'
+                                    )}
+                                    style={
+                                        filters.category === String(cat.id)
+                                            ? { backgroundColor: cat.color, boxShadow: `0 8px 20px ${cat.color}30` }
+                                            : undefined
+                                    }
+                                >
+                                    {cat.name}
+                                    <span className="ml-2 opacity-50 font-medium">({cat.podcasts_count})</span>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Episodes Library */}
+                    <section className="space-y-12">
+                        <div className="flex items-center justify-between">
+                            <h2 className="text-3xl font-black tracking-tight">
+                                {filters.category
+                                    ? <span className="text-primary">{categories.find(c => String(c.id) === filters.category)?.name}</span>
+                                    : 'Recent'
+                                } Episodes
+                            </h2>
+                        </div>
 
                         {podcasts.data.length === 0 ? (
-                            <div className="text-center py-20">
-                                <Headphones className="size-16 mx-auto text-muted-foreground/30 mb-4" />
-                                <h3 className="text-xl font-bold">No episodes found</h3>
-                                <p className="text-muted-foreground mt-2">
+                            <div className="text-center py-32 glass-effect rounded-[3rem] border border-dashed border-border/60">
+                                <Headphones className="size-20 mx-auto text-muted-foreground/20 mb-6" />
+                                <h3 className="text-2xl font-black tracking-tight">No episodes found</h3>
+                                <p className="text-muted-foreground mt-2 max-w-sm mx-auto">
                                     {filters.search
-                                        ? `No results for "${filters.search}"`
-                                        : 'Check back soon for new episodes!'}
+                                        ? `We couldn't find anything matching "${filters.search}". Try different keywords.`
+                                        : 'Our library is currently empty. Check back very soon!'}
                                 </p>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                                {podcasts.data.map((podcast) => (
-                                    <PodcastCard key={podcast.id} podcast={podcast} />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                                {podcasts.data.map((podcast, index) => (
+                                    <PodcastCard 
+                                        key={podcast.id} 
+                                        podcast={podcast} 
+                                        className={cn(
+                                            "animate-in fade-in slide-in-from-bottom-8 duration-700 ease-apple",
+                                            `delay-[${(index % 4) * 100}ms]`
+                                        )}
+                                    />
                                 ))}
                             </div>
                         )}
 
-                        {/* Pagination */}
+                        {/* Premium Pagination */}
                         {podcasts.last_page > 1 && (
-                            <div className="flex justify-center gap-2 pt-8">
+                            <div className="flex justify-center items-center gap-3 pt-12">
                                 {podcasts.links.map((link, i) => (
                                     <Button
                                         key={i}
-                                        variant={link.active ? 'default' : 'outline'}
+                                        variant={link.active ? 'default' : 'ghost'}
                                         size="sm"
                                         disabled={!link.url}
                                         onClick={() => link.url && router.get(link.url)}
-                                        dangerouslySetInnerHTML={{ __html: link.label }}
-                                        className="min-w-8"
-                                    />
+                                        className={cn(
+                                            "min-w-10 h-10 rounded-xl font-black transition-all",
+                                            link.active ? "shadow-lg shadow-primary/20 scale-110" : "hover:bg-muted"
+                                        )}
+                                    >
+                                        <span dangerouslySetInnerHTML={{ __html: link.label }} />
+                                    </Button>
                                 ))}
                             </div>
                         )}
                     </section>
                 </div>
             </main>
+            </div>
         </MainLayout>
     );
 }

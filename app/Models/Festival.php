@@ -15,14 +15,19 @@ class Festival extends Model
 
     protected $fillable = [
         'name',
+        'description',
         'slug',
+        'type',
         'location',
         'start_date',
         'end_date',
         'social_tags',
         'is_published',
+        'is_featured',
         'author_id',
         'category_id',
+        'image',
+        'gallery',
     ];
 
     /**
@@ -36,9 +41,11 @@ class Festival extends Model
     protected $casts = [
         'location' => 'array',
         'social_tags' => 'array',
+        'gallery' => 'array',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'is_published' => 'boolean',
+        'is_featured' => 'boolean',
     ];
 
     /**

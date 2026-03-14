@@ -9,6 +9,7 @@ import type {
     CommunityReviewBlock, 
     FestivalMapBlock as FestivalMapBlockType, 
     FestivalCardBlock as FestivalCardBlockType, 
+    FeaturedFestivalsBlock as FeaturedFestivalsBlockType,
     CTAHeroBlock as CTAHeroBlockType,
     StackedCardsBlock as StackedCardsBlockType
 } from '@/types/page-blocks';
@@ -77,6 +78,9 @@ const StackedCardsBlockComponent = React.lazy(() => import('@/components/Blocks/
 const StackedCardsBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/StackedCardsBlockEditor'));
 const CardsSliderBlockComponent = React.lazy(() => import('@/components/Blocks/CardsSliderBlock'));
 const CardsSliderBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/CardsSliderBlockEditor'));
+
+const FeaturedFestivalsBlockComponent = React.lazy(() => import('@/components/Blocks/FeaturedFestivalsBlock'));
+const FeaturedFestivalsEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FeaturedFestivalsEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -331,6 +335,24 @@ export function registerBlocks() {
         editor: (props: { content: FestivalCardBlockType['content']; onUpdate: (updates: Partial<FestivalCardBlockType['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <FestivalCardEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    blockRegistry.register({
+        type: 'featured_festivals',
+        label: 'Featured Festivals Slider',
+        icon: <Sparkles className="h-4 w-4" />,
+        desc: 'Horizontal slider of featured festivals with dreamy aesthetics.',
+        category: 'Travel',
+        renderer: (props: FeaturedFestivalsBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-3xl" />}>
+                <FeaturedFestivalsBlockComponent {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: FeaturedFestivalsBlockType['content']; onUpdate: (updates: Partial<FeaturedFestivalsBlockType['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <FeaturedFestivalsEditor {...props} />
             </React.Suspense>
         )
     });

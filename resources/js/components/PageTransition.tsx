@@ -118,7 +118,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
                     duration: 0.4, 
                     ease: [0.22, 1, 0.36, 1] 
                 }}
-                className="w-full flex-grow flex flex-col overflow-x-hidden"
+                className="relative w-full flex-grow flex flex-col overflow-x-hidden"
             >
                 {children}
             </motion.div>

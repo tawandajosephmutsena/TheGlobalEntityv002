@@ -13,6 +13,7 @@ Route::middleware([App\Http\Middleware\CacheHeadersMiddleware::class . ':public'
 
     Route::get('/services', [App\Http\Controllers\ServiceController::class, 'index'])->name('services');
     Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');
+    Route::get('/festivals/{slug}', [App\Http\Controllers\FestivalController::class, 'show'])->name('festivals.show');
 
     Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio');
     Route::get('/portfolio/{slug}', [App\Http\Controllers\PortfolioController::class, 'show'])->name('portfolio.show');
