@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/blog/{insight}/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [App\Http\Controllers\CommentController::class, 'destroy'])->name('comments.destroy');
     Route::post('/reactions/toggle', [App\Http\Controllers\ReactionController::class, 'toggle'])->name('reactions.toggle');
+    
+    // Festival Reviews
+    Route::post('/festivals/{festival}/reviews', [App\Http\Controllers\ReviewController::class, 'store'])->name('festivals.reviews.store');
 });
 
 Route::get('/documentation', function () {

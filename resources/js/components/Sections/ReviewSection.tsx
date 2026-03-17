@@ -1,6 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { ReviewForm } from './ReviewForm';
 
 interface Review {
     id: number;
@@ -34,7 +35,9 @@ const StarRating = ({ rating }: { rating: number }) => {
     );
 };
 
-export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, festivalId: _festivalId }) => {
+export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, festivalId }) => {
+    const [showForm, setShowForm] = React.useState(false);
+
     return (
         <section className="py-24 border-t border-border/10 bg-black/20">
             <div className="max-w-7xl mx-auto px-6">
@@ -46,14 +49,27 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, festivalI
                         </p>
                     </div>
                     
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="px-8 py-4 bg-primary text-black font-medium rounded-full"
-                    >
-                        Write a Review
-                    </motion.button>
+                    {!showForm && (
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setShowForm(true)}
+                            className="px-8 py-4 bg-primary text-black font-medium rounded-full"
+                        >
+                            Write a Review
+                        </motion.button>
+                    )}
                 </div>
+
+                <AnimatePresence>
+                    {showForm && (
+                        <ReviewForm 
+                            festivalId={festivalId} 
+                            onSuccess={() => setShowForm(false)} 
+                            onCancel={() => setShowForm(false)}
+                        />
+                    )}
+                </AnimatePresence>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {reviews.map((review, index) => (

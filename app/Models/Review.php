@@ -44,4 +44,20 @@ class Review extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Scope a query to only include approved reviews.
+     */
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
+    /**
+     * Get the formatted date attribute.
+     */
+    public function getFormattedDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
 }

@@ -27,7 +27,8 @@ import {
     TeamHeroBlock as TeamHeroBlockType,
     TeamGridBlock as TeamGridBlockType,
     CultureBentoBlock as CultureBentoBlockType,
-    TeamJoinBlock as TeamJoinBlockType
+    TeamJoinBlock as TeamJoinBlockType,
+    CommunityReviewBlock as CommunityReviewBlockType
 } from '@/types/page-blocks';
 import { cn } from '@/lib/utils';
 import { TeamMember } from '@/types'; // Import real type
@@ -60,6 +61,7 @@ import TeamHeroBlock from './TeamHeroBlock';
 import TeamGridBlock from './TeamGridBlock';
 import CultureBentoBlock from './CultureBentoBlock';
 import TeamJoinBlock from './TeamJoinBlock';
+import CommunityReviewBlock from './CommunityReviewBlock';
 
 
 // Type definitions for external data
@@ -112,6 +114,8 @@ interface BlockRendererProps {
     featuredServices?: ServiceItem[];
     featuredProjects?: ProjectItem[];
     recentInsights?: InsightItem[];
+    teamMembers?: TeamMember[];
+    reviews?: any[];
 }
 
 const VideoBlock = ({ content }: { content: VideoBlockType['content'] }) => {
@@ -362,20 +366,13 @@ const FeaturesBlock = ({ content }: { content: FeaturesBlockType['content'] }) =
     );
 };
 
-interface BlockRendererProps {
-    blocks: PageBlock[];
-    featuredServices?: ServiceItem[]; 
-    featuredProjects?: ProjectItem[]; 
-    recentInsights?: InsightItem[]; 
-    teamMembers?: TeamMember[];
-}
-
 export default function BlockRenderer({ 
     blocks, 
     featuredServices = [], 
     featuredProjects = [], 
     recentInsights = [],
-    teamMembers = []
+    teamMembers = [],
+    reviews = []
 }: BlockRendererProps) {
 
     if (!blocks || blocks.length === 0) return null;
@@ -547,6 +544,15 @@ export default function BlockRenderer({
                     case 'team_join':
                         return <TeamJoinBlock key={block.id} {...(block.content as TeamJoinBlockType['content'])} />;
 
+                    case 'community_review':
+                        return (
+                            <CommunityReviewBlock 
+                                key={block.id} 
+                                {...(block.content as CommunityReviewBlockType['content'])} 
+                                reviews={reviews}
+                            />
+                        );
+
                     default: {
                         const unknownBlock = block as unknown as {
                             type: string;
@@ -565,3 +571,4 @@ export default function BlockRenderer({
         </div>
     );
 }
+

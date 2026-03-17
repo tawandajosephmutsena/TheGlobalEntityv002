@@ -123,6 +123,33 @@ class CollectionController extends Controller
                     ];
                 });
                 break;
+
+            case 'podcasts':
+                if (class_exists('\Modules\PodcastPlugin\Models\Podcast')) {
+                    $items = \Modules\PodcastPlugin\Models\Podcast::published()
+                        ->when($request->has('featured'), function ($query) {
+                            return $query->where('is_featured', true);
+                        })
+                        ->with(['author', 'category'])
+                        ->latest('published_at')
+                        ->take($limit)
+                        ->get();
+                        
+                    $data = $items->map(function ($item) {
+                        return [
+                            'id' => $item->id,
+                            'title' => $item->title,
+                            'slug' => $item->slug,
+                            'description' => $item->description ?? '',
+                            'category' => ['name' => $item->category?->name ?? 'Podcast'],
+                            'thumbnail_url' => $item->thumbnail_url,
+                            'duration' => $item->formatted_duration,
+                            'published_at' => $item->published_at ? $item->published_at->toIso8601String() : '',
+                            'url' => route('podcasts.show', $item->slug),
+                        ];
+                    });
+                }
+                break;
                 
             default:
                 // Fallback empty data if collection is not found

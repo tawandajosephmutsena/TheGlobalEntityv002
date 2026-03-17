@@ -16,7 +16,7 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
+import { X, Minus, Plus, Locate, Maximize, Loader2, Layers, RotateCcw, BoxSelect, ArrowUp, ArrowDown, RotateCw } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -717,6 +717,8 @@ type MapControlsProps = {
   showLocate?: boolean;
   /** Show fullscreen toggle button (default: false) */
   showFullscreen?: boolean;
+  /** Show style switcher button (default: false) */
+  showStyleSwitcher?: boolean;
   /** Additional CSS classes for the controls container */
   className?: string;
   /** Callback with user coordinates when located */
@@ -724,15 +726,19 @@ type MapControlsProps = {
 };
 
 const positionClasses = {
-  "top-left": "top-2 left-2",
-  "top-right": "top-2 right-2",
-  "bottom-left": "bottom-2 left-2",
-  "bottom-right": "bottom-10 right-2",
+  "top-left": "top-8 left-8",
+  "top-right": "top-8 right-8",
+  "bottom-left": "bottom-8 left-8",
+  "bottom-right": "bottom-8 right-8",
 };
 
-function ControlGroup({ children }: { children: React.ReactNode }) {
+function ControlGroup({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className="flex flex-col rounded-md border border-border bg-background shadow-sm overflow-hidden [&>button:not(:last-child)]:border-b [&>button:not(:last-child)]:border-border">
+    <div className={cn(
+      "flex flex-col rounded-2xl border border-border/40 bg-background/80 backdrop-blur-xl shadow-2xl overflow-hidden",
+      "[&>button:not(:last-child)]:border-b [&>button:not(:last-child)]:border-border/40",
+      className
+    )}>
       {children}
     </div>
   );
@@ -743,11 +749,13 @@ function ControlButton({
   label,
   children,
   disabled = false,
+  active = false,
 }: {
   onClick: () => void;
   label: string;
   children: React.ReactNode;
   disabled?: boolean;
+  active?: boolean;
 }) {
   return (
     <button
@@ -755,8 +763,10 @@ function ControlButton({
       aria-label={label}
       type="button"
       className={cn(
-        "flex items-center justify-center size-8 hover:bg-accent dark:hover:bg-accent/40 transition-colors",
-        disabled && "opacity-50 pointer-events-none cursor-not-allowed"
+        "flex items-center justify-center size-10 transition-all duration-200",
+        "hover:bg-primary/10 hover:text-primary",
+        active ? "bg-primary/20 text-primary" : "text-muted-foreground",
+        disabled && "opacity-30 pointer-events-none cursor-not-allowed"
       )}
       disabled={disabled}
     >
@@ -771,6 +781,7 @@ function MapControls({
   showCompass = false,
   showLocate = false,
   showFullscreen = false,
+  showStyleSwitcher = false,
   className,
   onLocate,
 }: MapControlsProps) {
@@ -787,6 +798,22 @@ function MapControls({
 
   const handleResetBearing = useCallback(() => {
     map?.resetNorthPitch({ duration: 300 });
+  }, [map]);
+
+  const handlePitchUp = useCallback(() => {
+    map?.setPitch((map.getPitch() || 0) + 15, { duration: 300 });
+  }, [map]);
+
+  const handlePitchDown = useCallback(() => {
+    map?.setPitch(Math.max(0, (map.getPitch() || 0) - 15), { duration: 300 });
+  }, [map]);
+
+  const handleRotateLeft = useCallback(() => {
+    map?.setBearing((map.getBearing() || 0) - 30, { duration: 300 });
+  }, [map]);
+
+  const handleRotateRight = useCallback(() => {
+    map?.setBearing((map.getBearing() || 0) + 30, { duration: 300 });
   }, [map]);
 
   const handleLocate = useCallback(() => {
@@ -847,6 +874,24 @@ function MapControls({
           <CompassButton onClick={handleResetBearing} />
         </ControlGroup>
       )}
+      <ControlGroup>
+        <ControlButton onClick={handlePitchUp} label="Tilt up">
+          <ArrowUp className="size-4" />
+        </ControlButton>
+        <ControlButton onClick={handlePitchDown} label="Tilt down">
+          <ArrowDown className="size-4" />
+        </ControlButton>
+      </ControlGroup>
+
+      <ControlGroup>
+        <ControlButton onClick={handleRotateLeft} label="Rotate left">
+          <RotateCcw className="size-4" />
+        </ControlButton>
+        <ControlButton onClick={handleRotateRight} label="Rotate right">
+          <RotateCw className="size-4" />
+        </ControlButton>
+      </ControlGroup>
+
       {showLocate && (
         <ControlGroup>
           <ControlButton
@@ -862,12 +907,63 @@ function MapControls({
           </ControlButton>
         </ControlGroup>
       )}
+      {showStyleSwitcher && (
+        <MapStyleSwitcher />
+      )}
       {showFullscreen && (
         <ControlGroup>
           <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
             <Maximize className="size-4" />
           </ControlButton>
         </ControlGroup>
+      )}
+    </div>
+  );
+}
+
+function MapStyleSwitcher() {
+  const { map } = useMap();
+  const [open, setOpen] = useState(false);
+  const [currentStyle, setCurrentStyle] = useState("streets");
+
+  const styles = [
+    { id: "streets", name: "Streets", url: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json" },
+    { id: "light", name: "Light", url: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json" },
+    { id: "dark", name: "Dark", url: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json" },
+  ];
+
+  const switchStyle = (styleUrl: string, styleId: string) => {
+    if (!map) return;
+    map.setStyle(styleUrl);
+    setCurrentStyle(styleId);
+    setOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <ControlGroup>
+        <ControlButton onClick={() => setOpen(!open)} label="Switch Map Style" active={open}>
+          <Layers className="size-4" />
+        </ControlButton>
+      </ControlGroup>
+      
+      {open && (
+        <div className="absolute right-full mr-3 top-0 flex flex-col gap-1.5 p-1.5 rounded-2xl border border-border/40 bg-background/80 backdrop-blur-xl shadow-2xl animate-in fade-in slide-in-from-right-2 duration-200">
+          {styles.map((style) => (
+            <button
+              key={style.id}
+              onClick={() => switchStyle(style.url, style.id)}
+              className={cn(
+                "px-4 py-2 rounded-xl text-xs font-medium transition-all duration-200 text-left min-w-[100px]",
+                currentStyle === style.id 
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" 
+                  : "hover:bg-primary/10 text-muted-foreground hover:text-primary"
+              )}
+            >
+              {style.name}
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

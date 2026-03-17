@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import MainLayout from '@/layouts/MainLayout';
 import { motion } from 'framer-motion';
 import { 
     Calendar, 
     MapPin, 
     ExternalLink, 
-    ChevronLeft, 
     Share2, 
     Heart,
     Star,
@@ -18,6 +17,7 @@ import {
 import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
 import { Button } from '@/components/ui/button';
 import { ReviewSection } from '@/components/Sections/ReviewSection';
+import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
 
 interface Festival {
     id: number;
@@ -108,7 +108,7 @@ export default function Show({ festival }: Props) {
                                 </span>
                                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
                                     <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                                    <span className="text-xs font-medium text-white/90">Featured Event</span>
+                                    <span className="text-xs font-medium text-foreground/90">Featured Event</span>
                                 </div>
                             </motion.div>
 
@@ -150,7 +150,7 @@ export default function Show({ festival }: Props) {
                                     <Activity className="text-primary" />
                                     About the Phoenix
                                 </h2>
-                                <div className="prose prose-invert prose-lg max-w-none text-white/70 leading-relaxed">
+                                <div className="prose prose-neutral dark:prose-invert prose-lg max-w-none text-muted-foreground leading-relaxed">
                                     {festival.description.split('\n').map((para, i) => (
                                         <p key={i} className="mb-6">{para}</p>
                                     ))}
@@ -173,7 +173,7 @@ export default function Show({ festival }: Props) {
                                                 <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                                                     <CheckCircle2 size={20} className="text-primary" />
                                                 </div>
-                                                <span className="text-xl font-medium text-white/90">{activity}</span>
+                                                <span className="text-xl font-medium text-foreground/90">{activity}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -187,20 +187,20 @@ export default function Show({ festival }: Props) {
                                         <ImageIcon className="text-primary" />
                                         The Visual Journey
                                     </h2>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        {festival.gallery.map((img, i) => (
-                                            <motion.div 
-                                                key={i}
-                                                whileHover={{ scale: 1.02 }}
-                                                className={`overflow-hidden rounded-3xl cursor-pointer ${i % 3 === 0 ? 'col-span-2 aspect-[21/9]' : 'aspect-square'}`}
-                                            >
-                                                <img 
-                                                    src={img} 
-                                                    alt={`Gallery ${i}`} 
-                                                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                                    <div className="relative">
+                                        <Carousel 
+                                            items={festival.gallery.map((img, i) => (
+                                                <Card 
+                                                    key={i}
+                                                    card={{
+                                                        src: img,
+                                                        title: `Moment ${i + 1}`,
+                                                        category: "Festival Vibe",
+                                                    }}
+                                                    index={i}
                                                 />
-                                            </motion.div>
-                                        ))}
+                                            ))} 
+                                        />
                                     </div>
                                 </section>
                             )}
@@ -276,47 +276,77 @@ export default function Show({ festival }: Props) {
                     </div>
                 </div>
 
-                {/* Map Section - Full Width & Modern Styling - Aligned with Theme */}
+                {/* Map Section - Boxed & Modern Styling - Aligned with Theme */}
                 <section className="py-24 border-t border-border/10">
                     <div className="max-w-7xl mx-auto px-6 mb-12">
                         <h2 className="text-4xl font-display font-medium mb-4">Location</h2>
                         <p className="text-muted-foreground text-lg mb-8">{festival.location?.address ?? 'Detailed coordinates encrypted'}</p>
                     </div>
 
-                    <div className="h-[500px] w-full relative group bg-background">
-                        {/* Overlay for depth effect */}
-                        <div className="absolute inset-0 z-10 pointer-events-none border-y border-white/5 bg-gradient-to-b from-background via-transparent to-background" />
-                        
-                        <div className="h-full w-full">
-                            <Map
-                                center={center}
-                                zoom={13}
-                                className="h-full w-full"
-                            >
-                                <MapMarker 
-                                    latitude={lat} 
-                                    longitude={lng}
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="h-[500px] w-full relative group bg-background rounded-3xl overflow-hidden shadow-2xl border border-white/5">
+                            {/* Full visibility map container */}
+                            
+                            <div className="h-full w-full">
+                                <Map
+                                    center={center}
+                                    zoom={13}
+                                    className="h-full w-full"
+                                    cooperativeGestures={true}
                                 >
-                                    <MarkerContent>
-                                        <div className="relative group">
-                                            <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all duration-500 animate-pulse" />
-                                            <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
-                                        </div>
-                                    </MarkerContent>
-                                    <MarkerPopup>
-                                        <div className="p-2 min-w-[150px]">
-                                            <p className="font-bold text-sm text-primary uppercase mb-1">{festival.title}</p>
-                                            <p className="text-xs text-muted-foreground">{festival.location?.name || 'Festival Location'}</p>
-                                        </div>
-                                    </MarkerPopup>
-                                </MapMarker>
-                                <MapControls position="top-right" />
-                            </Map>
-                        </div>
+                                    <MapMarker 
+                                        latitude={lat} 
+                                        longitude={lng}
+                                    >
+                                        <MarkerContent>
+                                            <div className="relative group">
+                                                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all duration-500 animate-pulse" />
+                                                <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
+                                            </div>
+                                        </MarkerContent>
+                                        <MarkerPopup>
+                                            <div className="p-2 min-w-[150px]">
+                                                <p className="font-bold text-sm text-primary uppercase mb-1 tracking-tight">{festival.title}</p>
+                                                <p className="text-xs text-muted-foreground mb-3 leading-tight">{festival.location?.address || 'Festival Location'}</p>
+                                                <a 
+                                                    href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-primary hover:underline group/dir"
+                                                >
+                                                    Get Directions
+                                                    <ExternalLink size={12} className="group-hover/dir:translate-x-0.5 group-hover/dir:-translate-y-0.5 transition-transform" />
+                                                </a>
+                                            </div>
+                                        </MarkerPopup>
+                                    </MapMarker>
+                                    <MapControls 
+                                        position="top-right" 
+                                        showLocate 
+                                        showFullscreen 
+                                        showCompass 
+                                        showStyleSwitcher
+                                    />
+                                </Map>
+                            </div>
 
-                        {/* Map floating coordinates tag */}
-                        <div className="absolute top-8 left-8 z-20 px-4 py-2 rounded-xl bg-background/80 backdrop-blur-xl border border-border/10 text-xs font-mono text-muted-foreground/60">
-                            {lat.toFixed(4)}° N, {lng.toFixed(4)}° E
+                            {/* Map floating coordinates tag */}
+                            <div className="absolute top-8 left-8 z-20 px-6 py-3 rounded-2xl bg-background/60 backdrop-blur-2xl border border-white/10 shadow-2xl group/coord">
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-semibold">Location Data</span>
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex flex-col">
+                                            <span className="text-xs font-mono text-foreground/80">{lat.toFixed(6)}° N</span>
+                                            <span className="text-xs font-mono text-foreground/80">{lng.toFixed(6)}° E</span>
+                                        </div>
+                                        <div className="w-px h-8 bg-white/10" />
+                                        <div className="flex flex-col">
+                                            <span className="text-[10px] text-muted-foreground uppercase">Altitude</span>
+                                            <span className="text-xs font-mono text-foreground/80">342m MSL</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -324,17 +354,6 @@ export default function Show({ festival }: Props) {
                 {/* Review Section */}
                 <ReviewSection reviews={festival.reviews} festivalId={festival.id} />
 
-                {/* Footer Link back home */}
-                <div className="py-20 text-center border-t border-white/5">
-                    <Link 
-                        href="/"
-                        className="inline-flex items-center gap-3 text-2xl font-display text-muted-foreground hover:text-white transition-colors group"
-                    >
-                        <ChevronLeft />
-                        Back to the Realm
-                        <div className="w-1 h-1 rounded-full bg-primary scale-0 group-hover:scale-100 transition-transform" />
-                    </Link>
-                </div>
             </div>
         </MainLayout>
     );

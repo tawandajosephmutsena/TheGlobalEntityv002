@@ -625,6 +625,7 @@ export interface CommunityReviewBlock extends BaseBlock {
         showRatings?: boolean;
         limit?: number;
         layout?: 'list' | 'grid' | 'carousel';
+        reviews?: any[]; // Dynamic reviews passed from backend
     };
 }
 
@@ -798,7 +799,5 @@ export interface FeaturedFestivalsBlock extends BaseBlock {
         title?: string;
         subtitle?: string;
         limit?: number;
-        showViewAll?: boolean;
-        ctaText?: string;
     };
 }

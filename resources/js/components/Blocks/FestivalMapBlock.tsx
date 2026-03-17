@@ -1,29 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { MapPin, Search, Filter } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, Search, Filter, ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
 import { cn } from '@/lib/utils';
 import type { FestivalMapBlock as FestivalMapBlockType } from '@/types/page-blocks';
+
+interface FestivalData {
+    id: number;
+    title: string;
+    description: string;
+    category: string;
+    image: string;
+    location: {
+        address: string;
+        lat: string;
+        lng: string;
+    } | null;
+    url: string;
+    activities: string[];
+}
 
 const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
     title = "Explore the Magic",
     subtitle = "Find festivals and sustainable hubs near you",
     description,
-    center = { lat: 20, lng: 0 },
-    zoom = 3,
+    center: centerProp = { lat: 20, lng: 0 },
+    zoom: zoomProp = 3,
     showSearch = true,
-    theme = 'fairy-pirate'
+    theme = 'fairy-pirate',
+    limit = 50
 }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [festivals, setFestivals] = useState<FestivalData[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        // Simple loading state simulation for the map
-        // In a real implementation, 'center' and 'zoom' would be passed to the map engine
-        console.log(`Initializing map at ${center.lat}, ${center.lng} with zoom ${zoom} and theme ${theme}`);
-        const timer = setTimeout(() => setIsLoaded(true), 1000);
-        return () => clearTimeout(timer);
-    }, [center, zoom, theme]);
+        const fetchFestivals = async () => {
+            try {
+                setIsLoading(true);
+                const response = await fetch(`/api/collections/festivals?limit=${limit}`);
+                const result = await response.json();
+                
+                // Filter out festivals without location data or invalid coordinates
+                const locatedFestivals = (result.data || []).filter((f: FestivalData) => {
+                    if (!f.location?.lat || !f.location?.lng) return false;
+                    const lat = parseFloat(f.location.lat);
+                    const lng = parseFloat(f.location.lng);
+                    return (
+                        !isNaN(lat) && !isNaN(lng) && 
+                        lat >= -90 && lat <= 90 && 
+                        lng >= -180 && lng <= 180
+                    );
+                });
+                setFestivals(locatedFestivals);
+            } catch (error) {
+                console.error('Error fetching festivals for map:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchFestivals();
+    }, [limit]);
+
+    const filteredFestivals = festivals.filter(f => 
+        f.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        f.location?.address.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const mapCenter: [number, number] = [centerProp.lng, centerProp.lat];
 
     return (
         <section className={cn(
@@ -55,51 +103,73 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                 </div>
 
                 <div className="relative rounded-3xl overflow-hidden border border-primary/10 shadow-2xl bg-white/5 backdrop-blur-sm h-[600px] group">
-                    {/* Mock Map Background */}
-                    <div className={cn(
-                        "absolute inset-0 transition-opacity duration-1000 flex items-center justify-center",
-                        theme === 'dark' ? "bg-slate-900" : "bg-slate-100",
-                        isLoaded ? "opacity-100" : "opacity-0"
-                    )}>
-                        <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle_at_center,var(--color-primary)_1px,transparent_1px)] bg-[length:40px_40px]" />
-                        
-                        <div className="relative text-center p-8">
-                            <MapPin className="w-12 h-12 text-primary mx-auto mb-4 animate-bounce" />
-                            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Interactive Map Engine Initializing...</p>
-                        </div>
-
-                        {/* Sample Markers */}
-                        <motion.div 
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1.2, type: 'spring' }}
-                            className="absolute top-[30%] left-[40%] group/pin"
+                    <div className="absolute inset-0 z-0">
+                        <Map
+                            center={mapCenter}
+                            zoom={zoomProp}
+                            className="h-full w-full"
+                            theme={theme === 'dark' ? 'dark' : 'light'}
+                            cooperativeGestures={true}
                         >
-                            <div className="relative cursor-pointer">
-                                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover/pin:bg-primary/40 transition-all duration-500 animate-pulse" />
-                                <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
-                                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-32 p-2 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl opacity-0 group-hover/pin:opacity-100 transition-all duration-300 pointer-events-none translate-y-2 group-hover/pin:translate-y-0">
-                                    <p className="text-[10px] font-bold text-primary uppercase mb-0.5">Forest Magic</p>
-                                    <p className="text-[10px] text-foreground font-medium">Sustainable Gathering</p>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        <motion.div 
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1.4, type: 'spring' }}
-                            className="absolute top-[50%] right-[30%] group/pin"
-                        >
-                            <div className="relative cursor-pointer">
-                                <div className="absolute -inset-4 bg-accent/20 rounded-full blur-xl group-hover/pin:bg-accent/40 transition-all duration-500 animate-pulse" />
-                                <MapPin className="w-8 h-8 text-accent fill-accent/20 relative z-10" />
-                                <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-32 p-2 bg-white/90 dark:bg-black/90 backdrop-blur-md rounded-lg shadow-xl opacity-0 group-hover/pin:opacity-100 transition-all duration-300 pointer-events-none translate-y-2 group-hover/pin:translate-y-0">
-                                    <p className="text-[10px] font-bold text-accent uppercase mb-0.5">Coastal Echo 2026</p>
-                                    <p className="text-[10px] text-foreground font-medium">Slow Travel Summit</p>
-                                </div>
-                            </div>
-                        </motion.div>
+                            {filteredFestivals.map((festival) => {
+                                const lat = parseFloat(festival.location!.lat);
+                                const lng = parseFloat(festival.location!.lng);
+                                
+                                return (
+                                    <MapMarker 
+                                        key={festival.id}
+                                        latitude={lat} 
+                                        longitude={lng}
+                                    >
+                                        <MarkerContent>
+                                            <div className="relative group/marker">
+                                                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover/marker:bg-primary/40 transition-all duration-500 animate-pulse" />
+                                                <div className="relative z-10 w-8 h-8 rounded-full bg-background border-2 border-primary flex items-center justify-center shadow-lg transform group-hover/marker:scale-110 transition-transform duration-300">
+                                                    <MapPin className="w-4 h-4 text-primary fill-primary/20" />
+                                                </div>
+                                            </div>
+                                        </MarkerContent>
+                                        <MarkerPopup className="p-0 overflow-hidden min-w-[200px] rounded-2xl border-none shadow-2xl">
+                                            <div className="relative h-24 w-full">
+                                                <img 
+                                                    src={festival.image} 
+                                                    alt={festival.title}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                                                <Badge className="absolute top-2 right-2 bg-primary text-black text-[8px] uppercase font-bold py-0.5 px-1.5">
+                                                    {festival.category}
+                                                </Badge>
+                                            </div>
+                                            <div className="p-3 bg-card">
+                                                <h4 className="font-bold text-sm text-foreground mb-1 leading-tight">{festival.title}</h4>
+                                                <p className="text-[10px] text-muted-foreground mb-3 flex items-center gap-1">
+                                                    <MapPin size={10} />
+                                                    {festival.location?.address.split(',')[0]}
+                                                </p>
+                                                <Button 
+                                                    asChild 
+                                                    variant="secondary" 
+                                                    size="sm" 
+                                                    className="w-full h-8 text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-colors"
+                                                >
+                                                    <a href={festival.url}>
+                                                        Explore Vibe
+                                                        <ExternalLink size={10} className="ml-1.5" />
+                                                    </a>
+                                                </Button>
+                                            </div>
+                                        </MarkerPopup>
+                                    </MapMarker>
+                                );
+                            })}
+                            <MapControls 
+                                position="bottom-right" 
+                                showLocate 
+                                showFullscreen 
+                                showCompass
+                            />
+                        </Map>
                     </div>
 
                     {/* Search & Interface Overlays */}
@@ -110,6 +180,8 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 <Input 
                                     className="pl-10 h-11 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-white/20 shadow-xl rounded-2xl text-sm"
                                     placeholder="Search festivals or locations..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
                             <div className="flex gap-2 pointer-events-auto">
@@ -125,20 +197,49 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                     )}
 
                     {/* Bottom Info Status */}
-                    <div className="absolute bottom-6 left-6 z-20 pointer-events-none">
-                        <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
-                            <div className="flex -space-x-3">
-                                {[1, 2, 3].map(i => (
-                                    <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-gradient-to-br from-primary to-accent" />
-                                ))}
-                                <div className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold">+12</div>
-                            </div>
-                            <div>
-                                <p className="text-xs font-bold leading-none mb-1">Active Community</p>
-                                <p className="text-[10px] text-muted-foreground font-medium">124 travelers currently exploring</p>
-                            </div>
-                        </div>
-                    </div>
+                    <AnimatePresence>
+                        {isLoading ? (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                className="absolute bottom-6 left-6 z-20 pointer-events-none"
+                            >
+                                <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
+                                    <div className="flex gap-1">
+                                        <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
+                                        <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
+                                        <div className="w-2 h-2 rounded-full bg-primary animate-bounce" />
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold leading-none mb-1">Mapping Festivals</p>
+                                        <p className="text-[10px] text-muted-foreground font-medium italic">Synchronizing with global vibe radar...</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="absolute bottom-6 left-6 z-20 pointer-events-none"
+                            >
+                                <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
+                                    <div className="flex -space-x-3">
+                                        {[1, 2, 3].map(i => (
+                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-gradient-to-br from-primary to-accent overflow-hidden">
+                                                <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
+                                            </div>
+                                        ))}
+                                        <div className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold">+{festivals.length > 3 ? festivals.length - 3 : 0}</div>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold leading-none mb-1">Active Community</p>
+                                        <p className="text-[10px] text-muted-foreground font-medium">{festivals.length * 12 + 4} travelers currently exploring</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {description && (
@@ -152,3 +253,4 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
 };
 
 export default FestivalMapBlock;
+

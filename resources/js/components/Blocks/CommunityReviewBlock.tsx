@@ -12,38 +12,12 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
     description,
     showRatings = true,
     layout = 'grid',
-    limit = 3
+    limit = 3,
+    reviews = []
 }) => {
-    // Mock reviews for now - in production this would fetch from the backend
-    const mockReviews = [
-        {
-            id: 1,
-            user: "Aria Thorne",
-            body: "The festival was absolutely magical! The sustainable practices were impressive and the vibe was pure fairy pirate.",
-            vibe: 5,
-            safety: 4,
-            sustainability: 5,
-            date: "2 days ago"
-        },
-        {
-            id: 2,
-            user: "Leo Captain",
-            body: "Great experience overall. Loved the community feel and the focus on slow travel. Highly recommended.",
-            vibe: 4,
-            safety: 5,
-            sustainability: 4,
-            date: "1 week ago"
-        },
-        {
-            id: 3,
-            user: "Mira Moon",
-            body: "A dreamy adventure that stays true to its values. The local engagement was heart-warming.",
-            vibe: 5,
-            safety: 5,
-            sustainability: 5,
-            date: "3 weeks ago"
-        }
-    ].slice(0, limit);
+    // If no dynamic reviews provided, we could show an empty message or nothing
+    // For now we'll take the passed reviews and slice by the limit set in editor
+    const displayReviews = reviews.slice(0, limit);
 
     return (
         <section className="py-24 relative overflow-hidden bg-background">
@@ -73,70 +47,76 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                     </motion.div>
                 </div>
 
-                <div className={cn(
-                    "grid gap-8 auto-rows-fr",
-                    layout === 'grid' ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-4xl mx-auto"
-                )}>
-                    {mockReviews.map((review, index) => (
-                        <motion.div
-                            key={review.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
-                        >
-                            <Card className="h-full border-primary/10 bg-white/30 dark:bg-black/20 backdrop-blur-xl shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-500 group overflow-hidden flex flex-col">
-                                <CardContent className="p-10 relative flex-1 flex flex-col">
-                                    <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/5 group-hover:text-primary/10 group-hover:scale-110 transition-all duration-700 ease-out" />
-                                    
-                                    <div className="flex items-center gap-5 mb-8">
-                                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center border border-white/20 shadow-inner group-hover:rotate-3 transition-transform duration-500">
-                                            <span className="font-display text-primary text-2xl drop-shadow-sm">
-                                                {review.user.charAt(0)}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">{review.user}</h4>
-                                            <p className="text-xs text-muted-foreground font-mono font-medium tracking-tight opacity-70 italic">{review.date}</p>
-                                        </div>
-                                    </div>
-
-                                    {showRatings && (
-                                        <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl bg-primary/5 border border-primary/10">
-                                            <div className="flex flex-col gap-1.5">
-                                                <span className="text-[10px] uppercase font-bold tracking-widest text-primary/70">Vibe</span>
-                                                <div className="flex gap-1">
-                                                    {[...Array(5)].map((_, i) => (
-                                                        <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.vibe ? "text-primary fill-primary scale-110" : "text-primary/20")} />
-                                                    ))}
-                                                </div>
+                {displayReviews.length > 0 ? (
+                    <div className={cn(
+                        "grid gap-8 auto-rows-fr",
+                        layout === 'grid' ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1 max-w-4xl mx-auto"
+                    )}>
+                        {displayReviews.map((review, index) => (
+                            <motion.div
+                                key={review.id}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                            >
+                                <Card className="h-full border-primary/10 bg-white/30 dark:bg-black/20 backdrop-blur-xl shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-500 group overflow-hidden flex flex-col">
+                                    <CardContent className="p-10 relative flex-1 flex flex-col">
+                                        <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/5 group-hover:text-primary/10 group-hover:scale-110 transition-all duration-700 ease-out" />
+                                        
+                                        <div className="flex items-center gap-5 mb-8">
+                                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center border border-white/20 shadow-inner group-hover:rotate-3 transition-transform duration-500">
+                                                <span className="font-display text-primary text-2xl drop-shadow-sm">
+                                                    {review.user.charAt(0)}
+                                                </span>
                                             </div>
-                                            <div className="flex flex-col gap-1.5">
-                                                <span className="text-[10px] uppercase font-bold tracking-widest text-accent/70">Safety</span>
-                                                <div className="flex gap-1">
-                                                    {[...Array(5)].map((_, i) => (
-                                                        <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.safety ? "text-accent fill-accent scale-110" : "text-accent/20")} />
-                                                    ))}
-                                                </div>
+                                            <div>
+                                                <h4 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors duration-300">{review.user}</h4>
+                                                <p className="text-xs text-muted-foreground font-mono font-medium tracking-tight opacity-70 italic">{review.date}</p>
                                             </div>
                                         </div>
-                                    )}
 
-                                    <div className="relative flex-1">
-                                        <p className="text-lg text-foreground/80 leading-relaxed italic font-serif">
-                                            "{review.body}"
-                                        </p>
-                                    </div>
-                                    
-                                    <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                        <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Verified Guest</span>
-                                        <Badge variant="secondary" className="text-[10px] h-5 bg-primary/5 text-primary hover:bg-primary/10">Slow Travel</Badge>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    ))}
-                </div>
+                                        {showRatings && (
+                                            <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                                                <div className="flex flex-col gap-1.5">
+                                                    <span className="text-[10px] uppercase font-bold tracking-widest text-primary/70">Vibe</span>
+                                                    <div className="flex gap-1">
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.vibe ? "text-primary fill-primary scale-110" : "text-primary/20")} />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col gap-1.5">
+                                                    <span className="text-[10px] uppercase font-bold tracking-widest text-accent/70">Safety</span>
+                                                    <div className="flex gap-1">
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.safety ? "text-accent fill-accent scale-110" : "text-accent/20")} />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="relative flex-1">
+                                            <p className="text-lg text-foreground/80 leading-relaxed italic font-serif">
+                                                "{review.body}"
+                                            </p>
+                                        </div>
+                                        
+                                        <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                            <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Verified Guest</span>
+                                            <Badge variant="secondary" className="text-[10px] h-5 bg-primary/5 text-primary hover:bg-primary/10">Slow Travel</Badge>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-20 bg-muted/10 rounded-[40px] border border-dashed border-primary/20 backdrop-blur-sm">
+                        <p className="text-muted-foreground font-medium italic">No reviews found yet. Be the first to share your journey!</p>
+                    </div>
+                )}
             </div>
         </section>
     );

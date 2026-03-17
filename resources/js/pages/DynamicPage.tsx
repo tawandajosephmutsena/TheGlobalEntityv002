@@ -16,6 +16,7 @@ interface DynamicPageProps {
     featuredProjects?: any[];
     recentInsights?: any[];
     teamMembers?: any[];
+    reviews?: any[];
 }
 
 export default function DynamicPage({ 
@@ -23,7 +24,8 @@ export default function DynamicPage({
     featuredServices = [],
     featuredProjects = [],
     recentInsights = [],
-    teamMembers = []
+    teamMembers = [],
+    reviews = []
 }: DynamicPageProps) {
     const [blocks, setBlocks] = React.useState<PageBlock[]>(page.content?.blocks || []);
 
@@ -52,6 +54,7 @@ export default function DynamicPage({
                 featuredProjects={featuredProjects}
                 recentInsights={recentInsights}
                 teamMembers={teamMembers}
+                reviews={reviews}
             />
             
             {blocks.length === 0 && (
