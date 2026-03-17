@@ -103,7 +103,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ status }) => {
 
                     <div className="reveal-text flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link 
-                            href={route('home')}
+                            href={typeof route !== 'undefined' ? route('home') : '/'}
                             className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
                         >
                             <Home className="w-5 h-5" />
