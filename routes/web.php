@@ -9,7 +9,9 @@ use App\Http\Controllers\HomeController;
 
 // Frontend routes with cache headers for public pages
 Route::middleware([App\Http\Middleware\CacheHeadersMiddleware::class . ':public'])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/', function () {
+        return (new \App\Http\Controllers\PageController())->show('home');
+    })->name('home');
 
     Route::get('/services', [App\Http\Controllers\ServiceController::class, 'index'])->name('services');
     Route::get('/services/{slug}', [App\Http\Controllers\ServiceController::class, 'show'])->name('services.show');

@@ -42,6 +42,7 @@ export interface SharedData {
             linkedin?: string;
             instagram?: string;
             facebook?: string;
+            whatsapp?: string;
         };
         contact?: {
             address?: string;

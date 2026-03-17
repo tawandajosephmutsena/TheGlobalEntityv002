@@ -5,10 +5,12 @@ import {
     Instagram,
     Linkedin,
     Twitter,
+    Facebook,
 } from 'lucide-react';
+import { IconBrandWhatsapp } from '@tabler/icons-react';
 import React from 'react';
-import { SharedData } from '@/types';
-import AppLogo from './app-logo';
+import { SharedData, SettingItem } from '@/types';
+import AppLogo from '@/components/app-logo';
 
 interface FooterProps {
     className?: string;
@@ -46,14 +48,27 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
 
     // Helper to check social visibility
     const isSocialVisible = (key: string) => {
-        const val = props.settings?.social?.find((s) => s.key === `show_${key}`)?.value;
-        return val === true || val === 'true' || val === '1' || val === undefined; // Default to true if not found
+        const item = props.settings?.social?.find((s: SettingItem) => s.key === `show_${key}`);
+        if (!item) return true; // Default to true if not found in DB
+
+        const val = item.value;
+        const checkValue = Array.isArray(val) ? val[0] : val;
+
+        return (
+            checkValue === true ||
+            checkValue === 'true' ||
+            checkValue === '1' ||
+            checkValue === 'on' ||
+            checkValue === 'yes'
+        );
     };
 
     // Map social links from settings
     const socialLinks = [
         { name: 'Github', href: site.social?.github, icon: Github, visible: isSocialVisible('github') },
         { name: 'Twitter', href: site.social?.twitter, icon: Twitter, visible: isSocialVisible('twitter') },
+        { name: 'Facebook', href: site.social?.facebook, icon: Facebook, visible: isSocialVisible('facebook') },
+        { name: 'WhatsApp', href: site.social?.whatsapp, icon: IconBrandWhatsapp, visible: isSocialVisible('whatsapp') },
         { name: 'LinkedIn', href: site.social?.linkedin, icon: Linkedin, visible: isSocialVisible('linkedin') },
         { name: 'Instagram', href: site.social?.instagram, icon: Instagram, visible: isSocialVisible('instagram') },
     ].filter(link => link.href && link.visible);

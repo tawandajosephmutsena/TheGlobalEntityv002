@@ -33,7 +33,7 @@ return [
         ],
         'public' => [
             'driver' => 'local',
-            'root' => env('FILESYSTEM_ROOT_PUBLIC', is_dir(public_path('storage')) ? public_path('storage') : storage_path('app/public')),
+            'root' => public_path('storage'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

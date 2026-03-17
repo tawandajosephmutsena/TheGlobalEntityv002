@@ -4,8 +4,9 @@ import { useForm, usePage } from '@inertiajs/react';
 import { SeoHead } from '@/components/SeoHead';
 // import { cn } from '@/lib/utils'; // Removed unused import
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { IconBrandWhatsapp } from '@tabler/icons-react';
 import React, { useState } from 'react';
-import { SharedData } from '@/types';
+import { SharedData, SettingItem } from '@/types';
 
 export default function Contact() {
     const { props } = usePage<SharedData>();
@@ -19,6 +20,22 @@ export default function Contact() {
         subject: '',
         message: '',
     });
+
+    // Helper to check social visibility
+    const isSocialVisible = (key: string) => {
+        const item = props.settings?.social?.find((s: SettingItem) => s.key === `show_${key}`);
+        if (!item) return true; // Default to true if not found in DB
+
+        const val = item.value;
+        const checkValue = Array.isArray(val) ? val[0] : val;
+
+        return (
+            checkValue === true ||
+            checkValue === 'true' ||
+            checkValue === 'on' ||
+            checkValue === 'yes'
+        );
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -309,11 +326,14 @@ export default function Contact() {
                                 </h3>
                                 <div className="flex gap-4">
                                     {[
-                                        { icon: Facebook, href: site?.social?.facebook || 'https://facebook.com', label: 'Facebook' },
-                                        { icon: Twitter, href: site?.social?.twitter || 'https://twitter.com', label: 'Twitter' },
-                                        { icon: Instagram, href: site?.social?.instagram || 'https://instagram.com', label: 'Instagram' },
-                                        { icon: Linkedin, href: site?.social?.linkedin || 'https://linkedin.com', label: 'LinkedIn' },
-                                    ].map((social) => (
+                                        { icon: Facebook, href: site?.social?.facebook, label: 'Facebook', key: 'facebook' },
+                                        { icon: IconBrandWhatsapp, href: site?.social?.whatsapp, label: 'WhatsApp', key: 'whatsapp' },
+                                        { icon: Twitter, href: site?.social?.twitter, label: 'Twitter', key: 'twitter' },
+                                        { icon: Instagram, href: site?.social?.instagram, label: 'Instagram', key: 'instagram' },
+                                        { icon: Linkedin, href: site?.social?.linkedin, label: 'LinkedIn', key: 'linkedin' },
+                                    ]
+                                        .filter((social) => social.href && isSocialVisible(social.key))
+                                        .map((social) => (
                                         <a
                                             key={social.label}
                                             href={social.href}

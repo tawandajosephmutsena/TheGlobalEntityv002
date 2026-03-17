@@ -87,5 +87,17 @@ class FortifyServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($throttleKey);
         });
+
+        RateLimiter::for('password-update', function (Request $request) {
+            /** @var \App\Models\User|null $user */
+            $user = $request->user();
+            
+            // Admins get high limit
+            if ($user && $user->isAdmin()) {
+                return Limit::none();
+            }
+
+            return Limit::perMinute(6)->by($user?->id ?: $request->ip());
+        });
     }
 }

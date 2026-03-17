@@ -16,6 +16,7 @@ import { ToastContainer } from '@/components/ToastContainer';
 import { Toaster } from 'sonner';
 import CookieConsent from '@/components/CookieConsent';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import FloatingSocials from '@/components/FloatingSocials';
 
 
 declare const gtag: (command: string, action: string, params?: Record<string, unknown>) => void;
@@ -57,7 +58,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     customBreadcrumbs,
 }) => {
     // Get shared props including AI optimization settings
-    const { breadcrumbs, breadcrumbStructuredData, nonce, ai, site } = usePage<SharedData>().props;
+    const { breadcrumbs, breadcrumbStructuredData, nonce, ai, site, settings } = usePage<SharedData>().props;
     
     // Initialize smooth scrolling with enhanced controls
     const { scrollTo, stop, start } = useSmoothScroll();
@@ -198,6 +199,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             {/* Compliance components */}
             <GoogleAnalytics />
             <CookieConsent />
+            
+            <FloatingSocials settings={settings} social={site?.social} />
 
             {/* Web Core Vitals: Performance monitoring script */}
             <script

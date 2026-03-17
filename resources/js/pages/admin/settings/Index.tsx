@@ -112,6 +112,9 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'show_github', label: 'Show GitHub Icon', type: 'boolean', placeholder: 'true' },
         { key: 'instagram_url', label: 'Instagram URL', type: 'text', placeholder: 'https://instagram.com/...' },
         { key: 'show_instagram', label: 'Show Instagram Icon', type: 'boolean', placeholder: 'true' },
+        { key: 'whatsapp_url', label: 'WhatsApp URL / Number', type: 'text', placeholder: 'https://wa.me/263771234567' },
+        { key: 'show_whatsapp', label: 'Show WhatsApp Icon', type: 'boolean', placeholder: 'true' },
+        { key: 'show_floating_socials', label: 'Show Floating Social Icons (Fixed Right)', type: 'boolean', placeholder: 'true' },
     ],
     seo: [
         { key: 'google_analytics_id', label: 'Google Analytics ID', type: 'text', placeholder: 'G-XXXXXXXXXX', description: 'Your Google Analytics Measurement ID (e.g. G-XXXXXXXXXX). Also requires enabling Analytics in the Compliance tab.' },
