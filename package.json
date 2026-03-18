@@ -10,7 +10,7 @@
         "format:check": "prettier --check resources/",
         "lint": "eslint . --fix",
         "types": "tsc --noEmit",
-        "lighthouse": "lhci autorun"
+        "lighthouse": "lhci autorun --config=dev-lab/.lighthouserc.json"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
