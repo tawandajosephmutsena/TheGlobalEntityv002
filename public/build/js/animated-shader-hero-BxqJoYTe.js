@@ -1,4 +1,4 @@
-var _=Object.defineProperty;var A=(s,e,t)=>e in s?_(s,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):s[e]=t;var o=(s,e,t)=>A(s,typeof e!="symbol"?e+"":e,t);import{ah as R,j as n,r as w}from"./vendor-NW2Gh-E0.js";import{c as E}from"./utils-C_U_hw-v.js";import{c as P}from"./app-kdHACSaz.js";const C=`#version 300 es
+var _=Object.defineProperty;var A=(s,e,t)=>e in s?_(s,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):s[e]=t;var o=(s,e,t)=>A(s,typeof e!="symbol"?e+"":e,t);import{ah as R,j as n,r as w}from"./vendor-NW2Gh-E0.js";import{c as E}from"./utils-C_U_hw-v.js";import{c as P}from"./app-C4C2mr5f.js";const C=`#version 300 es
 precision highp float;
 out vec4 O;
 uniform vec2 resolution;
