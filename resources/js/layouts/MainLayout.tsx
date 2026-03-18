@@ -193,12 +193,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 )}
             </div>
 
-            {/* Global persistent podcast player */}
-            <GlobalPodcastPlayer />
-
-            {/* Compliance components */}
             <GoogleAnalytics />
             <CookieConsent />
+            {/* Global persistent podcast player */}
+            <GlobalPodcastPlayer />
             
             <FloatingSocials settings={settings} social={site?.social} />
 

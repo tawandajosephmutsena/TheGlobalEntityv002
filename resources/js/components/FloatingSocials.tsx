@@ -105,7 +105,10 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) =
     }
 
     const content = (
-        <div className="fixed right-0 md:right-2 inset-y-0 flex flex-col justify-center gap-2 p-2 pointer-events-none z-[9999]">
+        <div 
+            className="fixed right-0 md:right-2 inset-y-0 flex flex-col justify-center gap-2 p-2 pointer-events-none z-[99999]"
+            style={{ transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}
+        >
             <AnimatePresence>
                 {socialLinks.map((link, index) => (
                     <motion.a
