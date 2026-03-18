@@ -139,7 +139,7 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                             {/* Sophisticated Cinematic Gradients */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
-                            <div className="absolute inset-0 bg-black/5" style={{ backdropFilter: 'contrast(1.1) saturate(1.1)' }} />
+                            <div className="absolute inset-x-0 bottom-0 top-0 bg-black/5 md:backdrop-filter md:backdrop-contrast-[1.1] md:backdrop-saturate-[1.1]" />
                         </div>
                     );
                 })}

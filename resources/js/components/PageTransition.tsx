@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { usePage } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 
@@ -7,36 +7,19 @@ import React, { useEffect, useState } from 'react';
  * Displays a subtle bar at the top of the viewport
  */
 export const ScrollProgressIndicator: React.FC = () => {
-    const { url } = usePage();
-    const [progress, setProgress] = useState(0);
-    
-    useEffect(() => {
-        const handleScroll = () => {
-            if (typeof document === 'undefined') return;
-            const scrollHeight = document.documentElement.scrollHeight;
-            const clientHeight = document.documentElement.clientHeight;
-            const total = scrollHeight - clientHeight;
-            if (total <= 0) {
-                setProgress(100);
-                return;
-            }
-            const current = window.scrollY;
-            setProgress((current / total) * 100);
-        };
-        
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-        
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [url]);
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stagger: 0,
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     return (
-        <div className="fixed top-0 left-0 right-0 h-[3px] z-[9999] pointer-events-none">
+        <div className="fixed top-0 left-0 right-0 h-[3px] z-[9999] pointer-events-none origin-left overflow-hidden">
             <motion.div 
                 className="h-full bg-primary"
-                initial={{ width: '0%' }}
-                animate={{ width: `${progress}%` }}
-                transition={{ type: 'spring', stiffness: 100, damping: 20, mass: 0.5 }}
+                style={{ scaleX }}
             />
         </div>
     );

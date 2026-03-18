@@ -1,6 +1,7 @@
 import { Facebook, Github, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { IconBrandWhatsapp } from '@tabler/icons-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { SettingItem } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -104,7 +105,14 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) =
 
     console.log('Rendering floating social links:', socialLinks.map(l => l.name));
 
-    return (
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
+
+    const content = (
         <div className="fixed right-0 md:right-2 inset-y-0 flex flex-col justify-center gap-2 p-2 pointer-events-none z-[9999]">
             <AnimatePresence>
                 {socialLinks.map((link, index) => (
@@ -129,6 +137,10 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) =
             </AnimatePresence>
         </div>
     );
+
+    if (!mounted) return null;
+
+    return createPortal(content, document.body);
 };
 
 export default FloatingSocials;
