@@ -18,6 +18,13 @@ interface FloatingSocialsProps {
 }
 
 const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) => {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
+
     const isSocialVisible = (key: string) => {
         const item = settings?.social?.find((s: SettingItem) => s.key === `show_${key}`);
         if (!item) return true;
@@ -47,11 +54,6 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) =
             checkValue === 'yes'
         );
     };
-
-    if (!isFloatingVisible()) {
-        console.log('Floating socials disabled by setting or missing setting');
-        return null;
-    }
 
     const socialLinks = [
         { 
@@ -98,19 +100,9 @@ const FloatingSocials: React.FC<FloatingSocialsProps> = ({ settings, social }) =
         },
     ].filter(link => link.href && link.visible);
 
-    if (socialLinks.length === 0) {
-        console.log('No social links with URLs found to display in floating bar');
+    if (!mounted || !isFloatingVisible() || socialLinks.length === 0) {
         return null;
     }
-
-    console.log('Rendering floating social links:', socialLinks.map(l => l.name));
-
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-        return () => setMounted(false);
-    }, []);
 
     const content = (
         <div className="fixed right-0 md:right-2 inset-y-0 flex flex-col justify-center gap-2 p-2 pointer-events-none z-[9999]">
