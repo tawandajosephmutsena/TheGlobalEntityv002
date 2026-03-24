@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/AnimatedSection';
 import { ArrowUpRight, Search, Play, Zap, Mail, ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 
 interface BentoItem {
     id: string;
@@ -45,6 +46,45 @@ const sizeClasses: Record<string, string> = {
     lg: 'md:col-span-2 md:row-span-2',
     wide: 'md:col-span-2 md:row-span-1',
     tall: 'md:col-span-1 md:row-span-2',
+};
+
+const FestivalPagination: React.FC<{
+    pagination: {
+        links: Array<{ url: string | null; label: string; active: boolean }>;
+    };
+    onPageChange: (url: string | null) => void;
+    isLoading?: boolean;
+}> = ({ pagination, onPageChange, isLoading }) => {
+    if (!pagination || pagination.links.length <= 3) return null;
+
+    return (
+        <div className={cn(
+            "mt-20 flex justify-center transition-all duration-700 delay-500",
+            isLoading ? "opacity-30 pointer-events-none" : "opacity-100"
+        )}>
+            <div className="flex items-center gap-1.5 p-1.5 bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 shadow-2xl rounded-2xl">
+                {pagination.links.map((link, i) => {
+                    const label = link.label.replace(/&raquo;/g, '»').replace(/&laquo;/g, '«');
+                    return (
+                        <button
+                            key={i}
+                            onClick={() => onPageChange(link.url)}
+                            disabled={!link.url}
+                            title={link.active ? `Current Page: ${label}` : `Go to page ${label}`}
+                            className={cn(
+                                "h-10 min-w-[40px] px-4 flex items-center justify-center rounded-xl text-[10px] font-mono tracking-widest uppercase transition-all duration-300",
+                                link.active 
+                                    ? "bg-agency-accent text-agency-surface font-black shadow-lg shadow-agency-accent/20" 
+                                    : "text-agency-primary/40 hover:bg-agency-primary/5 hover:text-agency-primary",
+                                !link.url && "opacity-20 cursor-not-allowed hidden sm:flex"
+                            )}
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
 };
 
 const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
@@ -99,50 +139,78 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
     ]
 }) => {
     const [dynamicFestivals, setDynamicFestivals] = useState<FestivalData[]>([]);
+    const [pagination, setPagination] = useState<{
+        current_page: number;
+        last_page: number;
+        total: number;
+        links: Array<{ url: string | null; label: string; active: boolean }>;
+    } | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const fetchFestivals = React.useCallback(async (page = 1) => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(`/api/collections/festivals?limit=${dynamicLimit}&page=${page}`);
+            setDynamicFestivals(response.data.data || []);
+            setPagination({
+                current_page: response.data.current_page,
+                last_page: response.data.last_page,
+                total: response.data.total,
+                links: response.data.links || []
+            });
+        } catch (error) {
+            console.error("Failed to fetch dynamic festivals", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [dynamicLimit]);
 
     useEffect(() => {
         if (useDynamicFestivals) {
-            const fetchFestivals = async () => {
-                try {
-                    setIsLoading(true);
-                    const response = await axios.get(`/api/collections/festivals?limit=${dynamicLimit}`);
-                    setDynamicFestivals(response.data.data || []);
-                } catch (error) {
-                    console.error("Failed to fetch dynamic festivals", error);
-                } finally {
-                    setIsLoading(false);
-                }
-            };
-            fetchFestivals();
+            fetchFestivals(currentPage);
         }
-    }, [useDynamicFestivals, dynamicLimit]);
+    }, [useDynamicFestivals, currentPage, fetchFestivals]);
 
     // Merge logic: Replace 'festival' type manual items with dynamic ones if enabled
     const items = React.useMemo(() => {
         if (!useDynamicFestivals || dynamicFestivals.length === 0) return manualItems;
 
-        let dynamicIndex = 0;
-        return manualItems.map(item => {
-            // Only replace 'festival' type manual items that don't have a specific festivalId assigned
-            if (item.type === 'festival' && !item.festivalId && dynamicIndex < dynamicFestivals.length) {
-                const festival = dynamicFestivals[dynamicIndex++];
-                return {
-                    ...item,
-                    title: festival.title.toUpperCase(),
-                    location: festival.locationAddress.toUpperCase(),
-                    image: festival.image,
-                    link: festival.url,
-                    rating: festival.rating || '4.5',
-                    tags: festival.social_tags?.slice(0, 2) || []
-                };
-            }
-            return item;
-        });
+        // If in archive mode (dynamic), we want to show ALL fetched festivals
+        // We can use a pattern for sizes or just default to a grid
+        const sizes: BentoItem['size'][] = ['lg', 'md', 'md', 'tall', 'wide'];
+        
+        return dynamicFestivals.map((festival, index) => ({
+            id: `dynamic-${festival.id}`,
+            type: 'festival' as const,
+            title: festival.title.toUpperCase(),
+            location: festival.locationAddress.toUpperCase(),
+            image: festival.image,
+            link: festival.url,
+            rating: festival.rating || '4.5',
+            tags: festival.social_tags?.slice(0, 2) || [],
+            size: sizes[index % sizes.length]
+        }));
     }, [manualItems, dynamicFestivals, useDynamicFestivals]);
+
+    const handlePageChange = (url: string | null) => {
+        if (!url) return;
+        const urlObj = new URL(url, window.location.origin);
+        const page = urlObj.searchParams.get('page');
+        if (page) {
+            setCurrentPage(parseInt(page));
+            // Scroll to top of section
+            const section = document.getElementById('festival-grid-section');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    };
+
     return (
-        <section className="py-32 bg-agency-surface">
+        <section id="festival-grid-section" className="py-32 bg-agency-surface">
             <div className="container mx-auto px-6">
+
                 <AnimatedSection animation="fade-up" className="mb-20">
                     <div className="flex flex-col items-center text-center">
                         <span className="text-[10px] font-mono tracking-[0.5em] text-agency-accent mb-4 uppercase">{subtitle}</span>
@@ -266,6 +334,14 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                         </AnimatedSection>
                     ))}
                 </div>
+
+                {useDynamicFestivals && pagination && (
+                    <FestivalPagination 
+                        pagination={pagination} 
+                        onPageChange={handlePageChange}
+                        isLoading={isLoading}
+                    />
+                )}
             </div>
         </section>
     );

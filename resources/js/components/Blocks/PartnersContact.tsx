@@ -1,13 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, MessageSquare, Anchor } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import DynamicForm from '@/Components/DynamicForm';
-import AnimatedSection from '@/Components/AnimatedSection';
+import DynamicForm from '@/components/DynamicForm';
+import AnimatedSection from '@/components/AnimatedSection';
 
 interface PartnersContactProps {
     title?: string;
-    subtitle?: string;
     description?: string;
     features?: string[];
     formTitle?: string;
@@ -17,7 +15,6 @@ interface PartnersContactProps {
 
 const PartnersContact: React.FC<PartnersContactProps> = ({
     title = "Ready to set sail?",
-    subtitle = "Contact Us",
     description = "Drop us a line to discuss how we can tell your story through the lens of 'The Global Entity'. We are always looking for new horizons to explore together.",
     features = [
         "Custom Editorial Feature",
@@ -31,9 +28,9 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     return (
         <section className="py-32 bg-agency-secondary overflow-hidden">
             <div className="container mx-auto px-4">
-                <div className="bg-agency-primary rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-agency-primary/10">
+                <div className="bg-agency-secondary/30 backdrop-blur-3xl text-agency-primary rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-agency-primary/10">
                     {/* Left Column: Content & Benefits */}
-                    <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-agency-accent/20 to-agency-accent/5 text-agency-primary relative overflow-hidden">
+                    <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-agency-accent/10 to-transparent relative overflow-hidden">
                         {/* Decorative Background Icon */}
                         <div className="absolute -bottom-10 -right-10 opacity-5 -rotate-12 pointer-events-none">
                             <Anchor size={300} strokeWidth={1} />
@@ -65,7 +62,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                             </ul>
 
                             <div className="mt-16 pt-12 border-t border-agency-primary/10 flex items-center gap-4">
-                                <div className="p-3 bg-agency-primary text-agency-secondary rounded-2xl">
+                                <div className="p-3 bg-agency-accent/10 text-agency-accent rounded-2xl">
                                     <MessageSquare size={24} />
                                 </div>
                                 <div>
@@ -77,11 +74,11 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="flex-1 p-12 md:p-20 bg-agency-secondary/50 backdrop-blur-md relative">
+                    <div className="flex-1 p-12 md:p-20 bg-agency-primary/5 relative">
                         <AnimatedSection animation="fade-up" delay={400} className="relative z-10 h-full flex flex-col">
                             <div className="mb-10">
                                 <h3 className="text-4xl font-black uppercase tracking-tighter mb-3">{formTitle}</h3>
-                                <p className="text-agency-primary/60 font-medium">{formDescription}</p>
+                                <p className="text-agency-primary/70 font-medium">{formDescription}</p>
                             </div>
 
                             <div className="flex-grow">

@@ -112,7 +112,7 @@ export default function DynamicForm({
 
                         return (
                             <div key={index} className={cn("space-y-2", isFullWidth && "md:col-span-2")}>
-                                <Label htmlFor={fieldName} className="text-xs uppercase tracking-widest font-bold opacity-70">
+                                <Label htmlFor={fieldName} className="text-xs uppercase tracking-widest font-bold">
                                     {field.label} {field.required && <span className="text-agency-accent">*</span>}
                                 </Label>
                                 
