@@ -166,7 +166,7 @@ export default function DynamicForm({
                 <Button 
                     type="submit" 
                     disabled={processing} 
-                    className="w-full h-14 bg-agency-primary dark:bg-agency-accent text-white dark:text-agency-primary font-bold text-lg rounded-xl hover:scale-[1.02] transition-transform"
+                    className="w-full h-14 bg-agency-primary text-agency-secondary font-black uppercase tracking-widest text-lg rounded-2xl hover:scale-[1.02] transition-transform shadow-xl mt-4"
                 >
                     {processing ? (
                         <>
