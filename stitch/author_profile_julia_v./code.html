@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#bbfffe",
+              "tertiary-fixed": "#87fefd",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "surface-container-high": "#e1e4d4",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed-dim": "#78efef",
+              "tertiary-dim": "#005959",
+              "primary-dim": "#9a006b",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed": "#000000",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-secondary-container": "#723800",
+              "outline": "#75786d",
+              "on-error-container": "#510017",
+              "surface-variant": "#dbdfce",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "secondary": "#904800",
+              "error": "#b41340",
+              "surface-tint": "#af047a",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "error-container": "#f74b6d",
+              "secondary-container": "#ffc69f",
+              "on-surface": "#2d3027",
+              "outline-variant": "#acaea2",
+              "on-secondary-fixed": "#552800",
+              "background": "#f6f8ea",
+              "primary-fixed": "#ff6abf",
+              "error-dim": "#a70138",
+              "surface-container": "#e7eada",
+              "surface-bright": "#f6f8ea",
+              "on-tertiary-fixed": "#004d4d",
+              "primary-container": "#ff6abf",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "inverse-surface": "#0c0f08",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "inverse-primary": "#fe57bb",
+              "tertiary-container": "#87fefd",
+              "secondary-fixed": "#ffc69f",
+              "secondary-dim": "#7e3e00",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-tertiary-container": "#006161",
+              "on-surface-variant": "#5a5d52"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-bleed {
+            background: radial-gradient(circle at top right, rgba(175, 4, 122, 0.08) 0%, transparent 60%),
+                        radial-gradient(circle at bottom left, rgba(0, 102, 102, 0.08) 0%, transparent 60%);
+        }
+        .text-script {
+            font-style: italic;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Shell -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-8 py-6 max-w-none bg-[#f6f8ea]/70 dark:bg-[#1a1c14]/70 backdrop-blur-xl z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-black text-[#af047a] dark:text-[#f274c5] uppercase tracking-widest font-['Epilogue']">The Global Entity</span>
+</div>
+<div class="hidden md:flex items-center gap-10 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Podcast</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Blog</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Festivals</a>
+<a class="text-[#af047a] dark:text-[#f274c5] border-b-2 border-[#af047a] pb-1 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Authors</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 py-3 rounded-full font-bold shadow-lg hover:scale-105 transition-all active:scale-95">Contact</button>
+</div>
+</nav>
+<main class="pt-32 pb-20 watercolor-bleed">
+<!-- Hero Section: The Origin Story Header -->
+<section class="max-w-7xl mx-auto px-6 mb-24">
+<div class="flex flex-col lg:flex-row gap-16 items-center">
+<!-- Large Profile Photo with Editorial Asymmetry -->
+<div class="relative w-full lg:w-5/12">
+<div class="absolute -top-6 -left-6 w-32 h-32 bg-secondary-container rounded-full opacity-30 blur-3xl"></div>
+<div class="relative z-10 aspect-[4/5] rounded-lg overflow-hidden shadow-2xl rotate-1 group">
+<img alt="Portrait of an explorer and writer" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Portrait of an explorer and writer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdGqEW9Wgpp5ZFVW93TOj1FkAzJISWJOjL3BjzjwVToToXZOap6UtUkwT2mFYsLwg9qKW4Q4JIyHTraRtymOdVKSONSXEFeI6P3Wy8bX3j5_WFM9BYgDYD-UPi5aHhJIEEGFUE6hNZ4HIgzaJZlWt-_h9psKsa1StNpx_6ne_wsI3SiJ-_Rt-sv3foHYxunJ-BMaHvJZq-ETgcYDTWipSn9xK2hwSAt0LhTC5vSPS5eKEG2Iki2YI0XcnIO5AeQJUTo8HD9mYs0TnL"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+</div>
+<!-- Marginalia Overlay -->
+<div class="absolute -bottom-10 -right-8 z-20 bg-surface-container-lowest p-6 rounded-lg shadow-xl max-w-[200px] border-l-4 border-secondary">
+<p class="font-headline font-bold text-secondary text-sm leading-tight">Last seen mapping the Rift Valley</p>
+<span class="text-xs text-on-surface-variant opacity-60">October 2023</span>
+</div>
+</div>
+<!-- Bio / Soulful Identity -->
+<div class="w-full lg:w-7/12 flex flex-col gap-8">
+<div class="space-y-4">
+<span class="text-secondary font-headline font-bold tracking-[0.2em] uppercase text-sm">Lead Cartographer</span>
+<h1 class="text-6xl md:text-8xl font-headline font-black text-on-background tracking-tighter leading-none">
+                            Elowen <br/> <span class="text-primary">Storm</span>
+</h1>
+</div>
+<div class="space-y-6 max-w-2xl">
+<p class="text-xl md:text-2xl text-on-surface-variant font-medium leading-relaxed">
+                            Elowen doesn't just travel; she translates landscapes into language. With a background in environmental anthropology and a pirate's heart for discovery, her work bridges the gap between scientific observation and soulful storytelling.
+                        </p>
+<p class="text-body-md text-on-surface/80 leading-loose">
+                            Her origin story began in the dusty archives of Lisbon, where she found a map that didn't exist. Since then, she has spent twelve years documenting the "silent spaces"—the corners of the globe where folklore and geography intersect. Whether through her weekly podcast <span class="text-primary italic font-semibold">The Echo of Earth</span> or her long-form essays, she invites you to be a pirate of your own curiosity.
+                        </p>
+</div>
+<div class="flex flex-wrap gap-4 pt-4">
+<div class="flex items-center gap-2 bg-surface-container-low px-5 py-2 rounded-full border border-outline-variant/10">
+<span class="material-symbols-outlined text-tertiary" data-icon="explore">explore</span>
+<span class="text-sm font-semibold">14 Expeditions</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-5 py-2 rounded-full border border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" data-icon="auto_stories">auto_stories</span>
+<span class="text-sm font-semibold">82 Published Works</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-5 py-2 rounded-full border border-outline-variant/10">
+<span class="material-symbols-outlined text-secondary" data-icon="mic_external_on">mic_external_on</span>
+<span class="text-sm font-semibold">32 Podcast Episodes</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Work Gallery: Filterable Bento Grid -->
+<section class="bg-surface-container-low py-24 rounded-t-[4rem]">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+<div class="space-y-2">
+<h2 class="text-4xl font-headline font-extrabold text-on-background">Chronicles &amp; Transmissions</h2>
+<p class="text-on-surface-variant text-lg">A filtered map of contributions by Elowen Storm</p>
+</div>
+<!-- Editorial Filters -->
+<div class="flex gap-2 bg-surface p-1.5 rounded-full shadow-sm">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-bold text-sm transition-all">All Paths</button>
+<button class="px-6 py-2 rounded-full hover:bg-surface-container-high transition-all font-bold text-sm text-on-surface-variant">Essays</button>
+<button class="px-6 py-2 rounded-full hover:bg-surface-container-high transition-all font-bold text-sm text-on-surface-variant">Audio</button>
+<button class="px-6 py-2 rounded-full hover:bg-surface-container-high transition-all font-bold text-sm text-on-surface-variant">Visuals</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Feature Piece -->
+<div class="md:col-span-8 group relative bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
+<div class="aspect-[16/9] overflow-hidden">
+<img alt="Ocean waves hitting rocky shore" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Ocean waves hitting rocky shore" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAE4UrkwRVhfj8dex_Og7vlleuuDvhLo-zSFlLt7diXLn-kZzZjEIoiyj8sCgtNova03nNbi6Km5YfMst0enunEOm2cowsDbuicaZNGD4ZoK4zgaf3Zm9XorTzi2jtzQLuyMnkJcS-XZGWpSh-QPIlyBQ7nuZq9bO-fN3T95ZiyPUosw2u6TBmeKtYma0EKf6WgtrmenJxl5OZxkfN9VEM8SL1mnNEhAQ2euTdIW00B0K2Ns0RSGF5UDiYb_0I_Tyt23zJhdz5wnIdx"/>
+</div>
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-md text-xs font-bold uppercase tracking-widest">Featured Essay</span>
+<span class="text-xs font-medium text-on-surface-variant/60 uppercase">12 Min Read</span>
+</div>
+<h3 class="text-3xl font-headline font-bold text-on-background group-hover:text-primary transition-colors">The Salt of Ancestors: Why we look to the Sea</h3>
+<p class="text-on-surface-variant leading-relaxed line-clamp-2">An exploration of coastal folklore and how the tide shapes the language of island dwellers across the Atlantic archipelago...</p>
+<div class="pt-4 border-t border-outline-variant/10 flex justify-between items-center">
+<span class="flex items-center gap-2 text-primary font-bold">Read the Path <span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span></span>
+<span class="text-script text-sm font-medium">May 2024</span>
+</div>
+</div>
+</div>
+<!-- Podcast Entry -->
+<div class="md:col-span-4 bg-primary text-on-primary rounded-lg p-8 flex flex-col justify-between shadow-lg relative overflow-hidden group">
+<div class="absolute -right-10 -bottom-10 opacity-10 group-hover:rotate-12 transition-transform duration-700">
+<span class="material-symbols-outlined text-[12rem]" data-icon="waves" style="font-variation-settings: 'FILL' 1;">waves</span>
+</div>
+<div class="space-y-6 relative z-10">
+<div class="w-16 h-16 bg-on-primary rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-4xl" data-icon="play_arrow" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<h3 class="text-2xl font-headline font-bold leading-tight">Podcast Ep. 42: Listening to the Blue Ridge Fog</h3>
+<p class="text-on-primary/80 font-medium">A soundscape journey through the Appalachian mornings.</p>
+</div>
+<div class="flex items-center gap-4 pt-8 relative z-10">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-primary object-cover" data-alt="Listener avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC2pxVPlN9Wd9XJUw-Eb4sXCm6aJeSj728hlVpNRSxYh0RDFpcqVfOeHRYTyVYJEmEt1MpJEkT864OUO1yVJEiX7A_jqmjTcqFWQ9mBTWAcPSE8Su68CI6MSTVUMaBxMbQr4k_kNjmWKsDib8CltwObe-uADeWFBLr4RRSxQnQQP9UPlFeX-BN-LoHddv_N34dlGaaZMJDujRlI3Otf0FZKMw2PXSjuMhk6R1LDqjGKZxqM_jVVPgDbPqgrEn7iN4fKkh6utCiMrDP"/>
+<img class="w-8 h-8 rounded-full border-2 border-primary object-cover" data-alt="Listener avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYC58HklBWVZW5b43zHzZmci1mA1xnkLHCkVctJQdyXmarmwv6Sn3XKZIGTjigP-tVFeMN5TYHZsuW2u4P6k97DYIj5PNSzYLDX3EoZpX_kWmiYls21nwsIcwfc8zO26mkfySEUp4OIP7Kuvj_lAxHiz7H5DyQa3bH8c4P4tqU0RUsXvdf0P31Sl0uTQzie41kUKjha8JVltDkPkXBrRjk4tbrzs4pZwLLLirfoMHB6Fd3aXz04ox3ucGmktq5lv6UVTNE1tlnMzTS"/>
+<div class="w-8 h-8 rounded-full bg-on-primary/20 border-2 border-primary flex items-center justify-center text-[10px] font-bold">+12k</div>
+</div>
+<span class="text-xs font-bold uppercase tracking-tighter">Listen Now</span>
+</div>
+</div>
+<!-- Small Entry 1 -->
+<div class="md:col-span-4 group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:-translate-y-2 transition-all duration-300">
+<div class="aspect-video overflow-hidden">
+<img alt="Mountain peaks" class="w-full h-full object-cover" data-alt="Mountain peaks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6yJNZruzCvxoMkiIkLAktOBbIKPlVfhni7MLQKVoEo-vlf4S5IlSJYTYuhW9wwIOKRkEJU3ebJUN-8NBit93STTgT6YX-F_SrZEPgxgf4gYrp6Oi5uvwOAqMmaU1z3e2aW-DHg6wix_azUg2-issZwshFUzFM6QGde9ZATXlI0pehFv1MaY7czuphjowM1X76rf115g3LqonKJi1F3YBesKG-3J1_yD9H8L_1L7nlkG9OSOwGp2K1P3J2k1UOFvsDUATdFhdsEwFR"/>
+</div>
+<div class="p-6 space-y-3">
+<span class="text-secondary font-bold text-[10px] uppercase tracking-widest">Field Notes</span>
+<h4 class="text-xl font-headline font-bold text-on-background">High Altitude Whispers</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2">How oxygen levels affect the pitch of traditional wind instruments.</p>
+</div>
+</div>
+<!-- Small Entry 2 -->
+<div class="md:col-span-4 group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:-translate-y-2 transition-all duration-300">
+<div class="aspect-video overflow-hidden">
+<img alt="Rural village landscape" class="w-full h-full object-cover" data-alt="Rural village landscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0SkRXiFEgV3YpoNXRa22yC9FToSRc8jO_sVLa0jVP5bi9sPfqOdOSvfwEQYuW_vJADriRVN_UZeHl6fg_PYdXElbP760ZzJX7Cb8BGXV5ig-B69KkoHFVsKVolqgASDblfDsQVK_jarRCUQNNdMEtQq3iIqffxoBAeiPh55ekn47A_gw_nvDbBfFyJ0b4A8eVdxTmhKmc6kk8_LhbT95mwFcSDPeNp6TKU3J4lWdnwLvQk4R-GTvYWLhoyp3BaA_ksY7Oq5nEOmit"/>
+</div>
+<div class="p-6 space-y-3">
+<span class="text-tertiary font-bold text-[10px] uppercase tracking-widest">Archive</span>
+<h4 class="text-xl font-headline font-bold text-on-background">Vanishing Maps of the Steppe</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2">The oral tradition of navigation in nomadic societies.</p>
+</div>
+</div>
+<!-- Small Entry 3 -->
+<div class="md:col-span-4 group bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm hover:-translate-y-2 transition-all duration-300">
+<div class="aspect-video overflow-hidden">
+<img alt="Sunlight through forest" class="w-full h-full object-cover" data-alt="Sunlight through forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzqSc0xRWUj1GqwqaTYvrX0P-oxjwE-DPfw6JA6VuRJn5xlkqOlXRm2hQ2kIHvy0plzp6ehT59ZxRETraIyXpZ0sP6du8tkaC5FH9Ak7bGkPocOKxeYSU5oWyKLJiQs3sHju9tVG8NDN_VVVW_gWFjaN68gwqdUHugVS3DFkIMlwS9naqvS_D8UGLk5-Ll6v1hTnnACQI3t0rv2o64pssRuYvN1VuB3lp1hX4uzqEJCidSUM-7Db_oY5S-C_B1IPvHEFie4vW8D275"/>
+</div>
+<div class="p-6 space-y-3">
+<span class="text-primary font-bold text-[10px] uppercase tracking-widest">Long Read</span>
+<h4 class="text-xl font-headline font-bold text-on-background">Chlorophyll &amp; Conscience</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2">Redefining the relationship between forest and urban sprawls.</p>
+</div>
+</div>
+</div>
+<div class="mt-20 text-center">
+<button class="bg-surface-container-highest text-on-surface px-10 py-4 rounded-full font-bold hover:bg-secondary hover:text-on-secondary transition-all duration-300 shadow-md">
+                        Unearth More Archives
+                    </button>
+</div>
+</div>
+</section>
+<!-- Signature Component: The Pirate's Trail -->
+<section class="py-24 max-w-4xl mx-auto px-6 text-center">
+<div class="relative inline-block mb-8">
+<span class="material-symbols-outlined text-6xl text-secondary/40 rotate-12" data-icon="architecture">architecture</span>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<span class="material-symbols-outlined text-4xl text-secondary" data-icon="person_pin_circle" style="font-variation-settings: 'FILL' 1;">person_pin_circle</span>
+</div>
+</div>
+<h2 class="text-4xl font-headline font-black text-on-background mb-6">Join the Expedition</h2>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto mb-12 italic">"A map is only useful if you're willing to lose your way on the path it reveals." — Elowen Storm</p>
+<div class="bg-surface-container-lowest p-2 rounded-full shadow-lg max-w-md mx-auto flex">
+<input class="flex-1 bg-transparent border-none focus:ring-0 px-6 font-medium text-on-surface" placeholder="Your coordinates (email)..." type="email"/>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition-all">Embark</button>
+</div>
+</section>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full px-12 py-20 flex flex-col md:flex-row justify-between gap-8 border-t border-[#2d3027]/10 bg-[#f6f8ea] dark:bg-[#1a1c14] rounded-t-[3rem] mt-20">
+<div class="space-y-6 max-w-sm">
+<span class="font-['Epilogue'] font-bold text-[#904800] dark:text-[#ffb877] text-2xl tracking-widest uppercase">The Global Entity</span>
+<p class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027]/60 dark:text-[#e4e3da]/60 leading-relaxed">
+                Navigating the intersections of human spirit and geographic wonder. An Ethereal Cartographer Production.
+            </p>
+</div>
+<div class="flex flex-col md:flex-row gap-16">
+<div class="space-y-4">
+<h4 class="font-headline font-bold text-on-background text-sm uppercase tracking-widest">The Compass</h4>
+<ul class="space-y-2 font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<li><a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Terms of Service</a></li>
+<li><a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Shipping &amp; Returns</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-headline font-bold text-on-background text-sm uppercase tracking-widest">Connect</h4>
+<ul class="space-y-2 font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<li><a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Instagram</a></li>
+<li><a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Spotify</a></li>
+</ul>
+</div>
+</div>
+<div class="md:self-end">
+<p class="font-['Plus_Jakarta_Sans'] text-xs tracking-wide text-[#2d3027]/40 dark:text-[#e4e3da]/40">
+                © 2024 The Global Entity. <br/>An Ethereal Cartographer Production.
+            </p>
+</div>
+</footer>
+</body></html>

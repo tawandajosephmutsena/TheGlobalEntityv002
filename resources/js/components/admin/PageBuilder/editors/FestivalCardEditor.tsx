@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Ticket } from 'lucide-react';
+import axios from 'axios';
 import type { FestivalCardBlock } from '@/types/page-blocks';
 
 interface EditorProps {
@@ -12,17 +13,60 @@ interface EditorProps {
 }
 
 const FestivalCardEditor: React.FC<EditorProps> = ({ content, onUpdate }) => {
+    const [availableFestivals, setAvailableFestivals] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchFestivals = async () => {
+            try {
+                setLoading(true);
+                const response = await axios.get('/api/collections/festivals');
+                setAvailableFestivals(response.data.data || []);
+            } catch (error) {
+                console.error("Failed to fetch festivals for editor", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFestivals();
+    }, []);
+
+    const selectedFestival = availableFestivals.find(f => f.id === content.festivalId);
+
     return (
         <div className="space-y-6">
             <div className="space-y-2">
-                <Label>Festival ID</Label>
-                <Input
-                    type="number"
-                    value={content.festivalId || ''}
-                    onChange={(e) => onUpdate({ festivalId: e.target.value ? parseInt(e.target.value) : undefined })}
-                    placeholder="Enter database ID..."
-                />
-                <p className="text-[10px] text-muted-foreground italic">Tip: Find the ID in the Festival Management section</p>
+                <Label>Linked Festival</Label>
+                <div className="space-y-3">
+                    <select 
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer"
+                        title="Select a festival"
+                        value={content.festivalId || ''}
+                        onChange={(e) => onUpdate({ festivalId: e.target.value ? parseInt(e.target.value) : undefined })}
+                        disabled={loading}
+                    >
+                        <option value="">Select a festival...</option>
+                        {availableFestivals.map((festival: any) => (
+                            <option key={festival.id} value={festival.id}>
+                                {festival.title}
+                            </option>
+                        ))}
+                    </select>
+
+                    {selectedFestival && (
+                        <div className="p-3 bg-muted/50 rounded-lg border flex items-center gap-3">
+                            <img 
+                                src={selectedFestival.image} 
+                                alt="" 
+                                className="w-12 h-12 rounded object-cover border bg-background"
+                            />
+                            <div className="min-w-0">
+                                <p className="text-sm font-semibold truncate">{selectedFestival.title}</p>
+                                <p className="text-xs text-muted-foreground truncate">{selectedFestival.locationAddress}</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
             <div className="space-y-2">

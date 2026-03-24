@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#acaea2",
+              "tertiary-fixed-dim": "#78efef",
+              "on-tertiary-container": "#006161",
+              "on-primary-container": "#490031",
+              "tertiary-fixed": "#87fefd",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "surface-container-high": "#e1e4d4",
+              "secondary-fixed-dim": "#ffb37c",
+              "primary-dim": "#9a006b",
+              "surface-tint": "#af047a",
+              "on-background": "#2d3027",
+              "error-container": "#f74b6d",
+              "surface-variant": "#dbdfce",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#bbfffe",
+              "surface": "#f6f8ea",
+              "primary-fixed-dim": "#f852b5",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-dim": "#7e3e00",
+              "secondary-container": "#ffc69f",
+              "error": "#b41340",
+              "primary-container": "#ff6abf",
+              "surface-dim": "#d2d6c5",
+              "secondary": "#904800",
+              "on-secondary-container": "#723800",
+              "on-primary-fixed": "#000000",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "on-secondary": "#fff0e8",
+              "inverse-primary": "#fe57bb",
+              "primary-fixed": "#ff6abf",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-surface-variant": "#5a5d52",
+              "secondary-fixed": "#ffc69f",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "tertiary-dim": "#005959",
+              "surface-container-low": "#f0f2e4",
+              "primary": "#af047a",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "surface-bright": "#f6f8ea",
+              "surface-container": "#e7eada",
+              "error-dim": "#a70138",
+              "on-error-container": "#510017",
+              "inverse-on-surface": "#9b9e92",
+              "tertiary": "#006666",
+              "tertiary-container": "#87fefd"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .watercolor-highlight {
+            background: linear-gradient(120deg, rgba(255, 106, 191, 0.2) 0%, rgba(255, 106, 191, 0.1) 100%);
+            border-radius: 20% 50% 30% 60% / 40% 20% 60% 30%;
+            padding: 0 0.5rem;
+            display: inline-block;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c1e]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-full mx-auto">
+<div class="text-2xl font-black italic text-[#af047a] dark:text-[#fface8] font-['Epilogue'] tracking-tight">
+                The Global Entity
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-['Epilogue'] font-bold tracking-tight text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Festivals</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Destinations</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Journal</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Map</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<input class="bg-surface-variant/50 border-none rounded-full px-6 py-2 w-64 focus:ring-2 focus:ring-primary/20 text-sm" placeholder="Search the unknown..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-2 text-on-surface-variant">search</span>
+</div>
+<button class="text-[#af047a] dark:text-[#fface8] hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="mb-16">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
+<span>The Archive</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-semibold">Search Results</span>
+</nav>
+<h1 class="font-headline text-5xl md:text-7xl font-black text-on-background leading-tight">
+                        Discovering <br/>
+<span class="watercolor-highlight">Festivals</span> &amp; <span class="watercolor-highlight">Explorers</span>
+</h1>
+</div>
+<div class="bg-surface-container-low p-2 rounded-full flex items-center gap-2">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm shadow-lg">All Results</button>
+<button class="px-6 py-2 rounded-full font-bold text-sm text-on-surface-variant hover:bg-surface-variant transition-colors">Festivals</button>
+<button class="px-6 py-2 rounded-full font-bold text-sm text-on-surface-variant hover:bg-surface-variant transition-colors">Stories</button>
+</div>
+</div>
+</header>
+<!-- Filters & Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Filters Sidebar -->
+<aside class="lg:col-span-3 space-y-8">
+<div class="bg-surface-container-low rounded-lg p-6 space-y-8 sticky top-32">
+<h3 class="font-headline text-xl font-bold border-b border-outline-variant/10 pb-4">Refine Discovery</h3>
+<!-- Sustainability Score -->
+<div class="space-y-4">
+<label class="font-bold text-sm text-on-surface-variant uppercase tracking-widest flex justify-between">
+                            Sustainability 
+                            <span class="text-tertiary">80+</span>
+</label>
+<div class="relative h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="absolute top-0 left-0 h-full w-[80%] bg-tertiary rounded-full"></div>
+</div>
+<div class="flex justify-between text-xs font-bold opacity-60">
+<span>Neutral</span>
+<span>Regenerative</span>
+</div>
+</div>
+<!-- Safety Rating -->
+<div class="space-y-4">
+<label class="font-bold text-sm text-on-surface-variant uppercase tracking-widest">Global Safety</label>
+<div class="grid grid-cols-2 gap-2">
+<button class="border-2 border-primary/20 bg-primary/5 text-primary rounded-full py-2 px-4 text-xs font-bold">Secure</button>
+<button class="border-2 border-outline-variant/20 rounded-full py-2 px-4 text-xs font-bold hover:border-primary/20 transition-colors">Remote</button>
+</div>
+</div>
+<!-- Region Selector -->
+<div class="space-y-4">
+<label class="font-bold text-sm text-on-surface-variant uppercase tracking-widest">Territories</label>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-xs font-bold">Sahara</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-xs font-bold">Andes</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-xs font-bold">Nordics</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-xs font-bold">Oceania</span>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary font-bold py-4 rounded-full flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined">filter_list</span>
+                        Update Map
+                    </button>
+</div>
+</aside>
+<!-- Results Bento Grid -->
+<div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-6 auto-rows-[250px] gap-6">
+<!-- Main Featured Result (Large) -->
+<div class="md:col-span-4 md:row-span-2 bg-surface-container-lowest rounded-lg overflow-hidden group relative">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Vibrant desert festival with colorful lights and silhouettes of people dancing" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAzImJBP3n7Ob6SXslFLgJKT5Wz03VdT9MCcepruots92YOcyPC9asKl4L3IF2WPOMTo0rDQpixKYG9m6ittHBmiI-xNUsRvoITDUFqx-cgpm7q1Nss5QAXYpbyzCNLShVzrf361m5kzNofM96rIvhqY3A27KyC_lwFy-z9gnYQHW_Znra3qv3ycei-xMjkWGjb0bLzWVddUq-Xzeo38RPSru45jdb0feWoI-Oim_gyBHtTxYAg1xx4Ii0uuyXaq7MmhxF__3HxJVYg')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="absolute bottom-0 p-8 w-full">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-primary px-3 py-1 rounded-full text-[10px] font-bold text-on-primary uppercase tracking-tighter">Featured Festival</span>
+<span class="flex items-center gap-1 text-tertiary-fixed text-xs font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
+                                Eco Score 9.4
+                            </span>
+</div>
+<h2 class="font-headline text-4xl font-black text-white mb-2 leading-none">The Nomad Eclipse Gathering</h2>
+<p class="text-white/80 font-medium max-w-md">An ethereal convergence of sound and spirit beneath the Saharan night sky.</p>
+<div class="mt-6 flex gap-4">
+<button class="bg-white text-on-background px-6 py-2 rounded-full font-bold text-sm">Explore Journey</button>
+</div>
+</div>
+</div>
+<!-- Explorer Profile (Tall) -->
+<div class="md:col-span-2 md:row-span-2 bg-surface-container-low rounded-lg p-8 flex flex-col justify-between border-t-4 border-secondary">
+<div class="space-y-6">
+<div class="w-20 h-20 rounded-full bg-cover bg-center ring-4 ring-secondary-container" data-alt="Professional explorer woman portrait in outdoor gear" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABZmf5DrKV2bLuuzZw1XMnc9TQbv6JuOVfbmBfz0Mi_zM8dpahNDomOW3z8vihUq4NV-AfTjsFDH581fmk_-3M_EXjNAuSOwy1h3p9_1NwoBn6hVAN_lvP-jlTfZYKKghqGlWL-ozMyu_IZEdXeD_tyospp5Ctz7kgGVLcCr4fi9U8SAb28JnpCevkBET825DCeE0weKbKpq2t77wqx6ZzT3XKfvCn-3-KMGwyI8rb-Il9wVPOBjr3dtKJ-Nc_gy-th29ezJOv2k6s')"></div>
+<div>
+<h3 class="font-headline text-2xl font-bold">Elena Thorne</h3>
+<p class="text-on-surface-variant font-medium">Archeologist &amp; Ethnomusicologist</p>
+</div>
+<p class="text-sm italic opacity-80 leading-relaxed">"Searching for the rhythms that connect the ancient trade routes with modern celebrations."</p>
+</div>
+<div class="pt-6 border-t border-outline-variant/20">
+<div class="flex justify-between items-center mb-4">
+<span class="text-xs font-bold text-on-surface-variant">RECENT DISCOVERY</span>
+<span class="text-xs font-black text-primary">MAPS AVAILABLE</span>
+</div>
+<div class="bg-surface-container-highest p-4 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">location_on</span>
+<span class="font-bold text-sm">Lost City of Petra Rituals</span>
+</div>
+</div>
+</div>
+<!-- Story Result (Wide) -->
+<div class="md:col-span-3 md:row-span-1 bg-surface-container-low rounded-lg p-6 flex flex-col justify-between relative overflow-hidden group">
+<div class="absolute -right-10 -top-10 opacity-5 transition-transform duration-500 group-hover:scale-150">
+<span class="material-symbols-outlined text-[120px]">auto_stories</span>
+</div>
+<div>
+<span class="text-xs font-black text-tertiary uppercase tracking-widest mb-2 block">Journal Entry</span>
+<h4 class="font-headline text-xl font-bold leading-tight">Voices of the Mist: A Northern Lights Requiem</h4>
+</div>
+<div class="flex items-center gap-4 mt-4">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full bg-primary-container"></div>
+<div class="w-6 h-6 rounded-full bg-secondary-container"></div>
+</div>
+<span class="text-xs font-bold text-on-surface-variant">12 Explorers following</span>
+</div>
+</div>
+<!-- Map Data (Wide) -->
+<div class="md:col-span-3 md:row-span-1 bg-primary text-on-primary rounded-lg p-6 flex items-center justify-between group overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline text-2xl font-black italic mb-1">Live Map Data</h4>
+<p class="text-on-primary/70 text-sm font-medium">4 active festivals detected within 200km.</p>
+<button class="mt-4 flex items-center gap-2 text-sm font-bold bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full transition-colors">
+                            Launch Cartographer
+                            <span class="material-symbols-outlined text-sm">north_east</span>
+</button>
+</div>
+<div class="absolute right-0 top-0 h-full w-1/3 opacity-20 transform translate-x-4">
+<span class="material-symbols-outlined text-[140px]">map</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More -->
+<div class="mt-20 flex flex-col items-center gap-6">
+<div class="flex items-center gap-1">
+<div class="w-12 h-1 bg-primary rounded-full"></div>
+<div class="w-2 h-1 bg-outline-variant/30 rounded-full"></div>
+<div class="w-2 h-1 bg-outline-variant/30 rounded-full"></div>
+<div class="w-2 h-1 bg-outline-variant/30 rounded-full"></div>
+</div>
+<button class="font-headline font-bold text-on-surface hover:text-primary transition-colors flex items-center gap-2">
+                Discover More Treasures
+                <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#f6f8ea] dark:bg-[#1a1c1e] w-full rounded-t-[3rem] mt-20 shadow-2xl">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full gap-8 max-w-7xl mx-auto">
+<div class="text-center md:text-left">
+<div class="font-['Epilogue'] text-xl font-bold text-[#2d3027] dark:text-[#e2e3d8] mb-2">The Global Entity</div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027] dark:text-[#e2e3d8] opacity-70">
+                    © 2024 The Global Entity. Navigating the Ethereal.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Sustainability Manifesto</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Eco-Travel Credits</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Merchant Terms</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Privacy Scroll</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-[#2d3027] hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-[#2d3027] hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-xl">mail</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

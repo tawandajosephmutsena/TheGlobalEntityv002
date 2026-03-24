@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Featured Reviews | The Cartographer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#2d3027",
+              "inverse-surface": "#0c0f08",
+              "primary": "#af047a",
+              "on-primary": "#ffeff3",
+              "error-dim": "#a70138",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "surface-tint": "#af047a",
+              "surface-container-high": "#e1e4d4",
+              "error": "#b41340",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "outline-variant": "#acaea2",
+              "on-error-container": "#510017",
+              "primary-fixed": "#ff6abf",
+              "surface-container-highest": "#dbdfce",
+              "tertiary-fixed-dim": "#78efef",
+              "outline": "#75786d",
+              "surface-variant": "#dbdfce",
+              "background": "#f6f8ea",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "secondary": "#904800",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "secondary-dim": "#7e3e00",
+              "on-tertiary-container": "#006161",
+              "secondary-container": "#ffc69f",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#f74b6d",
+              "surface": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "secondary-fixed": "#ffc69f",
+              "surface-container": "#e7eada",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#ff6abf",
+              "tertiary-container": "#87fefd",
+              "on-secondary": "#fff0e8",
+              "on-tertiary-fixed": "#004d4d",
+              "on-tertiary": "#bbfffe",
+              "primary-dim": "#9a006b",
+              "on-error": "#ffefef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-secondary-container": "#723800"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating-motion {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .watercolor-ink {
+            background: linear-gradient(135deg, #af047a 0%, #ff6abf 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Anchor -->
+<header class="bg-[#f6f8ea]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#2d3027] dark:text-[#e2e3d8] italic font-epilogue tracking-tight">The Cartographer</span>
+<div class="hidden md:flex gap-6">
+<a class="text-[#af047a] dark:text-[#fface8] border-b-2 border-[#af047a] font-epilogue font-bold tracking-tight py-1 hover:scale-105 transition-transform duration-300" href="#">Reviews</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-epilogue font-bold tracking-tight py-1 hover:scale-105 transition-transform duration-300 hover:opacity-100" href="#">Journal</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-epilogue font-bold tracking-tight py-1 hover:scale-105 transition-transform duration-300 hover:opacity-100" href="#">Map</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container-low rounded-full px-4 py-2">
+<span class="material-symbols-outlined text-on-surface-variant mr-2" data-icon="search">search</span>
+<span class="text-sm text-on-surface-variant">Search explorers...</span>
+</div>
+<span class="material-symbols-outlined text-on-surface p-2 hover:scale-105 transition-transform duration-300" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface p-2 hover:scale-105 transition-transform duration-300" data-icon="settings">settings</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary">
+<img alt="User profile" data-alt="Portrait of a smiling traveler with a hat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMDK2g1RrIwZY_GNPA7wo35F-UfuF5hbQFjaa-SIyWJ5Z_o-dPJR0sNTBa62k5lFfdmuAx7rXJwFfAAdjKlifpjs8uFEUnqKlsmuYt09nvhzrNoHrNdDNfabTU0Q2gd1d4P2kFAOrMdXlUm4sH-yZcrKcpkJaFDOiPQcs6cZdL5XN7P8Eb818fJtO1MZU3YGWO13K-bg_HgNd2cRbvzP3YGtlEUAaui8cR4QrAM2fV4vIGvz_BgSfFSJP5LlL1B0wnzeD8t1vVnHwW"/>
+</div>
+</div>
+</nav>
+</header>
+<main class="max-w-screen-2xl mx-auto px-8 py-16">
+<!-- Hero Section -->
+<section class="mb-20">
+<h1 class="font-headline text-6xl font-black tracking-tighter mb-4 max-w-3xl leading-[0.9]">Voices from the <span class="text-primary italic">Uncharted</span> Trails.</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">Genuine stories from our community of global cartographers. Every review is a coordinate on our shared map of discovery.</p>
+</section>
+<!-- Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-start">
+<!-- 1. Testimonial card with large high-quality portrait -->
+<div class="lg:col-span-7 bg-surface-container-low rounded-lg overflow-hidden group hover:shadow-xl transition-all duration-500">
+<div class="flex flex-col md:flex-row h-full">
+<div class="md:w-1/2 overflow-hidden h-96 md:h-auto">
+<img alt="Explorer Portrait" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Rugged traveler looking at mountain horizon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9P8m-Hw6BETzNbSzsMJbceefjNngRqeC5zak3VQLuxM67tCPWmWs6y8Hi9G84fEi-E701T5GLrwLbZs3ocJeuKuT465AT1133GZ2_R_ua9KsKAvWx80Qmkbw1tTTQ_P5FTog8fykHrsDXjC0emo3H1dsuKC1BPKuRnYX11x7tBi81sW4LVpa-Olgp1o3Z-0PeNeG2mkTDGsPQ25w1O1jRUmXYj0iLQxpWzDLCDZq8BKqUCOWjE9qUz8gtPm-qISfwM83bO307mHfm"/>
+</div>
+<div class="md:w-1/2 p-10 flex flex-col justify-center">
+<div class="flex gap-1 mb-6 text-secondary">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-headline text-2xl font-bold mb-6 italic leading-snug">"The Atlas gave me the courage to wander into the unknown. I found more than just places; I found myself."</p>
+<div>
+<p class="font-bold text-on-surface text-lg">Marcus Sterling</p>
+<p class="text-on-surface-variant font-medium">Patagonia Expedition '23</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Quote-focused minimalist card -->
+<div class="lg:col-span-5 bg-primary text-on-primary rounded-lg p-10 relative overflow-hidden h-full flex flex-col justify-between hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined text-8xl opacity-20 absolute -top-4 -left-4" data-icon="format_quote">format_quote</span>
+<div class="relative z-10 pt-12">
+<p class="font-headline text-4xl font-extrabold leading-tight mb-8">Navigation redefined. Pure, tactile adventure at your fingertips.</p>
+</div>
+<div class="border-t border-on-primary/20 pt-6">
+<p class="font-bold">The Nomad Journal</p>
+<p class="opacity-70 text-sm tracking-widest uppercase font-semibold">Editorial Review</p>
+</div>
+</div>
+<!-- 3. Rating-driven bento card -->
+<div class="lg:col-span-4 bg-surface-container-highest rounded-lg p-8 flex flex-col items-center text-center justify-center hover:bg-surface-container-high transition-colors">
+<div class="bg-surface-container-lowest rounded-full w-24 h-24 flex items-center justify-center mb-6 shadow-sm border border-outline-variant/15">
+<span class="text-4xl font-black text-primary">4.9</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-2">Unmatched Accuracy</h3>
+<p class="text-on-surface-variant mb-6">Across 12,000+ trails tracked this season alone.</p>
+<div class="flex -space-x-3 mb-4">
+<img alt="User 1" class="w-10 h-10 rounded-full border-2 border-surface-container-highest" data-alt="Profile photo of man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDL-nGohT7ePttVO9RiUD3CH5ZjpFZykt2_ls3LIjmS2Wav_FeJN6uOcVWH9C_BsHWu3CfT1XN73ce3LOH6OmKED_JdCIm2w7CepR4_HiZfBnsxUEDOmakCPs7IMbU89bUj3PFoX3nZUPYxQdzC4JLGjktSWyz1zbdCyazLTAcZfmDPuYGLkUywgIQN69AxlLqyI8pxI9LiXuZznU15NbuThMb5Bs1wnG2xkmqiAp22PLd55dZmXmPOUuOzZuLh_f5JQd1SeXvK9rSm"/>
+<img alt="User 2" class="w-10 h-10 rounded-full border-2 border-surface-container-highest" data-alt="Profile photo of woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9XC5XAbsWqTf4nJ3aGpSS2XVwvwEdt0pAuKoReYfhHhBy_jAfsbro-6an-n1NENSxfLwnoHytFnigTLSd2lKBuKn37rHfK7g3_HXbVL5YhoZjGZFlrmZcgnqsATkU6P82y82MWNuAes5boay-5B6ISq6XisOr0xytMwMDOdrhgERr0R_7QnI8TXl9g4-yJi3GHta0Lxm3vcepzglSmAykt5K14KGskP7Cp7pMmXaZe56A-MDaYiuMMrWjYdgGcOakjKzvkHLh62fd"/>
+<img alt="User 3" class="w-10 h-10 rounded-full border-2 border-surface-container-highest" data-alt="Profile photo of man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSUprFPIUI2lENQI5cL4mI6D4d0XIei8GnNuaCLbfVbw1WO1uwJunNGZ5qk25A9AL00HXfcDWRbOmvjUcerXVx7GUYg94L9aCMd0LHsUqBYwsFhY1PuB_wU2cBxLDtZgA5Jf0wINtZFDpYpF41_8oK8awM8IDpicLb6Bk06CyB_oC-HeF0ichpyAytcO2i-MX75f5GJs2rD69pwVeEdgV1r2doLx8bPWFImyVr9lmVpiGvbrGkqlLBU5LxnwjxVnplZPG1Fau4br9M"/>
+<div class="w-10 h-10 rounded-full bg-secondary text-white border-2 border-surface-container-highest flex items-center justify-center text-xs font-bold">+2k</div>
+</div>
+</div>
+<!-- 4. Story-driven 'Diary Entry' card -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-lg p-10 shadow-sm border border-outline-variant/10 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-9xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<div class="flex items-center gap-4 mb-8">
+<div class="w-14 h-14 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</div>
+<div>
+<h4 class="font-bold text-lg">Entry #402: The Misty Valley</h4>
+<p class="text-sm text-on-surface-variant font-semibold uppercase tracking-widest">Ayla Chen • June 12, 2024</p>
+</div>
+</div>
+<div class="space-y-4 text-lg text-on-surface-variant leading-relaxed">
+<p>It was 4:00 AM in the highlands when the signal dropped, but my offline maps never flickered. I reached the summit just as the sun broke through the fog. Without the precise topo data from The Cartographer, I would have missed that hidden ridge path.</p>
+<p class="italic text-primary font-medium">"This isn't just an app; it's a silent partner in every discovery I make."</p>
+</div>
+<div class="mt-8 flex gap-4">
+<span class="px-4 py-1 bg-surface-container-low rounded-full text-xs font-bold text-on-surface-variant border border-outline-variant/10">#Hiking</span>
+<span class="px-4 py-1 bg-surface-container-low rounded-full text-xs font-bold text-on-surface-variant border border-outline-variant/10">#Scotland</span>
+</div>
+</div>
+<!-- 5. Interactive star-rating card with glassmorphism -->
+<div class="lg:col-span-6 h-[400px] relative rounded-lg overflow-hidden group">
+<img alt="Mountain Landscape" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" data-alt="Panoramic view of blue alpine lake and mountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoJB7coECfgSl4ATuuNPrXUOL8ulJexgydLkDPhug46n_3eOrEUR8zsHs9lmrSS0rVC6afe0sBEAjMfqmjkGR3MZ8vnC8wKLZsyygP4cIABhyKXIKL0-ZFEutU-Z92zoqloAlm_r5tvGcN7FWSz8n1yFVv-CWct7ki5yY9VWexJmU03Wst54P0a3EDOalOZGjE9ZzerEu7fqRLgsNiyNx8bvieKbkiJECixULozj7GbOc2uBZfUa8MaQB0M2CGLPOOVZ2qT8abbQLm"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 glass-card rounded-lg p-6 border border-white/20">
+<div class="flex justify-between items-center mb-4">
+<h5 class="font-headline font-bold text-white text-xl">Rate your adventure</h5>
+<div class="flex gap-1 text-tertiary-fixed">
+<span class="material-symbols-outlined cursor-pointer hover:scale-125 transition-transform" data-icon="star">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-125 transition-transform" data-icon="star">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-125 transition-transform" data-icon="star">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-125 transition-transform" data-icon="star">star</span>
+<span class="material-symbols-outlined cursor-pointer hover:scale-125 transition-transform" data-icon="star_outline">star_outline</span>
+</div>
+</div>
+<p class="text-white/80 text-sm mb-4">Help the community discover the best routes. Your feedback matters!</p>
+<button class="w-full bg-white text-on-surface py-3 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-primary hover:text-white transition-colors">Submit Review</button>
+</div>
+</div>
+<!-- 6. Social-proof bubble card -->
+<div class="lg:col-span-6 bg-secondary-container rounded-lg p-10 flex flex-col justify-between hover:rotate-1 transition-transform cursor-pointer">
+<div class="flex items-start justify-between">
+<div class="bg-on-secondary-container text-white p-3 rounded-xl shadow-lg floating-motion">
+<span class="material-symbols-outlined" data-icon="recommend">recommend</span>
+</div>
+<div class="bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 text-xs font-black uppercase tracking-tighter">Verified Journey</div>
+</div>
+<div class="my-8">
+<p class="font-headline text-3xl font-bold text-on-secondary-container mb-2 leading-tight">"Absolutely transformed how I plan my weekend escapes."</p>
+<p class="text-on-secondary-container/70 font-medium">Shared on TrailChat Community</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-md">
+<img alt="Devin" data-alt="Portrait of young man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_W9lfujbkgy2tZy_myDzDLGne8A3Eu8wXzjbgrwy-Wji1XgCIj1hss4VbUl70KH-I7vlLtf7KC2u5jcYMMW6_KsxKbmtqouJc6bR1VgtFlXpU0wx8SA2TQZ8kq93tu-Jn3iiDsgZnWPBfvHXW0i-R_-F5daus3Iryx5ST7l4UzABYQ-2xJMR0TkR2KwxrMjRGnwGVGtCDxaaAYgm0lENrZTY3I9u2Xna5Iu0Vs3BC_csUynkoArx8VHqOAD1jO7GXr-6E-Jv7sIuJ"/>
+</div>
+<div>
+<p class="font-bold text-on-secondary-container">Devin O'Shea</p>
+<p class="text-xs font-semibold opacity-60">Professional Mountain Guide</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<section class="mt-24 text-center">
+<div class="inline-block p-1 rounded-full bg-surface-container-high mb-8">
+<div class="flex items-center gap-2 px-6 py-2 bg-surface-container-lowest rounded-full shadow-sm">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified">verified</span>
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">45,000+ Reviews and counting</span>
+</div>
+</div>
+<h2 class="font-headline text-5xl font-black mb-10 leading-[0.9]">Ready to start your <span class="italic text-tertiary">own chapter?</span></h2>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary text-on-primary px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 shadow-xl watercolor-ink">Join the Expedition</button>
+<button class="bg-surface-container-highest text-on-surface px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300">Browse the Map</button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-[#f6f8ea]/80 dark:bg-[#1a1c18]/80 backdrop-blur-2xl z-50 rounded-t-[2rem] shadow-[0_-10px_30px_rgba(45,48,39,0.04)]">
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="festival">festival</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Festivals</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#af047a] text-white rounded-full p-3 scale-110 -translate-y-2 transition-all shadow-lg" href="#">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-plus-jakarta text-[8px] font-bold uppercase tracking-widest mt-0.5">Reviews</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Podcasts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Map</span>
+</a>
+</div>
+<footer class="mt-32 border-t border-outline-variant/10 py-16 px-8 bg-surface-container-low text-on-surface-variant">
+<div class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-center md:text-left">
+<span class="text-xl font-black text-on-surface italic font-epilogue">The Cartographer</span>
+<p class="mt-2 text-sm max-w-xs">Building the world's most detailed atlas for the soulful traveler.</p>
+</div>
+<div class="flex gap-8 text-sm font-bold uppercase tracking-widest">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined p-2 bg-surface-container-lowest rounded-full" data-icon="public">public</span>
+<span class="material-symbols-outlined p-2 bg-surface-container-lowest rounded-full" data-icon="language">language</span>
+</div>
+</div>
+<div class="text-center mt-12 text-xs opacity-50">
+            © 2024 The Cartographer Ltd. All rights reserved.
+        </div>
+</footer>
+</body></html>

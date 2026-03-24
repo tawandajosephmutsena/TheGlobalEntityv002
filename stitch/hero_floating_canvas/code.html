@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#ff6abf",
+              "on-error": "#ffefef",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-highest": "#dbdfce",
+              "secondary": "#904800",
+              "on-tertiary-container": "#006161",
+              "surface-container": "#e7eada",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-secondary-fixed": "#552800",
+              "on-tertiary": "#bbfffe",
+              "secondary-container": "#ffc69f",
+              "surface-container-high": "#e1e4d4",
+              "surface-variant": "#dbdfce",
+              "error-container": "#f74b6d",
+              "primary-fixed-dim": "#f852b5",
+              "on-primary": "#ffeff3",
+              "surface-container-low": "#f0f2e4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#af047a",
+              "on-secondary": "#fff0e8",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-on-surface": "#9b9e92",
+              "background": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface-variant": "#5a5d52",
+              "secondary-dim": "#7e3e00",
+              "surface-dim": "#d2d6c5",
+              "outline-variant": "#acaea2",
+              "surface": "#f6f8ea",
+              "error": "#b41340",
+              "tertiary-dim": "#005959",
+              "on-error-container": "#510017",
+              "inverse-primary": "#fe57bb",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-primary-container": "#490031",
+              "on-background": "#2d3027",
+              "tertiary": "#006666",
+              "on-surface": "#2d3027",
+              "error-dim": "#a70138",
+              "on-secondary-container": "#723800",
+              "surface-tint": "#af047a",
+              "tertiary-fixed-dim": "#78efef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed": "#ffc69f",
+              "primary-dim": "#9a006b",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "tertiary-container": "#87fefd",
+              "on-primary-fixed": "#000000",
+              "on-tertiary-fixed": "#004d4d"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drift-motion {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .watercolor-blur {
+            filter: blur(80px);
+            mix-blend-mode: multiply;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center px-8 py-6 w-full max-w-[1440px] mx-auto">
+<div class="text-3xl font-black text-[#af047a] dark:text-[#d33297] italic font-headline tracking-tight uppercase">
+                Aetheria
+            </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-headline font-bold tracking-tight uppercase text-[#af047a] dark:text-[#d33297] border-b-2 border-[#af047a] pb-1 hover:scale-105 transition-all duration-300" href="#">Journeys</a>
+<a class="font-headline font-bold tracking-tight uppercase text-[#2d3027] dark:text-[#f6f8ea] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Festivals</a>
+<a class="font-headline font-bold tracking-tight uppercase text-[#2d3027] dark:text-[#f6f8ea] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Archive</a>
+<a class="font-headline font-bold tracking-tight uppercase text-[#2d3027] dark:text-[#f6f8ea] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">About</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-[#2d3027] dark:text-[#f6f8ea] text-2xl hover:scale-105 transition-all duration-300" data-icon="search">search</button>
+<button class="material-symbols-outlined text-[#2d3027] dark:text-[#f6f8ea] text-2xl hover:scale-105 transition-all duration-300" data-icon="account_circle">account_circle</button>
+</div>
+</div>
+</nav>
+<main class="relative min-h-screen overflow-hidden flex flex-col items-center justify-center pt-20">
+<!-- Watercolor Background Elements (Animated feel) -->
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+<div class="absolute -top-24 -left-24 w-[600px] h-[600px] rounded-full bg-primary/10 watercolor-blur animate-pulse"></div>
+<div class="absolute top-1/2 -right-32 w-[800px] h-[800px] rounded-full bg-tertiary/10 watercolor-blur" style="animation: drift 20s infinite alternate ease-in-out;"></div>
+<div class="absolute -bottom-48 left-1/4 w-[700px] h-[700px] rounded-full bg-secondary/10 watercolor-blur"></div>
+</div>
+<!-- Hero Content: The Floating Canvas -->
+<section class="relative z-10 w-full max-w-7xl px-8 flex flex-col items-center text-center">
+<span class="font-headline font-bold tracking-[0.4em] uppercase text-primary mb-8 block opacity-80 text-sm">The Global Entity</span>
+<h1 class="font-headline text-7xl md:text-9xl font-black text-on-background tracking-tighter leading-[0.85] mb-12">
+                Travel <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-tertiary">Beyond the</span> <br/>
+                Ordinary
+            </h1>
+<div class="max-w-2xl mx-auto space-y-8">
+<p class="font-body text-xl md:text-2xl text-on-surface-variant leading-relaxed">
+                    A curated atlas for the modern soul. Discover paths less traveled and stories etched in the landscape.
+                </p>
+<div class="flex flex-wrap justify-center gap-6 pt-4">
+<button class="px-10 py-5 bg-gradient-to-br from-primary to-primary-dim text-on-primary rounded-full font-bold text-lg hover:scale-105 shadow-xl transition-all duration-300 flex items-center gap-3">
+                        Start Expedition
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="px-10 py-5 bg-surface-container-highest text-on-surface rounded-full font-bold text-lg hover:scale-105 transition-all duration-300">
+                        View Archive
+                    </button>
+</div>
+</div>
+</section>
+<!-- Signature Component: Hand-Drawn Map Progress Bar (Visual only) -->
+<div class="absolute bottom-16 w-full max-w-lg px-8 hidden lg:block">
+<div class="relative h-1 w-full bg-outline-variant/20 overflow-visible rounded-full">
+<!-- Dashed trail path visual -->
+<div class="absolute top-1/2 left-0 w-3/4 h-0.5 border-t-2 border-dashed border-primary -translate-y-1/2 opacity-40"></div>
+<!-- Current Position Marker -->
+<div class="absolute left-3/4 top-1/2 -translate-y-1/2 w-4 h-4 bg-secondary rounded-full shadow-[0_0_15px_rgba(144,72,0,0.5)] z-20 border-2 border-surface"></div>
+<!-- Labels -->
+<div class="flex justify-between mt-4 text-[10px] font-headline font-black uppercase tracking-widest text-on-surface-variant">
+<span>Departure</span>
+<span>Zenith</span>
+<span>Discovery</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Content Sections (Editorial Bento Grid) -->
+<section class="relative z-10 w-full max-w-[1440px] mx-auto px-8 py-32 bg-surface">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Large Editorial Card -->
+<div class="md:col-span-8 group relative bg-surface-container-low rounded-lg overflow-hidden h-[600px]">
+<img alt="Ethereal landscape with watercolor texture" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Misty tropical mountains reflecting in calm water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFmIvxH5ZFxGgF_-KSJAOT4jLOeBzTekZVXagc0zc0siOyPv-pKSM8RgiDG6htNYNfPnoLMQvDk-U9GCbqGjEjeBh9Ebzbns3PZZgcbvAtQ0-O1QItLG76SHKyebXiY75qJsuPxXWdK01fdoxdqwtlHvhlrVZVNFfa3IjB0zm4aQqBzE9YE9PISg6Dna0mYcmHZxAczEBf6dVA4HcYy7lqVK9JJ0dRv7as8wOsF-YqsR0CDibyb4zq_da0_BUx4_ZvqbyuEhlGPFXm"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-12 text-white">
+<span class="font-headline font-bold text-tertiary-fixed mb-4">VOLUME IV</span>
+<h2 class="font-headline text-5xl font-black mb-6">The Teal Archipelago</h2>
+<p class="font-body text-lg opacity-90 max-w-xl mb-8">Exploring the hidden currents and sacred reefs of the Indian Ocean through the lens of local cartographers.</p>
+<button class="w-fit px-8 py-3 rounded-full border border-white/30 backdrop-blur-md hover:bg-white hover:text-primary transition-all">Read Story</button>
+</div>
+</div>
+<!-- Side Bento Column -->
+<div class="md:col-span-4 flex flex-col gap-8">
+<div class="flex-1 bg-surface-container-highest rounded-lg p-10 flex flex-col justify-between relative overflow-hidden">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl text-primary mb-6" data-icon="explore">explore</span>
+<h3 class="font-headline text-3xl font-bold text-on-surface mb-4">Curated Journeys</h3>
+<p class="font-body text-on-surface-variant">Hand-drawn paths for sustainable souls. Every route vetted by our collective.</p>
+</div>
+<!-- Signature Bleed Element -->
+<div class="absolute -right-10 -bottom-10 w-40 h-40 opacity-10 rotate-12">
+<span class="material-symbols-outlined text-[160px] text-on-surface" data-icon="map">map</span>
+</div>
+</div>
+<div class="flex-1 bg-primary-container/20 rounded-lg p-10 relative overflow-hidden">
+<h3 class="font-headline text-3xl font-bold text-on-primary-container mb-4">Seasonal Festivals</h3>
+<p class="font-body text-on-primary-container/80 mb-6">Join the global entity in celebrating terrestrial rhythms.</p>
+<a class="inline-flex items-center gap-2 font-bold text-primary hover:underline uppercase tracking-tight text-sm" href="#">
+                        View Schedule
+                        <span class="material-symbols-outlined text-sm" data-icon="arrow_outward">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full pt-20 pb-10 bg-[#2d3027] dark:bg-black">
+<div class="flex flex-col items-center justify-center gap-8 px-4 w-full">
+<div class="text-lg font-black text-[#f6f8ea] font-headline uppercase tracking-widest italic">Aetheria Editorial</div>
+<nav class="flex flex-wrap justify-center gap-8">
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Privacy</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Terms</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Sustainability Report</a>
+<a class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Press Kit</a>
+</nav>
+<div class="flex gap-6 mt-4">
+<span class="material-symbols-outlined text-[#f6f8ea]/60 hover:text-primary-fixed cursor-pointer transition-colors" data-icon="public">public</span>
+<span class="material-symbols-outlined text-[#f6f8ea]/60 hover:text-primary-fixed cursor-pointer transition-colors" data-icon="sailing">sailing</span>
+<span class="material-symbols-outlined text-[#f6f8ea]/60 hover:text-primary-fixed cursor-pointer transition-colors" data-icon="travel_explore">travel_explore</span>
+</div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#f6f8ea]/60 mt-8 text-center max-w-md">
+                © 2024 Aetheria Editorial. Hand-drawn paths for sustainable souls.
+            </p>
+</div>
+</footer>
+<style>
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, -30px) scale(1.1); }
+        }
+    </style>
+</body></html>

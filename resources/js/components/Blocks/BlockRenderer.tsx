@@ -62,6 +62,10 @@ import TeamGridBlock from './TeamGridBlock';
 import CultureBentoBlock from './CultureBentoBlock';
 import TeamJoinBlock from './TeamJoinBlock';
 import CommunityReviewBlock from './CommunityReviewBlock';
+import JournalHeroBlock from './JournalHeroBlock';
+import JournalCategoryFilterBlock from './JournalCategoryFilterBlock';
+import JournalArticleGridBlock from './JournalArticleGridBlock';
+import JournalNewsletterBlock from './JournalNewsletterBlock';
 
 
 // Type definitions for external data
@@ -114,7 +118,9 @@ interface BlockRendererProps {
     featuredServices?: ServiceItem[];
     featuredProjects?: ProjectItem[];
     recentInsights?: InsightItem[];
+    categories?: any[];
     teamMembers?: TeamMember[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     reviews?: any[];
 }
 
@@ -316,7 +322,8 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
 };
 
 const ImageBlock = ({ content }: { content: ImageBlockType['content'] }) => {
-    const { url, alt, caption } = content;
+    const { image, aspectRatio, objectFit, caption } = content;
+    const { url, alt } = image || {};
     return (
         <section className="py-20 bg-background px-4">
             <div className="mx-auto max-w-7xl">
@@ -327,7 +334,11 @@ const ImageBlock = ({ content }: { content: ImageBlockType['content'] }) => {
                             alt={alt || 'Image'} 
                             loading="lazy"
                             decoding="async"
-                            className="w-full rounded-[40px] shadow-2xl" 
+                            className={cn(
+                                "w-full rounded-[40px] shadow-2xl",
+                                aspectRatio && `aspect-${aspectRatio}`,
+                                objectFit && `object-${objectFit}`
+                            )} 
                         />
                         {caption && (
                             <figcaption className="mt-4 text-center text-sm text-muted-foreground">
@@ -371,6 +382,7 @@ export default function BlockRenderer({
     featuredServices = [], 
     featuredProjects = [], 
     recentInsights = [],
+    categories = [],
     teamMembers = [],
     reviews = []
 }: BlockRendererProps) {
@@ -550,6 +562,38 @@ export default function BlockRenderer({
                                 key={block.id} 
                                 {...(block.content as CommunityReviewBlockType['content'])} 
                                 reviews={reviews}
+                            />
+                        );
+
+                    case 'journal_hero':
+                        return (
+                            <JournalHeroBlock 
+                                key={block.id} 
+                                content={block.content as any} 
+                                recentInsights={recentInsights as any} 
+                            />
+                        );
+                    case 'journal_category_filter':
+                        return (
+                            <JournalCategoryFilterBlock 
+                                key={block.id} 
+                                content={block.content as any} 
+                                categories={categories} 
+                            />
+                        );
+                    case 'journal_article_grid':
+                        return (
+                            <JournalArticleGridBlock 
+                                key={block.id} 
+                                content={block.content as any} 
+                                recentInsights={recentInsights as any} 
+                            />
+                        );
+                    case 'journal_newsletter':
+                        return (
+                            <JournalNewsletterBlock 
+                                key={block.id} 
+                                content={block.content as any} 
                             />
                         );
 

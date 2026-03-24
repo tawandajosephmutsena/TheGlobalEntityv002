@@ -1,0 +1,280 @@
+<html class="light" lang="en"><head></head><body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container watercolor-grid-bg min-h-screen">```html
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Global Entity | Bento Box Adventure</title>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#904800",
+              "surface-variant": "#dbdfce",
+              "on-secondary-container": "#723800",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "secondary-container": "#ffc69f",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-highest": "#dbdfce",
+              "surface-dim": "#d2d6c5",
+              "error": "#b41340",
+              "outline-variant": "#acaea2",
+              "surface-tint": "#af047a",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-fixed": "#ffc69f",
+              "on-tertiary-container": "#006161",
+              "on-tertiary": "#bbfffe",
+              "secondary-dim": "#7e3e00",
+              "on-error": "#ffefef",
+              "on-secondary-fixed": "#552800",
+              "primary-fixed": "#ff6abf",
+              "primary-dim": "#9a006b",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "tertiary-container": "#87fefd",
+              "error-dim": "#a70138",
+              "background": "#f6f8ea",
+              "on-error-container": "#510017",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "inverse-on-surface": "#9b9e92",
+              "surface-container-high": "#e1e4d4",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#006666",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-primary": "#ffeff3",
+              "surface-bright": "#f6f8ea",
+              "on-primary-container": "#490031",
+              "error-container": "#f74b6d",
+              "tertiary-fixed": "#87fefd",
+              "surface-container": "#e7eada",
+              "on-primary-fixed": "#000000",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "tertiary-fixed-dim": "#78efef",
+              "primary-fixed-dim": "#f852b5"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-grid-bg {
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(175, 4, 122, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 102, 102, 0.08) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L30 60 M0 30 L60 30' stroke='%232d3027' stroke-width='0.5' stroke-opacity='0.05' fill='none'/%3E%3C/svg%3E");
+        }
+        .scribble-accent {
+            mask-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 15 Q 25 5 45 15 T 85 15' stroke='black' stroke-width='4' fill='none'/%3E%3C/svg%3E");
+            -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 15 Q 25 5 45 15 T 85 15' stroke='black' stroke-width='4' fill='none'/%3E%3C/svg%3E");
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: minmax(100px, auto);
+            gap: 1.5rem;
+        }
+    </style>
+
+
+<nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-7xl z-50 bg-white/60 backdrop-blur-2xl rounded-full border border-white/40 shadow-2xl px-6 py-3 flex justify-between items-center">
+<a class="font-headline font-black text-xl text-primary italic" href="#">Ethereal Cartographer</a>
+<div class="hidden lg:flex gap-8 font-headline font-bold text-sm tracking-tight">
+<a class="text-primary border-b-2 border-primary" href="#">Home</a>
+<a class="hover:text-primary transition-colors" href="#">About</a>
+<a class="hover:text-primary transition-colors" href="#">Festival Map</a>
+<a class="hover:text-primary transition-colors" href="#">Blog</a>
+<a class="hover:text-primary transition-colors" href="#">Podcast</a>
+<a class="hover:text-primary transition-colors" href="#">Partner</a>
+</div>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform">Join Journey</button>
+</nav>
+<main class="pt-32 pb-20 px-4 md:px-8 max-w-[1600px] mx-auto">
+<div class="bento-grid">
+<div class="col-span-12 lg:col-span-8 row-span-2 bg-white rounded-xl p-8 md:p-12 relative overflow-hidden shadow-sm flex flex-col justify-center border border-surface-container">
+<div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="Abstract watercolor map of Southern Africa coastlines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeXFTbkRrB3znau0Anh6xoUV-doGnNCGRMbV1eNDPghYojLkGU7CQoeWP2r7YSsJEaZwXWWVgi903HfMTArgRqU_c0ACv0ZbRn-YIIeW0jHxI8qddRTXzR5gSRtSDLVbAX5DmL7G1aAgN_hV5FzyquQXqmc0AAo5RQH9kQ-aTicr_OCccxbAQqnMRYDKg9ebnzlM2XtlDsHMDEqxSEFOWcj9Ns4RmBCLPCMF4ktxq3MQaHJnOScP19ajG5VU2lZJRUmc9NzvZAUKgF"/>
+</div>
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full text-secondary font-bold text-xs mb-6">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span>THE GLOBAL ENTITY</span>
+</div>
+<h1 class="font-headline font-black text-6xl md:text-8xl text-on-background leading-[0.85] tracking-tighter mb-8">
+                    The <span class="text-primary italic">Global</span> Entity
+                </h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-2xl leading-relaxed">
+                    Your Sustainable Slow travel and festival plug. Living from the heart and slow travelling the African continent experiencing <span class="text-secondary font-semibold border-b-2 border-dotted border-secondary/40">epic festivals.</span>
+</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 row-span-3 rounded-xl overflow-hidden shadow-lg group relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Solo traveler looking thoughtfully at a sunset in the desert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjVZwCv0qhZwwt3Fm403ZgSMl6FdYlBSvRMhWGkkWZdfrWT45PBRJp8O3IpoFGoPDEi8ez6J58v-d3tVUmFN8pg_J1V68jK6IHaMf50NEy1TXugGQkYips_TQSMsCPdkIZg_P3eKl5GK1EOSCwZ8t6xBV1843bYyJipKynaT9hP1EXBtVCuCcZ77U5jO6CfAkup84cYtzzziL-lz4vG2CRz1ycCcwHpBySSzvhG0vradN5rboQsMidXAvGEGveRkePuBMTLscUF_Fq"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+<p class="text-white font-headline italic text-lg">"The road is the teacher."</p>
+</div>
+<div class="absolute top-4 left-4 bg-secondary-container/90 p-4 rounded-lg rotate-[-8deg] shadow-lg">
+<span class="material-symbols-outlined text-4xl text-on-secondary-container">sentiment_dissatisfied</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 row-span-1 bg-tertiary text-on-tertiary rounded-xl p-8 flex flex-col justify-between group hover:bg-tertiary-dim transition-colors cursor-pointer">
+<h3 class="font-headline font-bold text-2xl leading-tight">Beyond the Lineups—The Festival Guide You Actually Need.</h3>
+<div class="flex items-center justify-between mt-6">
+<span class="font-bold border-b border-on-tertiary pb-1">Explore the Festival Map</span>
+<span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 row-span-2 bg-surface-container-high rounded-xl p-8 flex flex-col justify-center">
+<h2 class="font-headline font-black text-4xl text-on-background mb-6 leading-tight">Travel That <span class="text-tertiary">Moves You.</span></h2>
+<div class="space-y-4 text-on-surface-variant">
+<p class="font-bold text-on-background italic">Ever felt lost in the sea of generic travel guides? Confused by curated feeds that don't tell the real story of the road?</p>
+<p>We skip the glossy filters to bring you purpose-driven travel guides born from real dust, real sweat, and real heart.</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 row-span-2 bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-surface-container group">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Outdoor festival crowd during golden hour" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCas0EPuy0aqUtIsAOlqG2k4uMGO0hJV5JNVm1bRBcHJ9RtJG02Iu5tsLA8Lyd3rK-MbW6ncgbnZe9_wT9pLzM631jOEw_Q_2Wpwk3VyW9zJvs4d2FdTaiqc8pnTQzppgUDjMyi0ubXBSEkFacHOCwWzqcre6SiBM2_bIFbVhz6ZaKFrrJ6d-i89ODxDh7-9g495anYuxy4P9oMvkd0Ry5khiu2kjGO7CC3whp5wLfRCfHJqGEcYE7oZzbxjaw8E2PjfmKozFZhuodM"/>
+</div>
+<div class="p-6 flex-1 flex flex-col">
+<span class="text-xs font-bold text-secondary uppercase tracking-widest mb-2">12 Oct, 2024</span>
+<h3 class="font-headline font-bold text-xl mb-3">Why I Stopped Planning and Started Feeling</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-4">The art of slow travel isn't about the destination, it's about the rhythm of the heart when you lose your map...</p>
+<a class="mt-auto text-primary font-bold text-sm inline-flex items-center gap-1" href="#">Read Entry <span class="material-symbols-outlined text-sm">arrow_right_alt</span></a>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-4 row-span-2 bg-secondary-container/30 rounded-xl p-8 flex items-center justify-center relative overflow-hidden">
+<div class="w-64 h-64 rounded-full border-4 border-dashed border-outline-variant p-4 relative bg-white/50">
+<img class="w-full h-full object-cover rounded-full opacity-90" data-alt="Close up of a hand-drawn map with festival pins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf1qPSYBAvYfR2HWJSnBKiVfURHTtn3tsBE5xmYi_YhTqBm0RmpubHnOM2due1L65rqFcEnQpVOXYbW-m7fOYTwYdgDZ-mb1fvYP0-CIlnda7fC6aXkJg9b6M6A2MHDcc3k9hANFA-oju1fwRpW5_0GvMV-xCoU8EpQLtcbjg9zOg-X5FOZGrzOlk1bKZMlQrSACoz4xTCe1kiNlAFB4gHTwZry3YC2kWzE_9OAuxvuZWYulfSjy-rAWijAjDmYQ_xYMuQyvS7EgHR"/>
+<div class="absolute -top-2 -right-2 bg-primary text-white p-2 rounded-full shadow-lg rotate-12">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="absolute bottom-4 right-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-9xl">architecture</span>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 row-span-1 bg-primary text-on-primary rounded-xl p-8 flex items-center">
+<div>
+<h2 class="font-headline font-black text-3xl mb-2">The Real Side of Travel</h2>
+<p class="text-on-primary opacity-80 italic">Embracing the messy, magical reality of life on the move. No scripts, just soul.</p>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-3 row-span-2 bg-white rounded-xl overflow-hidden shadow-sm flex flex-col border border-surface-container group">
+<div class="h-40 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Traditional African textile market vibrant colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyKqmFRUq0ylWViy-2t282OTKm7YPPRiDb2Db-Qj19elLcogTzTVXlYDhay5h-yyiCX5XOqShXev_XN5a4bFovLGn7O7B0ZDJvo0NlkWgRMaewxsnyVPr79Fug9rqJt_41dIWkMb1lHqcyLT_h2aMY5oNatXQVnqh9psH-uYg8HX8kOeU6hvCpQuMwR2oYtLDQQKZBsxlP88YwpfgJ59PmTGyWpDfKKpPf3ljtCBFQSOthZJNs3g3gbZ2zXDBM7CsNodPqPE5qjR3e"/>
+</div>
+<div class="p-6">
+<h3 class="font-headline font-bold text-lg mb-2 leading-tight">The Sustainable Soul: Local Gems</h3>
+<a class="text-primary font-bold text-xs flex items-center gap-1" href="#">Read Full Story <span class="material-symbols-outlined text-[14px]">arrow_right_alt</span></a>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-3 row-span-2 bg-primary-container text-on-primary-container rounded-xl p-8 flex flex-col justify-between group hover:brightness-105 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-4xl">auto_stories</span>
+<div>
+<h3 class="font-headline font-bold text-2xl mb-2">Read personal travel stories</h3>
+<p class="text-sm opacity-80">Unfiltered accounts from the heart of the continent.</p>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 row-span-2 grid grid-cols-2 gap-4">
+<div class="rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Instagram story style photo of travelers dancing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtljp68LkZQ7_jsC69e_SZKzcB-LGbfoRcm930YCmkd-LUuIWdYlsZ0eArVeN0mDn5ltb2KnHEimnWOuISxbtNWnV5g9qxc7Ji0Ih001MxITxfpeckvspauWrOujt5pNnJnP46l_DbcSVyh9QqX-C9NixT8lMptSBpNQzVY5MpERH2_wHtJBRSsVaudk09iPU5s2JyrsrzrVETwBJS0QgCtr1x3DzWqHC1m5-Bqze1QbQybl7UCaKdQEg4-p_AFgNqxMxIA4fJFgqN"/>
+</div>
+<div class="rounded-xl overflow-hidden shadow-sm translate-y-4">
+<img class="w-full h-full object-cover" data-alt="Tiktok screenshot of festival fireworks" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiaycjF-wlwpnwdOb0k74HIQQ8qfd0FqWvbIobI8KyP6lZ76HJRTWwOgI0qpW6UCsXk3bMzCshyzgFVptfr2ZVmt0Z5tbmzGw1JqZPdF0XRDg1wBYUBZrRz8CX8b6VG0N8wxfzrssiFS58Ya8uz5T1Pnten2l5dPDo0sJKCaL53PO3S8POKY_E8wvCkDCYbqmsjD7OtUDR4OzZCbDAbmTXYD8fixluEvRoI-xI7fvpEFMpEGub5N2q-Yys4CYPdVzPYJbpwk-q9Pf6"/>
+</div>
+<div class="rounded-xl overflow-hidden shadow-sm -translate-y-2">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling traveler with sunset lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdPGFOmPDcsZ1cldf9lS4xYXzYbFppyYWtPICMnhtCcgqw_ePyqNFgSEeajdMyb6ahyc1LCBWdK_lPeFedUO4u2MZJlmeheEz2Hng16oJQAyqyy-cca3lj95r7xtlwVxaPiGW7lPbsKMlNRoVYgwizIWXNFYwdmtQgyaXMVk26SvZYHRA_dXIOnm84cN9yNExqhWy0mN1npPY-3LepiqHc0-b-t2S4Np4pi33eRiAS35oI8zs2Tk_8dCNNtmzWrKt-_ggCrwWudm6m"/>
+</div>
+<div class="rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Close up of artisanal African jewelry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4536YlIPbctFjbJ3l-hKpfO2jIy7yI8P15upCSW5LyCereQPLqODrc5b_VlGBLT9Quj7re990ipnl4OJeo1tmiuzgjhvZUHreY52Txjs8VInhgF_gGvO7bcFrs4IYcDPw4a3LWPk7Cl0l8qnu4E1HsTiyEuplV87s5wnJKyvqYc89FilMHFiLvh4w5OC10kqZhwz16-mq9fzxKWuad9IWQO8bcA6bLTGbx7B-TvJozH3YVOhPH9ec27Y_y1iHGcTXxGjGwXEaXrBS"/>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-8 row-span-2 bg-surface-container-low rounded-xl p-8">
+<h3 class="font-headline font-bold text-3xl mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">chat_bubble</span>
+                Travel Whispers (FAQ)
+            </h3>
+<div class="grid md:grid-cols-2 gap-4">
+<details class="group bg-white rounded-lg p-6 shadow-sm cursor-pointer open:ring-2 open:ring-secondary/20 transition-all">
+<summary class="flex justify-between items-center font-bold text-lg list-none">
+                        Is slow travel safe?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-4 text-on-surface-variant text-sm leading-relaxed">Safety is our priority. We provide deep-dive cultural insights and safety checklists specifically tailored for solo travelers across Africa.</p>
+</details>
+<details class="group bg-white rounded-lg p-6 shadow-sm cursor-pointer open:ring-2 open:ring-secondary/20 transition-all">
+<summary class="flex justify-between items-center font-bold text-lg list-none">
+                        Partner festivals?
+                        <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<p class="mt-4 text-on-surface-variant text-sm leading-relaxed">We only partner with festivals that prioritize local community impact, sustainability, and authentic cultural exchange.</p>
+</details>
+</div>
+</div>
+<div class="col-span-12 row-span-1 bg-secondary-container rounded-xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="relative z-10 text-center md:text-left">
+<h4 class="font-headline font-bold text-3xl text-on-secondary-fixed-variant mb-2">Want to Join the Map?</h4>
+<p class="text-on-secondary-fixed max-w-lg">We partner with brands and festivals that share our soul for sustainable African adventure.</p>
+</div>
+<button class="bg-secondary text-on-secondary px-10 py-4 rounded-full font-headline font-bold text-lg hover:scale-105 transition-all shadow-xl relative z-10 whitespace-nowrap">Work with Us</button>
+<div class="absolute -right-20 -bottom-20 w-80 h-80 bg-secondary-fixed-dim/30 rounded-full blur-3xl"></div>
+</div>
+</div>
+</main>
+<footer class="w-full bg-surface-container-low border-t border-surface-container mt-20">
+<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 px-8 py-20">
+<div class="md:col-span-1">
+<a class="font-headline font-black text-primary text-3xl block mb-6" href="#">Ethereal Cartographer</a>
+<p class="font-body text-sm leading-relaxed text-on-surface-variant">Mapping the soul's journey across the African horizon, one heartbeat at a time.</p>
+</div>
+<div>
+<h5 class="font-headline font-bold text-on-background mb-6 uppercase tracking-widest text-xs">Explore</h5>
+<ul class="space-y-4 font-body text-sm text-on-surface-variant">
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Sustainability</a></li>
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Solo Travel</a></li>
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Living Through Heart</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-headline font-bold text-on-background mb-6 uppercase tracking-widest text-xs">Adventure</h5>
+<ul class="space-y-4 font-body text-sm text-on-surface-variant">
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Local Gems</a></li>
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Festival Adventures</a></li>
+<li><a class="hover:text-secondary underline decoration-wavy decoration-1 underline-offset-4" href="#">Travel Trouble</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-headline font-bold text-on-background mb-6 uppercase tracking-widest text-xs">Join Us</h5>
+<div class="flex gap-4 mb-6">
+<a class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm" href="#"><span class="material-symbols-outlined text-primary text-sm">heart_plus</span></a>
+<a class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm" href="#"><span class="material-symbols-outlined text-primary text-sm">share</span></a>
+<a class="w-10 h-10 rounded-full bg-white flex items-center justify-center hover:scale-110 transition-transform shadow-sm" href="#"><span class="material-symbols-outlined text-primary text-sm">mail</span></a>
+</div>
+<p class="font-body text-xs text-on-surface-variant/70 italic">© 2024 Ethereal Cartographer. Hand-drawn with soul across African horizons.</p>
+</div>
+</div>
+</footer>
+
+```</body></html>

@@ -158,6 +158,8 @@ export default function Index({ reviews }: Props) {
                     searchPlaceholder="Search reviews..."
                     routeKey="id"
                     baseUrl="/admin/reviews"
+                    disableViewAction={true}
+                    disableEditAction={true}
                     onSearch={(query) => router.get('/admin/reviews', { search: query }, { preserveState: true })}
                 />
             </div>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Off the Map | The Global Entity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#acaea2",
+              "tertiary-fixed-dim": "#78efef",
+              "on-tertiary-container": "#006161",
+              "on-primary-container": "#490031",
+              "tertiary-fixed": "#87fefd",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "surface-container-high": "#e1e4d4",
+              "secondary-fixed-dim": "#ffb37c",
+              "primary-dim": "#9a006b",
+              "surface-tint": "#af047a",
+              "on-background": "#2d3027",
+              "error-container": "#f74b6d",
+              "surface-variant": "#dbdfce",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#bbfffe",
+              "surface": "#f6f8ea",
+              "primary-fixed-dim": "#f852b5",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-dim": "#7e3e00",
+              "secondary-container": "#ffc69f",
+              "error": "#b41340",
+              "primary-container": "#ff6abf",
+              "surface-dim": "#d2d6c5",
+              "secondary": "#904800",
+              "on-secondary-container": "#723800",
+              "on-primary-fixed": "#000000",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "on-secondary": "#fff0e8",
+              "inverse-primary": "#fe57bb",
+              "primary-fixed": "#ff6abf",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-surface-variant": "#5a5d52",
+              "secondary-fixed": "#ffc69f",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "tertiary-dim": "#005959",
+              "surface-container-low": "#f0f2e4",
+              "primary": "#af047a",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "surface-bright": "#f6f8ea",
+              "surface-container": "#e7eada",
+              "error-dim": "#a70138",
+              "on-error-container": "#510017",
+              "inverse-on-surface": "#9b9e92",
+              "tertiary": "#006666",
+              "tertiary-container": "#87fefd"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-blur {
+            filter: blur(80px);
+            mix-blend-mode: multiply;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation (Shell Visible) -->
+<header class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c1e]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-full mx-auto">
+<div class="text-2xl font-black italic text-[#af047a] dark:text-[#fface8] font-['Epilogue'] tracking-tight">
+                The Global Entity
+            </div>
+<div class="hidden md:flex items-center gap-8 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Destinations</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Journal</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Map</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-6">
+<!-- Background Watercolor Splashes (Organic Brutalism) -->
+<div class="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute -top-20 -left-20 w-[600px] h-[600px] bg-primary/10 rounded-full watercolor-blur opacity-40"></div>
+<div class="absolute top-1/2 -right-40 w-[500px] h-[500px] bg-tertiary/10 rounded-full watercolor-blur opacity-30"></div>
+<div class="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-secondary/10 rounded-full watercolor-blur opacity-20"></div>
+</div>
+<!-- 404 Canvas -->
+<div class="relative w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Shattered Map Illustration (Left/Center Column) -->
+<div class="lg:col-span-7 relative order-2 lg:order-1">
+<div class="relative aspect-square flex items-center justify-center">
+<!-- The "Shattered" Map Fragments -->
+<div class="absolute inset-0 flex items-center justify-center rotate-3">
+<img alt="Torn vintage map" class="w-full h-full object-cover rounded-xl opacity-20 filter grayscale sepia" data-alt="Torn vintage world map with golden edges" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZrk3KlacDQ703C3mmPw0o-plcaCQWy6YbJwWboogtQYswRnAxImynO4ydMRYlJzGquIExHbxO1IJ3FNMb3KZ3WpsxyGJSLi38iuph1RxtMcIqyqoqb0uySfQ_gtRDk-jI9JudTUFYccxkvP7QQDQqkyrSCZCWrDUUPSJjjoD4UydyzxmXbl7IzGnYEfDtskCP6pW80OO5r5X5d3WWGuYh4DaLK2Mdd84Lau48FSE5qqyJVw9n6kYtsEUgbR2UG6hQyH6kaEAZ9Ljr"/>
+</div>
+<!-- Floating Elements (Fairy Pirate Style) -->
+<div class="absolute top-0 left-10 p-6 bg-surface-container-lowest/80 backdrop-blur-md rounded-lg shadow-xl -rotate-6 border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-secondary" data-icon="explore">explore</span>
+<div class="mt-2 font-headline font-bold text-on-surface">Uncharted</div>
+</div>
+<div class="absolute bottom-20 right-0 p-8 bg-surface-container-lowest/90 backdrop-blur-md rounded-2xl shadow-2xl rotate-12 border border-outline-variant/10 max-w-[200px]">
+<span class="material-symbols-outlined text-5xl text-primary" data-icon="skillet">skillet</span>
+<p class="mt-2 text-xs font-body italic">"The ink has run dry where the dragons lie."</p>
+</div>
+<!-- Central 404 Display -->
+<div class="relative z-10 flex flex-col items-center">
+<h1 class="font-headline font-black text-[12rem] leading-none text-on-background opacity-10 select-none">404</h1>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-80 h-80 bg-gradient-to-tr from-primary to-primary-container rounded-full flex items-center justify-center shadow-2xl">
+<span class="material-symbols-outlined text-9xl text-on-primary" data-icon="sailing" style="font-variation-settings: 'FILL' 1;">sailing</span>
+</div>
+</div>
+</div>
+<!-- Scattered Icons -->
+<span class="absolute top-20 right-20 material-symbols-outlined text-tertiary text-4xl opacity-50" data-icon="star">star</span>
+<span class="absolute bottom-10 left-20 material-symbols-outlined text-secondary text-5xl opacity-40 rotate-45" data-icon="anchor">anchor</span>
+</div>
+</div>
+<!-- Content (Right Column) -->
+<div class="lg:col-span-5 flex flex-col items-start order-1 lg:order-2 space-y-8">
+<div>
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-sm font-bold tracking-widest uppercase mb-6 inline-block">
+                        Dead End
+                    </span>
+<h2 class="font-headline font-black text-6xl md:text-7xl leading-tight text-on-background tracking-tighter">
+                        Off the <span class="text-primary italic">Map.</span>
+</h2>
+</div>
+<div class="space-y-4">
+<p class="font-body text-xl md:text-2xl text-on-surface-variant leading-relaxed">
+                        You've sailed into <span class="text-tertiary font-bold">uncharted waters</span>. Even the most seasoned fairy pirates lose their way sometimes.
+                    </p>
+<p class="font-body text-base text-on-surface-variant/70 italic border-l-4 border-primary/20 pl-4">
+                        "The compass spins wildly here, and the stars speak a language we haven't yet mastered."
+                    </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+<a class="px-8 py-4 bg-primary text-on-primary rounded-full font-headline font-bold text-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-lg shadow-primary/20" href="/">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                        Navigate Home
+                    </a>
+<a class="px-8 py-4 bg-surface-container-highest text-on-surface rounded-full font-headline font-bold text-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform" href="/festivals">
+<span class="material-symbols-outlined" data-icon="festival">festival</span>
+                        Explore Festivals
+                    </a>
+</div>
+<!-- Marginalia Note -->
+<div class="pt-8">
+<div class="flex items-center gap-3 text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+<span class="text-xs uppercase tracking-widest font-bold">Captain's Log — 00.00.404</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Shell -->
+<footer class="w-full rounded-t-[3rem] mt-20 bg-[#f6f8ea] dark:bg-[#1a1c1e] text-[#af047a] dark:text-[#fface8] font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full gap-8">
+<div class="flex flex-col items-center md:items-start gap-4">
+<div class="font-['Epilogue'] text-xl font-bold text-[#2d3027] dark:text-[#e2e3d8]">The Global Entity</div>
+<p class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70">© 2024 The Global Entity. Navigating the Ethereal.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Sustainability Manifesto</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Eco-Travel Credits</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Merchant Terms</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Privacy Scroll</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="public">public</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="share">share</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

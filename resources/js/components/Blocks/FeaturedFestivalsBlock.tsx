@@ -9,6 +9,8 @@ import { Link } from '@inertiajs/react';
 import axios from 'axios';
 import type { FeaturedFestivalsBlock } from '@/types/page-blocks';
 
+const EMPTY_ARRAY: number[] = [];
+
 interface FestivalData {
     id: number;
     title: string;
@@ -32,7 +34,8 @@ export default function FeaturedFestivalsBlockRenderer({
     subtitle = "Magical gatherings for the conscious traveler",
     limit = 6,
     showViewAll = true,
-    ctaText = "Join the Magic"
+    ctaText = "Join the Magic",
+    selectedFestivalIds = EMPTY_ARRAY
 }: FeaturedFestivalsBlock['content']) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(0);
@@ -40,12 +43,32 @@ export default function FeaturedFestivalsBlockRenderer({
     const [festivals, setFestivals] = useState<FestivalData[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const memoizedIds = React.useMemo(() => JSON.stringify(selectedFestivalIds), [selectedFestivalIds]);
+
     useEffect(() => {
         const fetchFestivals = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get(`/api/collections/festivals?featured=1&limit=${limit}`);
-                setFestivals(response.data.data || []);
+                let url = `/api/collections/festivals?limit=${limit}`;
+                
+                const currentIds = JSON.parse(memoizedIds);
+                if (currentIds && currentIds.length > 0) {
+                    url += `&ids=${currentIds.join(',')}`;
+                } else {
+                    // Fetch all festivals if no IDs provided
+                }
+
+                const response = await axios.get(url);
+                let fetchedFestivals = response.data.data || [];
+
+                // If we selected specific IDs, preserve that order
+                if (selectedFestivalIds && selectedFestivalIds.length > 0) {
+                    fetchedFestivals = selectedFestivalIds
+                        .map((id: number) => fetchedFestivals.find((f: FestivalData) => f.id === id))
+                        .filter((f: FestivalData | undefined): f is FestivalData => !!f);
+                }
+
+                setFestivals(fetchedFestivals);
             } catch (error) {
                 console.error("Failed to fetch featured festivals", error);
             } finally {
@@ -53,7 +76,8 @@ export default function FeaturedFestivalsBlockRenderer({
             }
         };
         fetchFestivals();
-    }, [limit]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [limit, memoizedIds]);
 
     useEffect(() => {
         if (festivals.length > 0 && containerRef.current) {
@@ -135,10 +159,10 @@ export default function FeaturedFestivalsBlockRenderer({
                                 className="rounded-full border-primary/20 hover:bg-primary/10 hover:border-primary/40 group"
                                 asChild
                             >
-                                <a href="/festivals">
+                                <Link href="/festivals">
                                     <span>View All</span>
                                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </a>
+                                </Link>
                             </Button>
                         )}
                         <div className="flex gap-2">
@@ -182,7 +206,7 @@ export default function FeaturedFestivalsBlockRenderer({
                             >
                                 <Link 
                                     href={festival.url}
-                                    className="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-card border border-border/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/10 block"
+                                    className="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low border border-border/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/10 block"
                                 >
                                     <img 
                                         src={festival.image} 

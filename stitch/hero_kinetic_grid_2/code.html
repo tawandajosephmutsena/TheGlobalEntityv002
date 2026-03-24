@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#ff6abf",
+              "on-error": "#ffefef",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-highest": "#dbdfce",
+              "secondary": "#904800",
+              "on-tertiary-container": "#006161",
+              "surface-container": "#e7eada",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-secondary-fixed": "#552800",
+              "on-tertiary": "#bbfffe",
+              "secondary-container": "#ffc69f",
+              "surface-container-high": "#e1e4d4",
+              "surface-variant": "#dbdfce",
+              "error-container": "#f74b6d",
+              "primary-fixed-dim": "#f852b5",
+              "on-primary": "#ffeff3",
+              "surface-container-low": "#f0f2e4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#af047a",
+              "on-secondary": "#fff0e8",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-on-surface": "#9b9e92",
+              "background": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface-variant": "#5a5d52",
+              "secondary-dim": "#7e3e00",
+              "surface-dim": "#d2d6c5",
+              "outline-variant": "#acaea2",
+              "surface": "#f6f8ea",
+              "error": "#b41340",
+              "tertiary-dim": "#005959",
+              "on-error-container": "#510017",
+              "inverse-primary": "#fe57bb",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-primary-container": "#490031",
+              "on-background": "#2d3027",
+              "tertiary": "#006666",
+              "on-surface": "#2d3027",
+              "error-dim": "#a70138",
+              "on-secondary-container": "#723800",
+              "surface-tint": "#af047a",
+              "tertiary-fixed-dim": "#78efef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed": "#ffc69f",
+              "primary-dim": "#9a006b",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "tertiary-container": "#87fefd",
+              "on-primary-fixed": "#000000",
+              "on-tertiary-fixed": "#004d4d"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .journey-snap {
+            scroll-snap-type: x mandatory;
+        }
+        .destination-slide {
+            scroll-snap-align: center;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<header class="fixed top-0 w-full z-[100] bg-[#f6f8ea]/70 backdrop-blur-xl border-b border-on-surface/5">
+<nav class="flex justify-between items-center px-8 py-6 w-full max-w-[1440px] mx-auto">
+<div class="text-3xl font-black text-[#af047a] italic font-headline tracking-tight uppercase">
+            Aetheria
+        </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#af047a] border-b-2 border-[#af047a] pb-1 font-headline font-bold tracking-tight uppercase" href="#">Journeys</a>
+<a class="text-[#2d3027] opacity-80 font-headline font-bold tracking-tight uppercase" href="#">Festivals</a>
+<a class="text-[#2d3027] opacity-80 font-headline font-bold tracking-tight uppercase" href="#">Archive</a>
+<a class="text-[#2d3027] opacity-80 font-headline font-bold tracking-tight uppercase" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface text-2xl cursor-pointer">account_circle</span>
+</div>
+</nav>
+</header>
+<main class="min-h-screen">
+<section class="relative h-screen w-full overflow-hidden">
+<div class="absolute inset-0 z-50 pointer-events-none flex items-center justify-center">
+<div class="text-center bg-background/40 backdrop-blur-md p-8 md:p-16 rounded-full border border-primary/20 shadow-2xl scale-75 md:scale-100">
+<h1 class="font-headline text-5xl md:text-7xl font-black leading-[0.85] tracking-tighter text-on-background mix-blend-darken">
+                    CHART YOUR <br/>
+<span class="text-primary italic">SOUL'S</span> <br/>
+                    COURSE
+                </h1>
+<div class="mt-6 flex justify-center">
+<span class="material-symbols-outlined text-primary text-5xl animate-pulse">explore</span>
+</div>
+</div>
+</div>
+<div class="flex h-full w-full overflow-x-auto no-scrollbar journey-snap cursor-grab active:cursor-grabbing">
+<div class="destination-slide flex-none w-screen h-full relative">
+<img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCU1jyiLZsEsAncLaMcGjEzws7W-cxlfjzla8ZrUNS4Y7qq1fDpl_U_aoC7pyvz9uOSaW3Vj9uSTO5EF1mUjtS8wwd-nWMVm74eturbDvG8WgfUMR9gevi6DHx8VnN-_AC0GVCybXimJ6OR05OSu-4O7HGDk65GATv52SOkF9qCI50nU2W4l6JveyfQha1Pw2ofm3c3vVsMfLagfFrmSp_26wnVXQU-SkjIS3fvpFEq2WPak7wGTq8PMwl_M6559OIBdelnEzFS9Ik"/>
+<div class="absolute inset-0 bg-gradient-to-r from-on-background/60 via-transparent to-on-background/60"></div>
+<div class="absolute bottom-20 left-20 z-10 text-on-primary max-w-lg">
+<span class="font-headline uppercase tracking-[0.3em] text-sm font-bold bg-primary px-4 py-1 inline-block mb-4">Expedition 01</span>
+<h3 class="text-6xl font-headline font-black mb-4">The Whispering Canyons</h3>
+<p class="text-xl font-body opacity-90">Traverse the silent echoes of the ancient red stone labyrinths.</p>
+</div>
+</div>
+<div class="destination-slide flex-none w-screen h-full relative">
+<img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcaQj9d7chdbwSB8CqAtK2IMr_a9Px01hnYaMdekPgY9R5lIq3qrUlFM8dJhhn__szvJxupaJgQXYv0S77Y1jBLPYv7zTAx6ri2WaLvhTdIQMTrCTJ1z03t2Y9MzrCz10aDYUqrbvsLKD6PB2LKXFtJc9al5Os4qrqO7mfIh6U3rsmMztcHCUm8SeIKqQBbNUP-rNLrwVEZ0IYO7CgdSUaaC0sFrUmmnVYld7CodFQbu9k4Z_y0RuD56uOtK0aHmffm8XHE8etGWVT"/>
+<div class="absolute inset-0 bg-secondary/30 mix-blend-overlay"></div>
+<div class="absolute inset-0 bg-on-background/40"></div>
+<div class="absolute top-40 right-20 z-10 text-right text-on-primary max-w-lg">
+<div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-2xl mb-8 ml-auto">
+<span class="material-symbols-outlined text-4xl">explore</span>
+</div>
+<h3 class="text-6xl font-headline font-black mb-4">Nocturnal Maps</h3>
+<p class="text-xl font-body opacity-90">Navigate by the stars of the southern cross. Discover beauty in the dark.</p>
+</div>
+</div>
+<div class="destination-slide flex-none w-screen h-full relative bg-tertiary">
+<div class="absolute inset-0 flex items-center justify-end pr-[10%]">
+<div class="max-w-2xl text-on-tertiary">
+<span class="material-symbols-outlined text-8xl mb-8">edit_note</span>
+<h3 class="text-7xl font-headline font-black mb-6">The Cartographer's Journal</h3>
+<p class="text-2xl font-body opacity-80 leading-relaxed mb-10">Ink-stained fingers and saltwater dreams. Documenting the unseen paths of the archipelago where the ocean meets the sky.</p>
+<div class="flex items-center gap-4 font-headline font-black text-2xl uppercase tracking-tighter border-b-4 border-on-tertiary pb-2 w-fit">
+                            Read entries <span class="material-symbols-outlined text-4xl">arrow_right_alt</span>
+</div>
+</div>
+</div>
+<div class="absolute left-0 top-0 h-full w-1/3 opacity-20 bg-[radial-gradient(circle,#87fefd_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+</div>
+<div class="destination-slide flex-none w-screen h-full relative">
+<img alt="" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcMMr1xjWZ9Z58x5vtw1JQCZYSv0SuTb-9nl29Ow-8guMdaFUbbsq6Z3Ta8-WkdH0fp5GSPMaI_dNUdZFnAhznHXsSry6p7spJdK2F0lPXepzFbw8PnFqARKRct00q-4LdW6kvVHBz_Dd5BqTGLlsO7mC3eRd_ryecq6d3ONkK_cPlRmOrY1go0MAAEbolv1TyHN7cJt_Sah0y7_tfmXiBHdjOJXz2c_A8Z_oRD8EjM2NI8uYiFOATJvkCi6KHc-SF2icMJk82k5Hf"/>
+<div class="absolute inset-0 bg-secondary/60 mix-blend-multiply"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-center px-4">
+<span class="text-on-primary font-headline text-8xl md:text-[12rem] font-black uppercase tracking-tighter opacity-80">Peak</span>
+<div class="text-on-primary font-headline text-5xl font-bold -mt-8">Revelations</div>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2">
+<span class="text-xs font-headline font-bold uppercase tracking-[0.5em] text-on-background/50">Scroll to Explore</span>
+<div class="w-1 h-12 rounded-full bg-gradient-to-b from-primary to-transparent"></div>
+</div>
+</section>
+<section class="bg-surface py-24 md:py-40">
+<div class="max-w-[1440px] mx-auto px-8">
+<div class="flex flex-col gap-24">
+<div class="max-w-4xl space-y-12">
+<div class="inline-flex items-center gap-3 px-6 py-3 bg-secondary-container rounded-full text-on-secondary-container font-label font-bold text-sm tracking-widest">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+                        THE ETHEREAL METHOD
+                    </div>
+<h2 class="font-headline text-6xl md:text-8xl font-black leading-tight text-on-background">
+                        Crafting paths for the <br/>
+<span class="text-tertiary italic underline decoration-tertiary-fixed decoration-8">wandering heart.</span>
+</h2>
+<p class="text-2xl text-on-surface-variant font-body leading-relaxed max-w-2xl">
+                        We believe travel isn't just about the destination—it's about the watercolor memories that bleed into your soul. Our expeditions are hand-drawn, curated experiences that prioritize local rhythm over global noise.
+                    </p>
+<button class="bg-primary text-on-primary px-12 py-6 rounded-full font-headline font-black text-xl tracking-wide hover:scale-105 transition-all shadow-2xl flex items-center gap-4 group">
+                        START YOUR EXPEDITION
+                        <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">east</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-surface-container-low p-12 rounded-[3rem] border border-on-surface/5 flex flex-col items-center text-center space-y-6">
+<div class="w-20 h-20 rounded-full bg-secondary flex items-center justify-center text-on-secondary shadow-xl">
+<span class="material-symbols-outlined text-4xl">map</span>
+</div>
+<h4 class="font-headline font-black text-2xl uppercase">Curated Cartography</h4>
+<p class="font-body text-on-surface-variant text-lg">Bespoke maps designed for sustainable discovery and hidden gems.</p>
+</div>
+<div class="bg-surface-container-low p-12 rounded-[3rem] border border-on-surface/5 flex flex-col items-center text-center space-y-6">
+<div class="w-20 h-20 rounded-full bg-tertiary flex items-center justify-center text-on-tertiary shadow-xl">
+<span class="material-symbols-outlined text-4xl">eco</span>
+</div>
+<h4 class="font-headline font-black text-2xl uppercase">Eco-Conscious Rhythms</h4>
+<p class="font-body text-on-surface-variant text-lg">Carbon-neutral journeys that respect ancestral lands and wildlife.</p>
+</div>
+<div class="bg-surface-container-low p-12 rounded-[3rem] border border-on-surface/5 flex flex-col items-center text-center space-y-6">
+<div class="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xl">
+<span class="material-symbols-outlined text-4xl">local_activity</span>
+</div>
+<h4 class="font-headline font-black text-2xl uppercase">Ritual Festivals</h4>
+<p class="font-body text-on-surface-variant text-lg">Access to exclusive, high-vibration cultural gatherings and rites.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full pt-20 pb-10 bg-[#2d3027] text-[#f6f8ea] font-body text-sm tracking-widest uppercase font-bold">
+<div class="flex flex-col items-center justify-center gap-12 px-4 w-full max-w-[1440px] mx-auto">
+<div class="text-4xl font-black text-[#f6f8ea] font-headline italic tracking-tight uppercase">Aetheria</div>
+<div class="flex flex-wrap justify-center gap-12">
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Privacy</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Terms</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Sustainability Report</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Press Kit</a>
+</div>
+<p class="text-center opacity-40 max-w-md normal-case font-medium">
+            © 2024 Aetheria Editorial. Hand-drawn paths for sustainable souls.
+        </p>
+</div>
+</footer>
+
+</body></html>

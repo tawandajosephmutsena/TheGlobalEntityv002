@@ -6,67 +6,51 @@
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 
-@variant dark (&:where(.dark, .dark *));
-
 @theme {
-    /* Fonts */
-    --font-sans:
-        'Instrument Sans', 'Inter', ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-        'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-display:
-        'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
-    --font-mono:
-        'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo,
-        Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
-    --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    --color-sidebar-ring: var(--sidebar-ring);
 
-    /* Base Core Colors */
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-
-    --color-card: var(--card);
-    --color-card-foreground: var(--card-foreground);
-
-    --color-popover: var(--popover);
-    --color-popover-foreground: var(--popover-foreground);
+    /* Stitch Material 3 Colors - Dynamic Mapping */
+    --color-on-surface: var(--on-surface);
+    --color-on-surface-variant: var(--on-surface-variant);
+    --color-primary-container: var(--primary-container);
+    --color-on-primary-container: var(--on-primary-container);
+    --color-secondary: var(--secondary);
+    --color-on-secondary: var(--on-secondary);
+    --color-tertiary: var(--tertiary);
+    --color-on-tertiary: var(--on-tertiary);
+    --color-surface: var(--surface);
+    --color-surface-container-low: var(--surface-container-low);
+    --color-surface-container: var(--surface-container);
+    --color-surface-container-high: var(--surface-container-high);
+    --color-surface-container-highest: var(--surface-container-highest);
+    --color-surface-container-lowest: var(--surface-container-lowest);
+    --color-outline: var(--outline);
+    --color-outline-variant: var(--outline-variant);
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
-
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
-
     --color-muted: var(--muted);
     --color-muted-foreground: var(--muted-foreground);
 
-    --color-accent: var(--accent);
-    --color-accent-foreground: var(--accent-foreground);
+    /* Fonts */
+    --font-sans: var(--font-sans);
+    --font-serif: var(--font-serif);
+    --font-mono: var(--font-mono);
 
-    --color-destructive: var(--destructive);
-    --color-destructive-foreground: var(--destructive-foreground);
+    /* Standard Tailwind v4 Mappings for Base Layers */
+    --color-background: var(--background, var(--surface));
+    --color-foreground: var(--foreground, var(--on-surface));
+    --color-border: var(--border, var(--outline-variant));
+    --color-muted: var(--muted, var(--surface-container-low));
+    --color-muted-foreground: var(--muted-foreground, var(--on-surface-variant));
 
-    --color-border: var(--border);
-    --color-input: var(--input);
-    --color-ring: var(--ring);
-
-    --color-chart-1: var(--chart-1);
-    --color-chart-2: var(--chart-2);
-    --color-chart-3: var(--chart-3);
-    --color-chart-4: var(--chart-4);
-    --color-chart-5: var(--chart-5);
-
-    --color-sidebar: var(--sidebar);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-ring: var(--sidebar-ring);
-
-    /* Agency Specific Colors (Mapped to Theme) */
+    /* Agency Specific Colors */
     --color-agency-primary: var(--agency-primary);
     --color-agency-secondary: var(--agency-secondary);
     --color-agency-accent: var(--agency-accent);
@@ -75,6 +59,7 @@
     --color-agency-dark: var(--agency-dark);
 
     /* Radius */
+    --radius-brand: 50px;
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
@@ -82,7 +67,6 @@
     --radius-2xl: calc(var(--radius) + 8px);
     --radius-3xl: calc(var(--radius) + 12px);
     --radius-4xl: calc(var(--radius) + 16px);
-    --radius-brand: 50px;
 
     /* Shadows */
     --shadow-2xs: var(--shadow-2xs);
@@ -94,20 +78,19 @@
     --shadow-xl: var(--shadow-xl);
     --shadow-2xl: var(--shadow-2xl);
 
-    /* Spacing & Tracking */
-    --spacing-1: var(--spacing);
-    --tracking-normal: var(--tracking-normal);
-    --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
-    --tracking-tight: calc(var(--tracking-normal) - 0.025em);
-    --tracking-wide: calc(var(--tracking-normal) + 0.025em);
-    --tracking-wider: calc(var(--tracking-normal) + 0.05em);
-    --tracking-widest: calc(var(--tracking-normal) + 0.1em);
-
     /* Animations */
-    --animate-bloom: bloom 1s ease-out both;
+    --animate-waveform-bar: waveform-bar 1s ease-in-out infinite;
+    --animate-spin-slow: spin 8s linear infinite;
     --animate-float: float 6s ease-in-out infinite;
+    --animate-bloom: bloom 1s ease-out both;
     --animate-smoke: smoke-reveal 1s ease-out both;
     --animate-shimmer: shimmer 2s infinite;
+}
+
+/* Material 3 / Stitch Specific Keyframes */
+@keyframes waveform-bar {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
 }
 
 /* Fail-safe Marquee Class */
@@ -350,11 +333,20 @@
         size-adjust: 100%;
     }
   .maplibregl-popup-content {
-    @apply bg-transparent! shadow-none! p-0! rounded-none!;
-    }
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
   .maplibregl-popup-tip {
-    @apply hidden!;
-    }
+    display: none !important;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    display: inline-block;
+    line-height: 1;
+  }
 }
 
 @layer utilities {
@@ -508,7 +500,9 @@
     }
 
     .focus-visible-ring {
-        @apply focus-visible:ring-2 focus-visible:ring-[var(--agency-accent)] focus-visible:ring-offset-2 focus-visible:outline-none;
+        outline: none;
+        box-shadow: 0 0 0 2px var(--agency-accent);
+        outline-offset: 2px;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -531,11 +525,25 @@
 
     /* Apple-Style Glassmorphism & Shadows */
     .glass-effect {
-        @apply backdrop-blur-xl bg-background/60 border border-white/20 dark:border-white/10 shadow-2xl;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background-color: color-mix(in srgb, var(--background, var(--surface)) 60%, transparent);
+        border: 1px solid color-mix(in srgb, white 20%, transparent);
+        box-shadow: var(--shadow-2xl);
+    }
+
+    .dark .glass-effect {
+        border-color: color-mix(in srgb, white 10%, transparent);
     }
 
     .glass-effect-hover {
-        @apply transition-all duration-500 hover:bg-background/80 hover:border-white/30 hover:shadow-primary/5;
+        transition: all 0.5s ease;
+    }
+
+    .glass-effect-hover:hover {
+        background-color: color-mix(in srgb, var(--background, var(--surface)) 80%, transparent);
+        border-color: color-mix(in srgb, white 30%, transparent);
+        box-shadow: 0 0 20px color-mix(in srgb, var(--primary) 5%, transparent);
     }
 
     .apple-shadow {
@@ -555,6 +563,26 @@
     .animate-stagger-2 { animation-delay: 200ms; }
     .animate-stagger-3 { animation-delay: 300ms; }
     .animate-stagger-4 { animation-delay: 400ms; }
+
+    /* The Journal specific utilities */
+    .watercolor-bleed {
+        background: radial-gradient(circle at top right, rgba(175, 4, 122, 0.08), transparent 70%);
+    }
+
+    .watercolor-gradient-auth {
+        background: radial-gradient(circle at 20% 30%, rgba(var(--primary-rgb), 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 70%, rgba(var(--tertiary-rgb), 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 50% 50%, rgba(var(--secondary-rgb), 0.05) 0%, transparent 50%);
+    }
+    
+    .asymmetric-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
 /* Frontend Content Rendering - Prose Enhancements */
@@ -706,6 +734,88 @@
 .prose img {
     border-radius: 0.5rem;
     margin: 1.5rem 0;
+}
+
+/* Stitch Theme Definitions */
+.theme-stitch {
+    --primary: oklch(0.7 0.2 300); /* Purple/Pink - Swapped from Tertiary */
+    --on-primary: oklch(1 0 0);
+    --primary-container: oklch(0.85 0.1 300);
+    --on-primary-container: oklch(0.2 0.05 300);
+    
+    --secondary: oklch(0.5 0.15 200);
+    --on-secondary: oklch(1 0 0);
+    
+    --tertiary: oklch(0.646 0.222 41.116); /* Orange/Red - Swapped from Primary */
+    --on-tertiary: oklch(0.985 0.001 106.423);
+    
+    --surface: oklch(0.99 0.01 40); /* Slightly warmer surface */
+    --on-surface: oklch(0.15 0.01 20);
+    --on-surface-variant: oklch(0.4 0.02 20);
+    
+    --surface-container-low: oklch(0.97 0.01 40);
+    --surface-container: oklch(0.95 0.01 40);
+    --surface-container-high: oklch(0.93 0.01 40);
+    --surface-container-highest: oklch(0.9 0.01 40);
+    --surface-container-lowest: oklch(1 0 0);
+    
+    --outline: oklch(0.5 0.02 20);
+    --outline-variant: oklch(0.85 0.02 20);
+}
+
+.dark .theme-stitch {
+    --primary: oklch(0.8 0.15 300); /* Purple/Pink - Brightened for dark mode */
+    --on-primary: oklch(0.1 0.05 300);
+    --primary-container: oklch(0.4 0.15 300);
+    --on-primary-container: oklch(0.95 0.05 300);
+    
+    --secondary: oklch(0.6 0.12 200);
+    --on-secondary: oklch(0.1 0.05 200);
+    
+    --tertiary: oklch(0.75 0.18 41.116); /* Orange/Red - Swapped */
+    --on-tertiary: oklch(0.2 0.05 41.116);
+    
+    --surface: oklch(0.12 0.01 20); /* Deep rich black/brown */
+    --on-surface: oklch(0.95 0.01 40);
+    --on-surface-variant: oklch(0.75 0.02 40);
+    
+    --surface-container-low: oklch(0.15 0.01 25);
+    --surface-container: oklch(0.18 0.01 25);
+    --surface-container-high: oklch(0.22 0.01 30);
+    --surface-container-highest: oklch(0.28 0.01 30);
+    --surface-container-lowest: oklch(0.08 0.01 15);
+    
+    --outline: oklch(0.6 0.05 300);
+    --outline-variant: oklch(0.3 0.1 300);
+}
+
+/* Premium Utilities */
+.glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl;
+}
+
+.dark .glass {
+    @apply bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl;
+}
+
+.organic-border {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.handwritten {
+    font-family: 'Kalam', 'Dancing Script', cursive;
+}
+
+.asymmetric-grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .asymmetric-grid-container {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Editor Button Styles - Works with theme colors */

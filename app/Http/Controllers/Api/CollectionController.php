@@ -94,12 +94,18 @@ class CollectionController extends Controller
                 
             case 'festivals':
                 $items = \App\Models\Festival::where('is_published', true)
-                    ->when($request->has('featured'), function ($query) {
+                    ->when($request->has('ids'), function ($query) use ($request) {
+                        $ids = explode(',', $request->get('ids'));
+                        return $query->whereIn('id', $ids);
+                    })
+                    ->when(!$request->has('ids') && $request->has('featured'), function ($query) {
                         return $query->where('is_featured', true);
                     })
                     ->with(['author', 'category', 'activities'])
                     ->latest()
-                    ->take($limit)
+                    ->when(!$request->has('ids'), function ($query) use ($limit) {
+                        return $query->take($limit);
+                    })
                     ->get();
                     
                 $data = $items->map(function ($item) {
@@ -149,6 +155,45 @@ class CollectionController extends Controller
                         ];
                     });
                 }
+                break;
+
+            case 'reviews':
+                $query = \App\Models\Review::query()->approved();
+                
+                // Note: Review model doesn't have is_featured yet, so we just filter by approved
+                if ($request->has('featured') && $request->featured == 1) {
+                    $query->latest();
+                }
+
+                $items = $query->with(['user', 'reviewable'])
+                    ->latest()
+                    ->take($limit)
+                    ->get();
+                    
+                $data = $items->map(function ($item) {
+                    $reviewable = $item->reviewable;
+                    $eventName = 'Platform Event';
+                    
+                    if ($reviewable) {
+                        // Safely get name or title without triggering MissingAttributeException
+                        $eventName = $reviewable->getAttribute('name') 
+                            ?? $reviewable->getAttribute('title') 
+                            ?? $eventName;
+                    }
+
+                    return [
+                        'id' => $item->id,
+                        'author' => [
+                            'name' => $item->user?->name ?? 'Anonymous',
+                            'avatar' => $item->user?->avatar_url ?? 'https://github.com/shadcn.png'
+                        ],
+                        'rating' => $item->vibe_rating ?? 5,
+                        'content' => $item->body ?? '',
+                        'event_name' => $eventName,
+                        'role' => 'Community Member',
+                        'image' => $item->user?->avatar_url ?? 'https://github.com/shadcn.png'
+                    ];
+                });
                 break;
                 
             default:

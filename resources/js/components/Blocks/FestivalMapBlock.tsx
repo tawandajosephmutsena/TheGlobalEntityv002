@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
-import { cn } from '@/lib/utils';
 import type { FestivalMapBlock as FestivalMapBlockType } from '@/types/page-blocks';
 
 interface FestivalData {
@@ -30,7 +29,6 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
     center: centerProp = { lat: 20, lng: 0 },
     zoom: zoomProp = 3,
     showSearch = true,
-    theme = 'fairy-pirate',
     limit = 50
 }) => {
     const [festivals, setFestivals] = useState<FestivalData[]>([]);
@@ -74,16 +72,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
     const mapCenter: [number, number] = [centerProp.lng, centerProp.lat];
 
     return (
-        <section className={cn(
-            "py-24 relative overflow-hidden",
-            theme === 'dark' ? "bg-slate-950 text-white" : "bg-background"
-        )}>
-            {/* Aesthetic background glow */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[10%] left-[5%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] opacity-50" />
-                <div className="absolute bottom-[10%] right-[5%] w-[40%] h-[40%] bg-accent/10 rounded-full blur-[120px] opacity-50" />
-            </div>
-
+        <section className="py-24 bg-background text-foreground border-t border-border/10">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-12">
                     <motion.div
@@ -102,13 +91,12 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                     </motion.div>
                 </div>
 
-                <div className="relative rounded-3xl overflow-hidden border border-primary/10 shadow-2xl bg-white/5 backdrop-blur-sm h-[600px] group">
+                <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl bg-background h-[600px] group">
                     <div className="absolute inset-0 z-0">
                         <Map
                             center={mapCenter}
                             zoom={zoomProp}
                             className="h-full w-full"
-                            theme={theme === 'dark' ? 'dark' : 'light'}
                             cooperativeGestures={true}
                         >
                             {filteredFestivals.map((festival) => {
@@ -122,11 +110,9 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                         longitude={lng}
                                     >
                                         <MarkerContent>
-                                            <div className="relative group/marker">
-                                                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover/marker:bg-primary/40 transition-all duration-500 animate-pulse" />
-                                                <div className="relative z-10 w-8 h-8 rounded-full bg-background border-2 border-primary flex items-center justify-center shadow-lg transform group-hover/marker:scale-110 transition-transform duration-300">
-                                                    <MapPin className="w-4 h-4 text-primary fill-primary/20" />
-                                                </div>
+                                            <div className="relative group">
+                                                <div className="absolute -inset-4 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all duration-500 animate-pulse" />
+                                                <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
                                             </div>
                                         </MarkerContent>
                                         <MarkerPopup className="p-0 overflow-hidden min-w-[200px] rounded-2xl border-none shadow-2xl">
@@ -151,7 +137,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                                     asChild 
                                                     variant="secondary" 
                                                     size="sm" 
-                                                    className="w-full h-8 text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-primary hover:text-white transition-colors"
+                                                    className="w-full h-8 text-[10px] font-bold uppercase tracking-widest rounded-xl hover:bg-primary hover:text-primary-foreground transition-colors"
                                                 >
                                                     <a href={festival.url}>
                                                         Explore Vibe
@@ -178,18 +164,18 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                             <div className="relative flex-1 max-w-md pointer-events-auto">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                 <Input 
-                                    className="pl-10 h-11 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-white/20 shadow-xl rounded-2xl text-sm"
+                                    className="pl-10 h-11 bg-background/80 dark:bg-card/80 backdrop-blur-xl border-border/20 shadow-xl rounded-2xl text-sm"
                                     placeholder="Search festivals or locations..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
                             <div className="flex gap-2 pointer-events-auto">
-                                <button className="h-11 px-5 bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 shadow-xl rounded-2xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-white transition-all duration-300">
+                                <button className="h-11 px-5 bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 shadow-xl rounded-2xl text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground">
                                     <Filter className="w-3.5 h-3.5" />
                                     Filter
                                 </button>
-                                <button className="h-11 px-5 bg-primary text-white shadow-xl shadow-primary/20 rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all duration-300">
+                                <button className="h-11 px-5 bg-primary text-primary-foreground shadow-xl shadow-primary/20 rounded-2xl text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all duration-300">
                                     Map View
                                 </button>
                             </div>
@@ -205,7 +191,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 exit={{ opacity: 0, y: 20 }}
                                 className="absolute bottom-6 left-6 z-20 pointer-events-none"
                             >
-                                <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
+                                <div className="bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
                                     <div className="flex gap-1">
                                         <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
                                         <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />
@@ -223,7 +209,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 animate={{ opacity: 1, y: 0 }}
                                 className="absolute bottom-6 left-6 z-20 pointer-events-none"
                             >
-                                <div className="bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
+                                <div className="bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
                                     <div className="flex -space-x-3">
                                         {[1, 2, 3].map(i => (
                                             <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-gradient-to-br from-primary to-accent overflow-hidden">

@@ -90,7 +90,9 @@ export default function Index({ pages }: Props) {
                     {page.template} Template
                 </div>
                 <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={() => {
+                    <Button variant="ghost" size="icon" className="h-7 w-7 text-destructive" onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
                         if(confirm('Delete Page?')) router.delete(`/admin/pages/${page.slug}`)
                     }}>
                         <Trash className="h-3.5 w-3.5" />

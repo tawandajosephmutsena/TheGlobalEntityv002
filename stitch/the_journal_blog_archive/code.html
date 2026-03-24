@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Blog Archive | The Global Entity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#bbfffe",
+              "tertiary-fixed": "#87fefd",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "surface-container-high": "#e1e4d4",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed-dim": "#78efef",
+              "tertiary-dim": "#005959",
+              "primary-dim": "#9a006b",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed": "#000000",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-secondary-container": "#723800",
+              "outline": "#75786d",
+              "on-error-container": "#510017",
+              "surface-variant": "#dbdfce",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "secondary": "#904800",
+              "error": "#b41340",
+              "surface-tint": "#af047a",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "error-container": "#f74b6d",
+              "secondary-container": "#ffc69f",
+              "on-surface": "#2d3027",
+              "outline-variant": "#acaea2",
+              "on-secondary-fixed": "#552800",
+              "background": "#f6f8ea",
+              "primary-fixed": "#ff6abf",
+              "error-dim": "#a70138",
+              "surface-container": "#e7eada",
+              "surface-bright": "#f6f8ea",
+              "on-tertiary-fixed": "#004d4d",
+              "primary-container": "#ff6abf",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "inverse-surface": "#0c0f08",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "inverse-primary": "#fe57bb",
+              "tertiary-container": "#87fefd",
+              "secondary-fixed": "#ffc69f",
+              "secondary-dim": "#7e3e00",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-tertiary-container": "#006161",
+              "on-surface-variant": "#5a5d52"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .watercolor-bleed {
+        background: radial-gradient(circle at top right, rgba(175, 4, 122, 0.08), transparent 70%);
+      }
+      .asymmetric-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 2rem;
+      }
+      .hide-scrollbar::-webkit-scrollbar { display: none; }
+      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-8 py-6 max-w-none bg-[#f6f8ea]/70 dark:bg-[#1a1c14]/70 backdrop-blur-xl z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="text-2xl font-black text-[#af047a] dark:text-[#f274c5] uppercase tracking-widest font-['Epilogue']">
+            The Global Entity
+        </div>
+<div class="hidden md:flex items-center gap-10 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Podcast</a>
+<a class="text-[#af047a] dark:text-[#f274c5] border-b-2 border-[#af047a] pb-1 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Blog</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Authors</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-variant/30 border-none rounded-full py-2 pl-10 pr-6 text-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search chronicles..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold text-sm hover:scale-105 active:scale-95 transition-all duration-300">
+                Contact
+            </button>
+</div>
+</nav>
+<main class="pt-32 pb-20 watercolor-bleed">
+<!-- Hero Featured Section -->
+<section class="container mx-auto px-6 mb-24">
+<div class="relative group cursor-pointer overflow-hidden rounded-xl lg:rounded-xl">
+<div class="asymmetric-grid items-center">
+<div class="col-span-12 lg:col-span-7 relative z-10 lg:pr-12 py-12">
+<span class="inline-block py-1 px-4 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold tracking-widest uppercase mb-6">Featured Story</span>
+<h1 class="font-headline font-black text-5xl lg:text-7xl text-on-background leading-[1.1] mb-8 tracking-tighter">
+                            The Silent Pulse of <span class="text-primary italic">Kyoto’s</span> Hidden Temples
+                        </h1>
+<p class="text-on-surface-variant text-lg lg:text-xl max-w-xl mb-10 leading-relaxed font-light">
+                            Beyond the cherry blossoms lies a world of cedar-scented silence and moss-covered secrets. Join us as we map the spiritual cartography of Japan's ancient capital.
+                        </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Portrait of a travel writer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFrUY76pWq6s9z_Ho3GOnlsYUNyM01a0lBNdFHlr2Q3T6_w2Lp8gJhEK5xzhdq2-bjkRdhc0QiyHMrtd4i-In0GHfsUR72spB6EZQXdJ4ojpoUyBSCdqSkKAihozUf8Y4Rz1XzIJsaom9xAr_KCejqTRjMU2lc22ZbPkqllYrgpJZ8UUiQqXKzRXJA1M_6SWQgJWN5Jh2nBje1jVMl0fqsGxO2KZmEeT4qao1StRdIOmdomm6qo_kTfm1zSpU2K6qbl2SJ97Uz2gLa"/>
+</div>
+<div>
+<p class="font-bold text-sm">By Julian Thorne</p>
+<p class="text-xs text-on-surface-variant">12 Min Read • October 24</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 relative h-[400px] lg:h-[600px]">
+<div class="absolute inset-0 bg-surface-container-low rounded-lg transform translate-x-4 translate-y-4 -z-10 opacity-50"></div>
+<img class="w-full h-full object-cover rounded-lg shadow-2xl transition-transform duration-700 group-hover:scale-105" data-alt="Traditional Japanese temple architecture in morning mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrotYUFx5kw9OF-yAXU1upeuMJOr0y_w_jXCvdG_5X11E5D_L_M5NnP9yWMXBU3YlB9c86uuqnAsOlMK54cHf0_ojUEU097bpOMr8MfXe4Q8ycYDVAjmHXKc5WmkM0hhTMD8EiKqHFnXyqEXmbHn1U1of5vYNnNzXd98aAmuFGAGkLOqMYIl7gYPSnTySwUN2uBjIsOaJdjG0km_8FHGEvZlQiRkIOfDyJNgwagZOksUZ7zzcLXB_64yMNnwudWFa2XWLbA72XSsWy"/>
+<!-- Decorative Watercolor Overlap -->
+<div class="absolute -bottom-8 -left-8 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Category Filter Bar -->
+<section class="container mx-auto px-6 mb-16">
+<div class="flex items-center gap-4 overflow-x-auto hide-scrollbar pb-4">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-on-background text-surface font-bold text-sm hover:scale-105 transition-transform">All Archives</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-medium text-sm hover:bg-surface-container-high hover:scale-105 transition-all">Live Through Your Heart</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-medium text-sm hover:bg-surface-container-high hover:scale-105 transition-all">Local Gems</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-medium text-sm hover:bg-surface-container-high hover:scale-105 transition-all">Solo Traveling</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-medium text-sm hover:bg-surface-container-high hover:scale-105 transition-all">Ethereal Maps</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-surface-container-low text-on-surface-variant font-medium text-sm hover:bg-surface-container-high hover:scale-105 transition-all">Journal Entries</button>
+</div>
+</section>
+<!-- Article Grid -->
+<section class="container mx-auto px-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
+<!-- Card 1 -->
+<article class="group relative">
+<div class="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Sailboat on turquoise tropical waters at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC2YxBTB9zz3lyL_3Y5kcPyKU7gk82FyM6zZj2otJR9-ZSIJwJnsDsHlN1qLMjA_E5s3HfeShwpBipMBRTgDw_d11V-uXJYMv2cHTkEyObgcF0d4M5bRBNhUpd9SmZyWqEJBTxwCfS7NTRpzp9l1FqYOk0BARg5sn7W2wgdA0_Iil1L7VaPHh4piFkEoPFQxzOdrAvKr-ZvUQyujTDmaV9-7tDScojyqbT9h5TME-q8AOBdE926QdSRwI6V5urrRKmmv6Bw9lILshs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="absolute top-6 right-6 bg-surface-bright/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Coastal</span>
+</div>
+<div class="space-y-4">
+<p class="text-secondary font-bold text-xs tracking-widest uppercase">Solo Traveling</p>
+<h3 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors leading-tight">Navigating the Azure: A Sailor's Guide to Amalfi</h3>
+<p class="text-on-surface-variant line-clamp-2 text-sm leading-relaxed">Finding serenity among the lemon groves and vertical villages of Italy’s most dramatic coastline.</p>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">Oct 20, 2024</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Card 2 (Offset / Asymmetric style) -->
+<article class="group relative lg:mt-12">
+<div class="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Classic off-road vehicle driving through desert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOMvSoJ42tbYr3LLaa3X8DKlTExpp1yTFFifhrxHSutvqHCJS5m7ZyMMF7qOCD5FSg85-UBI0Ikd45dRyK3WewenNMeBrznZagiyXOL6CqveC4sgDP6kINh-eF3RqCRhcJebX72bDqGvsRLpA_vyCcODj3izntpsJDjj62cNxYG3-kxYcF4x0n3bvzBUK4PW1c0NspknSAdPGiVENRn7Hz2Xa46GLb8v5-kcTQ5lhbpu6HjIiF3fvUrAIpd6Ps2AToIfDBgD7t01HW"/>
+<span class="absolute top-6 right-6 bg-surface-bright/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Desert</span>
+</div>
+<div class="space-y-4">
+<p class="text-secondary font-bold text-xs tracking-widest uppercase">Live Through Your Heart</p>
+<h3 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors leading-tight">The Sand and The Soul: Nomad Conversations</h3>
+<p class="text-on-surface-variant line-clamp-2 text-sm leading-relaxed">What the dunes taught me about letting go and embracing the vastness of the unknown.</p>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">Oct 18, 2024</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="group relative">
+<div class="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Sunlight filtering through a lush green forest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQAkLkQbmaMZ_X2KmRiHRTvn5I9EtukczG7D85fuJALc4vTG6TE52xzWC595958mH4ZVfvElgpuAQ4zPQ3eG8GH6ydsCqPC5Yg_Id84pH3oV9Pyt2dvcI6LEbuZ-3R8-PgA4bNVNRH2f3V4Y_cAUw1ZeFDsyPx-XkTj6km8E1XgYI56tW1ypXZg9n5nvj7NKbgs_EIA1Sq8VqhwLioYwwpY2K3JoZ3ODOwjofOYMWqRcG_eOj7jPjS5wlPVj5mk6eEZM7z47HYGi6b"/>
+<span class="absolute top-6 right-6 bg-surface-bright/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Forest</span>
+</div>
+<div class="space-y-4">
+<p class="text-secondary font-bold text-xs tracking-widest uppercase">Local Gems</p>
+<h3 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors leading-tight">Listening to the Whispers of the Old Growth</h3>
+<p class="text-on-surface-variant line-clamp-2 text-sm leading-relaxed">A journey into the ancient forests of the Pacific Northwest, where time stands still.</p>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">Oct 15, 2024</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Card 4 (Large Bento-style spanning) -->
+<article class="md:col-span-2 group relative grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-surface-container-low p-8 rounded-lg">
+<div class="relative aspect-video md:aspect-square overflow-hidden rounded-lg">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Detail of intricate Balinese temple carvings" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOsGFjxGZ-ePWm9gLFQYoy7bPmooEC8xTHYqvp4dfsh4arQ1hLKc3Laan2kgJQ7LUttXSl_VWy_thcatrwORy0vXkQN5AojfG73dIH2FH6wvPYmqKz15nZFcyczAflA3gae8XgBl6Ch8IIzf4kSpiKYGnKpP1aEy49n-Jhw_gOeqMEInQaQYvw3io-sWTL6s-r6OSd0izoC770IiLLfpTQQ4KdXUnJiC5bAPrQatLZKhAZ9FqWFNkg10LvFIVcSIs-VoCL3tRB7fpA"/>
+</div>
+<div class="space-y-6">
+<p class="text-tertiary font-bold text-xs tracking-widest uppercase">Editorial Feature</p>
+<h3 class="font-headline font-bold text-3xl group-hover:text-primary transition-colors leading-tight">Bali: The Weight of Heritage</h3>
+<p class="text-on-surface-variant text-base leading-relaxed">Exploring how tradition and tourism coexist in the heart of Ubud. A deep dive into the preservation of ritual in a digital age.</p>
+<button class="flex items-center gap-2 font-bold text-sm text-primary">
+                            READ FULL FEATURE
+                            <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</button>
+</div>
+</article>
+<!-- Card 5 -->
+<article class="group relative">
+<div class="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Sunset over the Ha Long Bay mountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmGl7Am4UOy5TSjiMp2qQiPU81x1_a4zErK6jhuUIWHRu9utaBBYgO3XSKz5PsUMRYIStdjE0dnD8ZbcczDD_6-mqCNEPpxgOqIEkpAtfAesJ0oEau5mgsrYH7GvMels9p05UJybX0wXzImRd3PWfEM58LH9th40XdPZmceM_iZ2HRpsyozx0B6TRYN4rdJIkBQKTe5A2QkNPGN-ZMU8D--7YY98T2FGnsNjCIVyrobZegq8D3uH-XS1Q38XMhwJgm8y3oYBTLY7lp"/>
+</div>
+<div class="space-y-4">
+<p class="text-secondary font-bold text-xs tracking-widest uppercase">Ethereal Maps</p>
+<h3 class="font-headline font-bold text-2xl group-hover:text-primary transition-colors leading-tight">Shadow Play in Ha Long Bay</h3>
+<p class="text-on-surface-variant line-clamp-2 text-sm leading-relaxed">Capturing the mystical interplay of limestone pillars and low-hanging clouds in Vietnam.</p>
+<div class="pt-2 flex items-center justify-between">
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">Oct 10, 2024</span>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Newsletter Section (Journal style) -->
+<section class="container mx-auto px-6 mt-32">
+<div class="bg-tertiary-container/30 rounded-xl p-12 lg:p-20 text-center relative overflow-hidden">
+<!-- Abstract Watercolor Shapes -->
+<div class="absolute -top-20 -left-20 w-64 h-64 bg-tertiary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<span class="material-symbols-outlined text-5xl text-tertiary mb-6" data-weight="fill">mail</span>
+<h2 class="font-headline font-black text-4xl lg:text-5xl mb-6 tracking-tight">Letters from the <span class="text-tertiary italic">Edge</span></h2>
+<p class="text-on-surface-variant mb-10 text-lg">Receive weekly coordinates to hidden corners of the world, curated stories, and slow travel wisdom delivered to your vessel.</p>
+<form class="flex flex-col sm:flex-row gap-4">
+<input class="flex-1 bg-surface-bright border-none rounded-full px-8 py-4 text-on-surface shadow-sm focus:ring-2 focus:ring-tertiary/30" placeholder="Your destination email..." type="email"/>
+<button class="bg-tertiary text-on-tertiary font-bold px-10 py-4 rounded-full hover:scale-105 transition-transform">SUBSCRIBE</button>
+</form>
+<p class="mt-6 text-[10px] text-on-surface-variant font-medium tracking-widest uppercase">No noise. Only the signal. Unsubscribe anytime.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-12 py-20 flex flex-col md:flex-row justify-between gap-8 border-t border-[#2d3027]/10 bg-[#f6f8ea] dark:bg-[#1a1c14] rounded-t-[3rem] mt-20 font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<div class="flex flex-col gap-6 max-w-sm">
+<div class="font-['Epilogue'] font-bold text-[#904800] dark:text-[#ffb877] text-2xl uppercase tracking-widest">
+                The Global Entity
+            </div>
+<p class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 leading-relaxed">
+                A sanctuary for the ethereal cartographer. We document the world not as it is seen, but as it is felt.
+            </p>
+<p class="text-[#2d3027]/40 dark:text-[#e4e3da]/40 text-xs">
+                © 2024 The Global Entity. An Ethereal Cartographer Production.
+            </p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-12">
+<div class="flex flex-col gap-4">
+<span class="font-bold text-on-surface uppercase text-xs tracking-widest">Explore</span>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Journal</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Manifesto</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Expeditions</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-bold text-on-surface uppercase text-xs tracking-widest">Connect</span>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Instagram</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Spotify</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Pinterest</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-bold text-on-surface uppercase text-xs tracking-widest">Utility</span>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Terms of Service</a>
+<a class="text-[#2d3027]/60 dark:text-[#e4e3da]/60 hover:text-[#006666] dark:hover:text-[#4fd8d8] transition-colors duration-300" href="#">Shipping &amp; Returns</a>
+</div>
+</div>
+</footer>
+<!-- Floating Action Button: Contextual for adding a 'Field Note' -->
+<button class="fixed bottom-8 right-8 w-16 h-16 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center group hover:scale-110 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-3xl" data-weight="fill">edit_square</span>
+<span class="absolute right-20 bg-on-background text-surface text-xs font-bold px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none uppercase tracking-widest">Write Note</span>
+</button>
+</body></html>

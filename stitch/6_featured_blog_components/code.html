@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#2d3027",
+              "inverse-surface": "#0c0f08",
+              "primary": "#af047a",
+              "on-primary": "#ffeff3",
+              "error-dim": "#a70138",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "surface-tint": "#af047a",
+              "surface-container-high": "#e1e4d4",
+              "error": "#b41340",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "outline-variant": "#acaea2",
+              "on-error-container": "#510017",
+              "primary-fixed": "#ff6abf",
+              "surface-container-highest": "#dbdfce",
+              "tertiary-fixed-dim": "#78efef",
+              "outline": "#75786d",
+              "surface-variant": "#dbdfce",
+              "background": "#f6f8ea",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "secondary": "#904800",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "secondary-dim": "#7e3e00",
+              "on-tertiary-container": "#006161",
+              "secondary-container": "#ffc69f",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#f74b6d",
+              "surface": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "secondary-fixed": "#ffc69f",
+              "surface-container": "#e7eada",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#ff6abf",
+              "tertiary-container": "#87fefd",
+              "on-secondary": "#fff0e8",
+              "on-tertiary-fixed": "#004d4d",
+              "on-tertiary": "#bbfffe",
+              "primary-dim": "#9a006b",
+              "on-error": "#ffefef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-secondary-container": "#723800"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating-motion {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-[#f6f8ea]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#2d3027] dark:text-[#e2e3d8] italic font-headline tracking-tight">The Cartographer</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#af047a] dark:text-[#fface8] border-b-2 border-[#af047a] font-label font-semibold text-sm ease-in-out transition-all duration-500" href="#">Journal</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold text-sm hover:scale-105 transition-transform duration-300 hover:opacity-100 ease-in-out transition-all duration-500" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold text-sm hover:scale-105 transition-transform duration-300 hover:opacity-100 ease-in-out transition-all duration-500" href="#">Reviews</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold text-sm hover:scale-105 transition-transform duration-300 hover:opacity-100 ease-in-out transition-all duration-500" href="#">Podcasts</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container-low px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<span class="ml-2 text-xs text-on-surface-variant opacity-60">Search destinations...</span>
+</div>
+<span class="material-symbols-outlined text-on-surface hover:scale-105 transition-transform cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface hover:scale-105 transition-transform cursor-pointer">settings</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Portrait of a woman traveling in nature" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeBACTANyM5re5raONI72Q1lkNBIbu1deDJC7kjxOqAPkUjRt-1Z_Z2J2QhAZca9dTsX4Tf-L5X3SX-o8smqnrHBPpqE_wf9Z7UhqOH5xayDVKpsc3IKDqRYpkBxBfGKSCbR08PKv6XrjDgwgvpQU0vyLaCJ5IwZSKnDPqDJjg3d5-yLdVjXFdkR8NY7DsRBxkoOjKMZuiqcsXElG_33Sn_VluEHOyMBLZvdJ9Ca7QkEZ2vrJ7ojduj6e0kVG2iOEYUnjFSjeSsEPN"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-screen-2xl mx-auto px-8 py-16">
+<div class="mb-20">
+<h1 class="font-headline text-6xl md:text-8xl font-black tracking-tighter text-on-surface leading-none mb-4">
+                Editorial <span class="text-primary italic">Soul.</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl font-medium">
+                Exploring the world through a "Fairy Pirate" lens. Our featured post gallery combines high-end editorial precision with organic, messy beauty.
+            </p>
+</div>
+<div class="grid grid-cols-1 gap-16">
+<!-- 1. Bento-style grid card -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-2 bg-surface-container-low rounded-lg p-8 relative overflow-hidden group">
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div>
+<span class="bg-primary text-on-primary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-6 inline-block">Trending</span>
+<h2 class="font-headline text-4xl font-bold leading-tight mb-4">The Lost Cities of the <span class="text-secondary">Sahara</span></h2>
+</div>
+<p class="text-on-surface-variant font-medium">Uncovering ancient trade routes buried beneath shifting sands.</p>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-20 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[12rem]" data-icon="explore">explore</span>
+</div>
+</div>
+<div class="md:col-span-1 bg-surface-container-highest rounded-lg p-6 flex flex-col justify-end relative overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Tropical beach at sunset with blue water" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-Igc_0RhW-oI3Cl0-RUclLtDJ_66E2NoXX9vCiHRZEJowgMYXBfC8NJJOSkqWv2_h78nlYKQTsF31ixFWaB-uQCMP1wUc209KswEikfOF1RoIMCFyRlJj4ycDqxArcDOnDjPY4biqCdve_uX3m1-OOg2sA9hb7jDRTwyXEbCNIMCxTjOjfUpw1HKL_7iaLavqFOR8zS3WhIxOINi_IGCnVhJuauzPdCXfaEMDqPN3KjDWjQAq2-Sj64uN_7Nv3zVToAqlrU9ga8oz"/>
+<div class="relative z-10">
+<h3 class="font-headline text-xl font-bold text-white shadow-sm">Island Hopper</h3>
+</div>
+</div>
+<div class="md:col-span-1 bg-tertiary text-on-tertiary rounded-lg p-6 flex flex-col items-center justify-center text-center group cursor-pointer">
+<span class="material-symbols-outlined text-4xl mb-4 group-hover:rotate-12 transition-transform" data-icon="auto_stories">auto_stories</span>
+<h3 class="font-headline font-bold text-lg">Daily Journal</h3>
+<p class="text-xs opacity-70 mt-2">New entry added 2 hours ago</p>
+</div>
+</section>
+<!-- 2. Large cinematic hero card with glassmorphism -->
+<section class="relative h-[716px] rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-1000" data-alt="Moody mountain landscape with low clouds" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx3xatSXfdw-dRCvmV87q1FeMj_ApNre14kgaKEuxmold-kFyexz6z9FVFhsnU3452Ix_37KGhc-rkv6f04Rx3Cc10YJodhizkydGxgr6Pz-n_cg0jBcExcd5M5oti7MdZZzWlJk3KwuiC-5AR6uuqEIPutHHH13zmuuyn9jEKFZJUeO911KzU4NUvGUtYXnG3ksB6Rp2npcqCZOJTltRJtz3ZZxd7PzjhIEJcuvBOmpf-OwHn0f_hitB_wokoArviIKlcrXVn8jOu"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-12 left-12 right-12">
+<div class="bg-surface/30 backdrop-blur-xl rounded-lg p-10 border border-white/10 max-w-3xl">
+<div class="flex gap-4 mb-6">
+<span class="font-label text-[10px] font-bold text-white uppercase tracking-widest bg-secondary/80 px-4 py-1 rounded-full">Cinematic</span>
+<span class="font-label text-[10px] font-bold text-white uppercase tracking-widest border border-white/20 px-4 py-1 rounded-full">12 Min Read</span>
+</div>
+<h2 class="font-headline text-5xl md:text-6xl font-black text-white leading-[1.1] mb-6">Chasing the Aurora in <br/><span class="italic text-tertiary-fixed">Lofoten Islands</span></h2>
+<button class="bg-primary hover:bg-primary-dim text-on-primary px-8 py-4 rounded-full font-bold flex items-center gap-3 transition-all hover:scale-105 shadow-xl">
+                            Read Full Story
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. Minimalist typography-focused card -->
+<section class="flex flex-col md:flex-row items-center gap-12 py-12 border-y border-outline-variant/15">
+<div class="flex-1">
+<div class="flex items-center gap-4 mb-8">
+<div class="h-[1px] w-12 bg-primary"></div>
+<span class="font-label font-bold text-primary tracking-widest text-xs uppercase">Issue 042 / Editorial</span>
+</div>
+<h2 class="font-headline text-6xl font-bold leading-tight text-on-surface mb-8">
+                        The Quiet <br/>
+<span class="text-on-surface-variant font-normal italic">Art of Slow</span> <br/>
+                        Navigation.
+                    </h2>
+<p class="text-lg text-on-surface-variant max-w-md leading-relaxed">
+                        Why the fastest route isn't always the one worth taking. Exploring the psychology of drift and discovery in modern travel.
+                    </p>
+</div>
+<div class="flex-1 relative">
+<div class="aspect-square bg-surface-container-high rounded-full flex items-center justify-center p-12 overflow-hidden">
+<img class="w-full h-full object-cover rounded-full opacity-80 mix-blend-multiply transition-transform hover:scale-110 duration-700" data-alt="Abstract water ripples on white sand" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5lRdsnw7hSEP_xiTt1fAUAMAeIOBAty7LWx90bBz97Ewt4heb0huViMoRptKiC7duyITWBdfZsKS1L_UBrcFO5ZcuqPedanzF4lr5ZS73WvzJi9dSwmTP4ta519SaJbKsYl0Y5Q4t273wM6Yzs9aurtpAdUDcib5wzqhovEfcvZvasdzraWqzWFBJk6iJVuJIXTYiDV4INhI5QFOocq2ShP-DDK1Hf_HeSLDWvlHOqQb300KG25VnPz_7R_A7YJPxZLkB1IIbXNIx"/>
+</div>
+<div class="absolute -top-4 -right-4 bg-white p-6 rounded-lg shadow-2xl rotate-12 max-w-[180px]">
+<p class="font-label text-xs font-semibold leading-tight text-secondary">"A masterpiece of travel writing..."</p>
+<p class="font-headline text-[10px] mt-2 font-bold uppercase tracking-wider">— London Globe</p>
+</div>
+</div>
+</section>
+<!-- 4. Split-screen interactive card -->
+<section class="grid grid-cols-1 md:grid-cols-2 bg-surface-container rounded-lg overflow-hidden group">
+<div class="relative overflow-hidden h-96 md:h-auto">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" data-alt="Colorful Moroccan market stalls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrHztWRV8_5oC1iHuCT9q5x2n9KHpBN084QQqn9qU__wQgDC-I3NGWd4znQB5c12RlCKbSxp1Lr77XhdokCevv5vegtH3w-G8G7i602foL8ZyRt_eSvG4AGjng35h-88JmotVk3nLtT_Ya3mLf0VFuvwAAWKYVAUFmiaObD8VetUZ4kbstcUKaq5TGKkT10h27JdCuF5CaXhjKnmZ6X1TSB3rRgz4lg2ZQToRNRocwebSeUs_8p_4TVGCpq6PusJ50U1MJcIofEXHE"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-overlay"></div>
+</div>
+<div class="p-12 md:p-20 flex flex-col justify-center">
+<h3 class="text-tertiary font-bold font-label uppercase tracking-[0.2em] text-xs mb-4">Culture Guide</h3>
+<h2 class="font-headline text-4xl font-bold mb-6">Vibrant Tones of Marrakech Markets</h2>
+<p class="text-on-surface-variant mb-10 leading-relaxed">
+                        Step into the sensory overload of the souks, where every color tells a centuries-old story of craftsmanship and spice.
+                    </p>
+<div class="flex items-center gap-6">
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-red-400"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-blue-400"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-yellow-400"></div>
+</div>
+<span class="text-xs font-bold text-on-surface/50">842 Travelers saved this</span>
+</div>
+</div>
+</section>
+<!-- 5. Floating 3D-effect card -->
+<section class="flex justify-center py-20 relative overflow-hidden">
+<!-- Background decoration -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-64 bg-secondary-container/30 blur-[120px] -z-10 rounded-full"></div>
+<div class="bg-surface-container-lowest shadow-[0_40px_80px_rgba(45,48,39,0.12)] rounded-lg p-2 max-w-sm floating-motion">
+<div class="rounded-lg overflow-hidden mb-6">
+<img class="w-full aspect-square object-cover" data-alt="Majestic mountain peak at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByVCsYuo3tEO6QIZl5dbeoZlRPVXaM5ozyP8irv__lOE817wgPnJC8OfBm5r8aZ_OQYDZ0T_e_coh-z0FlcJUDSrxYHHSK6dr87FIviKM4xd7vlqbJCiLj4roje90QLcZt8Y10YsaMdDqlMopC-5caFFFzHvnFERdmEc6hlP4XsKJ2NmuIxSgkUHNu7x1LYFkbC2XdQ7oILupQjFErveo3pNslyiOyUwB4aWHpNyrW9ZN9EiukNrfs1LCz1gXMxVFnCjCtF4qil8_3"/>
+</div>
+<div class="px-6 pb-8 text-center">
+<div class="w-12 h-1 bg-primary mx-auto mb-6"></div>
+<h2 class="font-headline text-2xl font-bold mb-3">Peak Reflections</h2>
+<p class="text-sm text-on-surface-variant mb-6">Finding solitude in the high altitudes of the Andes.</p>
+<a class="inline-flex items-center text-primary font-bold text-sm group" href="#">
+                            Explore Gallery
+                            <span class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 6. Horizontal wide-format card -->
+<section class="bg-surface-container-low rounded-lg p-8 md:p-12 flex flex-col md:flex-row gap-12 items-center group">
+<div class="w-full md:w-1/3 aspect-[4/3] rounded-lg overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Hiker overlooking a vast green valley" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0d7i7hYo5m0X75j7ahQ1faSwmJ_BkOzeCpctqtfGa582myRALfy9jl-QKi2E9FDwgU7Azu-DGSlCSHrEGlvqiMViJPLZSu5Wo0smgo5_dnBrVLU_KNih6lA8ApwpX91YoyCLLFzJLGlZF3Le0u_jFUJOhydTa-Y1LbCDUKDq-f6GXpuWh2fxoFwo1GdYpGcmM5fmQ1UHnVIvmmA9-YKP9xXYADpeWasnFs6rzS1K48mhl_2XPsc77dn4InJHrGUGN5FbZGywaF4Zz"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary" data-icon="star">star</span>
+<span class="text-xs font-bold ml-2 text-on-surface-variant">Top Rated Feature</span>
+</div>
+<h2 class="font-headline text-3xl md:text-4xl font-bold mb-4">The Nomad's Guide to Digital Freedom</h2>
+<p class="text-on-surface-variant text-lg mb-8 max-w-2xl leading-relaxed">
+                        Essential gear and mindset shifts for anyone looking to trade the desk for the open road without losing professional edge.
+                    </p>
+<div class="flex flex-wrap gap-3">
+<span class="bg-surface-container-highest px-4 py-2 rounded-full text-xs font-bold text-on-surface">Digital Nomad</span>
+<span class="bg-surface-container-highest px-4 py-2 rounded-full text-xs font-bold text-on-surface">Gear Review</span>
+<span class="bg-surface-container-highest px-4 py-2 rounded-full text-xs font-bold text-on-surface">Lifestyle</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer Space for Navigation -->
+<div class="h-32"></div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-[#f6f8ea]/80 dark:bg-[#1a1c18]/80 backdrop-blur-2xl z-50 shadow-[0_-10px_30px_rgba(45,48,39,0.04)] rounded-t-[2rem]">
+<a class="flex flex-col items-center justify-center bg-[#af047a] text-white rounded-full p-3 scale-110 -translate-y-2 transition-all shadow-lg" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-plus-jakarta text-[8px] font-semibold uppercase tracking-widest mt-1">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined" data-icon="festival">festival</span>
+<span class="font-plus-jakarta text-[8px] font-semibold uppercase tracking-widest mt-1">Festivals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+<span class="font-plus-jakarta text-[8px] font-semibold uppercase tracking-widest mt-1">Reviews</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+<span class="font-plus-jakarta text-[8px] font-semibold uppercase tracking-widest mt-1">Podcasts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-plus-jakarta text-[8px] font-semibold uppercase tracking-widest mt-1">Map</span>
+</a>
+</nav>
+</body></html>

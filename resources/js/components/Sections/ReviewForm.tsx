@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from '@inertiajs/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Star, Send, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -45,7 +45,7 @@ const RatingSelector = ({
     );
 };
 
-declare const route: any;
+declare function route(name: string, params?: Record<string, unknown> | number | string): string;
 
 export const ReviewForm: React.FC<ReviewFormProps> = ({ festivalId, onSuccess, onCancel }) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -76,6 +76,8 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ festivalId, onSuccess, o
                 <button 
                     type="button" 
                     onClick={onCancel}
+                    title="Cancel Review"
+                    aria-label="Cancel Review"
                     className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 text-muted-foreground transition-colors"
                 >
                     <X size={20} />

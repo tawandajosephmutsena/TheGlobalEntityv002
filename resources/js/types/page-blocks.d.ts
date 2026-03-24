@@ -99,9 +99,67 @@ export interface TextBlock extends BaseBlock {
 export interface ImageBlock extends BaseBlock {
     type: 'image';
     content: {
-        url: string;
-        alt: string;
+        image: {
+            url: string;
+            alt?: string;
+        };
+        aspectRatio?: string;
+        objectFit?: string;
         caption?: string;
+    };
+}
+
+export interface StitchFeaturedFestivalsBlock extends BaseBlock {
+    type: 'stitch_featured_festivals';
+    content: {
+        title: string;
+        subtitle?: string;
+        limit?: number;
+        selectedFestivalIds?: number[];
+    };
+}
+
+export interface StitchPodcastBlock extends BaseBlock {
+    type: 'stitch_podcast_featured';
+    content: {
+        title: string;
+        subtitle?: string;
+        limit?: number;
+        // Specific card styling
+        card1BgColor?: string;
+        card1Shadow?: boolean;
+        card5BgColor?: string;
+        card5Shadow?: boolean;
+    };
+}
+
+export interface StitchCommunityReviewBlock extends BaseBlock {
+    type: 'stitch_community_review';
+    content: {
+        title: string;
+        subtitle?: string;
+        limit?: number;
+        ctaTitle?: string;
+        ctaButtonText?: string;
+        // Dynamic stats card
+        statsRating?: string;
+        statsTitle?: string;
+        statsDescription?: string;
+        statsAvatars?: string[];
+        statsCount?: string;
+        // Featured diary entry
+        entryNumber?: string;
+        entryLocation?: string;
+        entryQuote?: string;
+        entryTags?: string[];
+        // Rating card
+        ratingCardImage?: string;
+        ratingCardTitle?: string;
+        ratingCardDescription?: string;
+        // Social proof
+        socialProofPlatform?: string;
+        // Footer
+        footerCounterText?: string;
     };
 }
 
@@ -293,7 +351,32 @@ export type PageBlock =
     | AiFeaturesBlock
     | StackingCardsBlock
     | ProductCardStackBlock
-    | CardsSliderBlock;
+    | CardsSliderBlock
+    | AboutHeroBlock
+    | AboutWhoAreYouBlock
+    | AboutTruthUntangledBlock
+    | AboutMoreThanEntertainmentBlock
+    | AboutOriginStoryBlock
+    | StitchFeaturedBlogBlock
+    | StitchFeaturedFestivalsBlock
+    | StitchPodcastBlock
+    | StitchCommunityReviewBlock
+    | JournalHeroBlock
+    | JournalCategoryFilterBlock
+    | JournalArticleGridBlock
+    | JournalNewsletterBlock
+    | ContactEtherealHeroBlock
+    | ContactEtherealInfoBlock
+    | ContactCartographerBlock
+    | PartnersHeroBlock
+    | PartnersBentoBlock
+    | PartnersProcessBlock
+    | PartnersContactBlock
+    | FestivalArchiveHeroBlock
+    | FestivalFilterBarBlock
+    | FestivalBentoGridBlock
+    | FestivalProgressTrailBlock;
+
 
 export interface CTAHeroBlock extends BaseBlock {
     type: 'cta_hero';
@@ -625,6 +708,7 @@ export interface CommunityReviewBlock extends BaseBlock {
         showRatings?: boolean;
         limit?: number;
         layout?: 'list' | 'grid' | 'carousel';
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         reviews?: any[]; // Dynamic reviews passed from backend
     };
 }
@@ -799,5 +883,342 @@ export interface FeaturedFestivalsBlock extends BaseBlock {
         title?: string;
         subtitle?: string;
         limit?: number;
+        showViewAll?: boolean;
+        ctaText?: string;
+        selectedFestivalIds?: number[];
+    };
+}
+
+export interface AboutHeroBlock extends BaseBlock {
+    type: 'about_hero';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        backgroundImage?: string;
+        ctaText?: string;
+        ctaLink?: string;
+    };
+}
+
+export interface AboutWhoAreYouBlock extends BaseBlock {
+    type: 'about_who_are_you';
+    content: {
+        title?: string;
+        description?: string;
+        image?: string;
+        signature?: string;
+        items?: Array<{
+            title?: string;
+            description?: string;
+            colorClass?: string;
+        }>;
+    };
+}
+
+export interface AboutTruthUntangledBlock extends BaseBlock {
+    type: 'about_truth_untangled';
+    content: {
+        title?: string;
+        description?: string;
+        items?: Array<{
+            icon?: string;
+            title?: string;
+            description?: string;
+        }>;
+    };
+}
+
+export interface AboutMoreThanEntertainmentBlock extends BaseBlock {
+    type: 'about_more_than_entertainment';
+    content: {
+        title?: string;
+        description?: string;
+        cards?: Array<{
+            image?: string;
+            title?: string;
+            subtitle?: string;
+            link?: string;
+        }>;
+    };
+}
+
+export interface AboutOriginStoryBlock extends BaseBlock {
+    type: 'about_origin_story';
+    content: {
+        title?: string;
+        description?: string;
+        image?: string;
+        timeline?: Array<{
+            year?: string;
+            event?: string;
+        }>;
+    };
+}
+
+export interface StitchFeaturedBlogBlock extends BaseBlock {
+    type: 'stitch_featured_blog';
+    content: {
+        title?: string;
+        subtitle?: string;
+        posts?: Array<{
+            id?: string;
+            title?: string;
+            excerpt?: string;
+            image?: string;
+            author?: string;
+            date?: string;
+            link?: string;
+        }>;
+    };
+}
+
+export interface JournalHeroBlock extends BaseBlock {
+    type: 'journal_hero';
+    content: {
+        titleHighlight?: string;
+        titleMain?: string;
+        description?: string;
+        featuredPostId?: number; // Optional override
+    };
+}
+
+export interface JournalCategoryFilterBlock extends BaseBlock {
+    type: 'journal_category_filter';
+    content: {
+        showAllLabel?: string;
+    };
+}
+
+export interface JournalArticleGridBlock extends BaseBlock {
+    type: 'journal_article_grid';
+    content: {
+        columns?: 2 | 3;
+        staggered?: boolean;
+        showBentoCards?: boolean;
+        limit?: number;
+    };
+}
+
+export interface JournalNewsletterBlock extends BaseBlock {
+    type: 'journal_newsletter';
+    content: {
+        title?: string;
+        description?: string;
+        placeholder?: string;
+        buttonText?: string;
+        badge?: string;
+    };
+}
+
+export interface ContactEtherealHeroBlock extends BaseBlock {
+    type: 'contact_ethereal_hero';
+    content: {
+        badgeText?: string;
+        titleLine1?: string;
+        titleLine2Highlight?: string;
+        description?: string;
+        sideImage?: string;
+        sideImageAlt?: string;
+        formBadgeText?: string;
+        formSubmitText?: string;
+        formEtaText?: string;
+        labels?: {
+            name?: string;
+            email?: string;
+            message?: string;
+        };
+        placeholders?: {
+            name?: string;
+            email?: string;
+            message?: string;
+        };
+    };
+}
+
+export interface ContactEtherealInfoBlock extends BaseBlock {
+    type: 'contact_ethereal_info';
+    content: {
+        archive?: {
+            title?: string;
+            description?: string;
+            buttonText?: string;
+            buttonLink?: string;
+            image?: string;
+        };
+        directPort?: {
+            number?: string;
+            title?: string;
+            description?: string;
+        };
+        instantMagic?: {
+            title?: string;
+        };
+        voiceFrequency?: {
+            title?: string;
+            description?: string;
+            phone?: string;
+        };
+        socialTether?: {
+            title?: string;
+            links?: Array<{
+                label: string;
+                url: string;
+            }>;
+        };
+    };
+}
+
+export interface ContactCartographerBlock extends BaseBlock {
+    type: 'contact_cartographer';
+    content: {
+        // Hero Section (Left)
+        heroTitle?: string;
+        heroTitleHighlight?: string;
+        heroDescription?: string;
+        
+        // Info Section (Right - Bento)
+        infoTitle?: string;
+        infoDescription?: string;
+        inquiryCards?: Array<{
+            id: string;
+            icon: string; // Lucide icon name
+            title: string;
+            description: string;
+            color: 'primary' | 'secondary' | 'tertiary';
+        }>;
+        
+        // Form Section (Right - Bottom)
+        formTitle?: string;
+        formDescription?: string;
+        formSubmitText?: string;
+        formSuccessMessage?: string;
+        formAdminEmail?: string;
+        subjects?: string[];
+    };
+}
+
+export interface PartnersHeroBlock extends BaseBlock {
+    type: 'partners_hero';
+    content: {
+        badgeText?: string;
+        title?: string;
+        description?: string;
+        cta1?: { text: string; href: string };
+        cta2?: { text: string; href: string };
+        image?: string;
+    };
+}
+
+export interface PartnersBentoBlock extends BaseBlock {
+    type: 'partners_bento';
+    content: {
+        title?: string;
+        subtitle?: string;
+        cards: Array<{
+            id: string;
+            title: string;
+            description: string;
+            icon: string;
+            link?: string;
+        }>;
+    };
+}
+
+export interface PartnersProcessBlock extends BaseBlock {
+    type: 'partners_process';
+    content: {
+        title?: string;
+        subtitle?: string;
+        steps: Array<{
+            id: string;
+            title: string;
+            description: string;
+            icon: string;
+        }>;
+    };
+}
+
+export interface PartnersContactBlock extends BaseBlock {
+    type: 'partners_contact';
+    content: {
+        title?: string;
+        subtitle?: string;
+        description?: string;
+        features: string[];
+        formTitle?: string;
+        formDescription?: string;
+        submitText?: string;
+    };
+}
+
+export interface FestivalArchiveHeroBlock extends BaseBlock {
+    type: 'festival_archive_hero';
+    content: {
+        badge?: string;
+        title?: string;
+        description?: string;
+        watercolorBlurs?: Array<{
+            color: string;
+            position: { x: string; y: string };
+            size: string;
+        }>;
+        marginalia?: Array<{
+            id: string;
+            type: 'text' | 'image' | 'stamp';
+            content: string;
+            position: { x: string; y: string };
+            rotation?: number;
+            parallaxSpeed?: number;
+        }>;
+    };
+}
+
+export interface FestivalFilterBarBlock extends BaseBlock {
+    type: 'festival_filter_bar';
+    content: {
+        searchPlaceholder?: string;
+        categories: Array<{
+            id: string;
+            label: string;
+            count: string;
+        }>;
+    };
+}
+
+export interface FestivalBentoGridBlock extends BaseBlock {
+    type: 'festival_bento_grid';
+    content: {
+        title?: string;
+        subtitle?: string;
+        useDynamicFestivals?: boolean;
+        dynamicLimit?: number;
+        items: Array<{
+            id: string;
+            type: 'festival' | 'stat' | 'feature' | 'signup';
+            festivalId?: number;
+            title: string;
+            subtitle?: string;
+            image?: string;
+            location?: string;
+            rating?: string;
+            tags?: string[];
+            size: 'sm' | 'md' | 'lg' | 'wide' | 'tall';
+            link?: string;
+        }>;
+    };
+}
+
+export interface FestivalProgressTrailBlock extends BaseBlock {
+    type: 'festival_progress_trail';
+    content: {
+        steps: Array<{
+            id: string;
+            label: string;
+            status: 'completed' | 'current' | 'upcoming';
+        }>;
+        scriptText?: string;
+        pathType?: 'wave' | 'loop' | 'zigzag';
+        color?: string;
     };
 }

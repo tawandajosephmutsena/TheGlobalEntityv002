@@ -20,7 +20,9 @@ Route::middleware([App\Http\Middleware\CacheHeadersMiddleware::class . ':public'
 
     Route::get('/team', [App\Http\Controllers\TeamController::class, 'index'])->name('team');
 
-    Route::get('/blog', [App\Http\Controllers\BlogController::class, 'index'])->name('blog');
+    Route::get('/blog', function () {
+        return (new \App\Http\Controllers\PageController())->show('blog');
+    })->name('blog');
     Route::get('/blog/{slug}', [App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 
     Route::get('/contact', function () {

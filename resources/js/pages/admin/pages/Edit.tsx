@@ -18,7 +18,7 @@ interface Props {
     page: Page;
 }
 
-export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | (string & {});
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | 'about_hero' | 'about_who_are_you' | 'about_truth_untangled' | 'about_more_than_entertainment' | 'about_origin_story' | 'stitch_featured_blog' | (string & {});
 
 
 
@@ -526,6 +526,74 @@ const getDefaultContentForType = (type: BlockType) => {
         case 'cards_slider': return {
             collection: 'insights',
             limit: 5,
+        };
+        case 'about_hero': return {
+            title: 'FOR THE OBSESSED.',
+            subtitle: 'This is not for the faint of heart.',
+            description: 'A playground for the bold, the outliers, and the unapologetically curious.',
+            image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop',
+            ctaText: 'Explore the Edge',
+            ctaLink: '#',
+            stats: [
+                { value: '10M+', label: 'Global Reach' },
+                { value: '500+', label: 'Stories Told' },
+                { value: '100%', label: 'Unfiltered' }
+            ]
+        };
+        case 'about_who_are_you': return {
+            title: 'WHO ARE YOU?',
+            description: 'You are the reason we exist. The one who seeks the truth behind the noise.',
+            image: 'https://images.unsplash.com/photo-1493246507139-91e8bef99c02?q=80&w=2670&auto=format&fit=crop',
+            signature: 'THE GLOBAL ENTITY',
+            items: [
+                { title: 'The Seeker', description: 'Always looking for what\'s next.' },
+                { title: 'The Maker', description: 'Building the future with every step.' }
+            ]
+        };
+        case 'about_truth_untangled': return {
+            title: 'TRUTH UNTANGLED',
+            items: [
+                {
+                    title: 'UNFILTERED ACCESS',
+                    description: 'Direct insight into the worlds most compelling stories.',
+                    image: 'https://images.unsplash.com/photo-1504711432869-e74e73a4b1de?q=80&w=2670&auto=format&fit=crop'
+                },
+                {
+                    title: 'GLOBAL PERSPECTIVE',
+                    description: 'Understanding the interconnectedness of our digital age.',
+                    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop'
+                }
+            ]
+        };
+        case 'about_more_than_entertainment': return {
+            title: 'MORE THAN ENTERTAINMENT',
+            description: 'We believe in content that challenges, inspires, and transforms.',
+            items: [
+                {
+                    title: 'Purpose Driven',
+                    description: 'Every story has a reason to be told.',
+                    icon: 'verified',
+                    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2670&auto=format&fit=crop'
+                }
+            ]
+        };
+        case 'about_origin_story': return {
+            title: 'THE ORIGIN STORY',
+            items: [
+                {
+                    year: '2019',
+                    title: 'The Spark',
+                    description: 'It started with a simple question: what if we told the truth?',
+                    image: 'https://images.unsplash.com/photo-1497493292307-31c376b6e479?q=80&w=2671&auto=format&fit=crop'
+                }
+            ]
+        };
+        case 'stitch_featured_blog': return {
+            title: 'LATEST FROM THE ENTITY',
+            limit: 3,
+            showTags: true,
+            showAuthor: true,
+            showDate: true
         };
         default: return {};
 

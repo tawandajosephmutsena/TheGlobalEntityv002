@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed": "#ff6abf",
+              "on-error": "#ffefef",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-highest": "#dbdfce",
+              "secondary": "#904800",
+              "on-tertiary-container": "#006161",
+              "surface-container": "#e7eada",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-secondary-fixed": "#552800",
+              "on-tertiary": "#bbfffe",
+              "secondary-container": "#ffc69f",
+              "surface-container-high": "#e1e4d4",
+              "surface-variant": "#dbdfce",
+              "error-container": "#f74b6d",
+              "primary-fixed-dim": "#f852b5",
+              "on-primary": "#ffeff3",
+              "surface-container-low": "#f0f2e4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#af047a",
+              "on-secondary": "#fff0e8",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-on-surface": "#9b9e92",
+              "background": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface-variant": "#5a5d52",
+              "secondary-dim": "#7e3e00",
+              "surface-dim": "#d2d6c5",
+              "outline-variant": "#acaea2",
+              "surface": "#f6f8ea",
+              "error": "#b41340",
+              "tertiary-dim": "#005959",
+              "on-error-container": "#510017",
+              "inverse-primary": "#fe57bb",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-primary-container": "#490031",
+              "on-background": "#2d3027",
+              "tertiary": "#006666",
+              "on-surface": "#2d3027",
+              "error-dim": "#a70138",
+              "on-secondary-container": "#723800",
+              "surface-tint": "#af047a",
+              "tertiary-fixed-dim": "#78efef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed": "#ffc69f",
+              "primary-dim": "#9a006b",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "tertiary-container": "#87fefd",
+              "on-primary-fixed": "#000000",
+              "on-tertiary-fixed": "#004d4d"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drift-motion { transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .text-mix-blend {
+            mix-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<nav class="flex justify-between items-center px-8 py-6 w-full max-w-[1440px] mx-auto">
+<div class="text-3xl font-black text-[#af047a] dark:text-[#d33297] italic font-headline tracking-tight uppercase">
+                Aetheria
+            </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="text-[#af047a] dark:text-[#d33297] border-b-2 border-[#af047a] pb-1 font-headline font-bold tracking-tight uppercase hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Journeys</a>
+<a class="text-[#2d3027] dark:text-[#f6f8ea] opacity-80 font-headline font-bold tracking-tight uppercase hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#f6f8ea] opacity-80 font-headline font-bold tracking-tight uppercase hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Archive</a>
+<a class="text-[#2d3027] dark:text-[#f6f8ea] opacity-80 font-headline font-bold tracking-tight uppercase hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface text-2xl cursor-pointer hover:scale-105 transition-all">account_circle</span>
+</div>
+</nav>
+</header>
+<main class="pt-32 min-h-screen">
+<!-- Hero: The Kinetic Grid -->
+<section class="max-w-[1440px] mx-auto px-8 py-12">
+<div class="relative mb-20">
+<h1 class="font-headline text-7xl md:text-[8rem] font-black leading-[0.85] tracking-tighter text-on-background z-10 relative">
+                    CHART YOUR <br/>
+<span class="text-primary italic">SOUL'S</span> <br/>
+                    COURSE
+                </h1>
+<div class="absolute -top-10 -right-10 w-64 h-64 bg-secondary/10 rounded-full blur-3xl -z-10"></div>
+</div>
+<div class="asymmetric-grid min-h-[800px]">
+<!-- Card 1: Vertical Focus -->
+<div class="col-span-12 md:col-span-5 row-span-2 group relative overflow-hidden rounded-lg bg-surface-container-low drift-motion hover:scale-[1.02] hover:-rotate-1 cursor-pointer">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Mystical foggy landscape with golden light rays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCU1jyiLZsEsAncLaMcGjEzws7W-cxlfjzla8ZrUNS4Y7qq1fDpl_U_aoC7pyvz9uOSaW3Vj9uSTO5EF1mUjtS8wwd-nWMVm74eturbDvG8WgfUMR9gevi6DHx8VnN-_AC0GVCybXimJ6OR05OSu-4O7HGDk65GATv52SOkF9qCI50nU2W4l6JveyfQha1Pw2ofm3c3vVsMfLagfFrmSp_26wnVXQU-SkjIS3fvpFEq2WPak7wGTq8PMwl_M6559OIBdelnEzFS9Ik"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 p-10 text-on-primary">
+<span class="font-headline uppercase tracking-widest text-sm opacity-70">Expedition 01</span>
+<h3 class="text-4xl font-headline font-bold mt-2">The Whispering Canyons</h3>
+<p class="font-body mt-4 opacity-90 max-w-xs">Traverse the silent echoes of the ancient red stone labyrinths.</p>
+</div>
+</div>
+<!-- Card 2: Square Detail -->
+<div class="col-span-12 md:col-span-7 group relative overflow-hidden rounded-lg bg-secondary-container drift-motion hover:scale-[1.02] hover:rotate-1 cursor-pointer">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Night sky over a traditional campsite" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcaQj9d7chdbwSB8CqAtK2IMr_a9Px01hnYaMdekPgY9R5lIq3qrUlFM8dJhhn__szvJxupaJgQXYv0S77Y1jBLPYv7zTAx6ri2WaLvhTdIQMTrCTJ1z03t2Y9MzrCz10aDYUqrbvsLKD6PB2LKXFtJc9al5Os4qrqO7mfIh6U3rsmMztcHCUm8SeIKqQBbNUP-rNLrwVEZ0IYO7CgdSUaaC0sFrUmmnVYld7CodFQbu9k4Z_y0RuD56uOtK0aHmffm8XHE8etGWVT"/>
+<div class="absolute inset-0 bg-on-background/20 group-hover:bg-on-background/10 transition-colors"></div>
+<div class="absolute top-8 left-8">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-on-primary shadow-xl">
+<span class="material-symbols-outlined">explore</span>
+</div>
+</div>
+<div class="absolute bottom-8 right-8 text-right text-on-primary">
+<h3 class="text-3xl font-headline font-bold">Nocturnal Maps</h3>
+<p class="font-body text-sm">Navigate by the stars of the southern cross.</p>
+</div>
+</div>
+<!-- Card 3: Horizontal Panorama -->
+<div class="col-span-12 md:col-span-4 group relative overflow-hidden rounded-lg bg-tertiary-container drift-motion hover:scale-[1.02] hover:-rotate-1 cursor-pointer">
+<div class="p-10 flex flex-col justify-between h-full bg-tertiary text-on-tertiary">
+<div>
+<span class="material-symbols-outlined text-4xl mb-4">edit_note</span>
+<h3 class="text-3xl font-headline font-bold">The Cartographer's Journal</h3>
+</div>
+<p class="font-body opacity-80">Ink-stained fingers and saltwater dreams. Documenting the unseen paths of the archipelago.</p>
+<div class="mt-6 flex items-center gap-2 font-headline font-bold tracking-tighter uppercase group-hover:translate-x-2 transition-transform">
+                            Read entries <span class="material-symbols-outlined">arrow_right_alt</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Overlapping Fragment -->
+<div class="col-span-12 md:col-span-3 group relative overflow-hidden rounded-lg bg-surface-container-highest drift-motion hover:scale-[1.05] hover:rotate-2 cursor-pointer z-20 md:-ml-12 md:-mt-12 shadow-2xl">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Dramatic mountain peaks at twilight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcMMr1xjWZ9Z58x5vtw1JQCZYSv0SuTb-9nl29Ow-8guMdaFUbbsq6Z3Ta8-WkdH0fp5GSPMaI_dNUdZFnAhznHXsSry6p7spJdK2F0lPXepzFbw8PnFqARKRct00q-4LdW6kvVHBz_Dd5BqTGLlsO7mC3eRd_ryecq6d3ONkK_cPlRmOrY1go0MAAEbolv1TyHN7cJt_Sah0y7_tfmXiBHdjOJXz2c_A8Z_oRD8EjM2NI8uYiFOATJvkCi6KHc-SF2icMJk82k5Hf"/>
+<div class="absolute inset-0 bg-secondary/40 mix-blend-multiply"></div>
+<div class="relative p-6 flex items-end h-full">
+<span class="text-on-primary font-headline text-xl font-bold">Peak Revelations</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Signature Section -->
+<section class="max-w-[1440px] mx-auto px-8 py-32 flex flex-col md:flex-row gap-20 items-center">
+<div class="flex-1 space-y-8">
+<div class="inline-flex items-center gap-3 px-4 py-2 bg-secondary-container rounded-full text-on-secondary-container font-label font-medium text-sm">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+                    THE ETHEREAL METHOD
+                </div>
+<h2 class="font-headline text-5xl font-extrabold leading-tight text-on-background">Crafting paths for the <span class="text-tertiary">wandering heart.</span></h2>
+<p class="text-xl text-on-surface-variant font-body leading-relaxed max-w-xl">
+                    We believe travel isn't just about the destination—it's about the watercolor memories that bleed into your soul. Our expeditions are hand-drawn, curated experiences that prioritize local rhythm over global noise.
+                </p>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-10 py-5 rounded-full font-headline font-bold tracking-wide hover:scale-105 transition-all shadow-lg hover:shadow-primary/20">
+                    START YOUR EXPEDITION
+                </button>
+</div>
+<div class="flex-1 relative">
+<div class="aspect-square bg-surface-container-low rounded-lg p-12 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(circle, #af047a 1px, transparent 1px); background-size: 30px 30px;"></div>
+<div class="relative z-10 space-y-12">
+<div class="flex gap-6 items-start">
+<div class="w-12 h-12 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined">map</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-lg">Curated Cartography</h4>
+<p class="font-body text-on-surface-variant text-sm mt-1">Bespoke maps designed for sustainable discovery.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<div class="w-12 h-12 rounded-full bg-tertiary flex-shrink-0 flex items-center justify-center text-on-tertiary">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-lg">Eco-Conscious Rhythms</h4>
+<p class="font-body text-on-surface-variant text-sm mt-1">Carbon-neutral journeys that respect ancestral lands.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">local_activity</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-lg">Ritual Festivals</h4>
+<p class="font-body text-on-surface-variant text-sm mt-1">Access to exclusive, high-vibration cultural gatherings.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- SideNavBar (Suppressed on Home due to focus, but defined for the blueprint) -->
+<aside class="hidden fixed left-0 top-0 h-screen z-40 md:flex flex-col py-8 bg-[#f6f8ea] dark:bg-slate-900 w-72 rounded-r-[2rem] shadow-xl translate-x-[-100%] transition-transform duration-500">
+<div class="px-8 mb-12">
+<div class="flex items-center gap-4 mb-8">
+<img class="w-12 h-12 rounded-full object-cover ring-2 ring-primary" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf6mSjzfsUlbBa-rpPyjW3xTQ2KkaKqVgA1JsQKTziZeHjBQkehitDmpWEdrpnfNz7RROJ3DEj-4KGN0EiLR59PwispCeBOjH20OMPwqnzo8Bv3G2hL5IrsBeLAOmDsl4B5NVvtnrmigzrAly4hYIXx3d6vvTqhb3eeSWmFTtx_JKobja6D1uSgcar0aMHtYl-yfCwlJUDTPqR1uK_S1rCh9Bm6o6CmXsG3Q5dI6sb38njiv8r_6tcVF4J8QiLg5XaN873QGgt6Y6D"/>
+<div>
+<h5 class="font-headline font-bold text-on-background leading-none">The Voyager</h5>
+<span class="text-xs text-on-surface-variant uppercase tracking-widest font-bold">Rank: Cartographer</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-full font-headline font-bold uppercase tracking-tight hover:scale-102 transition-all">
+                Book Expedition
+            </button>
+</div>
+<nav class="flex-1 space-y-2">
+<div class="flex items-center gap-4 bg-[#af047a]/10 text-[#af047a] rounded-full px-6 py-3 mx-2 font-body font-medium">
+<span class="material-symbols-outlined">map</span> Map
+            </div>
+<div class="flex items-center gap-4 text-[#2d3027] dark:text-[#f6f8ea] px-6 py-3 mx-2 font-body font-medium hover:bg-[#006666]/5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">event</span> Calendar
+            </div>
+<div class="flex items-center gap-4 text-[#2d3027] dark:text-[#f6f8ea] px-6 py-3 mx-2 font-body font-medium hover:bg-[#006666]/5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">confirmation_number</span> Tickets
+            </div>
+<div class="flex items-center gap-4 text-[#2d3027] dark:text-[#f6f8ea] px-6 py-3 mx-2 font-body font-medium hover:bg-[#006666]/5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">collections</span> Gallery
+            </div>
+<div class="flex items-center gap-4 text-[#2d3027] dark:text-[#f6f8ea] px-6 py-3 mx-2 font-body font-medium hover:bg-[#006666]/5 transition-colors cursor-pointer">
+<span class="material-symbols-outlined">edit_note</span> Journal
+            </div>
+</nav>
+</aside>
+<!-- Footer -->
+<footer class="w-full pt-20 pb-10 bg-[#2d3027] dark:bg-black text-[#f6f8ea] font-body text-sm tracking-wide">
+<div class="flex flex-col items-center justify-center gap-8 px-4 w-full max-w-[1440px] mx-auto">
+<div class="text-lg font-black text-[#f6f8ea] font-headline italic tracking-tight uppercase">Aetheria</div>
+<div class="flex flex-wrap justify-center gap-10">
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Privacy</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Terms</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Sustainability Report</a>
+<a class="text-[#f6f8ea]/60 hover:text-[#af047a] transition-colors" href="#">Press Kit</a>
+</div>
+<p class="text-center opacity-40 max-w-md">
+                © 2024 Aetheria Editorial. Hand-drawn paths for sustainable souls.
+            </p>
+</div>
+</footer>
+</body></html>

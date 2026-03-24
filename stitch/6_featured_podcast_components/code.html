@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Cartographer | Featured Podcasts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#2d3027",
+              "inverse-surface": "#0c0f08",
+              "primary": "#af047a",
+              "on-primary": "#ffeff3",
+              "error-dim": "#a70138",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "surface-tint": "#af047a",
+              "surface-container-high": "#e1e4d4",
+              "error": "#b41340",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "outline-variant": "#acaea2",
+              "on-error-container": "#510017",
+              "primary-fixed": "#ff6abf",
+              "surface-container-highest": "#dbdfce",
+              "tertiary-fixed-dim": "#78efef",
+              "outline": "#75786d",
+              "surface-variant": "#dbdfce",
+              "background": "#f6f8ea",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "secondary": "#904800",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "secondary-dim": "#7e3e00",
+              "on-tertiary-container": "#006161",
+              "secondary-container": "#ffc69f",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#f74b6d",
+              "surface": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "secondary-fixed": "#ffc69f",
+              "surface-container": "#e7eada",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#ff6abf",
+              "tertiary-container": "#87fefd",
+              "on-secondary": "#fff0e8",
+              "on-tertiary-fixed": "#004d4d",
+              "on-tertiary": "#bbfffe",
+              "primary-dim": "#9a006b",
+              "on-error": "#ffefef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-secondary-container": "#723800"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating-motion {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .waveform-bar {
+            animation: waveform 1.2s ease-in-out infinite alternate;
+        }
+        @keyframes waveform {
+            0% { height: 20%; }
+            100% { height: 100%; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<nav class="bg-[#f6f8ea]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#2d3027] dark:text-[#e2e3d8] italic font-headline tracking-tight">The Cartographer</span>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold hover:scale-105 transition-transform duration-300" href="#">Journal</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold hover:scale-105 transition-transform duration-300" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold hover:scale-105 transition-transform duration-300" href="#">Reviews</a>
+<a class="text-[#af047a] dark:text-[#fface8] border-b-2 border-[#af047a] font-label font-semibold hover:scale-105 transition-transform duration-300" href="#">Podcasts</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 font-label font-semibold hover:scale-105 transition-transform duration-300" href="#">Map</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container-low px-4 py-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-label" placeholder="Search stories..." type="text"/>
+</div>
+<span class="material-symbols-outlined p-2 hover:scale-105 transition-all text-on-surface cursor-pointer">notifications</span>
+<span class="material-symbols-outlined p-2 hover:scale-105 transition-all text-on-surface cursor-pointer">settings</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User profile" data-alt="Close up portrait of a smiling man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-QDGx43FZ4cfvbn1XiJVmN5Ovm14A6DkUWnCSANTgEkiGb4ov5C1L7sNKTCPeeUlRiP6n_CqLrKA50kVdsAtrlOCoIeJ6ZRazY1_xRadEaBReOZ2neUJf4Ct5mteynPVPzB1z4r0W12E7963bMvLBUX8UmoidwemNCKbkdSCCHtRLM1DeIW9d5WDB6vPkCP2vl1FByqjc8WCq3B0YL3DYXCX_VdFvC78s94abEj9wKNONoec2Ahjt3ElrxYmPsq2wnWyFNfAT7WgP"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-screen-2xl mx-auto px-8 py-12 pb-32">
+<!-- Hero Header -->
+<header class="mb-20">
+<h1 class="font-headline text-6xl md:text-8xl font-black tracking-tighter text-on-surface leading-none mb-6">
+                Voices of the <span class="text-primary italic">Wild.</span>
+</h1>
+<p class="text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">
+                Immersive audio journeys through the forgotten trails and vibrant subcultures of the modern cartographer's world.
+            </p>
+</header>
+<!-- Bento Grid of Podcast Components -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- 1. Audio-wave-inspired visual card (Large Span) -->
+<section class="md:col-span-8 bg-surface-container-low rounded-lg p-8 relative overflow-hidden flex flex-col justify-between group">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+<div class="flex items-end justify-center h-full gap-1 p-8">
+<div class="waveform-bar w-3 bg-primary rounded-full" style="animation-delay: 0.1s"></div>
+<div class="waveform-bar w-3 bg-primary rounded-full" style="animation-delay: 0.3s"></div>
+<div class="waveform-bar w-3 bg-primary rounded-full" style="animation-delay: 0.5s"></div>
+<div class="waveform-bar w-3 bg-primary rounded-full" style="animation-delay: 0.2s"></div>
+<div class="waveform-bar w-3 bg-primary rounded-full" style="animation-delay: 0.4s"></div>
+</div>
+</div>
+<div class="z-10">
+<span class="bg-primary text-on-primary px-3 py-1 rounded-full text-xs font-bold font-label uppercase tracking-widest mb-4 inline-block">Trending Now</span>
+<h2 class="font-headline text-4xl font-bold mb-4 text-on-surface">Echoes of the Serengeti</h2>
+<p class="text-on-surface-variant max-w-md mb-8">A sonic exploration of the great migration, recorded in binaural high-fidelity audio.</p>
+</div>
+<div class="flex items-center gap-6 z-10">
+<button class="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg group">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div>
+<p class="font-bold text-lg">Episode 42: The Midnight Waterhole</p>
+<p class="text-sm opacity-60">45 minutes remaining</p>
+</div>
+</div>
+</section>
+<!-- 2. Large album-art-focused player card -->
+<section class="md:col-span-4 bg-surface-container-highest rounded-lg overflow-hidden group">
+<div class="relative aspect-square overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Old vintage microphone in front of a window" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRsz4ByX4xbTy9d9sbeYGNxNKb8CELchDYH97jr8PHkxa4VxsU1FPDLK_nNuEK3JgN20aF6skBzy7D4CZsyRTUZCN_yVTJEZ5v-736uq3XpIK3TQIhTYpYYbmB_flWV_p97w7gUcclY-I4A28T69rHC0zGWBkbxOHDXVK-7O8xWIOSbLKbpjxylYlVB4LBtHFs3KwVIH3-5nrI2Oug-yDwpNJQ0kxg855XkFdI5BwPeW91cQI6ZBq2oBWpQMu2nwRLDbvhIU-fVBd"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<h3 class="text-white font-headline text-2xl font-bold leading-tight">The Analog Traveller</h3>
+<p class="text-white/80 text-sm">Season 3 • Hosted by Julian Moss</p>
+</div>
+</div>
+<div class="p-6 bg-surface-container-highest flex justify-between items-center">
+<button class="flex items-center gap-2 font-label font-bold text-primary">
+<span class="material-symbols-outlined">library_music</span>
+                        View Series
+                    </button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">favorite</span>
+</div>
+</section>
+<!-- 3. Minimalist episode list card -->
+<section class="md:col-span-4 bg-surface-container-lowest rounded-lg p-6 shadow-sm">
+<h3 class="font-headline text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">history</span>
+                    Recent Tracks
+                </h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-secondary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">waves</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Coastal Drifting</h4>
+<p class="text-xs opacity-60">12 Oct • 24m</p>
+</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-tertiary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-container">mountain_flag</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Peak Silence</h4>
+<p class="text-xs opacity-60">08 Oct • 38m</p>
+</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+<div class="flex items-center justify-between p-3 rounded-xl hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container">forest</span>
+</div>
+<div>
+<h4 class="font-bold text-sm">Forest Canopy</h4>
+<p class="text-xs opacity-60">05 Oct • 41m</p>
+</div>
+</div>
+<span class="material-symbols-outlined opacity-0 group-hover:opacity-100 transition-opacity">play_circle</span>
+</div>
+</div>
+</section>
+<!-- 4. Interactive 'Now Playing' glassmorphic card -->
+<section class="md:col-span-8 relative h-[400px] rounded-lg overflow-hidden flex items-end">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="Breathtaking mountain range under a starry sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXqD6xrj3gp8S258ebbHfsU70ysY_hSf59gn8Oz5NZKPWBHg1-3inxeaEcYnEYHPbGKCW-RFdOs-Vah-QtRlJn9HCARJcB7KtK11l7opgde9pzDKyZQGYdFw4EqwGUInc7Tp_vlNsW99FJuGVIqECto0vhQiqlumSOtezh9jTF5boH3PiMY4jAwwb7pQxRLpRzntAsUK9tKbs6tKo_ndXI0Ndybdm1NzyarvjcwZzx0EF-l0UA9aUPBz1nyWbKUcfdn_hOmqEyL0nU"/>
+<div class="relative w-full p-8 bg-surface/70 backdrop-blur-xl m-6 rounded-xl flex items-center justify-between shadow-2xl">
+<div class="flex items-center gap-6">
+<div class="w-20 h-20 bg-black rounded-lg shadow-xl overflow-hidden animate-pulse">
+<img class="w-full h-full object-cover opacity-80" data-alt="Concert stage lighting and smoke effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcjtmUXCPSS-ThhkShPwCd6u1WTBMdF0DMWMgl9Ttw2I7A7UXkXVtUSQ43Cnp5wtltoAUaN4EMYf-nH9qi8csCOxf0295WSvHolZyLUTvGrlOnb6WfOLjHNn91JLMTcjPqCySoenFj785os1pELIs1OXAqLMxjeFbo4Vs7vls7mh96K63YeQx-ZmYrWJRQ8xxaeoBjwUVqCzhmNmK-0c7X3OXqcKUbFlMKiMXJfmDFkJg_J-zpSW0eJtJijdpAXaoi3G6fLIJUDO3G"/>
+</div>
+<div>
+<span class="text-[10px] font-bold tracking-[0.2em] text-primary uppercase block mb-1">Live Broadcast</span>
+<h3 class="font-headline text-2xl font-bold">The Midnight Caravan</h3>
+<p class="text-on-surface-variant font-medium">Djemaa el-Fnaa, Marrakech</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<span class="material-symbols-outlined text-3xl cursor-pointer hover:text-primary">skip_previous</span>
+<div class="w-14 h-14 bg-on-surface text-surface rounded-full flex items-center justify-center cursor-pointer hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">pause</span>
+</div>
+<span class="material-symbols-outlined text-3xl cursor-pointer hover:text-primary">skip_next</span>
+</div>
+<div class="hidden lg:block w-48">
+<div class="h-1 w-full bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] font-bold opacity-50">
+<span>12:45</span>
+<span>18:30</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Floating card with prominent play button -->
+<section class="md:col-span-5 bg-tertiary text-on-tertiary rounded-lg p-10 flex flex-col items-center text-center relative overflow-hidden group">
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+<div class="mb-8 relative">
+<div class="w-32 h-32 rounded-full bg-white/10 flex items-center justify-center p-4 backdrop-blur-sm">
+<img class="w-full h-full object-cover rounded-full shadow-2xl transition-transform duration-500 group-hover:rotate-12" data-alt="Abstract watercolor map showing coastlines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-qCkQ8J9gpQs2NmF_KIXZigmx6G1QGsu6FSs9nM0fciabV0yMkEg9npcVQIEBviFYYSJBR9AcszmiHR5WdBaeFMSc6zisZ5fBH9SUp0sZBX6V44K97zlExqYK7Xs9tXNT5IfEwIPyQnB94YmiEbJzmmLwMONPOlW2AnyWEumq0gOt5GUUgHYuQAq4tGBGOYdVsOdNQL6Z6ytQr8QVQf4Zlfz0mhRcPTk6tacXJ02NjhDBntPBX0uovg6joixM0aBC8NhWYSLjaUww"/>
+</div>
+<button class="absolute -bottom-2 -right-2 w-12 h-12 bg-secondary text-on-secondary rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all border-4 border-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<h3 class="font-headline text-3xl font-bold mb-4">Cartographer's Daily</h3>
+<p class="opacity-80 text-sm leading-relaxed mb-8">Quick 10-minute updates on border openings, gear reviews, and local festivities around the globe.</p>
+<div class="flex gap-4">
+<span class="px-4 py-2 bg-white/10 rounded-full text-xs font-bold">#TravelNews</span>
+<span class="px-4 py-2 bg-white/10 rounded-full text-xs font-bold">#DailyLog</span>
+</div>
+</section>
+<!-- 6. Split-screen interview-focused card -->
+<section class="md:col-span-7 bg-surface-container-low rounded-lg overflow-hidden flex flex-col sm:flex-row h-full">
+<div class="sm:w-1/2 p-8 flex flex-col justify-between">
+<div>
+<div class="flex gap-2 mb-6">
+<div class="w-2 h-2 rounded-full bg-error animate-pulse"></div>
+<span class="text-[10px] font-bold tracking-widest uppercase opacity-60">In Conversation</span>
+</div>
+<h3 class="font-headline text-4xl font-black italic tracking-tighter mb-4">The Nomad's Ethics.</h3>
+<p class="text-on-surface-variant text-sm mb-6">In this deep dive, we sit down with Dr. Aris Thorne to discuss the impact of luxury exploration on indigenous landscapes.</p>
+</div>
+<button class="w-max px-6 py-3 bg-on-surface text-surface rounded-full text-sm font-bold flex items-center gap-3 hover:bg-primary transition-colors">
+                        Listen to Interview
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="sm:w-1/2 relative bg-surface-container-highest">
+<img class="w-full h-full object-cover grayscale opacity-80 mix-blend-multiply" data-alt="Group of people talking in a modern studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyxyVqBHlJBEvicUNKlivTRhdg4JzHQ9kkEP4gp__HOwu61NqaMzOweW9WuCv1QrhzX2Z5LQaa3T11AASG7X4sU5of9jY629f4uV3fsGYjbhKSX7hDBYu_7Xm2M_TiVbTMOWhLUEKjtC4E3q59WDWyI8dyzOZQOq1lvZl-Jyi9MVqaHVpbRQSADwSdtc-WzXYhrgY2TiUmI-qnTjoqTb5e94yObZtFGc2toa1n5QVszEz4VV7vlGkgnLnyfcrhRThITFk-dg47VgZQ"/>
+<div class="absolute inset-0 bg-gradient-to-l from-primary/20 to-transparent"></div>
+<div class="absolute bottom-6 right-6 flex flex-col items-end text-right">
+<p class="text-xs font-bold uppercase tracking-widest opacity-40 mb-1">Host</p>
+<p class="font-headline font-bold text-xl">Elena Vance</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-[#f6f8ea]/80 dark:bg-[#1a1c18]/80 backdrop-blur-2xl z-50 rounded-t-[2rem] shadow-[0_-10px_30px_rgba(45,48,39,0.04)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined">festival</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Festivals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Reviews</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#af047a] text-white rounded-full p-3 scale-110 -translate-y-2 transition-all shadow-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Podcasts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] dark:text-[#e2e3d8] opacity-50 p-2 hover:opacity-100 hover:text-[#904800]" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Map</span>
+</a>
+</nav>
+<!-- Contextual FAB (Only for main podcast listing) -->
+<button class="fixed bottom-12 right-8 w-16 h-16 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-all z-40 hidden md:flex">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

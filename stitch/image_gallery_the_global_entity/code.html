@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Visual Archive | The Global Entity</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-dim": "#005959",
+              "surface-container-high": "#e1e4d4",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed-dim": "#78efef",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "on-tertiary": "#bbfffe",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-low": "#f0f2e4",
+              "primary-dim": "#9a006b",
+              "primary": "#af047a",
+              "on-primary-fixed": "#000000",
+              "on-background": "#2d3027",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#dbdfce",
+              "surface-variant": "#dbdfce",
+              "outline": "#75786d",
+              "on-error-container": "#510017",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-secondary-container": "#723800",
+              "surface-dim": "#d2d6c5",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "secondary": "#904800",
+              "error": "#b41340",
+              "surface-tint": "#af047a",
+              "on-primary": "#ffeff3",
+              "surface-bright": "#f6f8ea",
+              "primary-fixed": "#ff6abf",
+              "error-dim": "#a70138",
+              "surface-container": "#e7eada",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "outline-variant": "#acaea2",
+              "secondary-container": "#ffc69f",
+              "on-surface": "#2d3027",
+              "error-container": "#f74b6d",
+              "inverse-on-surface": "#9b9e92",
+              "surface": "#f6f8ea",
+              "on-secondary": "#fff0e8",
+              "primary-container": "#ff6abf",
+              "on-tertiary-fixed": "#004d4d",
+              "on-surface-variant": "#5a5d52",
+              "on-tertiary-container": "#006161",
+              "secondary-dim": "#7e3e00",
+              "secondary-fixed-dim": "#ffb37c",
+              "secondary-fixed": "#ffc69f",
+              "tertiary-container": "#87fefd",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "inverse-primary": "#fe57bb",
+              "inverse-surface": "#0c0f08"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .watercolor-splash {
+        filter: blur(60px);
+        opacity: 0.15;
+        z-index: -1;
+      }
+      .pirate-trail {
+        stroke-dasharray: 8 8;
+      }
+      .glass-effect {
+        backdrop-filter: blur(12px);
+      }
+      .masonry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-rows: 200px;
+        gap: 1.5rem;
+      }
+      .masonry-item-tall { grid-row: span 3; }
+      .masonry-item-wide { grid-column: span 2; }
+      .masonry-item-square { grid-row: span 2; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c12]/70 backdrop-blur-md shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center px-8 py-6 max-w-full mx-auto">
+<div class="flex items-center gap-4">
+<span class="font-epilogue font-black text-[#af047a] dark:text-[#f26cc4] italic text-2xl tracking-tighter">The Global Entity</span>
+</div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-epilogue font-bold tracking-tight text-lg uppercase text-[#2d3027] dark:text-[#f6f8ea] font-medium hover:scale-105 hover:text-[#904800] transition-all duration-300" href="#">Festivals</a>
+<a class="font-epilogue font-bold tracking-tight text-lg uppercase text-[#af047a] dark:text-[#f26cc4] border-b-2 border-[#af047a] pb-1 hover:scale-105 hover:text-[#904800] transition-all duration-300" href="#">Archive</a>
+<a class="font-epilogue font-bold tracking-tight text-lg uppercase text-[#2d3027] dark:text-[#f6f8ea] font-medium hover:scale-105 hover:text-[#904800] transition-all duration-300" href="#">Landscapes</a>
+<a class="font-epilogue font-bold tracking-tight text-lg uppercase text-[#2d3027] dark:text-[#f6f8ea] font-medium hover:scale-105 hover:text-[#904800] transition-all duration-300" href="#">Culture</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[#af047a] dark:text-[#f26cc4]">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-44 pb-24 px-8 overflow-hidden">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-container rounded-full watercolor-splash translate-x-1/2 -translate-y-1/2"></div>
+<div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-tertiary-container rounded-full watercolor-splash -translate-x-1/3 translate-y-1/4"></div>
+<div class="max-w-7xl mx-auto relative">
+<div class="flex flex-col items-center md:items-start text-center md:text-left gap-6">
+<div class="flex items-center gap-2 text-secondary font-bold tracking-widest uppercase text-sm mb-2">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span>The Visual Narrative</span>
+</div>
+<h1 class="font-headline font-black text-6xl md:text-8xl text-on-background leading-[0.9] tracking-tighter max-w-4xl">
+                    Captured <span class="text-primary italic">Moments</span>
+</h1>
+<p class="font-body text-xl text-on-surface-variant max-w-2xl leading-relaxed mt-4">
+                    A cartographer’s journal of the soul. Explore the vibrant textures of the African continent through the lens of those who walk its hidden paths.
+                </p>
+<!-- Category Filter -->
+<div class="flex flex-wrap gap-3 mt-8">
+<button class="px-8 py-3 rounded-full bg-primary text-on-primary font-bold shadow-lg hover:scale-105 transition-all">All Stories</button>
+<button class="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-all">Festivals</button>
+<button class="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-all">Landscapes</button>
+<button class="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-all">People</button>
+<button class="px-8 py-3 rounded-full bg-surface-container-highest text-on-surface font-semibold hover:bg-secondary-container hover:text-on-secondary-container transition-all">Archive</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Gallery Grid -->
+<section class="px-8 pb-32">
+<div class="max-w-7xl mx-auto">
+<!-- Asymmetrical Grid Container -->
+<div class="masonry-grid">
+<!-- Card 1 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-tall surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Vibrant traditional African dance at Lake of Stars festival" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8vSqs5ZlhVuDu_RyN4AsDtoOxwX5u3Hqeibe5cdl68QRZeuXjMughRzbymyzlYO6AN_TbA86UkpySPIT6sd79s8nsMFRbwTE-to1AzaLH8AWrw7xjVauVI4kbED1GBBZlg9AvJBrvgfW19Ld85khileAKwtqhcc2qaMDMSF-g0WbfnNdLUQahm9I0PPseZCrijoaQaRKdC9IdVt_GFgGBejcVfm4r9bPPL5-W86Rzxkstg4wqpXu-LAbnU0nArPUkKssD9OqNUMYR"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">Festivals</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">Lake of Stars</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: Malawi, 2024</p>
+</div>
+<div class="absolute top-4 right-4 bg-surface/70 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary text-xl">favorite</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-wide surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Aerial view of sunset over the Serengeti plains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzqXFhDaVXdnY0WRq8a4b2BbsnjSMVUedXv4yEFtl5N7aukRBk8PgkRfIOeVS9G4qldcXBRmo4WPYrEQfL-UOQJPsRo5uNgP6OxRsAXjbwBQAo8KndU7a6n8NJ6TV5ebgBvcwLYwWTZHU_4DYX-zY3QW6Vku42ELYR6knLKNQkNzwN8VGqfrfwZ7Jv7X5fsuvPqUERoI8dRdL2gnc9YgLTqlZG1Si9MJAynI4iFbGX6PVk7PEhi0Mrs7NdOBF7nBwFd-gD1HjXh8Nd"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">Landscapes</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">Golden Hour Serengeti</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: Tanzania, 2023</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-square surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Portrait of a local merchant in a bustling market" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxwUXwnMPYsD8QK68U-josJVeUFLlbbts7W6lU5Ssi-eLjSCJwKzcVca4psWNLKeLDR9-oUFKfPHXj6_-i0aplKwOut6W7RtSCDsrm-v09IAFy7JEAvlDWwCn3HF-dJs7BSN9vprrpMxK7-W3Hpjem04nU7ndDdJX2y5a5C7B5dcwmddwBXtB3Kl_ppjti6m9Z0bc2KvNhp-GYBT7PTzXB14K_Pk4cu6aZ-xjBeBB_hKUSnaWpOp-JvuIYCiw2mzYyZBD6rqh-sJUk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">People</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">The Spice Merchant</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: Zanzibar, 2024</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-tall surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Wavy coastline and blue ocean of Cape Town" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgZRl217NhZ9QELMvnJ_tdzNsMVrdX3Ki1WhLanl_88gECCTxApjRadWmoSe_QMsvxhjRfkbZvtywhjuvSBJg5Z3utM2sVSes8R3QDwnkmoxvVGPMKiiiwVVC6wyTUsUN0wLrghz65sJxZzJR3D5ByAPeEErJRPzm_qSzOHqQdpb7CpJpMdTDYlrEKGfAoWcvg9WX0L8EGLMokmgHwRS2eV6ynoC13KGFQh7B5_2yNdyZf_O4oyl7XVgvnIOl1lmO1RQJlu7VeLMQM"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">Archive</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">Atlantic Drift</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: South Africa, 2022</p>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-square surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Traditional patterned fabrics hanging in the wind" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMAyPe80nohFMNdZw4J0b2ekxQ3qIAdxcujbzIln5PByBXNktcSPQ1qm9EI8oJjjHNyx7Pcrs23ogqGumvXUNjYRRRc0U9SrxO7jnk_8yeplVs-oM6L3tWSY4gvMiLmlIDgif_CMDWyWQknPfX1qOF9Y5zGp-WPbVbvAqpbMCacWt_-GnTFtFSOCj3DySUcmq4HFAXq2ANBJGaatX5lTwwOyi5_Uzes2n9TJxr3fZ-3b8voaN8DjZKkNZDCkRW0QFKnVY06Ah3RNSu"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">Culture</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">Woven History</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: Ethiopia, 2024</p>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="group relative overflow-hidden rounded-lg masonry-item-wide surface-container-low cursor-pointer">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Starry night sky over a lonely acacia tree" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBILs6debs3QU-qN3R3Ucz3TX9k7KBSUe8lR3qC33oVJflD_t7A0TlY5GeHiH8IH4VJi1YKHdOioCUG-nHUng4aBVoPLymncwvehoyxpB9pX_1YvEN3K6cG8vZEypq4tv1RKMDiaranLmV51jOE1znsOqxsg140_80WVmnq0jQ-Efb6gpCGNPmGpS0Ftas2p_OC_xgEmOKOblJNxXOfrO077eq3qFgKY_419fg7C5i5BdzY3ysfZXqvSZi3LJbD8hfIsf5L3rH1M7kT"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+<span class="text-primary-container font-bold text-xs uppercase tracking-widest mb-1">Archive</span>
+<h3 class="text-surface-bright font-headline font-bold text-2xl leading-tight">Celestial Map</h3>
+<p class="text-surface-variant text-sm mt-2 italic font-medium">Log Entry: Namibia, 2023</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Elements: Hand-drawn separator -->
+<div class="relative w-full py-12 flex justify-center">
+<svg class="text-secondary opacity-30" fill="none" height="40" viewbox="0 0 400 40" width="400">
+<path class="pirate-trail" d="M5 20C50 5 150 35 200 20C250 5 350 35 395 20" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="200" cy="20" fill="currentColor" r="4"></circle>
+</svg>
+</div>
+<!-- Submit Your Story CTA -->
+<section class="px-8 pb-32">
+<div class="max-w-5xl mx-auto rounded-lg bg-surface-container-low p-12 relative overflow-hidden shadow-sm">
+<!-- Watercolor flourish -->
+<div class="absolute -bottom-24 -right-24 w-64 h-64 bg-tertiary/10 rounded-full blur-3xl"></div>
+<div class="relative flex flex-col md:flex-row items-center gap-12">
+<div class="flex-1 space-y-6">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">auto_stories</span>
+</div>
+<h2 class="font-headline font-black text-4xl text-on-background">Your Journey <br/><span class="text-secondary">Needs a Map</span></h2>
+<p class="text-on-surface-variant text-lg">Are you a traveler with a story to tell? Submit your photographs and log entries to be featured in the Global Archive.</p>
+</div>
+<div class="flex-1 w-full">
+<div class="bg-surface-container-lowest p-8 rounded-lg shadow-sm space-y-4">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-outline">Journal Entry Name</label>
+<input class="w-full bg-surface-variant/30 border-none rounded focus:ring-2 focus:ring-primary/20 p-3 outline-none" placeholder="e.g. Whispers of the Sahara" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-outline">Photographic Memory</label>
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-8 flex flex-col items-center justify-center gap-3 hover:bg-surface-variant/10 transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-outline-variant text-3xl">add_photo_alternate</span>
+<span class="text-sm text-outline">Drop your lens captures here</span>
+</div>
+</div>
+<button class="w-full py-4 rounded-full bg-primary text-on-primary font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-md">Submit Log Entry</button>
+</div>
+</div>
+</div>
+<!-- Compass Overlay -->
+<div class="absolute top-8 right-8 text-on-surface-variant/5">
+<span class="material-symbols-outlined text-9xl select-none" style="font-variation-settings: 'wght' 100;">explore</span>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#f6f8ea] dark:bg-[#1a1c12] w-full relative overflow-hidden">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 w-full">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="font-epilogue font-bold text-[#904800] text-2xl italic tracking-tight">The Global Entity</span>
+<p class="font-plus-jakarta-sans text-sm tracking-wide text-[#2d3027]/60 dark:text-[#f6f8ea]/60 max-w-xs text-center md:text-left">© 2024 The Global Entity. Navigating the Soul's Map.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-plus-jakarta-sans text-sm tracking-wide text-[#af047a] dark:text-[#f26cc4] underline decoration-wavy hover:text-[#006666] transition-colors duration-300" href="#">The Map</a>
+<a class="font-plus-jakarta-sans text-sm tracking-wide text-[#2d3027]/60 dark:text-[#f6f8ea]/60 hover:text-[#006666] transition-colors duration-300" href="#">Our Journey</a>
+<a class="font-plus-jakarta-sans text-sm tracking-wide text-[#2d3027]/60 dark:text-[#f6f8ea]/60 hover:text-[#006666] transition-colors duration-300" href="#">Privacy</a>
+<a class="font-plus-jakarta-sans text-sm tracking-wide text-[#2d3027]/60 dark:text-[#f6f8ea]/60 hover:text-[#006666] transition-colors duration-300" href="#">Terms</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center hover:bg-primary-container transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-primary-container text-xl">anchor</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center hover:bg-primary-container transition-colors group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-primary-container text-xl">sailing</span>
+</div>
+</div>
+</div>
+<!-- Decorative subtle gradient at bottom -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-tertiary opacity-50"></div>
+</footer>
+</body></html>

@@ -54,6 +54,8 @@ interface AdvancedDataTableProps<T> {
     searchPlaceholder?: string;
     routeKey?: keyof T;
     baseUrl?: string; // Explicit base URL for actions (view, edit, delete)
+    disableViewAction?: boolean;
+    disableEditAction?: boolean;
 }
 
 export function AdvancedDataTable<T extends { id: number | string }>({
@@ -67,6 +69,8 @@ export function AdvancedDataTable<T extends { id: number | string }>({
     searchPlaceholder = 'Search...',
     routeKey = 'id' as keyof T,
     baseUrl,
+    disableViewAction = false,
+    disableEditAction = false,
 }: AdvancedDataTableProps<T>) {
     const [viewMode, setViewMode] = useState<'table' | 'grid'>(renderGridItem ? 'grid' : 'table');
     const [search, setSearch] = useState('');
@@ -161,20 +165,25 @@ export function AdvancedDataTable<T extends { id: number | string }>({
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent align="end">
                                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                    <DropdownMenuItem
-                                                        onClick={() => router.get(`${basePath}/${String(item[routeKey])}`)}
-                                                    >
-                                                        View Details
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem
-                                                        onClick={() => router.get(`${basePath}/${String(item[routeKey])}/edit`)}
-                                                    >
-                                                        Edit
-                                                    </DropdownMenuItem>
+                                                    {!disableViewAction && (
+                                                        <DropdownMenuItem
+                                                            onClick={() => router.get(`${basePath}/${String(item[routeKey])}`)}
+                                                        >
+                                                            View Details
+                                                        </DropdownMenuItem>
+                                                    )}
+                                                    {!disableEditAction && (
+                                                        <DropdownMenuItem
+                                                            onClick={() => router.get(`${basePath}/${String(item[routeKey])}/edit`)}
+                                                        >
+                                                            Edit
+                                                        </DropdownMenuItem>
+                                                    )}
                                                     <DropdownMenuSeparator />
                                                     <DropdownMenuItem 
                                                         className="text-destructive focus:text-destructive"
-                                                        onClick={() => {
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
                                                             if (confirm('Are you sure you want to delete this item?')) {
                                                                 router.delete(`${basePath}/${String(item[routeKey])}`);
                                                             }

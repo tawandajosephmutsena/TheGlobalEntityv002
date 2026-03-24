@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary": "#bbfffe",
+              "tertiary-fixed": "#87fefd",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "surface-container-high": "#e1e4d4",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed-dim": "#78efef",
+              "tertiary-dim": "#005959",
+              "primary-dim": "#9a006b",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-fixed": "#000000",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-secondary-container": "#723800",
+              "outline": "#75786d",
+              "on-error-container": "#510017",
+              "surface-variant": "#dbdfce",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "secondary": "#904800",
+              "error": "#b41340",
+              "surface-tint": "#af047a",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "error-container": "#f74b6d",
+              "secondary-container": "#ffc69f",
+              "on-surface": "#2d3027",
+              "outline-variant": "#acaea2",
+              "on-secondary-fixed": "#552800",
+              "background": "#f6f8ea",
+              "primary-fixed": "#ff6abf",
+              "error-dim": "#a70138",
+              "surface-container": "#e7eada",
+              "surface-bright": "#f6f8ea",
+              "on-tertiary-fixed": "#004d4d",
+              "primary-container": "#ff6abf",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "inverse-surface": "#0c0f08",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "inverse-primary": "#fe57bb",
+              "tertiary-container": "#87fefd",
+              "secondary-fixed": "#ffc69f",
+              "secondary-dim": "#7e3e00",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-tertiary-container": "#006161",
+              "on-surface-variant": "#5a5d52"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-blur {
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: -1;
+        }
+        .map-fragment {
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-8 py-6 max-w-none bg-[#f6f8ea]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)] z-50">
+<div class="text-2xl font-black text-[#af047a] uppercase tracking-widest font-['Epilogue']">
+            The Global Entity
+        </div>
+<div class="hidden md:flex items-center gap-10 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Podcast</a>
+<a class="text-[#2d3027] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Blog</a>
+<a class="text-[#2d3027] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Festivals</a>
+<a class="text-[#2d3027] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-500 ease-in-out" href="#">Authors</a>
+<a class="text-[#af047a] border-b-2 border-[#af047a] pb-1 hover:scale-105 transition-all duration-500 ease-in-out" href="#">Contact</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:block relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container rounded-full border-none focus:ring-2 focus:ring-primary w-64 text-sm" placeholder="Search destinations..." type="text"/>
+</div>
+<button class="md:hidden">
+<span class="material-symbols-outlined text-primary text-3xl">menu</span>
+</button>
+</div>
+</nav>
+<main class="relative pt-32 pb-20 overflow-hidden">
+<!-- Watercolor Background Elements -->
+<div class="absolute top-20 -left-20 w-96 h-96 bg-primary watercolor-blur rounded-full"></div>
+<div class="absolute bottom-40 -right-20 w-80 h-80 bg-tertiary watercolor-blur rounded-full"></div>
+<!-- Hand-drawn Map Background Fragment -->
+<div class="absolute top-0 right-0 w-full lg:w-1/2 h-full pointer-events-none opacity-20 z-0 map-fragment">
+<img alt="Vintage cartography map textures" class="w-full h-full object-cover grayscale mix-blend-multiply" data-alt="Hand-drawn vintage map fragment overlay" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjK6_ghEI4Z4twHRSaxBkMhvGFdCWssDwaZyCf7t03rCTo2vEJ0hHW-96xWa_nmEQ6gtIXYNSMgXvtiaThe4k8jGYvyEAwQRfAG9oE1byEAWY_yOVYzmmCV3RbFm06xyg1aVyV8MsWUzE9tXCNqHyk6yo-_b9SfEMKU_BIYfDnTde6fYujF-SRE7-HojvMEXWDA-CwS83owB3fS1pRqiulH9gc22rXxDotX2PPApUeG3Ku0vf2oUO_t_AlHPasM6X7z7z5xz8X1gLP"/>
+</div>
+<div class="container mx-auto px-6 relative z-10">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Left Column: Editorial Content -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<div>
+<span class="inline-block px-4 py-1 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold tracking-widest uppercase mb-4">Collaborations</span>
+<h1 class="text-6xl md:text-8xl font-headline font-black text-on-background tracking-tighter leading-none mb-6">
+                            Say <br/><span class="text-primary italic">Hello</span>
+</h1>
+<p class="text-lg text-on-surface-variant max-w-md leading-relaxed">
+                            We are ethereal cartographers, mapping the unseen beauty of the world. Join our journey as a local business, tourism board, or fellow storyteller.
+                        </p>
+</div>
+<div class="flex flex-col gap-6">
+<div class="group flex items-start gap-4 p-6 bg-surface-container-low rounded-lg transition-all duration-500 hover:scale-[1.02]">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined">explore</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-xl">Global Headquarters</h3>
+<p class="text-on-surface-variant">Nomadic Spirits, Lisbon 1200, Portugal</p>
+</div>
+</div>
+<div class="group flex items-start gap-4 p-6 bg-surface-container-low rounded-lg transition-all duration-500 hover:scale-[1.02]">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<div>
+<h3 class="font-headline font-bold text-xl">Digital Correspondence</h3>
+<p class="text-on-surface-variant">hello@theglobalentity.com</p>
+</div>
+</div>
+</div>
+<div class="flex gap-4 pt-4">
+<a class="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">camera</span>
+</a>
+<a class="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center hover:bg-tertiary hover:text-white hover:border-tertiary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">movie</span>
+</a>
+<a class="w-14 h-14 rounded-full border border-outline-variant flex items-center justify-center hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-300" href="#">
+<span class="material-symbols-outlined">podcasts</span>
+</a>
+</div>
+</div>
+<!-- Right Column: The Journal Form -->
+<div class="lg:col-span-7">
+<div class="bg-surface-container-lowest p-8 md:p-12 rounded-xl shadow-[0_40px_80px_rgba(45,48,39,0.08)] relative overflow-hidden">
+<!-- Watercolor Ink Splash Decoration -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary-container/30 blur-3xl rounded-full"></div>
+<form class="space-y-8 relative z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Your Identity</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/40 transition-all duration-300" placeholder="e.g. Captain Nemo" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">The Signal</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/40 transition-all duration-300" placeholder="email@vessel.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Collaboration Type</label>
+<div class="flex flex-wrap gap-3">
+<button class="px-5 py-2 rounded-full bg-surface-container text-sm font-semibold hover:bg-primary hover:text-white transition-all" type="button">Tourism Board</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-sm font-semibold hover:bg-primary hover:text-white transition-all" type="button">Hotelier</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-sm font-semibold hover:bg-primary hover:text-white transition-all" type="button">Creator</button>
+<button class="px-5 py-2 rounded-full bg-surface-container text-sm font-semibold hover:bg-primary hover:text-white transition-all" type="button">Other</button>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Your Message</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/40 transition-all duration-300 resize-none" placeholder="Tell us about the map you wish to build together..." rows="5"></textarea>
+</div>
+<div class="pt-4">
+<button class="w-full md:w-auto px-12 py-5 bg-gradient-to-r from-primary to-primary-dim text-white rounded-full font-headline font-bold text-lg hover:scale-[1.05] active:scale-95 shadow-lg shadow-primary/20 transition-all duration-500 flex items-center justify-center gap-3" type="submit">
+                                    Dispatch Message
+                                    <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Asymmetrical Marginalia Note -->
+<div class="mt-8 ml-auto max-w-xs text-right pr-6 transform rotate-2">
+<p class="font-headline italic text-secondary text-sm">
+                            "The world is a book, and those who do not travel read only a page."
+                        </p>
+<div class="w-24 h-[2px] bg-secondary-container ml-auto mt-2"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full px-12 py-20 flex flex-col md:flex-row justify-between gap-8 border-t border-[#2d3027]/10 bg-[#f6f8ea] rounded-t-[3rem] mt-20">
+<div class="flex flex-col gap-6">
+<div class="font-['Epilogue'] font-bold text-[#904800] text-3xl">
+                The Global Entity
+            </div>
+<p class="max-w-xs font-['Plus_Jakarta_Sans'] text-sm tracking-wide text-[#2d3027]/60">
+                © 2024 The Global Entity. An Ethereal Cartographer Production.
+            </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12 font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<div class="flex flex-col gap-4">
+<span class="font-bold text-[#af047a] uppercase text-xs tracking-widest">Connect</span>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">Instagram</a>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">Spotify</a>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">TikTok</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-bold text-[#af047a] uppercase text-xs tracking-widest">Legal</span>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">Terms of Service</a>
+<a class="text-[#2d3027]/60 hover:text-[#006666] transition-colors duration-300" href="#">Shipping &amp; Returns</a>
+</div>
+</div>
+</footer>
+</body></html>

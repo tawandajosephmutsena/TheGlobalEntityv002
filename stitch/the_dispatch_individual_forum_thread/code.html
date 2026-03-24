@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Dispatch - Forum Thread | The Grotto</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#e7eada",
+              "surface-container-high": "#e1e4d4",
+              "on-tertiary-fixed": "#004d4d",
+              "tertiary-container": "#87fefd",
+              "inverse-on-surface": "#9b9e92",
+              "inverse-surface": "#0c0f08",
+              "on-secondary-container": "#723800",
+              "tertiary-dim": "#005959",
+              "secondary-dim": "#7e3e00",
+              "surface": "#f6f8ea",
+              "surface-container-lowest": "#ffffff",
+              "surface-bright": "#f6f8ea",
+              "on-surface": "#2d3027",
+              "outline-variant": "#acaea2",
+              "tertiary-fixed": "#87fefd",
+              "on-primary-fixed": "#000000",
+              "on-error-container": "#510017",
+              "surface-container-highest": "#dbdfce",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "inverse-primary": "#fe57bb",
+              "background": "#f6f8ea",
+              "tertiary": "#006666",
+              "surface-dim": "#d2d6c5",
+              "on-secondary-fixed": "#552800",
+              "on-tertiary": "#bbfffe",
+              "primary-fixed-dim": "#f852b5",
+              "secondary-fixed-dim": "#ffb37c",
+              "surface-container-low": "#f0f2e4",
+              "on-surface-variant": "#5a5d52",
+              "error-dim": "#a70138",
+              "error-container": "#f74b6d",
+              "secondary": "#904800",
+              "on-error": "#ffefef",
+              "primary-dim": "#9a006b",
+              "primary": "#af047a",
+              "surface-variant": "#dbdfce",
+              "error": "#b41340",
+              "on-background": "#2d3027",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "tertiary-fixed-dim": "#78efef",
+              "on-primary": "#ffeff3",
+              "secondary-fixed": "#ffc69f",
+              "secondary-container": "#ffc69f",
+              "surface-tint": "#af047a",
+              "outline": "#75786d",
+              "on-tertiary-container": "#006161",
+              "on-secondary": "#fff0e8",
+              "primary-container": "#ff6abf",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-primary-container": "#490031",
+              "primary-fixed": "#ff6abf"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f6f8ea;
+      }
+      .watercolor-blur {
+        filter: blur(60px);
+        opacity: 0.15;
+        z-index: -1;
+      }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Background Accents -->
+<div class="fixed top-[-10%] left-[-5%] w-[40%] h-[40%] bg-primary watercolor-blur rounded-full"></div>
+<div class="fixed bottom-[-10%] right-[-5%] w-[30%] h-[50%] bg-tertiary watercolor-blur rounded-full"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-black text-[#af047a] dark:text-[#fface8] uppercase tracking-widest font-['Epilogue']">The Global Entity</span>
+</div>
+<div class="hidden md:flex items-center gap-8 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#af047a] dark:text-[#fface8] border-b-2 border-[#af047a] pb-1 hover:opacity-100 hover:scale-105 transition-transform duration-300 ease-in-out" href="#">The Grotto</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-70 hover:opacity-100 hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Dispatches</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-70 hover:opacity-100 hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Maps</a>
+<a class="text-[#2d3027] dark:text-[#e4e3da] opacity-70 hover:opacity-100 hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Archives</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<input class="bg-surface-container-high border-none rounded-full px-6 py-2 w-64 text-sm focus:ring-2 focus:ring-primary/20" placeholder="Search the archives..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-2 text-on-surface-variant">search</span>
+</div>
+<div class="flex gap-4 text-[#af047a] dark:text-[#fface8]">
+<button class="hover:scale-110 transition-transform"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:scale-110 transition-transform"><span class="material-symbols-outlined">account_circle</span></button>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="w-72 h-screen fixed left-0 top-0 pt-24 flex flex-col border-r border-[#2d3027]/10 dark:border-[#e4e3da]/10 bg-[#f6f8ea] dark:bg-[#1a1c18] font-['Epilogue'] font-medium text-sm z-40 hidden lg:flex">
+<div class="px-8 mb-8">
+<h2 class="text-xl font-bold text-[#2d3027] dark:text-[#e4e3da]">The Grotto</h2>
+<p class="text-xs opacity-50 uppercase tracking-widest mt-1">Premium Community</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-4 bg-[#af047a] text-white rounded-full mx-4 py-3 px-6 shadow-lg shadow-[#af047a]/20 transition-all duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">water_drop</span>
+<span>The Grotto</span>
+</a>
+<a class="flex items-center gap-4 text-[#2d3027] dark:text-[#e4e3da] mx-4 py-3 px-6 hover:bg-[#e2e4d5]/50 dark:hover:bg-[#383b32]/50 rounded-full transition-all duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Maritime Logs</span>
+</a>
+<a class="flex items-center gap-4 text-[#2d3027] dark:text-[#e4e3da] mx-4 py-3 px-6 hover:bg-[#e2e4d5]/50 dark:hover:bg-[#383b32]/50 rounded-full transition-all duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span>Trade Routes</span>
+</a>
+<a class="flex items-center gap-4 text-[#2d3027] dark:text-[#e4e3da] mx-4 py-3 px-6 hover:bg-[#e2e4d5]/50 dark:hover:bg-[#383b32]/50 rounded-full transition-all duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">air</span>
+<span>Whispering Winds</span>
+</a>
+<a class="flex items-center gap-4 text-[#2d3027] dark:text-[#e4e3da] mx-4 py-3 px-6 hover:bg-[#e2e4d5]/50 dark:hover:bg-[#383b32]/50 rounded-full transition-all duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>Celestial Charts</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full bg-secondary text-on-secondary rounded-full py-4 font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                New Dispatch
+            </button>
+</div>
+<div class="px-4 py-6 border-t border-outline-variant/15 flex flex-col gap-1">
+<a class="flex items-center gap-4 text-on-surface-variant mx-4 py-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="text-xs">Settings</span>
+</a>
+<a class="flex items-center gap-4 text-on-surface-variant mx-4 py-2 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help</span>
+<span class="text-xs">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="lg:ml-72 pt-28 px-4 md:px-12 pb-24 max-w-6xl mx-auto">
+<!-- Breadcrumbs -->
+<nav class="mb-8 flex items-center gap-2 text-xs font-medium text-on-surface-variant/60 uppercase tracking-widest font-label">
+<a class="hover:text-primary" href="#">The Grotto</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary" href="#">Charted Waters</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Navigating the Stormy Seas</span>
+</nav>
+<!-- Thread Header / Original Post -->
+<article class="bg-surface-container-low rounded-lg p-8 md:p-12 mb-12 relative overflow-hidden">
+<!-- Decorative Watercolor Splash -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-20 -mt-20"></div>
+<div class="relative z-10">
+<h1 class="text-3xl md:text-5xl font-headline font-extrabold text-on-surface leading-tight mb-8 max-w-3xl">
+                    Navigating the Stormy Seas: How to stay connected in the Outer Rim?
+                </h1>
+<div class="flex items-center justify-between mb-10 flex-wrap gap-6">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full border-2 border-primary p-1">
+<img alt="AeroSailor" class="w-full h-full rounded-full object-cover bg-surface-container" data-alt="Watercolor style illustrated male avatar with explorer gear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi_Hx0-HeST6bOVhOPTaVX-rPZy_4kORbzz-8fSPfi_i0_VM5pRMULV4BJ3ie3b557cDDw7y1AgIyfbqqp_nHVYq9sOLv7vFm0jVbPyEXdoVSBQ0t2ke4yRtJRuh0-QBdXZs4x19hURBfi51JcqzZ-QZT9YWZwfghh3CxgzDfhT_NAeFyeztS5GBoOoI0RLor0w2btd-6xzsrJz4WoGE8ZShXsT-oWRGvGuTaJgh3bvJHYOgQS0MMVeLnN_nVwCc92NmjOQyN-Fx0l"/>
+</div>
+<div>
+<p class="font-bold text-lg text-on-surface">@AeroSailor</p>
+<p class="text-xs text-on-surface-variant opacity-70">Traveler of the Mists • 4 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4 items-center bg-surface-container-lowest/50 backdrop-blur-sm px-6 py-2 rounded-full border border-outline-variant/10">
+<div class="flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">mode_comment</span>
+<span>84</span>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span>12</span>
+</div>
+<div class="flex items-center gap-2 text-sm font-medium">
+<span class="material-symbols-outlined text-primary text-lg">share</span>
+<span>3</span>
+</div>
+</div>
+</div>
+<div class="prose prose-lg max-w-none text-on-surface-variant font-body leading-relaxed space-y-6">
+<p>My fellow wanderers, I find myself drifting near the edge of the Outer Rim sectors this season. The beauty is unparalleled—stars like crushed diamonds on velvet—but the isolation is becoming... literal. </p>
+<p>I’ve been struggling to maintain a stable link to the Grotto’s main feed. Standard relays aren't cutting it through the ion storms. I've heard rumors of <span class="text-secondary font-bold underline decoration-secondary/30">spectral-link beacons</span> being deployed in the nebula, but I haven't seen a signature yet. Has anyone successfully established a tether out here? Or should I resign myself to weeks of radio silence and manual journal entries?</p>
+</div>
+<div class="mt-12 flex flex-wrap gap-4">
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-on-primary rounded-full font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-all">
+<span class="material-symbols-outlined">reply</span>
+                        Reply
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-highest text-on-surface rounded-full font-bold hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+                        Like
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-highest text-on-surface rounded-full font-bold hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined">share</span>
+                        Share
+                    </button>
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-highest text-on-surface rounded-full font-bold hover:bg-surface-variant transition-all ml-auto">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Comments Section -->
+<section class="space-y-8">
+<div class="flex items-center justify-between mb-8 px-4">
+<h3 class="text-2xl font-headline font-bold text-on-surface flex items-center gap-3">
+<span class="text-tertiary">Whispers from the Collective</span>
+<span class="text-sm font-body font-normal opacity-50">(84 Comments)</span>
+</h3>
+<button class="text-sm font-bold text-primary flex items-center gap-1">
+                    Sort by: Recent <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<!-- Reply 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 md:p-8 shadow-sm border-l-4 border-tertiary relative group hover:shadow-md transition-shadow">
+<div class="flex gap-6">
+<div class="flex-shrink-0">
+<img alt="Julia_Captain" class="w-12 h-12 rounded-full bg-surface-container" data-alt="Watercolor style portrait of a female ship captain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_WUFxtK-zEi5npNrXNp872aLhLXPwWI2U2HsHKOZCLUsj_B959IDttDH6d5B0md56-N4hFrb5qcfp49yvWqV4UNVqZfNyAczsTXEFLMdpKTc7HC3jDrkjvJWmGOxPdcL-devu4LA4NHMW4PUtjjg5RsmPKj-TXf9NeVND5yxKiFYR3UR02EhYuXtRywwgITXopBERZPzx1hZsfmCKCLCsLnC8yMtUCCz3joBN46seV4hu0vf1cwo0JUWHB2e04aibcEPGTeoMScRl"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-2">
+<p class="font-bold text-on-surface">@Julia_Captain</p>
+<span class="text-xs text-on-surface-variant/60">2 hours ago</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed">
+                            Aero, the spectral-links are real but they require a high-gain quartz receiver. If you don't have one, I'd strongly suggest falling back to <span class="font-bold text-tertiary">analog navigation</span> techniques. Keep your charts physical and your sextant handy. The comms will return once you clear the nebula's shadow. Safe travels!
+                        </p>
+<div class="mt-4 flex gap-6 text-xs font-bold text-on-surface-variant/40">
+<button class="hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">thumb_up</span> 24</button>
+<button class="hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">reply</span> Reply</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Reply 2 -->
+<div class="bg-surface-container-lowest rounded-lg p-6 md:p-8 shadow-sm border-l-4 border-secondary relative group hover:shadow-md transition-shadow">
+<div class="flex gap-6">
+<div class="flex-shrink-0">
+<img alt="FestivalNomad" class="w-12 h-12 rounded-full bg-surface-container" data-alt="Watercolor style illustration of a person with festive attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjfHYJGLxrr3qzG_0mag5HGGBcD45R8tXAnnUKpP4Abhi8MJKwVkwhcHUnoQD8i8xuoT8SPCLE4zHcePalj12pC1MIpAWUYpKR_Jrot8TyxDTebDtzD5MY742OFKa_55FmKsOaVC0RnLVmgCK0i_feY_KAl9vkFLPo6fX420VR51atyVe-wgHEst3z9Unr8cRWmbBGgzljW4zfZMohglYQpe1YdTwP7dRI2yGWRqNB75Iw561P__FZ4W-f1pwVUCMQI8LWPlRcGHqK"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-2">
+<p class="font-bold text-on-surface">@FestivalNomad</p>
+<span class="text-xs text-on-surface-variant/60">45 minutes ago</span>
+</div>
+<p class="text-on-surface-variant leading-relaxed mb-4">
+                            If the wait gets too long, check out the "Hidden Waterfalls" guide I posted last week. It's pre-cached for offline view if you hit the sync button before you lost the link. It's a great distraction from the static!
+                        </p>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-center gap-4 hover:bg-surface-container transition-colors cursor-pointer group/link">
+<span class="material-symbols-outlined text-secondary text-3xl">map</span>
+<div>
+<p class="text-sm font-bold text-on-surface group-hover/link:text-secondary">Guide: The Luminous Cascades of Sector 7</p>
+<p class="text-xs text-on-surface-variant/60 italic">Hand-drawn maps and portal locations</p>
+</div>
+<span class="material-symbols-outlined ml-auto text-on-surface-variant/40">open_in_new</span>
+</div>
+<div class="mt-4 flex gap-6 text-xs font-bold text-on-surface-variant/40">
+<button class="hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">thumb_up</span> 8</button>
+<button class="hover:text-primary transition-colors flex items-center gap-1"><span class="material-symbols-outlined text-sm">reply</span> Reply</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Reply Input -->
+<div class="mt-16 sticky bottom-8">
+<div class="bg-surface-container-lowest/80 backdrop-blur-xl rounded-full p-2 shadow-2xl border border-primary/10 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface ml-2 flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2" placeholder="Add your whisper to the collective..." type="text"/>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold text-sm shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-all">
+                        Cast Dispatch
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Mobile Bottom Navigation (Visible on mobile only) -->
+<div class="fixed bottom-0 left-0 right-0 bg-[#f6f8ea]/90 backdrop-blur-lg border-t border-outline-variant/10 md:hidden z-50 flex justify-around items-center h-16 px-4">
+<button class="text-primary flex flex-col items-center">
+<span class="material-symbols-outlined">water_drop</span>
+<span class="text-[10px] uppercase font-bold">Grotto</span>
+</button>
+<button class="text-on-surface-variant/50 flex flex-col items-center">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] uppercase font-bold">Routes</span>
+</button>
+<button class="bg-primary text-white p-3 rounded-full -mt-10 shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="text-on-surface-variant/50 flex flex-col items-center">
+<span class="material-symbols-outlined">notifications</span>
+<span class="text-[10px] uppercase font-bold">Alerts</span>
+</button>
+<button class="text-on-surface-variant/50 flex flex-col items-center">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] uppercase font-bold">Me</span>
+</button>
+</div>
+</body></html>

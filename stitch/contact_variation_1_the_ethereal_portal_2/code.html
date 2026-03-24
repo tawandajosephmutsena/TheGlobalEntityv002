@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cartographer's Workbench | Contact Us</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#ffc69f",
+                        "outline-variant": "#acaea2",
+                        "tertiary-container": "#87fefd",
+                        "surface-tint": "#af047a",
+                        "surface-variant": "#dbdfce",
+                        "on-surface": "#2d3027",
+                        "on-primary-fixed": "#000000",
+                        "surface-container": "#e7eada",
+                        "on-tertiary-fixed-variant": "#006c6c",
+                        "surface-bright": "#f6f8ea",
+                        "on-secondary-fixed": "#552800",
+                        "tertiary-fixed": "#87fefd",
+                        "error-container": "#f74b6d",
+                        "primary-container": "#ff6abf",
+                        "primary-fixed": "#ff6abf",
+                        "on-primary-container": "#490031",
+                        "on-primary-fixed-variant": "#5a003d",
+                        "surface-container-highest": "#dbdfce",
+                        "error": "#b41340",
+                        "primary": "#af047a",
+                        "background": "#f6f8ea",
+                        "primary-fixed-dim": "#f852b5",
+                        "on-surface-variant": "#5a5d52",
+                        "on-secondary-container": "#723800",
+                        "on-primary": "#ffeff3",
+                        "surface-dim": "#d2d6c5",
+                        "secondary-dim": "#7e3e00",
+                        "secondary": "#904800",
+                        "inverse-on-surface": "#9b9e92",
+                        "outline": "#75786d",
+                        "secondary-fixed-dim": "#ffb37c",
+                        "on-error": "#ffefef",
+                        "on-tertiary-fixed": "#004d4d",
+                        "inverse-surface": "#0c0f08",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#006161",
+                        "on-secondary-fixed-variant": "#7f3f00",
+                        "tertiary-dim": "#005959",
+                        "secondary-container": "#ffc69f",
+                        "on-background": "#2d3027",
+                        "error-dim": "#a70138",
+                        "inverse-primary": "#fe57bb",
+                        "surface-container-high": "#e1e4d4",
+                        "on-tertiary": "#bbfffe",
+                        "tertiary-fixed-dim": "#78efef",
+                        "on-secondary": "#fff0e8",
+                        "tertiary": "#006666",
+                        "primary-dim": "#9a006b",
+                        "surface": "#f6f8ea",
+                        "on-error-container": "#510017",
+                        "surface-container-low": "#f0f2e4"
+                    },
+                    fontFamily: {
+                        "headline": ["Epilogue"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .blueprint-grid {
+            background-image: 
+                linear-gradient(to right, rgba(175, 4, 122, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(175, 4, 122, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .technical-border {
+            border: 1px solid rgba(175, 4, 122, 0.2);
+            position: relative;
+        }
+        .technical-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid #af047a;
+            border-left: 2px solid #af047a;
+        }
+        .technical-border::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            border-bottom: 2px solid #af047a;
+            border-right: 2px solid #af047a;
+        }
+        .dashboard-panel {
+            @apply bg-surface-container-lowest/80 backdrop-blur-md border border-outline/20 shadow-sm;
+        }
+        .schematic-bg {
+            background-image: radial-gradient(circle at 2px 2px, rgba(175, 4, 122, 0.1) 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container blueprint-grid">
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline/10">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-[1440px] mx-auto">
+<a class="text-xl font-black text-primary italic font-headline flex items-center gap-2" href="#">
+<span class="material-symbols-outlined">architecture</span>
+            The Ethereal Cartographer
+        </a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-headline tracking-tighter font-bold uppercase text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">Journeys</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">Festivals</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">The Map</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a>
+<a class="font-headline tracking-tighter font-bold uppercase text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-none font-headline font-bold text-xs tracking-widest uppercase technical-border">
+            Inquire
+        </button>
+</div>
+</nav>
+<main class="relative min-h-screen pt-24 pb-20 px-4 max-w-[1500px] mx-auto">
+<div class="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden">
+<svg class="w-full h-full" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+<circle cx="500" cy="500" fill="none" r="400" stroke="#af047a" stroke-dasharray="10 5" stroke-width="0.5"></circle>
+<circle cx="500" cy="500" fill="none" r="300" stroke="#904800" stroke-width="0.5"></circle>
+<line stroke="#af047a" stroke-width="0.2" x1="0" x2="1000" y1="500" y2="500"></line>
+<line stroke="#af047a" stroke-width="0.2" x1="500" x2="500" y1="0" y2="1000"></line>
+<path d="M200,200 L800,800 M800,200 L200,800" stroke="#006666" stroke-width="0.2"></path>
+</svg>
+</div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 h-full">
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="dashboard-panel technical-border p-8 flex flex-col gap-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+<span class="font-headline font-bold uppercase text-[10px] tracking-[0.3em] text-primary">System Module: Header_v1</span>
+</div>
+<h1 class="text-5xl font-black font-headline text-on-surface leading-none tracking-tighter">
+                    Cast Your Message <br/>
+<span class="text-primary italic">into the Wind</span>
+</h1>
+<p class="text-sm text-on-surface-variant leading-relaxed font-body">
+                    Whether you're seeking a hidden archipelago or a festival of the souls, our cartographers are ready to map your next transcendence.
+                </p>
+</div>
+<div class="dashboard-panel technical-border p-6 flex-1 schematic-bg">
+<div class="flex justify-between items-start mb-6">
+<h3 class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface">Live Signal: Navigator's Outpost</h3>
+<span class="text-[10px] font-mono text-secondary">LAT: 40.7128° N / LON: 74.0060° W</span>
+</div>
+<div class="relative h-64 bg-surface-container rounded border border-outline/10 overflow-hidden">
+<img alt="Stylized topographic map" class="absolute inset-0 w-full h-full object-cover grayscale opacity-30 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3MPhbeuxREb4eJln4yYOVBgx1uF88ogHQm0eWUbEEanTR-UnGiya-UHi05uHteDZsSy6gtWA8MS31vTFjZpESPhgaWbJul2Zl4__-rqWDQWDsGQP-Jpjxd9Z-DT2AoiWd_SGdArbHhsppLcnPLfrK6zoU-8wowljSrosHAa9B9AIjy4ZUFm91kHKJUNua7JuaTAxo2u5LbO9Frg2k8uF0XnOdDlo1x4Ne10usajYwWJP2x_h_mRJyoZlsqK1nuM7t2Z2k5qNEx3-5"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-32 h-32 border border-primary/30 rounded-full flex items-center justify-center animate-spin" style="animation-duration: 10s">
+<div class="w-1 h-1 bg-primary absolute top-0"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5">
+<div class="dashboard-panel technical-border p-8 h-full bg-white/40">
+<div class="flex items-center justify-between mb-8 border-b border-outline/10 pb-4">
+<div class="flex flex-col">
+<span class="font-headline font-black text-xl uppercase tracking-tighter">Transmission Core</span>
+<span class="text-[10px] text-on-surface-variant font-mono uppercase">Protocol: Secure_Ether_Link</span>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">hub</span>
+</div>
+<form action="#" class="space-y-6">
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant">Navigator Name</label>
+<span class="text-[9px] font-mono text-outline">REQ_ID_01</span>
+</div>
+<input class="w-full bg-surface-container-low border border-outline/20 rounded-none px-4 py-3 focus:ring-1 focus:ring-primary focus:border-primary transition-all font-body text-sm text-on-surface" placeholder="e.g. Captain Lyra Dawn" type="text"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant">Email Address</label>
+<span class="text-[9px] font-mono text-outline">REQ_ID_02</span>
+</div>
+<input class="w-full bg-surface-container-low border border-outline/20 rounded-none px-4 py-3 focus:ring-1 focus:ring-primary focus:border-primary transition-all font-body text-sm text-on-surface" placeholder="correspondence@beyond.map" type="email"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant">Your Expedition Inquiry</label>
+<span class="text-[9px] font-mono text-outline">REQ_ID_03</span>
+</div>
+<textarea class="w-full bg-surface-container-low border border-outline/20 rounded-none px-4 py-3 focus:ring-1 focus:ring-primary focus:border-primary transition-all font-body text-sm text-on-surface" placeholder="Describe the coordinates of your imagination..." rows="6"></textarea>
+</div>
+<div class="pt-6">
+<button class="w-full py-4 bg-primary text-on-primary rounded-none font-headline font-black text-sm tracking-[0.2em] uppercase hover:bg-primary-dim transition-all technical-border" type="submit">
+                            Send to the Ether
+                        </button>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-on-surface-variant/60 pt-4 border-t border-outline/10">
+<span>LATENCY: 43ms</span>
+<span>EST. ARRIVAL: 2-3 SOLAR CYCLES</span>
+<span>ENC: AES-256</span>
+</div>
+</form>
+</div>
+</div>
+<div class="lg:col-span-3 flex flex-col gap-4">
+<div class="dashboard-panel technical-border p-6 relative overflow-hidden group min-h-[200px] flex flex-col justify-end">
+<img alt="Old journal and maps" class="absolute inset-0 w-full h-full object-cover opacity-10 grayscale group-hover:opacity-20 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_Y1LhjakNe8369-Y6kCMdSH5xXxN12oGlhanOil6qyhbZviP8NHZIbYNeNsUUET1bPsIjsK1uLWzrD2eAMM_810D3efqoLMRO31D6jllcCK_ZAtXiE0GbP7un0rBud8wybd4fmgfhgAdaOVq85izMftaGrVzgWasSGZ1novrFhIhELeArou3kDThIfu1wmpdGzsCW_Sh0LG2ojBSN5Kk0SO1Vv2vTfQnCBG3Z09-ACd2zsbGq_nHwrHDsURjV5Z3r8K7rM2orT1wQ"/>
+<div class="relative z-10">
+<h3 class="font-headline font-black text-lg text-on-surface">Our Archive</h3>
+<p class="text-[11px] text-on-surface-variant mb-4">Explore centuries of paper secrets.</p>
+<a class="inline-flex items-center gap-2 font-headline font-bold text-primary uppercase text-[10px] tracking-widest border-b border-primary/20 hover:border-primary transition-all" href="#">
+                        Browse <span class="material-symbols-outlined text-sm">arrow_right_alt</span>
+</a>
+</div>
+<div class="absolute top-2 right-2 text-[9px] font-mono text-outline">MOD_ARC_7</div>
+</div>
+<div class="dashboard-panel technical-border bg-secondary p-6 text-on-secondary relative overflow-hidden">
+<div class="absolute top-[-20px] right-[-20px] opacity-10">
+<span class="material-symbols-outlined text-8xl">sailing</span>
+</div>
+<div class="relative z-10 flex flex-col gap-2">
+<span class="font-headline font-black text-3xl">01</span>
+<h4 class="font-headline font-bold text-sm uppercase tracking-tighter">Direct Port</h4>
+<p class="font-body text-[11px] leading-snug">Visit us at the Golden Wharf, Anchor Point VII, The Sapphire Coast.</p>
+</div>
+<div class="absolute bottom-2 right-2 text-[9px] font-mono opacity-50">LOC_ST_09</div>
+</div>
+<div class="dashboard-panel technical-border p-6 flex flex-col gap-4 schematic-bg">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-none bg-primary flex items-center justify-center shrink-0 border border-primary-container">
+<span class="material-symbols-outlined text-on-primary text-xl">call</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-xs uppercase tracking-tighter">Voice Frequency</h4>
+<p class="text-[10px] text-on-surface-variant font-mono">432Hz | +1 (800) MAP-SOUL</p>
+</div>
+</div>
+</div>
+<div class="dashboard-panel technical-border p-6 flex-1 bg-surface-container">
+<h4 class="font-headline font-bold text-[10px] uppercase text-on-surface-variant tracking-[0.3em] mb-4">Social Tether</h4>
+<div class="flex flex-col gap-3">
+<a class="text-xs text-on-surface hover:text-primary transition-colors font-headline font-bold flex justify-between items-center group" href="#">
+                        Ethergram <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</a>
+<a class="text-xs text-on-surface hover:text-primary transition-colors font-headline font-bold flex justify-between items-center group" href="#">
+                        MapTok <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</a>
+<a class="text-xs text-on-surface hover:text-primary transition-colors font-headline font-bold flex justify-between items-center group" href="#">
+                        SkyBird <span class="material-symbols-outlined text-sm opacity-0 group-hover:opacity-100 transition-opacity">north_east</span>
+</a>
+</div>
+</div>
+<div class="dashboard-panel technical-border bg-tertiary p-4 flex items-center justify-between text-tertiary-container">
+<span class="font-headline font-bold text-[10px] uppercase tracking-tighter">Magic_Link_Status</span>
+<span class="material-symbols-outlined text-lg animate-pulse">auto_awesome</span>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-surface-container-low border-t border-outline/10 w-full relative z-20">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-8 w-full gap-8 max-w-[1440px] mx-auto">
+<div class="flex flex-col gap-2">
+<a class="font-['Epilogue'] font-bold text-secondary text-lg italic" href="#">The Ethereal Cartographer</a>
+<p class="font-['Plus_Jakarta_Sans'] text-[10px] tracking-wide text-on-surface-variant opacity-60">© 2024 The Ethereal Cartographer. Hand-drawn with soul.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all" href="#">Manifesto</a>
+<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all" href="#">Privacy</a>
+<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all" href="#">Terms</a>
+<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all" href="#">Partners</a>
+<a class="font-['Plus_Jakarta_Sans'] text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all" href="#">Careers</a>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary text-sm">language</span>
+<span class="material-symbols-outlined text-primary text-sm">park</span>
+</div>
+</div>
+</footer>
+
+</body></html>

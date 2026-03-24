@@ -12,10 +12,15 @@ interface CustomPage extends Page {
 
 interface DynamicPageProps {
     page: CustomPage;
-    featuredServices?: any[]; // Keep any for now as types might be complex
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    featuredServices?: any[]; 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     featuredProjects?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recentInsights?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     teamMembers?: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     reviews?: any[];
 }
 

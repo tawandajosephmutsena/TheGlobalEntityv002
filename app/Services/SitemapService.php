@@ -9,6 +9,7 @@ use App\Models\Service;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Log;
 
 class SitemapService
 {
@@ -43,7 +44,7 @@ class SitemapService
             
             return true;
         } catch (\Exception $e) {
-            \Log::error('Failed to generate sitemap: ' . $e->getMessage());
+            Log::error('Failed to generate sitemap: ' . $e->getMessage());
             return false;
         }
     }

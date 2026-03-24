@@ -1,0 +1,37 @@
+```mermaid
+graph TD
+    subgraph Admin Dashboard
+        PB[PageBuilder.tsx]
+        BL[BlockList.tsx]
+        BE[BlockEditor.tsx]
+        VP[VisualPreview.tsx]
+        
+        PB --> BL
+        PB --> BE
+        PB --> VP
+    end
+
+    subgraph Preview Iframe
+        DP[DynamicPage.tsx]
+        BR[BlockRenderer.tsx]
+        
+        DP --> BR
+        BR --> H[Hero Block]
+        BR --> T[Text Block]
+        BR --> S[Services Block...]
+    end
+
+    subgraph Database
+        P[(Pages Table)]
+    end
+
+    %% Interactions
+    BL -- "1. Reorder/Add" --> PB
+    BE -- "2. Update Content" --> PB
+    PB -- "3. postMessage(blocks)" --> VP
+    VP -- "4. window.postMessage" --> DP
+    DP -- "5. setBlocks(state)" --> BR
+    
+    PB -- "6. Inertia.put(save)" --> AC[Admin Controller]
+    AC -- "7. Update" --> P
+```

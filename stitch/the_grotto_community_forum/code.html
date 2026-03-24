@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Global Entity | Explorer's Forum</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#ffc69f",
+                        "surface-container-highest": "#dbdfce",
+                        "tertiary-dim": "#005959",
+                        "on-secondary-fixed-variant": "#7f3f00",
+                        "inverse-on-surface": "#9b9e92",
+                        "on-background": "#2d3027",
+                        "on-error": "#ffefef",
+                        "secondary-fixed-dim": "#ffb37c",
+                        "on-primary-container": "#490031",
+                        "background": "#f6f8ea",
+                        "outline": "#75786d",
+                        "inverse-primary": "#fe57bb",
+                        "surface-dim": "#d2d6c5",
+                        "on-secondary-fixed": "#552800",
+                        "on-tertiary-container": "#006161",
+                        "primary-fixed-dim": "#f852b5",
+                        "tertiary-fixed-dim": "#78efef",
+                        "on-secondary": "#fff0e8",
+                        "error-container": "#f74b6d",
+                        "secondary-container": "#ffc69f",
+                        "on-tertiary-fixed": "#004d4d",
+                        "on-tertiary": "#bbfffe",
+                        "outline-variant": "#acaea2",
+                        "secondary": "#904800",
+                        "tertiary-fixed": "#87fefd",
+                        "on-primary-fixed": "#000000",
+                        "surface-bright": "#f6f8ea",
+                        "primary-fixed": "#ff6abf",
+                        "surface-variant": "#dbdfce",
+                        "tertiary": "#006666",
+                        "on-primary": "#ffeff3",
+                        "on-tertiary-fixed-variant": "#006c6c",
+                        "primary-dim": "#9a006b",
+                        "primary": "#af047a",
+                        "surface-tint": "#af047a",
+                        "error": "#b41340",
+                        "primary-container": "#ff6abf",
+                        "error-dim": "#a70138",
+                        "on-surface-variant": "#5a5d52",
+                        "on-surface": "#2d3027",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f6f8ea",
+                        "inverse-surface": "#0c0f08",
+                        "on-error-container": "#510017",
+                        "secondary-dim": "#7e3e00",
+                        "surface-container-low": "#f0f2e4",
+                        "surface-container": "#e7eada",
+                        "surface-container-high": "#e1e4d4",
+                        "on-secondary-container": "#723800",
+                        "on-primary-fixed-variant": "#5a003d"
+                    },
+                    fontFamily: {
+                        "headline": ["Epilogue"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-bleed {
+            background: radial-gradient(circle at 90% 10%, rgba(175, 4, 122, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 10% 90%, rgba(144, 72, 0, 0.05) 0%, transparent 40%);
+        }
+        .signature-path {
+            stroke-dasharray: 8 8;
+            stroke: var(--secondary);
+        }
+        .glass-nav {
+            background: rgba(246, 248, 234, 0.85);
+            backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Main Layout Container -->
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<!-- Shared Header (Immutable Structure) -->
+<header class="sticky top-0 z-50 glass-nav border-b border-outline-variant/15 px-6 lg:px-10 py-4">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between whitespace-nowrap">
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-4 text-on-surface">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs><clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath></defs>
+</svg>
+</div>
+<h2 class="text-on-surface font-headline text-xl font-extrabold tracking-tight">The Global Entity</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-on-surface font-label text-sm font-semibold hover:text-primary transition-colors" href="#">Discussions</a>
+<a class="text-on-surface font-label text-sm font-semibold hover:text-primary transition-colors" href="#">Explorers</a>
+<a class="text-on-surface font-label text-sm font-semibold hover:text-primary transition-colors" href="#">Updates</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-full bg-surface-container overflow-hidden border border-outline-variant/10">
+<div class="text-on-surface-variant flex items-center justify-center pl-4" data-icon="magnifying_glass">
+<span class="material-symbols-outlined">magnification_large</span>
+</div>
+<input class="w-full border-none bg-transparent focus:ring-0 text-sm font-medium placeholder:text-on-surface-variant/60 px-3" placeholder="Search the map..." value=""/>
+</div>
+</label>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-full size-10 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined" data-icon="bell">doorbell</span>
+</button>
+<button class="flex items-center justify-center rounded-full size-10 bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-all">
+<span class="material-symbols-outlined" data-icon="user_circle">supervised_user_circle</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary-container" data-alt="Portrait of a female explorer smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBou3b5mdh_KZuDjaTXbNm_5myatn7D7113UoTC1EYuDUPhtPbHETQylAnchLMe7GXdkQR6roDO7laoGQdR3dhtcVNNlwsge3LbqqteQY1Me-SZRMsjUXY9Smia411YcszL2AxOB7zXsuCP__VTXxyODX3nTW63WMAWXTLeDfP6PlEvc2tUdL2hDH6CNyTt3D2kj49WoJOukPwFph991IyIS9LqCmMrQqk-ALHXf2EM5s2yqM0OIAgaEQaLMTEAh72GJqn5rHCDddF6");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 px-6 lg:px-10 py-10">
+<!-- Sidebar Navigation -->
+<aside class="lg:col-span-3 flex flex-col gap-10">
+<!-- Category Section -->
+<section class="flex flex-col gap-4">
+<h1 class="text-on-surface font-headline text-lg font-bold px-4">The Navigation</h1>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-full bg-primary-container text-on-primary-fixed-variant" href="#">
+<span class="material-symbols-outlined" data-icon="compass" style="font-variation-settings: 'FILL' 1;">compass_calibration</span>
+<span class="font-label text-sm font-bold">The Crow's Nest</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-tertiary" data-icon="waves">waves</span>
+<span class="font-label text-sm font-medium">Charted Waters</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-secondary" data-icon="storefront">storefront</span>
+<span class="font-label text-sm font-medium">Merchant Row</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-full hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="book_open">file_open</span>
+<span class="font-label text-sm font-medium">Captain's Log</span>
+</a>
+</div>
+</section>
+<!-- Action Button -->
+<button class="group flex items-center justify-between w-full bg-primary text-on-primary rounded-full px-6 py-4 shadow-lg hover:scale-[1.02] transition-transform overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-r from-primary to-primary-dim opacity-50"></div>
+<span class="relative z-10 font-headline font-bold text-base">New Dispatch</span>
+<span class="material-symbols-outlined relative z-10" data-icon="edit_note">edit_note</span>
+</button>
+<!-- Trending Topics -->
+<section class="flex flex-col gap-4">
+<h3 class="text-on-surface-variant font-headline text-sm font-bold uppercase tracking-widest px-4">Whispers on the Wind</h3>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 px-4 py-2 hover:bg-surface-container-low rounded-lg transition-all cursor-pointer">
+<span class="material-symbols-outlined text-secondary" data-icon="fire">fireplace</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">#ZanzibarSunset</span>
+<span class="text-xs text-on-surface-variant">42 new logs</span>
+</div>
+</div>
+<div class="flex items-center gap-3 px-4 py-2 hover:bg-surface-container-low rounded-lg transition-all cursor-pointer">
+<span class="material-symbols-outlined text-tertiary" data-icon="eco">eco</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">#CoralRegen</span>
+<span class="text-xs text-on-surface-variant">12 active souls</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Active Explorers -->
+<section class="flex flex-col gap-4">
+<h3 class="text-on-surface-variant font-headline text-sm font-bold uppercase tracking-widest px-4">Active Explorers</h3>
+<div class="flex flex-wrap gap-2 px-4">
+<div class="size-10 rounded-full border-2 border-surface bg-cover shadow-sm ring-1 ring-outline-variant/20" data-alt="Male traveler headshot" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAfN4gS8b9v34Hmwfx_0wwoUxL3N3UZfXT3FfBKhJL-5JN3QLpzrVzd_8nFtAFh2erkFwsdTOucbyae8oupaGwZL1BA3NK__NIAHPRrPPiIeUc8WPcC6yjY9NX4geZSWzQR7CqtvZMHPZA0vrXL-wxOv_SqhBGkF4N3amjY4U_JkeLyE7goKzt-S_7kNnWclhNXhlimKbjq-Cl31TxbuyU790q0Drs1HDywT_D9t43-JamxX20_62Yj4QvhQF05BPcKoUhXxypuDufc')"></div>
+<div class="size-10 rounded-full border-2 border-surface bg-cover shadow-sm ring-1 ring-outline-variant/20" data-alt="Female traveler headshot" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAWpjrxtme8HqrYDqIUI2YjG4ArFBEn0W_ZcKLUFDz5XsbiDeJ_iudPHZ0Hok_tZXmGvMJWTVqvZ8NIzVtdhWPVZ3cgPf3_znwPK6THuHNxQ9CGNvPtrLaevC95z_NvviYeDDh674W2pftsa-eImnp1VI4jS0QzkSghks5yZDJfeINpvkXLRXo-jFChLimMWv0dH0zptaqDCcOLUwI1G9lUp5Kn3WlO7TQD1tupiu1Qvnnlgb_57fqvoHLO4kW5ghQwwEAof4ArocLA')"></div>
+<div class="size-10 rounded-full border-2 border-surface bg-cover shadow-sm ring-1 ring-outline-variant/20" data-alt="Traveler profile photo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAROln_1ES3jpqHIiOnJyXLtYJXFh3Z1ZVtQ9dA83G5VY0V2BDgA5UxJ0LyzeUt9jqV2kbYpKCgG9ZKMOyzvshCnyYyBPIfE4wqdUQ50bVrA0jYptEJ8BWTlrikt2gzNntXYsXPeJxl_4Y2P1QxtGbz_W0iG6bcps4xJZIRPRrCHNuS0mlghSUvbe6UpmIr7SZpefGmXtF5YlMprEXmvzwPWAntS5xu5zYJyNfEmMxos7FQvoiCtUtFDYXtw-HiEX1spJRtpLMPU5KY')"></div>
+<div class="size-10 rounded-full bg-surface-container-highest border-2 border-surface flex items-center justify-center text-xs font-bold text-on-surface">+24</div>
+</div>
+</section>
+</aside>
+<!-- Main Discussion Feed -->
+<section class="lg:col-span-9 flex flex-col gap-8">
+<!-- Hero Highlight Section -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low watercolor-bleed border border-outline-variant/10 p-8 @container">
+<div class="flex flex-col @xl:flex-row gap-8 items-center">
+<div class="w-full @xl:w-1/2 rounded-lg overflow-hidden aspect-video shadow-2xl rotate-1">
+<img alt="Bioluminescent water at night" class="w-full h-full object-cover" data-alt="Bioluminescent bay with glowing blue water and stars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChJPocuMdyc-hVUxC3ma16W8NP8vUxGPYvnaLrOCdqo_UbGsQXOH5egnG3JgQ5B1DBT_RRfqtloD3qiujX_0uWbLZG49yv4ryYpWDb4Va2eWp2IgJoS8l_ElV4pe9AzchEcfOU1GoucCsFh47_1flo5U_24LV7CiQNJTsJyuY0wNc5gG2X824QVKepKmgPlVnZcj_QKr2P7aOylDxAuvKlf4ldsEHchbxz84MfNdd0P1CeB6OUoRvV690qKejq2q4G6SA6LISUOJwQ"/>
+</div>
+<div class="w-full @xl:w-1/2 flex flex-col gap-4">
+<span class="text-primary font-headline font-bold uppercase tracking-tighter text-sm">Featured Dispatch</span>
+<h2 class="text-on-surface font-headline text-3xl font-extrabold leading-tight">Navigating the bioluminescent bays of Vieques</h2>
+<p class="text-on-surface-variant text-base leading-relaxed">Exploring the hidden glows of the midnight sea with sustainable practices and ancient navigation techniques...</p>
+<div class="flex items-center gap-4 mt-2">
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-full font-bold text-sm hover:opacity-90 transition-opacity">Read Full Log</button>
+<span class="text-xs text-outline font-medium uppercase">Posted in Charted Waters • 2h ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters & Search -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex gap-2 flex-wrap">
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-highest text-on-surface text-sm font-semibold hover:bg-primary hover:text-on-primary transition-all">
+<span>Solo Travel</span>
+<span class="material-symbols-outlined text-xs" data-icon="close">close</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-sm font-medium border border-outline-variant/20 hover:border-primary transition-all">
+<span>Sustainability</span>
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container text-on-surface-variant text-sm font-medium border border-outline-variant/20 hover:border-primary transition-all">
+<span>Festival Vibe</span>
+<span class="material-symbols-outlined text-xs" data-icon="add">add</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<span class="text-sm font-bold text-on-surface-variant">Sort by:</span>
+<select class="bg-transparent border-none font-bold text-primary focus:ring-0 cursor-pointer text-sm">
+<option>Latest Waves</option>
+<option>Most Hearted</option>
+<option>Old Scrolls</option>
+</select>
+</div>
+</div>
+<!-- Thread List -->
+<div class="flex flex-col gap-4">
+<!-- Thread Card 1 -->
+<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-lg bg-surface-container-lowest border-l-4 border-primary hover:shadow-lg transition-all cursor-pointer">
+<div class="flex shrink-0">
+<div class="size-14 rounded-lg bg-cover bg-center border-2 border-surface-container rotate-[-2deg]" data-alt="Avatar of user Luca" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnP1XLlp-D1RbGl0JodiU5g4vjiroNIcri3wMh5iiClCaFjEyiouge7MqoshlPTE3S5fPXQLEUvEWwmTQKlIVM9bRogfSIBCrRyEK7_qPgbQbwTsPzO__ygm7TxLD7rC_gsHEdB7HVIIL8n-D-PWtgUrBk5cBU2tpHW4IwQ78_xxdLK-wfFxSncLRWK1CPzGMy8FUDm4alvj8-H_PR7_oBXvxI3UbEueexHKbtmqw7YmgxnG3Ri1JyGsL3wUlGfkbKY9a0ryudcqe0')"></div>
+</div>
+<div class="flex flex-col flex-1 gap-2">
+<div class="flex justify-between items-start">
+<h3 class="text-on-surface font-headline text-xl font-bold group-hover:text-primary transition-colors">Packing list for the Sahara Trek?</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-xs font-bold">14</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2">"Is anyone heading to the nomadic festivals this spring? I'm trying to figure out if I need more than just one solar charger and a heavy linen cloak..."</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary bg-secondary-container/30 px-2 py-0.5 rounded">The Crow's Nest</span>
+<span class="text-xs text-outline font-medium">Luca Explorer • 45 mins ago</span>
+</div>
+</div>
+</div>
+<!-- Thread Card 2 -->
+<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-lg bg-surface-container-lowest border-l-4 border-tertiary hover:shadow-lg transition-all cursor-pointer">
+<div class="flex shrink-0">
+<div class="size-14 rounded-lg bg-cover bg-center border-2 border-surface-container rotate-[3deg]" data-alt="Avatar of user Maya" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgFwYkJuxo9tm3HAZbzsyZbgp1xvArxBEUJPYd9XSSo_qNU9wVMXhYjgXtUvkp_q3KSttsCMDFqT1tGaQDT8B30iv3aoDZfZSzD_Pp6Pv3VljMj86obY4D0k7VrnZBrxWLi3vveQ2d6wyEwI5zr-CN22FcXWGYTRk1lTaA5cADFcQcNeVa8dxod5Dy3xczFpdtpy29_8XVunDo41KsjNdJzKOQXubIKpLK1Z7hiaUZc6kM3n3ICDWA1r3NGc1OrCTgPH0hGRRpFiem')"></div>
+</div>
+<div class="flex flex-col flex-1 gap-2">
+<div class="flex justify-between items-start">
+<h3 class="text-on-surface font-headline text-xl font-bold group-hover:text-tertiary transition-colors">The best vegan Jollof in Accra?</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-xs font-bold">32</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2">"Merchant Row really delivered last night. Found a hidden stall near the arts market that uses heirloom tomatoes. Here is the location drop..."</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-tertiary bg-tertiary-container/30 px-2 py-0.5 rounded">Merchant Row</span>
+<span class="text-xs text-outline font-medium">Maya Wanders • 3 hours ago</span>
+</div>
+</div>
+</div>
+<!-- Thread Card 3 (Captain's Log) -->
+<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-lg bg-primary-container/10 border-l-4 border-primary-dim hover:shadow-lg transition-all cursor-pointer relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-5 rotate-12">
+<span class="material-symbols-outlined !text-9xl" data-icon="history_edu">history_edu</span>
+</div>
+<div class="flex shrink-0">
+<div class="size-14 rounded-lg bg-cover bg-center border-2 border-primary-container" data-alt="Avatar of Julia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdhqFs3rrcfkpTyjHbOY6V1hW5srfKbhq18m9zBQvzfHae3-IcP9CPQwXotDmixqm4hA3CluL3pHYtmcjLk4qIhPBMtk0B946YWARMCFFd-IgndAWCwm6TJW98JUBezBNQLzN28nkCiIriBQscIm4fvqzYer30XdCfB1dyG4nhrlMf2EZL9zE6Y4y5e3o5KMhhbKhRV4A514XZiwhPi2XJ7GJ8MNumd_llu6VIXsLt7rf-E2D_vRvITKD4BSlbG4Fov-72E4dXvQAh')"></div>
+</div>
+<div class="flex flex-col flex-1 gap-2 relative z-10">
+<div class="flex justify-between items-start">
+<h3 class="text-on-surface font-headline text-xl font-bold group-hover:text-primary transition-colors">Julia's Monthly Update: The Lisbon Takeover</h3>
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-lg" data-icon="verified">verified</span>
+<span class="text-xs font-bold uppercase tracking-tighter">Official</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2">"Our community meetup is finally happening. 200 explorers from 30 countries are descending on the hills of Lisbon for a week of pirate-themed networking and..."</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary-dim bg-primary-container/40 px-2 py-0.5 rounded">Captain's Log</span>
+<span class="text-xs text-outline font-medium">Julia Entity • Yesterday</span>
+</div>
+</div>
+</div>
+<!-- Thread Card 4 -->
+<div class="group flex flex-col md:flex-row gap-6 p-6 rounded-lg bg-surface-container-lowest border-l-4 border-secondary hover:shadow-lg transition-all cursor-pointer">
+<div class="flex shrink-0">
+<div class="size-14 rounded-lg bg-cover bg-center border-2 border-surface-container rotate-[-1deg]" data-alt="Avatar of user Marcus" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0IljAm-weYcBGOFb78bHyee2OKT_gDESZGCAnbu3lnhK_0O2Z5MfhMaocrsbNX7S6rDXaWPwXOCJeM6_ech3eC3V-IYGD-dS6fJkkc-5epEFvrcSzT1PDempeCdckmE73cO_XJtRQCg_hl0nbjxrZfspsI4M7oLMW0h5tBYejayWcsQM6axJmyH78rFoXZVLJU_Cgk8ypY3wBfw-j-H9dhKsebF2R81gfk6RnUGEQBOksW3C26Dfm-41Sag22WvbYidkgPt8m7Oeh')"></div>
+</div>
+<div class="flex flex-col flex-1 gap-2">
+<div class="flex justify-between items-start">
+<h3 class="text-on-surface font-headline text-xl font-bold group-hover:text-secondary transition-colors">Finding water-taxi's in Venice without the tourist trap prices</h3>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-lg" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-xs font-bold">8</span>
+</div>
+</div>
+<p class="text-on-surface-variant text-sm line-clamp-2">"Tip for solo travelers: Head past the main square to the local grocery dock around 5 AM. The supply boats often take passengers for a few euros if you're..."</p>
+<div class="flex items-center gap-4 mt-2">
+<span class="text-[10px] font-bold uppercase tracking-widest text-secondary bg-secondary-container/30 px-2 py-0.5 rounded">Charted Waters</span>
+<span class="text-xs text-outline font-medium">Marcus Wayfarer • 2 days ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-2 py-10">
+<button class="size-10 rounded-full flex items-center justify-center border border-outline-variant/30 text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="size-10 rounded-full flex items-center justify-center bg-primary text-on-primary font-bold">1</button>
+<button class="size-10 rounded-full flex items-center justify-center text-on-surface font-bold hover:bg-surface-container">2</button>
+<button class="size-10 rounded-full flex items-center justify-center text-on-surface font-bold hover:bg-surface-container">3</button>
+<span class="px-2 text-outline">...</span>
+<button class="size-10 rounded-full flex items-center justify-center text-on-surface font-bold hover:bg-surface-container">12</button>
+<button class="size-10 rounded-full flex items-center justify-center border border-outline-variant/30 text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Signature Editorial Footer -->
+<footer class="bg-surface-container-low border-t border-outline-variant/20 py-20 px-6 lg:px-10 mt-10 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 overflow-hidden">
+<svg class="opacity-30" height="2" width="100%">
+<line class="signature-path" stroke-width="4" x1="0" x2="100%" y1="0" y2="0"></line>
+</svg>
+</div>
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="md:col-span-2 flex flex-col gap-6">
+<div class="flex items-center gap-3 text-on-surface">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48">
+<path d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"></path>
+</svg>
+</div>
+<span class="font-headline font-extrabold text-xl">The Global Entity</span>
+</div>
+<p class="text-on-surface-variant max-w-sm leading-relaxed font-medium">
+                        A sanctuary for the ethereal cartographers, the solo wanderers, and the festival seekers. Mapping the world beyond the edges of the grid.
+                    </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline font-bold text-on-surface">The Expedition</h4>
+<nav class="flex flex-col gap-2">
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#">Community Guidelines</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#">The Dispatch Archive</a>
+<a class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors" href="#">Merchant Partnership</a>
+</nav>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline font-bold text-on-surface">Connect</h4>
+<div class="flex gap-4">
+<a class="size-10 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="public">public</span>
+</a>
+<a class="size-10 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-secondary hover:text-on-secondary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</a>
+<a class="size-10 rounded-full bg-surface-container-highest flex items-center justify-center hover:bg-tertiary hover:text-on-tertiary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto mt-20 pt-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between gap-4">
+<span class="text-xs font-bold text-on-surface-variant tracking-widest uppercase">© 1721-2024 The Global Entity Ltd.</span>
+<span class="text-xs font-label italic text-outline">Hand-drawn with soul across seven seas.</span>
+</div>
+</footer>
+</div>
+</body></html>

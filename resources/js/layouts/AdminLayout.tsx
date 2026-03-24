@@ -45,7 +45,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
         <>
             <Head title={title ? `${title} - Admin` : 'Admin'} />
             <ThemeStyles />
-            <AppShell variant="sidebar">
+            <AppShell variant="sidebar" className="admin-ui">
 
                 <AdminSidebar />
                 <SidebarInset>

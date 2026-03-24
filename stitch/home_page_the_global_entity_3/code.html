@@ -1,0 +1,252 @@
+<html class="light" lang="en"><head></head><body class="bg-background text-on-background font-body overflow-hidden h-screen watercolor-canvas">```html
+
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Interactive Dashboard | The Global Entity</title>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#904800",
+              "surface-variant": "#dbdfce",
+              "on-secondary-container": "#723800",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "secondary-container": "#ffc69f",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-highest": "#dbdfce",
+              "surface-dim": "#d2d6c5",
+              "error": "#b41340",
+              "outline-variant": "#acaea2",
+              "surface-tint": "#af047a",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-fixed": "#ffc69f",
+              "on-tertiary-container": "#006161",
+              "on-tertiary": "#bbfffe",
+              "secondary-dim": "#7e3e00",
+              "on-error": "#ffefef",
+              "on-secondary-fixed": "#552800",
+              "primary-fixed": "#ff6abf",
+              "primary-dim": "#9a006b",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "tertiary-container": "#87fefd",
+              "error-dim": "#a70138",
+              "background": "#f6f8ea",
+              "on-error-container": "#510017",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "inverse-on-surface": "#9b9e92",
+              "surface-container-high": "#e1e4d4",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#006666",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-primary": "#ffeff3",
+              "surface-bright": "#f6f8ea",
+              "on-primary-container": "#490031",
+              "error-container": "#f74b6d",
+              "tertiary-fixed": "#87fefd",
+              "surface-container": "#e7eada",
+              "on-primary-fixed": "#000000",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "tertiary-fixed-dim": "#78efef",
+              "primary-fixed-dim": "#f852b5"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-canvas {
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(175, 4, 122, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(0, 102, 102, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(144, 72, 0, 0.05) 0%, transparent 60%);
+            background-color: #f6f8ea;
+        }
+        .map-pin {
+            @apply absolute cursor-pointer transition-all duration-500 hover:scale-125;
+        }
+        .map-pin input {
+            display: none;
+        }
+        .info-panel {
+            @apply absolute opacity-0 invisible translate-y-10 transition-all duration-500 z-50 pointer-events-none;
+        }
+        .map-pin input:checked ~ .info-panel {
+            @apply opacity-100 visible translate-y-0 pointer-events-auto;
+        }
+        .floating-island {
+            @apply bg-surface/90 backdrop-blur-md border border-outline/20 shadow-2xl p-8 rounded-xl max-w-md;
+        }
+        .scribble-border {
+            border-style: solid;
+            border-image: url("data:image/svg+xml,%3Csvg width='100' height='10' viewBox='0 0 100 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 8C20 2 40 12 60 5C80 -2 99 8 99 8' stroke='%23904800' stroke-width='2' stroke-linecap='round' stroke-dasharray='4 6'/%3E%3C/svg%3E") 30 stretch;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #af047a;
+            border-radius: 10px;
+        }
+    </style>
+
+
+<nav class="fixed top-0 w-full z-[100] px-8 py-4 flex justify-between items-center bg-surface/40 backdrop-blur-sm">
+<a class="font-headline font-black text-xl text-primary italic" href="#">Ethereal Cartographer</a>
+<div class="hidden md:flex gap-6 items-center font-bold text-sm">
+<a class="text-primary border-b-2 border-primary" href="#">Home</a>
+<a class="hover:text-primary transition-colors" href="#">Festival Map</a>
+<a class="hover:text-primary transition-colors" href="#">Blog</a>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full shadow-lg">Join Journey</button>
+</div>
+</nav>
+<main class="relative w-full h-full pt-16 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="Southern Africa Watercolor Map" class="w-full h-full object-cover opacity-40 mix-blend-multiply scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeXFTbkRrB3znau0Anh6xoUV-doGnNCGRMbV1eNDPghYojLkGU7CQoeWP2r7YSsJEaZwXWWVgi903HfMTArgRqU_c0ACv0ZbRn-YIIeW0jHxI8qddRTXzR5gSRtSDLVbAX5DmL7G1aAgN_hV5FzyquQXqmc0AAo5RQH9kQ-aTicr_OCccxbAQqnMRYDKg9ebnzlM2XtlDsHMDEqxSEFOWcj9Ns4RmBCLPCMF4ktxq3MQaHJnOScP19ajG5VU2lZJRUmc9NzvZAUKgF"/>
+</div>
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center pointer-events-none px-6">
+<h1 class="font-headline font-black text-5xl md:text-7xl text-on-background leading-none tracking-tighter mb-4">
+            The <span class="text-primary italic">Global</span> Entity
+        </h1>
+<p class="font-body text-lg text-on-surface-variant max-w-xl mx-auto mb-6">
+            Your Sustainable Slow travel and festival plug. Experience epic festivals and slow travel across the African continent.
+        </p>
+<div class="flex gap-4 justify-center pointer-events-auto">
+<button class="bg-tertiary text-on-tertiary px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-xl hover:scale-105 transition-transform">
+                Find your next Festival <span class="material-symbols-outlined">map</span>
+</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-xl hover:scale-105 transition-transform">
+                Read Stories <span class="material-symbols-outlined">auto_stories</span>
+</button>
+</div>
+</div>
+<label class="map-pin top-[40%] left-[30%]">
+<input type="checkbox"/>
+<div class="bg-secondary p-3 rounded-full text-white shadow-2xl animate-pulse ring-4 ring-secondary/20">
+<span class="material-symbols-outlined">sentiment_dissatisfied</span>
+</div>
+<div class="info-panel left-full ml-6 -top-40">
+<div class="floating-island">
+<h2 class="font-headline font-black text-3xl text-on-background mb-4">Travel That <span class="text-tertiary">Moves You.</span></h2>
+<img alt="Traveler" class="w-full h-40 object-cover rounded-lg mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjVZwCv0qhZwwt3Fm403ZgSMl6FdYlBSvRMhWGkkWZdfrWT45PBRJp8O3IpoFGoPDEi8ez6J58v-d3tVUmFN8pg_J1V68jK6IHaMf50NEy1TXugGQkYips_TQSMsCPdkIZg_P3eKl5GK1EOSCwZ8t6xBV1843bYyJipKynaT9hP1EXBtVCuCcZ77U5jO6CfAkup84cYtzzziL-lz4vG2CRz1ycCcwHpBySSzvhG0vradN5rboQsMidXAvGEGveRkePuBMTLscUF_Fq"/>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-4 italic">Ever felt lost in the sea of generic travel guides? We've been there. The missed buses, the language barriers.</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">TGE skip the glossy filters to bring you purpose-driven travel guides born from real dust, real sweat, and real heart.</p>
+</div>
+</div>
+</label>
+<label class="map-pin top-[55%] right-[25%]">
+<input type="checkbox"/>
+<div class="bg-primary p-3 rounded-full text-white shadow-2xl ring-4 ring-primary/20 hover:scale-110">
+<span class="material-symbols-outlined">festival</span>
+</div>
+<div class="info-panel right-full mr-6 -top-40">
+<div class="floating-island bg-surface-container-highest/95">
+<h2 class="font-headline font-bold text-2xl text-on-background mb-4">Beyond the Lineups—<span class="text-secondary italic">The Festival Guide You Need.</span></h2>
+<div class="w-24 h-24 bg-surface rounded-full border-2 border-dashed border-outline-variant mx-auto mb-4 overflow-hidden">
+<img alt="Festival Map" class="w-full h-full object-cover opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf1qPSYBAvYfR2HWJSnBKiVfURHTtn3tsBE5xmYi_YhTqBm0RmpubHnOM2due1L65rqFcEnQpVOXYbW-m7fOYTwYdgDZ-mb1fvYP0-CIlnda7fC6aXkJg9b6M6A2MHDcc3k9hANFA-oju1fwRpW5_0GvMV-xCoU8EpQLtcbjg9zOg-X5FOZGrzOlk1bKZMlQrSACoz4xTCe1kiNlAFB4gHTwZry3YC2kWzE_9OAuxvuZWYulfSjy-rAWijAjDmYQ_xYMuQyvS7EgHR"/>
+</div>
+<p class="text-sm text-on-surface-variant mb-6 text-center">We dive deep into culture, local safety insights, and the visceral experience of African festivals. From Zanzibar to Lesotho.</p>
+<button class="w-full bg-on-background text-surface py-3 rounded-full font-bold text-sm flex items-center justify-center gap-2">
+                    Explore Map <span class="material-symbols-outlined">location_on</span>
+</button>
+</div>
+</div>
+</label>
+<label class="map-pin bottom-[15%] left-[45%]">
+<input type="checkbox"/>
+<div class="bg-tertiary p-4 rounded-full text-white shadow-2xl ring-4 ring-tertiary/20">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<div class="info-panel bottom-full mb-6 left-1/2 -translate-x-1/2 w-[80vw] max-w-4xl">
+<div class="floating-island !max-w-none flex flex-col md:flex-row gap-6 max-h-[614px] overflow-y-auto">
+<div class="flex-1">
+<h2 class="font-headline font-black text-4xl mb-4">The Real Side of Travel</h2>
+<p class="text-on-surface-variant mb-6">Embracing the messy, magical reality of life on the move. No scripts, just soul.</p>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-bold">Read the Blog</button>
+</div>
+<div class="flex-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="group bg-surface-container-low rounded-lg p-4 transition-transform hover:-translate-y-2">
+<img alt="Blog" class="w-full h-32 object-cover rounded mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCas0EPuy0aqUtIsAOlqG2k4uMGO0hJV5JNVm1bRBcHJ9RtJG02Iu5tsLA8Lyd3rK-MbW6ncgbnZe9_wT9pLzM631jOEw_Q_2Wpwk3VyW9zJvs4d2FdTaiqc8pnTQzppgUDjMyi0ubXBSEkFacHOCwWzqcre6SiBM2_bIFbVhz6ZaKFrrJ6d-i89ODxDh7-9g495anYuxy4P9oMvkd0Ry5khiu2kjGO7CC3whp5wLfRCfHJqGEcYE7oZzbxjaw8E2PjfmKozFZhuodM"/>
+<h3 class="font-bold text-sm mb-1">Why I Stopped Planning</h3>
+<a class="text-xs text-primary font-bold" href="#">Read Entry →</a>
+</div>
+<div class="group bg-surface-container-low rounded-lg p-4 transition-transform hover:-translate-y-2">
+<img alt="Blog" class="w-full h-32 object-cover rounded mb-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrXY0UjNejUZuGmiIFLfcvEyUfi3THxkcRvOrIcCyrQwFO6-0RcITTBR71VNncF1soEkEdzYTB-N1uAO3Y-Nh1QyhwMXsQQnjXs9nGRI5frRZPdyWnHnCN3HwXMwHSd00LSbL3I67YlhUlc7H4Y8VKjupggmYfiQZCyOJcDhnbxU45Vdtpg0w1xFkrhPY3ZYkBBKAm0HGFC6f9uYA1OvMNhgV3uKvVxwOaRjTeBIw67TQ3E3y88sL9Twkdonin-QxmHSuGREDRrFOh"/>
+<h3 class="font-bold text-sm mb-1">Facing Travel Trouble</h3>
+<a class="text-xs text-primary font-bold" href="#">Read Entry →</a>
+</div>
+</div>
+</div>
+</div>
+</label>
+<label class="map-pin top-[15%] right-[35%]">
+<input type="checkbox"/>
+<div class="bg-primary-container p-3 rounded-full text-white shadow-2xl ring-4 ring-primary-container/20">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div class="info-panel top-full mt-6 right-0 w-[400px]">
+<div class="floating-island space-y-6">
+<div>
+<h3 class="font-headline font-bold text-xl mb-4">Travel Whispers (FAQ)</h3>
+<details class="mb-2 bg-surface-container rounded-lg p-3">
+<summary class="font-bold text-xs cursor-pointer">Safe for solo adventures?</summary>
+<p class="text-xs mt-2 text-on-surface-variant">Safety is our priority. Deep-dive cultural insights specifically for solo travelers.</p>
+</details>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<img alt="Social" class="rounded h-24 w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtljp68LkZQ7_jsC69e_SZKzcB-LGbfoRcm930YCmkd-LUuIWdYlsZ0eArVeN0mDn5ltb2KnHEimnWOuISxbtNWnV5g9qxc7Ji0Ih001MxITxfpeckvspauWrOujt5pNnJnP46l_DbcSVyh9QqX-C9NixT8lMptSBpNQzVY5MpERH2_wHtJBRSsVaudk09iPU5s2JyrsrzrVETwBJS0QgCtr1x3DzWqHC1m5-Bqze1QbQybl7UCaKdQEg4-p_AFgNqxMxIA4fJFgqN"/>
+<img alt="Social" class="rounded h-24 w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdPGFOmPDcsZ1cldf9lS4xYXzYbFppyYWtPICMnhtCcgqw_ePyqNFgSEeajdMyb6ahyc1LCBWdK_lPeFedUO4u2MZJlmeheEz2Hng16oJQAyqyy-cca3lj95r7xtlwVxaPiGW7lPbsKMlNRoVYgwizIWXNFYwdmtQgyaXMVk26SvZYHRA_dXIOnm84cN9yNExqhWy0mN1npPY-3LepiqHc0-b-t2S4Np4pi33eRiAS35oI8zs2Tk_8dCNNtmzWrKt-_ggCrwWudm6m"/>
+</div>
+<div class="text-center p-4 bg-secondary-container rounded-lg">
+<h4 class="font-bold text-sm mb-2">Want to Join the Map?</h4>
+<button class="bg-secondary text-on-secondary px-6 py-2 rounded-full text-xs font-bold">Work with Us</button>
+</div>
+</div>
+</div>
+</label>
+<div class="absolute bottom-10 right-10 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[15rem]">architecture</span>
+</div>
+<div class="absolute top-20 left-10 opacity-5 pointer-events-none rotate-12">
+<span class="material-symbols-outlined text-[10rem]">explore</span>
+</div>
+</main>
+<footer class="fixed bottom-0 w-full p-6 flex justify-between items-end pointer-events-none">
+<div class="pointer-events-auto">
+<p class="font-bold text-primary text-sm">© 2024 Ethereal Cartographer</p>
+<p class="text-[10px] text-on-surface-variant/50">Hand-drawn with soul across African horizons.</p>
+</div>
+<div class="flex gap-4 pointer-events-auto">
+<div class="flex gap-2">
+<a class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center" href="#"><span class="material-symbols-outlined text-xs text-primary">heart_plus</span></a>
+<a class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center" href="#"><span class="material-symbols-outlined text-xs text-primary">mail</span></a>
+</div>
+</div>
+</footer>
+
+```</body></html>

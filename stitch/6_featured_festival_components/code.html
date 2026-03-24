@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Featured Festivals | The Cartographer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#2d3027",
+              "inverse-surface": "#0c0f08",
+              "primary": "#af047a",
+              "on-primary": "#ffeff3",
+              "error-dim": "#a70138",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "surface-tint": "#af047a",
+              "surface-container-high": "#e1e4d4",
+              "error": "#b41340",
+              "on-primary-container": "#490031",
+              "tertiary": "#006666",
+              "outline-variant": "#acaea2",
+              "on-error-container": "#510017",
+              "primary-fixed": "#ff6abf",
+              "surface-container-highest": "#dbdfce",
+              "tertiary-fixed-dim": "#78efef",
+              "outline": "#75786d",
+              "surface-variant": "#dbdfce",
+              "background": "#f6f8ea",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "secondary": "#904800",
+              "surface-dim": "#d2d6c5",
+              "inverse-on-surface": "#9b9e92",
+              "secondary-dim": "#7e3e00",
+              "on-tertiary-container": "#006161",
+              "secondary-container": "#ffc69f",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "surface-container-lowest": "#ffffff",
+              "error-container": "#f74b6d",
+              "surface": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "secondary-fixed": "#ffc69f",
+              "surface-container": "#e7eada",
+              "primary-fixed-dim": "#f852b5",
+              "tertiary-fixed": "#87fefd",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "on-primary-fixed": "#000000",
+              "primary-container": "#ff6abf",
+              "tertiary-container": "#87fefd",
+              "on-secondary": "#fff0e8",
+              "on-tertiary-fixed": "#004d4d",
+              "on-tertiary": "#bbfffe",
+              "primary-dim": "#9a006b",
+              "on-error": "#ffefef",
+              "surface-bright": "#f6f8ea",
+              "secondary-fixed-dim": "#ffb37c",
+              "on-secondary-container": "#723800"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .floating-motion {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation -->
+<header class="bg-[#f6f8ea]/70 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center w-full px-8 py-4 max-w-screen-2xl mx-auto">
+<div class="text-2xl font-black text-[#2d3027] italic font-epilogue tracking-tight">The Cartographer</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-epilogue font-bold tracking-tight text-[#2d3027] opacity-70 hover:scale-105 transition-transform duration-300 hover:opacity-100" href="#">Journal</a>
+<a class="font-epilogue font-bold tracking-tight text-[#af047a] border-b-2 border-[#af047a] hover:scale-105 transition-transform duration-300" href="#">Festivals</a>
+<a class="font-epilogue font-bold tracking-tight text-[#2d3027] opacity-70 hover:scale-105 transition-transform duration-300 hover:opacity-100" href="#">Reviews</a>
+<a class="font-epilogue font-bold tracking-tight text-[#2d3027] opacity-70 hover:scale-105 transition-transform duration-300 hover:opacity-100" href="#">Map</a>
+</nav>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-container border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 ring-primary/20 w-64" placeholder="Search experiences..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface hover:scale-110 transition-transform">notifications</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary-container">
+<img alt="User profile" data-alt="User avatar profile picture circular" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNIcv53u8R3bcIzB6DmojB5GVJhOcKMkHJZfmRoE67e1pdnO_3A15WkyhwS7B4xQCx8rUsKxsC_dI412PQvus72rr1YfNOpyKXb53HTJ5ib-Kiyp9as1xWSsY-NkBFFAZI8r8g_1DIEyP3t-0d_sM4CBCHaXOAoFm-a7n0FH0-d7W8RwzfNvdq3G9kTtDDJgadRrPB_kAnBw1U_nbdKz6iDz7darppMAEpdjUQp2gZM2XRzyppicZE-wMNz5GT_q0DUsLTs94imh9o"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32">
+<!-- Hero Section -->
+<section class="mb-20">
+<h1 class="font-headline text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4">
+                Global <span class="text-primary italic">Spectacles</span>
+</h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-2xl font-medium leading-relaxed">
+                Curated gatherings where culture, art, and geography collide. From the salt flats of Bolivia to the neon alleys of Tokyo.
+            </p>
+</section>
+<!-- Bento Grid Gallery -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- 1. Immersive Card with Map Pin -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-lg aspect-video md:aspect-auto md:h-[500px] bg-surface-container-low">
+<img alt="Lantern Festival" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Night sky filled with thousands of glowing paper lanterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARdkD5hKp5ufNHk1DKO1CEEAkhzax8wnIRK4OorK37xQRo5fmxohtamLvyOHaavU-oOfY3p-WfO6xsUxjnmB8tdPTDCxiGiL5vnUghC1OzsZefvOqkyK59mWgoS0--qKgyqkGlF7DDo8MdQeSK9QY4XaRiGcS-2GrhHEV5osVx_JmmelM9WiMdR6yLfXvIKVohVHHlQNW1aYJPL7rYYPmLN8jB7trjSNv75f_IX7pjK8gO4S4cYpQcvEHmwQx1xWwnOrL7haW6i_Yb"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute top-8 left-8">
+<div class="bg-primary px-4 py-1 rounded-full text-white text-xs font-bold tracking-widest uppercase mb-4 inline-block">Featured</div>
+<h2 class="font-headline text-4xl font-bold text-white mb-2">Yi Peng Lantern Festival</h2>
+</div>
+<div class="absolute bottom-12 left-8 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white floating-motion">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="text-white font-bold">Chiang Mai, Thailand</p>
+<p class="text-white/70 text-sm">November 15 - 16, 2024</p>
+</div>
+</div>
+</div>
+<!-- 2. Glass-morphic Info Overlay -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg aspect-square bg-surface-container-low">
+<img alt="Jazz Festival" class="w-full h-full object-cover" data-alt="Concert stage lights with silhouettes of jazz musicians" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbpRpnL7nu1eD4WmuH8Lg44Uo5Rd1vJzVkDGOnf00oj5fSZIAl2H7JwCDObakgf-vVEp8rHDBjXNs9xj93dUjXVYnh7joYwuS032aEaNFnd2uN5GX0TRZwqopLkHy0gZvSa-pgmVoh_-s6NXREV2zk4K2-v_sdxzhjLV9BKNRBWTawk1oTzjD-aE64EB16yThDO49bwp7oKk6NcNMhxzb9gltgfjxtE7_Vpm8TLmrvG3tvFIuxNqTPjTz4WN-sa66TKqhSgYIqWFEl"/>
+<div class="absolute inset-0 flex items-end p-6">
+<div class="glass-card w-full p-6 rounded-lg border border-white/20 shadow-xl transform transition-transform duration-500 group-hover:-translate-y-2">
+<h3 class="font-headline text-2xl font-bold text-on-surface mb-2">Montreux Jazz</h3>
+<p class="text-on-surface-variant text-sm mb-4 line-clamp-2">A legendary lakeside gathering of world-class improvisers and soul legends.</p>
+<div class="flex justify-between items-center">
+<span class="text-primary font-bold text-xs uppercase tracking-widest">Switzerland</span>
+<button class="bg-primary text-white p-2 rounded-full flex items-center justify-center hover:bg-primary-dim transition-colors">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Minimalist Date/Location Card -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-lg h-[400px] bg-surface-container-highest">
+<div class="p-8 h-full flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-8">
+<span class="text-5xl font-black text-primary/10 font-headline">03</span>
+<span class="material-symbols-outlined text-secondary text-3xl">calendar_today</span>
+</div>
+<h3 class="font-headline text-3xl font-bold text-on-surface leading-tight mb-4">Inti Raymi Sun Festival</h3>
+<p class="text-on-surface-variant font-medium">Cusco, Peru</p>
+</div>
+<div class="border-t border-outline-variant/20 pt-6">
+<div class="flex items-center gap-2 text-sm font-bold text-on-surface uppercase tracking-widest">
+<span>June 24</span>
+<span class="w-8 h-px bg-outline-variant"></span>
+<span>Solstice</span>
+</div>
+</div>
+</div>
+<div class="absolute -right-12 -bottom-12 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+</div>
+</div>
+<!-- 4. Full-bleed Interactive Card (Carousel Style) -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-lg h-[400px]">
+<img alt="Burning Man" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Vast desert landscape with artistic wooden structures and dust" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsyCfr5v4tjZvPZAtOSnptG41PMLZtanup7gOb-QWuHpRS_Ev-jZyJfdfb1A3uzrc7kpIQ_-eoT53t-jLxxSd8w2H3uK-M7gLAFc0cksZG87o4DTj2p-GO6YD25344JSyJMzGIuUB7WMV03dpREbE4bwdXl9NZDyT_6sQOTxnCdfpfyS_L6uWY82b7H5WHW-mOT2fnW8WdvGq2sW_I7jh-IjAiULkPWOQIif80jZs2cKEqUcLs3ErhWnFVKqVf4iy8TYaIU-W0zlOh"/>
+<div class="absolute inset-0 bg-secondary/20 mix-blend-multiply group-hover:bg-transparent transition-all"></div>
+<div class="absolute inset-0 p-12 flex flex-col justify-end">
+<div class="max-w-md transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<span class="text-white text-xs font-bold tracking-widest uppercase mb-2 block">Experimental</span>
+<h3 class="font-headline text-5xl font-black text-white mb-4">Burning Man</h3>
+<div class="flex items-center gap-4">
+<button class="bg-white text-on-surface px-6 py-3 rounded-full font-bold text-sm hover:bg-secondary-container transition-colors">Experience It</button>
+<div class="flex -space-x-3">
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Avatar of user attendee 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFyzPdyqFBkgZGhUGYrOz8V66ZkOk-SuJLsJH-3uX8beYYkA8v5h-vF9a5hm22bR9UOGbVDOxfjy0Mg9Oycnh1GPVFou2SKklxwpWDgXDQ05h1fC6LfeyX0pw8zz73vIleQc4brXuYrSo8iLjL_cT_2BfmlhMWIxpqw4wLgK7yJq8G3zwwF3cTdVgSwl2AXS8CkU0ho7snAXipIB2SGB6j1TrQodCZips-vAL4smTFj1F4m2iemHPMqXfHt_SaLbZQGFJUjQcLq9My"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Avatar of user attendee 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWW5_JYWiRfhQbcqbjOH6_fxA5CKf4BRyi9tNDby6PClSx3IZhjHFpsizleZBUldUIAmyfpeoQY-xrlRRxtNHOPQY-pqU31-XcJ-X92hBgg5YyP1hdk6MVcrIql4ehyI5pzfYMR2AsjxuLwmoa-J6Ee_EwesWUZ0xM708O67Q3zUixLiVPF4QAQVJy_45UKXCgbSq4s9vHNuqPZkToLyj5EyzTXtt-M8zt1Li4N7kvfNIdUnPqlDPuPDq0er1Ec6yrsP2i_I62W9Sg"/>
+<img class="w-8 h-8 rounded-full border-2 border-white" data-alt="Avatar of user attendee 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC09aG3hfcpxNzPh0YZBZZnrADxag3d-4tTInbm5dSf2g6RpSwHPNnlJT0PmloLubQyBjN5MhE23h3EgPbzCgzjt6Cz4-DnB7sR95lUgGgSm3vy9mnSipseY6XT-SgggCodZD0Mx575SjdTUzaBdYY6Hr1ZMue_JX6x7fFSbrvf8LL5hBJJNejnXzwMT7jvRjD_fKV8kG5MaDjsCn4_IKL0yaa_3erdFVEHd7yFphrJ1X4Q4uokgVFQ-8S4AmdSeH0Ud9nooWCwebrf"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-on-surface text-[10px] text-white flex items-center justify-center font-bold">+2k</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Dynamic Grid Tile with Hover Details -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg aspect-[4/3] bg-tertiary/10">
+<img alt="Glastonbury" class="w-full h-full object-cover" data-alt="Aerial view of a massive music festival with colorful tents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzZoiWP0b9s1nuA_X9I6oVW3d1ZSLa8wLXbs-0fPg59muGL6Zy7gEgpQRTDQjmuKIikEUX9yneFvoin0Zba8cDAFK15KeofjY_mG-XT5KQTtRyceLF6KPHfyRZSRj2S2Yxg3SZzmO2nBjX8jMyZAPRVmQQlCTVaQa56IInBeB2T6tmvgXksKc35bgATNEOjStwhJslCDKtFS45R67djFQqwuj7nXRPMCCnjxQr4Cciqkc8jLOJCNbRC-d-nqOupgiWBo7rB0WQ3wR5"/>
+<div class="absolute inset-0 bg-on-surface/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-8 backdrop-blur-sm">
+<div class="text-center">
+<span class="material-symbols-outlined text-white text-5xl mb-4">music_note</span>
+<h4 class="text-white font-headline text-3xl font-bold mb-2">Glastonbury</h4>
+<p class="text-white/80 text-sm mb-6 max-w-xs mx-auto leading-relaxed">The largest greenfield festival in the world, a city that appears for five days in the UK countryside.</p>
+<a class="inline-block border-2 border-white text-white px-8 py-2 rounded-full font-bold hover:bg-white hover:text-on-surface transition-all" href="#">Details</a>
+</div>
+</div>
+<div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-sm text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-xs font-bold text-on-surface">4.9</span>
+</div>
+</div>
+<!-- 6. Video-Style Motion Card -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-lg aspect-[4/3] bg-surface-container-low">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/30 to-tertiary/30 animate-pulse"></div>
+<img alt="Rio Carnival" class="w-full h-full object-cover mix-blend-overlay group-hover:scale-110 transition-transform duration-1000" data-alt="Vibrant Rio Carnival parade with dancers in elaborate feathered costumes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcLkxQ8QBSRGlD7xVI8BrOC1nGkCvE0Z7P0RK5eDOPtb3OR-fArLxisN2zgsssHNk6Nwad--SQR6K-Wshck8JTsxP5cIaSZ8bKxbBN4Zk38OdO-fUz5hvqf31FiUZ2tzKB939yqnDSwKe6fiw19Ygknf9ZIZ84Ca21HF29MiRjTWcNtDU7VoWM--Gin4F4rfX8mfYXCJyVHdEBPfZ-rXhYoTA06lO8hZJoWE0HIEKR_K5HRjTVDhDI3XTpDsJBTZWRnWLVq8--VorC"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center p-12">
+<div class="w-20 h-20 rounded-full border-4 border-white/40 flex items-center justify-center mb-6 hover:scale-110 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-white text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<h4 class="font-headline text-4xl font-black text-white uppercase tracking-tighter mb-2">Rio Carnival</h4>
+<p class="text-white/90 font-bold text-sm tracking-widest">LIVE FROM BRAZIL</p>
+</div>
+<div class="absolute bottom-0 left-0 w-full h-1.5 bg-white/20">
+<div class="h-full bg-primary w-1/3"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end px-6 pb-8 pt-4 bg-[#f6f8ea]/80 backdrop-blur-2xl z-50 rounded-t-[2rem] shadow-[0_-10px_30px_rgba(45,48,39,0.04)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#2d3027] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Journal</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#af047a] text-white rounded-full p-3 scale-110 -translate-y-2 transition-all shadow-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">festival</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Festivals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined">star</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Reviews</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined">mic</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Podcasts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#2d3027] opacity-50 p-2 hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-plus-jakarta text-[10px] font-semibold uppercase tracking-widest mt-1">Map</span>
+</a>
+</nav>
+<!-- FAB for adding experience (desktop) -->
+<button class="hidden md:flex fixed bottom-8 right-8 w-16 h-16 bg-primary text-white rounded-full shadow-2xl items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined text-3xl">add</span>
+<div class="absolute right-20 bg-on-surface text-white px-4 py-2 rounded-lg text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Add New Festival
+        </div>
+</button>
+</body></html>

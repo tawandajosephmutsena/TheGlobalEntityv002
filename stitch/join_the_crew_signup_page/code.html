@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Join the Crew | The Global Entity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#acaea2",
+              "tertiary-fixed-dim": "#78efef",
+              "on-tertiary-container": "#006161",
+              "on-primary-container": "#490031",
+              "tertiary-fixed": "#87fefd",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "surface-container-high": "#e1e4d4",
+              "secondary-fixed-dim": "#ffb37c",
+              "primary-dim": "#9a006b",
+              "surface-tint": "#af047a",
+              "on-background": "#2d3027",
+              "error-container": "#f74b6d",
+              "surface-variant": "#dbdfce",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#bbfffe",
+              "surface": "#f6f8ea",
+              "primary-fixed-dim": "#f852b5",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-dim": "#7e3e00",
+              "secondary-container": "#ffc69f",
+              "error": "#b41340",
+              "primary-container": "#ff6abf",
+              "surface-dim": "#d2d6c5",
+              "secondary": "#904800",
+              "on-secondary-container": "#723800",
+              "on-primary-fixed": "#000000",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "on-secondary": "#fff0e8",
+              "inverse-primary": "#fe57bb",
+              "primary-fixed": "#ff6abf",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-surface-variant": "#5a5d52",
+              "secondary-fixed": "#ffc69f",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "tertiary-dim": "#005959",
+              "surface-container-low": "#f0f2e4",
+              "primary": "#af047a",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "surface-bright": "#f6f8ea",
+              "surface-container": "#e7eada",
+              "error-dim": "#a70138",
+              "on-error-container": "#510017",
+              "inverse-on-surface": "#9b9e92",
+              "tertiary": "#006666",
+              "tertiary-container": "#87fefd"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-blob {
+            filter: blur(60px);
+            opacity: 0.4;
+            position: absolute;
+            z-index: -1;
+        }
+        .ink-bleed {
+            background: linear-gradient(135deg, #af047a 0%, #9a006b 100%);
+        }
+        .map-dashed-line {
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%23904800' stroke-width='2' stroke-dasharray='8%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex flex-col overflow-x-hidden">
+<!-- Ambient Watercolor Background Elements -->
+<div class="watercolor-blob bg-primary w-96 h-96 -top-20 -left-20 rounded-full"></div>
+<div class="watercolor-blob bg-tertiary w-[500px] h-[500px] bottom-0 -right-40 rounded-full"></div>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex items-center justify-center p-6 md:p-12 relative">
+<!-- Asymmetric Layout Container -->
+<div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Side: Manifesto & Visual Narrative -->
+<div class="lg:col-span-5 flex flex-col space-y-8 order-2 lg:order-1">
+<div class="space-y-4">
+<span class="text-secondary font-headline font-bold tracking-widest text-sm uppercase">The Navigator's Oath</span>
+<h1 class="text-5xl md:text-7xl font-headline font-black text-on-background leading-tight tracking-tighter">
+                        Join the <span class="text-primary italic">Crew.</span>
+</h1>
+<p class="text-lg text-on-surface-variant leading-relaxed max-w-md">
+                        This is not a travel agency. This is a guild of the curious. By signing on, you commit to the wandering spirit and the preservation of the unseen.
+                    </p>
+</div>
+<!-- Manifesto Snippet Card -->
+<div class="bg-surface-container-low p-8 rounded-lg relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<p class="font-headline font-bold text-xl italic text-secondary mb-4">"We do not follow roads; we follow the ink of our own stories."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Portrait of a seasoned sea captain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtprAIFkcgYCrXcgWQ1rPrvCsx1N0WkzBzrlFLJ9T9M6LZvLzYhU9DSIDDLrSdokbUxhZB6dvImBQBc8gyZ1Wlj__qDEuKXq4qVetCmm8Rufxt1bSbY6NTCjVOLWc0r_u7uZ4YMKbv6HYDz2kRf5aMRmv9W0P8ehMBqEOhJHCeXyy3o1gkptrveYkYSxqhIXj11MT7-JGkFmjwKb_s8OU9dcthq9Mm8RMhgLVaLyB-tM-cH_VXt44lKHVvxaZKu9D1CtUYM2qzUUdP"/>
+</div>
+<div>
+<p class="text-sm font-bold">The Elder Cartographer</p>
+<p class="text-xs text-on-surface-variant opacity-70">Manifesto Section IV</p>
+</div>
+</div>
+</div>
+<!-- Hand-drawn style map path -->
+<div class="relative h-24 w-full">
+<div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-1 map-dashed-line opacity-30"></div>
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-tertiary rounded-full shadow-[0_0_15px_rgba(0,102,102,0.5)]"></div>
+<div class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-secondary rounded-full"></div>
+<span class="absolute left-0 -bottom-2 text-[10px] font-bold text-tertiary">POINT OF DEPARTURE</span>
+<span class="absolute right-0 -bottom-2 text-[10px] font-bold text-secondary">THE GREAT UNKNOWN</span>
+</div>
+</div>
+<!-- Right Side: Signup Form (Glassmorphism Card) -->
+<div class="lg:col-span-7 flex justify-center lg:justify-end order-1 lg:order-2">
+<div class="w-full max-w-lg bg-surface/70 backdrop-blur-xl p-8 md:p-12 rounded-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)] relative">
+<!-- Decorative "Seal" icon overlapping boundary -->
+<div class="absolute -top-6 -right-6 w-20 h-20 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center rotate-12 shadow-lg z-10">
+<span class="material-symbols-outlined text-3xl" data-icon="approval" style="font-variation-settings: 'FILL' 1;">approval</span>
+</div>
+<div class="space-y-8">
+<div class="space-y-2">
+<h2 class="text-3xl font-headline font-bold text-on-background">Sign the Register</h2>
+<p class="text-on-surface-variant">Choose your method of entry into the guild.</p>
+</div>
+<!-- Social Logins -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-3 py-3 px-6 bg-surface-container-highest rounded-full hover:scale-105 transition-transform duration-300 font-semibold text-sm">
+<span class="material-symbols-outlined" data-icon="google">google</span>
+                                Google
+                            </button>
+<button class="flex items-center justify-center gap-3 py-3 px-6 bg-on-background text-surface rounded-full hover:scale-105 transition-transform duration-300 font-semibold text-sm">
+<span class="material-symbols-outlined" data-icon="apple">ios</span>
+                                Apple
+                            </button>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex-grow h-px bg-outline-variant opacity-20"></div>
+<span class="text-xs font-bold text-outline uppercase tracking-widest">or by parchment</span>
+<div class="flex-grow h-px bg-outline-variant opacity-20"></div>
+</div>
+<!-- Email Signup Form -->
+<form class="space-y-6">
+<div class="space-y-1">
+<label class="text-xs font-bold text-on-surface-variant ml-2">NAVIGATOR NAME</label>
+<input class="w-full bg-surface-variant/50 border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/40" placeholder="e.g. Isabella Bird" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-on-surface-variant ml-2">EMAIL ADDRESS</label>
+<input class="w-full bg-surface-variant/50 border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/40" placeholder="isabella@wandering.soul" type="email"/>
+</div>
+<div class="space-y-1">
+<label class="text-xs font-bold text-on-surface-variant ml-2">SECRET CIPHER (PASSWORD)</label>
+<input class="w-full bg-surface-variant/50 border-none rounded-lg p-4 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full py-4 ink-bleed text-on-primary font-headline font-extrabold text-lg rounded-full hover:scale-[1.02] transition-transform duration-300 shadow-xl shadow-primary/20" type="submit">
+                                JOIN THE CREW
+                            </button>
+</form>
+<p class="text-center text-sm text-on-surface-variant">
+                            Already part of the manifest? <a class="text-primary font-bold underline underline-offset-4" href="#">Board here.</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer: Manifest Status Indicator -->
+<footer class="w-full py-8 px-8 bg-surface-container-low/50 backdrop-blur-md flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-4 py-2 bg-tertiary/10 rounded-full border border-tertiary/20">
+<span class="w-2 h-2 bg-tertiary rounded-full animate-pulse"></span>
+<span class="text-xs font-bold text-tertiary tracking-widest uppercase">MANIFEST STATUS: OPEN</span>
+</div>
+<p class="text-xs font-medium text-on-surface-variant">412 Vessels currently at sea.</p>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline-variant uppercase">Current Expedition</p>
+<p class="text-sm font-headline font-bold">The Aurora Passage</p>
+</div>
+<div class="h-10 w-px bg-outline-variant opacity-20"></div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant opacity-50 cursor-pointer hover:opacity-100 transition-opacity" data-icon="public">public</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-50 cursor-pointer hover:opacity-100 transition-opacity" data-icon="anchor">anchor</span>
+</div>
+</div>
+</footer>
+<!-- Script to set Material Symbols weight -->
+<script>
+        document.querySelectorAll('.material-symbols-outlined').forEach(span => {
+            if (span.getAttribute('data-icon')) {
+                span.innerText = span.getAttribute('data-icon');
+            }
+        });
+    </script>
+</body></html>

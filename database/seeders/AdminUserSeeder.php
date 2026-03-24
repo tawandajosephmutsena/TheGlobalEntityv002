@@ -26,7 +26,7 @@ class AdminUserSeeder extends Seeder
             ]
         );
         
-        $adminRole = \App\Models\Role::where('slug', 'admin')->first();
+        $adminRole = Role::where('slug', 'admin')->first();
         if ($adminRole) {
             $admin->roles()->syncWithoutDetaching([$adminRole->id]);
         }

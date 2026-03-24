@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About | Ethereal Cartographer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary": "#904800",
+              "surface-variant": "#dbdfce",
+              "on-secondary-container": "#723800",
+              "tertiary-dim": "#005959",
+              "on-surface-variant": "#5a5d52",
+              "on-secondary": "#fff0e8",
+              "surface": "#f6f8ea",
+              "primary-container": "#ff6abf",
+              "secondary-container": "#ffc69f",
+              "surface-container-low": "#f0f2e4",
+              "on-background": "#2d3027",
+              "surface-container-highest": "#dbdfce",
+              "surface-dim": "#d2d6c5",
+              "error": "#b41340",
+              "outline-variant": "#acaea2",
+              "surface-tint": "#af047a",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-fixed": "#ffc69f",
+              "on-tertiary-container": "#006161",
+              "on-tertiary": "#bbfffe",
+              "secondary-dim": "#7e3e00",
+              "on-error": "#ffefef",
+              "on-secondary-fixed": "#552800",
+              "primary-fixed": "#ff6abf",
+              "primary-dim": "#9a006b",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "tertiary-container": "#87fefd",
+              "error-dim": "#a70138",
+              "background": "#f6f8ea",
+              "on-error-container": "#510017",
+              "secondary-fixed-dim": "#ffb37c",
+              "inverse-primary": "#fe57bb",
+              "on-primary-fixed-variant": "#5a003d",
+              "inverse-on-surface": "#9b9e92",
+              "surface-container-high": "#e1e4d4",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#006666",
+              "primary": "#af047a",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "on-primary": "#ffeff3",
+              "surface-bright": "#f6f8ea",
+              "on-primary-container": "#490031",
+              "error-container": "#f74b6d",
+              "tertiary-fixed": "#87fefd",
+              "surface-container": "#e7eada",
+              "on-primary-fixed": "#000000",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "tertiary-fixed-dim": "#78efef",
+              "primary-fixed-dim": "#f852b5"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-blur {
+            filter: blur(60px);
+            opacity: 0.4;
+        }
+        .scribble-text {
+            font-family: cursive;
+            transform: rotate(-3deg);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c1e]/70 backdrop-blur-xl transition-colors duration-300 shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center px-8 py-6 max-w-screen-2xl mx-auto">
+<div class="font-['Epilogue'] font-black text-2xl text-[#af047a] italic">Ethereal Cartographer</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#2d3027] dark:text-[#e2e3d8] hover:text-[#af047a] transition-colors" href="#">Home</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#af047a] dark:text-[#f48fb1] border-b-2 border-[#af047a] pb-1" href="#">About</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#2d3027] dark:text-[#e2e3d8] hover:text-[#af047a] transition-colors" href="#">Festival Map</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#2d3027] dark:text-[#e2e3d8] hover:text-[#af047a] transition-colors" href="#">Blog</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#2d3027] dark:text-[#e2e3d8] hover:text-[#af047a] transition-colors" href="#">Podcast</a>
+<a class="font-['Epilogue'] font-bold tracking-tight text-lg text-[#2d3027] dark:text-[#e2e3d8] hover:text-[#af047a] transition-colors" href="#">Partner</a>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface hover:scale-110 transition-transform" data-icon="search">search</button>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 py-3 rounded-full font-bold hover:scale-105 transition-all shadow-lg">Join Journey</button>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero Section -->
+<section class="relative px-8 py-20 overflow-hidden">
+<div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full watercolor-blur"></div>
+<div class="absolute bottom-0 right-1/4 w-80 h-80 bg-tertiary/20 rounded-full watercolor-blur"></div>
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+<div class="relative z-10">
+<span class="text-secondary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">Identity &amp; Soul</span>
+<h1 class="font-headline font-black text-7xl md:text-8xl text-on-background leading-[0.9] mb-8">
+                        The Global… <br/><span class="text-primary italic">What?</span>
+</h1>
+<p class="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed">
+                        Your brutally honest travel guide, your happy festival connoisseur, and the map for the souls who refuse to walk the paved path.
+                    </p>
+</div>
+<div class="relative grid grid-cols-3 gap-4">
+<!-- Watercolor Category Icons -->
+<div class="aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center transform -rotate-3 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-tertiary mb-2" data-icon="eco">eco</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Sustainability</span>
+</div>
+<div class="aspect-square bg-surface-container-high rounded-lg p-6 flex flex-col items-center justify-center transform rotate-6 hover:rotate-0 transition-transform mt-8">
+<span class="material-symbols-outlined text-4xl text-primary mb-2" data-icon="favorite" data-weight="fill" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Living Through Heart</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-lg p-6 flex flex-col items-center justify-center transform -rotate-6 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2" data-icon="person_pin_circle">person_pin_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Solo Travel</span>
+</div>
+<div class="aspect-square bg-surface-container-high rounded-lg p-6 flex flex-col items-center justify-center transform rotate-2 hover:rotate-0 transition-transform col-span-2">
+<span class="material-symbols-outlined text-4xl text-primary-dim mb-2" data-icon="festival">festival</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Adventures</span>
+</div>
+<div class="aspect-square bg-surface-container-lowest shadow-sm rounded-lg p-6 flex flex-col items-center justify-center transform -rotate-12 hover:rotate-0 transition-transform">
+<span class="material-symbols-outlined text-4xl text-on-secondary-fixed-variant mb-2" data-icon="diamond">diamond</span>
+<span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Local Gems</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 1: Who Are You? -->
+<section class="bg-surface-container-low py-32 px-8">
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="font-headline font-bold text-5xl mb-12">Who Are <span class="text-tertiary">You?</span></h2>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="p-8 bg-surface-container-lowest rounded-lg hover:shadow-xl transition-shadow">
+<h3 class="font-headline font-bold text-xl mb-4 text-primary">The Seeker</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">You don't just want a vacation; you want an encounter. You are chasing the rhythm of a place, not just its coordinates.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-lg hover:shadow-xl transition-shadow">
+<h3 class="font-headline font-bold text-xl mb-4 text-secondary">The Dancer</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">Festivals are your temples. You understand that collective joy is a revolutionary act in a disconnected world.</p>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-lg hover:shadow-xl transition-shadow">
+<h3 class="font-headline font-bold text-xl mb-4 text-tertiary">The Curiously Brave</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">You prefer the unfiltered truth over the curated postcard. You're ready to see the world as it breathes, messy and all.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: What’s in it for you? -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="order-2 md:order-1 relative">
+<div class="rounded-lg overflow-hidden shadow-2xl">
+<img class="w-full h-[500px] object-cover" data-alt="Vibrant outdoor music festival at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ06Nd1MTUiPS8xk95Nk18SRnvs3HkHYu5A3XlLoLtOIQ0VsWt1Urtzoey8GB6C3M6UTnghbSyBOQPg2d5wQwagG1GrGYuukm0UtoR9mk1g8ZXZmgMFNM9CdvC7b1IVMf2amBmJavkrGZ3rj50yrmuyJKTUY6wnIKsHc-wEw9eJOq4_i4MS1n3eiFgiAGZLNgKUupyYj2tBijNQYM8t30YnpLIO-5UC9QLxwLNuY30SjoZIwbs87ImIEpBsu8q7P4yBHYQw1KrpLZ1"/>
+</div>
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-secondary-container rounded-full p-8 flex items-center justify-center text-center shadow-lg border-4 border-surface">
+<p class="font-headline font-black text-on-secondary-container leading-none">REAL STORIES<br/><span class="text-xs uppercase tracking-tighter">No Filters</span></p>
+</div>
+</div>
+<div class="order-1 md:order-2">
+<h2 class="font-headline font-black text-6xl mb-8 leading-tight">Truth, <span class="text-primary">Untangled.</span></h2>
+<p class="text-lg text-on-surface-variant mb-10 leading-relaxed">
+                        We specialize in deep-dives into the world's most transformative festivals and providing raw, honest depictions of travel. No sugar-coating, no sponsored lies—just the heartbeat of the road.
+                    </p>
+<a class="inline-flex items-center gap-4 bg-on-background text-surface px-10 py-5 rounded-full font-bold text-lg hover:bg-primary transition-colors" href="#">
+                        Explore the Festival Map
+                        <span class="material-symbols-outlined" data-icon="explore">explore</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Section 3: More Than Entertainment -->
+<section class="bg-surface py-32 px-8 overflow-hidden">
+<div class="max-w-7xl mx-auto">
+<div class="mb-20 text-center max-w-3xl mx-auto">
+<h2 class="font-headline font-black text-5xl mb-6">What If Festivals Could Do <span class="text-tertiary italic">More?</span></h2>
+<p class="text-on-surface-variant italic scribble-text text-xl">Beyond the mainstage lights...</p>
+</div>
+<div class="grid md:grid-cols-3 gap-1 px-4 md:px-0">
+<div class="group relative bg-surface-container p-12 hover:bg-tertiary transition-all duration-500 rounded-lg md:rounded-r-none">
+<h3 class="font-headline font-bold text-2xl mb-6 group-hover:text-white transition-colors">Social Sustainability</h3>
+<p class="text-on-surface-variant group-hover:text-white/80 transition-colors leading-relaxed">Exploring how events can empower local economies instead of just draining them. We look for the legacy left behind after the tents are gone.</p>
+<span class="material-symbols-outlined absolute top-8 right-8 text-tertiary/20 group-hover:text-white/20 text-6xl" data-icon="nature_people">nature_people</span>
+</div>
+<div class="group relative bg-surface-container-high p-12 hover:bg-primary transition-all duration-500">
+<h3 class="font-headline font-bold text-2xl mb-6 group-hover:text-white transition-colors">The Artist's Role</h3>
+<p class="text-on-surface-variant group-hover:text-white/80 transition-colors leading-relaxed">Artists aren't just entertainment; they are the modern-day storytellers. We examine the shift from performer to cultural bridge.</p>
+<span class="material-symbols-outlined absolute top-8 right-8 text-primary/20 group-hover:text-white/20 text-6xl" data-icon="brush">brush</span>
+</div>
+<div class="group relative bg-surface-container-highest p-12 hover:bg-secondary transition-all duration-500 rounded-lg md:rounded-l-none">
+<h3 class="font-headline font-bold text-2xl mb-6 group-hover:text-white transition-colors">The Tourism Imbalance</h3>
+<p class="text-on-surface-variant group-hover:text-white/80 transition-colors leading-relaxed">Commercial tourism often breaks what it loves. We highlight the small, the quiet, and the respectful ways to exist in someone else's home.</p>
+<span class="material-symbols-outlined absolute top-8 right-8 text-secondary/20 group-hover:text-white/20 text-6xl" data-icon="balance">balance</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Origin Story -->
+<section class="py-32 px-8 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-2 gap-20 items-center">
+<div class="space-y-8">
+<h2 class="font-headline font-black text-6xl leading-tight">The <span class="italic text-primary">Shattered</span> Plans.</h2>
+<div class="prose prose-lg text-on-surface-variant leading-relaxed">
+<p>It began with a one-way ticket from the quiet forests of Sweden to the pulsing energy of South Africa. Julia didn't come with a business plan; she came with a backpack and a burning curiosity.</p>
+<p>When the 'shattered plans' of a traditional life fell apart, TGE—The Global Entity—was born. It wasn't about finding a new path; it was about realizing that the path is whatever you draw on the map in ink, sweat, and dance.</p>
+</div>
+<div class="flex flex-wrap gap-6 pt-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold shadow-lg hover:scale-105 transition-all">Start from the beginning</button>
+<button class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-full font-bold hover:scale-105 transition-all">Write to us</button>
+</div>
+</div>
+<div class="relative">
+<div class="w-full aspect-square bg-surface-container rounded-xl overflow-hidden rotate-3">
+<img class="w-full h-full object-cover" data-alt="Close up of a hand drawing on a vintage map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIkHx7Ju8x2s_6qc3oWZCF-TSSbIRJYsy6ERTd1NgCGzL26-5v-l4ooOudX4FkPQOSE7w31UQcwoia4KV06vIEPnYszuLQds8K7-un3wkIJaBJDngVL6uguAOvnt6Swv8jKS6ton6dXk0LR2NPLQKXeam0-SNzezdG3RHIzZBODxoIGlZo6g3j7PV5tW-y6c_cIBUqiZ9hoeceiqH_yQwE0-3G6vxt5m0DSfa1ofsDJQc2-xjjt4Dw3dMZ5qsxeGug4u-exWlJJKqD"/>
+</div>
+<div class="absolute -top-10 -left-10 w-40 h-40 bg-tertiary-container/30 backdrop-blur rounded-full flex items-center justify-center -rotate-12 border border-tertiary/20">
+<span class="scribble-text text-tertiary font-bold text-sm">Circa 2018</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full rounded-t-[3rem] mt-20 bg-[#f6f8ea] dark:bg-[#1a1c1e]">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-2">
+<div class="font-['Epilogue'] font-bold text-[#af047a] text-3xl mb-6">Ethereal Cartographer</div>
+<p class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 max-w-sm">
+                    © 2024 Ethereal Cartographer. Hand-drawn with soul across African horizons. Navigating the world through the lens of honesty and magic.
+                </p>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface mb-6">Explore</h4>
+<ul class="space-y-4">
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Sustainability</a></li>
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Living Through Heart</a></li>
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Solo Travel</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface mb-6">Adventures</h4>
+<ul class="space-y-4">
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Local Gems</a></li>
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Festival Adventures</a></li>
+<li><a class="font-['Plus_Jakarta_Sans'] text-sm leading-relaxed text-[#2d3027]/70 dark:text-[#e2e3d8]/70 hover:text-[#904800] underline decoration-wavy decoration-1 underline-offset-4" href="#">Travel Trouble</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

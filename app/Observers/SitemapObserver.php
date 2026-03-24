@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Services\SitemapService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class SitemapObserver
 {
@@ -66,7 +67,7 @@ class SitemapObserver
             $this->sitemapService->clearCache();
         } catch (\Exception $e) {
             // Log error but don't fail the main operation
-            \Log::warning('Failed to clear sitemap cache: ' . $e->getMessage());
+            Log::warning('Failed to clear sitemap cache: ' . $e->getMessage());
         }
     }
 }

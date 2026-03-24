@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-variant": "#dbdfce",
+              "tertiary": "#006666",
+              "primary-fixed-dim": "#f852b5",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "secondary-fixed": "#ffc69f",
+              "tertiary-fixed": "#87fefd",
+              "error-dim": "#a70138",
+              "secondary": "#904800",
+              "primary-dim": "#9a006b",
+              "surface-tint": "#af047a",
+              "inverse-on-surface": "#9b9e92",
+              "tertiary-fixed-dim": "#78efef",
+              "primary-fixed": "#ff6abf",
+              "on-tertiary-fixed": "#004d4d",
+              "surface-container-high": "#e1e4d4",
+              "on-tertiary-container": "#006161",
+              "tertiary-container": "#87fefd",
+              "on-surface-variant": "#5a5d52",
+              "on-primary-container": "#490031",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "secondary-container": "#ffc69f",
+              "on-error": "#ffefef",
+              "on-primary-fixed-variant": "#5a003d",
+              "surface-dim": "#d2d6c5",
+              "surface-container-low": "#f0f2e4",
+              "on-secondary": "#fff0e8",
+              "error": "#b41340",
+              "on-error-container": "#510017",
+              "on-primary-fixed": "#000000",
+              "outline-variant": "#acaea2",
+              "on-primary": "#ffeff3",
+              "inverse-primary": "#fe57bb",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-container": "#723800",
+              "primary-container": "#ff6abf",
+              "error-container": "#f74b6d",
+              "surface-container-highest": "#dbdfce",
+              "inverse-surface": "#0c0f08",
+              "tertiary-dim": "#005959",
+              "secondary-fixed-dim": "#ffb37c",
+              "outline": "#75786d",
+              "secondary-dim": "#7e3e00",
+              "surface-bright": "#f6f8ea",
+              "on-background": "#2d3027",
+              "on-tertiary": "#bbfffe",
+              "on-surface": "#2d3027",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "surface": "#f6f8ea",
+              "primary": "#af047a",
+              "surface-container": "#e7eada"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.watercolor-blob {
+    filter: blur(60px);
+    opacity: 0.15;
+    z-index: -1
+    }
+.hero-gradient {
+    background: linear-gradient(135deg, #af047a 0%, #9a006b 100%)
+    }
+.paper-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDx2brI5Tx8a-dxVg1ylAKDgcNPX6m12HrTCOkbpsU5IO8Y6EvN2GKr6c72uvaXmsF3sYkaM2hL77N1-oHaFO-gRXZDOY-ySNWLimv0awvhomtqpSi1HVqajXaFPZ0eKgJ9M-u_FS5WjPCZ56bnNFrMwTqN-ffKyMNG_OaZyWUPYo1AmcaCk5ifJKwJlEhkkBderyHhhQbPLboGZUUu0-7-LbwvoPkwCY62T9ZtOO44w0kv7z7R961LhiLNmDADnByDTQvL7CcV9UlL)
+    }</style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<nav class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c18]/70 backdrop-blur-xl border-none shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto">
+<div class="text-2xl font-black text-[#af047a] dark:text-[#fface8] italic font-['Epilogue'] tracking-tight">
+                The Global Entity
+            </div>
+<div class="hidden md:flex items-center gap-8 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Journals</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Map</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Community</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 hover:opacity-100 transition-all duration-300" href="#">Treasures</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-[#af047a] dark:text-[#fface8] text-2xl cursor-pointer hover:scale-110 transition-transform" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 relative">
+<div class="absolute top-0 left-[-10%] w-[40%] h-[400px] bg-primary watercolor-blob rounded-full"></div>
+<div class="absolute top-[20%] right-[-5%] w-[30%] h-[500px] bg-secondary watercolor-blob rounded-full"></div>
+<div class="absolute bottom-[10%] left-[5%] w-[25%] h-[400px] bg-tertiary watercolor-blob rounded-full"></div>
+<header class="max-w-5xl mx-auto px-8 mb-24 text-center">
+<h1 class="font-headline font-black text-6xl md:text-8xl text-on-background mb-8 leading-[1.1] tracking-tighter">
+                The Way of the <span class="text-primary italic">Cartographer</span>.
+            </h1>
+<p class="font-body text-xl md:text-2xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                This document is more than a list of rules; it is the soul of our community. A compass for those navigating the beautiful, messy edges of the world.
+            </p>
+</header>
+<section class="max-w-[1200px] mx-auto px-8 mb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-8 space-y-12">
+<div class="bg-surface-container-low p-12 rounded-lg relative overflow-hidden group">
+<div class="absolute -top-4 -right-4 w-32 h-32 bg-primary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+<h2 class="font-headline font-extrabold text-4xl mb-6 text-primary">01. Our Core Values</h2>
+<div class="space-y-6 font-body text-lg leading-loose text-on-surface">
+<p>We believe in the <strong>Radical Authenticity</strong> of the journey. We are not here to curate a perfect life, but to document a real one. Every stain on a map, every torn page in a journal, tells a story worth telling.</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8">
+<div class="p-6 bg-surface-container-lowest rounded-DEFAULT border-l-4 border-secondary">
+<h4 class="font-headline font-bold mb-2">Kindness over Logic</h4>
+<p class="text-sm opacity-80">Compassion is our primary language. We prioritize human connection over being "right."</p>
+</div>
+<div class="p-6 bg-surface-container-lowest rounded-DEFAULT border-l-4 border-tertiary">
+<h4 class="font-headline font-bold mb-2">Active Curiosity</h4>
+<p class="text-sm opacity-80">Never stop asking why. We embrace the unknown with open arms and steady feet.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-12 rounded-lg relative">
+<h2 class="font-headline font-extrabold text-4xl mb-6 text-tertiary">02. The Pirate Code</h2>
+<p class="font-body text-lg mb-8 italic text-on-surface-variant">Rules for keeping the crew safe and the journey meaningful.</p>
+<div class="space-y-8">
+<div class="flex gap-6 items-start">
+<span class="material-symbols-outlined text-tertiary text-3xl shrink-0" data-icon="anchor">anchor</span>
+<div>
+<h3 class="font-headline font-bold text-xl mb-2">Guard the Hearth</h3>
+<p class="font-body text-on-surface-variant">Harassment, hate speech, and exclusionary behavior are the only storms we cannot weather. We have zero tolerance for any form of discrimination.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="material-symbols-outlined text-tertiary text-3xl shrink-0" data-icon="visibility_off">visibility_off</span>
+<div>
+<h3 class="font-headline font-bold text-xl mb-2">Respect the Secret Spots</h3>
+<p class="font-body text-on-surface-variant">When sharing "Treasures," respect the privacy of local communities. Do not expose fragile ecosystems or sacred spaces without permission.</p>
+</div>
+</div>
+<div class="flex gap-6 items-start">
+<span class="material-symbols-outlined text-tertiary text-3xl shrink-0" data-icon="edit_document">edit_document</span>
+<div>
+<h3 class="font-headline font-bold text-xl mb-2">No Counterfeit Tales</h3>
+<p class="font-body text-on-surface-variant">Authenticity is our currency. Do not claim others' journeys as your own. Credit the storytellers and the cartographers who came before you.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside class="md:col-span-4 space-y-8">
+<div class="bg-primary text-on-primary p-8 rounded-lg shadow-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-20 transform translate-x-4 -translate-y-4">
+<span class="material-symbols-outlined text-8xl" data-icon="shield">shield</span>
+</div>
+<h3 class="font-headline font-bold text-2xl mb-4 relative z-10">Safe Passage</h3>
+<p class="font-body text-sm mb-6 relative z-10 leading-relaxed">If you witness a violation of the Code, report it immediately. Our elders review every report with care and anonymity.</p>
+<button class="w-full py-4 bg-surface-container-lowest text-primary font-headline font-black rounded-full hover:scale-[1.02] transition-transform">Report an Issue</button>
+</div>
+<div class="bg-surface-container-highest p-8 rounded-lg">
+<h3 class="font-headline font-bold text-xl mb-4">The Captains</h3>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a diverse male community leader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ-zDx5wayLbetaKVjnyNfH7AP3xxIKtPoLEqc3rnSDljqra9egnLjdEs2GUWlyHVO6_h5J5LBhFBoAYZc72cISe41jz0UyXh-eDd2PAn0wtyOQBQO-X8rxafakLgatpP-euNfwUSjnKoG74jOvyeh_YiAKGO7gczs0qE3l8zwygUvxUUQ0AsMMtUCYWzMcCUbHBNadavAoJNM0gyqyMvldlvV7Qa3xiWH5QMXdEzQhpk1a0weSK7DUJGmIO-dA7B7rACBMbAT1T2J"/>
+</div>
+<div>
+<p class="font-headline font-bold text-sm">Aris Thorne</p>
+<p class="text-xs opacity-60 uppercase tracking-widest">Lead Moderator</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a smiling female community leader" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqIaa5tm9dPMAnY20QaC-gb3MeAhuui7f1xj2RRuDCpDe5XSvmhMbYMFX4tCvCSyw7qk9y7onC26PbnzuWGnAl9PeKyD9slmdXBmteC-4s8QACabGrAre_9GRQu1UAqzC7gG9C-zhGbZdyoMJ99-3Nhgk_yHXa11rbrrj8PadSLQnYWC880Mn2WIx7WVhl-6LxhvI6JvVm0HF4Zql7_wHlMpCHsODKEefj_-sFK3TxubbnzUBGpDkxT8L282BGmxAvooeJf74bvxS-"/>
+</div>
+<div>
+<p class="font-headline font-bold text-sm">Elena Voss</p>
+<p class="text-xs opacity-60 uppercase tracking-widest">Community Soul</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-1 border border-outline-variant/20 rounded-lg">
+<img class="rounded-DEFAULT w-full grayscale contrast-125 opacity-80" data-alt="Vintage map with compass and watercolor splashes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA57XHBX3RzvVM-SiJ1TIdXLe17CTZlcVF0D0eQ8TkMt2GYAfDvdRGuRuI2bn46_tnIAXIvMfnSuRQaiSIO3EsrS8bEkHxwc3i6ZJWx4Q9XS-PsdxFTdFyAKCSCFgvcasC3PiR9a501dLOh8JPiggDn7LHweELKbkyR5CIuxezkgkHnMuIYjuUHr6amUQB6N8B77VB6si7wst0VS2epYDIUE-zORqkYnvE624C6smuvEqpgfOYRXBxnfXaTKmlH67y8w4F_1zIx-ZUH"/>
+</div>
+</aside>
+</div>
+</section>
+<section class="max-w-[1200px] mx-auto px-8 mb-32 text-center">
+<div class="p-20 bg-surface-container rounded-xl border-none relative overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full h-2 bg-gradient-to-r from-primary via-secondary to-tertiary"></div>
+<h2 class="font-headline font-black text-5xl mb-8 leading-tight">Ready to sign the <span class="text-secondary">Authenticity Ledger</span>?</h2>
+<p class="font-body text-xl max-w-2xl mx-auto mb-12 text-on-surface-variant">By participating in our community, you agree to uphold these values and protect the magic of our shared journey.</p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="px-10 py-5 bg-primary text-on-primary rounded-full font-headline font-black text-lg hover:scale-105 transition-all shadow-lg">I Agree to the Code</button>
+<button class="px-10 py-5 bg-surface-container-highest text-on-surface rounded-full font-headline font-bold text-lg hover:scale-105 transition-all">Download PDF Version</button>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full rounded-t-[3rem] mt-20 bg-[#f6f8ea] dark:bg-[#1a1c18]">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 gap-8 max-w-[1440px] mx-auto">
+<div class="space-y-2 text-center md:text-left">
+<div class="font-['Epilogue'] text-lg font-bold text-[#af047a] dark:text-[#fface8]">The Global Entity</div>
+<div class="font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest text-[#2d3027] dark:text-[#e2e3d8] opacity-60 italic">
+                    © 2024 The Global Entity. Crafted for the Ethereal Cartographer.
+                </div>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-['Plus_Jakarta_Sans'] text-sm uppercase tracking-widest font-bold">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-60 hover:text-[#af047a] dark:hover:text-[#fface8] transition-colors" href="#">Our Mission</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-60 hover:text-[#af047a] dark:hover:text-[#fface8] transition-colors" href="#">Authenticity Ledger</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-60 hover:text-[#af047a] dark:hover:text-[#fface8] transition-colors" href="#">Pirate Code</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-60 hover:text-[#af047a] dark:hover:text-[#fface8] transition-colors" href="#">Join the Crew</a>
+</div>
+</div>
+</footer>
+</body></html>

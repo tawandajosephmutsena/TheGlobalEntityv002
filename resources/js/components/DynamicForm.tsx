@@ -9,11 +9,12 @@ import { Loader2, Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface FormField {
-    type: 'text' | 'email' | 'number' | 'textarea' | 'tel' | 'city' | 'address';
+    type: 'text' | 'email' | 'number' | 'textarea' | 'tel' | 'city' | 'address' | 'select';
     label: string;
     required: boolean;
     placeholder?: string;
     name: string;
+    options?: string[];
 }
 
 interface DynamicFormProps {
@@ -124,6 +125,27 @@ export default function DynamicForm({
                                         required={field.required}
                                         className="bg-muted/30 border-none min-h-[120px] focus-visible:ring-agency-accent"
                                     />
+                                ) : field.type === 'select' ? (
+                                    <div className="relative">
+                                        <select
+                                            id={fieldName}
+                                            value={data[fieldName]}
+                                            onChange={e => setData(fieldName, e.target.value)}
+                                            required={field.required}
+                                            title={field.label}
+                                            className="w-full bg-muted/30 border-none h-12 px-4 rounded-md focus:ring-2 focus:ring-agency-accent appearance-none transition-colors"
+                                        >
+                                            <option value="" disabled>{field.placeholder || `Select ${field.label.toLowerCase()}...`}</option>
+                                            {field.options?.map((option, i) => (
+                                                <option key={i} value={option}>{option}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-muted-foreground">
+                                            <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 ) : (
                                     <Input
                                         id={fieldName}

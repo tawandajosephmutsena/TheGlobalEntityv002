@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Voyager's Log | The Global Entity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#acaea2",
+              "tertiary-fixed-dim": "#78efef",
+              "on-tertiary-container": "#006161",
+              "on-primary-container": "#490031",
+              "tertiary-fixed": "#87fefd",
+              "background": "#f6f8ea",
+              "on-secondary-fixed": "#552800",
+              "surface-container-high": "#e1e4d4",
+              "secondary-fixed-dim": "#ffb37c",
+              "primary-dim": "#9a006b",
+              "surface-tint": "#af047a",
+              "on-background": "#2d3027",
+              "error-container": "#f74b6d",
+              "surface-variant": "#dbdfce",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary": "#bbfffe",
+              "surface": "#f6f8ea",
+              "primary-fixed-dim": "#f852b5",
+              "on-tertiary-fixed": "#004d4d",
+              "secondary-dim": "#7e3e00",
+              "secondary-container": "#ffc69f",
+              "error": "#b41340",
+              "primary-container": "#ff6abf",
+              "surface-dim": "#d2d6c5",
+              "secondary": "#904800",
+              "on-secondary-container": "#723800",
+              "on-primary-fixed": "#000000",
+              "surface-container-highest": "#dbdfce",
+              "on-primary": "#ffeff3",
+              "on-secondary": "#fff0e8",
+              "inverse-primary": "#fe57bb",
+              "primary-fixed": "#ff6abf",
+              "inverse-surface": "#0c0f08",
+              "outline": "#75786d",
+              "on-surface-variant": "#5a5d52",
+              "secondary-fixed": "#ffc69f",
+              "on-primary-fixed-variant": "#5a003d",
+              "on-error": "#ffefef",
+              "tertiary-dim": "#005959",
+              "surface-container-low": "#f0f2e4",
+              "primary": "#af047a",
+              "on-secondary-fixed-variant": "#7f3f00",
+              "on-surface": "#2d3027",
+              "on-tertiary-fixed-variant": "#006c6c",
+              "surface-bright": "#f6f8ea",
+              "surface-container": "#e7eada",
+              "error-dim": "#a70138",
+              "on-error-container": "#510017",
+              "inverse-on-surface": "#9b9e92",
+              "tertiary": "#006666",
+              "tertiary-container": "#87fefd"
+            },
+            fontFamily: {
+              "headline": ["Epilogue"],
+              "body": ["Plus Jakarta Sans"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .watercolor-bleed {
+            background: radial-gradient(circle at top right, rgba(175, 4, 122, 0.08) 0%, transparent 70%);
+        }
+        .pirate-path {
+            stroke-dasharray: 8 8;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-[#f6f8ea]/70 dark:bg-[#1a1c1e]/70 backdrop-blur-xl shadow-[0_20px_40px_rgba(45,48,39,0.06)]">
+<nav class="flex justify-between items-center w-full px-8 py-4 max-w-full mx-auto">
+<div class="text-2xl font-black italic text-[#af047a] dark:text-[#fface8] font-['Epilogue'] tracking-tight">
+                The Global Entity
+            </div>
+<div class="hidden md:flex items-center space-x-12 font-['Epilogue'] font-bold tracking-tight">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Festivals</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Destinations</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Journal</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-80 hover:scale-105 transition-transform duration-300 ease-in-out hover:opacity-100" href="#">Map</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#af047a] dark:text-[#fface8] hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-12 px-6 md:px-12 lg:px-24 max-w-screen-2xl mx-auto watercolor-bleed">
+<!-- Profile Hero / Voyager Header -->
+<section class="mt-8 mb-16 flex flex-col md:flex-row items-end justify-between gap-8 border-b-2 border-surface-container-high pb-12">
+<div class="flex-1">
+<div class="inline-flex items-center gap-3 px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold tracking-widest mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                    MASTER CARTOGRAPHER
+                </div>
+<h1 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter text-on-background">
+                    Elias <span class="text-primary italic">Vane.</span>
+</h1>
+<p class="mt-4 text-xl text-on-surface-variant max-w-xl font-medium leading-relaxed">
+                    Navigating the ethereal threads of the world since 2018. Currently drifting through the Atlas Mountains.
+                </p>
+</div>
+<div class="w-full md:w-auto flex flex-col items-end gap-6">
+<div class="flex gap-12 text-center">
+<div>
+<div class="text-3xl font-headline font-black text-secondary">42</div>
+<div class="text-xs font-bold uppercase tracking-widest opacity-60">Expeditions</div>
+</div>
+<div>
+<div class="text-3xl font-headline font-black text-tertiary">128</div>
+<div class="text-xs font-bold uppercase tracking-widest opacity-60">Maps Saved</div>
+</div>
+<div>
+<div class="text-3xl font-headline font-black text-primary">15</div>
+<div class="text-xs font-bold uppercase tracking-widest opacity-60">Journals</div>
+</div>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 py-4 rounded-full font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+                    New Entry
+                </button>
+</div>
+</section>
+<!-- Bento Grid: Main Dashboard Content -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Column: My Expeditions -->
+<section class="md:col-span-8 flex flex-col gap-8">
+<div class="flex items-center justify-between">
+<h2 class="font-headline text-3xl font-bold tracking-tight">My Expeditions</h2>
+<a class="text-primary font-bold text-sm hover:underline" href="#">View Ledger</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<!-- Expedition Card 1 -->
+<div class="group relative overflow-hidden rounded-lg bg-surface-container-low p-6 flex flex-col justify-between aspect-[4/5]">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl" data-icon="festival">festival</span>
+</div>
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 rounded-full bg-surface-container-highest text-on-surface text-[10px] font-black uppercase tracking-widest mb-4">Completed • 2023</span>
+<h3 class="font-headline text-2xl font-bold leading-tight">Glastonbury <br/>Mystics</h3>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                                Somerset, UK
+                            </div>
+<img class="w-full h-32 object-cover rounded shadow-md grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Vibrant outdoor music festival with colorful flags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvh70tDxZT9J0r5yzgpTHkTkwfnFCY55MWB309EBkKZMVz2OIwCvUnERkEbbqX3huC5aduXMcAwEs2Mq0DZ1Um0LpuXuTmwwQjC8JT5s4ZDGoKv5R-K08phjwRg91O4xX3wicHn5fzTckqCBx753mfeWLFQZdZEuJCoqIEDg-Hh6lnwVSRygccumQ49f4EaUcNXqkLQwC0QbevdQSYlfLex-fR6GDsSgtkIncLXV2meTA4H7Yp9JQSEivfrx3j0zHowkERI2GI18qF"/>
+</div>
+</div>
+<!-- Expedition Card 2 -->
+<div class="group relative overflow-hidden rounded-lg bg-surface-container-low p-6 flex flex-col justify-between aspect-[4/5]">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-9xl" data-icon="sailing">sailing</span>
+</div>
+<div class="relative z-10">
+<span class="inline-block px-3 py-1 rounded-full bg-surface-container-highest text-on-surface text-[10px] font-black uppercase tracking-widest mb-4">In Progress • 2024</span>
+<h3 class="font-headline text-2xl font-bold leading-tight">The Cyclades <br/>Odyssey</h3>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+                                Greece
+                            </div>
+<img class="w-full h-32 object-cover rounded shadow-md grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="Turquoise water and white buildings of a Greek island" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEJHi7LF7__XLWQFm1nPoC3Cb4nRTgLJdNMm7btoDKbE1n16cu-UphPAxlarxzDoG8h1PcNQARfXBW4yZLLt4a9cvHyV87R6wWsHUGgqMtlx6Z9mxZhMjSMqGCuyGji7ulsS3AD-GMnn_ykzTX-JBI6Too7u8SLqw2q3PJyt85cEY7gwbJjmMXWfm7ii6LKXfnSO5HQNHqSKw3zdhsv0TsDzEVh3Db4iysQAac4fxkKdKwY29VYAmMc6JWjHLj78pNrUwc_meGsNj8"/>
+</div>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="bg-surface-container-low rounded-lg p-8 relative overflow-hidden">
+<h3 class="font-headline text-xl font-bold mb-8">Path to Grand Voyager</h3>
+<div class="relative h-12 flex items-center">
+<svg class="absolute w-full h-full overflow-visible" fill="none" viewbox="0 0 800 50">
+<path class="pirate-path stroke-outline-variant opacity-30" d="M0 25C100 25 150 5 250 5C350 5 400 45 500 45C600 45 650 25 800 25" stroke-linecap="round" stroke-width="2"></path>
+<path class="pirate-path stroke-secondary" d="M0 25C100 25 150 5 250 5C350 5 400 45 500 45" stroke-linecap="round" stroke-width="3"></path>
+<circle class="fill-secondary shadow-lg" cx="500" cy="45" r="6"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">
+<span>Initiate</span>
+<span>Cartographer</span>
+<span class="text-secondary">Grand Voyager</span>
+</div>
+</div>
+</section>
+<!-- Right Column: Journal & Updates -->
+<aside class="md:col-span-4 flex flex-col gap-8">
+<!-- Journal Drafts -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline text-xl font-bold">Journal Drafts</h3>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="history_edu">history_edu</span>
+</div>
+<ul class="space-y-4">
+<li class="group cursor-pointer">
+<div class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Shadows of Marrakesh</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Edited 2h ago • 1,200 words</div>
+</li>
+<li class="group cursor-pointer">
+<div class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">The Salt Flats Paradox</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Edited 3d ago • 450 words</div>
+</li>
+<li class="group cursor-pointer">
+<div class="text-sm font-bold text-on-surface group-hover:text-primary transition-colors">Midnight at Fuji</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-widest">Edited 1w ago • 3,100 words</div>
+</li>
+</ul>
+</div>
+<!-- Saved Maps -->
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.03)]">
+<div class="p-6">
+<h3 class="font-headline text-xl font-bold mb-4">Latest Map Scan</h3>
+<div class="relative rounded-md overflow-hidden bg-surface-variant">
+<img class="w-full h-48 object-cover opacity-60 mix-blend-multiply" data-alt="Vintage textured world map with pins" data-location="Morocco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQLJ6b0EI-_hy5X2JCz-volLowD2fR3dtfhiLn7mAVFGykvcCuvoCDGuCF_zhRjDviUmwWQVeRGUCyXG5ajWFxXZTAyoPImecS5E2spnk0ftB_yJc35PlVhGgpm8mNTAPAAImyBpmNmw5EPMLJ4dYzv9GZhyKA1NLuJuxvcVkOMTZjnqwIOTsSqHJQ8jU2IufxX9i9wUeEx7pOjp15s9l4Dtg9QNH7MDS-alBSXuzyMrmWiCmz06GTZlswvFlD1gcZ2Zen0IhkVzhC"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="bg-background/90 backdrop-blur px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest shadow-sm hover:bg-primary hover:text-on-primary transition-all">
+                                    Expand Chart
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Community Updates Feed -->
+<div class="flex flex-col gap-4">
+<h3 class="font-headline text-xl font-bold">Whispers from the Void</h3>
+<div class="flex flex-col gap-6">
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="person">person</span>
+</div>
+<div>
+<p class="text-sm leading-relaxed"><span class="font-bold">Liora Shell</span> discovered a hidden oasis in <span class="text-tertiary font-bold italic">Wadi Rum.</span></p>
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">12 minutes ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="campaign">campaign</span>
+</div>
+<div>
+<p class="text-sm leading-relaxed"><span class="font-bold">New Fest Alert:</span> The Solar Flare Gathering has been announced for July.</p>
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">4 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#f6f8ea] dark:bg-[#1a1c1e] w-full rounded-t-[3rem] mt-20">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full gap-8">
+<div class="font-['Epilogue'] text-xl font-bold text-[#2d3027] dark:text-[#e2e3d8]">
+                The Global Entity
+            </div>
+<div class="flex flex-wrap justify-center gap-8 font-['Plus_Jakarta_Sans'] text-sm tracking-wide">
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Sustainability Manifesto</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Eco-Travel Credits</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Merchant Terms</a>
+<a class="text-[#2d3027] dark:text-[#e2e3d8] opacity-70 hover:text-[#af047a] transition-colors duration-200" href="#">Privacy Scroll</a>
+</div>
+<div class="text-[#2d3027] dark:text-[#e2e3d8] opacity-60 text-xs font-['Plus_Jakarta_Sans']">
+                © 2024 The Global Entity. Navigating the Ethereal.
+            </div>
+</div>
+</footer>
+</body></html>

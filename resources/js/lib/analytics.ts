@@ -15,6 +15,9 @@ class AnalyticsTracker {
     public init() {
         if (this.isInitialized || typeof window === 'undefined') return;
 
+        // Skip completely for admin routes
+        if (window.location.pathname.startsWith('/admin')) return;
+
         this.setupClickTracking();
         this.setupScrollTracking();
         this.isInitialized = true;
@@ -90,6 +93,7 @@ class AnalyticsTracker {
                     'X-CSRF-TOKEN': token || '',
                     'Accept': 'application/json',
                 },
+                body: JSON.stringify(data),
             });
         } catch {
             // Silently fail to not interrupt user experience

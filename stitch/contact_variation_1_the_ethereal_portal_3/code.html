@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cosmic Journey | The Ethereal Cartographer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,800;0,900;1,400;1,700;1,900&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#ffc69f",
+                        "outline-variant": "#acaea2",
+                        "tertiary-container": "#87fefd",
+                        "surface-tint": "#af047a",
+                        "surface-variant": "#dbdfce",
+                        "on-surface": "#2d3027",
+                        "on-primary-fixed": "#000000",
+                        "surface-container": "#e7eada",
+                        "on-tertiary-fixed-variant": "#006c6c",
+                        "surface-bright": "#f6f8ea",
+                        "on-secondary-fixed": "#552800",
+                        "tertiary-fixed": "#87fefd",
+                        "error-container": "#f74b6d",
+                        "primary-container": "#ff6abf",
+                        "primary-fixed": "#ff6abf",
+                        "on-primary-container": "#490031",
+                        "on-primary-fixed-variant": "#5a003d",
+                        "surface-container-highest": "#dbdfce",
+                        "error": "#b41340",
+                        "primary": "#af047a",
+                        "background": "#f6f8ea",
+                        "primary-fixed-dim": "#f852b5",
+                        "on-surface-variant": "#5a5d52",
+                        "on-secondary-container": "#723800",
+                        "on-primary": "#ffeff3",
+                        "surface-dim": "#d2d6c5",
+                        "secondary-dim": "#7e3e00",
+                        "secondary": "#904800",
+                        "inverse-on-surface": "#9b9e92",
+                        "outline": "#75786d",
+                        "secondary-fixed-dim": "#ffb37c",
+                        "on-error": "#ffefef",
+                        "on-tertiary-fixed": "#004d4d",
+                        "inverse-surface": "#0c0f08",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#006161",
+                        "on-secondary-fixed-variant": "#7f3f00",
+                        "tertiary-dim": "#005959",
+                        "secondary-container": "#ffc69f",
+                        "on-background": "#2d3027",
+                        "error-dim": "#a70138",
+                        "inverse-primary": "#fe57bb",
+                        "surface-container-high": "#e1e4d4",
+                        "on-tertiary": "#bbfffe",
+                        "tertiary-fixed-dim": "#78efef",
+                        "on-secondary": "#fff0e8",
+                        "tertiary": "#006666",
+                        "primary-dim": "#9a006b",
+                        "surface": "#f6f8ea",
+                        "on-error-container": "#510017",
+                        "surface-container-low": "#f0f2e4"
+                    },
+                    fontFamily: {
+                        "headline": ["Epilogue"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .cosmic-gradient {
+            background: radial-gradient(circle at center, rgba(175, 4, 122, 0.15) 0%, rgba(246, 248, 234, 1) 100%);
+        }
+        .starfield {
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #af047a, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #ff943c, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #006666, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #af047a, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, #ff943c, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, #006666, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.3;
+        }
+        .nebula-blur {
+            filter: blur(120px);
+        }
+        .orbit-container {
+            perspective: 1000px;
+        }
+        .celestial-body {
+            box-shadow: 0 0 80px rgba(175, 4, 122, 0.2), inset 0 0 40px rgba(255, 148, 60, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<nav class="fixed top-0 w-full z-50 bg-background/40 backdrop-blur-2xl">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-[1440px] mx-auto">
+<a class="text-2xl font-black text-primary italic font-headline" href="#">The Ethereal Cartographer</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="font-headline tracking-tight font-bold uppercase text-xs text-on-surface/60 hover:text-primary transition-colors" href="#">Journeys</a>
+<a class="font-headline tracking-tight font-bold uppercase text-xs text-on-surface/60 hover:text-primary transition-colors" href="#">Festivals</a>
+<a class="font-headline tracking-tight font-bold uppercase text-xs text-on-surface/60 hover:text-primary transition-colors" href="#">The Map</a>
+<a class="font-headline tracking-tight font-bold uppercase text-xs text-on-surface/60 hover:text-primary transition-colors" href="#">Journal</a>
+</div>
+<button class="px-8 py-3 bg-primary text-on-primary rounded-full font-headline font-bold text-xs tracking-widest uppercase shadow-xl hover:shadow-primary/40 transition-all">
+            Inquire
+        </button>
+</div>
+</nav>
+<main>
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+<div class="absolute inset-0 starfield"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-primary/10 rounded-full nebula-blur pointer-events-none"></div>
+<div class="relative z-10 space-y-12 max-w-6xl">
+<div class="inline-flex items-center gap-4 px-6 py-2 bg-surface-container-low border border-primary/10 rounded-full">
+<span class="material-symbols-outlined text-secondary text-sm">flare</span>
+<span class="font-headline font-bold uppercase text-[10px] tracking-[0.4em] text-on-surface-variant">The Ethereal Portal</span>
+</div>
+<h1 class="text-7xl md:text-[10rem] font-black font-headline text-on-surface leading-none tracking-tighter">
+                Cast Your Message <br/>
+<span class="text-primary italic">into the Wind</span>
+</h1>
+<p class="text-2xl md:text-3xl text-on-surface-variant leading-relaxed max-w-3xl mx-auto font-body font-light">
+                Whether you're seeking a hidden archipelago or a festival of the souls, our cartographers are ready to map your next transcendence.
+            </p>
+</div>
+<div class="absolute bottom-12 flex flex-col items-center gap-4 opacity-40">
+<span class="font-headline text-[10px] uppercase tracking-[0.5em]">Descent</span>
+<div class="w-px h-24 bg-gradient-to-b from-primary to-transparent"></div>
+</div>
+</section>
+<section class="relative min-h-screen flex items-center justify-center px-6 py-24 bg-surface-container-low/30">
+<div class="absolute top-0 left-0 w-full h-full starfield opacity-20"></div>
+<div class="absolute top-1/4 right-0 w-[50vw] h-[50vw] bg-secondary/5 rounded-full nebula-blur"></div>
+<div class="relative z-10 w-full max-w-4xl orbit-container">
+<div class="celestial-body bg-surface-container-lowest/80 backdrop-blur-3xl p-12 md:p-20 rounded-full border border-white/40 shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
+<div class="max-w-xl mx-auto text-center mb-12">
+<span class="material-symbols-outlined text-primary text-5xl mb-4">ac_unit</span>
+<h2 class="font-headline font-black text-4xl uppercase tracking-tighter mb-4">Universal Alignment</h2>
+</div>
+<form action="#" class="space-y-8 max-w-xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-3">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant ml-4">Navigator Name</label>
+<input class="w-full bg-white/50 border-none rounded-full px-8 py-5 focus:ring-2 focus:ring-primary/20 transition-all font-body text-on-surface placeholder:text-on-surface-variant/30" placeholder="e.g. Captain Lyra Dawn" type="text"/>
+</div>
+<div class="space-y-3">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant ml-4">Email Address</label>
+<input class="w-full bg-white/50 border-none rounded-full px-8 py-5 focus:ring-2 focus:ring-primary/20 transition-all font-body text-on-surface placeholder:text-on-surface-variant/30" placeholder="correspondence@beyond.map" type="email"/>
+</div>
+</div>
+<div class="space-y-3">
+<label class="font-headline font-bold text-[10px] uppercase tracking-widest text-on-surface-variant ml-4">Your Expedition Inquiry</label>
+<textarea class="w-full bg-white/50 border-none rounded-[2rem] px-8 py-6 focus:ring-2 focus:ring-primary/20 transition-all font-body text-on-surface placeholder:text-on-surface-variant/30" placeholder="Describe the coordinates of your imagination..." rows="4"></textarea>
+</div>
+<div class="pt-6">
+<button class="w-full py-6 bg-gradient-to-r from-primary to-primary-dim text-on-primary rounded-full font-headline font-black text-xl tracking-widest uppercase hover:shadow-2xl hover:shadow-primary/30 transition-all" type="submit">
+                            Send to the Ether
+                        </button>
+</div>
+<p class="text-center font-headline text-[10px] uppercase tracking-[0.3em] opacity-40">Est. Time of Arrival: 2-3 Solar Cycles</p>
+</form>
+</div>
+</div>
+</section>
+<section class="relative py-40 px-6 md:px-12 bg-background">
+<div class="max-w-[1440px] mx-auto space-y-24">
+<div class="text-center max-w-2xl mx-auto space-y-4">
+<span class="font-headline font-bold uppercase text-xs tracking-[0.4em] text-primary">Celestial Narrative</span>
+<h2 class="text-5xl md:text-7xl font-black font-headline tracking-tighter">Grand Chapters</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 gap-8">
+<div class="md:col-span-6 lg:col-span-4 bg-surface-container-low rounded-[3rem] p-16 relative overflow-hidden group min-h-[600px] flex flex-col justify-end">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10"></div>
+<div class="absolute inset-0 opacity-40 mix-blend-overlay starfield scale-150 rotate-12"></div>
+<div class="absolute -top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full nebula-blur"></div>
+<div class="relative z-10 space-y-6">
+<span class="font-headline font-bold text-6xl opacity-10 italic">01</span>
+<h3 class="font-headline font-black text-6xl text-on-surface">Our Archive</h3>
+<p class="text-on-surface-variant text-xl max-w-md">Explore the centuries of scribbled routes and paper secrets found in our Great Library.</p>
+<a class="inline-flex items-center gap-4 font-headline font-bold text-primary uppercase text-sm tracking-widest group-hover:gap-6 transition-all" href="#">
+                            Browse the Archives <span class="material-symbols-outlined">north_east</span>
+</a>
+</div>
+</div>
+<div class="md:col-span-3 lg:col-span-2 bg-secondary rounded-[3rem] p-16 flex flex-col justify-between text-on-secondary relative overflow-hidden group">
+<div class="absolute inset-0 opacity-20 starfield"></div>
+<div class="relative z-10">
+<span class="font-headline font-black text-8xl block leading-none opacity-20">02</span>
+<h4 class="font-headline font-bold text-3xl mt-8 uppercase tracking-tighter">Direct Port</h4>
+<div class="w-12 h-1 bg-on-secondary/30 mt-4"></div>
+</div>
+<p class="font-body text-xl relative z-10 opacity-90 leading-relaxed">Visit us at the Golden Wharf, Anchor Point VII, The Sapphire Coast.</p>
+</div>
+<div class="md:col-span-3 lg:col-span-2 bg-tertiary rounded-[3rem] p-16 flex flex-col justify-center items-center text-center gap-8 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+<div class="relative z-10 space-y-4">
+<div class="w-24 h-24 rounded-full bg-tertiary-container/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
+<span class="material-symbols-outlined text-tertiary-container text-6xl">auto_awesome</span>
+</div>
+<h5 class="font-headline font-bold text-3xl text-tertiary-container uppercase tracking-[0.2em]">Instant Magic</h5>
+</div>
+</div>
+<div class="md:col-span-6 lg:col-span-4 bg-surface-container-highest rounded-[3rem] p-16 flex flex-col md:flex-row items-center gap-16 relative overflow-hidden group">
+<div class="absolute inset-0 opacity-10 starfield"></div>
+<div class="w-40 h-40 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-2xl shadow-primary/40 relative z-10">
+<span class="material-symbols-outlined text-on-primary text-6xl">waves</span>
+</div>
+<div class="relative z-10">
+<h4 class="font-headline font-bold text-4xl text-on-surface tracking-tighter">Voice Frequency</h4>
+<p class="text-on-surface-variant font-body mt-4 text-xl leading-relaxed">
+                            Tune your resonator to 432Hz or dial <br/>
+<span class="font-black text-primary text-3xl">+1 (800) MAP-SOUL</span>
+</p>
+</div>
+</div>
+<div class="md:col-span-6 lg:col-span-6 bg-surface-container rounded-[3rem] p-16 flex flex-col justify-center items-center text-center relative overflow-hidden">
+<div class="absolute -right-20 -bottom-20 w-[40vw] h-[40vw] bg-secondary/5 rounded-full nebula-blur"></div>
+<div class="absolute -left-20 -top-20 w-[40vw] h-[40vw] bg-primary/5 rounded-full nebula-blur"></div>
+<div class="relative z-10 space-y-10 w-full">
+<h4 class="font-headline font-bold text-xs uppercase text-on-surface-variant tracking-[1em]">Social Tether</h4>
+<div class="flex flex-wrap justify-center gap-12 md:gap-24">
+<a class="text-on-surface hover:text-primary transition-all font-headline font-black text-4xl md:text-6xl italic group" href="#">
+                                Ethergram <span class="block h-1 w-0 group-hover:w-full bg-primary transition-all duration-500"></span>
+</a>
+<a class="text-on-surface hover:text-primary transition-all font-headline font-black text-4xl md:text-6xl italic group" href="#">
+                                MapTok <span class="block h-1 w-0 group-hover:w-full bg-primary transition-all duration-500"></span>
+</a>
+<a class="text-on-surface hover:text-primary transition-all font-headline font-black text-4xl md:text-6xl italic group" href="#">
+                                SkyBird <span class="block h-1 w-0 group-hover:w-full bg-primary transition-all duration-500"></span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-background w-full pt-32">
+<div class="bg-surface-container-low rounded-t-[5rem] px-12 py-24">
+<div class="max-w-[1440px] mx-auto space-y-16">
+<div class="flex flex-col lg:flex-row justify-between items-start gap-12">
+<div class="space-y-6 max-w-md">
+<a class="font-headline font-black text-primary text-4xl italic" href="#">The Ethereal Cartographer</a>
+<p class="font-body text-on-surface-variant leading-relaxed">Charting the unknown since the first star fell. Join our collective journey across the celestial expanse.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+<div class="space-y-4">
+<h6 class="font-headline font-bold text-[10px] uppercase tracking-widest opacity-40">Explore</h6>
+<ul class="space-y-2">
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Manifesto</a></li>
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Journeys</a></li>
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Festivals</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h6 class="font-headline font-bold text-[10px] uppercase tracking-widest opacity-40">Legal</h6>
+<ul class="space-y-2">
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Privacy</a></li>
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Terms</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h6 class="font-headline font-bold text-[10px] uppercase tracking-widest opacity-40">Company</h6>
+<ul class="space-y-2">
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Partners</a></li>
+<li><a class="text-sm hover:text-primary transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="pt-16 border-t border-on-surface/5 flex flex-col md:flex-row justify-between items-center gap-8">
+<p class="font-body text-xs tracking-wide text-on-surface/40 italic">© 2024 The Ethereal Cartographer. Hand-drawn with soul across the cosmos.</p>
+<div class="flex gap-6">
+<div class="w-12 h-12 rounded-full border border-on-surface/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl">language</span>
+</div>
+<div class="w-12 h-12 rounded-full border border-on-surface/10 flex items-center justify-center hover:bg-primary/10 hover:border-primary/40 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-primary text-xl">park</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+
+</body></html>

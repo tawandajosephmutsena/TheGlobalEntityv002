@@ -16,7 +16,7 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2, Layers, RotateCcw, BoxSelect, ArrowUp, ArrowDown, RotateCw } from "lucide-react";
+import { X, Minus, Plus, Locate, Maximize, Loader2, Layers, RotateCcw, ArrowUp, ArrowDown, RotateCw } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -999,8 +999,7 @@ function CompassButton({ onClick }: { onClick: () => void }) {
       <svg
         ref={compassRef}
         viewBox="0 0 24 24"
-        className="size-5 transition-transform duration-200"
-        style={{ transformStyle: "preserve-3d" }}
+        className="size-5 transition-transform duration-200 [transform-style:preserve-3d]"
       >
         <path d="M12 2L16 12H12V2Z" className="fill-red-500" />
         <path d="M12 2L8 12H12V2Z" className="fill-red-300" />
