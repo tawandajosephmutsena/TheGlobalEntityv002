@@ -28,29 +28,29 @@ export default function AboutHeroBlockRenderer({
                     className="relative z-10"
                 >
                     {backgroundImage && (
-                        <div className="absolute -top-10 -left-10 w-20 h-20 rounded-full overflow-hidden border-2 border-primary rotate-12 shadow-xl">
+                        <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full overflow-hidden border-4 border-primary/30 rotate-12 shadow-2xl z-20">
                             <img src={backgroundImage} alt="" className="w-full h-full object-cover" />
                         </div>
                     )}
-                    <span className="text-secondary font-bold tracking-[0.2em] uppercase text-sm mb-4 block">
+                    <span className="text-primary font-black tracking-[0.3em] uppercase text-xs mb-6 block italic">
                         {subtitle}
                     </span>
-                    <h1 className="font-headline font-black text-7xl md:text-8xl text-on-background leading-[0.9] mb-8">
+                    <h1 className="font-display font-black text-7xl md:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter uppercase">
                         {title.includes('…') ? (
                             <>
                                 {title.split('…')[0]}… <br/>
-                                <span className="text-primary italic">{title.split('…')[1] || 'What?'}</span>
+                                <span className="text-secondary italic lowercase mix-blend-multiply dark:mix-blend-normal">{title.split('…')[1] || 'What?'}</span>
                             </>
                         ) : title}
                     </h1>
-                    <p className="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed mb-10">
+                    <p className="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed mb-12 font-medium italic">
                         {description}
                     </p>
                     
                     <motion.button 
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-gradient-to-r from-primary to-primary-dim text-on-primary px-8 py-4 rounded-full font-bold shadow-lg flex items-center gap-2 group"
+                        className="bg-primary text-on-primary px-10 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
                     >
                         <a href={ctaLink}>{ctaText}</a>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

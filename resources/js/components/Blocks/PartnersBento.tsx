@@ -1,6 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import AnimatedSection from '@/Components/AnimatedSection';
+import AnimatedSection from '@/components/AnimatedSection';
 import { Map, Store, PartyPopper, ShieldCheck, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +14,7 @@ interface PartnersBentoProps {
     }>;
 }
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ElementType> = {
     map: Map,
     storefront: Store,
     festival: PartyPopper,
@@ -25,7 +23,6 @@ const iconMap: Record<string, any> = {
 
 const PartnersBento: React.FC<PartnersBentoProps> = ({
     title = "For the Ethereal Cartographers",
-    subtitle = "Our Partners",
     cards = [
         {
             id: '1',
@@ -58,12 +55,12 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
     ]
 }) => {
     return (
-        <section className="py-32 bg-agency-secondary overflow-hidden">
+        <section className="py-32 bg-background text-foreground overflow-hidden">
             <div className="container mx-auto px-4">
                 <AnimatedSection animation="fade-up" className="text-center mb-20">
-                    <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-agency-primary mb-4 leading-none">
+                    <h2 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter text-on-surface mb-4 leading-none">
                         {title.split(' ').map((word, i) => (
-                            <span key={i} className={cn(i === 2 ? "text-agency-accent italic" : "")}>
+                            <span key={i} className={cn(i === 2 ? "text-primary italic font-serif font-light" : "")}>
                                 {word}{' '}
                             </span>
                         ))}
@@ -86,32 +83,32 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                 )}
                             >
                                 <div className={cn(
-                                    "h-full rounded-[2.5rem] p-10 md:p-14 transition-all duration-700 overflow-hidden group border flex flex-col justify-between",
+                                    "h-full rounded-[2.5rem] p-10 md:p-14 transition-all duration-700 overflow-hidden group border-none flex flex-col justify-between",
                                     index === 3 
-                                        ? "bg-agency-primary text-agency-secondary border-transparent" 
-                                        : "bg-agency-primary/5 hover:bg-agency-primary/10 border-agency-primary/5 hover:border-agency-accent/20"
+                                        ? "bg-primary text-on-primary" 
+                                        : "bg-surface-container hover:bg-surface-container-high transition-colors"
                                 )}>
                                     {/* Abstract background pattern for cards */}
                                     <div className={cn(
                                         "absolute top-0 right-0 w-80 h-80 rounded-full -mr-32 -mt-32 group-hover:scale-110 transition-transform duration-1000 pointer-events-none opacity-20",
-                                        index === 3 ? "bg-agency-accent" : "bg-agency-accent/10"
+                                        index === 3 ? "bg-on-primary" : "bg-primary/10"
                                     )} />
 
                                     <div className="relative z-10">
                                         <div className={cn(
-                                            "w-20 h-20 rounded-3xl flex items-center justify-center mb-10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-lg",
+                                            "w-20 h-20 rounded-3xl flex items-center justify-center mb-10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-sea-mist",
                                             index === 3 
-                                                ? "bg-agency-accent text-agency-secondary" 
-                                                : "bg-agency-secondary text-agency-accent border border-agency-accent/20"
+                                                ? "bg-secondary text-on-secondary" 
+                                                : "bg-surface text-secondary shadow-inner"
                                         )}>
                                             <Icon size={40} strokeWidth={1} />
                                         </div>
-                                        <h3 className="text-4xl font-black uppercase tracking-tighter mb-6 leading-tight">
+                                        <h3 className="font-display text-4xl font-black uppercase tracking-tighter mb-6 leading-tight">
                                             {card.title}
                                         </h3>
                                         <p className={cn(
                                             "text-xl leading-relaxed max-w-xl",
-                                            index === 3 ? "text-agency-secondary/80" : "text-agency-primary/60"
+                                            index === 3 ? "text-on-primary/80" : "text-on-surface-variant"
                                         )}>
                                             {card.description}
                                         </p>
@@ -122,7 +119,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                             href={card.link} 
                                             className={cn(
                                                 "inline-flex items-center gap-3 font-black uppercase tracking-[0.2em] text-xs group/link py-2",
-                                                index === 3 ? "text-agency-accent" : "text-agency-accent"
+                                                index === 3 ? "text-on-primary" : "text-primary"
                                             )}
                                         >
                                             <span className="relative">

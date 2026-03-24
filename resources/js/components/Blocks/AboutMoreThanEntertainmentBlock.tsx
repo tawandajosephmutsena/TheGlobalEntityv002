@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import type { AboutMoreThanEntertainmentBlock } from '@/types/page-blocks';
 
@@ -38,7 +37,7 @@ export default function AboutMoreThanEntertainmentBlockRenderer({
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-headline font-bold text-5xl mb-6"
+                        className="font-display font-black text-5xl md:text-7xl mb-8 tracking-tighter uppercase leading-[0.85]"
                     >
                         {title}
                     </motion.h2>
@@ -47,7 +46,7 @@ export default function AboutMoreThanEntertainmentBlockRenderer({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-xl text-on-surface-variant leading-relaxed"
+                        className="text-xl md:text-2xl text-on-surface-variant leading-relaxed font-semibold italic"
                     >
                         {description}
                     </motion.p>
@@ -77,24 +76,24 @@ function AboutMoreThanEntertainmentCard({ image, title, subtitle, link, delay }:
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay, duration: 0.6 }}
-            className="group relative rounded-3xl overflow-hidden aspect-[4/5] shadow-xl hover:shadow-2xl transition-all duration-500 bg-surface-container"
+            className="group relative rounded-[2.5rem] overflow-hidden aspect-[4/5] shadow-sea-mist hover:shadow-2xl transition-all duration-700 bg-surface-container-low border border-primary/5"
         >
             <img src={image} alt={title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             
             <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                <h3 className="font-headline font-black text-3xl mb-2 group-hover:translate-x-2 transition-transform duration-300">
+                <h3 className="font-display font-black text-4xl mb-4 group-hover:translate-x-2 transition-transform duration-500 uppercase tracking-tighter leading-none italic">
                     {title}
                 </h3>
-                <p className="text-white/80 text-sm mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                <p className="text-white/90 text-base mb-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 font-medium italic">
                     {subtitle}
                 </p>
                 <motion.a 
                     href={link}
                     whileHover={{ scale: 1.1 }}
-                    className="inline-flex items-center gap-2 text-white font-bold group/btn"
+                    className="inline-flex items-center gap-3 text-white font-black text-xs uppercase tracking-widest group/btn bg-primary/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-primary transition-all duration-500"
                 >
-                    Learn More 
+                    Chart Path 
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                 </motion.a>
             </div>

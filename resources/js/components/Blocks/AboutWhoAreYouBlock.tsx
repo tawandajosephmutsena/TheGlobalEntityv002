@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 import type { AboutWhoAreYouBlock } from '@/types/page-blocks';
 
 export default function AboutWhoAreYouBlockRenderer({
@@ -32,14 +31,14 @@ export default function AboutWhoAreYouBlockRenderer({
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="font-headline font-bold text-5xl mb-12"
+                    className="font-display font-black text-5xl md:text-8xl mb-20 tracking-tighter uppercase leading-[0.85]"
                 >
                     {title.includes('You?') ? (
-                        <>Who Are <span className="text-tertiary">You?</span></>
+                        <>Who Are <span className="text-secondary italic">You?</span></>
                     ) : title}
                 </motion.h2>
                 
-                <div className="grid md:grid-cols-3 gap-8 text-left">
+                <div className="grid md:grid-cols-3 gap-12 text-left">
                     {items.map((item, index) => (
                         <AboutWhoAreYouCard 
                             key={index}
@@ -62,12 +61,12 @@ function AboutWhoAreYouCard({ title, description, colorClass, delay }: { title: 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay, duration: 0.6 }}
-            className="p-8 bg-surface-container-lowest rounded-2xl hover:shadow-xl transition-all duration-300 border border-transparent hover:border-surface-variant group"
+            className="p-10 bg-surface-container-lowest rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/5 hover:border-primary/20 group"
         >
-            <h3 className={cn("font-headline font-bold text-xl mb-4 transition-transform origin-left group-hover:scale-105", colorClass)}>
+            <h3 className={`font-display font-black text-3xl mb-6 transition-transform origin-left group-hover:scale-105 uppercase tracking-tighter italic ${colorClass}`}>
                 {title}
             </h3>
-            <p className="text-on-surface-variant text-sm leading-relaxed">
+            <p className="text-on-surface-variant text-base leading-relaxed font-medium">
                 {description}
             </p>
         </motion.div>

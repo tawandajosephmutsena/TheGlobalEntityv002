@@ -34,7 +34,12 @@ interface ThemeColors {
 interface ThemePreset {
     name: string;
     description: string;
-    fonts: { sans: string; serif: string; mono: string };
+    fonts: {
+        sans: string;
+        mono: string;
+        serif?: string;
+        display?: string;
+    };
     radius: string;
     light: ThemeColors;
     dark: ThemeColors;
@@ -203,7 +208,7 @@ export default function ThemeStyles() {
                         ${generateCssVariables(preset.light, false, '                        ')}
                         --radius: ${customRadius || preset.radius || '0.5rem'};
                         --font-sans: "${customBodyFont || preset.fonts.sans || 'Inter'}", ui-sans-serif, system-ui, sans-serif;
-                        --font-display: "${customDisplayFont || preset.fonts.sans || 'Inter'}", ui-sans-serif, system-ui, sans-serif;
+                        --font-display: "${customDisplayFont || preset.fonts.display || preset.fonts.sans || 'Inter'}", ui-sans-serif, system-ui, sans-serif;
                         --font-serif: "${preset.fonts.serif || 'Georgia'}", ui-serif, Georgia, serif;
                         --font-mono: "${preset.fonts.mono || 'monospace'}", ui-monospace, SFMono-Regular, monospace;
                         --font-weight-base: ${customFontWeight || '400'};

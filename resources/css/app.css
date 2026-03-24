@@ -42,6 +42,7 @@
     --font-sans: var(--font-sans);
     --font-serif: var(--font-serif);
     --font-mono: var(--font-mono);
+    --font-display: var(--font-display);
 
     /* Standard Tailwind v4 Mappings for Base Layers */
     --color-background: var(--background, var(--surface));
@@ -77,6 +78,8 @@
     --shadow-lg: var(--shadow-lg);
     --shadow-xl: var(--shadow-xl);
     --shadow-2xl: var(--shadow-2xl);
+    --shadow-sea-mist: var(--shadow-sea-mist);
+    --shadow-journal: var(--shadow-journal);
 
     /* Animations */
     --animate-waveform-bar: waveform-bar 1s ease-in-out infinite;
@@ -232,13 +235,27 @@
         0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
     --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 
-    /* Primary RGB for special effects (computed from primary color) */
-    --primary-rgb: 194, 94, 46;
+    /* Fairy Pirate Shadows */
+    --shadow-sea-mist: 0 20px 40px rgba(45, 48, 39, 0.06);
+    --shadow-journal: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
     * {
         @apply border-border;
+    }
+
+    /* Organic Brutalism Typography */
+    h1, .display-lg {
+        @apply font-display font-black tracking-tighter;
+        font-size: clamp(3rem, 10vw, 3.5rem);
+        line-height: 0.9;
+    }
+
+    h2, .headline-lg {
+        @apply font-display font-bold;
+        font-size: clamp(2rem, 6vw, 2.5rem);
+        line-height: 1.1;
     }
 
     body {
@@ -575,6 +592,38 @@
                     radial-gradient(circle at 50% 50%, rgba(var(--secondary-rgb), 0.05) 0%, transparent 50%);
     }
     
+    /* Fairy Pirate Utilities */
+    .glassmorphism {
+        @apply backdrop-blur-xl;
+        background-color: color-mix(in srgb, var(--background) 70%, transparent);
+        border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+    }
+
+    .pirates-trail {
+        position: relative;
+        height: 4px;
+        background-image: linear-gradient(to right, var(--secondary) 50%, transparent 50%);
+        background-size: 20px 100%;
+        border-radius: 2px;
+    }
+
+    .pirates-trail::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 12px;
+        height: 12px;
+        background-color: var(--secondary);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--secondary);
+    }
+
+    .no-line-section {
+        @apply border-none shadow-none;
+    }
+
     .asymmetric-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);

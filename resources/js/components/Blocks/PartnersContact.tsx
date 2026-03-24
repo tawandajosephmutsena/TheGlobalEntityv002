@@ -26,21 +26,21 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     submitText = "Dispatch Inquiry"
 }) => {
     return (
-        <section className="py-32 bg-agency-secondary overflow-hidden">
+        <section className="py-32 bg-background overflow-hidden">
             <div className="container mx-auto px-4">
-                <div className="bg-agency-secondary/30 backdrop-blur-3xl text-agency-primary rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-agency-primary/10">
+                <div className="bg-surface-container/30 backdrop-blur-3xl text-foreground rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-primary/10">
                     {/* Left Column: Content & Benefits */}
-                    <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-agency-accent/10 to-transparent relative overflow-hidden">
+                    <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-primary/5 to-transparent relative overflow-hidden">
                         {/* Decorative Background Icon */}
-                        <div className="absolute -bottom-10 -right-10 opacity-5 -rotate-12 pointer-events-none">
+                        <div className="absolute -bottom-10 -right-10 opacity-5 -rotate-12 pointer-events-none text-primary">
                             <Anchor size={300} strokeWidth={1} />
                         </div>
 
                         <AnimatedSection animation="fade-right" className="relative z-10">
-                            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-[0.9]">
+                            <h2 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-[0.9] text-on-surface">
                                 {title}
                             </h2>
-                            <p className="text-xl md:text-2xl opacity-70 mb-12 max-w-lg font-serif italic">
+                            <p className="text-xl md:text-2xl text-on-surface-variant mb-12 max-w-lg font-body italic leading-relaxed">
                                 {description}
                             </p>
 
@@ -53,32 +53,32 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                                         transition={{ delay: 0.8 + (i * 0.1) }}
                                         className="flex items-center gap-4 group"
                                     >
-                                        <div className="w-10 h-10 rounded-full bg-agency-accent/10 flex items-center justify-center text-agency-accent group-hover:bg-agency-accent group-hover:text-agency-secondary transition-colors duration-500">
+                                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
                                             <CheckCircle2 size={24} />
                                         </div>
-                                        <span className="text-lg font-bold tracking-tight">{feature}</span>
+                                        <span className="text-lg font-bold tracking-tight text-on-surface">{feature}</span>
                                     </motion.li>
                                 ))}
                             </ul>
 
-                            <div className="mt-16 pt-12 border-t border-agency-primary/10 flex items-center gap-4">
-                                <div className="p-3 bg-agency-accent/10 text-agency-accent rounded-2xl">
+                            <div className="mt-16 pt-12 border-t border-primary/10 flex items-center gap-4">
+                                <div className="p-3 bg-primary/10 text-primary rounded-2xl">
                                     <MessageSquare size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-sm opacity-60 uppercase font-black tracking-widest">Average Response</p>
-                                    <p className="text-lg font-bold">24-48 Moons</p>
+                                    <p className="text-sm text-on-surface-variant uppercase font-black tracking-widest opacity-60">Average Response</p>
+                                    <p className="text-lg font-bold text-on-surface">24-48 Moons</p>
                                 </div>
                             </div>
                         </AnimatedSection>
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="flex-1 p-12 md:p-20 bg-agency-primary/5 relative">
+                    <div className="flex-1 p-12 md:p-20 bg-surface-container relative">
                         <AnimatedSection animation="fade-up" delay={400} className="relative z-10 h-full flex flex-col">
                             <div className="mb-10">
-                                <h3 className="text-4xl font-black uppercase tracking-tighter mb-3">{formTitle}</h3>
-                                <p className="text-agency-primary/70 font-medium">{formDescription}</p>
+                                <h3 className="font-display text-4xl font-black uppercase tracking-tighter mb-3 text-on-surface">{formTitle}</h3>
+                                <p className="text-on-surface-variant font-medium">{formDescription}</p>
                             </div>
 
                             <div className="flex-grow">
