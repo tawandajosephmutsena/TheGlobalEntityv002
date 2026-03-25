@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { AboutHeroBlock } from '@/types/page-blocks';
+import CategoryIcon from '@/components/CategoryIcon';
 
 export default function AboutHeroBlockRenderer({
     title = "The Global… What?",
@@ -15,7 +16,7 @@ export default function AboutHeroBlockRenderer({
     ctaLink = "#"
 }: AboutHeroBlock['content']) {
     return (
-        <section className="theme-stitch relative px-8 py-20 overflow-hidden bg-background text-on-background">
+        <section className="theme-stitch relative px-8 pt-48 pb-20 overflow-hidden bg-background text-on-background">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[60px] opacity-40"></div>
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-tertiary/20 rounded-full blur-[60px] opacity-40"></div>
             
@@ -27,15 +28,17 @@ export default function AboutHeroBlockRenderer({
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="relative z-10"
                 >
-                    {backgroundImage && (
-                        <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full overflow-hidden border-4 border-primary/30 rotate-12 shadow-2xl z-20">
+                    <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full overflow-hidden border-4 border-primary/30 rotate-12 shadow-2xl z-20 bg-surface-container-high flex items-center justify-center">
+                        {backgroundImage ? (
                             <img src={backgroundImage} alt="" className="w-full h-full object-cover" />
-                        </div>
-                    )}
-                    <span className="text-primary font-black tracking-[0.3em] uppercase text-xs mb-6 block italic">
+                        ) : (
+                            <CategoryIcon category="travel-trouble" size={48} glow={false} className="opacity-80" />
+                        )}
+                    </div>
+                    <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic">
                         {subtitle}
                     </span>
-                    <h1 className="font-display font-black text-7xl md:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter uppercase">
+                    <h1 className="font-display font-black text-7xl md:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter">
                         {title.includes('…') ? (
                             <>
                                 {title.split('…')[0]}… <br/>
@@ -59,30 +62,34 @@ export default function AboutHeroBlockRenderer({
 
                 <div className="relative grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <AboutHeroIcon 
-                        icon="eco" 
+                        category="social-sustainability" 
                         label="Sustainability" 
-                        className="bg-surface-container-low transform -rotate-3 hover:rotate-0 text-tertiary"
+                        className="bg-surface-container-low transform -rotate-3 hover:rotate-0"
                     />
                     <AboutHeroIcon 
-                        icon="favorite" 
-                        label="Living Through Heart" 
-                        className="bg-surface-container-high transform rotate-6 hover:rotate-0 mt-8 text-primary shadow-lg"
-                        fill
+                        category="living-from-the-heart" 
+                        label="Heart-Led" 
+                        className="bg-surface-container-high transform rotate-6 hover:rotate-0 mt-8 shadow-lg"
                     />
                     <AboutHeroIcon 
-                        icon="person_pin_circle" 
+                        category="solo-travel" 
                         label="Solo Travel" 
-                        className="bg-surface-container-low transform -rotate-6 hover:rotate-0 text-secondary"
+                        className="bg-surface-container-low transform -rotate-6 hover:rotate-0 ml-4"
                     />
                     <AboutHeroIcon 
-                        icon="festival" 
-                        label="Adventures" 
-                        className="bg-surface-container-high col-span-2 transform rotate-2 hover:rotate-0 text-primary-dim"
+                        category="festival-fever" 
+                        label="Festivals" 
+                        className="bg-surface-container-high transform rotate-2 hover:rotate-0 mt-4"
                     />
                     <AboutHeroIcon 
-                        icon="diamond" 
-                        label="Local Gems" 
-                        className="bg-surface-container-lowest shadow-sm transform -rotate-12 hover:rotate-0 text-on-secondary-fixed-variant"
+                        category="glocal-gems" 
+                        label="Hidden Gems" 
+                        className="bg-surface-container-lowest shadow-sm transform -rotate-12 hover:rotate-0"
+                    />
+                    <AboutHeroIcon 
+                        category="travel-trouble" 
+                        label="The Truth" 
+                        className="bg-surface-container-low transform rotate-12 hover:rotate-0 mt-12 shadow-md"
                     />
                 </div>
             </div>
@@ -90,21 +97,17 @@ export default function AboutHeroBlockRenderer({
     );
 }
 
-function AboutHeroIcon({ icon, label, className, fill = false }: { icon: string, label: string, className: string, fill?: boolean }) {
+function AboutHeroIcon({ category, label, className }: { category: string, label: string, className: string }) {
     return (
         <motion.div 
             whileHover={{ scale: 1.1, rotate: 0 }}
             className={cn(
-                "aspect-square rounded-2xl p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default",
+                "aspect-square rounded-[2.5rem] p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default border border-primary/5 hover:border-primary/20 shadow-sm hover:shadow-xl group",
                 className
             )}
         >
-            <span 
-                className={cn("material-symbols-outlined text-4xl mb-2", fill && "[font-variation-settings:'FILL'_1] fill-current")}
-            >
-                {icon}
-            </span>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant text-center leading-tight">
+            <CategoryIcon category={category} size={48} className="mb-4 group-hover:scale-110 transition-transform duration-500" />
+            <span className="text-[10px] font-black tracking-widest text-on-surface-variant text-center leading-tight">
                 {label}
             </span>
         </motion.div>

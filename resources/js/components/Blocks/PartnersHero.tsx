@@ -66,7 +66,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background text-foreground py-32 theme-stitch"
+            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background text-foreground pt-48 pb-32 theme-stitch"
         >
             {/* Watercolor Background Effect */}
             <div className="absolute inset-0 z-0 watercolor-bg pointer-events-none">
@@ -103,7 +103,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                     </AnimatedSection>
 
                     <AnimatedSection animation="fade-up" delay={300} textReveal textRevealType="words">
-                        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-on-surface leading-[0.85] italic-not-really">
+                        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-on-surface leading-[0.85] italic-not-really">
                             {title.split(' ').map((word, i, arr) => (
                                 <span key={i} className={cn(
                                     "inline-block",

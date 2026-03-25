@@ -30,10 +30,9 @@ export default function ContactEtherealHeroBlock({
     }
 }: ContactEtherealHeroBlock['content']) {
     return (
-        <section className="relative pt-32 pb-24 overflow-hidden bg-background text-foreground selection:bg-primary/20 selection:text-primary-foreground">
+        <section className="relative pt-48 pb-24 overflow-hidden bg-background text-foreground selection:bg-primary/20 selection:text-primary-foreground">
             {/* Parchment Texture Overlay */}
-            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
-                 style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/natural-paper.png')", boxShadow: "inset 0 0 100px rgba(0,0,0,0.05)" }} />
+            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] shadow-[inset_0_0_100px_rgba(0,0,0,0.05)]" />
             
             {/* Background Decorative Graphic */}
             <div className="absolute top-20 right-[-10%] w-[600px] h-[800px] opacity-10 dark:opacity-20 rotate-12 pointer-events-none">
@@ -90,8 +89,7 @@ export default function ContactEtherealHeroBlock({
                             initial={{ opacity: 0, scale: 0.95, rotate: 1 }}
                             whileInView={{ opacity: 1, scale: 1, rotate: -1 }}
                             viewport={{ once: true }}
-                            className="relative w-full aspect-video bg-slate-200 shadow-2xl overflow-hidden group"
-                            style={{ clipPath: "polygon(0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 2%, 30% 5%, 35% 3%, 40% 6%, 45% 4%, 50% 7%, 55% 5%, 60% 8%, 65% 6%, 70% 9%, 75% 7%, 80% 10%, 85% 8%, 90% 11%, 95% 9%, 100% 12%, 100% 88%, 95% 91%, 90% 89%, 85% 92%, 80% 90%, 75% 93%, 70% 91%, 65% 94%, 60% 92%, 55% 95%, 50% 93%, 45% 96%, 40% 94%, 35% 97%, 30% 95%, 25% 98%, 20% 96%, 15% 99%, 10% 97%, 5% 100%, 0% 98%)" }}
+                            className="relative w-full aspect-video bg-slate-200 shadow-2xl overflow-hidden group ethereal-rough-edge"
                         >
                             <img 
                                 alt={sideImageAlt} 
@@ -111,19 +109,14 @@ export default function ContactEtherealHeroBlock({
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className="absolute -inset-4 bg-accent/5 rotate-3 -z-10"
-                            style={{ clipPath: "polygon(0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 2%, 30% 5%, 35% 3%, 40% 6%, 45% 4%, 50% 7%, 55% 5%, 60% 8%, 65% 6%, 70% 9%, 75% 7%, 80% 10%, 85% 8%, 90% 11%, 95% 9%, 100% 12%, 100% 88%, 95% 91%, 90% 89%, 85% 92%, 80% 90%, 75% 93%, 70% 91%, 65% 94%, 60% 92%, 55% 95%, 50% 93%, 45% 96%, 40% 94%, 35% 97%, 30% 95%, 25% 98%, 20% 96%, 15% 99%, 10% 97%, 5% 100%, 0% 98%)" }}
+                            className="absolute -inset-4 bg-accent/5 rotate-3 -z-10 ethereal-rough-edge"
                         ></motion.div>
                         
                         <motion.div 
                             initial={{ opacity: 0, y: 40, rotate: 0 }}
                             whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
                             viewport={{ once: true }}
-                            className="p-10 md:p-14 bg-card dark:bg-card/90 border border-border shadow-2xl relative"
-                            style={{ 
-                                backgroundImage: "url('https://www.transparenttextures.com/patterns/natural-paper.png')",
-                                clipPath: "polygon(0% 2%, 5% 0%, 10% 3%, 15% 1%, 20% 4%, 25% 2%, 30% 5%, 35% 3%, 40% 6%, 45% 4%, 50% 7%, 55% 5%, 60% 8%, 65% 6%, 70% 9%, 75% 7%, 80% 10%, 85% 8%, 90% 11%, 95% 9%, 100% 12%, 100% 88%, 95% 91%, 90% 89%, 85% 92%, 80% 90%, 75% 93%, 70% 91%, 65% 94%, 60% 92%, 55% 95%, 50% 93%, 45% 96%, 40% 94%, 35% 97%, 30% 95%, 25% 98%, 20% 96%, 15% 99%, 10% 97%, 5% 100%, 0% 98%)" 
-                            }}
+                            className="p-10 md:p-14 bg-card dark:bg-card/90 border border-border shadow-2xl relative bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] ethereal-rough-edge"
                         >
                             <motion.div 
                                 animate={{ rotate: [12, 15, 12] }}

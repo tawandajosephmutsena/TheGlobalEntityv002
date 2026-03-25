@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Play, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Zap } from "lucide-react";
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
@@ -28,10 +28,9 @@ export default function CTAHeroBlock({
   imageLink = "",
 }: CTAHeroBlock['content']) {
   const [email, setEmail] = useState("");
-  const [isVideoHovered, setIsVideoHovered] = useState(false);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background px-4 py-16 md:py-24 lg:py-32">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background px-4 pt-48 pb-32">
       {/* Animated background elements */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.div

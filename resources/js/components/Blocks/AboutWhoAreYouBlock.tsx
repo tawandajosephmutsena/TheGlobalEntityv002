@@ -31,7 +31,7 @@ export default function AboutWhoAreYouBlockRenderer({
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="font-display font-black text-5xl md:text-8xl mb-20 tracking-tighter uppercase leading-[0.85]"
+                    className="font-display font-black text-5xl md:text-8xl mb-20 tracking-tighter leading-[0.85]"
                 >
                     {title.includes('You?') ? (
                         <>Who Are <span className="text-secondary italic">You?</span></>
@@ -63,7 +63,7 @@ function AboutWhoAreYouCard({ title, description, colorClass, delay }: { title: 
             transition={{ delay, duration: 0.6 }}
             className="p-10 bg-surface-container-low rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/10 hover:border-primary/30 group"
         >
-            <h3 className={`font-display font-black text-3xl mb-6 transition-transform origin-left group-hover:scale-105 uppercase tracking-tighter italic ${colorClass}`}>
+            <h3 className={`font-display font-black text-3xl mb-6 transition-transform origin-left group-hover:scale-105 tracking-tighter italic ${colorClass}`}>
                 {title}
             </h3>
             <p className="text-on-surface-variant text-base leading-relaxed font-medium">

@@ -111,10 +111,11 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
 
             {/* Background Layers with Mouse Parallax */}
             <div 
-                className="absolute inset-[-5%] w-[110%] h-[110%] transition-transform duration-700 ease-out"
+                className="absolute inset-[-5%] w-[110%] h-[110%] transition-transform duration-700 ease-out transform-[var(--parallax-move)]"
                 style={{ 
-                    transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-                }}
+                    // @ts-expect-error - dynamic transform
+                    "--parallax-move": `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`
+                } as React.CSSProperties}
             >
                 {slides.map((slide, idx) => {
                     const isActive = idx === activeIndex;
@@ -124,22 +125,20 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                         <div
                             key={idx}
                             className={cn(
-                                "absolute inset-0 w-full h-full",
+                                "absolute inset-0 w-full h-full bg-cover bg-[center_45%] bg-[image:var(--slide-bg)]",
                                 "transition-all duration-[2000ms] ease-[cubic-bezier(0.23,1,0.32,1)]",
                                 isActive && "opacity-100 z-20 scale-100",
                                 isPrevious && "opacity-0 z-10 scale-105 blur-sm",
                                 !isActive && !isPrevious && "opacity-0 z-0 scale-110"
                             )}
                             style={{ 
-                                backgroundImage: `url('${slide.image}')`, 
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center 45%',
-                            }}
+                                "--slide-bg": `url('${slide.image}')`
+                            } as React.CSSProperties}
                         >
                             {/* Sophisticated Cinematic Gradients */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
-                            <div className="absolute inset-0 bg-black/5" style={{ backdropFilter: 'contrast(1.1) saturate(1.1)' }} />
+                            <div className="absolute inset-0 bg-black/5 backdrop-contrast-[1.1] backdrop-saturate-[1.1]" />
                         </div>
                     );
                 })}
@@ -148,31 +147,31 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
             {/* Content Layer (Inverse Parallax for Depth) */}
             <div 
                 className={cn(
-                    "relative z-40 h-full w-full max-w-[1920px] mx-auto p-8 md:p-24 pt-32 md:pt-40 flex flex-col justify-between pointer-events-none transition-all duration-1000",
+                    "relative z-40 h-full w-full max-w-[1920px] mx-auto p-8 md:p-24 pt-48 flex flex-col justify-between pointer-events-none transition-all duration-1000 transform-[var(--parallax-inverse)]",
                     isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 )}
                 style={{
-                    transform: `translate3d(${-mousePos.x * 0.5}px, ${-mousePos.y * 0.5}px, 0)`
-                }}
+                    "--parallax-inverse": `translate3d(${-mousePos.x * 0.5}px, ${-mousePos.y * 0.5}px, 0)`
+                } as React.CSSProperties}
             >
                 {/* Header: Title + Tagline */}
                 <div className="flex flex-col md:flex-row justify-between items-start w-full gap-8">
                     <div className="overflow-visible">
                         <h1 
                             key={`title-${activeIndex}`}
-                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter uppercase max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6"
+                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6"
                         >
                             {titleWords.map((word, i) => (
                                 <span 
                                     key={`${activeIndex}-${i}`} 
                                     className={cn(
                                         "inline-block",
-                                        textVisible && "animate-epic-reveal"
+                                        textVisible && "animate-epic-reveal [animation-delay:var(--reveal-delay)] [text-shadow:0_10_40px_rgba(0,0,0,0.6)]"
                                     )}
                                     style={{ 
-                                        animationDelay: `${i * 0.15}s`,
-                                        textShadow: '0 10px 40px rgba(0,0,0,0.6)'
-                                    }}
+                                        // @ts-expect-error - dynamic delay
+                                        "--reveal-delay": `${i * 0.15}s`
+                                    } as React.CSSProperties}
                                 >
                                     {word}
                                 </span>
@@ -184,11 +183,10 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                         key={`tagline-${activeIndex}`}
                         className={cn(
                             "mt-4 md:mt-20 border-l-[6px] border-agency-accent pl-8 py-3 shrink-0",
-                            textVisible && "animate-slide-left-reveal"
+                            textVisible && "animate-slide-left-reveal [animation-delay:0.6s]"
                         )}
-                        style={{ animationDelay: '0.6s' }}
                     >
-                        <div className="font-sans font-bold text-xl md:text-2xl text-white tracking-[0.3em] uppercase opacity-90">
+                        <div className="font-sans font-bold text-xl md:text-2xl text-white tracking-[0.3em] opacity-90">
                             {currentSlide.tagline}
                         </div>
                     </div>
@@ -217,9 +215,8 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                                     <div 
                                         className={cn(
                                             "absolute top-0 left-0 w-full bg-agency-accent rounded-full transition-all duration-1000 ease-out",
-                                            idx === activeIndex ? "height-100 shadow-[0_0_20px_rgba(var(--agency-accent-rgb),0.8)]" : "height-0"
+                                            idx === activeIndex ? "h-full shadow-[0_0_20px_rgba(var(--agency-accent-rgb),0.8)]" : "h-0"
                                         )}
-                                        style={{ height: idx === activeIndex ? '100%' : '0%' }}
                                     />
                                 </div>
                             </button>
@@ -231,9 +228,8 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                         key={`subtitle-${activeIndex}`}
                         className={cn(
                             "max-w-2xl text-right",
-                            textVisible && "animate-slide-up-reveal"
+                            textVisible && "animate-slide-up-reveal [animation-delay:0.8s]"
                         )}
-                        style={{ animationDelay: '0.8s' }}
                     >
                         <p className="font-sans text-xl md:text-3xl text-white/80 font-light leading-relaxed tracking-tight italic">
                             {currentSlide.subtitle}
@@ -255,6 +251,7 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                         <button
                             key={idx}
                             onClick={() => goToSlide(idx)}
+                            aria-label={`Go to slide ${idx + 1}`}
                             className={cn(
                                 "h-[3px] transition-all duration-700",
                                 idx === activeIndex 

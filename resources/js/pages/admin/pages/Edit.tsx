@@ -360,9 +360,9 @@ const getDefaultContentForType = (type: BlockType) => {
         };
         case 'team_hero': return {
             title: 'Meet the Minds',
-            subtitle: 'THE TRIBE',
+            subtitle: 'The Tribe',
             description: 'A collective of researchers, designers, and engineers dedicated to building the future of digital interaction.',
-            marqueeText: 'INNOVATION • DESIGN • ENGINEERING • STRATEGY • '
+            marqueeText: 'Innovation • Design • Engineering • Strategy • '
         };
         case 'team_grid': return {
             title: 'Our Experts',
@@ -379,7 +379,7 @@ const getDefaultContentForType = (type: BlockType) => {
         };
         case 'team_join': return {
             title: 'Ready to build the future?',
-            subtitle: 'JOIN OUR TRIBE',
+            subtitle: 'Join Our Tribe',
             ctaText: 'View Openings',
             ctaHref: '/careers'
         };
@@ -527,9 +527,9 @@ const getDefaultContentForType = (type: BlockType) => {
             collection: 'insights',
             limit: 5,
         };
-        case 'about_hero': return {
-            title: 'FOR THE OBSESSED.',
-            subtitle: 'This is not for the faint of heart.',
+        case 'about_hero': return { 
+            title: 'For the Obsessed.', 
+            subtitle: 'This is not for the faint of heart.', 
             description: 'A playground for the bold, the outliers, and the unapologetically curious.',
             image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop',
             ctaText: 'Explore the Edge',
@@ -541,32 +541,32 @@ const getDefaultContentForType = (type: BlockType) => {
             ]
         };
         case 'about_who_are_you': return {
-            title: 'WHO ARE YOU?',
+            title: 'Who Are You?',
             description: 'You are the reason we exist. The one who seeks the truth behind the noise.',
             image: 'https://images.unsplash.com/photo-1493246507139-91e8bef99c02?q=80&w=2670&auto=format&fit=crop',
-            signature: 'THE GLOBAL ENTITY',
+            signature: 'The Global Entity',
             items: [
                 { title: 'The Seeker', description: 'Always looking for what\'s next.' },
                 { title: 'The Maker', description: 'Building the future with every step.' }
             ]
         };
         case 'about_truth_untangled': return {
-            title: 'TRUTH UNTANGLED',
+            title: 'Truth Untangled',
             items: [
                 {
-                    title: 'UNFILTERED ACCESS',
+                    title: 'Unfiltered Access',
                     description: 'Direct insight into the worlds most compelling stories.',
                     image: 'https://images.unsplash.com/photo-1504711432869-e74e73a4b1de?q=80&w=2670&auto=format&fit=crop'
                 },
                 {
-                    title: 'GLOBAL PERSPECTIVE',
+                    title: 'Global Perspective',
                     description: 'Understanding the interconnectedness of our digital age.',
                     image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop'
                 }
             ]
         };
         case 'about_more_than_entertainment': return {
-            title: 'MORE THAN ENTERTAINMENT',
+            title: 'More Than Entertainment',
             description: 'We believe in content that challenges, inspires, and transforms.',
             items: [
                 {
@@ -578,7 +578,7 @@ const getDefaultContentForType = (type: BlockType) => {
             ]
         };
         case 'about_origin_story': return {
-            title: 'THE ORIGIN STORY',
+            title: 'The Origin Story',
             items: [
                 {
                     year: '2019',
@@ -589,7 +589,7 @@ const getDefaultContentForType = (type: BlockType) => {
             ]
         };
         case 'stitch_featured_blog': return {
-            title: 'LATEST FROM THE ENTITY',
+            title: 'Latest From the Entity',
             limit: 3,
             showTags: true,
             showAuthor: true,

@@ -49,10 +49,10 @@ export default function AboutTruthUntangledBlockRenderer({
                         transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
                         className="absolute -bottom-10 -right-10 w-56 h-56 bg-secondary text-on-secondary rounded-full p-8 flex flex-col items-center justify-center text-center shadow-sea-mist border-8 border-background z-20"
                     >
-                        <p className="font-display font-black text-2xl leading-none uppercase tracking-tighter">
+                        <p className="font-display font-black text-2xl leading-none tracking-tighter">
                             REAL<br/>STORIES
                         </p>
-                        <span className="text-[10px] font-black tracking-[0.3em] uppercase opacity-70 mt-2">No Filters</span>
+                        <span className="text-[10px] font-black tracking-[0.3em] opacity-70 mt-2">No Filters</span>
                     </motion.div>
                 </motion.div>
 
@@ -62,7 +62,7 @@ export default function AboutTruthUntangledBlockRenderer({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="font-display font-black text-5xl md:text-7xl mb-8 tracking-tighter uppercase leading-[0.85]">
+                        <h2 className="font-display font-black text-5xl md:text-7xl mb-8 tracking-tighter leading-[0.85]">
                             {title}
                         </h2>
                         <p className="text-xl md:text-2xl text-on-surface-variant leading-relaxed font-semibold italic">
@@ -86,7 +86,7 @@ export default function AboutTruthUntangledBlockRenderer({
                                     </span>
                                 </div>
                                 <div className="flex-1">
-                                    <h4 className="font-display font-black text-xl mb-2 uppercase tracking-tighter">{item.title}</h4>
+                                    <h4 className="font-display font-black text-xl mb-2 tracking-tighter">{item.title}</h4>
                                     <p className="text-on-surface-variant text-base leading-relaxed italic">{item.description}</p>
                                 </div>
                             </motion.div>

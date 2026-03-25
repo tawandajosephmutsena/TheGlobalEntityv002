@@ -109,7 +109,7 @@ export default function VideoBackgroundHero({
 
             {/* Content Layer */}
             <div className="relative z-20 flex-grow flex items-center px-6 md:px-12">
-                <div className="max-w-7xl mx-auto w-full pt-20">
+                <div className="max-w-7xl mx-auto w-full pt-48">
                     <div className="max-w-3xl">
                         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight tracking-tighter mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
                             {title}

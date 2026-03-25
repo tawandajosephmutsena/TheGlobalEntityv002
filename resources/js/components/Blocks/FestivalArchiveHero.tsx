@@ -28,7 +28,7 @@ interface FestivalArchiveHeroProps {
 
 const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
     badge = "Ethereal Archive",
-    title = "FESTIVAL\nMAP ARCHIVE",
+    title = "Festival\nMap Archive",
     description = "Step into the shifting corridors of sound and light. A repository of ethereal cartography for the modern nomad.",
     watercolorBlurs = [
         { color: 'bg-agency-primary/20', position: { x: '10%', y: '10%' }, size: 'w-96 h-96' },
@@ -85,7 +85,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-agency-surface py-32"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-agency-surface pt-48 pb-32"
         >
             {/* Watercolor Blurs */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -96,12 +96,8 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
                             "absolute rounded-full blur-[120px] watercolor-blur opacity-40 mix-blend-multiply dark:mix-blend-soft-light",
                             blur.color,
                             blur.size,
-                            "left-[var(--blur-left)] top-[var(--blur-top)]"
+                            `left-[${blur.position.x}] top-[${blur.position.y}]`
                         )}
-                        style={{ 
-                            '--blur-left': blur.position.x, 
-                            '--blur-top': blur.position.y 
-                        } as React.CSSProperties}
                     />
                 ))}
             </div>
@@ -115,22 +111,15 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
                     <div 
                         key={item.id}
                         ref={el => { marginaliaRefs.current[i] = el; }}
-                        className="absolute left-[var(--item-left)] top-[var(--item-top)]"
-                        style={{ 
-                            '--item-left': item.position.x, 
-                            '--item-top': item.position.y 
-                        } as React.CSSProperties}
+                        className={cn("absolute", `left-[${item.position.x}] top-[${item.position.y}]`)}
                     >
                         <div 
                             className={cn(
                                 "px-4 py-2 border border-agency-primary/10 rounded-sm backdrop-blur-md bg-white/5",
                                 "text-[10px] font-mono tracking-[0.3em] uppercase transition-colors duration-500",
-                                "rotate-[var(--rotation)]",
-                                item.type === 'stamp' ? "bg-agency-accent/5 border-agency-accent/20 text-agency-accent rotate-12" : "text-agency-primary/40"
+                                item.type === 'stamp' ? "bg-agency-accent/5 border-agency-accent/20 text-agency-accent rotate-12" : "text-agency-primary/40",
+                                `rotate-[${item.rotation || 0}deg]`
                             )}
-                            style={{ 
-                                '--rotation': `${item.rotation || 0}deg` 
-                            } as React.CSSProperties}
                         >
                             {item.content}
                         </div>
@@ -152,7 +141,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
 
                     <div className="relative text-center">
                         <AnimatedSection animation="fade-up" delay={400} textReveal textRevealType="words">
-                            <h1 className="text-7xl md:text-[10rem] lg:text-[12rem] font-black uppercase tracking-tighter leading-[0.8] text-agency-primary whitespace-pre-line mb-8">
+                            <h1 className="text-7xl md:text-[10rem] lg:text-[12rem] font-black tracking-tighter leading-[0.8] text-agency-primary whitespace-pre-line mb-8">
                                 {title}
                             </h1>
                         </AnimatedSection>

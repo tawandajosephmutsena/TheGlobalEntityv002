@@ -38,7 +38,7 @@ export default function AboutOriginStoryBlockRenderer({
                         viewport={{ once: true }}
                         className="mb-16"
                     >
-                        <h2 className="font-display font-black text-5xl md:text-8xl mb-8 tracking-tighter uppercase leading-[0.85]">
+                        <h2 className="font-display font-black text-5xl md:text-8xl mb-8 tracking-tighter leading-[0.85]">
                             {title}
                         </h2>
                         <p className="text-xl md:text-2xl text-on-surface-variant leading-relaxed font-semibold italic">
@@ -57,7 +57,7 @@ export default function AboutOriginStoryBlockRenderer({
                                 className="relative"
                             >
                                 <div className="absolute -left-[41px] top-1.5 w-4 h-4 rounded-full bg-primary shadow-lg ring-4 ring-background"></div>
-                                <span className="font-display font-black text-3xl text-primary mb-2 block tracking-tighter uppercase italic">
+                                <span className="font-display font-black text-3xl text-primary mb-2 block tracking-tighter italic">
                                     {item.year}
                                 </span>
                                 <p className="text-on-surface-variant font-medium text-lg leading-relaxed italic">

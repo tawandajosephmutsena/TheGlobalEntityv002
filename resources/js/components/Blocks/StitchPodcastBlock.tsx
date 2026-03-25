@@ -275,7 +275,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                         </AnimatedSection>
 
                         <AnimatedSection animation="fade-up" delay={400} className="md:col-span-4">
-                            <div className="h-full bg-surface-container-low border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner">
+                            <div className="h-full bg-surface-container-lowest border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner transition-colors duration-500">
                                 <div className="flex items-center justify-between mb-10">
                                     <h3 className="font-display text-2xl font-black flex items-center gap-3">
                                         <History className="w-6 h-6 text-primary" />
@@ -347,7 +347,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                             whileHover={{ scale: 1.1 }}
                                             href={getPod(5).audio_url}
                                             target="_blank"
-                                            className="w-16 h-16 bg-on-surface text-surface rounded-full flex items-center justify-center shadow-xl shadow-black/20"
+                                            className="w-16 h-16 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-xl shadow-primary/20"
                                         >
                                             <Play className="w-8 h-8 fill-current ml-1" />
                                         </motion.a>
@@ -396,7 +396,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                             alt="" 
                                         />
                                         <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="w-12 h-12 bg-surface/80 backdrop-blur-md rounded-full shadow-xl flex items-center justify-center text-primary border border-primary/20">
+                                            <div className="w-12 h-12 bg-on-surface text-surface rounded-full shadow-xl flex items-center justify-center border border-primary/20">
                                                 <Play className="w-5 h-5 fill-current ml-1" />
                                             </div>
                                         </div>

@@ -124,7 +124,7 @@ export default function KimiHeroSection({
             className={`kimi-hero-section overflow-hidden flex flex-col justify-center kimi-hero-${uid} min-h-[100vh]`}
         >
             {/* Main Content — uses global theme fonts & colors */}
-            <div className="pt-32 sm:pt-40 pb-8 px-4 sm:px-6 lg:px-8">
+            <div className="pt-48 pb-8 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-5xl mx-auto text-center">
                     {/* Headline — uses --font-display and --foreground from the active theme */}
                     <h1 className="mb-4">
