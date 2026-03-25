@@ -1,4 +1,5 @@
 import '../css/app.css';
+import '../css/category-icons.css';
 
 // Polyfill for crypto.randomUUID in non-secure contexts
 if (typeof window !== 'undefined' && !window.crypto?.randomUUID) {

@@ -11,6 +11,16 @@ export interface BaseBlock {
     order?: number;
 }
 
+export interface HomeReview {
+    id: number;
+    user: string;
+    body: string;
+    vibe: number;
+    safety: number;
+    sustainability?: number;
+    date: string;
+}
+
 export interface HeroBlock extends BaseBlock {
     type: 'hero';
     content: {
@@ -708,8 +718,7 @@ export interface CommunityReviewBlock extends BaseBlock {
         showRatings?: boolean;
         limit?: number;
         layout?: 'list' | 'grid' | 'carousel';
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        reviews?: any[]; // Dynamic reviews passed from backend
+        reviews?: HomeReview[]; // Dynamic reviews passed from backend
     };
 }
 

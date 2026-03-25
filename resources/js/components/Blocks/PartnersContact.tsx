@@ -26,7 +26,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     submitText = "Dispatch Inquiry"
 }) => {
     return (
-        <section className="py-32 bg-background overflow-hidden">
+        <section className="py-32 bg-background overflow-hidden theme-stitch">
             <div className="container mx-auto px-4">
                 <div className="bg-surface-container/30 backdrop-blur-3xl text-foreground rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-primary/10">
                     {/* Left Column: Content & Benefits */}

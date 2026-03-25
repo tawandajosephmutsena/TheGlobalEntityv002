@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalArticleGridBlock } from '@/types/page-blocks';
+import CategoryIcon from '../CategoryIcon';
 
 interface InsightItem {
     id: number;
@@ -31,11 +32,11 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
 
     // Subscribe to category filter events
     useEffect(() => {
-        const handleFilter = (e: any) => {
+        const handleFilter = (e: CustomEvent<number | 'all'>) => {
             setActiveCategoryId(e.detail);
         };
-        window.addEventListener('journal-category-filter', handleFilter);
-        return () => window.removeEventListener('journal-category-filter', handleFilter);
+        window.addEventListener('journal-category-filter', handleFilter as EventListener);
+        return () => window.removeEventListener('journal-category-filter', handleFilter as EventListener);
     }, []);
 
     const filteredPosts = useMemo(() => {
@@ -111,12 +112,16 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                             alt={post.title} 
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
+                                            <CategoryIcon category={post.category?.slug || ''} size={14} glow={false} />
                                             {post.category?.name || 'Insight'}
                                         </span>
                                     </div>
                                     <div className="space-y-4">
-                                        <p className="text-secondary font-black text-[10px] tracking-widest uppercase">{post.category?.name || 'Journal'}</p>
+                                        <p className="text-secondary font-black text-[10px] tracking-widest uppercase flex items-center gap-2">
+                                            <CategoryIcon category={post.category?.slug || ''} size={12} glow={false} />
+                                            {post.category?.name || 'Journal'}
+                                        </p>
                                         <h3 className="font-display font-bold text-2xl group-hover:text-primary transition-colors leading-tight tracking-tight text-on-surface">
                                             {post.title}
                                         </h3>

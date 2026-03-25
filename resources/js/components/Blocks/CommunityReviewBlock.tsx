@@ -94,6 +94,16 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                                         ))}
                                                     </div>
                                                 </div>
+                                                {review.sustainability !== undefined && (
+                                                    <div className="flex flex-col gap-1.5">
+                                                        <span className="text-[10px] uppercase font-bold tracking-widest text-[#2ecc71]/70">Sustainability</span>
+                                                        <div className="flex gap-1">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.sustainability! ? "text-[#2ecc71] fill-[#2ecc71] scale-110" : "text-[#2ecc71]/20")} />
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
 

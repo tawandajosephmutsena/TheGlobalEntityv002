@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Play, 
     PlayCircle, 
     Library, 
-    Heart, 
     History, 
     Waves, 
     Mountain, 
@@ -16,10 +15,10 @@ import {
     CircleDashed,
     Volume2
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import type { StitchPodcastBlock } from '@/types/page-blocks';
-import AnimatedSection from '@/Components/AnimatedSection';
+import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 
 interface PodcastData {
@@ -41,6 +40,12 @@ interface PodcastData {
  * High-fidelity Waveform Visualizer
  */
 const ModernWaveform = ({ count = 40, active = true }: { count?: number; active?: boolean }) => {
+    // Generate stable random-looking heights based on index to satisfy React purity rules
+    const generateHeight = (i: number, step: number) => {
+        const seed = (i * 1.5 + step) % 1;
+        return 10 + seed * 70;
+    };
+
     return (
         <div className="flex items-end gap-[2px] h-full w-full px-4 transform-gpu">
             {Array.from({ length: count }).map((_, i) => (
@@ -48,10 +53,14 @@ const ModernWaveform = ({ count = 40, active = true }: { count?: number; active?
                     key={i}
                     className="flex-1 bg-primary/40 rounded-full"
                     animate={active ? {
-                        height: [`${Math.random() * 40 + 10}%`, `${Math.random() * 80 + 20}%`, `${Math.random() * 40 + 10}%`]
+                        height: [
+                            `${generateHeight(i, 0)}%`, 
+                            `${generateHeight(i, 0.5)}%`, 
+                            `${generateHeight(i, 0)}%`
+                        ]
                     } : { height: '15%' }}
                     transition={{
-                        duration: 0.5 + Math.random() * 1,
+                        duration: 1 + (i % 5) * 0.2,
                         repeat: Infinity,
                         ease: "easeInOut",
                         delay: i * 0.02
@@ -85,7 +94,6 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
 
     const [podcasts, setPodcasts] = useState<PodcastData[]>([]);
     const [loading, setLoading] = useState(true);
-    const [activeIdx, setActiveIdx] = useState(0);
 
     useEffect(() => {
         const fetchPodcasts = async () => {
@@ -143,7 +151,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                 <header className="mb-20 max-w-4xl">
                     <AnimatedSection animation="fade-up" textReveal>
                         <h2 className="font-display text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
-                            {title.split(' ').map((word, i, arr) => (
+                            {title.split(' ').map((word: string, i: number, arr: string[]) => (
                                 <span key={i} className={cn(
                                     "inline-block",
                                     i === arr.length - 1 && "text-primary italic font-serif font-light"
@@ -266,9 +274,8 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                             </div>
                         </AnimatedSection>
 
-                        {/* LIST: Minimalist History/Recent */}
                         <AnimatedSection animation="fade-up" delay={400} className="md:col-span-4">
-                            <div className="h-full bg-surface-container-lowest border border-outline-variant/30 rounded-[2.5rem] p-10 flex flex-col shadow-sm">
+                            <div className="h-full bg-surface-container-low border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner">
                                 <div className="flex items-center justify-between mb-10">
                                     <h3 className="font-display text-2xl font-black flex items-center gap-3">
                                         <History className="w-6 h-6 text-primary" />
@@ -335,7 +342,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     </div>
 
                                     <div className="flex items-center gap-8">
-                                        <SkipBack className="w-10 h-10 opacity-30 hover:opacity-100 transition-opacity cursor-pointer" />
+                                        <SkipBack className="w-10 h-10 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" />
                                         <motion.a 
                                             whileHover={{ scale: 1.1 }}
                                             href={getPod(5).audio_url}
@@ -344,7 +351,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         >
                                             <Play className="w-8 h-8 fill-current ml-1" />
                                         </motion.a>
-                                        <SkipForward className="w-10 h-10 opacity-30 hover:opacity-100 transition-opacity cursor-pointer" />
+                                        <SkipForward className="w-10 h-10 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" />
                                     </div>
 
                                     <div className="hidden xl:block w-48 space-y-3">

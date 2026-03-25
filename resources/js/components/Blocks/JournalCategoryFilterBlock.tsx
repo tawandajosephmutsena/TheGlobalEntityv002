@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { JournalCategoryFilterBlock } from '@/types/page-blocks';
+import CategoryIcon from '../CategoryIcon';
 
 interface Category {
     id: number;
@@ -47,12 +48,21 @@ export default function JournalCategoryFilterBlock({ content, categories = [] }:
                         key={cat.id}
                         onClick={() => handleCategoryClick(cat.id)}
                         className={cn(
-                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
+                            "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
                             activeCategoryId === cat.id 
                                 ? "bg-primary text-on-primary shadow-xl scale-105" 
                                 : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
                         )}
                     >
+                        <CategoryIcon 
+                            category={cat.slug} 
+                            size={18} 
+                            glow={activeCategoryId === cat.id}
+                            className={cn(
+                                "transition-transform duration-500",
+                                activeCategoryId === cat.id ? "scale-110" : "group-hover:scale-110"
+                            )}
+                        />
                         {cat.name}
                     </button>
                 ))}

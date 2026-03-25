@@ -1,0 +1,27 @@
+.category-icon {
+    display: inline-block;
+    object-fit: contain;
+    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+}
+
+.category-icon-glow {
+    filter: drop-shadow(0 0 2px var(--glow-color)) drop-shadow(0 0 5px var(--glow-color));
+}
+
+.podcast-category-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    font-weight: 700;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.podcast-category-badge-sm {
+    padding: 0.125rem 0.5rem;
+    font-size: 10px;
+}
+
+.podcast-category-badge-md {
+    padding: 0.25rem 0.625rem;
+    font-size: 12px;
+}

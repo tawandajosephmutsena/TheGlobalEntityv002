@@ -4,19 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { 
     Star, 
     Quote, 
-    BookOpen, 
     PenTool, 
     ThumbsUp, 
-    CheckCircle,
     ArrowRight,
     MapPin,
     Calendar,
     Award
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import type { StitchCommunityReviewBlock } from '@/types/page-blocks';
-import AnimatedSection from '@/Components/AnimatedSection';
+import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 
 interface ReviewData {
@@ -76,12 +74,12 @@ const RadialMeter = ({ value, label }: { value: string; label: string }) => {
 export default function StitchCommunityReviewBlockRenderer(props: StitchCommunityReviewBlock['content']) {
     const extractContent = (data: unknown): any => {
         if (data && typeof data === 'object' && 'content' in data && data.content !== null) {
-            return extractContent((data as any).content);
+            return extractContent((data as { content: unknown }).content);
         }
         return data;
     };
 
-    const blockContent = extractContent(props);
+    const blockContent = extractContent(props) as StitchCommunityReviewBlock['content'];
     const {
         title = "Voices from the Uncharted Trails.",
         subtitle = "Genuine stories from our community of global cartographers. Every review is a coordinate on our shared map of discovery.",
@@ -117,7 +115,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                 setLoading(true);
                 const response = await axios.get(`/api/collections/reviews?featured=1&limit=${limit}`).catch(() => ({ data: { data: [] } }));
                 if (response.data?.data?.length > 0) {
-                    const mappedReviews = response.data.data.map((r: any) => ({
+                    const mappedReviews = response.data.data.map((r: { id: number; author?: { name?: string; avatar?: string }; name?: string; avatar?: string; role?: string; rating?: number; content?: string; review?: string; event_name?: string; event?: string; image?: string }) => ({
                         id: r.id,
                         author: {
                             name: r.author?.name || r.name || 'Anonymous',
@@ -253,12 +251,13 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
 
                                 <div className="flex flex-col items-center gap-4">
                                     <div className="flex -space-x-4">
-                                        {statsAvatars.map((url, i) => (
+                                        {statsAvatars.map((url) => (
                                             <motion.img 
                                                 key={url}
                                                 whileHover={{ y: -5, zIndex: 50 }}
                                                 src={url} 
                                                 className="w-12 h-12 rounded-full border-4 border-surface-container-highest shadow-xl object-cover relative pointer-events-auto"
+                                                alt="Explorer"
                                             />
                                         ))}
                                         <div className="w-12 h-12 rounded-full bg-secondary text-on-secondary border-4 border-surface-container-highest flex items-center justify-center text-xs font-black shadow-xl">
@@ -403,7 +402,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                     </div>
                 ) : (
                     <AnimatedSection animation="fade-up" className="text-center py-32 bg-surface-container-low/30 rounded-[3rem] border-2 border-dashed border-outline-variant/30 flex flex-col items-center">
-                        <CircleDashed className="w-24 h-24 text-primary/20 mb-8 animate-spin-slow" />
+                        <Award className="w-24 h-24 text-primary/20 mb-8 animate-spin-slow" />
                         <h3 className="text-4xl font-display font-black mb-4 tracking-tighter italic">Echoes in the Void.</h3>
                         <p className="text-xl text-on-surface-variant font-medium max-w-sm opacity-60 leading-relaxed">
                             Every explorer has a story. Be the one to break the silence.
@@ -452,14 +451,19 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
             <div className="absolute inset-x-0 bottom-0 py-12 px-6 pointer-events-none opacity-20">
                 <div className="container mx-auto h-24 overflow-hidden border-t-2 border-primary/20 flex items-center justify-center">
                     <div className="flex items-end gap-1 h-12">
-                        {Array.from({ length: 120 }).map((_, i) => (
-                            <motion.div 
-                                key={i}
-                                className="w-px bg-primary rounded-full"
-                                animate={{ height: [`${Math.random() * 20 + 5}%`, `${Math.random() * 80 + 20}%`, `${Math.random() * 20 + 5}%`] }}
-                                transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.01 }}
-                            />
-                        ))}
+                        {Array.from({ length: 120 }).map((_, i) => {
+                            const seed = (i * 0.8) % 1;
+                            const h1 = 5 + seed * 20;
+                            const h2 = 20 + seed * 60;
+                            return (
+                                <motion.div 
+                                    key={i}
+                                    className="w-px bg-primary rounded-full"
+                                    animate={{ height: [`${h1}%`, `${h2}%`, `${h1}%`] }}
+                                    transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.01 }}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
             </div>

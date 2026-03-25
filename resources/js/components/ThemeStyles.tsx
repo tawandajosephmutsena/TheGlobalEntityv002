@@ -160,6 +160,17 @@ export default function ThemeStyles() {
             'accent-foreground': 'oklch(0.25 0 0)',
             'destructive-foreground': 'oklch(1 0 0)',
             'input': colors.border,
+            'surface-container-lowest': 'oklch(1 0 0)',
+            'surface-container-low': 'oklch(0.96 0 0)',
+            'surface-container': 'oklch(0.94 0 0)',
+            'surface-container-high': 'oklch(0.92 0 0)',
+            'surface-container-highest': 'oklch(0.90 0 0)',
+            'surface': bg,
+            'on-surface': fg,
+            'on-surface-variant': 'oklch(0.45 0 0)',
+            'surface-variant': 'oklch(0.92 0 0)',
+            'outline': 'oklch(0.50 0 0)',
+            'outline-variant': 'oklch(0.80 0 0)',
         };
         
         const darkDefaults: ThemeColors = {
@@ -172,6 +183,17 @@ export default function ThemeStyles() {
             'accent-foreground': 'oklch(0.95 0 0)',
             'destructive-foreground': 'oklch(1 0 0)',
             'input': colors.border,
+            'surface-container-lowest': 'oklch(0.12 0 0)',
+            'surface-container-low': 'oklch(0.18 0 0)',
+            'surface-container': 'oklch(0.22 0 0)',
+            'surface-container-high': 'oklch(0.28 0 0)',
+            'surface-container-highest': 'oklch(0.35 0 0)',
+            'surface': bg,
+            'on-surface': fg,
+            'on-surface-variant': 'oklch(0.80 0 0)',
+            'surface-variant': 'oklch(0.30 0 0)',
+            'outline': 'oklch(0.60 0 0)',
+            'outline-variant': 'oklch(0.35 0 0)',
         };
         
         const defaults = isDark ? darkDefaults : lightDefaults;

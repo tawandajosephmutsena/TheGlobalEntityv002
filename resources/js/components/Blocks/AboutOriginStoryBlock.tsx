@@ -16,7 +16,7 @@ export default function AboutOriginStoryBlockRenderer({
     ]
 }: AboutOriginStoryBlock['content']) {
     return (
-        <section className="py-32 px-8 bg-background overflow-hidden">
+        <section className="theme-stitch py-32 px-8 bg-background text-on-surface overflow-hidden">
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.9 }}

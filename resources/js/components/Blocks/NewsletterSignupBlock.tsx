@@ -40,7 +40,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
   };
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-16">
+    <section className="theme-stitch relative w-full overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-16">
       {/* Animated background elements */}
       <motion.div
         animate={{
@@ -83,7 +83,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
               >
                 {badgeText && (
-                  <Badge className="mb-4 w-fit" variant="secondary">
+                  <Badge className="mb-4 w-fit bg-primary/20 text-primary border-primary/30 font-bold tracking-widest uppercase py-1.5 px-4" variant="outline">
                     <Sparkles className="mr-1 h-3 w-3" />
                     {badgeText}
                   </Badge>

@@ -15,7 +15,7 @@ export default function AboutHeroBlockRenderer({
     ctaLink = "#"
 }: AboutHeroBlock['content']) {
     return (
-        <section className="relative px-8 py-20 overflow-hidden bg-background">
+        <section className="theme-stitch relative px-8 py-20 overflow-hidden bg-background text-on-background">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[60px] opacity-40"></div>
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-tertiary/20 rounded-full blur-[60px] opacity-40"></div>
             
@@ -57,7 +57,7 @@ export default function AboutHeroBlockRenderer({
                     </motion.button>
                 </motion.div>
 
-                <div className="relative grid grid-cols-3 gap-4">
+                <div className="relative grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <AboutHeroIcon 
                         icon="eco" 
                         label="Sustainability" 

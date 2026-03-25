@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
+import CategoryIcon from '../CategoryIcon';
 
 interface PodcastCategoryBadgeProps {
     category: {
@@ -14,15 +15,18 @@ export function PodcastCategoryBadge({ category, size = 'md', className }: Podca
     return (
         <span
             className={cn(
-                'inline-flex items-center rounded-full font-bold transition-colors',
-                size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs',
+                'podcast-category-badge',
+                size === 'sm' ? 'podcast-category-badge-sm' : 'podcast-category-badge-md',
                 className
             )}
             style={{
-                backgroundColor: `${category.color}15`,
-                color: category.color,
+                // @ts-expect-error - CSS custom property
+                '--badge-color': category.color,
+                backgroundColor: `var(--badge-color)15`,
+                color: 'var(--badge-color)',
             }}
         >
+            <CategoryIcon category={category.name} size={size === 'sm' ? 12 : 14} glow={false} className="mr-1.5" />
             {category.name}
         </span>
     );

@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, User, Tag, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, Calendar, User, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { StitchFeaturedBlogBlock } from '@/types/page-blocks';
-import AnimatedSection from '@/Components/AnimatedSection';
+import AnimatedSection from '@/components/AnimatedSection';
+import CategoryIcon from '../CategoryIcon';
 
 export default function StitchFeaturedBlogBlockRenderer({
     title = "Latest Stories.",
@@ -98,7 +99,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                     
                                     <div className="absolute top-6 left-6">
                                         <div className="glass px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white flex items-center gap-2 border-white/20">
-                                            <Tag className="w-3 h-3 text-primary" />
+                                            <CategoryIcon category="festival-fever" size={14} glow />
                                             Exploration
                                         </div>
                                     </div>

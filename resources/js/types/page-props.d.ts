@@ -1,5 +1,5 @@
 import { Page, PortfolioItem, Service, Insight } from './index';
-import { PageContent } from './page-blocks';
+import { PageContent, HomeReview } from './page-blocks';
 
 /**
  * Type definitions for page component props
@@ -48,5 +48,6 @@ export interface HomePageProps {
     stats: StatsData;
     structuredData: Record<string, unknown>;
     site: SiteSettings;
+    reviews?: HomeReview[];
     canRegister?: boolean;
 }

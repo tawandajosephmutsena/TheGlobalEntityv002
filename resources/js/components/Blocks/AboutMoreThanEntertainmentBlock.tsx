@@ -30,7 +30,7 @@ export default function AboutMoreThanEntertainmentBlockRenderer({
     ]
 }: AboutMoreThanEntertainmentBlock['content']) {
     return (
-        <section className="py-32 px-8 bg-surface-container-lowest overflow-hidden text-on-surface">
+        <section className="theme-stitch py-32 px-8 bg-gradient-to-b from-surface to-surface-container-low overflow-hidden text-on-surface">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-20 max-w-3xl mx-auto">
                     <motion.h2 

@@ -177,7 +177,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                     {/* 3. Minimalist Date/Location Card */}
                     {festivals.length > 2 && (
-                        <Link href={getFest(2).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] bg-surface-container-low transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist">
+                        <Link href={getFest(2).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] bg-surface-container transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist">
                             <div className="p-10 h-full flex flex-col justify-between relative z-10">
                                 <div>
                                     <div className="flex justify-between items-start mb-8">

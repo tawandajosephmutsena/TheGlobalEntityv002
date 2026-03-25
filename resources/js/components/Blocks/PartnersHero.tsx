@@ -66,7 +66,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background text-foreground py-32"
+            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background text-foreground py-32 theme-stitch"
         >
             {/* Watercolor Background Effect */}
             <div className="absolute inset-0 z-0 watercolor-bg pointer-events-none">

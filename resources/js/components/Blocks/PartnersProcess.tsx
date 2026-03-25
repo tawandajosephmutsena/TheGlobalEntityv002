@@ -58,7 +58,7 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-32 bg-background text-foreground relative overflow-hidden">
+        <section ref={sectionRef} className="py-32 bg-background text-foreground relative overflow-hidden theme-stitch">
             <div className="container mx-auto px-4">
                 <AnimatedSection animation="fade-up" className="text-center mb-24">
                     <h2 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter text-on-surface">
@@ -104,10 +104,6 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
                 </div>
             </div>
 
-            {/* Subtle background labels or numbers could go here for extra style */}
-            <div className="absolute top-1/2 left-4 -translate-y-1/2 text-[20rem] font-black text-on-surface/[0.03] transform -rotate-90 pointer-events-none select-none uppercase">
-                VOYAGE
-            </div>
         </section>
     );
 };

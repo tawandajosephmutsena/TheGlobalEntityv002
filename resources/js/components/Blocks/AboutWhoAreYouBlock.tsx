@@ -25,7 +25,7 @@ export default function AboutWhoAreYouBlockRenderer({
     ]
 }: AboutWhoAreYouBlock['content']) {
     return (
-        <section className="bg-surface-container-low py-32 px-8 text-on-surface">
+        <section className="theme-stitch bg-gradient-to-b from-surface-container-low to-surface py-32 px-8 text-on-surface">
             <div className="max-w-4xl mx-auto text-center">
                 <motion.h2 
                     initial={{ opacity: 0, y: 20 }}
@@ -61,7 +61,7 @@ function AboutWhoAreYouCard({ title, description, colorClass, delay }: { title: 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay, duration: 0.6 }}
-            className="p-10 bg-surface-container-lowest rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/5 hover:border-primary/20 group"
+            className="p-10 bg-surface-container-low rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/10 hover:border-primary/30 group"
         >
             <h3 className={`font-display font-black text-3xl mb-6 transition-transform origin-left group-hover:scale-105 uppercase tracking-tighter italic ${colorClass}`}>
                 {title}

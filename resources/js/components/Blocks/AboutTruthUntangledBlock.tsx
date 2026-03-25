@@ -26,7 +26,7 @@ export default function AboutTruthUntangledBlockRenderer({
     ]
 }: AboutTruthUntangledBlock['content']) {
     return (
-        <section className="py-32 px-8 max-w-7xl mx-auto overflow-hidden">
+        <section className="theme-stitch py-32 px-8 max-w-7xl mx-auto overflow-hidden text-on-surface">
             <div className="grid md:grid-cols-2 gap-20 items-center">
                 <motion.div 
                     initial={{ opacity: 0, x: -30 }}

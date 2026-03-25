@@ -19,7 +19,8 @@ export default function Home() {
         featuredServices = [], 
         recentInsights = [], 
         stats: defaultStats, 
-        structuredData 
+        structuredData,
+        reviews = []
     } = usePage<SharedData & HomePageProps>().props;
 
     const blocks = page?.content?.blocks || [];
@@ -92,6 +93,7 @@ export default function Home() {
                     featuredServices={featuredServices}
                     featuredProjects={featuredProjects}
                     recentInsights={recentInsights}
+                    reviews={reviews}
                 />
             </Deferred>
         </MainLayout>

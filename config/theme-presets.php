@@ -799,6 +799,9 @@ return [
                 'ring' => 'oklch(0.455 0.199 334)',
                 'surface-container-low' => 'oklch(0.95 0.01 106.5)',
                 'surface-container-lowest' => 'oklch(1 0 0)',
+                'surface' => 'oklch(0.975 0.01 106.5)',
+                'on-surface' => 'oklch(0.3211 0 0)',
+                'surface-variant' => 'oklch(0.92 0.02 106.5)',
             ],
             'dark' => [
                 'background' => 'oklch(0.2303 0.0125 264.2926)', // From template
@@ -817,6 +820,17 @@ return [
                 'border' => 'transparent', // No-Line rule
                 'input' => 'oklch(0.3 0.02 264)',
                 'ring' => 'oklch(0.6 0.2 334)',
+                'surface-container-lowest' => 'oklch(0.18 0.01 264)',
+                'surface-container-low' => 'oklch(0.25 0.015 264)',
+                'surface-container' => 'oklch(0.30 0.02 264)',
+                'surface-container-high' => 'oklch(0.35 0.02 264)',
+                'surface-container-highest' => 'oklch(0.40 0.02 264)',
+                'on-surface' => 'oklch(0.95 0 0)',
+                'on-surface-variant' => 'oklch(0.85 0.01 264)',
+                'surface' => 'oklch(0.2303 0.0125 264.2926)',
+                'surface-variant' => 'oklch(0.3 0.02 264)',
+                'outline' => 'oklch(0.50 0.02 264)',
+                'outline-variant' => 'oklch(0.40 0.02 264)',
             ],
         ],
 
