@@ -89,10 +89,34 @@ export default function InsightForm({ insight, categories, authors }: Props) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Debug: log what we're sending
+        const contentLength = data.content?.body?.length || 0;
+        const jsonLength = JSON.stringify(data).length;
+        console.log('[Insight Save] Content length:', contentLength, 'Total JSON:', jsonLength);
+        console.log('[Insight Save] Data keys:', Object.keys(data));
+        console.log('[Insight Save] Content body preview:', data.content?.body?.substring(0, 200));
+        
+        const options = {
+            onError: (formErrors: Record<string, string>) => {
+                console.error('[Insight Save] Validation errors:', formErrors);
+                // Scroll to top to show the error banner
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Show all errors as alert so user always sees them
+                const errorMessages = Object.entries(formErrors).map(([k, v]) => `${k}: ${v}`).join('\n');
+                alert('Save failed with validation errors:\n' + errorMessages);
+            },
+            onSuccess: () => {
+                console.log('[Insight Save] Success!');
+                localStorage.removeItem(`insight-draft-${insight?.id || 'new'}`);
+            },
+        };
+        
+        console.log('[Insight Save] Submitting...');
         if (insight) {
-            put(`/admin/insights/${insight.slug}`);
+            put(`/admin/insights/${insight.slug}`, options);
         } else {
-            post('/admin/insights');
+            post('/admin/insights', options);
         }
     };
 

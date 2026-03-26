@@ -133,7 +133,6 @@ export default function RichTextEditor({
         formData.append('folder', 'uploads/editor');
 
         try {
-            setIsUploading(true);
             const response = await axios.post('/admin/media', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
@@ -146,10 +145,65 @@ export default function RichTextEditor({
         } catch (err) {
             console.error('Editor image upload failed:', err);
             return null;
-        } finally {
-            setIsUploading(false);
         }
     }, []);
+
+    // Track images currently being uploaded to prevent duplicate uploads
+    const uploadingImages = React.useRef<Set<string>>(new Set());
+
+    // Scan the document for base64 images and upload them
+    const uploadBase64Images = useCallback(async (editorInstance: ReturnType<typeof useEditor>) => {
+        if (!editorInstance) return;
+        const doc = editorInstance.state.doc;
+        const base64Nodes: { pos: number; src: string; node: ReturnType<typeof doc.nodeAt> }[] = [];
+
+        doc.descendants((node, pos) => {
+            if (node.type.name === 'image' && node.attrs.src?.startsWith('data:image/')) {
+                const src = node.attrs.src as string;
+                // Skip if already uploading this image
+                if (!uploadingImages.current.has(src.substring(0, 100))) {
+                    base64Nodes.push({ pos, src, node });
+                }
+            }
+        });
+
+        if (base64Nodes.length === 0) return;
+
+        setIsUploading(true);
+
+        for (const { src } of base64Nodes) {
+            const key = src.substring(0, 100);
+            uploadingImages.current.add(key);
+
+            try {
+                // Convert base64 to File
+                const response = await fetch(src);
+                const blob = await response.blob();
+                const ext = blob.type.split('/')[1]?.split(';')[0] || 'png';
+                const file = new File([blob], `pasted-image-${Date.now()}.${ext}`, { type: blob.type });
+
+                const url = await uploadImageFile(file);
+                if (url && editorInstance) {
+                    // Find the image node again (positions may have changed)
+                    editorInstance.state.doc.descendants((node, pos) => {
+                        if (node.type.name === 'image' && node.attrs.src === src) {
+                            editorInstance.chain()
+                                .focus()
+                                .setNodeSelection(pos)
+                                .setImage({ src: url })
+                                .run();
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error('Failed to upload base64 image:', err);
+            } finally {
+                uploadingImages.current.delete(key);
+            }
+        }
+
+        setIsUploading(false);
+    }, [uploadImageFile]);
 
     const editor = useEditor({
         extensions: [
@@ -178,7 +232,7 @@ export default function RichTextEditor({
                 placeholder,
             }),
             CharacterCount.configure({
-                limit,
+                limit: null, // Disable character limit for the editor (validation is backend)
             }),
             Highlight.configure({
                 multicolor: true,
@@ -213,13 +267,24 @@ export default function RichTextEditor({
         ],
         content,
         editable,
-        onUpdate: ({ editor }) => {
-            onChange(editor.getHTML());
+        onUpdate: ({ editor: editorInstance }) => {
+            onChange(editorInstance.getHTML());
+            // After any content update, scan for base64 images and upload them
+            // Use a small delay to batch multiple image pastes
+            setTimeout(() => uploadBase64Images(editorInstance), 500);
         },
         editorProps: {
             handlePaste: (_view, event) => {
                 const items = event.clipboardData?.items;
                 if (!items) return false;
+
+                // Only intercept if it's a pure image paste (no text/html)
+                const hasHtml = Array.from(items).some(item => item.type === 'text/html');
+                if (hasHtml) {
+                    // Let Tiptap handle the HTML paste normally - 
+                    // the onUpdate handler will catch and upload any base64 images
+                    return false;
+                }
 
                 for (const item of Array.from(items)) {
                     if (item.type.startsWith('image/')) {

@@ -9,35 +9,52 @@ class SafeHtml implements ValidationRule
 {
     /**
      * Allowed HTML tags for rich text content
+     * Includes common tags that appear when pasting from websites
      */
     private array $allowedTags = [
-        'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'strike', 'del',
+        'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'strike', 'del', 's',
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
         'ul', 'ol', 'li',
         'blockquote', 'pre', 'code',
         'a', 'img',
-        'table', 'thead', 'tbody', 'tr', 'th', 'td',
-        'div', 'span'
+        'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'caption', 'colgroup', 'col',
+        'div', 'span',
+        // Semantic/formatting tags commonly pasted from websites
+        'figure', 'figcaption', 'picture', 'source',
+        'section', 'article', 'aside', 'header', 'footer', 'nav', 'main',
+        'mark', 'small', 'sub', 'sup', 'abbr', 'cite', 'q', 'dfn',
+        'details', 'summary', 'time', 'address',
+        'hr', 'wbr',
+        'video', 'audio', 'iframe',
     ];
 
     /**
-     * Allowed attributes for specific tags
+     * Globally allowed attributes (allowed on any tag)
+     */
+    private array $globalAttributes = [
+        'class', 'id', 'style', 'title', 'lang', 'dir',
+        'role', 'aria-label', 'aria-hidden', 'aria-describedby',
+    ];
+
+    /**
+     * Allowed attributes for specific tags (in addition to global attributes)
      */
     private array $allowedAttributes = [
-        'a' => ['href', 'title', 'target', 'rel'],
-        'img' => ['src', 'alt', 'title', 'width', 'height', 'class'],
-        'div' => ['class', 'id'],
-        'span' => ['class', 'id'],
-        'p' => ['class'],
-        'h1' => ['class', 'id'],
-        'h2' => ['class', 'id'],
-        'h3' => ['class', 'id'],
-        'h4' => ['class', 'id'],
-        'h5' => ['class', 'id'],
-        'h6' => ['class', 'id'],
-        'table' => ['class'],
-        'th' => ['class', 'scope'],
-        'td' => ['class', 'colspan', 'rowspan'],
+        'a' => ['href', 'target', 'rel', 'download'],
+        'img' => ['src', 'alt', 'width', 'height', 'loading', 'decoding', 'srcset', 'sizes'],
+        'source' => ['src', 'srcset', 'sizes', 'media', 'type'],
+        'video' => ['src', 'controls', 'width', 'height', 'poster', 'preload', 'autoplay', 'loop', 'muted'],
+        'audio' => ['src', 'controls', 'preload', 'autoplay', 'loop', 'muted'],
+        'iframe' => ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'allow', 'sandbox'],
+        'td' => ['colspan', 'rowspan'],
+        'th' => ['colspan', 'rowspan', 'scope'],
+        'col' => ['span'],
+        'colgroup' => ['span'],
+        'time' => ['datetime'],
+        'abbr' => [],
+        'q' => ['cite'],
+        'blockquote' => ['cite'],
+        'ol' => ['start', 'type', 'reversed'],
     ];
 
     /**
@@ -149,11 +166,23 @@ class SafeHtml implements ValidationRule
                 foreach ($element->attributes as $attribute) {
                     $attrName = strtolower($attribute->name);
                     
-                    // Check if this attribute is allowed for this tag
-                    if (!isset($this->allowedAttributes[$tagName]) || 
-                        !in_array($attrName, $this->allowedAttributes[$tagName])) {
-                        return false;
+                    // Allow global attributes on any tag
+                    if (in_array($attrName, $this->globalAttributes)) {
+                        continue;
                     }
+
+                    // Allow data-* attributes (commonly used by frameworks/CMS)
+                    if (str_starts_with($attrName, 'data-')) {
+                        continue;
+                    }
+
+                    // Check tag-specific allowed attributes
+                    if (isset($this->allowedAttributes[$tagName]) && 
+                        in_array($attrName, $this->allowedAttributes[$tagName])) {
+                        continue;
+                    }
+
+                    return false;
                 }
             }
         }
