@@ -72,15 +72,15 @@ const ModernWaveform = ({ count = 40, active = true }: { count?: number; active?
 };
 
 export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['content']) {
-    const extractContent = (data: unknown): any => {
-        if (data && typeof data === 'object' && 'content' in data && data.content !== null) {
-            return extractContent((data as any).content);
+    const extractContent = (data: unknown): Record<string, any> | null => {
+        if (data && typeof data === 'object' && 'content' in data && (data as { content: any }).content !== null) {
+            return extractContent((data as { content: any }).content);
         }
-        return data;
+        return data as Record<string, any>;
     };
 
     const blockContent = extractContent(props);
-    const finalContent = (blockContent && typeof blockContent === 'object') ? blockContent : {};
+    const finalContent = blockContent || {};
 
     const {
         title = "Voices of the Wild.",
@@ -150,11 +150,11 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                 {/* Header Section */}
                 <header className="mb-20 max-w-4xl">
                     <AnimatedSection animation="fade-up" textReveal>
-                        <h2 className="font-display text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
+                        <h2 className="font-display text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] mb-8 [font-variant-caps:small-caps]">
                             {title.split(' ').map((word: string, i: number, arr: string[]) => (
                                 <span key={i} className={cn(
                                     "inline-block",
-                                    i === arr.length - 1 && "text-primary italic font-serif font-light"
+                                    i === arr.length - 1 && "text-primary italic font-serif font-light normal-case"
                                 )}>
                                     {word}{' '}
                                 </span>
@@ -173,12 +173,12 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                     <div className="asymmetric-grid-container gap-8">
                         {/* FEATURED: The High-Fidelity Waveform Card */}
                         <AnimatedSection animation="scale" className="md:col-span-8">
-                            <div 
+                            <motion.div 
                                 className={cn(
                                     "group relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-primary/10 border border-outline-variant/30",
                                     card1Shadow && "shadow-shadow"
                                 )}
-                                style={{ backgroundColor: card1BgColor || 'var(--surface-container-low)' }}
+                                animate={{ backgroundColor: card1BgColor || 'var(--surface-container-low)' }}
                             >
                                 {/* Layered Background Visualizer */}
                                 <div className="absolute inset-0 z-0">
@@ -194,15 +194,15 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <div className="flex items-center gap-3 mb-6">
-                                                <span className="bg-primary text-on-primary text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg shadow-primary/20">
-                                                    Editor's Choice
+                                                <span className="bg-primary text-on-primary text-[10px] font-black tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg shadow-primary/20 [font-variant-caps:small-caps] lowercase">
+                                                    editor's choice
                                                 </span>
-                                                <span className="flex items-center gap-1.5 text-on-surface-variant text-xs font-bold">
+                                                <span className="flex items-center gap-1.5 text-on-surface-variant text-xs font-bold [font-variant-caps:small-caps]">
                                                     <CircleDashed className="w-3 h-3 animate-spin-slow" />
-                                                    04:20 Remaining
+                                                    04:20 remaining
                                                 </span>
                                             </div>
-                                            <h3 className="font-display text-5xl md:text-6xl font-black mb-4 leading-tight group-hover:translate-x-2 transition-transform duration-500">
+                                            <h3 className="font-display text-5xl md:text-6xl font-black mb-4 leading-tight group-hover:translate-x-2 transition-transform duration-500 [font-variant-caps:small-caps]">
                                                 {getPod(0).title}
                                             </h3>
                                             <p className="text-lg text-on-surface-variant max-w-md line-clamp-2 font-medium opacity-80">
@@ -218,7 +218,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                                     transition={{ duration: 10, repeat: Infinity }}
                                                 />
                                             </div>
-                                            <span className="text-[10px] font-black tracking-widest uppercase opacity-40">SIGNAL STRENGTH</span>
+                                            <span className="text-[10px] font-black tracking-widest opacity-40 [font-variant-caps:small-caps] lowercase">signal strength</span>
                                         </div>
                                     </div>
 
@@ -235,7 +235,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         </motion.a>
                                         
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-primary mb-1">Now Streaming</p>
+                                            <p className="text-xs font-black tracking-widest text-primary mb-1 [font-variant-caps:small-caps] lowercase">now streaming</p>
                                             <p className="text-2xl font-bold flex items-center gap-3">
                                                 {getPod(0).author.name}
                                                 <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
@@ -243,7 +243,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </AnimatedSection>
 
                         {/* SECONDARY: Album Art Focus */}
@@ -257,8 +257,8 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
                                 
                                 <div className="absolute inset-0 p-10 flex flex-col justify-end">
-                                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-3">UP NEXT</span>
-                                    <h3 className="text-3xl font-display font-bold text-white mb-6 leading-tight">
+                                    <span className="text-[10px] font-black text-primary tracking-[0.3em] mb-3 [font-variant-caps:small-caps] lowercase">up next</span>
+                                    <h3 className="text-3xl font-display font-black text-white mb-6 leading-tight [font-variant-caps:small-caps] tracking-tighter">
                                         {getPod(1).title}
                                     </h3>
                                     <div className="flex items-center justify-between">
@@ -277,11 +277,11 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                         <AnimatedSection animation="fade-up" delay={400} className="md:col-span-4">
                             <div className="h-full bg-surface-container-lowest border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner transition-colors duration-500">
                                 <div className="flex items-center justify-between mb-10">
-                                    <h3 className="font-display text-2xl font-black flex items-center gap-3">
+                                    <h3 className="font-display text-2xl font-black flex items-center gap-3 [font-variant-caps:small-caps] tracking-tighter">
                                         <History className="w-6 h-6 text-primary" />
-                                        Broadcast Log
+                                        broadcast log
                                     </h3>
-                                    <span className="text-[10px] font-black opacity-30 tracking-widest">{podcasts.length} TOTAL</span>
+                                    <span className="text-[10px] font-black opacity-30 tracking-widest [font-variant-caps:small-caps] lowercase">{podcasts.length} total</span>
                                 </div>
                                 
                                 <div className="space-y-6 flex-1 overflow-y-auto pr-2 hide-scrollbar">
@@ -299,7 +299,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                                 {i === 0 ? <Waves className="w-6 h-6" /> : i === 1 ? <Mountain className="w-6 h-6" /> : <Trees className="w-6 h-6" />}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <h4 className="font-bold text-sm truncate uppercase tracking-tight">{pod.title}</h4>
+                                                <h4 className="font-black text-sm truncate [font-variant-caps:small-caps] tracking-tighter">{pod.title}</h4>
                                                 <p className="text-xs text-on-surface-variant font-medium opacity-60">Episode {pod.id} • {pod.duration || '24m'}</p>
                                             </div>
                                             <PlayCircle className="w-6 h-6 text-primary opacity-0 group-hover/item:opacity-100 transition-opacity" />
@@ -308,8 +308,8 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                 </div>
                                 
                                 <div className="mt-10 pt-8 border-t border-outline-variant/30">
-                                    <button className="w-full flex items-center justify-between font-black text-[10px] tracking-[0.2em] uppercase text-on-surface-variant hover:text-primary transition-colors">
-                                        View Full Archive
+                                    <button className="w-full flex items-center justify-between font-black text-[10px] tracking-[0.2em] text-on-surface-variant hover:text-primary transition-colors [font-variant-caps:small-caps] lowercase">
+                                        view full archive
                                         <ArrowRight className="w-4 h-4 ml-2" />
                                     </button>
                                 </div>
@@ -332,11 +332,11 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                             <div className="w-24 h-24 rounded-2xl bg-black shadow-2xl overflow-hidden border border-white/20 group/art">
                                                 <img src={getPod(0).image} className="w-full h-full object-cover opacity-80 group-hover/art:opacity-100 transition-opacity" alt="" />
                                             </div>
-                                            <div className="absolute -top-2 -left-2 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-lg animate-pulse">LIVE</div>
+                                            <div className="absolute -top-2 -left-2 bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full shadow-lg animate-pulse [font-variant-caps:small-caps] lowercase">live</div>
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black text-primary tracking-[0.3em] uppercase mb-1">CARTOGRAPHER SIGNAL</p>
-                                            <h3 className="text-2xl font-display font-black tracking-tight">{getPod(5).title}</h3>
+                                            <p className="text-[10px] font-black text-primary tracking-[0.3em] mb-1 [font-variant-caps:small-caps] lowercase">cartographer signal</p>
+                                            <h3 className="text-2xl font-display font-black tracking-tight [font-variant-caps:small-caps]">{getPod(5).title}</h3>
                                             <p className="text-on-surface-variant/80 font-bold text-sm tracking-tight italic">With {getPod(5).author.name}</p>
                                         </div>
                                     </div>
@@ -356,11 +356,11 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
 
                                     <div className="hidden xl:block w-48 space-y-3">
                                         <div className="flex justify-between items-end mb-1">
-                                            <span className="text-[10px] font-black text-primary tracking-widest">LIVE AUDIO</span>
+                                            <span className="text-[10px] font-black text-primary tracking-widest lowercase">LIVE AUDIO</span>
                                             <div className="flex gap-0.5 h-3">
-                                                <div className="w-1 bg-primary rounded-full h-full animate-waveform-bar" style={{ animationDelay: '0.1s' }} />
-                                                <div className="w-1 bg-primary rounded-full h-1/2 animate-waveform-bar" style={{ animationDelay: '0.3s' }} />
-                                                <div className="w-1 bg-primary rounded-full h-2/3 animate-waveform-bar" style={{ animationDelay: '0.2s' }} />
+                                                <motion.div className="w-1 bg-primary rounded-full h-full animate-waveform-bar" transition={{ delay: 0.1 }} />
+                                                <motion.div className="w-1 bg-primary rounded-full h-1/2 animate-waveform-bar" transition={{ delay: 0.3 }} />
+                                                <motion.div className="w-1 bg-primary rounded-full h-2/3 animate-waveform-bar" transition={{ delay: 0.2 }} />
                                             </div>
                                         </div>
                                         <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden shadow-inner">
@@ -378,12 +378,15 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
 
                         {/* ARTIFACT: The Floating Disk Card */}
                         <AnimatedSection animation="fade-right" delay={600} className="md:col-span-5">
-                            <div 
+                            <motion.div 
                                 className={cn(
                                     "h-full relative overflow-hidden rounded-[2.5rem] p-12 group transition-all duration-700 flex flex-col items-center text-center",
                                     card5Shadow && "shadow-shadow"
                                 )}
-                                style={{ backgroundColor: card5BgColor || 'var(--primary-container)', color: card5BgColor ? 'inherit' : 'var(--on-primary-container)' }}
+                                animate={{ 
+                                    backgroundColor: card5BgColor || 'var(--primary-container)', 
+                                    color: card5BgColor ? 'inherit' : 'var(--on-primary-container)' 
+                                }}
                             >
                                 <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 blur-[80px] rounded-full -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 group-hover:scale-150" />
                                 
@@ -402,19 +405,18 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         </div>
                                     </div>
                                 </div>
-
-                                <h3 className="font-display text-4xl font-black mb-6 leading-tight group-hover:scale-105 transition-transform duration-500">
-                                    Cartographer's Daily
+                                <h3 className="font-display text-4xl font-black mb-6 leading-tight group-hover:scale-105 transition-transform duration-500 [font-variant-caps:small-caps] tracking-tighter">
+                                    cartographer's daily
                                 </h3>
                                 <p className="text-lg font-medium opacity-80 mb-10 max-w-sm leading-relaxed">
                                     Quick 10-minute updates on border openings, gear reviews, and local festivities around the globe.
                                 </p>
                                 
                                 <div className="flex flex-wrap justify-center gap-3">
-                                    <span className="px-5 py-2 glass rounded-full text-xs font-black uppercase tracking-widest border border-white/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500">#Signal</span>
-                                    <span className="px-5 py-2 glass rounded-full text-xs font-black uppercase tracking-widest border border-white/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 delay-75">#DailyLog</span>
+                                    <span className="px-5 py-2 glass rounded-full text-xs font-black tracking-widest border border-white/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 [font-variant-caps:small-caps]">#signal</span>
+                                    <span className="px-5 py-2 glass rounded-full text-xs font-black tracking-widest border border-white/10 group-hover:bg-primary group-hover:text-on-primary transition-all duration-500 delay-75 [font-variant-caps:small-caps]">#dailylog</span>
                                 </div>
-                            </div>
+                            </motion.div>
                         </AnimatedSection>
 
                         {/* INTERVIEW: Wide Split Screen */}
@@ -424,9 +426,9 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     <div className="w-full">
                                         <div className="flex items-center gap-3 mb-10">
                                             <div className="w-2.5 h-2.5 rounded-full bg-primary shadow-lg shadow-primary/50 animate-pulse" />
-                                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">FIELD INTERVIEW</span>
+                                            <span className="text-[10px] font-black tracking-[0.4em] text-primary [font-variant-caps:small-caps] lowercase">field interview</span>
                                         </div>
-                                        <h3 className="font-display text-5xl font-black italic tracking-tighter leading-none mb-8 group-hover:translate-x-3 transition-transform duration-700">
+                                        <h3 className="font-display text-5xl font-black italic tracking-tighter leading-none mb-8 group-hover:translate-x-3 transition-transform duration-700 [font-variant-caps:small-caps]">
                                             {getPod(2).title}
                                         </h3>
                                         <p className="text-lg text-on-surface-variant font-medium opacity-70 mb-10 line-clamp-4 max-w-md leading-relaxed">
@@ -437,9 +439,9 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         whileHover={{ x: 10 }}
                                         href={getPod(2).audio_url}
                                         target="_blank"
-                                        className="inline-flex items-center gap-4 px-10 py-5 bg-on-surface text-surface rounded-full font-black text-[10px] tracking-[0.3em] uppercase hover:bg-primary transition-colors group/link"
+                                        className="inline-flex items-center gap-4 px-10 py-5 bg-on-surface text-surface rounded-full font-black text-[10px] tracking-[0.3em] hover:bg-primary transition-colors group/link [font-variant-caps:small-caps]"
                                     >
-                                        Enter Conversation
+                                        enter conversation
                                         <ArrowRight className="w-5 h-5 group-hover/link:translate-x-2 transition-transform" />
                                     </motion.a>
                                 </div>
@@ -456,8 +458,8 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                         </div>
                                     </div>
                                     <div className="absolute bottom-0 left-0 p-10 w-full bg-gradient-to-t from-black/80 to-transparent">
-                                        <p className="text-white/60 text-[10px] font-black tracking-widest uppercase mb-1">STATION MASTER</p>
-                                        <h4 className="text-3xl font-display font-black text-white italic tracking-tight">{getPod(2).author.name}</h4>
+                                        <p className="text-white/60 text-[10px] font-black tracking-widest mb-1 [font-variant-caps:small-caps] lowercase">station master</p>
+                                        <h4 className="text-3xl font-display font-black text-white italic tracking-tight [font-variant-caps:small-caps]">{getPod(2).author.name}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -467,7 +469,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                     <AnimatedSection animation="fade-up" className="text-center py-32 rounded-[3rem] border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest relative overflow-hidden">
                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--primary)_0%,transparent_70%)] opacity-[0.03]" />
                          <PlayCircle className="w-24 h-24 text-primary/20 mx-auto mb-8 animate-pulse" />
-                         <h3 className="font-display text-4xl font-black mb-4 tracking-tight">Static on the Frequency.</h3>
+                         <h3 className="font-display text-4xl font-black mb-4 tracking-tight [font-variant-caps:small-caps]">static on the frequency.</h3>
                          <p className="text-xl text-on-surface-variant font-medium max-w-sm mx-auto opacity-70">
                              We're waiting for the signal to return. Check back shortly for new audio journeys.
                          </p>
@@ -477,10 +479,10 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
             
             {/* Bottom Marquee Decoration */}
             <div className="mt-32 border-y border-outline-variant/20 py-8 overflow-hidden bg-surface-container-low/30 backdrop-blur-sm">
-                <div className="animate-marquee-slow flex whitespace-nowrap gap-12 text-[10px] font-black tracking-[0.5em] uppercase text-primary/30">
+                <div className="animate-marquee-slow flex whitespace-nowrap gap-12 text-[10px] font-black tracking-[0.5em] text-primary/30 [font-variant-caps:small-caps]">
                     {Array.from({ length: 12 }).map((_, i) => (
                         <span key={i} className="flex items-center gap-12">
-                            VOICES OF THE WILD <CircleDashed className="w-2 h-2" /> UNCHARTED TRAILS <CircleDashed className="w-2 h-2" /> MODERN CARTOGRAPHER
+                            voices of the wild <CircleDashed className="w-2 h-2" /> uncharted trails <CircleDashed className="w-2 h-2" /> modern cartographer
                         </span>
                     ))}
                 </div>

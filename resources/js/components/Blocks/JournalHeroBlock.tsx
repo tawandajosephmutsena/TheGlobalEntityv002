@@ -39,14 +39,14 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
     const highlight = titleHighlight || "Featured Story";
 
     return (
-        <section className="container mx-auto px-6 mb-24">
+        <section className="container mx-auto px-6 pt-48 mb-24">
             <AnimatedSection animation="fade-in" className="relative group cursor-pointer overflow-hidden rounded-xl">
                 <div className="asymmetric-grid items-center grid grid-cols-12 gap-y-12">
                     <div className="col-span-12 lg:col-span-7 relative z-10 lg:pr-12 py-12">
-                        <span className="inline-block py-1 px-4 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black tracking-widest uppercase mb-6 shadow-sm">
+                        <span className="inline-block py-1 px-4 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-black tracking-widest mb-6 shadow-sm [font-variant-caps:small-caps]">
                             {highlight}
                         </span>
-                        <h1 className="font-display font-black text-5xl lg:text-7xl text-on-surface leading-[1.1] mb-8 tracking-tighter">
+                        <h1 className="font-display font-black text-5xl lg:text-7xl text-on-surface leading-[1.1] mb-8 tracking-tighter [font-variant-caps:small-caps]">
                             {displayTitle.split(' ').map((word, i) => (
                                 <span key={i} className={i % 4 === 3 ? "text-primary italic" : ""}>{word} </span>
                             ))}
@@ -68,7 +68,7 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
                                 </div>
                                 <div>
                                     <p className="font-bold text-sm group-hover/author:text-primary transition-colors">By {featuredPost.author?.name || 'Anonymous'}</p>
-                                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest font-medium">
+                                    <p className="text-[10px] text-on-surface-variant tracking-widest font-medium [font-variant-caps:small-caps]">
                                         {featuredPost.reading_time || 5} Min Read • {featuredPost.published_at ? new Date(featuredPost.published_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) : 'Recently'}
                                     </p>
                                 </div>

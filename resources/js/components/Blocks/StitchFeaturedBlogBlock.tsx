@@ -41,7 +41,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
                     <div className="max-w-3xl">
                         <AnimatedSection animation="fade-up" textReveal>
-                            <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-8">
+                        <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-8 [font-variant-caps:small-caps]">
                                 {title.split(' ').map((word, i, arr) => (
                                     <span key={i} className={cn(
                                         "inline-block mr-3",
@@ -62,9 +62,9 @@ export default function StitchFeaturedBlogBlockRenderer({
                     <AnimatedSection animation="fade-left" delay={300}>
                         <motion.button 
                             whileHover={{ x: 10 }}
-                            className="flex items-center gap-4 py-4 px-8 bg-surface-container rounded-full border border-outline-variant/30 font-black text-[10px] tracking-[0.4em] uppercase text-primary transition-all group shadow-lg"
+                            className="flex items-center gap-4 py-4 px-8 bg-surface-container rounded-full border border-outline-variant/30 font-black text-[10px] tracking-tighter [font-variant-caps:small-caps] text-primary transition-all group shadow-lg"
                         >
-                            View All Stories 
+                            view all stories 
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </motion.button>
                     </AnimatedSection>
@@ -98,9 +98,9 @@ export default function StitchFeaturedBlogBlockRenderer({
                                     <div className="absolute inset-0 bg-primary/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                                     
                                     <div className="absolute top-6 left-6">
-                                        <div className="glass px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white flex items-center gap-2 border-white/20">
+                                        <div className="glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white flex items-center gap-2 border-white/20">
                                             <CategoryIcon category="festival-fever" size={14} glow />
-                                            Exploration
+                                            exploration
                                         </div>
                                     </div>
                                     
@@ -118,13 +118,13 @@ export default function StitchFeaturedBlogBlockRenderer({
                                     "p-10 md:p-12 flex flex-col justify-center",
                                     index === 0 ? "md:w-1/2" : "flex-grow"
                                 )}>
-                                    <div className="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.3em] text-on-surface-variant/40 mb-8 border-b border-outline-variant/10 pb-6">
+                                    <div className="flex items-center gap-6 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface-variant/40 mb-8 border-b border-outline-variant/10 pb-6">
                                         <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> {post.date}</span>
                                         <span className="flex items-center gap-2"><User className="w-4 h-4 text-primary" /> {post.author}</span>
                                     </div>
                                     
                                     <h3 className={cn(
-                                        "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter",
+                                        "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter [font-variant-caps:small-caps]",
                                         index === 0 ? "text-4xl md:text-5xl" : "text-3xl"
                                     )}>
                                         {post.title}
@@ -135,8 +135,8 @@ export default function StitchFeaturedBlogBlockRenderer({
                                     </p>
                                     
                                     <div className="mt-auto">
-                                        <div className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.4em] text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
-                                            Read Narrative
+                                        <div className="inline-flex items-center gap-3 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
+                                            read narrative
                                             <div className="w-12 h-px bg-primary/30 group-hover:bg-primary transition-all group-hover:w-20"></div>
                                         </div>
                                     </div>

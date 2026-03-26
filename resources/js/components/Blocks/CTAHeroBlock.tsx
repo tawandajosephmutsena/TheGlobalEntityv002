@@ -66,7 +66,7 @@ export default function CTAHeroBlock({
             >
               <Badge
                 variant="outline"
-                className="bg-primary/5 border-primary/20 text-primary flex items-center gap-2 px-3 py-1 font-medium ring-1 ring-inset"
+                className="bg-primary/5 border-primary/20 text-primary flex items-center gap-2 px-3 py-1 font-black ring-1 ring-inset [font-variant-caps:small-caps] lowercase"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 {badge}
@@ -78,7 +78,7 @@ export default function CTAHeroBlock({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+                className="font-display text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl [font-variant-caps:small-caps]"
               >
                 {titlePrefix}{" "}
                 <span className="text-primary relative inline-block">

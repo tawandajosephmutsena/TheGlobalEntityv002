@@ -136,7 +136,7 @@ export default function FeaturedFestivalsBlockRenderer({
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4"
+                            className="text-4xl md:text-5xl font-display font-black text-foreground mb-4 tracking-tighter [font-variant-caps:small-caps]"
                         >
                             {title}
                         </motion.h2>
@@ -217,7 +217,7 @@ export default function FeaturedFestivalsBlockRenderer({
                                     
                                     {/* Top Content Overlay */}
                                     <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
-                                        <Badge className="bg-primary/20 hover:bg-primary/30 text-primary backdrop-blur-md border border-primary/20 px-2.5 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase">
+                                        <Badge className="bg-primary/20 hover:bg-primary/30 text-primary backdrop-blur-md border border-primary/20 px-2.5 py-0.5 rounded-full text-[9px] font-black tracking-widest [font-variant-caps:small-caps]">
                                             {festival.category}
                                         </Badge>
                                         <div className="w-8 h-8 rounded-full bg-secondary/10 backdrop-blur-md flex items-center justify-center border border-border/10 text-muted-foreground group-hover:text-primary transition-colors">
@@ -231,9 +231,9 @@ export default function FeaturedFestivalsBlockRenderer({
                                             <div className="w-5 h-5 rounded-full overflow-hidden border border-white/20">
                                                 <img src={festival.author.avatar} alt="" className="w-full h-full object-cover" />
                                             </div>
-                                            <span className="text-[9px] font-bold uppercase tracking-widest text-primary/80">{festival.author.name}</span>
+                                            <span className="text-[9px] font-black tracking-widest text-primary/80 [font-variant-caps:small-caps]">{festival.author.name}</span>
                                         </div>
-                                        <h3 className="text-xl font-display font-bold text-foreground mb-2 line-clamp-1 group-hover:text-primary transition-colors leading-tight">
+                                        <h3 className="text-xl font-display font-black text-foreground mb-2 line-clamp-1 group-hover:text-primary transition-colors leading-tight tracking-tighter [font-variant-caps:small-caps]">
                                             {festival.title}
                                         </h3>
                                         
@@ -251,7 +251,7 @@ export default function FeaturedFestivalsBlockRenderer({
                                         {/* Activities Tags */}
                                         <div className="flex flex-wrap gap-1.5 mb-5 overflow-hidden h-5">
                                             {festival.activities.slice(0, 2).map((activity, idx) => (
-                                                <span key={idx} className="text-[9px] font-medium tracking-wide text-muted-foreground bg-secondary/10 border border-border/10 px-1.5 py-0.5 rounded uppercase">
+                                                <span key={idx} className="text-[9px] font-black tracking-wide text-muted-foreground bg-secondary/10 border border-border/10 px-1.5 py-0.5 rounded [font-variant-caps:small-caps]">
                                                     {activity}
                                                 </span>
                                             ))}
@@ -260,8 +260,8 @@ export default function FeaturedFestivalsBlockRenderer({
                                             )}
                                         </div>
 
-                                        <Button className="w-full h-10 rounded-lg bg-primary hover:bg-primary/90 text-white text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-primary/10 border-none">
-                                            <Ticket className="w-3.5 h-3.5 mr-2" />
+                                        <Button className="w-full h-10 rounded-lg bg-primary hover:bg-primary/90 text-white text-[11px] font-black tracking-widest transition-all shadow-lg shadow-primary/10 border-none [font-variant-caps:small-caps]">
+                                            < Ticket className="w-3.5 h-3.5 mr-2" />
                                             {ctaText}
                                         </Button>
                                     </div>

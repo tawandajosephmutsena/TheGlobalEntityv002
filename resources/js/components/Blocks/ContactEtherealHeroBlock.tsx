@@ -54,8 +54,8 @@ export default function ContactEtherealHeroBlock({
                             viewport={{ once: true }}
                             className="relative inline-block"
                         >
-                            <div className="bg-accent/10 px-4 py-2 border-b-2 border-accent/30">
-                                <span className="font-serif font-bold uppercase text-xs tracking-[0.3em] text-accent">{badgeText}</span>
+                            <div className="bg-accent/10 px-4 py-2 border-b-2 border-accent/30 [font-variant-caps:small-caps]">
+                                <span className="font-serif font-bold text-xs tracking-[0.3em] text-accent">{badgeText}</span>
                             </div>
                         </motion.div>
 
@@ -64,7 +64,7 @@ export default function ContactEtherealHeroBlock({
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="text-6xl md:text-8xl lg:text-9xl font-black font-serif text-foreground leading-tight tracking-tighter"
+                                className="font-display text-6xl md:text-8xl lg:text-9xl font-black text-foreground leading-tight tracking-tighter [font-variant-caps:small-caps]"
                             >
                                 {titleLine1} <br/>
                                 <span className="text-primary italic underline decoration-wavy decoration-primary/30">
@@ -97,8 +97,8 @@ export default function ContactEtherealHeroBlock({
                                 src={sideImage} 
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
-                            <div className="absolute bottom-8 left-8 bg-card p-4 border border-border shadow-lg">
-                                <span className="font-serif font-bold text-xs uppercase tracking-widest text-card-foreground">Live Signal: Navigator's Outpost</span>
+                            <div className="absolute bottom-8 left-8 bg-card p-4 border border-border shadow-lg [font-variant-caps:small-caps]">
+                                <span className="font-serif font-bold text-xs tracking-widest text-card-foreground">Live Signal: Navigator's Outpost</span>
                             </div>
                         </motion.div>
                     </div>
@@ -128,7 +128,7 @@ export default function ContactEtherealHeroBlock({
 
                             <form action="#" className="space-y-10" onSubmit={(e) => e.preventDefault()}>
                                 <div className="space-y-4">
-                                    <Label className="font-serif font-bold text-xs uppercase tracking-widest text-primary block border-b border-primary/20 pb-1">
+                                    <Label className="font-serif font-bold text-xs tracking-widest text-primary block border-b border-primary/20 pb-1 [font-variant-caps:small-caps]">
                                         {labels.name}
                                     </Label>
                                     <Input 
@@ -138,7 +138,7 @@ export default function ContactEtherealHeroBlock({
                                     />
                                 </div>
                                 <div className="space-y-4">
-                                    <Label className="font-serif font-bold text-xs uppercase tracking-widest text-primary block border-b border-primary/20 pb-1">
+                                    <Label className="font-serif font-bold text-xs tracking-widest text-primary block border-b border-primary/20 pb-1">
                                         {labels.email}
                                     </Label>
                                     <Input 
@@ -148,7 +148,7 @@ export default function ContactEtherealHeroBlock({
                                     />
                                 </div>
                                 <div className="space-y-4">
-                                    <Label className="font-serif font-bold text-xs uppercase tracking-widest text-primary block border-b border-primary/20 pb-1">
+                                    <Label className="font-serif font-bold text-xs tracking-widest text-primary block border-b border-primary/20 pb-1">
                                         {labels.message}
                                     </Label>
                                     <Textarea 
@@ -158,7 +158,7 @@ export default function ContactEtherealHeroBlock({
                                     />
                                 </div>
                                 <div className="pt-6">
-                                    <Button className="w-full py-8 bg-primary hover:bg-primary/90 text-primary-foreground font-serif font-black text-lg tracking-[0.2em] uppercase transition-all shadow-xl rounded-none">
+                                    <Button className="w-full py-8 bg-primary hover:bg-primary/90 text-primary-foreground font-serif font-black text-lg tracking-[0.2em] transition-all shadow-xl rounded-none [font-variant-caps:small-caps]">
                                         {formSubmitText}
                                     </Button>
                                 </div>

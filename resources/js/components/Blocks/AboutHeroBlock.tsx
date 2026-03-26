@@ -16,7 +16,7 @@ export default function AboutHeroBlockRenderer({
     ctaLink = "#"
 }: AboutHeroBlock['content']) {
     return (
-        <section className="theme-stitch relative px-8 pt-48 pb-20 overflow-hidden bg-background text-on-background">
+        <section className="theme-stitch relative px-8 pt-56 pb-20 overflow-hidden bg-background text-on-background">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[60px] opacity-40"></div>
             <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-tertiary/20 rounded-full blur-[60px] opacity-40"></div>
             
@@ -32,17 +32,17 @@ export default function AboutHeroBlockRenderer({
                         {backgroundImage ? (
                             <img src={backgroundImage} alt="" className="w-full h-full object-cover" />
                         ) : (
-                            <CategoryIcon category="travel-trouble" size={48} glow={false} className="opacity-80" />
+                            <CategoryIcon category="travel-trouble" size={48} glow={true} className="opacity-80" />
                         )}
                     </div>
-                    <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic">
+                    <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic [font-variant-caps:small-caps]">
                         {subtitle}
                     </span>
-                    <h1 className="font-display font-black text-7xl md:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter">
+                    <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter [font-variant-caps:small-caps]">
                         {title.includes('…') ? (
                             <>
                                 {title.split('…')[0]}… <br/>
-                                <span className="text-secondary italic lowercase mix-blend-multiply dark:mix-blend-normal">{title.split('…')[1] || 'What?'}</span>
+                                <span className="text-secondary italic mix-blend-multiply dark:mix-blend-normal">{title.split('…')[1] || 'What?'}</span>
                             </>
                         ) : title}
                     </h1>
@@ -53,7 +53,7 @@ export default function AboutHeroBlockRenderer({
                     <motion.button 
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-primary text-on-primary px-10 py-5 rounded-full font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
+                        className="bg-primary text-on-primary px-10 py-5 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
                     >
                         <a href={ctaLink}>{ctaText}</a>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -107,7 +107,7 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
             )}
         >
             <CategoryIcon category={category} size={48} className="mb-4 group-hover:scale-110 transition-transform duration-500" />
-            <span className="text-[10px] font-black tracking-widest text-on-surface-variant text-center leading-tight">
+            <span className="text-[10px] font-black tracking-widest text-on-surface-variant text-center leading-tight [font-variant-caps:small-caps]">
                 {label}
             </span>
         </motion.div>

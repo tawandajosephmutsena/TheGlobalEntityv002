@@ -47,10 +47,10 @@ const Feature108 = ({
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col items-center gap-4 text-center">
           <AnimatedSection animation="fade-up">
-            <Badge variant="outline">{badge}</Badge>
+            <Badge variant="outline" className="font-black tracking-tighter lowercase [font-variant-caps:small-caps]">{badge}</Badge>
           </AnimatedSection>
           <AnimatedSection animation="fade-up" delay={100}>
-            <h1 className="max-w-2xl text-3xl font-semibold md:text-5xl">
+            <h1 className="max-w-2xl text-3xl font-black md:text-5xl tracking-tighter lowercase [font-variant-caps:small-caps]">
               {heading}
             </h1>
           </AnimatedSection>
@@ -80,10 +80,10 @@ const Feature108 = ({
                 className="grid place-items-center gap-20 lg:grid-cols-2 lg:gap-10 focus-visible:outline-none"
               >
                 <div className="flex flex-col gap-6">
-                  <Badge variant="outline" className="w-fit bg-background">
+                  <Badge variant="outline" className="w-fit bg-background font-black tracking-tighter lowercase [font-variant-caps:small-caps]">
                     {tab.content.badge}
                   </Badge>
-                  <h3 className="text-3xl font-semibold lg:text-5xl leading-tight">
+                  <h3 className="text-3xl font-black lg:text-5xl leading-tight tracking-tighter lowercase [font-variant-caps:small-caps]">
                     {tab.content.title}
                   </h3>
                   <div 
@@ -92,12 +92,12 @@ const Feature108 = ({
                   />
                   {tab.content.buttonLink ? (
                     <Button asChild className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
-                      <a href={tab.content.buttonLink}>
+                      <a href={tab.content.buttonLink} className="font-black tracking-tighter lowercase [font-variant-caps:small-caps]">
                         {tab.content.buttonText}
                       </a>
                     </Button>
                   ) : (
-                    <Button className="mt-4 w-fit gap-2 h-12 px-8 rounded-full" size="lg">
+                    <Button className="mt-4 w-fit gap-2 h-12 px-8 rounded-full font-black tracking-tighter lowercase [font-variant-caps:small-caps]" size="lg">
                       {tab.content.buttonText}
                     </Button>
                   )}

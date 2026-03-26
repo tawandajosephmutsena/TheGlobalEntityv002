@@ -58,7 +58,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
         <section className="py-32 bg-background text-foreground overflow-hidden theme-stitch">
             <div className="container mx-auto px-4">
                 <AnimatedSection animation="fade-up" className="text-center mb-20">
-                    <h2 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter text-on-surface mb-4 leading-none">
+                    <h2 className="font-display text-5xl md:text-7xl font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface mb-4 leading-none">
                         {title.split(' ').map((word, i) => (
                             <span key={i} className={cn(i === 2 ? "text-primary italic font-serif font-light" : "")}>
                                 {word}{' '}
@@ -111,7 +111,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                         )}>
                                             <Icon size={40} strokeWidth={1} />
                                         </div>
-                                        <h3 className="font-display text-4xl font-black uppercase tracking-tighter mb-6 leading-tight">
+                                        <h3 className="font-display text-4xl font-black [font-variant-caps:small-caps] tracking-tighter mb-6 leading-tight">
                                             {card.title}
                                         </h3>
                                         <p className={cn(
@@ -126,7 +126,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                         <a 
                                             href={card.link} 
                                             className={cn(
-                                                "inline-flex items-center gap-4 px-8 py-3 rounded-full font-black uppercase tracking-[0.2em] text-[10px] group/link transition-all",
+                                                "inline-flex items-center gap-4 px-8 py-3 rounded-full font-black [font-variant-caps:small-caps] tracking-tighter text-[10px] group/link transition-all",
                                                 index === 0
                                                     ? "bg-primary text-on-primary hover:bg-white hover:text-secondary"
                                                     : index === 3 
@@ -136,7 +136,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                                     : "bg-primary text-on-primary hover:bg-secondary hover:text-on-secondary"
                                             )}
                                         >
-                                            Collaborate
+                                            collaborate
                                             <ArrowRight size={18} className="transition-transform duration-500 group-hover/link:translate-x-2" />
                                         </a>
                                     </div>

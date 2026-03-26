@@ -86,14 +86,14 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
                         <AnimatedSection animation="fade-right">
-                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{activeSubtitle}</span>
-                            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-agency-primary dark:text-white leading-none mb-12">
+                            <span className="text-agency-accent font-black [font-variant-caps:small-caps] tracking-tighter text-xs mb-8 block">{activeSubtitle}</span>
+                            <h2 className="text-6xl md:text-8xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white leading-none mb-12">
                                 {activeTitle}
                             </h2>
                             <div className="space-y-12">
                                 {activeItems.map((item, i) => (
                                     <div key={i}>
-                                        <p className="text-xs font-bold uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-4">{item.label}</p>
+                                        <p className="text-xs font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary/40 dark:text-white/40 mb-4">{item.label}</p>
                                         {item.href ? (
                                             <a href={item.href} className="text-3xl md:text-4xl font-bold text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
                                                 {item.value}
@@ -127,7 +127,7 @@ const ContactInfoBlock: React.FC<ContactInfoBlockProps> = ({
                                 />
                             ) : (
                                 <div className="bg-muted/30 dark:bg-white/5 rounded-[40px] p-12 border border-black/5 dark:border-white/5">
-                                    <h3 className="text-xl font-black uppercase tracking-widest text-agency-primary dark:text-white mb-8 italic">Office Hours</h3>
+                                    <h3 className="text-xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white mb-8 italic">office hours</h3>
                                     <div className="space-y-4">
                                         {activeHours.map((hour, i) => (
                                             <div key={i} className="flex justify-between items-center border-b border-black/5 dark:border-white/5 pb-4">

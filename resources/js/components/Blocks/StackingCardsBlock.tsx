@@ -39,7 +39,7 @@ export default function StackingCardsBlockRenderer(props: StackingCardsBlock['co
                         totalCards={cards.length}
                     >
                         {scrollText && (
-                            <div className="relative font-calendas h-screen w-full z-10 text-2xl md:text-7xl font-bold uppercase flex justify-center items-center text-[#ff5941] whitespace-pre">
+                            <div className="relative font-calendas h-screen w-full z-10 text-2xl md:text-7xl font-bold lowercase [font-variant-caps:small-caps] flex justify-center items-center text-[#ff5941] whitespace-pre">
                                 {scrollText}
                             </div>
                         )}
@@ -53,7 +53,7 @@ export default function StackingCardsBlockRenderer(props: StackingCardsBlock['co
                                         )}
                                     >
                                         <div className="flex-1 flex flex-col justify-center">
-                                            <h3 className="font-bold text-2xl mb-5">{title}</h3>
+                                            <h3 className="font-bold text-2xl mb-5 lowercase [font-variant-caps:small-caps]">{title}</h3>
                                             <p>{description}</p>
                                         </div>
 

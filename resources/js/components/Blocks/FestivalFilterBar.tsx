@@ -15,11 +15,11 @@ interface FestivalFilterBarProps {
 const FestivalFilterBar: React.FC<FestivalFilterBarProps> = ({
     searchPlaceholder = "SEARCH ARCHIVES...",
     categories = [
-        { id: 'all', label: 'ALL', count: '42' },
-        { id: 'fairy', label: 'FAIRY', count: '12' },
-        { id: 'mystic', label: 'MYSTIC', count: '08' },
-        { id: 'nomadic', label: 'NOMADIC', count: '15' },
-        { id: 'celestial', label: 'CELESTIAL', count: '07' },
+        { id: 'all', label: 'All', count: '42' },
+        { id: 'fairy', label: 'Fairy', count: '12' },
+        { id: 'mystic', label: 'Mystic', count: '08' },
+        { id: 'nomadic', label: 'Nomadic', count: '15' },
+        { id: 'celestial', label: 'Celestial', count: '07' },
     ]
 }) => {
     const [activeTab, setActiveTab] = useState('all');
@@ -52,7 +52,7 @@ const FestivalFilterBar: React.FC<FestivalFilterBarProps> = ({
                             onChange={handleSearchChange}
                             className={cn(
                                 "w-full bg-agency-primary/[0.03] border border-agency-primary/10 rounded-none px-14 py-5",
-                                "text-[10px] font-mono tracking-[0.3em] uppercase outline-none focus:ring-0",
+                                "text-[10px] font-mono tracking-tighter [font-variant-caps:small-caps] outline-none focus:ring-0",
                                 "transition-all duration-500 focus:bg-agency-primary/[0.05] focus:border-agency-accent/30",
                                 "placeholder:text-agency-primary/20"
                             )}
@@ -67,7 +67,7 @@ const FestivalFilterBar: React.FC<FestivalFilterBarProps> = ({
                                 key={cat.id}
                                 onClick={() => handleTabClick(cat.id)}
                                 className={cn(
-                                    "whitespace-nowrap px-8 py-5 border text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500",
+                                    "whitespace-nowrap px-8 py-5 border text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter transition-all duration-500",
                                     activeTab === cat.id 
                                         ? "bg-agency-primary text-agency-surface border-agency-primary scale-105 z-10 shadow-2xl" 
                                         : "bg-agency-primary/[0.03] border-agency-primary/10 text-agency-primary/60 hover:bg-agency-primary/5 hover:border-agency-primary/30"

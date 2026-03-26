@@ -37,7 +37,7 @@ export default function AboutMoreThanEntertainmentBlockRenderer({
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="font-display font-black text-5xl md:text-7xl mb-8 tracking-tighter leading-[0.85]"
+                        className="font-display font-black text-5xl md:text-7xl mb-8 tracking-tighter leading-[0.85] [font-variant-caps:small-caps]"
                     >
                         {title}
                     </motion.h2>
@@ -82,7 +82,7 @@ function AboutMoreThanEntertainmentCard({ image, title, subtitle, link, delay }:
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             
             <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                <h3 className="font-display font-black text-4xl mb-4 group-hover:translate-x-2 transition-transform duration-500 tracking-tighter leading-none italic">
+                <h3 className="font-display font-black text-4xl mb-4 group-hover:translate-x-2 transition-transform duration-500 tracking-tighter leading-none italic [font-variant-caps:small-caps]">
                     {title}
                 </h3>
                 <p className="text-white/90 text-base mb-8 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 font-medium italic">
@@ -91,7 +91,7 @@ function AboutMoreThanEntertainmentCard({ image, title, subtitle, link, delay }:
                 <motion.a 
                     href={link}
                     whileHover={{ scale: 1.1 }}
-                    className="inline-flex items-center gap-3 text-white font-black text-xs uppercase tracking-widest group/btn bg-primary/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-primary transition-all duration-500"
+                    className="inline-flex items-center gap-3 text-white font-black text-xs [font-variant-caps:small-caps] tracking-widest group/btn bg-primary/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 hover:bg-primary transition-all duration-500"
                 >
                     Chart Path 
                     <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />

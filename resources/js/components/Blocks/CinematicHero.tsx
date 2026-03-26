@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface Slide {
     title: string;
@@ -110,71 +111,73 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
             <div className="absolute inset-0 z-50 pointer-events-none opacity-[0.03] mix-blend-overlay animate-grain" />
 
             {/* Background Layers with Mouse Parallax */}
-            <div 
-                className="absolute inset-[-5%] w-[110%] h-[110%] transition-transform duration-700 ease-out transform-[var(--parallax-move)]"
+            <motion.div 
+                className="absolute inset-[-5%] w-[110%] h-[110%] transition-transform duration-700 ease-out"
                 style={{ 
-                    // @ts-expect-error - dynamic transform
-                    "--parallax-move": `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`
-                } as React.CSSProperties}
+                    transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`
+                }}
             >
                 {slides.map((slide, idx) => {
                     const isActive = idx === activeIndex;
                     const isPrevious = idx === previousIndex;
                     
                     return (
-                        <div
+                        <motion.div
                             key={idx}
                             className={cn(
-                                "absolute inset-0 w-full h-full bg-cover bg-[center_45%] bg-[image:var(--slide-bg)]",
+                                "absolute inset-0 w-full h-full bg-cover bg-[center_45%]",
                                 "transition-all duration-[2000ms] ease-[cubic-bezier(0.23,1,0.32,1)]",
                                 isActive && "opacity-100 z-20 scale-100",
                                 isPrevious && "opacity-0 z-10 scale-105 blur-sm",
                                 !isActive && !isPrevious && "opacity-0 z-0 scale-110"
                             )}
                             style={{ 
-                                "--slide-bg": `url('${slide.image}')`
-                            } as React.CSSProperties}
+                                backgroundImage: `url('${slide.image}')`
+                            }}
                         >
                             {/* Sophisticated Cinematic Gradients */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/60" />
                             <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
                             <div className="absolute inset-0 bg-black/5 backdrop-contrast-[1.1] backdrop-saturate-[1.1]" />
-                        </div>
+                        </motion.div>
                     );
                 })}
-            </div>
+            </motion.div>
 
             {/* Content Layer (Inverse Parallax for Depth) */}
-            <div 
+            <motion.div 
                 className={cn(
-                    "relative z-40 h-full w-full max-w-[1920px] mx-auto p-8 md:p-24 pt-48 flex flex-col justify-between pointer-events-none transition-all duration-1000 transform-[var(--parallax-inverse)]",
+                    "relative z-40 h-full w-full max-w-[1920px] mx-auto p-8 md:p-24 pt-64 flex flex-col justify-between pointer-events-none transition-all duration-1000",
                     isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
                 )}
                 style={{
-                    "--parallax-inverse": `translate3d(${-mousePos.x * 0.5}px, ${-mousePos.y * 0.5}px, 0)`
-                } as React.CSSProperties}
+                    transform: `translate3d(${-mousePos.x * 0.5}px, ${-mousePos.y * 0.5}px, 0)`
+                }}
             >
                 {/* Header: Title + Tagline */}
                 <div className="flex flex-col md:flex-row justify-between items-start w-full gap-8">
                     <div className="overflow-visible">
                         <h1 
                             key={`title-${activeIndex}`}
-                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6"
+                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6 [font-variant-caps:small-caps]"
                         >
                             {titleWords.map((word, i) => (
-                                <span 
+                                <motion.span 
                                     key={`${activeIndex}-${i}`} 
                                     className={cn(
                                         "inline-block",
-                                        textVisible && "animate-epic-reveal [animation-delay:var(--reveal-delay)] [text-shadow:0_10_40px_rgba(0,0,0,0.6)]"
+                                        textVisible && "animate-epic-reveal [text-shadow:0_10_40px_rgba(0,0,0,0.6)]"
                                     )}
-                                    style={{ 
-                                        // @ts-expect-error - dynamic delay
-                                        "--reveal-delay": `${i * 0.15}s`
-                                    } as React.CSSProperties}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ 
+                                        opacity: textVisible ? 1 : 0
+                                    }}
+                                    transition={{ 
+                                        delay: i * 0.15 
+                                    }}
                                 >
                                     {word}
-                                </span>
+                                </motion.span>
                             ))}
                         </h1>
                     </div>
@@ -261,7 +264,7 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                         />
                     ))}
                 </div>
-            </div>
+            </motion.div>
 
             {/* Premium Styles */}
             <style>{`

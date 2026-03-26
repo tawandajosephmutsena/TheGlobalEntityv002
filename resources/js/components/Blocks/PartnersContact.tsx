@@ -37,7 +37,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                         </div>
 
                         <AnimatedSection animation="fade-right" className="relative z-10">
-                            <h2 className="font-display text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 leading-[0.9] text-on-surface">
+                            <h2 className="font-display text-5xl md:text-7xl font-black lowercase [font-variant-caps:small-caps] tracking-tighter mb-8 leading-[0.9] text-on-surface">
                                 {title}
                             </h2>
                             <p className="text-xl md:text-2xl text-on-surface-variant mb-12 max-w-lg font-body italic leading-relaxed">
@@ -66,7 +66,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                                     <MessageSquare size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-on-surface-variant uppercase font-black tracking-widest opacity-60">Average Response</p>
+                                    <p className="text-sm text-on-surface-variant lowercase [font-variant-caps:small-caps] font-black tracking-widest opacity-60">Average Response</p>
                                     <p className="text-lg font-bold text-on-surface">24-48 Moons</p>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                     <div className="flex-1 p-12 md:p-20 bg-surface-container relative">
                         <AnimatedSection animation="fade-up" delay={400} className="relative z-10 h-full flex flex-col">
                             <div className="mb-10">
-                                <h3 className="font-display text-4xl font-black uppercase tracking-tighter mb-3 text-on-surface">{formTitle}</h3>
+                                <h3 className="font-display text-4xl font-black lowercase [font-variant-caps:small-caps] tracking-tighter mb-3 text-on-surface">{formTitle}</h3>
                                 <p className="text-on-surface-variant font-medium">{formDescription}</p>
                             </div>
 

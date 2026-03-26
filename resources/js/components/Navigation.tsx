@@ -32,7 +32,7 @@ const NavLink = ({
             ref={linkRef}
             href={item.href}
             className={cn(
-                'relative overflow-hidden rounded-full px-4 py-2 text-[12px] font-bold tracking-widest [font-variant-caps:all-small-caps] transition-all duration-500',
+                'relative overflow-hidden rounded-full px-4 py-2 text-[12px] font-bold tracking-widest [font-variant-caps:small-caps] transition-all duration-500',
                 isActive
                     ? 'bg-agency-accent text-primary-foreground shadow-lg shadow-agency-accent/20'
                     : 'text-agency-primary/80 hover:bg-agency-accent/5 hover:text-agency-accent dark:text-white/60',
@@ -208,13 +208,13 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                 <>
                                     <Link
                                         href="/login"
-                                        className="inline-flex h-10 items-center gap-2 rounded-full px-5 text-[12px] font-bold tracking-widest text-agency-primary/80 [font-variant-caps:all-small-caps] transition-all hover:text-agency-accent dark:text-white/60"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full px-5 text-[12px] font-bold tracking-widest text-agency-primary/80 [font-variant-caps:small-caps] transition-all hover:text-agency-accent dark:text-white/60"
                                     >
                                         <LogIn className="size-3" /> sign in
                                     </Link>
                                     <Link
                                         href="/registration"
-                                        className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[12px] font-bold tracking-widest text-white [font-variant-caps:all-small-caps] shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[12px] font-bold tracking-widest text-white [font-variant-caps:small-caps] shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
                                     >
                                         <UserPlus className="size-3" /> sign up
                                     </Link>
@@ -263,7 +263,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                 href={item.href}
                                 onClick={() => setIsMenuOpen(false)}
                                 className={cn(
-                                    "text-5xl font-black [font-variant-caps:all-small-caps] tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
+                                    "text-5xl font-black [font-variant-caps:small-caps] tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
                                     url === item.href ? "text-agency-accent" : "text-agency-primary/60 dark:text-white/60 hover:text-agency-accent"
                                 )}
                                 style={{ transitionDelay: `${i * 50}ms` }}
@@ -279,14 +279,14 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                 <Link
                                     href="/login"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex h-14 items-center justify-center rounded-2xl border border-border font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
+                                    className="flex h-14 items-center justify-center rounded-2xl border border-border font-bold [font-variant-caps:small-caps] tracking-widest text-lg"
                                 >
                                     log in
                                 </Link>
                                 <Link
                                     href="/registration"
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
+                                    className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:small-caps] tracking-widest text-lg"
                                 >
                                     sign up
                                 </Link>
@@ -296,7 +296,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                             <Link
                                 href="/admin"
                                 onClick={() => setIsMenuOpen(false)}
-                                className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:all-small-caps] tracking-widest text-lg"
+                                className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold [font-variant-caps:small-caps] tracking-widest text-lg"
                             >
                                 dashboard
                             </Link>

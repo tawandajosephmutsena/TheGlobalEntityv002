@@ -70,7 +70,7 @@ export default function PodcastFeaturedBlock({
             <div className="container px-4 mx-auto relative">
                 <div className="max-w-3xl mb-12">
                     {subtitle && (
-                        <div className="text-primary font-bold uppercase tracking-widest text-xs mb-3">
+                        <div className="text-primary font-bold lowercase [font-variant-caps:small-caps] tracking-widest text-xs mb-3">
                             {subtitle}
                         </div>
                     )}
@@ -109,7 +109,7 @@ export default function PodcastFeaturedBlock({
                                 )}
 
                                 <div className="absolute top-4 left-4">
-                                     <div className="px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-wider">
+                                     <div className="px-4 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-wider">
                                         Featured Episode
                                      </div>
                                 </div>
@@ -123,7 +123,7 @@ export default function PodcastFeaturedBlock({
                             <AnimatedSection animation="fade-left" delay={200}>
                                 <a href={`/podcasts/${featured.slug}`} className="block group">
                                     <div className="flex items-center gap-3 text-primary mb-4">
-                                        <span className="text-xs font-black uppercase tracking-widest">{featured.category?.name || 'Latest Episode'}</span>
+                                        <span className="text-xs font-black lowercase [font-variant-caps:small-caps] tracking-widest">{featured.category?.name || 'Latest Episode'}</span>
                                         <span className="size-1 rounded-full bg-primary/30" />
                                         <span className="text-xs font-bold text-muted-foreground">{featured.duration || '45 mins'}</span>
                                     </div>
@@ -150,11 +150,11 @@ export default function PodcastFeaturedBlock({
                                                     )}
                                                 </div>
                                                 <div className="flex-1 py-1">
-                                                    <div className="text-[10px] font-bold text-primary uppercase tracking-widest mb-1">{podcast.category?.name || 'Up Next'}</div>
+                                                    <div className="text-[10px] font-bold text-primary lowercase [font-variant-caps:small-caps] tracking-widest mb-1">{podcast.category?.name || 'Up Next'}</div>
                                                     <h4 className="font-black text-sm line-clamp-2 group-hover:text-primary transition-colors">{podcast.title}</h4>
                                                     <div className="flex items-center gap-3 mt-2 text-[10px] font-bold text-muted-foreground">
                                                         <span className="flex items-center gap-1"><Clock className="size-3" /> {podcast.duration || '30m'}</span>
-                                                        <span className="flex items-center gap-1 uppercase tracking-tighter hover:text-primary transition-colors">Listen Now</span>
+                                                        <span className="flex items-center gap-1 lowercase [font-variant-caps:small-caps] tracking-tighter hover:text-primary transition-colors">Listen Now</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -188,7 +188,7 @@ export default function PodcastFeaturedBlock({
                                         )}
                                     </div>
                                     <div className="p-6">
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">
+                                        <div className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest text-primary mb-2">
                                             {podcast.category?.name || 'Podcast'}
                                         </div>
                                         <h3 className="font-black text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">
@@ -198,7 +198,7 @@ export default function PodcastFeaturedBlock({
                                             <span className="text-xs font-bold text-muted-foreground flex items-center gap-1.5">
                                                 <Clock className="size-3.5" /> {podcast.duration || '40 min'}
                                             </span>
-                                            <span className="text-xs font-black uppercase text-primary tracking-tighter flex items-center gap-1 group-hover:gap-2 transition-all">
+                                            <span className="text-xs font-black lowercase [font-variant-caps:small-caps] text-primary tracking-tighter flex items-center gap-1 group-hover:gap-2 transition-all">
                                                 Play <ArrowRight className="size-3" />
                                             </span>
                                         </div>
@@ -225,7 +225,7 @@ export default function PodcastFeaturedBlock({
                                     </div>
                                     <div className="flex-1">
                                         <div className="flex items-center gap-3 mb-1">
-                                            <div className="text-[10px] font-black uppercase tracking-widest text-primary">
+                                            <div className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest text-primary">
                                                 {podcast.category?.name || 'Latest'}
                                             </div>
                                             <span className="text-xs text-muted-foreground/60 font-bold">• {podcast.duration || '30m'}</span>
@@ -265,7 +265,7 @@ export default function PodcastFeaturedBlock({
                                             )}
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-8 flex flex-col justify-end">
                                                 <div className="mb-4">
-                                                    <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest">Featured Series</span>
+                                                    <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest">Featured Series</span>
                                                 </div>
                                                 <h3 className="text-2xl md:text-4xl font-black text-white mb-4 leading-tight group-hover:text-primary transition-colors">{podcast.title}</h3>
                                                 <p className="text-white/70 line-clamp-2 max-w-xl mb-6 text-sm md:text-base">{podcast.description}</p>
@@ -273,7 +273,7 @@ export default function PodcastFeaturedBlock({
                                                     <div className="size-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg transform group-hover:scale-110 transition-transform">
                                                         <Play className="size-6 fill-current translate-x-0.5" />
                                                     </div>
-                                                    <span className="text-white font-black uppercase tracking-tighter text-sm">Listen to episode</span>
+                                                    <span className="text-white font-black lowercase [font-variant-caps:small-caps] tracking-tighter text-sm">Listen to episode</span>
                                                 </div>
                                             </div>
                                         </a>
@@ -306,7 +306,7 @@ export default function PodcastFeaturedBlock({
                                                 </div>
                                             </div>
                                             <div className="p-6 flex-1 flex flex-col justify-center">
-                                                <div className="text-[10px] font-black tracking-widest uppercase text-primary mb-2">Editor's Pick</div>
+                                                <div className="text-[10px] font-black tracking-widest lowercase [font-variant-caps:small-caps] text-primary mb-2">Editor's Pick</div>
                                                 <h3 className="text-lg font-black leading-tight group-hover:text-primary transition-colors line-clamp-3">
                                                     {podcast.title}
                                                 </h3>
@@ -327,11 +327,11 @@ export default function PodcastFeaturedBlock({
                                     >
                                         <a href={`/podcasts/${podcast.slug}`} className="flex h-full bg-card rounded-xl md:rounded-2xl overflow-hidden relative group">
                                             <div className="flex-1 p-6 flex flex-col justify-center pr-24">
-                                                <div className="text-[10px] font-black tracking-widest uppercase text-primary mb-2">TGE Original</div>
+                                                <div className="text-[10px] font-black tracking-widest lowercase [font-variant-caps:small-caps] text-primary mb-2">TGE Original</div>
                                                 <h3 className="text-xl font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
                                                     {podcast.title}
                                                 </h3>
-                                                <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-muted-foreground uppercase">
+                                                <div className="mt-4 flex items-center gap-2 text-[10px] font-bold text-muted-foreground lowercase [font-variant-caps:small-caps]">
                                                     <Clock className="size-3" /> {podcast.duration || '24m'}
                                                     <span className="mx-1">•</span>
                                                     <span>Play Now</span>
@@ -368,7 +368,7 @@ export default function PodcastFeaturedBlock({
                                         </div>
 
                                         <div className="mb-auto">
-                                            <div className="text-[10px] font-black tracking-widest uppercase text-primary mb-1">
+                                            <div className="text-[10px] font-black tracking-widest lowercase [font-variant-caps:small-caps] text-primary mb-1">
                                                 {podcast.category?.name || 'New Spotlight'}
                                             </div>
                                             <h3 className="text-sm font-black leading-snug line-clamp-3 group-hover:text-primary transition-colors">
@@ -377,7 +377,7 @@ export default function PodcastFeaturedBlock({
                                         </div>
 
                                         <div className="mt-4 flex items-center justify-between text-[10px] font-bold text-muted-foreground/60">
-                                            <span className="flex items-center gap-1 uppercase">Spotlight Series</span>
+                                            <span className="flex items-center gap-1 lowercase [font-variant-caps:small-caps]">Spotlight Series</span>
                                             <div className="flex gap-1">
                                                 {[1, 2, 3].map(i => (
                                                     <div key={i} className="size-1 rounded-full bg-primary/30 group-hover:bg-primary transition-colors" style={{ transitionDelay: `${i * 100}ms` }} />

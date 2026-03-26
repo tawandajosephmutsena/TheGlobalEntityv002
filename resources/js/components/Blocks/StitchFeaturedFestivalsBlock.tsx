@@ -137,15 +137,15 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
                             <div className="absolute top-8 left-8">
-                                <div className="bg-primary px-4 py-1 rounded-full text-on-primary text-xs font-bold tracking-widest uppercase mb-4 inline-block shadow-lg">Featured</div>
-                                <h3 className="font-display text-4xl lg:text-5xl font-black text-on-surface mb-2 tracking-tighter uppercase">{getFest(0).title}</h3>
+                                <div className="bg-primary px-4 py-1 rounded-full text-on-primary text-xs font-black tracking-tighter [font-variant-caps:small-caps] mb-4 inline-block shadow-lg">featured</div>
+                                <h3 className="font-display text-4xl lg:text-5xl font-black text-on-surface mb-2 tracking-tighter [font-variant-caps:small-caps]">{getFest(0).title}</h3>
                             </div>
                             <div className="absolute bottom-12 left-8 flex items-center gap-4">
                                 <div className="w-12 h-12 rounded-full bg-surface/20 backdrop-blur-md flex items-center justify-center text-on-surface animate-float group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
                                     <MapPin className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <p className="text-on-surface font-black uppercase tracking-tight">{getFest(0).locationAddress}</p>
+                                    <p className="text-on-surface font-black [font-variant-caps:small-caps] tracking-tighter">{getFest(0).locationAddress}</p>
                                     <p className="text-on-surface-variant text-sm font-medium italic">{getFest(0).date}</p>
                                 </div>
                             </div>
@@ -162,10 +162,10 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                             />
                             <div className="absolute inset-0 flex items-end p-6">
                                 <div className="bg-surface/70 dark:bg-surface-container-high/70 backdrop-blur-xl w-full p-8 rounded-3xl border border-primary/10 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-2 text-on-surface">
-                                    <h3 className="font-display text-2xl lg:text-3xl font-black mb-3 leading-none uppercase tracking-tighter">{getFest(1).title}</h3>
+                                    <h3 className="font-display text-2xl lg:text-3xl font-black mb-3 leading-none [font-variant-caps:small-caps] tracking-tighter">{getFest(1).title}</h3>
                                     <p className="text-on-surface-variant text-sm mb-6 line-clamp-2 font-medium italic">{getFest(1).description}</p>
                                     <div className="flex justify-between items-center">
-                                        <span className="text-primary font-black text-[10px] uppercase tracking-[0.2em]">Cultural Voyage</span>
+                                        <span className="text-primary font-black text-[10px] [font-variant-caps:small-caps] tracking-tighter">cultural voyage</span>
                                         <div className="bg-primary text-on-primary p-3 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
                                             <ArrowRight className="w-5 h-5" />
                                         </div>
@@ -184,14 +184,14 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                         <span className="text-6xl font-black text-primary/10 font-display group-hover:text-primary transition-colors duration-700">03</span>
                                         <Calendar className="text-secondary w-8 h-8 group-hover:rotate-12 transition-transform duration-500" />
                                     </div>
-                                    <h3 className="font-display text-3xl font-black text-on-surface leading-[0.9] mb-4 group-hover:text-primary transition-colors duration-500 uppercase tracking-tighter">{getFest(2).title}</h3>
+                                    <h3 className="font-display text-3xl font-black text-on-surface leading-[0.9] mb-4 group-hover:text-primary transition-colors duration-500 [font-variant-caps:small-caps] tracking-tighter">{getFest(2).title}</h3>
                                     <p className="text-on-surface-variant font-medium italic">{getFest(2).locationAddress}</p>
                                 </div>
                                 <div className="border-t border-primary/10 pt-6">
-                                    <div className="flex items-center gap-2 text-[10px] font-black text-on-surface uppercase tracking-[0.3em]">
+                                    <div className="flex items-center gap-2 text-[10px] font-black text-on-surface [font-variant-caps:small-caps] tracking-tighter">
                                         <span>{getFest(2).date}</span>
                                         <span className="w-8 h-px bg-primary/20"></span>
-                                        <span>Dispatch</span>
+                                        <span>dispatch</span>
                                     </div>
                                 </div>
                             </div>
@@ -212,11 +212,11 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                             <div className="absolute inset-0 bg-background/40 mix-blend-multiply transition-all duration-700 group-hover:bg-transparent"></div>
                             <div className="absolute inset-0 p-12 flex flex-col justify-end bg-gradient-to-t from-background/80 via-transparent to-transparent">
                                 <div className="max-w-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-700">
-                                    <span className="text-on-surface text-[10px] font-black tracking-[0.3em] uppercase mb-3 block opacity-70">Journal Entry</span>
-                                    <h3 className="font-display text-5xl md:text-6xl font-black text-on-surface mb-6 uppercase tracking-tighter leading-[0.85] italic-not-really">{getFest(3).title}</h3>
+                                    <span className="text-on-surface text-[10px] font-black tracking-tighter [font-variant-caps:small-caps] mb-3 block opacity-70">journal entry</span>
+                                    <h3 className="font-display text-5xl md:text-6xl font-black text-on-surface mb-6 [font-variant-caps:small-caps] tracking-tighter leading-[0.85] italic-not-really">{getFest(3).title}</h3>
                                     <div className="flex items-center gap-6">
-                                        <div className="bg-primary text-on-primary px-8 py-4 rounded-full font-black text-xs uppercase tracking-widest hover:scale-105 transition-all duration-500 shadow-xl shadow-primary/20">
-                                            Read Story
+                                        <div className="bg-primary text-on-primary px-8 py-4 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-tighter hover:scale-105 transition-all duration-500 shadow-xl shadow-primary/20">
+                                            read story
                                         </div>
                                         <div className="flex -space-x-3 items-center">
                                             {defaultAvatars.map((src, i) => (
@@ -245,12 +245,12 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                     <div className="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-6 text-primary">
                                         <Music size={32} />
                                     </div>
-                                    <h4 className="text-on-surface font-display text-4xl font-black mb-4 uppercase tracking-tighter leading-none">{getFest(4).title}</h4>
+                                    <h4 className="text-on-surface font-display text-4xl font-black mb-4 [font-variant-caps:small-caps] tracking-tighter leading-none">{getFest(4).title}</h4>
                                     <p className="text-on-surface-variant text-base mb-8 max-w-xs mx-auto leading-relaxed font-medium italic line-clamp-3">
                                         {getFest(4).description}
                                     </p>
-                                    <Link href={getFest(4).url} className="inline-block border-2 border-primary text-primary px-10 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all duration-500">
-                                        Voyage Details
+                                    <Link href={getFest(4).url} className="inline-block border-2 border-primary text-primary px-10 py-3 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-tighter hover:bg-primary hover:text-on-primary transition-all duration-500">
+                                        voyage details
                                     </Link>
                                 </div>
                             </div>
@@ -274,8 +274,8 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                 <div className="w-24 h-24 rounded-full border-4 border-primary/20 flex items-center justify-center mb-8 bg-surface/30 backdrop-blur-xl group-hover:bg-primary group-hover:border-primary transition-all duration-700 shadow-2xl">
                                     <Play className="w-12 h-12 text-primary group-hover:text-on-primary fill-current transition-colors" />
                                 </div>
-                                <h4 className="font-display text-4xl md:text-5xl font-black text-on-surface uppercase tracking-tighter mb-3 leading-[0.85]">{getFest(5).title}</h4>
-                                <p className="text-on-surface-variant font-black text-[10px] tracking-[0.4em] uppercase opacity-70">LIVE FROM {(getFest(5).locationAddress || '').split(',').pop()?.toUpperCase()}</p>
+                                <h4 className="font-display text-4xl md:text-5xl font-black text-on-surface [font-variant-caps:small-caps] tracking-tighter mb-3 leading-[0.85]">{getFest(5).title}</h4>
+                                <p className="text-on-surface-variant font-black text-[10px] tracking-tighter [font-variant-caps:small-caps] opacity-70">live from {(getFest(5).locationAddress || '').split(',').pop()}</p>
                             </div>
                         </Link>
                     )}
@@ -284,7 +284,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                 <div className="text-center py-40 bg-surface-container-lowest rounded-[3rem] border-2 border-primary/10 border-dashed backdrop-blur-sm relative overflow-hidden max-w-4xl mx-auto shadow-sea-mist">
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
                     <Compass className="w-20 h-20 text-primary/20 mx-auto mb-8 animate-spin-slow" />
-                    <p className="font-display text-3xl md:text-4xl font-black text-on-surface-variant mb-4 italic tracking-tighter uppercase leading-none">No spectacles on the horizon.</p>
+                    <p className="font-display text-3xl md:text-4xl font-black text-on-surface-variant mb-4 italic tracking-tighter [font-variant-caps:small-caps] leading-none">no spectacles on the horizon.</p>
                     <p className="text-on-surface-variant font-medium max-w-md mx-auto leading-relaxed">The cultural map is waiting for its next great gathering. Check back as new voyages are charted.</p>
                 </div>
             )}

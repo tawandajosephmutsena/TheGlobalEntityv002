@@ -135,12 +135,12 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
                 {(title || subtitle) && (
                     <div className="mb-24 text-center">
                         {subtitle && (
-                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">
+                            <span className="lowercase text-agency-accent font-black [font-variant-caps:small-caps] tracking-tighter text-xs mb-8 block">
                                 {subtitle}
                             </span>
                         )}
                         {title && (
-                            <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white">
+                            <h2 className="lowercase text-6xl md:text-8xl font-black [font-variant-caps:small-caps] tracking-tighter leading-[0.85] text-agency-primary dark:text-white">
                                 {title.split(' ')[0]} <br/>
                                 <span className="opacity-30 italic">{title.split(' ').slice(1).join(' ')}</span>
                             </h2>
@@ -168,7 +168,7 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
                                         className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
                                     />
                                     <div className="absolute top-6 left-6 z-10">
-                                        <span className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-widest shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform -translate-y-2 group-hover:translate-y-0">
+                                        <span className="lowercase px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-500 transform -translate-y-2 group-hover:translate-y-0">
                                             {item.category}
                                         </span>
                                     </div>
@@ -181,7 +181,7 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
                                 </div>
 
                                 <div className="px-2 flex-grow">
-                                    <div className="flex items-center gap-6 mb-6 opacity-40 text-[10px] font-bold uppercase tracking-widest group-hover:opacity-100 transition-opacity duration-500">
+                                    <div className="lowercase flex items-center gap-6 mb-6 opacity-40 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter group-hover:opacity-100 transition-opacity duration-500">
                                         <div className="flex items-center gap-2">
                                             <UserIcon className="size-3" /> {item.author || 'Anonymous'}
                                         </div>
@@ -190,7 +190,7 @@ const CreativeGridBlock: React.FC<CreativeGridBlockProps> = ({
                                         </div>
                                     </div>
                                     <h2 className={cn(
-                                        'font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-6 group-hover:text-agency-accent transition-colors duration-500',
+                                        'lowercase font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white mb-6 group-hover:text-agency-accent transition-colors duration-500',
                                         i % 3 === 0 ? 'text-4xl md:text-6xl' : 'text-3xl md:text-4xl'
                                     )}>
                                         {item.title}

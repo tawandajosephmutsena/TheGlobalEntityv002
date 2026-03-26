@@ -99,7 +99,7 @@ export default function PodcastGridBlock({
                         </span>
                     )}
                     {title && (
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase">
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tight">
                             {title}
                         </h2>
                     )}

@@ -285,6 +285,14 @@ export default function ThemeStyles() {
 
                     h1, h2, h3, h4, h5, h6, .font-display {
                         font-family: var(--font-display);
+                        letter-spacing: -0.05em;
+                    }
+
+                    h1 {
+                        font-weight: 900;
+                    }
+
+                    h2, h3, h4, h5, h6 {
                         font-weight: var(--font-weight-heading);
                     }
                 `

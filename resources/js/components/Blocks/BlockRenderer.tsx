@@ -306,7 +306,7 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
             <div className="max-w-7xl mx-auto">
                 {title && (
                     <AnimatedSection animation="fade-up" className="mb-12 text-center">
-                        <h2 className="text-4xl font-black uppercase tracking-tight">{title}</h2>
+                        <h2 className="text-4xl font-black [font-variant-caps:small-caps] tracking-tight">{title}</h2>
                     </AnimatedSection>
                 )}
                 <div className={gridClass}>
@@ -359,7 +359,7 @@ const FeaturesBlock = ({ content }: { content: FeaturesBlockType['content'] }) =
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 {title && (
                     <div className="mb-16 text-center">
-                        <h2 className="text-4xl font-black uppercase tracking-tight md:text-6xl">
+                        <h2 className="text-4xl font-black [font-variant-caps:small-caps] tracking-tight md:text-6xl">
                             {title}
                         </h2>
                     </div>

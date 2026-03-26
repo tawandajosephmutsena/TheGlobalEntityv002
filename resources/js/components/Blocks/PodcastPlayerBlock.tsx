@@ -110,7 +110,7 @@ export default function PodcastPlayerBlock({
                 {/* Optional custom title override */}
                 {title && (
                     <AnimatedSection animation="fade-up" className="text-center mb-8">
-                        <h2 className="text-3xl md:text-4xl font-black tracking-tight uppercase">
+                        <h2 className="lowercase text-3xl md:text-4xl font-black tracking-tight [font-variant-caps:small-caps]">
                             {title}
                         </h2>
                         {description && (

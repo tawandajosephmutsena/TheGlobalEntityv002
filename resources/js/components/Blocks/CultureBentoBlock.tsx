@@ -23,7 +23,7 @@ const CultureBentoBlock: React.FC<CultureBentoBlockProps> = ({
                         animation="slide-right"
                         className="md:col-span-8 p-16 rounded-[60px] bg-agency-accent text-agency-primary flex flex-col justify-between min-h-[400px]"
                     >
-                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+                        <h2 className="text-5xl md:text-7xl font-black lowercase [font-variant-caps:small-caps] tracking-tighter leading-none">
                             {title.includes('Everything.') ? (
                                 <>
                                     {title.replace('Everything.', '')} <br/>
@@ -32,7 +32,7 @@ const CultureBentoBlock: React.FC<CultureBentoBlockProps> = ({
                             ) : title}
                         </h2>
                         <div className="flex justify-between items-end">
-                            <p className="max-w-md font-bold uppercase tracking-tight opacity-70">
+                            <p className="max-w-md font-bold lowercase [font-variant-caps:small-caps] tracking-tight opacity-70">
                                 {description}
                             </p>
                             <div className="size-20 rounded-full border border-agency-primary/20 flex items-center justify-center">
@@ -46,7 +46,7 @@ const CultureBentoBlock: React.FC<CultureBentoBlockProps> = ({
                         className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/5 text-agency-secondary dark:text-white flex flex-col justify-center text-center dark:border dark:border-white/10"
                     >
                         <span className="text-6xl font-black mb-4 text-agency-secondary dark:text-white">{statValue}</span>
-                        <span className="text-xs font-bold uppercase tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">{statLabel}</span>
+                        <span className="text-xs font-bold lowercase [font-variant-caps:small-caps] tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">{statLabel}</span>
                     </AnimatedSection>
                 </div>
             </div>

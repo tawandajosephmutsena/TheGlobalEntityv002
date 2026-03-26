@@ -35,7 +35,7 @@ export default function JournalCategoryFilterBlock({ content, categories = [] }:
                 <button 
                     onClick={() => handleCategoryClick('all')}
                     className={cn(
-                        "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
+                        "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
                         activeCategoryId === 'all' 
                             ? "bg-on-surface text-surface shadow-xl scale-105" 
                             : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
@@ -48,7 +48,7 @@ export default function JournalCategoryFilterBlock({ content, categories = [] }:
                         key={cat.id}
                         onClick={() => handleCategoryClick(cat.id)}
                         className={cn(
-                            "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
+                            "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
                             activeCategoryId === cat.id 
                                 ? "bg-primary text-on-primary shadow-xl scale-105" 
                                 : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"

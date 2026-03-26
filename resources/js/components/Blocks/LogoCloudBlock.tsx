@@ -38,7 +38,7 @@ const LogoCloudBlock: React.FC<LogoCloudBlockProps> = ({
             <div className="group relative m-auto max-w-7xl px-6">
                 <div className="flex flex-col items-center md:flex-row">
                     <div className="md:max-w-44 md:border-r md:pr-6">
-                        <p className="text-end text-sm text-muted-foreground font-semibold uppercase tracking-wider">{title}</p>
+                        <p className="text-end text-sm text-muted-foreground font-semibold [font-variant-caps:small-caps] tracking-wider">{title}</p>
                     </div>
                     <div className="relative py-6 md:w-[calc(100%-11rem)]">
                         <InfiniteSlider

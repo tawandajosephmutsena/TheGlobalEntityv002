@@ -52,7 +52,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                 <div className="inline-block p-12 rounded-full bg-surface-container-low mb-8 opacity-20">
                     <Search className="size-20" />
                 </div>
-                <h3 className="text-3xl font-black uppercase tracking-tight mb-4 text-on-surface">No chronicles found</h3>
+                <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">No chronicles found</h3>
                 <p className="text-on-surface-variant max-w-md mx-auto font-light">
                     The map remains blank for this category. Explore other coordinates or search for hidden paths.
                 </p>
@@ -90,15 +90,15 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                         />
                                     </div>
                                     <div className="w-full md:w-1/2 space-y-6">
-                                        <p className="text-tertiary font-black text-[10px] tracking-widest uppercase">Editorial Feature</p>
-                                        <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface">
+                                        <p className="text-tertiary font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">Editorial Feature</p>
+                                        <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
                                         </h3>
                                         <p className="text-on-surface-variant text-base leading-relaxed font-light line-clamp-3">
                                             {post.excerpt}
                                         </p>
-                                        <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all uppercase">
-                                            READ FULL FEATURE
+                                        <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all [font-variant-caps:small-caps]">
+                                            {"READ FULL FEATURE"}
                                             <ArrowUpRight className="size-4" />
                                         </Link>
                                     </div>
@@ -112,24 +112,24 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                             alt={post.title} 
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
+                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black [font-variant-caps:small-caps] tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
                                             <CategoryIcon category={post.category?.slug || ''} size={14} glow={false} />
                                             {post.category?.name || 'Insight'}
                                         </span>
                                     </div>
                                     <div className="space-y-4">
-                                        <p className="text-secondary font-black text-[10px] tracking-widest uppercase flex items-center gap-2">
+                                        <p className="text-secondary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-2">
                                             <CategoryIcon category={post.category?.slug || ''} size={12} glow={false} />
                                             {post.category?.name || 'Journal'}
                                         </p>
-                                        <h3 className="font-display font-bold text-2xl group-hover:text-primary transition-colors leading-tight tracking-tight text-on-surface">
+                                        <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
                                         </h3>
                                         <p className="text-on-surface-variant line-clamp-2 text-sm leading-relaxed font-light">
                                             {post.excerpt}
                                         </p>
                                         <div className="pt-2 flex items-center justify-between">
-                                            <span className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest opacity-60">
+                                            <span className="text-[10px] text-on-surface-variant font-bold [font-variant-caps:small-caps] tracking-widest opacity-60">
                                                 {post.published_at ? new Date(post.published_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'}
                                             </span>
                                             <ArrowRight className="size-5 text-primary group-hover:translate-x-2 transition-transform duration-500" />

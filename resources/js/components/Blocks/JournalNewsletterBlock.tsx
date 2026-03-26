@@ -55,7 +55,7 @@ export default function JournalNewsletterBlock({ content }: Props) {
                     {submitted ? (
                         <div className="flex items-center justify-center gap-4 p-8 rounded-full bg-tertiary/10 border border-tertiary/20">
                             <CheckCircle2 className="size-8 text-tertiary" />
-                            <p className="text-tertiary font-black text-sm uppercase tracking-widest">Entry confirmed. Welcome aboard.</p>
+                            <p className="text-tertiary font-black text-sm tracking-widest">Entry confirmed. Welcome aboard.</p>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
@@ -75,7 +75,7 @@ export default function JournalNewsletterBlock({ content }: Props) {
                             </button>
                         </form>
                     )}
-                    <p className="mt-8 text-[10px] text-on-surface-variant font-black tracking-widest uppercase opacity-40">
+                    <p className="mt-8 text-[10px] text-on-surface-variant font-black tracking-widest opacity-40">
                         No noise. Only the signal. Unsubscribe anytime.
                     </p>
                 </div>
