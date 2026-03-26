@@ -108,7 +108,7 @@ abstract class SecureFormRequest extends FormRequest
     /**
      * Get common validation rules for rich text content
      */
-    protected function getRichTextRules(int $maxLength = 65535, bool $required = true): array
+    protected function getRichTextRules(int $maxLength = 500000, bool $required = true): array
     {
         $rules = $this->getTextRules($maxLength, $required);
         $rules[] = new \App\Rules\SafeHtml();

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import axios from 'axios';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -104,7 +105,7 @@ export default function RichTextEditor({
     onChange,
     placeholder = 'Start writing...',
     className,
-    limit = 10000,
+    limit = 500000,
     editable = true,
     onSave,
     autoSave = false,
@@ -123,6 +124,32 @@ export default function RichTextEditor({
     const [validationErrors, setValidationErrors] = React.useState<string[]>([]);
     const [isValid, setIsValid] = React.useState(true);
     const [lastSaved, setLastSaved] = React.useState<Date | null>(null);
+    const [isUploading, setIsUploading] = React.useState(false);
+
+    // Upload an image file to the server and return its URL
+    const uploadImageFile = useCallback(async (file: File): Promise<string | null> => {
+        const formData = new FormData();
+        formData.append('files[]', file);
+        formData.append('folder', 'uploads/editor');
+
+        try {
+            setIsUploading(true);
+            const response = await axios.post('/admin/media', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            // The MediaController returns { files: [{ url, path, ... }] }
+            const files = response.data?.files;
+            if (Array.isArray(files) && files.length > 0) {
+                return files[0].url || null;
+            }
+            return null;
+        } catch (err) {
+            console.error('Editor image upload failed:', err);
+            return null;
+        } finally {
+            setIsUploading(false);
+        }
+    }, []);
 
     const editor = useEditor({
         extensions: [
@@ -188,6 +215,46 @@ export default function RichTextEditor({
         editable,
         onUpdate: ({ editor }) => {
             onChange(editor.getHTML());
+        },
+        editorProps: {
+            handlePaste: (_view, event) => {
+                const items = event.clipboardData?.items;
+                if (!items) return false;
+
+                for (const item of Array.from(items)) {
+                    if (item.type.startsWith('image/')) {
+                        event.preventDefault();
+                        const file = item.getAsFile();
+                        if (file) {
+                            uploadImageFile(file).then((url) => {
+                                if (url && editor) {
+                                    editor.chain().focus().setImage({ src: url }).run();
+                                }
+                            });
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            },
+            handleDrop: (_view, event, _slice, moved) => {
+                if (moved) return false;
+                const files = event.dataTransfer?.files;
+                if (!files || files.length === 0) return false;
+
+                for (const file of Array.from(files)) {
+                    if (file.type.startsWith('image/')) {
+                        event.preventDefault();
+                        uploadImageFile(file).then((url) => {
+                            if (url && editor) {
+                                editor.chain().focus().setImage({ src: url }).run();
+                            }
+                        });
+                        return true;
+                    }
+                }
+                return false;
+            },
         },
     });
 
@@ -644,7 +711,15 @@ export default function RichTextEditor({
                     )}
 
                     {/* Main Editor */}
-                    <div className="flex-1">
+                    <div className="flex-1 relative">
+                        {isUploading && (
+                            <div className="absolute inset-0 bg-background/60 backdrop-blur-sm z-10 flex items-center justify-center rounded">
+                                <div className="flex items-center gap-2 bg-background border rounded-lg px-4 py-2 shadow-sm">
+                                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                                    <span className="text-sm text-muted-foreground">Uploading image…</span>
+                                </div>
+                            </div>
+                        )}
                         <EditorContent 
                             editor={editor} 
                             className={cn(

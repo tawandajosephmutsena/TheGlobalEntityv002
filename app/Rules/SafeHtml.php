@@ -203,7 +203,12 @@ class SafeHtml implements ValidationRule
             return filter_var($url, FILTER_VALIDATE_URL) !== false;
         }
 
-        // Reject javascript:, data:, vbscript:, and other protocols
+        // Allow data URIs for images (base64-encoded pasted images)
+        if (preg_match('/^data:image\/(jpeg|jpg|png|gif|webp|svg\+xml|avif|bmp);base64,/i', $url)) {
+            return true;
+        }
+
+        // Reject javascript:, vbscript:, and other protocols
         if (preg_match('/^[a-z][a-z0-9+.-]*:/i', $url)) {
             return false;
         }

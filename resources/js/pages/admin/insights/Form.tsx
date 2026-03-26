@@ -120,6 +120,17 @@ export default function InsightForm({ insight, categories, authors }: Props) {
 
     return (
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            {/* Global validation errors */}
+            {Object.keys(errors).length > 0 && (
+                <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
+                    <p className="text-sm font-medium text-destructive mb-1">Please fix the following errors:</p>
+                    <ul className="list-disc list-inside text-sm text-destructive/80">
+                        {Object.entries(errors).map(([key, msg]) => (
+                            <li key={key}>{msg}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Link href="/admin/insights">
@@ -192,7 +203,7 @@ export default function InsightForm({ insight, categories, authors }: Props) {
                                     content={data.content.body}
                                     onChange={(content) => setData('content', { ...data.content, body: content })}
                                     placeholder="Write your article here..."
-                                    limit={50000}
+                                    limit={500000}
                                     autoSave={true}
                                     onSave={(content) => {
                                         // Auto-save functionality - could save to localStorage or send to server
@@ -204,6 +215,9 @@ export default function InsightForm({ insight, categories, authors }: Props) {
                                 <p className="text-xs text-muted-foreground">
                                     Rich text editor with auto-save, media integration, and advanced formatting options.
                                 </p>
+                                {(errors as Record<string, string>)['content.body'] && (
+                                    <p className="text-sm text-destructive mt-1">{(errors as Record<string, string>)['content.body']}</p>
+                                )}
                             </div>
                         </CardContent>
                     </Card>
