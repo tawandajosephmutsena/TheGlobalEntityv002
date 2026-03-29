@@ -113,7 +113,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
             {/* Article Hero */}
             <article className="bg-white dark:bg-agency-dark">
                 <header className="pt-48 pb-20 border-b border-agency-primary/5 dark:border-white/5">
-                    <div className="mx-auto max-w-4xl px-4 text-center">
+                    <div className="mx-auto max-w-7xl px-4 text-center">
                         <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-bold uppercase tracking-widest text-[10px] mb-12 hover:gap-4 transition-all">
                             <ArrowLeft className="h-3 w-3" /> Back to Insights
                         </Link>
@@ -129,7 +129,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 </div>
                             </div>
                             
-                            <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-tight mb-12">
+                            <h1 className="text-4xl md:text-6xl font-black [font-variant-caps:small-caps] tracking-tighter leading-tight mb-12">
                                 {insight.title}
                             </h1>
                             
@@ -155,101 +155,99 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
 
                 {/* Article Content */}
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-                        {/* Social Share Stickiness */}
-                        <aside className="lg:col-span-1 hidden lg:block">
-                            <div className="sticky top-48 space-y-8 flex flex-col items-center">
-                                <span className="text-[10px] font-black uppercase tracking-widest [writing-mode:vertical-rl] opacity-20">Share Article</span>
-                                <button 
-                                    onClick={() => handleShare('facebook')}
-                                    title="Share on Facebook" 
-                                    aria-label="Share on Facebook" 
-                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                                >
-                                    <Facebook className="size-4" />
-                                </button>
-                                <button 
-                                    onClick={() => handleShare('twitter')}
-                                    title="Share on Twitter" 
-                                    aria-label="Share on Twitter" 
-                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                                >
-                                    <Twitter className="size-4" />
-                                </button>
-                                <button 
-                                    onClick={() => handleShare('linkedin')}
-                                    title="Share on LinkedIn" 
-                                    aria-label="Share on LinkedIn" 
-                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                                >
-                                    <Linkedin className="size-4" />
-                                </button>
-                                <button 
-                                    onClick={handleCopyLink}
-                                    title="Copy Link" 
-                                    aria-label="Copy Link" 
-                                    className="size-10 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                                >
-                                    <Share2 className="size-4" />
-                                </button>
-                            </div>
-                        </aside>
+                    {/* Social Share Bar */}
+                    <div className="flex flex-wrap items-center gap-6 mb-16 pb-8 border-b border-agency-primary/5 dark:border-white/5">
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
+                        <div className="flex items-center gap-4">
+                            <button 
+                                onClick={() => handleShare('facebook')}
+                                title="Share on Facebook" 
+                                aria-label="Share on Facebook" 
+                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                            >
+                                <Facebook className="size-5" />
+                            </button>
+                            <button 
+                                onClick={() => handleShare('twitter')}
+                                title="Share on Twitter" 
+                                aria-label="Share on Twitter" 
+                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                            >
+                                <Twitter className="size-5" />
+                            </button>
+                            <button 
+                                onClick={() => handleShare('linkedin')}
+                                title="Share on LinkedIn" 
+                                aria-label="Share on LinkedIn" 
+                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                            >
+                                <Linkedin className="size-5" />
+                            </button>
+                            <button 
+                                onClick={handleCopyLink}
+                                title="Copy Link" 
+                                aria-label="Copy Link" 
+                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                            >
+                                <Share2 className="size-5" />
+                            </button>
+                        </div>
+                    </div>
 
-                        <div className="lg:col-span-8 lg:col-offset-1">
-                            <div className="prose prose-xl md:prose-2xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-a:text-agency-accent prose-strong:text-agency-primary dark:prose-strong:text-white">
-                                {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
-                                {insight.content?.body ? (
-                                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
-                                ) : (
-                                    <p className="italic opacity-40">Article content is being developed...</p>
-                                )}
-                            </div>
+                    <div className="w-full">
+                        <div className="prose prose-2xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-a:text-agency-accent prose-strong:text-agency-primary dark:prose-strong:text-white [&_p]:text-2xl [&_p]:md:text-[32px] [&_p]:leading-[1.8] [&_p]:md:leading-[1.9] [&_li]:text-2xl [&_li]:md:text-[32px] [&_li]:leading-[1.8] [&_li]:md:leading-[1.9]">
+                            {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
+                            {insight.content?.body ? (
+                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
+                            ) : (
+                                <p className="italic opacity-40">Article content is being developed...</p>
+                            )}
+                        </div>
 
-                            {/* Reactions on Post */}
-                            <div className="mt-16 pt-10 border-t border-agency-primary/5 dark:border-white/5">
-                                <ReactionButton
-                                    reactableId={insight.id}
-                                    reactableType="insight"
-                                    counts={reactionCounts}
-                                    userReaction={userReaction}
-                                />
-                            </div>
+                        {/* Reactions on Post */}
+                        <div className="mt-16 pt-10 border-t border-agency-primary/5 dark:border-white/5">
+                            <ReactionButton
+                                reactableId={insight.id}
+                                reactableType="insight"
+                                counts={reactionCounts}
+                                userReaction={userReaction}
+                            />
+                        </div>
 
-                            {/* Tags */}
-                            {insight.tags && insight.tags.length > 0 && (
-                                <div className="mt-12 pt-10 border-t border-agency-primary/5 dark:border-white/5">
-                                    <div className="flex flex-wrap gap-3">
-                                        {insight.tags.map(tag => (
-                                            <span key={tag} className="px-5 py-2 rounded-full bg-agency-secondary dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest">
-                                                #{tag}
-                                            </span>
-                                        ))}
-                                    </div>
+                        {/* Tags */}
+                        {insight.tags && insight.tags.length > 0 && (
+                            <div className="mt-12 pt-10 border-t border-agency-primary/5 dark:border-white/5">
+                                <div className="flex flex-wrap gap-3">
+                                    {insight.tags.map(tag => (
+                                        <span key={tag} className="px-5 py-2 rounded-full bg-agency-secondary dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Author Bio */}
+                        <div className="mt-24 p-12 rounded-[50px] bg-agency-secondary dark:bg-white/5 flex flex-col md:flex-row items-center gap-10">
+                            {insight.author?.avatar && (
+                                <div className="size-24 rounded-full overflow-hidden shrink-0 border-2 border-agency-accent p-1">
+                                    <img 
+                                        src={insight.author.avatar} 
+                                        alt={insight.author.name} 
+                                        className="w-full h-full object-cover rounded-full"
+                                    />
                                 </div>
                             )}
-
-                            {/* Author Bio */}
-                            <div className="mt-24 p-12 rounded-[50px] bg-agency-secondary dark:bg-white/5 flex flex-col md:flex-row items-center gap-10">
-                                {insight.author?.avatar && (
-                                    <div className="size-24 rounded-full overflow-hidden shrink-0 border-2 border-agency-accent p-1">
-                                        <img 
-                                            src={insight.author.avatar} 
-                                            alt={insight.author.name} 
-                                            className="w-full h-full object-cover rounded-full"
-                                        />
-                                    </div>
-                                )}
-                                <div className="text-center md:text-left">
-                                    <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
-                                    <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Anonymous'}</h4>
-                                    <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light">
-                                        Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.
-                                    </p>
-                                </div>
+                            <div className="text-center md:text-left">
+                                <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
+                                <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Anonymous'}</h4>
+                                <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light">
+                                    Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.
+                                </p>
                             </div>
-                            {/* Comments Section */}
-                            <CommentSection insightSlug={insight.slug} insightId={insight.id} comments={comments} />
                         </div>
+                        {/* Comments Section */}
+                        <CommentSection insightSlug={insight.slug} insightId={insight.id} comments={comments} />
                     </div>
                 </div>
             </article>
