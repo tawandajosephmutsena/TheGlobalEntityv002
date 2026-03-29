@@ -129,7 +129,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 </div>
                             </div>
                             
-                            <h1 className="text-4xl md:text-6xl font-black [font-variant-caps:small-caps] tracking-tighter leading-tight mb-12">
+                            <h1 className="text-4xl md:text-6xl font-black [font-variant-caps:small-caps] tracking-[0.05em] leading-tight mb-12">
                                 {insight.title}
                             </h1>
                             
@@ -195,7 +195,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     </div>
 
                     <div className="w-full">
-                        <div className="prose prose-2xl dark:prose-invert max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-a:text-agency-accent prose-strong:text-agency-primary dark:prose-strong:text-white [&_p]:text-2xl [&_p]:md:text-[32px] [&_p]:leading-[1.8] [&_p]:md:leading-[1.9] [&_li]:text-2xl [&_li]:md:text-[32px] [&_li]:leading-[1.8] [&_li]:md:leading-[1.9]">
+                        <div className="prose prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-10 prose-p:text-2xl prose-p:md:text-[32px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-2xl prose-li:md:text-[32px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-3xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
                             {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
                             {insight.content?.body ? (
                                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
