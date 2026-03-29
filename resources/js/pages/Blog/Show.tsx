@@ -113,7 +113,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
             {/* Article Hero */}
             <article className="bg-white dark:bg-agency-dark">
                 <header className="pt-48 pb-20 border-b border-agency-primary/5 dark:border-white/5">
-                    <div className="mx-auto max-w-7xl px-4 text-center">
+                    <div className="mx-auto max-w-6xl px-4 text-center">
                         <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-bold uppercase tracking-widest text-[10px] mb-12 hover:gap-4 transition-all">
                             <ArrowLeft className="h-3 w-3" /> Back to Insights
                         </Link>
@@ -142,7 +142,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
 
                 {/* Featured Image - Wide Layout */}
                 {insight.featured_image && (
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="aspect-video relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5">
                             <img 
                                 src={insight.featured_image} 
@@ -154,7 +154,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                 )}
 
                 {/* Article Content */}
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-32">
                     {/* Social Share Bar */}
                     <div className="flex flex-wrap items-center gap-6 mb-16 pb-8 border-b border-agency-primary/5 dark:border-white/5">
                         <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
@@ -195,7 +195,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     </div>
 
                     <div className="w-full">
-                        <div className="prose prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-10 prose-p:text-2xl prose-p:md:text-[32px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-2xl prose-li:md:text-[32px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-3xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
+                        <div className="prose prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-10 prose-p:text-[25px] prose-p:md:text-[33px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-[25px] prose-li:md:text-[33px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-3xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
                             {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
                             {insight.content?.body ? (
                                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
