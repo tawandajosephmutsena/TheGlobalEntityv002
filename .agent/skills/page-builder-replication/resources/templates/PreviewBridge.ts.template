@@ -1,0 +1,62 @@
+/**
+ * Preview Bridge Templates
+ * 
+ * This file contains the cross-window communication logic (postMessage) 
+ * for real-time iframe previews.
+ */
+
+// --- 1. ADMIN SIDE (The Window Hosting the Iframe) ---
+// Typically placed in VisualPreview.tsx
+
+const VisualPreview = ({ blocks }) => {
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    // Send update when blocks change
+    useEffect(() => {
+        if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.postMessage({
+                type: 'PREVIEW_UPDATE',
+                blocks: blocks
+            }, window.location.origin);
+        }
+    }, [blocks]);
+
+    return (
+        <iframe 
+            ref={iframeRef} 
+            src="/preview/some-slug" 
+            title="Page Preview"
+        />
+    );
+};
+
+
+// --- 2. PUBLIC SIDE (The Page Inside the Iframe) ---
+// Typically placed in DynamicPage.tsx
+
+const DynamicPage = ({ initialBlocks }) => {
+    const [blocks, setBlocks] = useState(initialBlocks);
+
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            // Security check: ensure same origin
+            if (event.origin !== window.location.origin) return;
+
+            if (event.data.type === 'PREVIEW_UPDATE') {
+                console.log('Preview update received:', event.data.blocks);
+                setBlocks(event.data.blocks);
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
+
+    return (
+        <main>
+            {blocks.map(block => (
+                <BlockRenderer key={block.id} block={block} />
+            ))}
+        </main>
+    );
+};

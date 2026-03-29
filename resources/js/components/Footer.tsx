@@ -99,9 +99,9 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
     return (
-        <footer className={cn('relative bg-muted/30 dark:bg-background text-foreground pt-32 pb-12 overflow-hidden border-t border-border', className)}>
+        <footer className={cn('relative bg-muted/30 dark:bg-background text-foreground pt-16 md:pt-32 pb-12 overflow-hidden border-t border-border', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-32">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-16 md:mb-32">
                     {/* Massive Brand Side */}
                     <div className="lg:col-span-6 flex flex-col justify-between">
                         <div>
@@ -122,7 +122,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                                     />
                                 </div>
                             )}
-                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8">
+                            <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8">
                                 {footerHeadingLine1} <br/>
                                 <span className="text-agency-accent">{footerHeadingLine2}</span> {footerHeadingLine3}
                             </h2>
@@ -198,11 +198,26 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                         </div>
                         <div className="col-span-2 md:col-span-1">
                             <h3 className="text-xs font-bold tracking-[0.2em] text-agency-accent mb-8">{footerOfficeTitle}</h3>
-                            <address className="not-italic">
-                                <p className="text-xl font-bold opacity-40 leading-tight">
+                            <address className="not-italic space-y-4">
+                                <p className="text-lg md:text-xl font-bold opacity-40 leading-tight whitespace-pre-line">
                                     {site.contact?.address || '123 Creative Studio\nMarket Street 456\nSan Francisco, CA'}
                                 </p>
-                                <p className="mt-4 text-agency-accent font-bold">{site.contact?.phone}</p>
+                                {site.contact?.email && (
+                                    <a 
+                                        href={`mailto:${site.contact.email}`} 
+                                        className="block text-agency-accent font-bold hover:underline transition-all"
+                                    >
+                                        {site.contact.email}
+                                    </a>
+                                )}
+                                {site.contact?.phone && (
+                                    <a 
+                                        href={`tel:${site.contact.phone.replace(/\s+/g, '')}`} 
+                                        className="block text-agency-accent font-bold hover:underline transition-all"
+                                    >
+                                        {site.contact.phone}
+                                    </a>
+                                )}
                             </address>
                         </div>
                     </div>
