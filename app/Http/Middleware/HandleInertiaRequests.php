@@ -167,6 +167,7 @@ class HandleInertiaRequests extends Middleware
                     'terms_url' => $settings['terms_page'] ?? '/terms',
                     'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',
                 ],
+
             ]),
             'theme' => Inertia::always([
                 'preset' => $settings['theme_preset'] ?? config('theme-presets.default'),

@@ -20,7 +20,16 @@ interface Props {
 }
 
 export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [] }: Props) {
-    const { site } = usePage<{ site: { url: string; logo: string; name: string } }>().props;
+    const { site } = usePage<{ 
+        site: { 
+            url: string; 
+            logo: string; 
+            name: string;
+
+        } 
+    }>().props;
+
+
 
     const handleShare = (platform: 'facebook' | 'twitter' | 'linkedin') => {
         const url = encodeURIComponent(window.location.origin + window.location.pathname);
@@ -289,21 +298,6 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                 </section>
             )}
 
-            {/* CTA Shared Component */}
-            <section className="bg-agency-primary dark:bg-white text-white dark:text-agency-primary py-40 text-center relative overflow-hidden">
-                <div className="mx-auto max-w-4xl px-4 relative z-10">
-                    <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-12 leading-none">
-                        Have a <br/>
-                        <span className="italic opacity-30">Vision?</span>
-                    </h2>
-                    <Link
-                        href="/contact"
-                        className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-accent text-agency-primary text-xl font-black uppercase tracking-tighter hover:scale-105 transition-all shadow-2xl"
-                    >
-                        LET'S TALK
-                    </Link>
-                </div>
-            </section>
         </MainLayout>
     );
 }

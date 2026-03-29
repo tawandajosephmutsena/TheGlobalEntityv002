@@ -265,7 +265,7 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
                 { value: 'dark', label: 'Dark Mode (Forced)' },
             ]
         },
-    ]
+    ],
 };
 
 /**
@@ -605,6 +605,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                             <TabsTrigger value="contact">Contact Info</TabsTrigger>
                             <TabsTrigger value="social">Social Media</TabsTrigger>
                             <TabsTrigger value="seo">SEO & Analytics</TabsTrigger>
+
                             <TabsTrigger value="theme">Theme & Branding</TabsTrigger>
                             <TabsTrigger value="compliance">Compliance</TabsTrigger>
                         </TabsList>
