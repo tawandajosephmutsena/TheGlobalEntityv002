@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark']) data-appearance="{{ $appearance ?? 'system' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark']) data-appearance="{{ $appearance ?? 'system' }}" style="color-scheme: {{ ($appearance ?? 'system') == 'dark' ? 'dark' : (($appearance ?? 'system') == 'light' ? 'light' : 'normal') }};">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -79,6 +79,9 @@
 
                     if (prefersDark) {
                         document.documentElement.classList.add('dark');
+                        document.documentElement.style.colorScheme = 'dark';
+                    } else {
+                        document.documentElement.style.colorScheme = 'light';
                     }
                 }
 
