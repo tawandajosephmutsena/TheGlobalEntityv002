@@ -1,4 +1,4 @@
-var _=Object.defineProperty;var A=(s,e,t)=>e in s?_(s,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):s[e]=t;var o=(s,e,t)=>A(s,typeof e!="symbol"?e+"":e,t);import{e as R,j as n,r as w}from"./react-core-BG7W8Jkt.js";import{c as E}from"./utils-C8jIqrr-.js";import{c as P}from"./app-C_qT49Mn.js";const C=`#version 300 es
+var _=Object.defineProperty;var A=(s,e,t)=>e in s?_(s,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):s[e]=t;var o=(s,e,t)=>A(s,typeof e!="symbol"?e+"":e,t);import{e as R,j as n,r as w}from"./react-core-BG7W8Jkt.js";import{c as E}from"./utils-C8jIqrr-.js";import{c as P}from"./app-BhmXn1kY.js";const C=`#version 300 es
 precision highp float;
 out vec4 O;
 uniform vec2 resolution;
