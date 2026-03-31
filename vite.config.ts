@@ -42,11 +42,40 @@ export default defineConfig({
             output: {
                 manualChunks(id) {
                     if (id.includes('node_modules')) {
+                        // 1. Icons & Large Media/UI Libraries (Check specifically first)
+                        if (id.includes('lucide-react') || id.includes('@tabler/icons-react')) return 'icons';
+                        if (id.includes('react-player')) return 'media-vendor';
+                        if (id.includes('yet-another-react-lightbox')) return 'lightbox-vendor';
+                        if (id.includes('recharts')) return 'charts';
+                        if (id.includes('jspdf')) return 'pdf-vendor';
+                        if (id.includes('@tsparticles')) return 'particles-vendor';
+                        
+                        // Video & Streaming Libraries (Typically very large)
+                        if (id.includes('dashjs')) return 'dashjs-vendor';
+                        if (id.includes('hls.js')) return 'hls-vendor';
+                        if (id.includes('@mux')) return 'mux-vendor';
+                        if (id.includes('video.js')) return 'videojs-vendor';
+                        
+                        // 2. Core React (Specifically match to avoid catching 'lucide-react')
+                        if (id.includes('node_modules/react/') || 
+                            id.includes('node_modules/react-dom/') || 
+                            id.includes('node_modules/scheduler/')) {
+                            return 'react-core';
+                        }
+                        
+                        // 3. Inertia & Routing
+                        if (id.includes('@inertiajs') || id.includes('ziggy-js')) {
+                            return 'inertia-vendor';
+                        }
+
+                        // 4. Specific Vendor Groups
                         if (id.includes('gsap')) return 'gsap';
                         if (id.includes('framer-motion') || id.includes('motion')) return 'animations';
-                        if (id.includes('recharts')) return 'charts';
-                        if (id.includes('lucide-react')) return 'icons';
+                        if (id.includes('@radix-ui')) return 'radix-vendor';
                         if (id.includes('@tiptap') || id.includes('prosemirror')) return 'editor';
+                        if (id.includes('date-fns') || id.includes('dompurify')) return 'utils-vendor';
+
+                        // Catch-all for other node_modules
                         return 'vendor';
                     }
                 },
@@ -70,7 +99,7 @@ export default defineConfig({
             },
         },
         // Web Core Vitals: Reduce chunk size for better performance
-        chunkSizeWarningLimit: 500, // Reduced from 1000 to encourage smaller chunks
+        chunkSizeWarningLimit: 1000, // Balanced limit for large SaaS applications
     },
     server: {
         host: '127.0.0.1',

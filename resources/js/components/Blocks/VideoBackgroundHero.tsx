@@ -88,9 +88,11 @@ export default function VideoBackgroundHero({
                         loop
                         muted
                         playsInline
-                        className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-60"
+                        className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2 object-cover opacity-60 transition-opacity duration-1000"
                         src={videoUrl}
+                        poster={videoType === 'youtube' && ytId ? getYouTubeThumbnail(ytId) : undefined}
                         onError={(e) => console.error("[VideoHero] Source error:", e)}
+                        loading="lazy"
                     />
                 ) : videoType === "youtube" && ytId ? (
                     /* YouTube: use a static thumbnail image instead of iframe to avoid bot checks */

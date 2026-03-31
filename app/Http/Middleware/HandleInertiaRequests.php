@@ -109,6 +109,7 @@ class HandleInertiaRequests extends Middleware
                     'github' => $settings['github_url'] ?? 'https://github.com/mhondoro',
                     'instagram' => $settings['instagram_url'] ?? 'https://instagram.com/ottomate',
                     'facebook' => $settings['facebook_url'] ?? 'https://facebook.com/ottomate',
+                    'whatsapp' => $settings['whatsapp_url'] ?? null,
                 ],
                 'contact' => [
                     'email' => $settings['contact_email'] ?? 'hello@otto-mate.space',

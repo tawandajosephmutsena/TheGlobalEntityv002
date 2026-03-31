@@ -112,6 +112,12 @@ class SecureFileUploadService
     ];
 
     /**
+     * Threshold for immediate compression (in bytes)
+     * 0.9MB = 943718 bytes
+     */
+    private float $compressionThreshold = 943718.4; 
+
+    /**
      * Upload a file securely
      */
     public function upload(UploadedFile $file, string $category = 'image', string $folder = 'uploads'): array
@@ -129,11 +135,7 @@ class SecureFileUploadService
         $path = $folder . '/' . date('Y/m') . '/' . $filename;
         
         // Store file
-        $storedPath = Storage::disk('public')->putFileAs(
-            dirname($path),
-            $file,
-            basename($path)
-        );
+        $storedPath = $this->storeFile($file, $path, $category);
 
         if (!$storedPath) {
             throw new \RuntimeException('Failed to store file');
@@ -147,7 +149,7 @@ class SecureFileUploadService
         Log::info('File uploaded successfully', [
             'original_name' => $file->getClientOriginalName(),
             'stored_path' => $storedPath,
-            'size' => $file->getSize(),
+            'size' => Storage::disk('public')->size($storedPath),
             'mime_type' => $file->getMimeType(),
             'user_id' => Auth::id(),
         ]);
@@ -160,7 +162,7 @@ class SecureFileUploadService
             'url' => $disk->url($storedPath),
             'filename' => $filename,
             'original_name' => $file->getClientOriginalName(),
-            'size' => $file->getSize(),
+            'size' => Storage::disk('public')->size($storedPath),
             'mime_type' => $file->getMimeType(),
         ];
     }
@@ -479,6 +481,54 @@ class SecureFileUploadService
             return Storage::disk('public')->delete($path);
         }
         
+        return false;
+    }
+
+    /**
+     * Store file, with optional compression for images
+     */
+    private function storeFile(UploadedFile $file, string $path, string $category): string|bool
+    {
+        $disk = Storage::disk('public');
+        $directory = dirname($path);
+        $filename = basename($path);
+
+        // Check if compression is needed for images
+        if ($category === 'image' && 
+            $file->getSize() > $this->compressionThreshold && 
+            $file->getMimeType() !== 'image/svg+xml' &&
+            class_exists('\Intervention\Image\ImageManager')) {
+            
+            try {
+                return $this->compressAndStoreImage($file, $path);
+            } catch (\Exception $e) {
+                Log::warning('Image compression failed during upload, falling back to original', [
+                    'error' => $e->getMessage(),
+                    'file' => $file->getClientOriginalName()
+                ]);
+            }
+        }
+
+        // Standard storage
+        return $disk->putFileAs($directory, $file, $filename);
+    }
+
+    /**
+     * Compress and store image
+     */
+    private function compressAndStoreImage(UploadedFile $file, string $path): string|bool
+    {
+        $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Imagick\Driver());
+        $image = $manager->read($file->getPathname());
+
+        // Moderate compression for "easy loading"
+        // Reducing quality slightly and strip metadata (already done in post-upload checks, but here too)
+        $encoded = $image->toJpeg(80); // Convert to high-quality JPEG if large
+
+        if (Storage::disk('public')->put($path, $encoded)) {
+            return $path;
+        }
+
         return false;
     }
 

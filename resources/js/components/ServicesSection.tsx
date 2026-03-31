@@ -66,7 +66,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                         <span className="text-primary font-bold uppercase tracking-[0.2em] text-sm mb-6 block">
                             {subtitle}
                         </span>
-                        <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85]">
+                        <h2 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85]">
                             {title.split(' ')[0]} <br/>
                             <span className="opacity-30 italic">{title.split(' ').slice(1).join(' ')}</span>
                         </h2>
@@ -85,7 +85,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                         >
                             <div className="flex items-center gap-8 relative z-10">
                                 <span className="text-sm font-mono opacity-40">0{index + 1}</span>
-                                <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter group-hover:translate-x-4 transition-transform duration-500">
+                                <h3 className="text-2xl md:text-6xl font-black uppercase tracking-tighter md:group-hover:translate-x-4 transition-transform duration-500">
                                     {service.title}
                                 </h3>
                             </div>
@@ -96,7 +96,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                                 </p>
                             </div>
 
-                            <div className="absolute right-0 top-0 h-full aspect-square bg-primary/20 flex items-center justify-center translate-x-full group-hover:translate-x-0 transition-transform duration-500">
+                            <div className="absolute right-0 top-0 h-full aspect-square bg-primary/20 flex items-center justify-center translate-x-full md:group-hover:translate-x-0 transition-transform duration-500 pointer-events-none">
                                 <span className="material-symbols-outlined text-6xl">arrow_outward</span>
                             </div>
                         </Link>

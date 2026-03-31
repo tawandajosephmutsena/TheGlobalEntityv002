@@ -35,6 +35,11 @@ class ImageOptimizationService
     ];
 
     /**
+     * Threshold for immediate compression during upload (in MB)
+     */
+    const COMPRESSION_THRESHOLD_MB = 0.9;
+
+    /**
      * Maximum file sizes (in bytes)
      */
     const MAX_SIZES = [

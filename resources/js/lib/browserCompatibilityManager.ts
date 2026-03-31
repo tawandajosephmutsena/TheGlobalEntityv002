@@ -91,13 +91,14 @@ export class BrowserCompatibilityManager {
      * Check ES6 support
      */
     private supportsES6Features(): boolean {
-        try {
-            // Test for basic ES6 features
-            eval('const test = () => {}; class Test {}');
-            return true;
-        } catch {
-            return false;
-        }
+        // Test for basic ES6 features using common global objects
+        // This avoids eval() which is a security risk and can break CSP
+        return typeof Symbol !== 'undefined' && 
+               typeof Promise !== 'undefined' && 
+               typeof Map !== 'undefined' && 
+               typeof Set !== 'undefined' &&
+               'assign' in Object &&
+               'from' in Array;
     }
 
     /**
@@ -295,17 +296,17 @@ export class BrowserCompatibilityManager {
     private polyfillRequestAnimationFrame(): void {
         let lastTime = 0;
         
-        (window as any).requestAnimationFrame = (callback: FrameRequestCallback) => {
+        (window as Window).requestAnimationFrame = (callback: FrameRequestCallback) => {
             const currTime = new Date().getTime();
             const timeToCall = Math.max(0, 16 - (currTime - lastTime));
             const id = window.setTimeout(() => {
                 callback(currTime + timeToCall);
             }, timeToCall);
             lastTime = currTime + timeToCall;
-            return id;
+            return id as unknown as number;
         };
 
-        (window as any).cancelAnimationFrame = (id: number) => {
+        (window as Window).cancelAnimationFrame = (id: number) => {
             clearTimeout(id);
         };
     }
@@ -368,13 +369,13 @@ export class BrowserCompatibilityManager {
                     });
 
                     if (entries.length > 0) {
-                        this.callback(entries, this as any);
+                        this.callback(entries, this as unknown as IntersectionObserver);
                     }
                 }, 100);
             }
         }
 
-        (window as any).IntersectionObserver = IntersectionObserverPolyfill;
+        (window as unknown as { IntersectionObserver: any }).IntersectionObserver = IntersectionObserverPolyfill;
     }
 
     /**
@@ -623,7 +624,7 @@ export const browserCompatibilityManager = BrowserCompatibilityManager.getInstan
 // Auto-initialize
 if (typeof window !== 'undefined') {
     // Add compatibility information to window for debugging
-    (window as any).__browserCompatibility = {
+    (window as unknown as { __browserCompatibility: any }).__browserCompatibility = {
         info: browserCompatibilityManager.getBrowserInfo(),
         features: browserCompatibilityManager.getSupportedFeatures(),
     };
