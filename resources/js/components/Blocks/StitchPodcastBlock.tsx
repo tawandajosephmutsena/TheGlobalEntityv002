@@ -72,25 +72,23 @@ const ModernWaveform = ({ count = 40, active = true }: { count?: number; active?
 };
 
 export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['content']) {
-    const extractContent = (data: unknown): Record<string, any> | null => {
-        if (data && typeof data === 'object' && 'content' in data && (data as { content: any }).content !== null) {
-            return extractContent((data as { content: any }).content);
+    const extractContent = (data: unknown): Record<string, unknown> | null => {
+        if (data && typeof data === 'object' && 'content' in data && (data as { content: unknown }).content !== null) {
+            return extractContent((data as { content: unknown }).content);
         }
-        return data as Record<string, any>;
+        return data as Record<string, unknown>;
     };
 
     const blockContent = extractContent(props);
     const finalContent = blockContent || {};
 
-    const {
-        title = "Voices of the Wild.",
-        subtitle = "Immersive audio journeys through the forgotten trails and vibrant subcultures of the modern cartographer's world.",
-        limit = 6,
-        card1BgColor,
-        card1Shadow,
-        card5BgColor,
-        card5Shadow
-    } = finalContent;
+    const title = (finalContent.title as string) || "Voices of the Wild.";
+    const subtitle = (finalContent.subtitle as string) || "Immersive audio journeys through the forgotten trails and vibrant subcultures of the modern cartographer's world.";
+    const limit = (finalContent.limit as number) || 6;
+    const card1BgColor = finalContent.card1BgColor as string | undefined;
+    const card1Shadow = finalContent.card1Shadow as boolean | undefined;
+    const card5BgColor = finalContent.card5BgColor as string | undefined;
+    const card5Shadow = finalContent.card5Shadow as boolean | undefined;
 
     const [podcasts, setPodcasts] = useState<PodcastData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -101,19 +99,19 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                 setLoading(true);
                 const response = await axios.get(`/api/collections/podcasts?featured=1&limit=${limit}`).catch(() => ({ data: { data: [] } }));
                 if (response.data?.data?.length > 0) {
-                    const mappedPodcasts = response.data.data.map((p: Record<string, any>) => ({
-                        id: p.id,
-                        title: p.title,
-                        description: p.description,
-                        category: p.category?.name || 'Podcast',
-                        image: p.thumbnail_url || p.image || '',
-                        audio_url: p.url || p.audio_url,
-                        duration: p.duration,
+                    const mappedPodcasts = response.data.data.map((p: Record<string, unknown>) => ({
+                        id: Number(p.id) || 0,
+                        title: String(p.title || ''),
+                        description: String(p.description || ''),
+                        category: p.category && typeof p.category === 'object' && 'name' in p.category ? String(p.category.name) : 'Podcast',
+                        image: String(p.thumbnail_url || p.image || ''),
+                        audio_url: String(p.url || p.audio_url || ''),
+                        duration: String(p.duration || ''),
                         author: {
-                            name: p.author?.name || 'Unknown',
-                            avatar: p.author?.avatar || ''
+                            name: p.author && typeof p.author === 'object' && 'name' in p.author ? String(p.author.name) : 'Unknown',
+                            avatar: p.author && typeof p.author === 'object' && 'avatar' in p.author ? String(p.author.avatar) : ''
                         },
-                        created_at: p.published_at || p.created_at
+                        created_at: String(p.published_at || p.created_at || '')
                     }));
                     setPodcasts(mappedPodcasts);
                 }

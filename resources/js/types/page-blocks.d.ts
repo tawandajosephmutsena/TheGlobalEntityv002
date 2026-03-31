@@ -970,6 +970,9 @@ export interface StitchFeaturedBlogBlock extends BaseBlock {
     content: {
         title?: string;
         subtitle?: string;
+        useDynamicPosts?: boolean;
+        collection?: string;
+        limit?: number;
         posts?: Array<{
             id?: string;
             title?: string;

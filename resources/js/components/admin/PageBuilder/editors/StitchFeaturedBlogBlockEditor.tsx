@@ -4,6 +4,8 @@ import { Input } from "@/Components/ui/input";
 import { Textarea } from "@/Components/ui/textarea";
 import { Button } from "@/Components/ui/button";
 import { Plus, Trash2, GripVertical, Image as ImageIcon } from 'lucide-react';
+import { Switch } from "@/Components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import type { StitchFeaturedBlogBlock } from '@/types/page-blocks';
 import MediaLibrary from '@/Components/admin/MediaLibrary';
 import type { MediaAsset } from '@/types';
@@ -50,8 +52,51 @@ export default function StitchFeaturedBlogBlockEditor({ content, onUpdate }: Sti
                 </div>
             </div>
 
-            <div className="space-y-4 pt-4 border-t">
-                <Label>Featured Posts</Label>
+            <div className="flex items-center justify-between p-4 border rounded-lg bg-surface-container-lowest">
+                <div className="space-y-0.5">
+                    <Label className="text-base">Use Dynamic Posts</Label>
+                    <p className="text-sm text-muted-foreground">
+                        Automatically pull posts from a specific collection instead of selecting them manually.
+                    </p>
+                </div>
+                <Switch
+                    checked={content.useDynamicPosts || false}
+                    onCheckedChange={(checked) => onUpdate({ useDynamicPosts: checked })}
+                />
+            </div>
+
+            {content.useDynamicPosts ? (
+                <div className="grid gap-4 sm:grid-cols-2 pt-4 border-t">
+                    <div className="space-y-2">
+                        <Label>Collection</Label>
+                        <Select 
+                            value={content.collection || 'insights'} 
+                            onValueChange={(value) => onUpdate({ collection: value })}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select collection" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="insights">Insights (Blog)</SelectItem>
+                                <SelectItem value="portfolio">Portfolio</SelectItem>
+                                <SelectItem value="services">Services</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Number of Posts to Show</Label>
+                        <Input 
+                            type="number"
+                            min="1"
+                            max="12"
+                            value={content.limit || 3} 
+                            onChange={(e) => onUpdate({ limit: parseInt(e.target.value) || 3 })} 
+                        />
+                    </div>
+                </div>
+            ) : (
+                <div className="space-y-4 pt-4 border-t">
+                    <Label>Featured Posts</Label>
                 <div className="space-y-4">
                     {(content.posts || []).map((post, index) => (
                         <div key={index} className="p-4 border rounded-lg bg-surface-container-lowest space-y-4 shadow-sm">
@@ -140,6 +185,7 @@ export default function StitchFeaturedBlogBlockEditor({ content, onUpdate }: Sti
                     Add Featured Post
                 </Button>
             </div>
+            )}
         </div>
     );
 }
