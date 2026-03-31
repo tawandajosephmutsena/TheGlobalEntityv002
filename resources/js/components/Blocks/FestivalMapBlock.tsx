@@ -98,6 +98,10 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                             zoom={zoomProp}
                             className="h-full w-full"
                             cooperativeGestures={true}
+                            styles={{
+                                light: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+                                dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
+                            }}
                         >
                             {filteredFestivals.map((festival) => {
                                 const lat = parseFloat(festival.location!.lat);
@@ -129,10 +133,13 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                             </div>
                                             <div className="p-3 bg-card">
                                                 <h4 className="font-bold text-sm text-foreground mb-1 leading-tight">{festival.title}</h4>
-                                                <p className="text-[10px] text-muted-foreground mb-3 flex items-center gap-1">
+                                                <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
                                                     <MapPin size={10} />
                                                     {festival.location?.address.split(',')[0]}
                                                 </p>
+                                                {festival.description && (
+                                                    <p className="text-xs text-muted-foreground mb-3 line-clamp-2" dangerouslySetInnerHTML={{ __html: festival.description }} />
+                                                )}
                                                 <Button 
                                                     asChild 
                                                     variant="secondary" 
@@ -184,7 +191,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
 
                     {/* Bottom Info Status */}
                     <AnimatePresence>
-                        {isLoading ? (
+                        {isLoading && (
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -200,27 +207,6 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                     <div>
                                         <p className="text-xs font-bold leading-none mb-1">Mapping Festivals</p>
                                         <p className="text-[10px] text-muted-foreground font-medium italic">Synchronizing with global vibe radar...</p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ) : (
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="absolute bottom-6 left-6 z-20 pointer-events-none"
-                            >
-                                <div className="bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
-                                    <div className="flex -space-x-3">
-                                        {[1, 2, 3].map(i => (
-                                            <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-gradient-to-br from-primary to-accent overflow-hidden">
-                                                <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full object-cover" />
-                                            </div>
-                                        ))}
-                                        <div className="w-8 h-8 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[10px] font-bold">+{festivals.length > 3 ? festivals.length - 3 : 0}</div>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-bold leading-none mb-1">Active Community</p>
-                                        <p className="text-[10px] text-muted-foreground font-medium">{festivals.length * 12 + 4} travelers currently exploring</p>
                                     </div>
                                 </div>
                             </motion.div>
