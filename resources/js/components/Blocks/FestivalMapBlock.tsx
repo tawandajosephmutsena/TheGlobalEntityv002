@@ -97,6 +97,17 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
 
     const mapCenter: [number, number] = [centerProp.lng, centerProp.lat];
 
+    const groupedFestivals = React.useMemo(() => {
+        const groups: Record<string, FestivalData[]> = {};
+        filteredFestivals.forEach(festival => {
+            if (!festival.location) return;
+            // Round coordinates slightly to handle minor floating point differences
+            const key = `${parseFloat(festival.location.lat).toFixed(5)},${parseFloat(festival.location.lng).toFixed(5)}`;
+            if (!groups[key]) groups[key] = [];
+            groups[key].push(festival);
+        });
+        return Object.values(groups);
+    }, [filteredFestivals]);
     return (
         <section className="py-24 bg-background text-foreground border-t border-border/10">
             <div className="container mx-auto px-4 relative z-10">
@@ -132,13 +143,14 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
                             }}
                         >
-                            {filteredFestivals.map((festival) => {
-                                const lat = parseFloat(festival.location!.lat);
-                                const lng = parseFloat(festival.location!.lng);
+                            {groupedFestivals.map((festivalsInGroup) => {
+                                const firstFestival = festivalsInGroup[0];
+                                const lat = parseFloat(firstFestival.location!.lat);
+                                const lng = parseFloat(firstFestival.location!.lng);
                                 
                                 return (
                                     <MapMarker 
-                                        key={festival.id}
+                                        key={`marker-${firstFestival.id}`}
                                         latitude={lat} 
                                         longitude={lng}
                                     >
@@ -148,50 +160,54 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                                 <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
                                             </div>
                                         </MarkerContent>
-                                        <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl bg-background/50 backdrop-blur-2xl flex flex-col gap-3">
-                                            {/* Top Text Section */}
-                                            <div className="flex items-center gap-2.5">
-                                                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20">
-                                                    <MapPin size={14} className="text-primary" />
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-bold text-sm text-foreground leading-tight truncate">{festival.title}</h4>
-                                                    <p className="text-[10px] text-foreground/70 truncate">{festival.location?.address.split(',')[0]}</p>
-                                                </div>
-                                            </div>
+                                            <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl bg-background/50 backdrop-blur-2xl flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+                                                {festivalsInGroup.map((festival, index) => (
+                                                    <div key={festival.id} className={`flex flex-col gap-3 ${index > 0 ? "pt-3 border-t border-white/10 mt-1" : ""}`}>
+                                                        {/* Top Text Section */}
+                                                        <div className="flex items-center gap-2.5">
+                                                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20">
+                                                                <MapPin size={14} className="text-primary" />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <h4 className="font-bold text-sm text-foreground leading-tight truncate">{festival.title}</h4>
+                                                                <p className="text-[10px] text-foreground/70 truncate">{festival.location?.address.split(',')[0]}</p>
+                                                            </div>
+                                                        </div>
 
-                                            {/* Middle Image Section */}
-                                            {festival.image && (
-                                                <div className="relative h-28 w-full rounded-2xl overflow-hidden shrink-0">
-                                                    <img 
-                                                        src={festival.image} 
-                                                        alt={festival.title}
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                    <Badge className="absolute top-2 right-2 bg-background/70 backdrop-blur-md text-foreground text-[8px] font-bold py-0.5 px-2 rounded-full border border-white/10">
-                                                        {festival.category}
-                                                    </Badge>
-                                                </div>
-                                            )}
+                                                        {/* Middle Image Section */}
+                                                        {festival.image && (
+                                                            <div className="relative h-28 w-full rounded-2xl overflow-hidden shrink-0">
+                                                                <img 
+                                                                    src={festival.image} 
+                                                                    alt={festival.title}
+                                                                    className="w-full h-full object-cover"
+                                                                />
+                                                                <Badge className="absolute top-2 right-2 bg-background/70 backdrop-blur-md text-foreground text-[8px] font-bold py-0.5 px-2 rounded-full border border-white/10">
+                                                                    {festival.category}
+                                                                </Badge>
+                                                            </div>
+                                                        )}
 
-                                            {/* Bottom Button Section */}
-                                            <div className="flex justify-between items-center mt-0.5">
-                                                <div className="flex-1"></div>
-                                                <Button 
-                                                    asChild 
-                                                    variant="secondary" 
-                                                    size="sm" 
-                                                    className="h-8 px-4 text-[11px] font-semibold rounded-full bg-white/10 hover:bg-primary text-foreground hover:text-black border border-white/10 transition-colors"
-                                                >
-                                                    <a href={festival.url}>
-                                                        Explore Vibe
-                                                    </a>
-                                                </Button>
-                                            </div>
-                                        </MarkerPopup>
-                                    </MapMarker>
-                                );
-                            })}
+                                                        {/* Bottom Button Section */}
+                                                        <div className="flex justify-between items-center mt-0.5">
+                                                            <div className="flex-1"></div>
+                                                            <Button 
+                                                                asChild 
+                                                                variant="secondary" 
+                                                                size="sm" 
+                                                                className="h-8 px-4 text-[11px] font-semibold rounded-full bg-white/10 hover:bg-primary text-foreground hover:text-black border border-white/10 transition-colors"
+                                                            >
+                                                                <a href={festival.url || '#'}>
+                                                                    Explore Vibe
+                                                                </a>
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </MarkerPopup>
+                                        </MapMarker>
+                                    );
+                                })}
                             <MapControls 
                                 position="bottom-right" 
                                 showLocate 
