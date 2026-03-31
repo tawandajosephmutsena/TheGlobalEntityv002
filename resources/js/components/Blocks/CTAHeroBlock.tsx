@@ -8,6 +8,7 @@ import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
+import CategoryIcon from "@/components/CategoryIcon";
 
 export default function CTAHeroBlock({
   badge = "New Feature",
@@ -152,11 +153,13 @@ export default function CTAHeroBlock({
             >
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
-                  {[1, 2, 3, 4].map((i) => (
+                  {['travel-trouble', 'festival-fever', 'living-from-the-heart', 'social-sustainability', 'glocal-gems', 'solo-travel'].map((category) => (
                     <div
-                      key={i}
-                      className="h-8 w-8 rounded-full border-2 border-background bg-muted"
-                    />
+                      key={category}
+                      className="h-8 w-8 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden"
+                    >
+                      <CategoryIcon category={category} size={20} />
+                    </div>
                   ))}
                 </div>
                 <div className="text-sm">
