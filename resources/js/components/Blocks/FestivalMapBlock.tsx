@@ -29,11 +29,37 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
     center: centerProp = { lat: 20, lng: 0 },
     zoom: zoomProp = 3,
     showSearch = true,
-    limit = 50
+    limit = 50,
+    theme
 }) => {
     const [festivals, setFestivals] = useState<FestivalData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [mapInstance, setMapInstance] = useState<any>(null);
+
+    useEffect(() => {
+        if (mapInstance && festivals.length > 0) {
+            let minLng = 180, maxLng = -180, minLat = 90, maxLat = -90;
+            festivals.forEach(f => {
+                const lng = parseFloat(f.location!.lng);
+                const lat = parseFloat(f.location!.lat);
+                if (lng < minLng) minLng = lng;
+                if (lng > maxLng) maxLng = lng;
+                if (lat < minLat) minLat = lat;
+                if (lat > maxLat) maxLat = lat;
+            });
+            
+            if (minLng === maxLng && minLat === maxLat) {
+                mapInstance.flyTo({ center: [minLng, minLat], zoom: 12 });
+            } else {
+                mapInstance.fitBounds([
+                    [minLng, minLat],
+                    [maxLng, maxLat]
+                ], { padding: 50, maxZoom: 12, duration: 1000 });
+            }
+        }
+    }, [mapInstance, festivals]);
 
     useEffect(() => {
         const fetchFestivals = async () => {
@@ -94,10 +120,12 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                 <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl bg-background h-[600px] group">
                     <div className="absolute inset-0 z-0">
                         <Map
+                            ref={setMapInstance}
                             center={mapCenter}
                             zoom={zoomProp}
                             className="h-full w-full"
                             cooperativeGestures={true}
+                            theme={theme as any}
                             styles={{
                                 light: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
                                 dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
