@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
@@ -205,24 +205,6 @@ export default function CTAHeroBlock({
               <div className="absolute -bottom-4 -left-4 -z-10 h-24 w-24 bg-purple-500/20 blur-2xl" />
             </div>
 
-            {/* Floating Badge */}
-            <motion.div
-              animate={{
-                y: [0, -10, 0],
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="bg-background/90 absolute -bottom-6 -left-6 rounded-2xl border p-4 shadow-xl backdrop-blur-md sm:-bottom-8 sm:-left-8"
-            >
-              <div className="flex items-center gap-3">
-                <div className="bg-primary/20 flex h-10 w-10 items-center justify-center rounded-xl">
-                  <Zap className="text-primary h-6 w-6" />
-                </div>
-                <div>
-                    <div className="text-sm font-bold">Real-time Sync</div>
-                    <div className="text-muted-foreground text-xs font-medium">Auto-saving active</div>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
       </div>
