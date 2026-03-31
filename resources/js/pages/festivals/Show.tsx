@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { ReviewSection } from '@/components/Sections/ReviewSection';
 import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
 
@@ -304,19 +305,45 @@ export default function Show({ festival }: Props) {
                                                 <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
                                             </div>
                                         </MarkerContent>
-                                        <MarkerPopup>
-                                            <div className="p-2 min-w-[150px]">
-                                                <p className="font-bold text-sm text-primary uppercase mb-1 tracking-tight">{festival.title}</p>
-                                                <p className="text-xs text-muted-foreground mb-3 leading-tight">{festival.location?.address || 'Festival Location'}</p>
-                                                <a 
-                                                    href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-1.5 text-[10px] font-semibold text-primary hover:underline group/dir"
+                                        <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl bg-background/50 backdrop-blur-2xl flex flex-col gap-3">
+                                            {/* Top Text Section */}
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border border-primary/20">
+                                                    <MapPin size={14} className="text-primary" />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h4 className="font-bold text-sm text-foreground leading-tight truncate">{festival.title}</h4>
+                                                    <p className="text-[10px] text-foreground/70 truncate">{festival.location?.address.split(',')[0] || 'Location'}</p>
+                                                </div>
+                                            </div>
+
+                                            {/* Middle Image Section */}
+                                            {festival.image && (
+                                                <div className="relative h-28 w-full rounded-2xl overflow-hidden shrink-0">
+                                                    <img 
+                                                        src={festival.image} 
+                                                        alt={festival.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                    <Badge className="absolute top-2 right-2 bg-background/70 backdrop-blur-md text-foreground text-[8px] font-bold py-0.5 px-2 rounded-full border border-white/10">
+                                                        {festival.category}
+                                                    </Badge>
+                                                </div>
+                                            )}
+
+                                            {/* Bottom Button Section */}
+                                            <div className="flex justify-between items-center mt-0.5">
+                                                <div className="flex-1"></div>
+                                                <Button 
+                                                    asChild 
+                                                    variant="secondary" 
+                                                    size="sm" 
+                                                    className="h-8 px-4 text-[11px] font-semibold rounded-full bg-white/10 hover:bg-primary text-foreground hover:text-black border border-white/10 transition-colors"
                                                 >
-                                                    Get Directions
-                                                    <ExternalLink size={12} className="group-hover/dir:translate-x-0.5 group-hover/dir:-translate-y-0.5 transition-transform" />
-                                                </a>
+                                                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`} target="_blank" rel="noopener noreferrer">
+                                                        Get Directions
+                                                    </a>
+                                                </Button>
                                             </div>
                                         </MarkerPopup>
                                     </MapMarker>
