@@ -48,28 +48,34 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
     // Extract posts and pagination links
     const isPaginated = !Array.isArray(recentInsights) && recentInsights !== null && 'data' in recentInsights;
     const allPosts = isPaginated ? (recentInsights as PaginatedInsights).data : (recentInsights as InsightItem[]);
-    const paginationLinks = isPaginated ? (recentInsights as PaginatedInsights).links : null;
+
+    const [visibleCount, setVisibleCount] = useState(limit);
 
     // Subscribe to category filter events
     useEffect(() => {
         const handleFilter = (e: CustomEvent<number | 'all'>) => {
             setActiveCategoryId(e.detail);
+            setVisibleCount(limit); // Reset visibility on filter change
         };
         window.addEventListener('journal-category-filter', handleFilter as EventListener);
         return () => window.removeEventListener('journal-category-filter', handleFilter as EventListener);
-    }, []);
+    }, [limit]);
 
     const filteredPosts = useMemo(() => {
         const posts = activeCategoryId === 'all' 
             ? allPosts 
             : allPosts.filter(p => p.category_id === activeCategoryId || p.additional_categories?.some(c => (c as any).id === activeCategoryId));
         
-        // If it's the main journal page (paginated), we don't slice by limit here as the server does it
-        // and we don't necessarily skip the first one if we are on page 2+
-        if (isPaginated) return posts;
-        
-        return posts.slice(1, limit + 1); // Skip the first one as it's usually featured
-    }, [activeCategoryId, allPosts, limit, isPaginated]);
+        // Skip the first one if it's the first page/all view as it's usually featured elsewhere (JournalHero)
+        // But only if we have more than 1 post
+        return posts.length > 1 ? posts.slice(1) : posts;
+    }, [activeCategoryId, allPosts]);
+
+    const visiblePosts = useMemo(() => {
+        return filteredPosts.slice(0, visibleCount);
+    }, [filteredPosts, visibleCount]);
+
+    const hasMore = visibleCount < filteredPosts.length;
 
     if (filteredPosts.length === 0) {
         return (
@@ -91,7 +97,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                 "grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16",
                 columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
             )}>
-                {filteredPosts.map((post, i) => {
+                {visiblePosts.map((post, i) => {
                     const isBento = showBentoCards && i === 3;
                     const allCategories = [
                         post.category,
@@ -102,7 +108,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                         <AnimatedSection 
                             key={post.id} 
                             animation="fade-up" 
-                            delay={i * 100}
+                            delay={(i % 12) * 100}
                             className={cn(
                                 "group relative",
                                 isBento && "md:col-span-2 bg-surface-container-low p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center",
@@ -196,29 +202,14 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                 })}
             </div>
 
-            {/* Pagination UI */}
-            {isPaginated && paginationLinks && paginationLinks.length > 3 && (
-                <div className="mt-24 flex items-center justify-center gap-2">
-                    {paginationLinks.map((link, i) => {
-                        // Skip "Previous" and "Next" if they don't have URLs
-                        if ((link.label.includes('Previous') || link.label.includes('Next')) && !link.url) return null;
-                        
-                        return (
-                            <Link
-                                key={i}
-                                href={link.url || '#'}
-                                className={cn(
-                                    "px-4 py-2 rounded-md text-[10px] font-black tracking-widest transition-all [font-variant-caps:small-caps]",
-                                    link.active 
-                                        ? "bg-primary text-on-primary shadow-lg" 
-                                        : "bg-surface-container hover:bg-surface-container-high text-on-surface-variant",
-                                    !link.url && "opacity-50 cursor-not-allowed"
-                                )}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                preserveScroll
-                            />
-                        );
-                    })}
+            {hasMore && (
+                <div className="mt-24 flex items-center justify-center">
+                    <button
+                        onClick={() => setVisibleCount(prev => prev + 12)}
+                        className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black tracking-widest transition-all hover:scale-105 hover:shadow-xl active:scale-95 [font-variant-caps:small-caps]"
+                    >
+                        Show More Articles
+                    </button>
                 </div>
             )}
         </section>

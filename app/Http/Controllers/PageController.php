@@ -24,7 +24,7 @@ class PageController extends Controller
 
         // If it's the journal/blog page, we might want real pagination
         if (in_array($slug, ['journal', 'blog', 'insights'])) {
-            $recentInsights = $insightsQuery->paginate(13); // 1 featured + 12 in grid (3x4)
+            $recentInsights = $insightsQuery->get(); // Load all for "Show More" functionality in blocks
         } else {
             $recentInsights = $insightsQuery->take(10)->get();
         }

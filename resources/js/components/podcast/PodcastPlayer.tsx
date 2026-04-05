@@ -5,12 +5,16 @@ import { cn } from '@/lib/utils';
 import { WaveformVisualizer } from './WaveformVisualizer';
 
 // ─── YouTube helpers ───
-const getYouTubeId = (url: string): string | null => {
+const getYouTubeId = (url: string | null | undefined): string | null => {
+    if (!url || typeof url !== 'string') return null;
     if (url.includes('youtu.be')) return url.split('youtu.be/')[1]?.split(/[?&#]/)[0] || null;
     if (url.includes('youtube.com')) { const m = url.match(/[?&]v=([^&#]+)/); return m?.[1] || null; }
     return null;
 };
-const isYouTubeUrl = (url: string) => url.includes('youtube.com') || url.includes('youtu.be');
+const isYouTubeUrl = (url: string | null | undefined) => {
+    if (!url || typeof url !== 'string') return false;
+    return url.includes('youtube.com') || url.includes('youtu.be');
+};
 const getYouTubeThumbnail = (id: string) => `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
 const getYouTubeWatchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 const getYouTubeEmbedUrl = (id: string) => `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1&iv_load_policy=3`;
@@ -35,7 +39,6 @@ export function PodcastPlayer({
     thumbnail,
     mediaType,
     duration: initialDuration,
-    description,
     variant = 'expanded',
     onPlay,
     className,

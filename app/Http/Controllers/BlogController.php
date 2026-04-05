@@ -70,7 +70,7 @@ class BlogController extends Controller
     public function show(string $slug): Response
     {
         $insight = Insight::published()
-            ->with(['author', 'category'])
+            ->with(['author:id,name,avatar', 'category', 'additionalCategories', 'podcast', 'festival'])
             ->where('slug', $slug)
             ->firstOrFail();
 

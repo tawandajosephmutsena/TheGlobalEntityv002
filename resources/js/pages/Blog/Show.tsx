@@ -11,8 +11,30 @@ import { toast } from 'sonner';
 import DOMPurify from 'dompurify';
 
 
+import { PodcastPlayer } from '@/components/podcast/PodcastPlayer';
+import FestivalCardBlock from '@/components/Blocks/FestivalCardBlock';
+
+
+interface Podcast {
+    url?: string;
+    path?: string;
+    title: string;
+    thumb?: string;
+    is_video?: boolean;
+}
+
+interface Festival {
+    id: number;
+    title: string;
+    // other fields as needed
+}
+
 interface Props {
-    insight: Insight;
+    insight: Insight & {
+        podcast?: Podcast;
+        festival?: Festival;
+        festival_id?: number;
+    };
     comments: Comment[];
     reactionCounts: Record<string, number>;
     userReaction: ReactionType | null;
@@ -149,14 +171,15 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     </div>
                 </header>
 
-                {/* Featured Image - Wide Layout */}
+                {/* Featured Image - Constrained Viewport Height */}
                 {insight.featured_image && (
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="aspect-video relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5">
+                        <div className="relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5 max-h-[80vh] flex items-center justify-center">
                             <img 
                                 src={insight.featured_image} 
                                 alt={insight.title} 
-                                className="w-full h-full object-cover"
+                                className="w-full h-auto max-h-[80vh] object-contain"
+                                style={{ maxHeight: '80vh' }}
                             />
                         </div>
                     </div>
@@ -165,7 +188,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                 {/* Article Content */}
                 <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-32">
                     {/* Social Share Bar */}
-                    <div className="flex flex-wrap items-center gap-6 mb-16 pb-8 border-b border-agency-primary/5 dark:border-white/5">
+                    <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-agency-primary/5 dark:border-white/5">
                         <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
                         <div className="flex items-center gap-4">
                             <button 
@@ -203,6 +226,21 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         </div>
                     </div>
 
+                    {/* Minimal Podcast Player (Conditional) */}
+                    {insight.podcast && (insight.podcast.url || insight.podcast.path) && (
+                        <div className="mb-16">
+                            <PodcastPlayer 
+                                src={(insight.podcast.url || insight.podcast.path) ?? ''}
+                                title={insight.podcast.title}
+                                artist={insight.author?.name}
+                                thumbnail={insight.podcast.thumb || insight.featured_image}
+                                mediaType={insight.podcast.is_video ? 'video' : 'audio'}
+                                variant="compact"
+                                className="border border-agency-primary/5 dark:border-white/5"
+                            />
+                        </div>
+                    )}
+
                     <div className="w-full">
                         <div className="prose prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-10 prose-p:text-[25px] prose-p:md:text-[33px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-[25px] prose-li:md:text-[33px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-3xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
                             {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
@@ -212,6 +250,23 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 <p className="italic opacity-40">Article content is being developed...</p>
                             )}
                         </div>
+
+                        {/* Associated Festival Card (Conditional) */}
+                        {insight.festival_id && (
+                            <div className="mt-24">
+                                <div className="mb-8 flex items-center gap-4">
+                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Related Experience</span>
+                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
+                                </div>
+                                <FestivalCardBlock 
+                                    festivalId={insight.festival_id} 
+                                    variant="dreamy" 
+                                    showActivities={true} 
+                                    showTags={true} 
+                                />
+                            </div>
+                        )}
 
                         {/* Reactions on Post */}
                         <div className="mt-16 pt-10 border-t border-agency-primary/5 dark:border-white/5">
