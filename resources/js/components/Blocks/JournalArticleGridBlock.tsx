@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalArticleGridBlock } from '@/types/page-blocks';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '../CategoryIcon';
 
 interface InsightItem {
@@ -17,6 +18,7 @@ interface InsightItem {
     author?: { name: string; avatar?: string | null };
     category?: { name: string; slug: string; icon?: string | null };
     additional_categories?: { name: string; slug: string; icon?: string | null }[];
+    additionalCategories?: { name: string; slug: string; icon?: string | null }[];
     published_at: string | null;
     reading_time?: number | null;
     category_id: number;
@@ -62,13 +64,9 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
     }, [limit]);
 
     const filteredPosts = useMemo(() => {
-        const posts = activeCategoryId === 'all' 
+        return activeCategoryId === 'all' 
             ? allPosts 
             : allPosts.filter(p => p.category_id === activeCategoryId || p.additional_categories?.some(c => (c as any).id === activeCategoryId));
-        
-        // Skip the first one if it's the first page/all view as it's usually featured elsewhere (JournalHero)
-        // But only if we have more than 1 post
-        return posts.length > 1 ? posts.slice(1) : posts;
     }, [activeCategoryId, allPosts]);
 
     const visiblePosts = useMemo(() => {
@@ -101,11 +99,12 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                     const isBento = showBentoCards && i === 3;
                     const allCategories = [
                         post.category,
-                        ...(post.additional_categories || [])
+                        ...(post.additional_categories || post.additionalCategories || [])
                     ].filter(Boolean);
 
                     return (
-                        <AnimatedSection 
+                        <TooltipProvider key={post.id}>
+                            <AnimatedSection 
                             key={post.id} 
                             animation="fade-up" 
                             delay={(i % 12) * 100}
@@ -126,12 +125,23 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                     </div>
                                     <div className="w-full md:w-1/2 space-y-6">
                                         <div className="flex flex-wrap gap-2">
-                                            {allCategories.map((cat, ci) => (
-                                                <p key={ci} className="text-tertiary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-1 bg-surface-container px-2 py-1 rounded-full uppercase">
-                                                    <CategoryIcon category={cat?.slug || ''} icon={cat?.icon} size={10} glow={false} />
-                                                    {cat?.name}
-                                                </p>
-                                            ))}
+                                            {allCategories.map((cat, ci) => {
+                                                const slug = cat?.slug || '';
+                                                
+                                                return (
+                                                    <Tooltip key={ci}>
+                                                        <TooltipTrigger asChild>
+                                                            <div className="category-icon-wrapper w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-help"
+                                                                 data-category={slug}>
+                                                                <CategoryIcon category={slug} icon={cat?.icon} size={20} glow={true} />
+                                                            </div>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="top">
+                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                );
+                                            })}
                                         </div>
                                         <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
@@ -154,33 +164,50 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                             alt={post.title} 
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-2">
-                                            {allCategories.map((cat, ci) => (
-                                                <span key={ci} className="bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black [font-variant-caps:small-caps] tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
-                                                    <CategoryIcon 
-                                                        category={cat?.slug || ''} 
-                                                        icon={cat?.icon}
-                                                        size={14} 
-                                                        glow={false} 
-                                                    />
-                                                    {cat?.name}
-                                                </span>
-                                            ))}
+                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-3">
+                                            {allCategories.map((cat, ci) => {
+                                                 const slug = cat?.slug || '';
+
+                                                 return (
+                                                    <Tooltip key={ci}>
+                                                        <TooltipTrigger asChild>
+                                                            <div className="category-icon-wrapper bg-surface/90 backdrop-blur-md size-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 cursor-help"
+                                                                 data-category={slug}>
+                                                                <CategoryIcon 
+                                                                    category={slug} 
+                                                                    icon={cat?.icon}
+                                                                    size={18} 
+                                                                    glow={true} 
+                                                                />
+                                                            </div>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="left">
+                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                     <div className="space-y-4">
-                                        <div className="flex flex-wrap gap-x-4 gap-y-2">
-                                            {allCategories.map((cat, ci) => (
-                                                <p key={ci} className="text-secondary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-2">
-                                                    <CategoryIcon 
-                                                        category={cat?.slug || ''} 
-                                                        icon={cat?.icon}
-                                                        size={12} 
-                                                        glow={false} 
-                                                    />
-                                                    {cat?.name}
-                                                </p>
-                                            ))}
+                                        <div className="flex flex-wrap gap-2">
+                                            {allCategories.map((cat, ci) => {
+                                                const slug = cat?.slug || '';
+
+                                                return (
+                                                    <Tooltip key={ci}>
+                                                        <TooltipTrigger asChild>
+                                                            <div className="category-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-help"
+                                                                 data-category={slug}>
+                                                                <CategoryIcon category={slug} icon={cat?.icon} size={16} glow={false} />
+                                                            </div>
+                                                        </TooltipTrigger>
+                                                        <TooltipContent side="top">
+                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps] text-[10px]">{cat?.name}</p>
+                                                        </TooltipContent>
+                                                    </Tooltip>
+                                                );
+                                            })}
                                         </div>
                                         <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
@@ -197,7 +224,8 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                     </div>
                                 </Link>
                             )}
-                        </AnimatedSection>
+                            </AnimatedSection>
+                        </TooltipProvider>
                     );
                 })}
             </div>

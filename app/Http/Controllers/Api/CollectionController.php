@@ -204,4 +204,90 @@ class CollectionController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
+    /**
+     * Fetch a single item from a collection by ID
+     */
+    public function show(Request $request, $collection, $id)
+    {
+        $item = null;
+        $data = null;
+
+        switch ($collection) {
+            case 'insights':
+            case 'blog':
+                $item = \App\Models\Insight::published()
+                    ->with(['author', 'category', 'additionalCategories', 'podcast', 'festival'])
+                    ->find($id);
+                
+                if ($item) {
+                    $data = [
+                        'id' => $item->id,
+                        'title' => $item->title,
+                        'description' => $item->excerpt ?? strip_tags(substr($item->getContentBody(), 0, 150)),
+                        'category' => $item->category?->name ?? 'Article',
+                        'image' => $item->featured_image ?: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80',
+                        'author' => [
+                            'name' => $item->author?->name ?? 'Admin',
+                            'avatar' => $item->author?->avatar_url ?? 'https://github.com/shadcn.png'
+                        ],
+                        'date' => $item->published_at ? $item->published_at->format('M d, Y') : $item->created_at->format('M d, Y'),
+                        'readTime' => $item->reading_time ? $item->reading_time . ' min read' : '5 min read',
+                        'url' => route('blog.show', $item->slug),
+                        'podcast' => $item->podcast ? [
+                            'media_url' => $item->podcast->media_full_url,
+                            'media_type' => $item->podcast->media_type,
+                            'title' => $item->podcast->title,
+                            'thumbnail' => $item->podcast->thumbnail_url,
+                            'duration' => $item->podcast->formatted_duration,
+                        ] : null,
+                    ];
+                }
+                break;
+
+            case 'festivals':
+                $item = \App\Models\Festival::with(['author', 'category', 'activities'])->find($id);
+                if ($item) {
+                    $data = [
+                        'id' => $item->id,
+                        'title' => $item->name,
+                        'description' => $item->description ?? '',
+                        'category' => $item->category?->name ?? 'Festival',
+                        'image' => $item->image ?: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800',
+                        'date' => $item->start_date ? $item->start_date->format('M d, Y') : '',
+                        'locationAddress' => $item->location['address'] ?? 'Multiple Locations',
+                        'url' => route('festivals.show', $item->slug),
+                        'host' => $item->author?->name ?? 'Wildroots Collective',
+                        'tags' => $item->social_tags ?? [],
+                        'activities' => $item->activities->pluck('name')->toArray(),
+                    ];
+                }
+                break;
+
+            case 'podcasts':
+                if (class_exists('\Modules\PodcastPlugin\Models\Podcast')) {
+                    $item = \Modules\PodcastPlugin\Models\Podcast::published()->find($id);
+                    if ($item) {
+                        $data = [
+                            'id' => $item->id,
+                            'title' => $item->title,
+                            'slug' => $item->slug,
+                            'media_url' => $item->media_full_url,
+                            'media_type' => $item->media_type,
+                            'thumbnail_url' => $item->thumbnail_url,
+                            'duration' => $item->formatted_duration,
+                            'url' => route('podcasts.show', $item->slug),
+                        ];
+                    }
+                }
+                break;
+        }
+
+        if (!$data) {
+            return response()->json(['error' => 'Item not found'], 404);
+        }
+
+        return response()->json(['data' => $data]);
+    }
+
 }

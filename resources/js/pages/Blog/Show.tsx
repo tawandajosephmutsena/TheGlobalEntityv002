@@ -13,14 +13,16 @@ import DOMPurify from 'dompurify';
 
 import { PodcastPlayer } from '@/components/podcast/PodcastPlayer';
 import FestivalCardBlock from '@/components/Blocks/FestivalCardBlock';
+import CategoryIcon from '@/components/CategoryIcon';
 
 
 interface Podcast {
-    url?: string;
-    path?: string;
+    media_url: string;
+    media_type: 'audio' | 'video';
     title: string;
-    thumb?: string;
-    is_video?: boolean;
+    thumbnail?: string | null;
+    episode_number?: number | null;
+    season_number?: number | null;
 }
 
 interface Festival {
@@ -34,6 +36,7 @@ interface Props {
         podcast?: Podcast;
         festival?: Festival;
         festival_id?: number;
+        additionalCategories?: { name: string; slug: string; icon?: string | null }[];
     };
     comments: Comment[];
     reactionCounts: Record<string, number>;
@@ -150,13 +153,29 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         </Link>
                         
                         <AnimatedSection animation="slide-up">
-                            <div className="flex items-center justify-center gap-4 mb-8">
-                                <span className="px-4 py-1.5 rounded-full bg-agency-accent/10 text-agency-accent text-[10px] font-black uppercase tracking-widest border border-agency-accent/20">
-                                    {insight.category?.name || 'Article'}
-                                </span>
-                                <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest opacity-40">
-                                    <div className="flex items-center gap-2"><Clock className="size-3" /> {insight.reading_time || 5} min read</div>
-                                    <div className="flex items-center gap-2"><User className="size-3" /> {insight.author?.name || 'Anonymous'}</div>
+                            <div className="flex flex-col items-center gap-6 mb-12">
+                                <div className="flex flex-wrap justify-center gap-3">
+                                    {[
+                                        insight.category,
+                                        ...(insight.additionalCategories || [])
+                                    ].filter(Boolean).map((cat, idx) => (
+                                        <div key={idx} className="category-icon-wrapper flex items-center gap-2 px-4 py-2 rounded-xl bg-agency-primary/5 dark:bg-white/5 border border-agency-primary/10 dark:border-white/10 shadow-sm backdrop-blur-sm transition-all hover:bg-agency-primary/10 dark:hover:bg-white/10"
+                                             data-category={cat?.slug || ''}>
+                                            <CategoryIcon 
+                                                category={cat?.slug || ''} 
+                                                icon={cat?.icon}
+                                                size={18} 
+                                                glow={true} 
+                                            />
+                                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-agency-primary/70 dark:text-white/70">
+                                                {cat?.name}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] opacity-30">
+                                    <div className="flex items-center gap-2.5"><Clock className="size-3.5" /> {insight.reading_time || 5} min read</div>
+                                    <div className="flex items-center gap-2.5"><User className="size-3.5" /> {insight.author?.name || 'Anonymous'}</div>
                                 </div>
                             </div>
                             
@@ -174,12 +193,12 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                 {/* Featured Image - Constrained Viewport Height */}
                 {insight.featured_image && (
                     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5 max-h-[80vh] flex items-center justify-center">
+                        <div className="relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center">
                             <img 
                                 src={insight.featured_image} 
                                 alt={insight.title} 
-                                className="w-full h-auto max-h-[80vh] object-contain"
-                                style={{ maxHeight: '80vh' }}
+                                className="w-full h-auto max-h-[65vh] object-contain transition-all duration-700 bg-black/5"
+                                style={{ maxHeight: '65vh' }}
                             />
                         </div>
                     </div>
@@ -227,16 +246,20 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     </div>
 
                     {/* Minimal Podcast Player (Conditional) */}
-                    {insight.podcast && (insight.podcast.url || insight.podcast.path) && (
+                    {insight.podcast && (insight.podcast.media_full_url || insight.podcast.media_url) && (
                         <div className="mb-16">
+                            <div className="mb-6 flex items-center gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent">Featured Podcast</span>
+                                <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
+                            </div>
                             <PodcastPlayer 
-                                src={(insight.podcast.url || insight.podcast.path) ?? ''}
+                                src={insight.podcast.media_full_url || insight.podcast.media_url}
                                 title={insight.podcast.title}
                                 artist={insight.author?.name}
-                                thumbnail={insight.podcast.thumb || insight.featured_image}
-                                mediaType={insight.podcast.is_video ? 'video' : 'audio'}
+                                thumbnail={insight.podcast.thumbnail_url || insight.podcast.thumbnail || insight.featured_image}
+                                mediaType={insight.podcast.media_type || 'audio'}
                                 variant="compact"
-                                className="border border-agency-primary/5 dark:border-white/5"
+                                className="border border-agency-primary/10 dark:border-white/10 bg-white/5 backdrop-blur-md rounded-3xl"
                             />
                         </div>
                     )}
@@ -252,15 +275,15 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         </div>
 
                         {/* Associated Festival Card (Conditional) */}
-                        {insight.festival_id && (
+                        {(insight.festival_id || insight.festival) && (
                             <div className="mt-24">
                                 <div className="mb-8 flex items-center gap-4">
                                     <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Related Experience</span>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Associated Experience</span>
                                     <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
                                 </div>
                                 <FestivalCardBlock 
-                                    festivalId={insight.festival_id} 
+                                    festivalId={Number(insight.festival_id || insight.festival?.id)} 
                                     variant="dreamy" 
                                     showActivities={true} 
                                     showTags={true} 

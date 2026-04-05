@@ -247,8 +247,9 @@ export function PodcastPlayer({
                             <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-primary/0 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-1000" />
                             <div
                                 className="relative size-32 md:size-40 rounded-2xl bg-muted bg-cover bg-center shadow-2xl overflow-hidden apple-shadow transition-transform duration-700 group-hover:scale-[1.02]"
-                                style={{ backgroundImage: `url(${thumbnail})` }}
+                                style={{ '--bg-image': `url(${thumbnail})` } as React.CSSProperties}
                             >
+                                <div className="absolute inset-0 bg-[image:var(--bg-image)] bg-cover bg-center" />
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
                             </div>
                         </div>
@@ -350,7 +351,7 @@ export function PodcastPlayer({
                                         <div className="absolute inset-0 rounded-full bg-secondary/50 overflow-hidden">
                                             <div
                                                 className="h-full bg-primary/60 transition-all duration-300"
-                                                style={{ width: `${(isMuted ? 0 : volume) * 100}%` }}
+                                                style={{ '--volume-pct': `${(isMuted ? 0 : volume) * 100}%`, width: 'var(--volume-pct)' } as React.CSSProperties}
                                             />
                                         </div>
                                     </div>

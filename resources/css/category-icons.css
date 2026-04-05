@@ -1,13 +1,104 @@
-.category-icon {
+:root {
+    /* Category Colors - Light Mode (Deeper, more readable) */
+    --cat-fest-pink: #c000af;
+    --cat-glocal-cyan: #008b8b;
+    --cat-heart-red: #cc0000;
+    --cat-social-green: #2e7d32;
+    --cat-solo-yellow: #827717;
+    --cat-trouble-orange: #e65100;
+}
+
+.dark {
+    /* Category Colors - Dark Mode (Vibrant, Neon) */
+    --cat-fest-pink: #ff00ff;
+    --cat-glocal-cyan: #00ffff;
+    --cat-heart-red: #ff3131;
+    --cat-social-green: #39ff14;
+    --cat-solo-yellow: #ffff00;
+    --cat-trouble-orange: #ffaa00;
+}
+
+/* Base Utility for Icon Masking */
+.category-icon-mask {
     display: inline-block;
-    object-fit: contain;
-    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    transition: background-color 0.3s ease;
 }
 
-.category-icon-glow {
-    filter: drop-shadow(0 0 2px var(--glow-color)) drop-shadow(0 0 5px var(--glow-color));
+/* Standardized Icon Wrapper */
+.category-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem; /* rounded-xl */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: help;
+    border: 1px solid transparent;
 }
 
+.category-icon-wrapper:hover {
+    transform: scale(1.1) rotate(5deg);
+    z-index: 10;
+}
+
+/* Category Specific Variables & Glows */
+.category-icon-wrapper[data-category="festival-fever"] {
+    --cat-color: var(--cat-fest-pink);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+.category-icon-wrapper[data-category="glocal-gems"] {
+    --cat-color: var(--cat-glocal-cyan);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+.category-icon-wrapper[data-category="living-from-the-heart"] {
+    --cat-color: var(--cat-heart-red);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+.category-icon-wrapper[data-category="social-sustainability"] {
+    --cat-color: var(--cat-social-green);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+.category-icon-wrapper[data-category="solo-travel"] {
+    --cat-color: var(--cat-solo-yellow);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+.category-icon-wrapper[data-category="travel-trouble"] {
+    --cat-color: var(--cat-trouble-orange);
+    background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
+}
+
+/* Default state for unknown categories */
+.category-icon-wrapper:not([data-category]) {
+    --cat-color: var(--on-surface-variant);
+    background-color: var(--surface-container-high);
+}
+
+/* Apply color to the icon inside the wrapper */
+.category-icon-wrapper .category-icon-mask {
+    background-color: var(--cat-color);
+}
+
+.category-icon-wrapper.glow {
+    box-shadow: 0 0 15px color-mix(in srgb, var(--cat-color) 20%, transparent);
+}
+
+.category-icon-wrapper.glow:hover {
+    box-shadow: 0 0 25px color-mix(in srgb, var(--cat-color) 40%, transparent);
+}
+
+/* Podcast Badge styles preserved */
 .podcast-category-badge {
     display: inline-flex;
     align-items: center;

@@ -215,6 +215,9 @@ export interface Insight {
     updated_at: string;
     author?: User;
     category?: Category;
+    additionalCategories?: Category[];
+    podcast?: any;
+    festival?: any;
 }
 
 export type ReactionType = 'like' | 'love' | 'celebrate' | 'insightful';

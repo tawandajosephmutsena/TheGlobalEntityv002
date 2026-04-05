@@ -19,7 +19,7 @@ class PageController extends Controller
         $featuredProjects = \App\Models\PortfolioItem::orderBy('sort_order')->take(10)->get();
         
         $insightsQuery = \App\Models\Insight::published()
-            ->with(['author', 'category', 'additionalCategories'])
+            ->with(['author', 'category', 'additionalCategories', 'podcast', 'festival'])
             ->orderBy('published_at', 'desc');
 
         // If it's the journal/blog page, we might want real pagination

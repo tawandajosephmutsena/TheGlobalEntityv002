@@ -7,7 +7,8 @@ export type CategorySlug =
     | 'living-from-the-heart'
     | 'social-sustainability'
     | 'solo-travel'
-    | 'travel-trouble';
+    | 'travel-trouble'
+    | string;
 
 interface CategoryIconProps {
     category: string | CategorySlug;
@@ -17,28 +18,19 @@ interface CategoryIconProps {
     glow?: boolean;
 }
 
-const iconToColor: Record<string, string> = {
-    'festival-fever-icon.svg': '#ff00ff',
-    'glocal-gems-icon.svg': '#00ffff',
-    'living-from-the-heart-icon.svg': '#ff3131',
-    'social-sustainability-icon.svg': '#39ff14',
-    'solotravel-icon.svg': '#ffff00',
-    'travel-trouble-icon.svg': '#ffaa00',
-};
-
-const categoryMapping: Record<string, { icon: string; color: string }> = {
-    'festival-fever': { icon: 'festival-fever-icon.svg', color: '#ff00ff' }, // Neon Pink
-    'festival fever': { icon: 'festival-fever-icon.svg', color: '#ff00ff' },
-    'glocal-gems': { icon: 'glocal-gems-icon.svg', color: '#00ffff' }, // Cyan
-    'glocal gems': { icon: 'glocal-gems-icon.svg', color: '#00ffff' },
-    'living-from-the-heart': { icon: 'living-from-the-heart-icon.svg', color: '#ff3131' }, // Neon Red
-    'living from the heart': { icon: 'living-from-the-heart-icon.svg', color: '#ff3131' },
-    'social-sustainability': { icon: 'social-sustainability-icon.svg', color: '#39ff14' }, // Neon Green
-    'social sustainability': { icon: 'social-sustainability-icon.svg', color: '#39ff14' },
-    'solo-travel': { icon: 'solotravel-icon.svg', color: '#ffff00' }, // Neon Yellow
-    'solo travel': { icon: 'solotravel-icon.svg', color: '#ffff00' },
-    'travel-trouble': { icon: 'travel-trouble-icon.svg', color: '#ffaa00' }, // Neon Orange
-    'travel trouble': { icon: 'travel-trouble-icon.svg', color: '#ffaa00' },
+const categoryMapping: Record<string, { icon: string }> = {
+    'festival-fever': { icon: 'festival-fever-icon.svg' },
+    'festival fever': { icon: 'festival-fever-icon.svg' },
+    'glocal-gems': { icon: 'glocal-gems-icon.svg' },
+    'glocal gems': { icon: 'glocal-gems-icon.svg' },
+    'living-from-the-heart': { icon: 'living-from-the-heart-icon.svg' },
+    'living from the heart': { icon: 'living-from-the-heart-icon.svg' },
+    'social-sustainability': { icon: 'social-sustainability-icon.svg' },
+    'social sustainability': { icon: 'social-sustainability-icon.svg' },
+    'solo-travel': { icon: 'solotravel-icon.svg' },
+    'solo travel': { icon: 'solotravel-icon.svg' },
+    'travel-trouble': { icon: 'travel-trouble-icon.svg' },
+    'travel trouble': { icon: 'travel-trouble-icon.svg' },
 };
 
 const CategoryIcon: React.FC<CategoryIconProps> = ({
@@ -49,15 +41,14 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
     glow = true,
 }) => {
     let iconFile = icon;
-    let iconColor = icon ? iconToColor[icon] : undefined;
 
     if (!iconFile) {
-        const normalizedCategory = category.toLowerCase().replace(/-/g, ' ');
-        const mapping = categoryMapping[category.toLowerCase()] || categoryMapping[normalizedCategory];
+        const catLower = category?.toLowerCase() || '';
+        const normalizedCategory = catLower.replace(/-/g, ' ');
+        const mapping = categoryMapping[catLower] || categoryMapping[normalizedCategory];
         
         if (mapping) {
             iconFile = mapping.icon;
-            iconColor = mapping.color;
         }
     }
 
@@ -65,22 +56,26 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
         return null;
     }
 
+    const iconUrl = `/images/stitch/icons/${iconFile}`;
 
     return (
-        <img
-            src={`/images/stitch/icons/${iconFile}`}
-            alt={`${category} icon`}
-            style={{
-                width: size,
-                height: size,
-                // @ts-expect-error - CSS custom property
-                "--glow-color": iconColor || '#ffffff',
-            }}
+        <div
+            role="img"
+            aria-label={`${category} icon`}
             className={cn(
-                "category-icon",
+                "category-icon-mask",
                 glow && "category-icon-glow",
                 className
             )}
+            style={{
+                '--icon-size': `${size}px`,
+                '--icon-url': `url('${iconUrl}')`,
+                width: 'var(--icon-size)',
+                height: 'var(--icon-size)',
+                maskImage: 'var(--icon-url)',
+                WebkitMaskImage: 'var(--icon-url)',
+                backgroundColor: 'currentColor'
+            } as React.CSSProperties}
         />
     );
 };

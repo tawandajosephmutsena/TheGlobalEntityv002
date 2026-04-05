@@ -66,6 +66,7 @@ Route::get('/api/search', [App\Http\Controllers\SearchController::class, 'index'
 
 // Dynamic Collections API
 Route::get('/api/collections/{collection}', [\App\Http\Controllers\Api\CollectionController::class, 'index'])->name('api.collections.index');
+Route::get('/api/collections/{collection}/{id}', [\App\Http\Controllers\Api\CollectionController::class, 'show'])->name('api.collections.show');
 
 // Interactions tracking
 Route::post('/interactions', [App\Http\Controllers\InteractionController::class, 'store'])
