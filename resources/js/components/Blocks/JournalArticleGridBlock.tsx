@@ -139,8 +139,8 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                                 variant="badge"
                                                             />
                                                         </TooltipTrigger>
-                                                        <TooltipContent side="top">
-                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                        <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
+                                                            <p className="font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">{cat?.name}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );
@@ -167,47 +167,25 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                             alt={post.title} 
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-3">
-                                            {allCategories.map((cat, ci) => {
-                                                 const slug = cat?.slug || '';
-
-                                                 return (
-                                                    <Tooltip key={ci}>
-                                                        <TooltipTrigger asChild>
-                                                            <CategoryIcon 
-                                                                category={slug} 
-                                                                icon={cat?.icon}
-                                                                size={18} 
-                                                                glow={true}
-                                                                variant="badge"
-                                                            />
-                                                        </TooltipTrigger>
-                                                        <TooltipContent side="left">
-                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
-                                                        </TooltipContent>
-                                                    </Tooltip>
-                                                );
-                                            })}
-                                        </div>
                                     </div>
-                                    <div className="space-y-4">
-                                        <div className="flex flex-wrap gap-2">
+                                    <div className="space-y-6">
+                                        <div className="flex flex-wrap gap-3">
                                             {allCategories.map((cat, ci) => {
                                                 const slug = cat?.slug || '';
 
                                                 return (
-                                                    <Tooltip key={ci}>
+                                                    <Tooltip key={ci} delayDuration={150}>
                                                         <TooltipTrigger asChild>
                                                             <CategoryIcon 
                                                                 category={slug} 
                                                                 icon={cat?.icon} 
-                                                                size={16} 
-                                                                glow={false}
+                                                                size={20} 
+                                                                glow={true}
                                                                 variant="badge" 
                                                             />
                                                         </TooltipTrigger>
-                                                        <TooltipContent side="top">
-                                                            <p className="font-bold tracking-wider [font-variant-caps:small-caps] text-[10px]">{cat?.name}</p>
+                                                        <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
+                                                            <p className="font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">{cat?.name}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );

@@ -52,35 +52,40 @@
 }
 
 /* Category Specific Variables & Glows */
-.category-icon-wrapper[data-category="festival-fever"] {
+.category-icon-wrapper[data-category="festival-fever"],
+.category-icon-wrapper[data-category="festival-adventures"] {
     --cat-color: var(--cat-fest-pink);
     background-color: rgba(192, 0, 175, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
     border-color: rgba(192, 0, 175, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
-.category-icon-wrapper[data-category="glocal-gems"] {
+.category-icon-wrapper[data-category="glocal-gems"],
+.category-icon-wrapper[data-category="local-gems"] {
     --cat-color: var(--cat-glocal-cyan);
     background-color: rgba(0, 139, 139, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
     border-color: rgba(0, 139, 139, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
-.category-icon-wrapper[data-category="living-from-the-heart"] {
+.category-icon-wrapper[data-category="living-from-the-heart"],
+.category-icon-wrapper[data-category*="live-through-your-heart"] {
     --cat-color: var(--cat-heart-red);
     background-color: rgba(204, 0, 0, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
     border-color: rgba(204, 0, 0, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
-.category-icon-wrapper[data-category="social-sustainability"] {
+.category-icon-wrapper[data-category="social-sustainability"],
+.category-icon-wrapper[data-category="social-sustainable-tourism"] {
     --cat-color: var(--cat-social-green);
     background-color: rgba(46, 125, 50, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
     border-color: rgba(46, 125, 50, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
-.category-icon-wrapper[data-category="solo-travel"] {
+.category-icon-wrapper[data-category="solo-travel"],
+.category-icon-wrapper[data-category="solo-traveling"] {
     --cat-color: var(--cat-solo-yellow);
     background-color: rgba(130, 119, 23, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);

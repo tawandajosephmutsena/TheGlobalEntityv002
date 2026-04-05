@@ -23,14 +23,19 @@ interface CategoryIconProps {
 const categoryMapping: Record<string, { icon: string }> = {
     'festival-fever': { icon: 'festival-fever-icon.svg' },
     'festival fever': { icon: 'festival-fever-icon.svg' },
+    'festival-adventures': { icon: 'festival-fever-icon.svg' }, // DB match
     'glocal-gems': { icon: 'glocal-gems-icon.svg' },
     'glocal gems': { icon: 'glocal-gems-icon.svg' },
+    'local-gems': { icon: 'glocal-gems-icon.svg' }, // DB match
     'living-from-the-heart': { icon: 'living-from-the-heart-icon.svg' },
     'living from the heart': { icon: 'living-from-the-heart-icon.svg' },
+    'live-through-your-heart-live-through-your-heart': { icon: 'living-from-the-heart-icon.svg' }, // DB match
     'social-sustainability': { icon: 'social-sustainability-icon.svg' },
     'social sustainability': { icon: 'social-sustainability-icon.svg' },
+    'social-sustainable-tourism': { icon: 'social-sustainability-icon.svg' }, // DB match
     'solo-travel': { icon: 'solotravel-icon.svg' },
     'solo travel': { icon: 'solotravel-icon.svg' },
+    'solo-traveling': { icon: 'solotravel-icon.svg' }, // DB match
     'travel-trouble': { icon: 'travel-trouble-icon.svg' },
     'travel trouble': { icon: 'travel-trouble-icon.svg' },
 };
