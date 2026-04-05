@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
 use App\Traits\HasVersions;
 use App\Traits\HasSeoOptimization;
@@ -28,6 +29,8 @@ class Insight extends Model
         'featured_image_title',
         'author_id',
         'category_id',
+        'podcast_id',
+        'festival_id',
         'tags',
         'reading_time',
         'is_featured',
@@ -79,6 +82,30 @@ class Insight extends Model
     public function reactions(): MorphMany
     {
         return $this->morphMany(Reaction::class, 'reactable');
+    }
+
+    /**
+     * Additional categories for this insight
+     */
+    public function additionalCategories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_insight')->withTimestamps();
+    }
+
+    /**
+     * Podcast association
+     */
+    public function podcast(): BelongsTo
+    {
+        return $this->belongsTo(\Modules\PodcastPlugin\Models\Podcast::class);
+    }
+
+    /**
+     * Festival association
+     */
+    public function festival(): BelongsTo
+    {
+        return $this->belongsTo(Festival::class);
     }
 
     /**

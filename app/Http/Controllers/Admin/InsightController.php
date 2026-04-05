@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Insight;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Festival;
+use Modules\PodcastPlugin\Models\Podcast;
 use App\Http\Requests\Admin\InsightRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -75,10 +77,14 @@ class InsightController extends Controller
     {
         $categories = Category::where('type', 'insight')->get(['id', 'name']);
         $authors = User::whereIn('role', ['admin', 'editor'])->get(['id', 'name']);
+        $podcasts = Podcast::get(['id', 'title']);
+        $festivals = Festival::get(['id', 'name']);
 
         return Inertia::render('admin/insights/Create', [
             'categories' => $categories,
             'authors' => $authors,
+            'podcasts' => $podcasts,
+            'festivals' => $festivals,
         ]);
     }
 
@@ -88,8 +94,16 @@ class InsightController extends Controller
     public function store(InsightRequest $request): RedirectResponse
     {
         $validated = $request->validated();
+        
+        $additionalCategories = $validated['additional_categories'] ?? [];
+        unset($validated['additional_categories']);
 
         $insight = Insight::create($validated);
+        
+        if (!empty($additionalCategories)) {
+            $insight->additionalCategories()->sync($additionalCategories);
+        }
+        
         $this->clearCache();
 
         return redirect()->route('admin.insights.show', $insight)
@@ -101,7 +115,7 @@ class InsightController extends Controller
      */
     public function show(Insight $insight): Response
     {
-        $insight->load(['author', 'category']);
+        $insight->load(['author', 'category', 'additionalCategories', 'podcast', 'festival']);
 
         return Inertia::render('admin/insights/Show', [
             'insight' => $insight,
@@ -113,14 +127,18 @@ class InsightController extends Controller
      */
     public function edit(Insight $insight): Response
     {
-        $insight->load(['author', 'category']);
+        $insight->load(['author', 'category', 'additionalCategories', 'podcast', 'festival']);
         $categories = Category::where('type', 'insight')->get(['id', 'name']);
         $authors = User::whereIn('role', ['admin', 'editor'])->get(['id', 'name']);
+        $podcasts = Podcast::get(['id', 'title']);
+        $festivals = Festival::get(['id', 'name']);
 
         return Inertia::render('admin/insights/Edit', [
             'insight' => $insight,
             'categories' => $categories,
             'authors' => $authors,
+            'podcasts' => $podcasts,
+            'festivals' => $festivals,
         ]);
     }
 
@@ -130,8 +148,18 @@ class InsightController extends Controller
     public function update(InsightRequest $request, Insight $insight): RedirectResponse
     {
         $validated = $request->validated();
+        
+        $additionalCategories = $validated['additional_categories'] ?? [];
+        unset($validated['additional_categories']);
 
         $insight->update($validated);
+        
+        if (isset($request->additional_categories)) {
+            $insight->additionalCategories()->sync($additionalCategories);
+        } else {
+            $insight->additionalCategories()->detach();
+        }
+        
         $this->clearCache();
 
         return redirect()->route('admin.insights.show', $insight)

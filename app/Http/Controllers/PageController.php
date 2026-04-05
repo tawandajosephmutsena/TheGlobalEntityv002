@@ -17,7 +17,18 @@ class PageController extends Controller
         // Fetch collections for dynamic blocks
         $featuredServices = \App\Models\Service::orderBy('sort_order')->take(10)->get();
         $featuredProjects = \App\Models\PortfolioItem::orderBy('sort_order')->take(10)->get();
-        $recentInsights = \App\Models\Insight::published()->with(['author', 'category'])->orderBy('published_at', 'desc')->take(10)->get();
+        
+        $insightsQuery = \App\Models\Insight::published()
+            ->with(['author', 'category', 'additionalCategories'])
+            ->orderBy('published_at', 'desc');
+
+        // If it's the journal/blog page, we might want real pagination
+        if (in_array($slug, ['journal', 'blog', 'insights'])) {
+            $recentInsights = $insightsQuery->paginate(13); // 1 featured + 12 in grid (3x4)
+        } else {
+            $recentInsights = $insightsQuery->take(10)->get();
+        }
+
         $teamMembers = \App\Models\TeamMember::active()->ordered()->get();
         
         $reviews = \App\Models\Review::approved()->with('user')->latest()->take(20)->get()->map(function ($review) {

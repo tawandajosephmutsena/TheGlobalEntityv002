@@ -8,14 +8,17 @@ import { Search, ArrowRight, ArrowUpRight, CheckCircle2, Edit3, Mail } from 'luc
 import React, { useState, useMemo } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 
+import CategoryIcon from '@/components/CategoryIcon';
+
 interface Props {
     insights: PaginatedData<Insight>;
     categories: Category[];
     page?: Page;
+    filters?: { category?: string; search?: string };
 }
 
-export default function Blog({ insights, categories, page }: Props) {
-    const [activeCategoryId, setActiveCategoryId] = useState<number | 'all'>('all');
+export default function Blog({ insights, categories, page, filters }: Props) {
+    const activeCategoryId = filters?.category || 'all';
     const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
     
     const { data, setData, post, processing, errors } = useForm({
@@ -36,14 +39,8 @@ export default function Blog({ insights, categories, page }: Props) {
 
     const posts = insights.data;
 
-    const filteredPosts = useMemo(() => {
-        return activeCategoryId === 'all' 
-            ? posts 
-            : posts.filter(p => p.category_id === activeCategoryId);
-    }, [activeCategoryId, posts]);
-
-    const featuredPost = filteredPosts[0];
-    const gridPosts = filteredPosts.slice(1);
+    const featuredPost = posts[0];
+    const gridPosts = posts.slice(1);
 
     const appName = import.meta.env.VITE_APP_NAME || 'The Global Entity';
 
@@ -150,8 +147,9 @@ export default function Blog({ insights, categories, page }: Props) {
                         {/* Category Filter Bar */}
                         <section className="container mx-auto px-6 mb-16">
                             <div className="flex items-center gap-4 overflow-x-auto hide-scrollbar pb-4">
-                                <button 
-                                    onClick={() => setActiveCategoryId('all')}
+                                <Link 
+                                    href="/blog?category=all"
+                                    preserveScroll
                                     className={cn(
                                         "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
                                         activeCategoryId === 'all' 
@@ -160,20 +158,22 @@ export default function Blog({ insights, categories, page }: Props) {
                                     )}
                                 >
                                     All Archives
-                                </button>
+                                </Link>
                                 {categories.map((cat) => (
-                                    <button 
+                                    <Link 
                                         key={cat.id}
-                                        onClick={() => setActiveCategoryId(cat.id)}
+                                        href={`/blog?category=${cat.id}`}
+                                        preserveScroll
                                         className={cn(
-                                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
-                                            activeCategoryId === cat.id 
+                                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500 flex items-center gap-2",
+                                            activeCategoryId === cat.id.toString() || activeCategoryId === cat.slug
                                                 ? "bg-primary text-on-primary shadow-xl scale-105" 
                                                 : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
                                         )}
                                     >
+                                        {cat.icon && <CategoryIcon category={cat.slug} icon={cat.icon} size={14} glow={false} />}
                                         {cat.name}
-                                    </button>
+                                    </Link>
                                 ))}
                             </div>
                         </section>
@@ -228,12 +228,40 @@ export default function Blog({ insights, categories, page }: Props) {
                                                             alt={post.title} 
                                                         />
                                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
-                                                            {post.category?.name || 'Insight'}
-                                                        </span>
+                                                        <div className="absolute top-6 right-6 flex flex-col gap-2 items-end">
+                                                            {post.category && (
+                                                                <span className="bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
+                                                                    {post.category.icon && <CategoryIcon category={post.category.slug} icon={post.category.icon} size={12} glow={false} />}
+                                                                    {post.category.name}
+                                                                </span>
+                                                            )}
+                                                            {/* @ts-ignore */}
+                                                            {post.additional_categories && post.additional_categories.map((additionalCat: any) => (
+                                                                <span key={additionalCat.id} className="bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
+                                                                    {additionalCat.icon && <CategoryIcon category={additionalCat.slug} icon={additionalCat.icon} size={12} glow={false} />}
+                                                                    {additionalCat.name}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                        <div className="absolute bottom-6 left-6 flex gap-2 items-center">
+                                                            {/* @ts-ignore */}
+                                                            {post.podcast && (
+                                                                <span className="bg-primary/90 backdrop-blur-md text-on-primary text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                                                    🎙️ Podcast
+                                                                </span>
+                                                            )}
+                                                            {/* @ts-ignore */}
+                                                            {post.festival && (
+                                                                <span className="bg-tertiary/90 backdrop-blur-md text-on-primary text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                                                    🎪 Festival
+                                                                </span>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     <div className="space-y-4">
-                                                        <p className="text-secondary font-black text-[10px] tracking-widest uppercase">{post.category?.name || 'Journal'}</p>
+                                                        <p className="text-secondary font-black text-[10px] tracking-widest uppercase">
+                                                            {post.category?.name || 'Journal'}
+                                                        </p>
                                                         <h3 className="font-display font-bold text-2xl group-hover:text-primary transition-colors leading-tight tracking-tight">
                                                             {post.title}
                                                         </h3>
@@ -255,7 +283,7 @@ export default function Blog({ insights, categories, page }: Props) {
                             </div>
 
                             {/* Empty State */}
-                            {filteredPosts.length === 0 && (
+                            {posts.length === 0 && (
                                 <div className="py-32 text-center">
                                     <div className="inline-block p-12 rounded-full bg-surface-container-low mb-8 opacity-20">
                                         <Search className="size-20" />

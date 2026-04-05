@@ -25,11 +25,17 @@ class BlogController extends Controller
 
         $insights = \Illuminate\Support\Facades\Cache::flexible($cacheKey, [60 * 60, 60 * 60 * 2], function () use ($request) {
             $query = Insight::published()
-                ->with(['author:id,name,avatar', 'category:id,name,slug']);
+                ->with(['author:id,name,avatar', 'category:id,name,slug,icon', 'additionalCategories:id,name,slug,icon', 'podcast:id,title,slug', 'festival:id,name,slug']);
 
-            if ($request->filled('category')) {
-                $query->whereHas('category', function ($q) use ($request) {
-                    $q->where('slug', $request->category);
+            if ($request->filled('category') && $request->category !== 'all') {
+                $query->where(function ($q) use ($request) {
+                    $q->whereHas('category', function ($subQ) use ($request) {
+                        $subQ->where('slug', $request->category)
+                             ->orWhere('categories.id', $request->category);
+                    })->orWhereHas('additionalCategories', function ($subQ) use ($request) {
+                        $subQ->where('slug', $request->category)
+                             ->orWhere('categories.id', $request->category);
+                    });
                 });
             }
 

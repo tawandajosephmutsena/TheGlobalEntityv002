@@ -16,19 +16,39 @@ interface InsightItem {
     featured_image?: string | null;
     author?: { name: string; avatar?: string | null };
     category?: { name: string; slug: string; icon?: string | null };
+    additional_categories?: { name: string; slug: string; icon?: string | null }[];
     published_at: string | null;
     reading_time?: number | null;
     category_id: number;
 }
 
+interface PaginationLinks {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+interface PaginatedInsights {
+    data: InsightItem[];
+    links: PaginationLinks[];
+    current_page: number;
+    last_page: number;
+    total: number;
+}
+
 interface Props {
     content: JournalArticleGridBlock['content'];
-    recentInsights?: InsightItem[];
+    recentInsights?: InsightItem[] | PaginatedInsights;
 }
 
 export default function JournalArticleGridBlock({ content, recentInsights = [] }: Props) {
     const { columns = 3, staggered = true, showBentoCards = true, limit = 9 } = content;
     const [activeCategoryId, setActiveCategoryId] = useState<number | 'all'>('all');
+
+    // Extract posts and pagination links
+    const isPaginated = !Array.isArray(recentInsights) && recentInsights !== null && 'data' in recentInsights;
+    const allPosts = isPaginated ? (recentInsights as PaginatedInsights).data : (recentInsights as InsightItem[]);
+    const paginationLinks = isPaginated ? (recentInsights as PaginatedInsights).links : null;
 
     // Subscribe to category filter events
     useEffect(() => {
@@ -41,10 +61,15 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
 
     const filteredPosts = useMemo(() => {
         const posts = activeCategoryId === 'all' 
-            ? recentInsights 
-            : recentInsights.filter(p => p.category_id === activeCategoryId);
+            ? allPosts 
+            : allPosts.filter(p => p.category_id === activeCategoryId || p.additional_categories?.some(c => (c as any).id === activeCategoryId));
+        
+        // If it's the main journal page (paginated), we don't slice by limit here as the server does it
+        // and we don't necessarily skip the first one if we are on page 2+
+        if (isPaginated) return posts;
+        
         return posts.slice(1, limit + 1); // Skip the first one as it's usually featured
-    }, [activeCategoryId, recentInsights, limit]);
+    }, [activeCategoryId, allPosts, limit, isPaginated]);
 
     if (filteredPosts.length === 0) {
         return (
@@ -68,6 +93,10 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
             )}>
                 {filteredPosts.map((post, i) => {
                     const isBento = showBentoCards && i === 3;
+                    const allCategories = [
+                        post.category,
+                        ...(post.additional_categories || [])
+                    ].filter(Boolean);
 
                     return (
                         <AnimatedSection 
@@ -90,7 +119,14 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                         />
                                     </div>
                                     <div className="w-full md:w-1/2 space-y-6">
-                                        <p className="text-tertiary font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">Editorial Feature</p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {allCategories.map((cat, ci) => (
+                                                <p key={ci} className="text-tertiary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-1 bg-surface-container px-2 py-1 rounded-full uppercase">
+                                                    <CategoryIcon category={cat?.slug || ''} icon={cat?.icon} size={10} glow={false} />
+                                                    {cat?.name}
+                                                </p>
+                                            ))}
+                                        </div>
                                         <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
                                         </h3>
@@ -112,26 +148,34 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                             alt={post.title} 
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                        <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black [font-variant-caps:small-caps] tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
-                                            <CategoryIcon 
-                                                category={post.category?.slug || ''} 
-                                                icon={post.category?.icon}
-                                                size={14} 
-                                                glow={false} 
-                                            />
-                                            {post.category?.name || 'Insight'}
-                                        </span>
+                                        <div className="absolute top-6 right-6 flex flex-col items-end gap-2">
+                                            {allCategories.map((cat, ci) => (
+                                                <span key={ci} className="bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black [font-variant-caps:small-caps] tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
+                                                    <CategoryIcon 
+                                                        category={cat?.slug || ''} 
+                                                        icon={cat?.icon}
+                                                        size={14} 
+                                                        glow={false} 
+                                                    />
+                                                    {cat?.name}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div className="space-y-4">
-                                        <p className="text-secondary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-2">
-                                            <CategoryIcon 
-                                                category={post.category?.slug || ''} 
-                                                icon={post.category?.icon}
-                                                size={12} 
-                                                glow={false} 
-                                            />
-                                            {post.category?.name || 'Journal'}
-                                        </p>
+                                        <div className="flex flex-wrap gap-x-4 gap-y-2">
+                                            {allCategories.map((cat, ci) => (
+                                                <p key={ci} className="text-secondary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-2">
+                                                    <CategoryIcon 
+                                                        category={cat?.slug || ''} 
+                                                        icon={cat?.icon}
+                                                        size={12} 
+                                                        glow={false} 
+                                                    />
+                                                    {cat?.name}
+                                                </p>
+                                            ))}
+                                        </div>
                                         <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
                                         </h3>
@@ -151,6 +195,32 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                     );
                 })}
             </div>
+
+            {/* Pagination UI */}
+            {isPaginated && paginationLinks && paginationLinks.length > 3 && (
+                <div className="mt-24 flex items-center justify-center gap-2">
+                    {paginationLinks.map((link, i) => {
+                        // Skip "Previous" and "Next" if they don't have URLs
+                        if ((link.label.includes('Previous') || link.label.includes('Next')) && !link.url) return null;
+                        
+                        return (
+                            <Link
+                                key={i}
+                                href={link.url || '#'}
+                                className={cn(
+                                    "px-4 py-2 rounded-md text-[10px] font-black tracking-widest transition-all [font-variant-caps:small-caps]",
+                                    link.active 
+                                        ? "bg-primary text-on-primary shadow-lg" 
+                                        : "bg-surface-container hover:bg-surface-container-high text-on-surface-variant",
+                                    !link.url && "opacity-50 cursor-not-allowed"
+                                )}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                preserveScroll
+                            />
+                        );
+                    })}
+                </div>
+            )}
         </section>
     );
 }

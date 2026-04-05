@@ -248,6 +248,12 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
     Route::post('reviews/{review}/reject', [App\Http\Controllers\Admin\ReviewController::class, 'reject'])->name('reviews.reject');
 
     // Contact Inquiries management
+    Route::prefix('contact-inquiries')->name('contact-inquiries.')->group(function () {
+        Route::post('bulk-action', [App\Http\Controllers\Admin\ContactInquiryController::class, 'bulkAction'])->name('bulk-action');
+        Route::get('export', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportFiltered'])->name('export');
+        Route::get('export-pdf', [App\Http\Controllers\Admin\ContactInquiryController::class, 'exportPdfFiltered'])->name('export-pdf');
+    });
+    Route::resource('contact-inquiries', App\Http\Controllers\Admin\ContactInquiryController::class)->only(['index', 'show', 'update', 'destroy']);
 
     // Page management
     Route::resource('pages', App\Http\Controllers\Admin\PageController::class);

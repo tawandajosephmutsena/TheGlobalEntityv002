@@ -116,7 +116,7 @@ class Podcast extends Model
 
     public function getFormattedDurationAttribute(): string
     {
-        $seconds = $this->duration;
+        $seconds = $this->attributes['duration'] ?? 0;
         if ($seconds <= 0) return '0:00';
 
         $hours = floor($seconds / 3600);
@@ -132,7 +132,7 @@ class Podcast extends Model
 
     public function getFormattedFileSizeAttribute(): string
     {
-        $bytes = $this->file_size;
+        $bytes = $this->attributes['file_size'] ?? 0;
         if ($bytes <= 0) return '0 B';
 
         $units = ['B', 'KB', 'MB', 'GB'];
@@ -144,20 +144,24 @@ class Podcast extends Model
 
     public function getMediaFullUrlAttribute(): string
     {
-        if (Str::startsWith($this->media_url, ['http://', 'https://'])) {
-            return $this->media_url;
+        $mediaUrl = $this->attributes['media_url'] ?? '';
+        if (empty($mediaUrl)) return '';
+
+        if (Str::startsWith($mediaUrl, ['http://', 'https://'])) {
+            return $mediaUrl;
         }
-        return asset('storage/' . $this->media_url);
+        return asset('storage/' . $mediaUrl);
     }
 
     public function getThumbnailUrlAttribute(): ?string
     {
-        if (empty($this->thumbnail)) return null;
+        $thumbnail = $this->attributes['thumbnail'] ?? '';
+        if (empty($thumbnail)) return null;
 
-        if (Str::startsWith($this->thumbnail, ['http://', 'https://'])) {
-            return $this->thumbnail;
+        if (Str::startsWith($thumbnail, ['http://', 'https://'])) {
+            return $thumbnail;
         }
-        return asset('storage/' . $this->thumbnail);
+        return asset('storage/' . $thumbnail);
     }
 
     // ── Helpers ──

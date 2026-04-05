@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Insight, Category, User } from '@/types';
 import { useForm, Link } from '@inertiajs/react';
 import React, { useEffect, useRef } from 'react';
@@ -30,12 +31,14 @@ import PreviewShare from '@/components/admin/PreviewShare';
 import { accessibilityManager } from '@/lib/accessibilityManager';
 
 interface Props {
-    insight?: Insight;
+    insight?: any; // any to bypass strict type for now given additional fields
     categories: Category[];
     authors: User[];
+    podcasts?: { id: number; title: string }[];
+    festivals?: { id: number; name: string }[];
 }
 
-export default function InsightForm({ insight, categories, authors }: Props) {
+export default function InsightForm({ insight, categories, authors, podcasts = [], festivals = [] }: Props) {
     const { data, setData, post, put, processing, errors } = useForm<{
         title: string;
         slug: string;
@@ -44,6 +47,9 @@ export default function InsightForm({ insight, categories, authors }: Props) {
         featured_image: string;
         author_id: string | number;
         category_id: string | number;
+        additional_categories: number[];
+        podcast_id: string | number;
+        festival_id: string | number;
         tags: string[];
         reading_time: number;
         is_published: boolean;
@@ -56,6 +62,9 @@ export default function InsightForm({ insight, categories, authors }: Props) {
         featured_image: insight?.featured_image || '',
         author_id: insight?.author_id || authors[0]?.id || '',
         category_id: insight?.category_id || categories[0]?.id || '',
+        additional_categories: insight?.additionalCategories?.map((c: any) => c.id) || [],
+        podcast_id: insight?.podcast_id || '',
+        festival_id: insight?.festival_id || '',
         tags: insight?.tags || [],
         reading_time: insight?.reading_time || 5,
         is_published: insight?.is_published ?? false,
@@ -294,7 +303,7 @@ export default function InsightForm({ insight, categories, authors }: Props) {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid gap-2">
-                                <Label>Category</Label>
+                                <Label>Primary Category</Label>
                                 <Select 
                                     value={data.category_id?.toString()} 
                                     onValueChange={(val) => setData('category_id', parseInt(val))}
@@ -306,6 +315,74 @@ export default function InsightForm({ insight, categories, authors }: Props) {
                                         {categories.map(cat => (
                                             <SelectItem key={cat.id} value={cat.id.toString()}>
                                                 {cat.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label>Additional Categories</Label>
+                                <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto border rounded-md p-3 bg-card">
+                                    {categories.map(cat => (
+                                        <div key={cat.id} className="flex items-center space-x-2">
+                                            <Checkbox 
+                                                id={`add-cat-${cat.id}`} 
+                                                checked={data.additional_categories.includes(cat.id)}
+                                                onCheckedChange={(checked) => {
+                                                    if (checked) {
+                                                        setData('additional_categories', [...data.additional_categories, cat.id]);
+                                                    } else {
+                                                        setData('additional_categories', data.additional_categories.filter(id => id !== cat.id));
+                                                    }
+                                                }}
+                                            />
+                                            <label 
+                                                htmlFor={`add-cat-${cat.id}`}
+                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                            >
+                                                {cat.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label>Link Podcast</Label>
+                                <Select 
+                                    value={data.podcast_id ? data.podcast_id.toString() : "none"} 
+                                    onValueChange={(val) => setData('podcast_id', val === "none" ? '' : parseInt(val))}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select podcast" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="none">None</SelectItem>
+                                        {podcasts.map(podcast => (
+                                            <SelectItem key={podcast.id} value={podcast.id.toString()}>
+                                                {podcast.title}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="grid gap-2">
+                                <Label>Link Festival</Label>
+                                <Select 
+                                    value={data.festival_id ? data.festival_id.toString() : "none"} 
+                                    onValueChange={(val) => setData('festival_id', val === "none" ? '' : parseInt(val))}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select festival" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="none">None</SelectItem>
+                                        {festivals.map(festival => (
+                                            <SelectItem key={festival.id} value={festival.id.toString()}>
+                                                {festival.name}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
