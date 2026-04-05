@@ -103,19 +103,21 @@
 
 /* Apply color to the icon inside the wrapper - now consistently white */
 .category-icon-wrapper .category-icon-mask {
-    background-color: #ffffff;
+    background-color: #ffffff !important;
+    color: #ffffff !important;
 }
 
 .category-icon-wrapper.glow {
     /* Fallback for browsers that don't support color-mix */
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px color-mix(in srgb, var(--cat-color) 20%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 
 .category-icon-wrapper.glow:hover {
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 25px color-mix(in srgb, var(--cat-color) 40%, transparent);
+    box-shadow: 0 0 35px color-mix(in srgb, var(--cat-color) 45%, transparent);
 }
+
 
 /* Podcast Badge styles preserved */
 .podcast-category-badge {

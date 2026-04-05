@@ -165,12 +165,14 @@ export default function CTAHeroBlock({
               <div className="flex items-center gap-2">
                 <div className="flex -space-x-2">
                   {['travel-trouble', 'festival-fever', 'living-from-the-heart', 'social-sustainability', 'glocal-gems', 'solo-travel'].map((category) => (
-                    <div
+                    <CategoryIcon 
                       key={category}
-                      className="h-8 w-8 rounded-full border-2 border-background bg-muted flex items-center justify-center overflow-hidden"
-                    >
-                      <CategoryIcon category={category} size={20} />
-                    </div>
+                      category={category} 
+                      variant="badge"
+                      size={18} 
+                      className="border-2 border-background"
+                      glow={false}
+                    />
                   ))}
                 </div>
                 <div className="text-sm">

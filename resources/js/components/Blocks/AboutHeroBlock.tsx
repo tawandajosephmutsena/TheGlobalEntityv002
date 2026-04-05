@@ -32,7 +32,13 @@ export default function AboutHeroBlockRenderer({
                         {backgroundImage ? (
                             <img src={backgroundImage} alt="" className="w-full h-full object-cover" />
                         ) : (
-                            <CategoryIcon category="travel-trouble" size={48} glow={true} className="opacity-80" />
+                            <CategoryIcon 
+                                category="travel-trouble" 
+                                size={48} 
+                                glow={true} 
+                                variant="badge" 
+                            />
+
                         )}
                     </div>
                     <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic [font-variant-caps:small-caps]">
@@ -106,7 +112,13 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
                 className
             )}
         >
-            <CategoryIcon category={category} size={48} className="mb-4 group-hover:scale-110 transition-transform duration-500" />
+            <CategoryIcon 
+                category={category} 
+                size={48} 
+                glow={true} 
+                variant="badge" 
+            />
+
             <span className="text-[10px] font-black tracking-widest text-on-surface-variant text-center leading-tight [font-variant-caps:small-caps]">
                 {label}
             </span>

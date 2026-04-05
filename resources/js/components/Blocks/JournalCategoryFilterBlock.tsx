@@ -60,11 +60,9 @@ export default function JournalCategoryFilterBlock({ content, categories = [] }:
                             icon={cat.icon}
                             size={18} 
                             glow={activeCategoryId === cat.id}
-                            className={cn(
-                                "transition-transform duration-500",
-                                activeCategoryId === cat.id ? "scale-110" : "group-hover:scale-110"
-                            )}
+                            variant="badge"
                         />
+
                         {cat.name}
                     </button>
                 ))}

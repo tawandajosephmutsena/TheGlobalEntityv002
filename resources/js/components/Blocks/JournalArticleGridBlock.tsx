@@ -131,10 +131,13 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                 return (
                                                     <Tooltip key={ci}>
                                                         <TooltipTrigger asChild>
-                                                            <div className="category-icon-wrapper w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-help"
-                                                                 data-category={slug}>
-                                                                <CategoryIcon category={slug} icon={cat?.icon} size={20} glow={true} />
-                                                            </div>
+                                                            <CategoryIcon 
+                                                                category={slug} 
+                                                                icon={cat?.icon} 
+                                                                size={20} 
+                                                                glow={true} 
+                                                                variant="badge"
+                                                            />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top">
                                                             <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
@@ -171,15 +174,13 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                  return (
                                                     <Tooltip key={ci}>
                                                         <TooltipTrigger asChild>
-                                                            <div className="category-icon-wrapper bg-surface/90 backdrop-blur-md size-10 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 cursor-help"
-                                                                 data-category={slug}>
-                                                                <CategoryIcon 
-                                                                    category={slug} 
-                                                                    icon={cat?.icon}
-                                                                    size={18} 
-                                                                    glow={true} 
-                                                                />
-                                                            </div>
+                                                            <CategoryIcon 
+                                                                category={slug} 
+                                                                icon={cat?.icon}
+                                                                size={18} 
+                                                                glow={true}
+                                                                variant="badge"
+                                                            />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="left">
                                                             <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
@@ -197,10 +198,13 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                 return (
                                                     <Tooltip key={ci}>
                                                         <TooltipTrigger asChild>
-                                                            <div className="category-icon-wrapper w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-help"
-                                                                 data-category={slug}>
-                                                                <CategoryIcon category={slug} icon={cat?.icon} size={16} glow={false} />
-                                                            </div>
+                                                            <CategoryIcon 
+                                                                category={slug} 
+                                                                icon={cat?.icon} 
+                                                                size={16} 
+                                                                glow={false}
+                                                                variant="badge" 
+                                                            />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top">
                                                             <p className="font-bold tracking-wider [font-variant-caps:small-caps] text-[10px]">{cat?.name}</p>
@@ -209,6 +213,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                 );
                                             })}
                                         </div>
+
                                         <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">
                                             {post.title}
                                         </h3>

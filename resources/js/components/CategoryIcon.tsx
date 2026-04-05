@@ -16,6 +16,8 @@ interface CategoryIconProps {
     size?: number;
     className?: string;
     glow?: boolean;
+    variant?: 'icon-only' | 'badge';
+    wrapperClassName?: string;
 }
 
 const categoryMapping: Record<string, { icon: string }> = {
@@ -39,13 +41,16 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
     size = 24,
     className = '',
     glow = true,
+    variant = 'icon-only',
+    wrapperClassName = '',
 }) => {
     let iconFile = icon;
 
+    const catSlug = (typeof category === 'string' ? category.toLowerCase() : category)
+        .replace(/\s+/g, '-');
+
     if (!iconFile) {
-        const catLower = category?.toLowerCase() || '';
-        const normalizedCategory = catLower.replace(/-/g, ' ');
-        const mapping = categoryMapping[catLower] || categoryMapping[normalizedCategory];
+        const mapping = categoryMapping[catSlug] || categoryMapping[category.toLowerCase().replace(/-/g, ' ')];
         
         if (mapping) {
             iconFile = mapping.icon;
@@ -58,13 +63,13 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
 
     const iconUrl = `/images/stitch/icons/${iconFile}`;
 
-    return (
+    const iconElement = (
         <div
             role="img"
             aria-label={`${category} icon`}
             className={cn(
                 "category-icon-mask",
-                glow && "category-icon-glow",
+                !variant || variant === 'icon-only' ? (glow && "category-icon-glow") : "",
                 className
             )}
             style={{
@@ -73,6 +78,29 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
             } as React.CSSProperties}
         />
     );
+
+    if (variant === 'badge') {
+        const badgeSize = size <= 20 ? (size + 12) : (size + 16);
+        return (
+            <div 
+                className={cn(
+                    "category-icon-wrapper",
+                    glow && "glow",
+                    wrapperClassName
+                )}
+                data-category={catSlug}
+                style={{
+                    width: `${badgeSize}px`,
+                    height: `${badgeSize}px`,
+                } as React.CSSProperties}
+            >
+                {iconElement}
+            </div>
+        );
+    }
+
+    return iconElement;
 };
+
 
 export default CategoryIcon;

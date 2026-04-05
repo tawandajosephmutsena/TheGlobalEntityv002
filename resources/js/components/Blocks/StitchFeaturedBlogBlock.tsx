@@ -157,10 +157,18 @@ export default function StitchFeaturedBlogBlockRenderer({
                                         <div className="theme-gradient-bg absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                                         
                                         <div className="absolute top-6 left-6">
-                                            <div className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white flex items-center gap-2">
-                                                <CategoryIcon category="festival-fever" size={14} glow />
-                                                exploration
+                                            <div className="flex items-center gap-2">
+                                                <CategoryIcon 
+                                                    category="festival-fever" 
+                                                    size={14} 
+                                                    glow={true} 
+                                                    variant="badge"
+                                                />
+                                                <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white">
+                                                    exploration
+                                                </span>
                                             </div>
+
                                         </div>
                                         
                                         {index === 0 && (
