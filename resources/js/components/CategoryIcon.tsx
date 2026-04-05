@@ -70,11 +70,6 @@ const CategoryIcon: React.FC<CategoryIconProps> = ({
             style={{
                 '--icon-size': `${size}px`,
                 '--icon-url': `url('${iconUrl}')`,
-                width: 'var(--icon-size)',
-                height: 'var(--icon-size)',
-                maskImage: 'var(--icon-url)',
-                WebkitMaskImage: 'var(--icon-url)',
-                backgroundColor: 'currentColor'
             } as React.CSSProperties}
         />
     );

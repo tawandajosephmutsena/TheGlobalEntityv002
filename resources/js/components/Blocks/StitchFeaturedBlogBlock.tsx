@@ -154,7 +154,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                             alt={post.title || ""} 
                                             className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" 
                                         />
-                                        <div className="absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" style={{ background: 'var(--theme-gradient)' }} />
+                                        <div className="theme-gradient-bg absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                                         
                                         <div className="absolute top-6 left-6">
                                             <div className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white flex items-center gap-2">

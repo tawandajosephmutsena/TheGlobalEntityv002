@@ -57,6 +57,7 @@
     border: 1px solid hsl(var(--border));
     border-radius: 0.75rem;
     margin-bottom: 0.5rem;
+    -webkit-user-select: none;
     user-select: none;
 }
 

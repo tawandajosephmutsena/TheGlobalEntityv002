@@ -216,8 +216,8 @@ export interface Insight {
     author?: User;
     category?: Category;
     additionalCategories?: Category[];
-    podcast?: any;
-    festival?: any;
+    podcast?: Podcast | null;
+    festival?: Festival | null;
 }
 
 export type ReactionType = 'like' | 'love' | 'celebrate' | 'insightful';
@@ -402,5 +402,15 @@ export interface PodcastPlay {
     user_agent: string | null;
     played_at: string;
     duration_listened: number;
+}
+
+// Global Ziggy route function
+declare global {
+    function route(
+        name?: string,
+        params?: Record<string, unknown> | string | number | (string | number)[],
+        absolute?: boolean,
+        config?: Record<string, unknown>
+    ): string;
 }
 

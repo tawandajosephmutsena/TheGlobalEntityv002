@@ -117,16 +117,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Animated gradient background orbs */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
                 <div
-                    className="absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
-                    style={{ background: 'var(--gradient-start)' }}
+                    className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
                 />
                 <div
-                    className="absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
-                    style={{ background: 'var(--gradient-end)', animationDelay: '2s' }}
+                    className="bg-theme-end dynamic-delay absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
+                    style={{ '--delay': '2s' } as React.CSSProperties}
                 />
                 <div
-                    className="absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
-                    style={{ background: 'var(--gradient-accent)', animationDelay: '4s' }}
+                    className="bg-theme-accent dynamic-delay absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
+                    style={{ '--delay': '4s' } as React.CSSProperties}
                 />
             </div>
             {/* Infinite Background Marquee */}

@@ -25,9 +25,13 @@
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
+    -webkit-mask-image: var(--icon-url);
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
+    mask-image: var(--icon-url);
+    width: var(--icon-size, 24px);
+    height: var(--icon-size, 24px);
     transition: background-color 0.3s ease;
 }
 
@@ -50,32 +54,44 @@
 /* Category Specific Variables & Glows */
 .category-icon-wrapper[data-category="festival-fever"] {
     --cat-color: var(--cat-fest-pink);
+    background-color: rgba(192, 0, 175, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(192, 0, 175, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 .category-icon-wrapper[data-category="glocal-gems"] {
     --cat-color: var(--cat-glocal-cyan);
+    background-color: rgba(0, 139, 139, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(0, 139, 139, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 .category-icon-wrapper[data-category="living-from-the-heart"] {
     --cat-color: var(--cat-heart-red);
+    background-color: rgba(204, 0, 0, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(204, 0, 0, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 .category-icon-wrapper[data-category="social-sustainability"] {
     --cat-color: var(--cat-social-green);
+    background-color: rgba(46, 125, 50, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(46, 125, 50, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 .category-icon-wrapper[data-category="solo-travel"] {
     --cat-color: var(--cat-solo-yellow);
+    background-color: rgba(130, 119, 23, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(130, 119, 23, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 .category-icon-wrapper[data-category="travel-trouble"] {
     --cat-color: var(--cat-trouble-orange);
+    background-color: rgba(230, 81, 0, 0.15); /* Fallback */
     background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+    border-color: rgba(230, 81, 0, 0.25); /* Fallback */
     border-color: color-mix(in srgb, var(--cat-color) 25%, transparent);
 }
 
@@ -85,16 +101,19 @@
     background-color: var(--surface-container-high);
 }
 
-/* Apply color to the icon inside the wrapper */
+/* Apply color to the icon inside the wrapper - now consistently white */
 .category-icon-wrapper .category-icon-mask {
-    background-color: var(--cat-color);
+    background-color: #ffffff;
 }
 
 .category-icon-wrapper.glow {
+    /* Fallback for browsers that don't support color-mix */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 15px color-mix(in srgb, var(--cat-color) 20%, transparent);
 }
 
 .category-icon-wrapper.glow:hover {
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 25px color-mix(in srgb, var(--cat-color) 40%, transparent);
 }
 

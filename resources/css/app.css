@@ -595,9 +595,11 @@
 
     /* Apple-Style Glassmorphism & Shadows */
     .glass-effect {
-        backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-color: rgba(var(--background-rgb, 255, 255, 255), 0.6);
         background-color: color-mix(in srgb, var(--background, var(--surface)) 60%, transparent);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         border: 1px solid color-mix(in srgb, white 20%, transparent);
         box-shadow: var(--shadow-2xl);
     }
@@ -644,6 +646,20 @@
                     radial-gradient(circle at 80% 70%, rgba(var(--tertiary-rgb), 0.08) 0%, transparent 40%),
                     radial-gradient(circle at 50% 50%, rgba(var(--secondary-rgb), 0.05) 0%, transparent 50%);
     }
+
+    /* Theme-aware Utilities for Refactoring Inline Styles */
+    .bg-theme-start { background-color: var(--gradient-start); }
+    .bg-theme-end { background-color: var(--gradient-end); }
+    .bg-theme-accent { background-color: var(--gradient-accent); }
+    
+    .text-theme-accent { color: var(--gradient-accent); }
+    
+    .border-theme-soft { 
+        border-color: rgba(var(--primary-rgb, 0, 0, 0), 0.2);
+        border-color: color-mix(in srgb, var(--gradient-start) 25%, transparent); 
+    }
+
+    .dynamic-delay { animation-delay: var(--delay, 0ms); transition-delay: var(--delay, 0ms); }
     
     /* Fairy Pirate Utilities */
     .glassmorphism {

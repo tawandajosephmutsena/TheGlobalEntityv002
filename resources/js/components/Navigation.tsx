@@ -251,8 +251,8 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 
                 {/* Background Blobs for Visual Interest */}
                 <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">
-                    <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse" style={{ background: 'var(--gradient-start)' }}></div>
-                    <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full blur-[120px] animation-delay-2000" style={{ background: 'var(--gradient-end)' }}></div>
+                    <div className="bg-theme-start absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse"></div>
+                    <div className="bg-theme-end absolute bottom-[10%] -right-[10%] size-80 rounded-full blur-[120px] animation-delay-2000"></div>
                 </div>
 
                 <div className="relative z-10 flex h-full flex-col p-8 pt-32">
@@ -263,10 +263,10 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                 href={item.href}
                                 onClick={() => setIsMenuOpen(false)}
                                 className={cn(
-                                    "text-5xl font-black [font-variant-caps:small-caps] tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block",
+                                    "text-5xl font-black [font-variant-caps:small-caps] tracking-tighter transition-all duration-500 hover:translate-x-4 inline-block dynamic-delay",
                                     url === item.href ? "text-agency-accent" : "text-agency-primary/60 dark:text-white/60 hover:text-agency-accent"
                                 )}
-                                style={{ transitionDelay: `${i * 50}ms` }}
+                                style={{ '--delay': `${i * 50}ms` } as React.CSSProperties}
                             >
                                 {item.name.toLowerCase()}
                             </Link>

@@ -42,8 +42,7 @@ export default function CTAHeroBlock({
             y: [0, 50, 0],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[10%] -left-[10%] h-[40%] w-[40%] rounded-full blur-[120px]"
-          style={{ background: 'var(--gradient-start)' }}
+          className="bg-theme-start absolute -top-[10%] -left-[10%] h-[40%] w-[40%] rounded-full blur-[120px]"
         />
         <motion.div
           animate={{
@@ -53,8 +52,7 @@ export default function CTAHeroBlock({
             y: [0, 80, 0],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[20%] -right-[5%] h-[35%] w-[35%] rounded-full blur-[100px]"
-          style={{ background: 'var(--gradient-end)' }}
+          className="bg-theme-end absolute top-[20%] -right-[5%] h-[35%] w-[35%] rounded-full blur-[100px]"
         />
         <motion.div
           animate={{
@@ -62,8 +60,7 @@ export default function CTAHeroBlock({
             opacity: [0.15, 0.3, 0.15],
           }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[10%] left-[30%] h-[25%] w-[25%] rounded-full blur-[80px]"
-          style={{ background: 'var(--gradient-accent)' }}
+          className="bg-theme-accent absolute bottom-[10%] left-[30%] h-[25%] w-[25%] rounded-full blur-[80px]"
         />
       </div>
 
@@ -99,10 +96,9 @@ export default function CTAHeroBlock({
                 <span className="theme-gradient-text relative inline-block">
                   {titleHighlight}
                   <svg
-                    className="absolute -bottom-2 left-0 -z-10 h-3 w-full opacity-30"
+                    className="text-theme-accent absolute -bottom-2 left-0 -z-10 h-3 w-full opacity-30"
                     viewBox="0 0 100 12"
                     preserveAspectRatio="none"
-                    style={{ color: 'var(--gradient-accent)' }}
                   >
                     <path
                       d="M0,10 Q50,0 100,10"
@@ -135,7 +131,7 @@ export default function CTAHeroBlock({
                 <Input
                   type="email"
                   placeholder={emailPlaceholder}
-                  className="h-12 bg-background/50 backdrop-blur-sm focus-visible:ring-2" style={{ borderColor: 'color-mix(in oklch, var(--gradient-start) 25%, transparent)' }}
+                  className="border-theme-soft h-12 bg-background/50 backdrop-blur-sm focus-visible:ring-2"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -219,8 +215,8 @@ export default function CTAHeroBlock({
               </div>
 
               {/* Decorative gradient elements */}
-              <div className="absolute -top-4 -right-4 -z-10 h-24 w-24 blur-2xl" style={{ background: 'var(--gradient-start)', opacity: 0.3 }} />
-              <div className="absolute -bottom-4 -left-4 -z-10 h-24 w-24 blur-2xl" style={{ background: 'var(--gradient-end)', opacity: 0.3 }} />
+              <div className="bg-theme-start absolute -top-4 -right-4 -z-10 h-24 w-24 blur-2xl opacity-30" />
+              <div className="bg-theme-end absolute -bottom-4 -left-4 -z-10 h-24 w-24 blur-2xl opacity-30" />
             </div>
 
           </motion.div>
