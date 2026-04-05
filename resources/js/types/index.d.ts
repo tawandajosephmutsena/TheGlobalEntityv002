@@ -131,6 +131,13 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
+    about?: string;
+    social_links?: {
+        twitter?: string;
+        linkedin?: string;
+        github?: string;
+        website?: string;
+    } | null;
     email_verified_at: string | null;
     is_super_admin?: boolean;
     two_factor_enabled?: boolean;

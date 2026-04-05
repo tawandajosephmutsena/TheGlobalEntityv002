@@ -35,6 +35,8 @@ class User extends Authenticatable
         'role',
         'is_active',
         'avatar',
+        'about',
+        'social_links',
         'email_verified_at',
     ];
 
@@ -62,6 +64,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
             'is_active' => 'boolean',
+            'social_links' => 'array',
         ];
     }
 

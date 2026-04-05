@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/MainLayout';
 import { Comment, Insight, ReactionType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { SeoHead } from '@/components/SeoHead';
-import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2, Github, Globe } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import DOMPurify from 'dompurify';
@@ -328,9 +328,34 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                             <div className="text-center md:text-left">
                                 <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
                                 <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Anonymous'}</h4>
-                                <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light">
-                                    Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.
+                                <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light mb-6">
+                                    {insight.author?.about || 'Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.'}
                                 </p>
+                                
+                                {insight.author?.social_links && Object.values(insight.author.social_links).some(Boolean) && (
+                                    <div className="flex items-center gap-4">
+                                        {insight.author.social_links.twitter && (
+                                            <a href={insight.author.social_links.twitter} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
+                                                <Twitter className="size-4" />
+                                            </a>
+                                        )}
+                                        {insight.author.social_links.linkedin && (
+                                            <a href={insight.author.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
+                                                <Linkedin className="size-4" />
+                                            </a>
+                                        )}
+                                        {insight.author.social_links.github && (
+                                            <a href={insight.author.social_links.github} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
+                                                <Github className="size-4" />
+                                            </a>
+                                        )}
+                                        {insight.author.social_links.website && (
+                                            <a href={insight.author.social_links.website} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
+                                                <Globe className="size-4" />
+                                            </a>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {/* Comments Section */}

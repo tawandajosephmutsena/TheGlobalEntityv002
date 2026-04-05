@@ -12,6 +12,8 @@ import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Twitter, Linkedin, Github, Globe } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { edit } from '@/routes/profile';
@@ -37,6 +39,13 @@ export default function Profile({
         name: auth.user.name,
         email: auth.user.email,
         avatar: auth.user.avatar || '',
+        about: auth.user.about || '',
+        social_links: {
+            twitter: auth.user.social_links?.twitter || '',
+            linkedin: auth.user.social_links?.linkedin || '',
+            github: auth.user.social_links?.github || '',
+            website: auth.user.social_links?.website || '',
+        },
     });
 
     const submit = (e: React.FormEvent) => {
@@ -117,6 +126,77 @@ export default function Profile({
                                         className="mt-2"
                                         message={errors.email}
                                     />
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="about">About Me (Author Bio)</Label>
+
+                                    <Textarea
+                                        id="about"
+                                        className="mt-1 block w-full min-h-[120px]"
+                                        value={data.about}
+                                        onChange={(e) => setData('about', e.target.value)}
+                                        placeholder="Tell us about yourself. This will show up at the bottom of your blog posts."
+                                    />
+
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.about}
+                                    />
+                                </div>
+
+                                <div className="pt-4 space-y-4 border-t border-agency-primary/5 dark:border-white/5">
+                                    <Label className="text-xs font-bold uppercase tracking-widest text-agency-accent">Social Links</Label>
+                                    
+                                    <div className="grid gap-4 sm:grid-cols-2">
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="twitter" className="flex items-center gap-2">
+                                                <Twitter className="size-3.5" /> Twitter
+                                            </Label>
+                                            <Input
+                                                id="twitter"
+                                                value={data.social_links.twitter}
+                                                onChange={(e) => setData('social_links', { ...data.social_links, twitter: e.target.value })}
+                                                placeholder="https://twitter.com/username"
+                                            />
+                                        </div>
+
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="linkedin" className="flex items-center gap-2">
+                                                <Linkedin className="size-3.5" /> LinkedIn
+                                            </Label>
+                                            <Input
+                                                id="linkedin"
+                                                value={data.social_links.linkedin}
+                                                onChange={(e) => setData('social_links', { ...data.social_links, linkedin: e.target.value })}
+                                                placeholder="https://linkedin.com/in/username"
+                                            />
+                                        </div>
+
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="github" className="flex items-center gap-2">
+                                                <Github className="size-3.5" /> GitHub
+                                            </Label>
+                                            <Input
+                                                id="github"
+                                                value={data.social_links.github}
+                                                onChange={(e) => setData('social_links', { ...data.social_links, github: e.target.value })}
+                                                placeholder="https://github.com/username"
+                                            />
+                                        </div>
+
+                                        <div className="grid gap-2">
+                                            <Label htmlFor="website" className="flex items-center gap-2">
+                                                <Globe className="size-3.5" /> Website
+                                            </Label>
+                                            <Input
+                                                id="website"
+                                                value={data.social_links.website}
+                                                onChange={(e) => setData('social_links', { ...data.social_links, website: e.target.value })}
+                                                placeholder="https://yourwebsite.com"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
