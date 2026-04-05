@@ -96,7 +96,7 @@ export default function ContactEtherealInfoEditor({ content, onUpdate }: Props) 
                     <Label>Background Archive Image</Label>
                     <MediaLibrary 
                         currentValue={content.archive?.image || ""} 
-                        onSelect={(asset) => updateArchive({ image: asset.url })}
+                        onSelect={(asset) => updateArchive({ image: asset.relative_url })}
                     />
                 </div>
             </section>

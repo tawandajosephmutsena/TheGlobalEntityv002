@@ -241,7 +241,7 @@ export default function FestivalBentoGridEditor({ content, onUpdate }: FestivalB
                                             <Label>Image</Label>
                                             <div className="flex gap-2">
                                                 <MediaLibrary 
-                                                    onSelect={(asset: MediaAsset) => updateItem(index, { image: asset.url })}
+                                                    onSelect={(asset: MediaAsset) => updateItem(index, { image: asset.relative_url })}
                                                     trigger={
                                                         <Button type="button" variant="outline" size="sm" className="h-10">
                                                             <ImageIcon className="h-4 w-4 mr-2" /> Select

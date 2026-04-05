@@ -161,7 +161,7 @@ export default function StitchFeaturedBlogBlockEditor({ content, onUpdate }: Sti
                                 <Label className="text-xs">Post Image</Label>
                                 <div className="flex gap-2">
                                     <MediaLibrary 
-                                        onSelect={(asset: MediaAsset) => handlePostChange(index, { image: asset.url })}
+                                        onSelect={(asset: MediaAsset) => handlePostChange(index, { image: asset.relative_url })}
                                         trigger={
                                             <Button type="button" variant="outline" size="sm" className="h-9">
                                                 <ImageIcon className="h-4 w-4 mr-2" /> 

@@ -34,7 +34,7 @@ const EcosystemContentBlockEditor = ({ content, onUpdate }: Props) => {
                     <Label>Dark Mode Image</Label>
                     <div className="flex gap-2">
                         <MediaLibrary
-                            onSelect={(asset: MediaAsset) => updateContent({ imageDarkSrc: asset.url })}
+                            onSelect={(asset: MediaAsset) => updateContent({ imageDarkSrc: asset.relative_url })}
                             trigger={
                                 <Button size="sm" variant="outline" className="h-8 text-xs shrink-0">
                                     <ImageIcon className="h-3 w-3 mr-1" /> Choose
@@ -53,7 +53,7 @@ const EcosystemContentBlockEditor = ({ content, onUpdate }: Props) => {
                     <Label>Light Mode Image</Label>
                     <div className="flex gap-2">
                         <MediaLibrary
-                            onSelect={(asset: MediaAsset) => updateContent({ imageLightSrc: asset.url })}
+                            onSelect={(asset: MediaAsset) => updateContent({ imageLightSrc: asset.relative_url })}
                             trigger={
                                 <Button size="sm" variant="outline" className="h-8 text-xs shrink-0">
                                     <ImageIcon className="h-3 w-3 mr-1" /> Choose

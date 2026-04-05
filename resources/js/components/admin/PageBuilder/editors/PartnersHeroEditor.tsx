@@ -88,7 +88,7 @@ export default function PartnersHeroEditor({ content, onUpdate }: PartnersHeroEd
                 <Label>Hero Image (Optional)</Label>
                 <div className="flex gap-2">
                     <MediaLibrary 
-                        onSelect={(asset: MediaAsset) => onUpdate({ image: asset.url })}
+                        onSelect={(asset: MediaAsset) => onUpdate({ image: asset.relative_url })}
                         trigger={
                             <Button type="button" variant="outline" size="sm" className="h-10">
                                 <ImageIcon className="h-4 w-4 mr-2" /> 

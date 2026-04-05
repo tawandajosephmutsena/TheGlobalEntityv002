@@ -1,117 +1,137 @@
 <?php
 /**
- * OttoStart cPanel Deployment Helper
+ * OttoStart cPanel Deployment Helper - DIRECT DATABASE FIX
  * 
- * This script helps run Laravel artisan commands on cPanel shared hosting
- * where SSH access may be limited or unavailable.
- * 
- * SECURITY WARNING: Delete this file immediately after use!
- * 
- * Usage:
- * 1. Upload to public_html/cpanel-helper.php
- * 2. Visit: https://your-domain.com/cpanel-helper.php?key=YOUR_SECRET_KEY
- * 3. Run the commands you need
- * 4. DELETE THIS FILE when done!
+ * This script will DIRECTLY update your database to fix broken image links.
+ * It does not require any other files to be uploaded.
  */
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // ============================================
 // SECURITY CONFIGURATION
 // ============================================
-// CHANGE THIS KEY! Use a random string.
 $secretKey = 'ottostart-deploy-2026-change-me-immediately';
 
-// Verify access key
 if (!isset($_GET['key']) || $_GET['key'] !== $secretKey) {
     http_response_code(403);
     die('Access Denied. Invalid or missing key.');
 }
 
-// Timeout for long operations
-set_time_limit(300);
-ini_set('memory_limit', '256M');
+set_time_limit(600);
+ini_set('memory_limit', '512M');
 
 // ============================================
-// HELPER FUNCTIONS
+// PATH DETECTION
 // ============================================
 
-function runCommand($command): array {
-    $output = [];
-    $returnCode = 0;
-    
-    // Laravel app is at /home/ottomate/ottomate/ (sibling to public_html)
-    $laravelPath = dirname(__DIR__) . '/ottomate';
-    $fullCommand = 'cd ' . $laravelPath . ' && php artisan ' . $command . ' 2>&1';
-    exec($fullCommand, $output, $returnCode);
-    
-    return [
-        'command' => 'php artisan ' . $command,
-        'success' => $returnCode === 0,
-        'output' => implode("\n", $output),
+function findLaravelRoot() {
+    $currentDir = __DIR__;
+    $searchPaths = [
+        $currentDir,
+        dirname($currentDir),
+        dirname(dirname($currentDir)),
+        dirname($currentDir) . '/tge',
+        dirname($currentDir) . '/ottomate',
+        dirname($currentDir) . '/otto_main_site_01',
     ];
+    
+    foreach ($searchPaths as $path) {
+        if (file_exists($path . '/artisan') && file_exists($path . '/.env')) {
+            return realpath($path);
+        }
+    }
+    return null;
 }
 
-function showResult(array $result): void {
-    $status = $result['success'] ? '✅' : '❌';
-    echo "<div class='result " . ($result['success'] ? 'success' : 'error') . "'>";
-    echo "<h4>{$status} {$result['command']}</h4>";
-    echo "<pre>" . htmlspecialchars($result['output']) . "</pre>";
-    echo "</div>";
+$laravelRoot = findLaravelRoot();
+
+// ============================================
+// DATABASE HELPER
+// ============================================
+
+function getDbConnection($laravelRoot) {
+    if (!$laravelRoot || !file_exists($laravelRoot . '/.env')) {
+        throw new Exception("Could not find .env file at $laravelRoot");
+    }
+
+    $env = file_get_contents($laravelRoot . '/.env');
+    preg_match('/DB_HOST=(.*)/', $env, $host);
+    preg_match('/DB_DATABASE=(.*)/', $env, $db);
+    preg_match('/DB_USERNAME=(.*)/', $env, $user);
+    preg_match('/DB_PASSWORD=(.*)/', $env, $pass);
+    preg_match('/DB_PORT=(.*)/', $env, $port);
+
+    $host = trim($host[1] ?? '127.0.0.1');
+    $db = trim($db[1] ?? '');
+    $user = trim($user[1] ?? '');
+    $pass = trim($pass[1] ?? '');
+    $port = trim($port[1] ?? '3306');
+
+    // Remove quotes if present
+    $host = trim($host, '"\'');
+    $db = trim($db, '"\'');
+    $user = trim($user, '"\'');
+    $pass = trim($pass, '"\'');
+
+    $dsn = "mysql:host=$host;dbname=$db;port=$port;charset=utf8mb4";
+    return new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+}
+
+function runDirectFix($laravelRoot) {
+    try {
+        $pdo = getDbConnection($laravelRoot);
+        $stmt = $pdo->query("SELECT id, title, content FROM pages");
+        $pages = $stmt->fetchAll();
+        
+        $updatedCount = 0;
+        $search = 'tge.test/storage';
+        $replace = '/storage';
+        
+        // Escaped versions for JSON
+        $searchEscaped = str_replace('/', '\\/', $search);
+        $replaceEscaped = str_replace('/', '\\/', $replace);
+
+        foreach ($pages as $page) {
+            $content = $page['content'];
+            if (empty($content)) continue;
+
+            $newContent = str_replace($search, $replace, $content);
+            $newContent = str_replace($searchEscaped, $replaceEscaped, $newContent);
+
+            if ($content !== $newContent) {
+                $updateStmt = $pdo->prepare("UPDATE pages SET content = ?, updated_at = NOW() WHERE id = ?");
+                $updateStmt->execute([$newContent, $page['id']]);
+                $updatedCount++;
+            }
+        }
+        
+        return [
+            'success' => true,
+            'message' => "Successfully updated $updatedCount pages directly in the database.",
+            'details' => "Replaced '$search' with '$replace' in the 'pages' table."
+        ];
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'message' => "Database Error: " . $e->getMessage()
+        ];
+    }
 }
 
 // ============================================
-// PROCESS ACTIONS
+// ACTION HANDLER
 // ============================================
 
-$results = [];
-$action = $_GET['action'] ?? '';
+$action = $_GET['action'] ?? null;
+$directResult = null;
 
-switch ($action) {
-    case 'storage_link':
-        $results[] = runCommand('storage:link');
-        break;
-        
-    case 'cache_clear':
-        $results[] = runCommand('cache:clear');
-        $results[] = runCommand('config:clear');
-        $results[] = runCommand('route:clear');
-        $results[] = runCommand('view:clear');
-        break;
-        
-    case 'cache_build':
-        $results[] = runCommand('config:cache');
-        $results[] = runCommand('route:cache');
-        $results[] = runCommand('view:cache');
-        break;
-        
-    case 'migrate':
-        $results[] = runCommand('migrate --force');
-        break;
-        
-    case 'migrate_fresh':
-        $results[] = runCommand('migrate:fresh --force --seed');
-        break;
-        
-    case 'optimize':
-        $results[] = runCommand('optimize:clear');
-        $results[] = runCommand('optimize');
-        break;
-        
-    case 'status':
-        $results[] = runCommand('--version');
-        $results[] = runCommand('env');
-        break;
-        
-    case 'full_deploy':
-        $results[] = runCommand('cache:clear');
-        $results[] = runCommand('config:clear');
-        $results[] = runCommand('route:clear');
-        $results[] = runCommand('view:clear');
-        $results[] = runCommand('storage:link');
-        $results[] = runCommand('migrate --force');
-        $results[] = runCommand('config:cache');
-        $results[] = runCommand('route:cache');
-        $results[] = runCommand('view:cache');
-        break;
+if ($action === 'direct_fix') {
+    $directResult = runDirectFix($laravelRoot);
 }
 
 ?>
@@ -120,216 +140,33 @@ switch ($action) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OttoStart cPanel Deployment Helper</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #3b82f6;
-            --success: #22c55e;
-            --error: #ef4444;
-            --warning: #f59e0b;
-        }
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            padding: 2rem;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-        
-        .warning {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--error);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .warning h3 {
-            color: var(--error);
-            margin-bottom: 0.5rem;
-        }
-        
-        .actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .action-btn {
-            display: block;
-            background: var(--surface);
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 1rem;
-            color: var(--text);
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.2s;
-        }
-        
-        .action-btn:hover {
-            background: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .action-btn.danger {
-            border-color: var(--error);
-        }
-        
-        .action-btn.danger:hover {
-            background: var(--error);
-        }
-        
-        .action-btn h4 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-        
-        .action-btn p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-        
-        .result {
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--success);
-        }
-        
-        .result.error {
-            border-left-color: var(--error);
-        }
-        
-        .result h4 {
-            margin-bottom: 0.5rem;
-        }
-        
-        .result pre {
-            background: rgba(0,0,0,0.3);
-            padding: 1rem;
-            border-radius: 4px;
-            overflow-x: auto;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-        }
-        
-        .info {
-            background: var(--surface);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .info h3 {
-            color: var(--warning);
-            margin-bottom: 0.5rem;
-        }
-        
-        code {
-            background: rgba(0,0,0,0.3);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.875rem;
-        }
-    </style>
+    <title>OttoStart Emergency Fix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>🚀 OttoStart Deployment Helper</h1>
-        <p style="color: var(--text-muted); margin-bottom: 2rem;">cPanel Artisan Command Runner</p>
+<body class="bg-slate-950 text-slate-200 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-red-600 mb-6 italic">⚡ Quick Fix Tool</h1>
         
-        <div class="warning">
-            <h3>⚠️ Security Warning</h3>
-            <p>This file provides direct access to Laravel artisan commands. <strong>Delete this file immediately after completing deployment!</strong></p>
-        </div>
-        
-        <?php if (!empty($results)): ?>
-            <h2 style="margin-bottom: 1rem;">Command Results</h2>
-            <?php foreach ($results as $result): ?>
-                <?php showResult($result); ?>
-            <?php endforeach; ?>
-            <hr style="border-color: var(--surface); margin: 2rem 0;">
+        <?php if ($directResult): ?>
+            <div class="p-6 rounded-xl border mb-8 <?php echo $directResult['success'] ? 'bg-green-900/20 border-green-500 text-green-200' : 'bg-red-900/20 border-red-500 text-red-200'; ?>">
+                <h3 class="font-bold text-xl mb-2"><?php echo $directResult['success'] ? '✅ Success!' : '❌ Failed'; ?></h3>
+                <p><?php echo $directResult['message']; ?></p>
+                <?php if (isset($directResult['details'])): ?>
+                    <p class="text-sm mt-2 opacity-70"><?php echo $directResult['details']; ?></p>
+                <?php endif; ?>
+            </div>
         <?php endif; ?>
-        
-        <h2 style="margin-bottom: 1rem;">Available Actions</h2>
-        
-        <div class="actions">
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=status" class="action-btn">
-                <h4>📊 Check Status</h4>
-                <p>Laravel version & env</p>
-            </a>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl">
+            <h2 class="text-xl font-semibold mb-4">Direct Database Repair</h2>
+            <p class="text-slate-400 mb-6">This will bypass Artisan and modify the database directly. It looks into your <code>.env</code> file, connects to the DB, and replaces local URLs with relative ones.</p>
             
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=storage_link" class="action-btn">
-                <h4>🔗 Storage Link</h4>
-                <p>Create storage symlink</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=cache_clear" class="action-btn">
-                <h4>🧹 Clear Caches</h4>
-                <p>Clear all Laravel caches</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=cache_build" class="action-btn">
-                <h4>⚡ Build Caches</h4>
-                <p>Cache config, routes, views</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=migrate" class="action-btn">
-                <h4>🗄️ Run Migrations</h4>
-                <p>Execute pending migrations</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=optimize" class="action-btn">
-                <h4>🔧 Optimize</h4>
-                <p>Optimize for production</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=full_deploy" class="action-btn" style="grid-column: span 2;">
-                <h4>🚀 Full Deployment</h4>
-                <p>Clear caches → Storage link → Migrate → Build caches</p>
-            </a>
-            
-            <a href="?key=<?= htmlspecialchars($secretKey) ?>&action=migrate_fresh" class="action-btn danger">
-                <h4>💣 Fresh Migration</h4>
-                <p>WARNING: Drops all tables!</p>
+            <a href="?key=<?php echo $secretKey; ?>&action=direct_fix" class="block w-full py-4 text-center bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-900/20">
+                🚀 RUN EMERGENCY DATABASE FIX
             </a>
         </div>
-        
-        <div class="info">
-            <h3>📝 After Deployment</h3>
-            <p>Once your site is working correctly:</p>
-            <ol style="margin-top: 0.5rem; padding-left: 1.5rem;">
-                <li>Delete this file: <code>cpanel-helper.php</code></li>
-                <li>Verify <code>APP_DEBUG=false</code> in <code>.env</code></li>
-                <li>Test all critical functionality</li>
-                <li>Check <code>storage/logs/laravel.log</code> for errors</li>
-            </ol>
-        </div>
-        
-        <p style="margin-top: 2rem; text-align: center; color: var(--text-muted);">
-            OttoStart Deployment Helper | Generated <?= date('Y-m-d H:i:s') ?>
-        </p>
+
+        <p class="mt-8 text-center text-slate-500 text-sm italic">Delete this file immediately after images are fixed.</p>
     </div>
 </body>
 </html>

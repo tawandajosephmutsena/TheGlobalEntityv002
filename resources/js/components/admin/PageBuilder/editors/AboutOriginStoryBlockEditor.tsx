@@ -54,7 +54,7 @@ export default function AboutOriginStoryBlockEditor({ content, onUpdate }: About
                 <Label>Featured Image</Label>
                 <div className="flex gap-2">
                     <MediaLibrary 
-                        onSelect={(asset: MediaAsset) => onUpdate({ image: asset.url })}
+                        onSelect={(asset: MediaAsset) => onUpdate({ image: asset.relative_url })}
                         trigger={
                             <Button type="button" variant="outline" size="sm" className="h-9">
                                 <ImageIcon className="h-4 w-4 mr-2" /> 

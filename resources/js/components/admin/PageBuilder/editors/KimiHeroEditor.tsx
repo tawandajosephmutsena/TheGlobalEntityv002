@@ -199,7 +199,7 @@ export default function KimiHeroEditor({ block, onUpdate }: KimiHeroEditorProps)
                                 <MediaLibrary
                                     onSelect={(asset: MediaAsset) => {
                                         const updated = [...images];
-                                        updated[idx] = asset.url;
+                                        updated[idx] = asset.relative_url;
                                         updateContent({ images: updated });
                                     }}
                                     trigger={

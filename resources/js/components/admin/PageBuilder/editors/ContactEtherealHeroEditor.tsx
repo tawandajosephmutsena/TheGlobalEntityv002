@@ -167,7 +167,7 @@ export default function ContactEtherealHeroEditor({ content, onUpdate }: Props) 
                 <Label className="block mb-4 font-bold">Side Frame Image</Label>
                 <MediaLibrary 
                     currentValue={content.sideImage || ""} 
-                    onSelect={(asset) => updateContent({ sideImage: asset.url })}
+                    onSelect={(asset) => updateContent({ sideImage: asset.relative_url })}
                 />
             </div>
         </div>

@@ -68,7 +68,7 @@ export default function AboutHeroBlockEditor({ content, onUpdate }: AboutHeroBlo
                 <Label>Hero Image (Small Circle)</Label>
                 <div className="flex gap-2">
                     <MediaLibrary 
-                        onSelect={(asset: MediaAsset) => onUpdate({ backgroundImage: asset.url })}
+                        onSelect={(asset: MediaAsset) => onUpdate({ backgroundImage: asset.relative_url })}
                         trigger={
                             <Button type="button" variant="outline" size="sm" className="h-10">
                                 <ImageIcon className="h-4 w-4 mr-2" /> 

@@ -96,7 +96,7 @@ export default function AboutMoreThanEntertainmentBlockEditor({ content, onUpdat
                                 <Label className="text-xs">Image</Label>
                                 <div className="flex gap-2">
                                     <MediaLibrary 
-                                        onSelect={(asset: MediaAsset) => handleCardChange(index, { image: asset.url })}
+                                        onSelect={(asset: MediaAsset) => handleCardChange(index, { image: asset.relative_url })}
                                         trigger={
                                             <Button type="button" variant="outline" size="sm" className="h-9">
                                                 <ImageIcon className="h-4 w-4 mr-2" /> 

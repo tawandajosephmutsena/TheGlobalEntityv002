@@ -82,7 +82,7 @@ export default function ScrollAnimationEditor({ block, onUpdate }: ScrollAnimati
                     <div className="flex gap-2">
                         <MediaLibrary
                             type="image"
-                            onSelect={(asset: MediaAsset) => updateContent({ image: asset.url })}
+                            onSelect={(asset: MediaAsset) => updateContent({ image: asset.relative_url })}
                             trigger={
                                 <Button variant="outline" size="icon" className="shrink-0">
                                     <ImagePlus className="h-4 w-4" />

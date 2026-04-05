@@ -153,7 +153,7 @@ const FlipRevealBlockEditor = ({ content, onUpdate }: FlipRevealBlockEditorProps
                                 <Label className="text-xs">Image</Label>
                                 <div className="flex gap-2">
                                     <MediaLibrary
-                                        onSelect={(asset: MediaAsset) => updateItem(item.id, { image: asset.url })}
+                                        onSelect={(asset: MediaAsset) => updateItem(item.id, { image: asset.relative_url })}
                                         trigger={
                                             <Button size="sm" variant="outline" className="h-8 text-xs shrink-0">
                                                 <ImageIcon className="h-3 w-3 mr-1" /> Choose

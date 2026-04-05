@@ -151,7 +151,7 @@ export default function CarouselEditor({ content, onUpdate }: CarouselEditorProp
                                             <div className="flex gap-2">
                                                 <MediaLibrary
                                                     type="image"
-                                                    onSelect={(asset: MediaAsset) => updateSlide(index, { src: asset.url })}
+                                                    onSelect={(asset: MediaAsset) => updateSlide(index, { src: asset.relative_url })}
                                                     trigger={
                                                         <Button variant="outline" size="icon" className="shrink-0 h-9 w-9">
                                                             <ImagePlus className="h-4 w-4" />

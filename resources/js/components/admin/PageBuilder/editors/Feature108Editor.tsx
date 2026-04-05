@@ -168,7 +168,7 @@ const Feature108Editor = ({ content, onUpdate }: Feature108EditorProps) => {
                                     <Label className="text-[10px]">Image</Label>
                                     <div className="flex gap-2">
                                         <MediaLibrary
-                                            onSelect={(asset: MediaAsset) => updateTabContent(index, { imageSrc: asset.url })}
+                                            onSelect={(asset: MediaAsset) => updateTabContent(index, { imageSrc: asset.relative_url })}
                                             trigger={
                                                 <Button size="sm" variant="outline" className="h-8 text-xs">
                                                     <ImageIcon className="h-3 w-3 mr-1" /> Choose

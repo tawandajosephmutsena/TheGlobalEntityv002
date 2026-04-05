@@ -34,6 +34,7 @@ class MediaAsset extends Model
 
     protected $appends = [
         'url',
+        'relative_url',
         'is_image',
         'is_video',
     ];
@@ -61,6 +62,11 @@ class MediaAsset extends Model
     public function getUrlAttribute()
     {
         return asset('storage/' . $this->path);
+    }
+
+    public function getRelativeUrlAttribute()
+    {
+        return '/storage/' . $this->path;
     }
 
     public function getIsImageAttribute()
