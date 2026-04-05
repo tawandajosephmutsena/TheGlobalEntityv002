@@ -12,6 +12,16 @@ import { Edit, Trash, Plus } from 'lucide-react';
 import { router, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+
+const AVAILABLE_ICONS = [
+    'festival-fever-icon.svg',
+    'glocal-gems-icon.svg',
+    'living-from-the-heart-icon.svg',
+    'social-sustainability-icon.svg',
+    'solotravel-icon.svg',
+    'travel-trouble-icon.svg',
+];
 
 interface Props {
     categories: PaginatedData<Category>;
@@ -47,6 +57,22 @@ export default function Index({ categories, filters, stats }: Props) {
             ),
         },
         {
+            header: 'Icon',
+            cell: (item: Category) => (
+                <div className="flex items-center justify-center bg-muted/20 rounded-lg p-2 w-10 h-10">
+                    {item.icon ? (
+                        <img 
+                            src={`/images/stitch/icons/${item.icon}`} 
+                            alt="" 
+                            className="w-6 h-6 object-contain"
+                        />
+                    ) : (
+                        <span className="text-[10px] text-muted-foreground italic">None</span>
+                    )}
+                </div>
+            ),
+        },
+        {
             header: 'Type',
             cell: (item: Category) => (
                 <Badge variant="outline" className="capitalize">
@@ -69,6 +95,7 @@ export default function Index({ categories, filters, stats }: Props) {
         slug: '',
         description: '',
         type: 'insight' as Category['type'],
+        icon: '' as string,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -100,6 +127,7 @@ export default function Index({ categories, filters, stats }: Props) {
             slug: category.slug,
             description: category.description || '',
             type: category.type,
+            icon: category.icon || '',
         });
         setIsAddDialogOpen(true);
     };
@@ -189,6 +217,44 @@ export default function Index({ categories, filters, stats }: Props) {
                                         placeholder="Optional description"
                                     />
                                     {errors.description && <p className="text-xs text-destructive">{errors.description}</p>}
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Icon</Label>
+                                    <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 p-3 border rounded-xl bg-muted/5">
+                                        {AVAILABLE_ICONS.map((iconName) => (
+                                            <button
+                                                key={iconName}
+                                                type="button"
+                                                onClick={() => setData('icon', iconName)}
+                                                className={cn(
+                                                    "p-2 rounded-lg border transition-all hover:bg-muted/20 flex items-center justify-center",
+                                                    data.icon === iconName 
+                                                        ? "border-agency-accent bg-agency-accent/10 shadow-sm" 
+                                                        : "border-transparent"
+                                                )}
+                                                title={iconName.replace('-icon.svg', '').replace(/-/g, ' ')}
+                                            >
+                                                <img 
+                                                    src={`/images/stitch/icons/${iconName}`} 
+                                                    alt="" 
+                                                    className="w-6 h-6 object-contain"
+                                                />
+                                            </button>
+                                        ))}
+                                        <button
+                                            type="button"
+                                            onClick={() => setData('icon', '')}
+                                            className={cn(
+                                                "p-2 rounded-lg border transition-all hover:bg-muted/20 flex items-center justify-center text-[10px] font-medium",
+                                                !data.icon 
+                                                    ? "border-agency-accent bg-agency-accent/10 shadow-sm" 
+                                                    : "border-transparent"
+                                            )}
+                                        >
+                                            None
+                                        </button>
+                                    </div>
+                                    {errors.icon && <p className="text-xs text-destructive">{errors.icon}</p>}
                                 </div>
                                 <DialogFooter>
                                     <Button type="submit" disabled={processing} className="bg-agency-accent text-white hover:bg-agency-accent/90 shadow-lg">

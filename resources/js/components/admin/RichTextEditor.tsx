@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import axios from 'axios';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
@@ -38,7 +37,10 @@ import {
     Save,
     AlertCircle,
     CheckCircle,
-    MousePointerClick
+    MousePointerClick,
+    Columns2,
+    LayoutPanelLeft,
+    SeparatorHorizontal,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import MediaLibrary from './MediaLibrary';
@@ -53,6 +55,10 @@ import {
     TableOfContentsPlugin 
 } from './editor/EditorPlugins';
 import { ButtonExtension } from './editor/ButtonExtension';
+import { ResizableImageExtension } from './editor/ResizableImageExtension';
+import { ColumnLayoutNode, ColumnNode } from './editor/ColumnLayoutExtension';
+import { TextImageExtension } from './editor/TextImageExtension';
+import { DividerExtension } from './editor/DividerExtension';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // ToolbarButton component - defined outside to prevent recreation during render
@@ -158,7 +164,7 @@ export default function RichTextEditor({
         const base64Nodes: { pos: number; src: string; node: ReturnType<typeof doc.nodeAt> }[] = [];
 
         doc.descendants((node, pos) => {
-            if (node.type.name === 'image' && node.attrs.src?.startsWith('data:image/')) {
+            if (node.type.name === 'resizableImage' && node.attrs.src?.startsWith('data:image/')) {
                 const src = node.attrs.src as string;
                 // Skip if already uploading this image
                 if (!uploadingImages.current.has(src.substring(0, 100))) {
@@ -186,12 +192,10 @@ export default function RichTextEditor({
                 if (url && editorInstance) {
                     // Find the image node again (positions may have changed)
                     editorInstance.state.doc.descendants((node, pos) => {
-                        if (node.type.name === 'image' && node.attrs.src === src) {
-                            editorInstance.chain()
-                                .focus()
-                                .setNodeSelection(pos)
-                                .setImage({ src: url })
-                                .run();
+                        if (node.type.name === 'resizableImage' && node.attrs.src === src) {
+                            const tr = editorInstance.state.tr;
+                            tr.setNodeMarkup(pos, undefined, { ...node.attrs, src: url });
+                            editorInstance.view.dispatch(tr);
                         }
                     });
                 }
@@ -217,11 +221,7 @@ export default function RichTextEditor({
                     keepAttributes: false,
                 },
             }),
-            Image.configure({
-                HTMLAttributes: {
-                    class: 'rounded-lg max-w-full h-auto',
-                },
-            }),
+            ResizableImageExtension,
             Link.configure({
                 openOnClick: false,
                 HTMLAttributes: {
@@ -232,7 +232,7 @@ export default function RichTextEditor({
                 placeholder,
             }),
             CharacterCount.configure({
-                limit: null, // Disable character limit for the editor (validation is backend)
+                limit: null,
             }),
             Highlight.configure({
                 multicolor: true,
@@ -242,6 +242,10 @@ export default function RichTextEditor({
             }),
             Typography,
             Underline,
+            ColumnLayoutNode,
+            ColumnNode,
+            TextImageExtension,
+            DividerExtension,
             WordCountPlugin,
             AutoSavePlugin.configure({
                 delay: 2000,
@@ -293,7 +297,7 @@ export default function RichTextEditor({
                         if (file) {
                             uploadImageFile(file).then((url) => {
                                 if (url && editor) {
-                                    editor.chain().focus().setImage({ src: url }).run();
+                                    editor.chain().focus().setResizableImage({ src: url }).run();
                                 }
                             });
                         }
@@ -312,7 +316,7 @@ export default function RichTextEditor({
                         event.preventDefault();
                         uploadImageFile(file).then((url) => {
                             if (url && editor) {
-                                editor.chain().focus().setImage({ src: url }).run();
+                                editor.chain().focus().setResizableImage({ src: url }).run();
                             }
                         });
                         return true;
@@ -340,7 +344,7 @@ export default function RichTextEditor({
 
     const addImage = useCallback((url: string) => {
         if (editor) {
-            editor.chain().focus().setImage({ src: url }).run();
+            editor.chain().focus().setResizableImage({ src: url }).run();
         }
     }, [editor]);
 
@@ -728,6 +732,28 @@ export default function RichTextEditor({
                             </div>
                         </DialogContent>
                     </Dialog>
+
+                    <Separator orientation="vertical" className="h-6 mx-1" />
+
+                    {/* Layout Blocks */}
+                    <ToolbarButton
+                        onClick={() => editor.chain().focus().setColumnLayout({ layout: '1-1' }).run()}
+                        title="Column Layout"
+                    >
+                        <Columns2 className="h-4 w-4" />
+                    </ToolbarButton>
+                    <ToolbarButton
+                        onClick={() => editor.chain().focus().setTextImage().run()}
+                        title="Text + Image Block"
+                    >
+                        <LayoutPanelLeft className="h-4 w-4" />
+                    </ToolbarButton>
+                    <ToolbarButton
+                        onClick={() => editor.chain().focus().setDivider().run()}
+                        title="Divider"
+                    >
+                        <SeparatorHorizontal className="h-4 w-4" />
+                    </ToolbarButton>
 
                     <Separator orientation="vertical" className="h-6 mx-1" />
 

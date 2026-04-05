@@ -249,6 +249,7 @@ export interface Category {
     slug: string;
     description: string | null;
     type: 'insight' | 'service' | 'portfolio' | 'festival';
+    icon?: string | null;
 }
 
 export interface Review {

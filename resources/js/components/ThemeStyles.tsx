@@ -28,6 +28,9 @@ interface ThemeColors {
     'sidebar-accent-foreground'?: string;
     'sidebar-border'?: string;
     'sidebar-ring'?: string;
+    'gradient-start'?: string;
+    'gradient-end'?: string;
+    'gradient-accent'?: string;
     [key: string]: string | undefined;
 }
 
@@ -253,6 +256,15 @@ export default function ThemeStyles() {
                         
                         /* Primary RGB for effects (approximate) */
                         --primary-rgb: 194, 94, 46;
+                        
+                        /* Gradient system — derived from theme tokens or fallback to primary/accent */
+                        --gradient-start: ${preset.light['gradient-start'] || preset.light.primary || 'oklch(0.55 0.13 43)'};
+                        --gradient-end: ${preset.light['gradient-end'] || preset.light.accent || 'oklch(0.88 0.03 93)'};
+                        --gradient-accent: ${preset.light['gradient-accent'] || preset.light.accent || 'oklch(0.70 0.10 200)'};
+                        --theme-gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+                        --theme-gradient-reverse: linear-gradient(135deg, var(--gradient-end), var(--gradient-start));
+                        --theme-gradient-subtle: linear-gradient(135deg, color-mix(in oklch, var(--gradient-start) 8%, var(--background)), color-mix(in oklch, var(--gradient-end) 8%, var(--background)));
+                        --theme-gradient-radial: radial-gradient(ellipse at 20% 50%, color-mix(in oklch, var(--gradient-start) 15%, transparent), color-mix(in oklch, var(--gradient-end) 10%, transparent), transparent 70%);
                     }
                     
                     .dark {
@@ -275,6 +287,15 @@ export default function ThemeStyles() {
                         
                         /* Primary RGB for effects - dark mode */
                         --primary-rgb: 217, 116, 65;
+                        
+                        /* Gradient system — dark mode */
+                        --gradient-start: ${preset.dark['gradient-start'] || preset.dark.primary || 'oklch(0.55 0.13 43)'};
+                        --gradient-end: ${preset.dark['gradient-end'] || preset.dark.accent || 'oklch(0.21 0.01 95)'};
+                        --gradient-accent: ${preset.dark['gradient-accent'] || preset.dark.accent || 'oklch(0.50 0.08 200)'};
+                        --theme-gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+                        --theme-gradient-reverse: linear-gradient(135deg, var(--gradient-end), var(--gradient-start));
+                        --theme-gradient-subtle: linear-gradient(135deg, color-mix(in oklch, var(--gradient-start) 12%, var(--background)), color-mix(in oklch, var(--gradient-end) 12%, var(--background)));
+                        --theme-gradient-radial: radial-gradient(ellipse at 20% 50%, color-mix(in oklch, var(--gradient-start) 20%, transparent), color-mix(in oklch, var(--gradient-end) 15%, transparent), transparent 70%);
                     }
 
                     /* Global Font Applications */

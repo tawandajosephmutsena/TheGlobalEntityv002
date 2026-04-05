@@ -99,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
     return (
-        <footer className={cn('relative bg-muted/30 dark:bg-background text-foreground pt-16 md:pt-32 pb-12 overflow-hidden border-t border-border', className)}>
+        <footer className={cn('relative theme-gradient-bg-subtle dark:bg-background text-foreground pt-16 md:pt-32 pb-12 overflow-hidden theme-gradient-border-top', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-16 md:mb-32">
                     {/* Massive Brand Side */}
@@ -136,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                                     aria-label={social.name}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="size-12 rounded-full border border-border flex items-center justify-center hover:bg-agency-accent hover:text-agency-primary transition-all duration-500"
+                                    className="size-12 rounded-full border border-border flex items-center justify-center hover:theme-gradient-bg hover:text-white hover:border-transparent transition-all duration-500 hover:shadow-lg theme-gradient-glow"
                                 >
                                     <social.icon className="size-5" />
                                 </a>
@@ -237,8 +237,8 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     </div>
 
                     <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <span className="text-xs font-bold uppercase tracking-widest group-hover:text-agency-accent transition-colors">{footerBackToTop}</span>
-                        <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:bg-agency-accent group-hover:border-transparent group-hover:text-agency-primary transition-all">
+                        <span className="text-xs font-bold uppercase tracking-widest group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
+                        <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:theme-gradient-bg group-hover:border-transparent group-hover:text-white transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>
                         </div>
                     </div>

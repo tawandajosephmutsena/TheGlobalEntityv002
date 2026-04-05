@@ -53,10 +53,10 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
         ...defaultStats.slice(statsArray.length)
     ].slice(0, 4);
     return (
-        <section className={cn('bg-background py-32 dark:bg-card/50', className)}>
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className={cn('gradient-aurora py-32', className)}>
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
                 <header className="mb-16">
-                    <span className="text-primary font-bold uppercase tracking-widest text-sm mb-2 block animate-[bloom_1s_ease-out_0.2s_both]">
+                    <span className="theme-gradient-text font-bold uppercase tracking-widest text-sm mb-2 block animate-[bloom_1s_ease-out_0.2s_both]">
                         {subtitle}
                     </span>
                     <h2 className="text-5xl md:text-7xl font-bold text-foreground dark:text-white animate-[bloom_1s_ease-out_0.4s_both]">
@@ -69,18 +69,18 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                     {/* Large Stat Box */}
                     <AnimatedSection 
                         animation="scale"
-                        className="lg:col-span-7 bg-white dark:bg-[#161616] border border-current/5 p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[300px] md:min-h-[400px] relative overflow-hidden group cursor-default"
+                        className="lg:col-span-7 gradient-accent-card bg-white dark:bg-[#161616] border border-current/5 p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[300px] md:min-h-[400px] relative overflow-hidden group cursor-default"
                     >
                         <div className="relative z-10">
-                            <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-8">
+                            <div className="size-16 rounded-full flex items-center justify-center mb-8 theme-gradient-animated text-white shadow-lg">
                                 <span className="material-symbols-outlined text-4xl">groups</span>
                             </div>
                             <h3 className="text-xl uppercase tracking-widest opacity-40 font-bold mb-4">{displayStats[0].label}</h3>
                             <div className="text-7xl md:text-9xl font-black text-foreground dark:text-white group-hover:scale-110 transition-transform origin-left duration-700">
-                                {displayStats[0].value}<span className="text-primary">{displayStats[0].suffix || '+'}</span>
+                                {displayStats[0].value}<span className="theme-gradient-text">{displayStats[0].suffix || '+'}</span>
                             </div>
                         </div>
-                        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-none"></div>
+                        <div className="absolute top-0 right-0 w-1/2 h-full pointer-none" style={{ background: 'linear-gradient(to left, color-mix(in oklch, var(--gradient-start) 8%, transparent), transparent)' }}></div>
                     </AnimatedSection>
 
                     {/* Accent Stat Box */}
@@ -88,11 +88,11 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                         <AnimatedSection 
                             animation="scale"
                             delay={200}
-                            className="flex-1 bg-primary text-primary-foreground p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[200px] md:min-h-[250px] group transition-transform hover:-translate-y-2 cursor-default"
+                            className="flex-1 theme-gradient-animated text-white p-8 md:p-12 rounded-3xl flex flex-col justify-between min-h-[200px] md:min-h-[250px] group transition-transform hover:-translate-y-2 cursor-default shadow-xl theme-gradient-glow"
                         >
                             <div>
                                 <span className="material-symbols-outlined text-4xl mb-4">bolt</span>
-                                <h3 className="text-xl uppercase tracking-widest opacity-60 font-bold">{displayStats[1].label}</h3>
+                                <h3 className="text-xl uppercase tracking-widest opacity-80 font-bold">{displayStats[1].label}</h3>
                             </div>
                             <div className="text-6xl md:text-8xl font-black">{displayStats[1].value}{displayStats[1].suffix || '%'}</div>
                         </AnimatedSection>
@@ -112,7 +112,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                             <AnimatedSection 
                                 animation="scale"
                                 delay={600}
-                                className="bg-foreground text-background dark:bg-card dark:text-card-foreground p-6 md:p-8 rounded-3xl group hover:scale-105 transition-all cursor-default"
+                                className="gradient-mesh p-6 md:p-8 rounded-3xl group hover:scale-105 transition-all cursor-default gradient-dot-grid"
                             >
                                 <h3 className="text-xs md:text-sm uppercase tracking-widest opacity-60 font-bold mb-4 leading-tight">{displayStats[3].label}</h3>
                                 <div className="text-4xl md:text-5xl font-black">{displayStats[3].value}</div>

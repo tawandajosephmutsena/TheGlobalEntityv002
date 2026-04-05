@@ -15,7 +15,7 @@ interface InsightItem {
     excerpt: string;
     featured_image?: string | null;
     author?: { name: string; avatar?: string | null };
-    category?: { name: string; slug: string };
+    category?: { name: string; slug: string; icon?: string | null };
     published_at: string | null;
     reading_time?: number | null;
     category_id: number;
@@ -113,13 +113,23 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                         <span className="absolute top-6 right-6 bg-surface/90 backdrop-blur-md text-on-surface text-[10px] font-black [font-variant-caps:small-caps] tracking-widest px-4 py-1.5 rounded-full shadow-lg flex items-center gap-2">
-                                            <CategoryIcon category={post.category?.slug || ''} size={14} glow={false} />
+                                            <CategoryIcon 
+                                                category={post.category?.slug || ''} 
+                                                icon={post.category?.icon}
+                                                size={14} 
+                                                glow={false} 
+                                            />
                                             {post.category?.name || 'Insight'}
                                         </span>
                                     </div>
                                     <div className="space-y-4">
                                         <p className="text-secondary font-black text-[10px] tracking-widest [font-variant-caps:small-caps] flex items-center gap-2">
-                                            <CategoryIcon category={post.category?.slug || ''} size={12} glow={false} />
+                                            <CategoryIcon 
+                                                category={post.category?.slug || ''} 
+                                                icon={post.category?.icon}
+                                                size={12} 
+                                                glow={false} 
+                                            />
                                             {post.category?.name || 'Journal'}
                                         </p>
                                         <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">

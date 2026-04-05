@@ -11,10 +11,20 @@ export type CategorySlug =
 
 interface CategoryIconProps {
     category: string | CategorySlug;
+    icon?: string | null;
     size?: number;
     className?: string;
     glow?: boolean;
 }
+
+const iconToColor: Record<string, string> = {
+    'festival-fever-icon.svg': '#ff00ff',
+    'glocal-gems-icon.svg': '#00ffff',
+    'living-from-the-heart-icon.svg': '#ff3131',
+    'social-sustainability-icon.svg': '#39ff14',
+    'solotravel-icon.svg': '#ffff00',
+    'travel-trouble-icon.svg': '#ffaa00',
+};
 
 const categoryMapping: Record<string, { icon: string; color: string }> = {
     'festival-fever': { icon: 'festival-fever-icon.svg', color: '#ff00ff' }, // Neon Pink
@@ -33,27 +43,38 @@ const categoryMapping: Record<string, { icon: string; color: string }> = {
 
 const CategoryIcon: React.FC<CategoryIconProps> = ({
     category,
+    icon,
     size = 24,
     className = '',
     glow = true,
 }) => {
-    const normalizedCategory = category.toLowerCase().replace(/-/g, ' ');
-    const mapping = categoryMapping[category.toLowerCase()] || categoryMapping[normalizedCategory];
+    let iconFile = icon;
+    let iconColor = icon ? iconToColor[icon] : undefined;
 
-    if (!mapping) {
+    if (!iconFile) {
+        const normalizedCategory = category.toLowerCase().replace(/-/g, ' ');
+        const mapping = categoryMapping[category.toLowerCase()] || categoryMapping[normalizedCategory];
+        
+        if (mapping) {
+            iconFile = mapping.icon;
+            iconColor = mapping.color;
+        }
+    }
+
+    if (!iconFile) {
         return null;
     }
 
 
     return (
         <img
-            src={`/images/stitch/icons/${mapping.icon}`}
+            src={`/images/stitch/icons/${iconFile}`}
             alt={`${category} icon`}
             style={{
                 width: size,
                 height: size,
                 // @ts-expect-error - CSS custom property
-                "--glow-color": mapping.color,
+                "--glow-color": iconColor || '#ffffff',
             }}
             className={cn(
                 "category-icon",

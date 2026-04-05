@@ -110,10 +110,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ref={containerRef}
             className={cn(
                 'relative flex min-h-[100dvh] flex-col items-center overflow-hidden',
-                'bg-agency-secondary dark:bg-agency-dark pt-20',
+                'theme-gradient-bg-subtle pt-20',
                 className,
             )}
         >
+            {/* Animated gradient background orbs */}
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+                <div
+                    className="absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
+                    style={{ background: 'var(--gradient-start)' }}
+                />
+                <div
+                    className="absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
+                    style={{ background: 'var(--gradient-end)', animationDelay: '2s' }}
+                />
+                <div
+                    className="absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
+                    style={{ background: 'var(--gradient-accent)', animationDelay: '4s' }}
+                />
+            </div>
             {/* Infinite Background Marquee */}
             <div className="absolute inset-0 z-0 flex items-center justify-start opacity-[0.03] dark:opacity-[0.08] pointer-events-none select-none overflow-hidden">
                 <div 
@@ -209,7 +224,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         </span>
                     </div>
                     <div className="overflow-visible mt-2">
-                        <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.6s_both] text-transparent bg-clip-text bg-gradient-to-r from-agency-accent to-agency-accent-soft italic pr-4">
+                        <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.6s_both] theme-gradient-text italic pr-4">
                             {(title || '').split(' ').slice(2).join(' ')}
                         </span>
                     </div>
@@ -227,7 +242,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     <Button
                         asChild
                         size="lg"
-                        className="group h-14 px-10 rounded-full bg-primary text-primary-foreground font-bold text-lg hover:scale-105 transition-all shadow-xl shadow-primary/20 border-none btn-magnetic"
+                        className="group h-14 px-10 rounded-full theme-gradient-animated text-white font-bold text-lg hover:scale-105 transition-all shadow-xl theme-gradient-glow border-none btn-magnetic"
                     >
                         <a href={ctaHref}>
                             {ctaText}

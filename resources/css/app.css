@@ -89,6 +89,13 @@
     --animate-bloom: bloom 1s ease-out both;
     --animate-smoke: smoke-reveal 1s ease-out both;
     --animate-shimmer: shimmer 2s infinite;
+    --animate-gradient-shift: gradient-shift 6s ease infinite;
+    --animate-gradient-pulse: gradient-pulse 4s ease-in-out infinite;
+
+    /* Gradient tokens — mapped from CSS vars injected by ThemeStyles */
+    --color-gradient-start: var(--gradient-start);
+    --color-gradient-end: var(--gradient-end);
+    --color-gradient-accent: var(--gradient-accent);
 }
 
 /* Material 3 / Stitch Specific Keyframes */
@@ -207,6 +214,33 @@
     100% {
         background-position: 0% 50%;
     }
+}
+
+/* Theme Gradient Keyframes */
+@keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes gradient-pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes gradient-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+@keyframes aurora-drift-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(10%, 15%) scale(1.1); }
+}
+
+@keyframes aurora-drift-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-12%, -10%) scale(1.15); }
 }
 
 /*
@@ -637,6 +671,224 @@
         background-color: var(--secondary);
         border-radius: 50%;
         box-shadow: 0 0 10px var(--secondary);
+    }
+
+    /* ===== Theme Gradient Utilities ===== */
+    .theme-gradient-bg {
+        background: var(--theme-gradient);
+    }
+
+    .theme-gradient-bg-subtle {
+        background: var(--theme-gradient-subtle);
+    }
+
+    .theme-gradient-bg-radial {
+        background: var(--theme-gradient-radial);
+    }
+
+    .theme-gradient-text {
+        background: var(--theme-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .theme-gradient-border {
+        border-image: var(--theme-gradient) 1;
+    }
+
+    .theme-gradient-border-top {
+        border-top: 2px solid transparent;
+        border-image: linear-gradient(to right, var(--gradient-start), var(--gradient-end), var(--gradient-start)) 1;
+        border-image-slice: 1;
+    }
+
+    .theme-gradient-overlay::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--theme-gradient-radial);
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .theme-gradient-animated {
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-accent), var(--gradient-end), var(--gradient-start));
+        background-size: 300% 300%;
+        animation: gradient-shift 6s ease infinite;
+    }
+
+    .theme-gradient-glow {
+        box-shadow:
+            0 0 20px color-mix(in oklch, var(--gradient-start) 15%, transparent),
+            0 0 40px color-mix(in oklch, var(--gradient-end) 10%, transparent);
+    }
+
+    .theme-gradient-card {
+        background: var(--theme-gradient-subtle);
+        border: 1px solid color-mix(in oklch, var(--gradient-start) 15%, transparent);
+        transition: all 0.5s ease;
+    }
+
+    .theme-gradient-card:hover {
+        border-color: color-mix(in oklch, var(--gradient-start) 30%, transparent);
+        box-shadow: 0 8px 30px color-mix(in oklch, var(--gradient-start) 10%, transparent);
+    }
+
+    .gradient-glass {
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background: linear-gradient(
+            135deg,
+            color-mix(in oklch, var(--gradient-start) 8%, var(--background)),
+            color-mix(in oklch, var(--gradient-end) 5%, var(--background))
+        );
+        border: 1px solid color-mix(in oklch, var(--gradient-start) 12%, transparent);
+    }
+
+    /* ===== Motion Gradient Backgrounds ===== */
+
+    /* Full-section flowing gradient background with slow motion */
+    .gradient-motion-bg {
+        position: relative;
+        overflow: hidden;
+    }
+    .gradient-motion-bg::before {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        background: conic-gradient(
+            from 0deg at 50% 50%,
+            var(--gradient-start),
+            var(--gradient-accent),
+            var(--gradient-end),
+            var(--gradient-start)
+        );
+        animation: gradient-rotate 12s linear infinite;
+        opacity: 0.08;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .dark .gradient-motion-bg::before {
+        opacity: 0.15;
+    }
+
+    /* Aurora-style flowing background */
+    .gradient-aurora {
+        position: relative;
+        overflow: hidden;
+    }
+    .gradient-aurora::before,
+    .gradient-aurora::after {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        z-index: 0;
+        border-radius: 50%;
+        filter: blur(80px);
+    }
+    .gradient-aurora::before {
+        top: -30%;
+        left: -20%;
+        width: 70%;
+        height: 70%;
+        background: var(--gradient-start);
+        opacity: 0.12;
+        animation: aurora-drift-1 8s ease-in-out infinite alternate;
+    }
+    .gradient-aurora::after {
+        bottom: -20%;
+        right: -15%;
+        width: 60%;
+        height: 60%;
+        background: var(--gradient-end);
+        opacity: 0.10;
+        animation: aurora-drift-2 10s ease-in-out infinite alternate;
+    }
+    .dark .gradient-aurora::before { opacity: 0.20; }
+    .dark .gradient-aurora::after  { opacity: 0.18; }
+
+    /* Mesh gradient (multi-stop radial) */
+    .gradient-mesh {
+        background:
+            radial-gradient(ellipse at 0% 0%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 100% 0%, color-mix(in oklch, var(--gradient-accent) 15%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 100%, color-mix(in oklch, var(--gradient-end) 18%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh {
+        background:
+            radial-gradient(ellipse at 0% 0%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 100% 0%, color-mix(in oklch, var(--gradient-accent) 25%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 100%, color-mix(in oklch, var(--gradient-end) 28%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* Section gradient divider (horizontal line) */
+    .gradient-divider {
+        height: 2px;
+        background: linear-gradient(to right, transparent, var(--gradient-start), var(--gradient-accent), var(--gradient-end), transparent);
+        border: none;
+        margin: 0;
+    }
+
+    /* Thick gradient divider with glow */
+    .gradient-divider-glow {
+        height: 3px;
+        background: linear-gradient(to right, transparent 5%, var(--gradient-start), var(--gradient-accent), var(--gradient-end), transparent 95%);
+        border: none;
+        margin: 0;
+        box-shadow: 0 0 20px color-mix(in oklch, var(--gradient-accent) 30%, transparent);
+    }
+
+    /* Gradient ring / outline effect */
+    .gradient-ring {
+        position: relative;
+    }
+    .gradient-ring::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        background: var(--theme-gradient);
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    .gradient-ring:hover::before {
+        opacity: 1;
+    }
+
+    /* Stats / accent card with gradient edge */
+    .gradient-accent-card {
+        position: relative;
+        overflow: hidden;
+    }
+    .gradient-accent-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: var(--theme-gradient);
+        border-radius: 4px 0 0 4px;
+    }
+
+    /* Gradient dot grid pattern */
+    .gradient-dot-grid {
+        background-image: radial-gradient(
+            color-mix(in oklch, var(--gradient-start) 12%, transparent) 1px,
+            transparent 1px
+        );
+        background-size: 24px 24px;
+    }
+    .dark .gradient-dot-grid {
+        background-image: radial-gradient(
+            color-mix(in oklch, var(--gradient-start) 20%, transparent) 1px,
+            transparent 1px
+        );
     }
 
     .no-line-section {

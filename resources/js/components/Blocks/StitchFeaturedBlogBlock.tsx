@@ -86,7 +86,7 @@ export default function StitchFeaturedBlogBlockRenderer({
         : posts;
 
     return (
-        <section className="py-24 md:py-32 px-6 bg-surface theme-stitch overflow-hidden">
+        <section className="py-24 md:py-32 px-6 gradient-aurora theme-stitch overflow-hidden">
             <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
                     <div className="max-w-3xl">
@@ -112,7 +112,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                     <AnimatedSection animation="fade-left" delay={300}>
                         <motion.button 
                             whileHover={{ x: 10 }}
-                            className="flex items-center gap-4 py-4 px-8 bg-surface-container rounded-full border border-outline-variant/30 font-black text-[10px] tracking-tighter [font-variant-caps:small-caps] text-primary transition-all group shadow-lg"
+                            className="flex items-center gap-4 py-4 px-8 theme-gradient-animated text-white rounded-full font-black text-[10px] tracking-tighter [font-variant-caps:small-caps] transition-all group shadow-lg theme-gradient-glow"
                         >
                             view all stories 
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -154,10 +154,10 @@ export default function StitchFeaturedBlogBlockRenderer({
                                             alt={post.title || ""} 
                                             className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000" 
                                         />
-                                        <div className="absolute inset-0 bg-primary/20 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                                        <div className="absolute inset-0 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-1000" style={{ background: 'var(--theme-gradient)' }} />
                                         
                                         <div className="absolute top-6 left-6">
-                                            <div className="glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white flex items-center gap-2 border-white/20">
+                                            <div className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white flex items-center gap-2">
                                                 <CategoryIcon category="festival-fever" size={14} glow />
                                                 exploration
                                             </div>

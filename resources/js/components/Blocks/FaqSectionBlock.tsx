@@ -25,8 +25,10 @@ export default function FaqSectionBlockRenderer(props: FaqSectionBlock['content'
     } = props || {};
 
     return (
-        <AnimatedSection className="bg-muted dark:bg-background py-20">
-            <div className="mx-auto max-w-5xl px-4 md:px-6">
+        <AnimatedSection className="gradient-motion-bg gradient-mesh py-20">
+            {/* Gradient section divider */}
+            <div className="gradient-divider-glow mb-20" aria-hidden="true" />
+            <div className="mx-auto max-w-5xl px-4 md:px-6 relative z-10">
                 <div className="flex flex-col gap-10 md:flex-row md:gap-16">
                     <div className="md:w-1/3">
                         <div className="sticky top-20">
@@ -46,11 +48,11 @@ export default function FaqSectionBlockRenderer(props: FaqSectionBlock['content'
                                 <AccordionItem
                                     key={item.id}
                                     value={item.id}
-                                    className="bg-background shadow-xs rounded-lg border border-border px-4 last:border-b"
+                                    className="theme-gradient-card rounded-lg px-4 last:border-b"
                                 >
                                     <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline text-foreground">
                                         <div className="flex items-center gap-3">
-                                            <div className="flex size-6 shrink-0 text-primary">
+                                            <div className="flex size-6 shrink-0 theme-gradient-text">
                                                 {/* Fallback pattern if DynamicIcon isn't available: render generic icon or nothing */}
                                                 {item.icon ? (
                                                     <DynamicIcon name={item.icon as IconName} className="m-auto size-4" />

@@ -9,6 +9,7 @@ interface Category {
     id: number;
     name: string;
     slug: string;
+    icon?: string | null;
 }
 
 interface Props {
@@ -56,6 +57,7 @@ export default function JournalCategoryFilterBlock({ content, categories = [] }:
                     >
                         <CategoryIcon 
                             category={cat.slug} 
+                            icon={cat.icon}
                             size={18} 
                             glow={activeCategoryId === cat.id}
                             className={cn(

@@ -1037,5 +1037,151 @@ return [
                 'ring' => 'oklch(0.6000 0.2000 333.00)',
             ],
         ],
+
+        'ocean_sunset' => [
+            'name' => 'Ocean Sunset',
+            'description' => 'Deep underwater calm with oceanic teal gradients',
+            'fonts' => [
+                'sans' => 'Space Grotesk',
+                'serif' => 'Lora',
+                'mono' => 'JetBrains Mono',
+                'display' => 'Space Grotesk',
+            ],
+            'radius' => '0.625rem',
+            'light' => [
+                // Core tokens — light mode
+                'background'             => 'oklch(0.9700 0.0120 220)',     // Very pale steel-blue tint
+                'foreground'             => 'oklch(0.2321 0.0265 226)',     // Derived from #0F2027
+                'card'                   => 'oklch(0.9800 0.0080 222)',
+                'card-foreground'        => 'oklch(0.2321 0.0265 226)',
+                'popover'                => 'oklch(0.9850 0.0060 220)',
+                'popover-foreground'     => 'oklch(0.2321 0.0265 226)',
+                'primary'                => 'oklch(0.4209 0.0525 228)',     // #2C5364 — steel blue
+                'primary-foreground'     => 'oklch(1.0000 0 0)',
+                'secondary'              => 'oklch(0.9100 0.0250 222)',
+                'secondary-foreground'   => 'oklch(0.2500 0.0200 226)',
+                'accent'                 => 'oklch(0.5500 0.0750 200)',     // Luminous teal accent
+                'accent-foreground'      => 'oklch(1.0000 0 0)',
+                'muted'                  => 'oklch(0.9400 0.0150 222)',
+                'muted-foreground'       => 'oklch(0.4500 0.0200 226)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.8800 0.0200 222)',
+                'input'                  => 'oklch(0.9200 0.0150 222)',
+                'ring'                   => 'oklch(0.4209 0.0525 228)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.4209 0.0525 228)',     // #2C5364
+                'gradient-end'           => 'oklch(0.3200 0.0400 226)',     // Mid-blend
+                'gradient-accent'        => 'oklch(0.5500 0.0750 200)',     // Bright teal
+            ],
+            'dark' => [
+                // Core tokens — dark mode
+                'background'             => 'oklch(0.1600 0.0200 226)',     // Very deep ocean (#0F2027 area)
+                'foreground'             => 'oklch(0.9200 0.0150 220)',
+                'card'                   => 'oklch(0.1900 0.0230 226)',
+                'card-foreground'        => 'oklch(0.9200 0.0150 220)',
+                'popover'                => 'oklch(0.1900 0.0230 226)',
+                'popover-foreground'     => 'oklch(0.9200 0.0150 220)',
+                'primary'                => 'oklch(0.5500 0.0650 228)',     // Brighter #2C5364 for dark
+                'primary-foreground'     => 'oklch(1.0000 0 0)',
+                'secondary'              => 'oklch(0.2600 0.0300 226)',
+                'secondary-foreground'   => 'oklch(0.9200 0.0150 220)',
+                'accent'                 => 'oklch(0.6200 0.0850 200)',     // Luminous teal in dark
+                'accent-foreground'      => 'oklch(0.1000 0 0)',
+                'muted'                  => 'oklch(0.2200 0.0250 226)',
+                'muted-foreground'       => 'oklch(0.7000 0.0200 222)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.2800 0.0300 226)',
+                'input'                  => 'oklch(0.2500 0.0280 226)',
+                'ring'                   => 'oklch(0.5500 0.0650 228)',
+                // Sidebar
+                'sidebar'                => 'oklch(0.1400 0.0180 226)',
+                'sidebar-foreground'     => 'oklch(0.9000 0.0150 220)',
+                'sidebar-primary'        => 'oklch(0.5500 0.0650 228)',
+                'sidebar-primary-foreground' => 'oklch(1.0000 0 0)',
+                'sidebar-accent'         => 'oklch(0.2200 0.0250 226)',
+                'sidebar-accent-foreground'  => 'oklch(0.9000 0.0150 220)',
+                'sidebar-border'         => 'oklch(0.2600 0.0280 226)',
+                'sidebar-ring'           => 'oklch(0.5500 0.0650 228)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.2321 0.0265 226)',     // #0F2027
+                'gradient-end'           => 'oklch(0.4209 0.0525 228)',     // #2C5364
+                'gradient-accent'        => 'oklch(0.6200 0.0850 200)',     // Bright teal
+            ],
+        ],
+
+        'emerald_dusk' => [
+            'name' => 'Emerald Dusk',
+            'description' => 'Lush forest twilight with emerald-to-sage gradients',
+            'fonts' => [
+                'sans' => 'Outfit',
+                'serif' => 'Merriweather',
+                'mono' => 'JetBrains Mono',
+                'display' => 'Outfit',
+            ],
+            'radius' => '0.75rem',
+            'light' => [
+                // Core tokens — light mode
+                'background'             => 'oklch(0.9700 0.0150 150)',     // Soft sage-white
+                'foreground'             => 'oklch(0.2500 0.0400 180)',     // Deep forest text
+                'card'                   => 'oklch(0.9800 0.0100 148)',
+                'card-foreground'        => 'oklch(0.2500 0.0400 180)',
+                'popover'                => 'oklch(0.9850 0.0080 150)',
+                'popover-foreground'     => 'oklch(0.2500 0.0400 180)',
+                'primary'                => 'oklch(0.3948 0.0637 220)',     // #134E5E — deep teal-green
+                'primary-foreground'     => 'oklch(1.0000 0 0)',
+                'secondary'              => 'oklch(0.9000 0.0400 150)',
+                'secondary-foreground'   => 'oklch(0.2500 0.0400 180)',
+                'accent'                 => 'oklch(0.7062 0.0990 150)',     // #71B280 — sage green
+                'accent-foreground'      => 'oklch(0.1500 0.0300 160)',
+                'muted'                  => 'oklch(0.9400 0.0200 150)',
+                'muted-foreground'       => 'oklch(0.4500 0.0300 180)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.8800 0.0300 150)',
+                'input'                  => 'oklch(0.9200 0.0200 150)',
+                'ring'                   => 'oklch(0.3948 0.0637 220)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.3948 0.0637 220)',     // #134E5E
+                'gradient-end'           => 'oklch(0.7062 0.0990 150)',     // #71B280
+                'gradient-accent'        => 'oklch(0.6000 0.0800 180)',     // Mid emerald
+            ],
+            'dark' => [
+                // Core tokens — dark mode
+                'background'             => 'oklch(0.1600 0.0300 200)',     // Deep forest dark
+                'foreground'             => 'oklch(0.9200 0.0200 150)',
+                'card'                   => 'oklch(0.1900 0.0350 200)',
+                'card-foreground'        => 'oklch(0.9200 0.0200 150)',
+                'popover'                => 'oklch(0.1900 0.0350 200)',
+                'popover-foreground'     => 'oklch(0.9200 0.0200 150)',
+                'primary'                => 'oklch(0.7062 0.0990 150)',     // #71B280 — sage green as primary in dark
+                'primary-foreground'     => 'oklch(0.1200 0.0200 180)',
+                'secondary'              => 'oklch(0.2600 0.0400 200)',
+                'secondary-foreground'   => 'oklch(0.9200 0.0200 150)',
+                'accent'                 => 'oklch(0.5500 0.0700 220)',     // Brighter teal-green
+                'accent-foreground'      => 'oklch(1.0000 0 0)',
+                'muted'                  => 'oklch(0.2200 0.0350 200)',
+                'muted-foreground'       => 'oklch(0.7000 0.0250 160)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.2800 0.0400 200)',
+                'input'                  => 'oklch(0.2500 0.0370 200)',
+                'ring'                   => 'oklch(0.7062 0.0990 150)',
+                // Sidebar
+                'sidebar'                => 'oklch(0.1400 0.0280 200)',
+                'sidebar-foreground'     => 'oklch(0.9000 0.0200 150)',
+                'sidebar-primary'        => 'oklch(0.7062 0.0990 150)',
+                'sidebar-primary-foreground' => 'oklch(0.1200 0.0200 180)',
+                'sidebar-accent'         => 'oklch(0.2200 0.0350 200)',
+                'sidebar-accent-foreground'  => 'oklch(0.9000 0.0200 150)',
+                'sidebar-border'         => 'oklch(0.2600 0.0380 200)',
+                'sidebar-ring'           => 'oklch(0.7062 0.0990 150)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.3948 0.0637 220)',     // #134E5E
+                'gradient-end'           => 'oklch(0.7062 0.0990 150)',     // #71B280
+                'gradient-accent'        => 'oklch(0.5500 0.0700 220)',     // Bright teal
+            ],
+        ],
     ],
 ];

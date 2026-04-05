@@ -159,9 +159,15 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 className={cn(
                     'min-h-screen bg-background font-sans text-foreground',
                     'antialiased selection:bg-agency-accent/20',
+                    'relative',
                     className,
                 )}
             >
+                {/* Ambient theme gradient overlay — subtle radial wash behind content */}
+                <div
+                    className="pointer-events-none fixed inset-0 z-0 opacity-60 theme-gradient-bg-radial"
+                    aria-hidden="true"
+                />
                 {showNavigation && <Navigation />}
 
                 {shouldShowBreadcrumbs && (

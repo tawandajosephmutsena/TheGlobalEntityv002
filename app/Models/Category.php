@@ -15,6 +15,7 @@ class Category extends Model
         'slug',
         'description',
         'type', // insight, service, portfolio, festival
+        'icon',
     ];
 
     public function festivals(): HasMany

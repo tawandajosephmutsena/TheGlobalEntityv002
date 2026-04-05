@@ -109,12 +109,12 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
     ];
 
     return (
-        <section className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32 bg-background text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch">
+        <section className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch">
             {/* Hero Section */}
             <div className="mb-20">
                 <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4">
                     {title.split(' ').map((word: string, i: number) => (
-                        <span key={i} className={i === 1 ? 'text-primary italic' : ''}>{word} </span>
+                        <span key={i} className={i === 1 ? 'theme-gradient-text italic' : ''}>{word} </span>
                     ))}
                 </h2>
                 {subtitle && (
@@ -137,7 +137,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
                             <div className="absolute top-8 left-8">
-                                <div className="bg-primary px-4 py-1 rounded-full text-on-primary text-xs font-black tracking-tighter [font-variant-caps:small-caps] mb-4 inline-block shadow-lg">featured</div>
+                                <div className="theme-gradient-animated text-white px-4 py-1 rounded-full text-xs font-black tracking-tighter [font-variant-caps:small-caps] mb-4 inline-block shadow-lg">featured</div>
                                 <h3 className="font-display text-4xl lg:text-5xl font-black text-on-surface mb-2 tracking-tighter [font-variant-caps:small-caps]">{getFest(0).title}</h3>
                             </div>
                             <div className="absolute bottom-12 left-8 flex items-center gap-4">
@@ -215,7 +215,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                     <span className="text-on-surface text-[10px] font-black tracking-tighter [font-variant-caps:small-caps] mb-3 block opacity-70">journal entry</span>
                                     <h3 className="font-display text-5xl md:text-6xl font-black text-on-surface mb-6 [font-variant-caps:small-caps] tracking-tighter leading-[0.85] italic-not-really">{getFest(3).title}</h3>
                                     <div className="flex items-center gap-6">
-                                        <div className="bg-primary text-on-primary px-8 py-4 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-tighter hover:scale-105 transition-all duration-500 shadow-xl shadow-primary/20">
+                                        <div className="theme-gradient-animated text-white px-8 py-4 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-tighter hover:scale-105 transition-all duration-500 shadow-xl theme-gradient-glow">
                                             read story
                                         </div>
                                         <div className="flex -space-x-3 items-center">
@@ -264,7 +264,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                     {/* 6. Video-Style Motion Card */}
                     {festivals.length > 5 && (
                         <Link href={getFest(5).url} className="block md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] bg-surface-container shadow-sea-mist">
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 animate-pulse opacity-50"></div>
+                            <div className="absolute inset-0 animate-pulse opacity-50" style={{ background: 'var(--theme-gradient-subtle)' }}></div>
                             <img 
                                 alt={getFest(5).title} 
                                 src={getFest(5).image} 

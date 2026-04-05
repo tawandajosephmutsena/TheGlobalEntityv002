@@ -55,6 +55,7 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug',
             'description' => 'nullable|string',
             'type' => 'required|in:insight,service,portfolio,festival',
+            'icon' => 'nullable|string|max:255',
         ]);
 
         if (empty($validated['slug'])) {
@@ -76,6 +77,7 @@ class CategoryController extends Controller
             'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
             'description' => 'nullable|string',
             'type' => 'required|in:insight,service,portfolio,festival',
+            'icon' => 'nullable|string|max:255',
         ]);
 
         $category->update($validated);

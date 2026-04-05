@@ -34,7 +34,7 @@ const NavLink = ({
             className={cn(
                 'relative overflow-hidden rounded-full px-4 py-2 text-[12px] font-bold tracking-widest [font-variant-caps:small-caps] transition-all duration-500',
                 isActive
-                    ? 'bg-agency-accent text-primary-foreground shadow-lg shadow-agency-accent/20'
+                    ? 'theme-gradient-bg text-white shadow-lg theme-gradient-glow'
                     : 'text-agency-primary/80 hover:bg-agency-accent/5 hover:text-agency-accent dark:text-white/60',
             )}
         >
@@ -150,7 +150,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     className={cn(
                         'relative mx-auto flex h-20 items-center justify-between px-6 transition-all duration-500',
                         isScrolled
-                            ? 'max-w-full rounded-none border-b border-border bg-white shadow-sm dark:border-white/10 dark:bg-black md:rounded-none'
+                            ? 'max-w-full rounded-none border-b border-border gradient-glass shadow-sm dark:border-white/10 md:rounded-none'
                             : 'max-w-7xl rounded-full border border-border bg-white shadow-2xl dark:border-white/5 dark:bg-black',
                         // On mobile, even when scrolled, we want a bit of breathing room if it's not meant to be full-width
                         // but the user said "navigation should have more padding so its not on the edges"
@@ -251,8 +251,8 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 
                 {/* Background Blobs for Visual Interest */}
                 <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">
-                    <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full bg-agency-accent blur-[100px] animate-pulse"></div>
-                    <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full bg-primary blur-[120px] animation-delay-2000"></div>
+                    <div className="absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse" style={{ background: 'var(--gradient-start)' }}></div>
+                    <div className="absolute bottom-[10%] -right-[10%] size-80 rounded-full blur-[120px] animation-delay-2000" style={{ background: 'var(--gradient-end)' }}></div>
                 </div>
 
                 <div className="relative z-10 flex h-full flex-col p-8 pt-32">
