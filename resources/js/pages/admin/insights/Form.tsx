@@ -39,6 +39,21 @@ interface Props {
 }
 
 export default function InsightForm({ insight, categories, authors, podcasts = [], festivals = [] }: Props) {
+    // Helper to format date for datetime-local input (YYYY-MM-DDTHH:mm)
+    const formatDateForInput = (dateString: string | null) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return '';
+        
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
     const { data, setData, post, put, processing, errors } = useForm<{
         title: string;
         slug: string;
@@ -54,6 +69,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         reading_time: number;
         is_published: boolean;
         is_featured: boolean;
+        published_at: string;
     }>({
         title: insight?.title || '',
         slug: insight?.slug || '',
@@ -69,6 +85,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         reading_time: insight?.reading_time || 5,
         is_published: insight?.is_published ?? false,
         is_featured: insight?.is_featured ?? false,
+        published_at: insight?.published_at ? formatDateForInput(insight.published_at) : '',
     });
 
     // Auto-generate slug from title
@@ -275,6 +292,19 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                                     checked={data.is_featured}
                                     onCheckedChange={(checked) => setData('is_featured', checked)}
                                 />
+                            </div>
+                            <div className="grid gap-2">
+                                <Label htmlFor="published_at">Publication Date</Label>
+                                <Input
+                                    id="published_at"
+                                    type="datetime-local"
+                                    value={data.published_at}
+                                    onChange={(e) => setData('published_at', e.target.value)}
+                                    className="bg-background border-agency-accent/20 focus:border-agency-accent/50 focus:ring-agency-accent/20"
+                                />
+                                {errors.published_at && (
+                                    <p className="text-sm text-destructive mt-1">{errors.published_at}</p>
+                                )}
                             </div>
                             <div className="grid gap-2 text-xs">
                                <Label>Author</Label>

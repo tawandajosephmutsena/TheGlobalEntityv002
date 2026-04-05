@@ -42,7 +42,7 @@
     justify-content: center;
     border-radius: 0.75rem; /* rounded-xl */
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: help;
+    cursor: pointer;
     border: 1px solid transparent;
 }
 

@@ -140,7 +140,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                             />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
-                                                            <p className="font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                            <p className="font-black text-xs tracking-widest [font-variant-caps:small-caps]">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );
@@ -185,7 +185,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                                             />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
-                                                            <p className="font-black text-[10px] tracking-widest [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                            <p className="font-black text-xs tracking-widest [font-variant-caps:small-caps]">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );

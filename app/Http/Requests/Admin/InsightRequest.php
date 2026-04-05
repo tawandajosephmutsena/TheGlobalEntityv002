@@ -121,7 +121,12 @@ class InsightRequest extends SecureFormRequest
             'is_published' => $this->boolean('is_published'),
         ]);
 
-        // Set published_at if publishing for the first time
+        // Convert empty string from frontend date picker to null
+        if ($this->has('published_at') && $this->published_at === '') {
+            $this->merge(['published_at' => null]);
+        }
+
+        // Set published_at if publishing and date is empty
         if ($this->boolean('is_published') && empty($this->published_at)) {
             $this->merge([
                 'published_at' => now(),
