@@ -146,126 +146,121 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
 
             {/* Article Hero */}
             <article className="bg-white dark:bg-agency-dark">
-                <header className="pt-48 pb-20 border-b border-agency-primary/5 dark:border-white/5">
-                    <div className="mx-auto max-w-6xl px-4 text-center">
-                        <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-bold uppercase tracking-widest text-[10px] mb-12 hover:gap-4 transition-all">
-                            <ArrowLeft className="h-3 w-3" /> Back to Insights
-                        </Link>
-                        
-                        <AnimatedSection animation="slide-up">
-                            <div className="flex flex-col items-center gap-6 mb-12">
-                                <div className="flex flex-wrap justify-center gap-3">
-                                    {[
-                                        insight.category,
-                                        ...(insight.additionalCategories || [])
-                                    ].filter(Boolean).map((cat, idx) => (
-                                        <div key={idx} className="category-icon-wrapper flex items-center gap-2 px-4 py-2 rounded-xl bg-agency-primary/5 dark:bg-white/5 border border-agency-primary/10 dark:border-white/10 shadow-sm backdrop-blur-sm transition-all hover:bg-agency-primary/10 dark:hover:bg-white/10"
-                                             data-category={cat?.slug || ''}>
-                                            <CategoryIcon 
-                                                category={cat?.slug || ''} 
-                                                icon={cat?.icon}
-                                                size={18} 
-                                                glow={true} 
-                                            />
-                                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-agency-primary/70 dark:text-white/70">
-                                                {cat?.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="flex items-center gap-8 text-[11px] font-bold uppercase tracking-[0.2em] opacity-30">
-                                    <div className="flex items-center gap-2.5"><Clock className="size-3.5" /> {insight.reading_time || 5} min read</div>
-                                    <div className="flex items-center gap-2.5"><User className="size-3.5" /> {insight.author?.name || 'Anonymous'}</div>
-                                </div>
+            {/* Article Hero Split Layout */}
+            <div className="flex flex-col lg:flex-row min-h-[85vh] border-b border-agency-primary/5 dark:border-white/5 overflow-hidden">
+                {/* Left Content Column */}
+                <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 lg:px-24 py-32 bg-white dark:bg-agency-dark order-2 lg:order-1">
+                    <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-bold uppercase tracking-widest text-[9px] mb-12 hover:gap-4 transition-all">
+                        <ArrowLeft className="h-3 w-3" /> Back to Insights
+                    </Link>
+                    
+                    <AnimatedSection animation="slide-up">
+                        <div className="flex flex-col gap-6 mb-8">
+                            <div className="flex flex-wrap gap-2">
+                                {[insight.category, ...(insight.additionalCategories || [])].filter(Boolean).map((cat, idx) => (
+                                    <div key={idx} className="category-icon-wrapper flex items-center gap-2 px-3 py-1.5 rounded-lg bg-agency-primary/5 dark:bg-white/5 border border-agency-primary/10 dark:border-white/10"
+                                         data-category={cat?.slug || ''}>
+                                        <CategoryIcon category={cat?.slug || ''} icon={cat?.icon} size={14} glow={true} />
+                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-agency-primary/60 dark:text-white/60">{cat?.name}</span>
+                                    </div>
+                                ))}
                             </div>
-                            
-                            <h1 className="text-4xl md:text-6xl font-black [font-variant-caps:small-caps] tracking-[0.05em] leading-tight mb-12">
-                                {insight.title}
-                            </h1>
-                            
-                            <p className="text-xl md:text-2xl text-agency-primary/60 dark:text-white/60 font-light leading-relaxed italic max-w-3xl mx-auto border-l-4 border-agency-accent pl-8 text-left">
+                        </div>
+                        
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black [font-variant-caps:small-caps] tracking-[0.02em] leading-tight mb-8 text-agency-primary dark:text-white">
+                            {insight.title}
+                        </h1>
+                        
+                        <div className="relative mb-10">
+                            <div className="absolute -left-6 top-0 bottom-0 w-1 bg-agency-accent/30 rounded-full" />
+                            <p className="text-base md:text-lg text-agency-primary/70 dark:text-white/70 font-light leading-relaxed max-w-lg">
                                 {insight.excerpt}
                             </p>
-                        </AnimatedSection>
-                    </div>
-                </header>
-
-                {/* Featured Image - Constrained Viewport Height */}
-                {insight.featured_image && (
-                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="relative overflow-hidden rounded-[40px] shadow-2xl bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center">
-                            <img 
-                                src={insight.featured_image} 
-                                alt={insight.title} 
-                                className="w-full h-auto max-h-[65vh] object-contain transition-all duration-700 bg-black/5"
-                                style={{ maxHeight: '65vh' }}
-                            />
                         </div>
+
+                        <div className="flex items-center gap-8 text-[9px] font-bold uppercase tracking-[0.2em] opacity-40">
+                            <div className="flex items-center gap-2.5"><Clock className="size-3.5" /> {insight.reading_time || 5} min read</div>
+                            <div className="flex items-center gap-2.5"><User className="size-3.5" /> {insight.author?.name || 'Anonymous'}</div>
+                        </div>
+                    </AnimatedSection>
+                </div>
+
+                {/* Right Image Column */}
+                {insight.featured_image && (
+                    <div className="w-full lg:w-1/2 h-[50vh] lg:h-auto relative overflow-hidden bg-agency-primary/5 dark:bg-white/5 order-1 lg:order-2">
+                        <img 
+                            src={insight.featured_image} 
+                            alt={insight.title} 
+                            className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
+                        />
+                        {/* Overlay to bridge the themes */}
+                        <div className="absolute inset-0 bg-agency-primary/10 dark:bg-black/20" />
+                    </div>
+                )}
+            </div>
+
+            {/* Article Content Container */}
+            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-32">
+                {/* Social Share Bar */}
+                <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-agency-primary/5 dark:border-white/5">
+                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
+                    <div className="flex items-center gap-4">
+                        <button 
+                            onClick={() => handleShare('facebook')}
+                            title="Share on Facebook" 
+                            aria-label="Share on Facebook" 
+                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                        >
+                            <Facebook className="size-5" />
+                        </button>
+                        <button 
+                            onClick={() => handleShare('twitter')}
+                            title="Share on Twitter" 
+                            aria-label="Share on Twitter" 
+                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                        >
+                            <Twitter className="size-5" />
+                        </button>
+                        <button 
+                            onClick={() => handleShare('linkedin')}
+                            title="Share on LinkedIn" 
+                            aria-label="Share on LinkedIn" 
+                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                        >
+                            <Linkedin className="size-5" />
+                        </button>
+                        <button 
+                            onClick={handleCopyLink}
+                            title="Copy Link" 
+                            aria-label="Copy Link" 
+                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
+                        >
+                            <Share2 className="size-5" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Minimal Podcast Player (Conditional) */}
+                {insight.podcast && (insight.podcast.media_full_url || insight.podcast.media_url) && (
+                    <div className="mb-16">
+                        <div className="mb-6 flex items-center gap-4">
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent">Featured Podcast</span>
+                            <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
+                        </div>
+                        <PodcastPlayer 
+                            src={insight.podcast.media_full_url || insight.podcast.media_url}
+                            title={insight.podcast.title}
+                            artist={insight.author?.name}
+                            thumbnail={insight.podcast.thumbnail_url || insight.podcast.thumbnail || insight.featured_image}
+                            mediaType={insight.podcast.media_type || 'audio'}
+                            variant="compact"
+                            className="border border-agency-primary/10 dark:border-white/10 bg-white/5 backdrop-blur-md rounded-3xl"
+                        />
                     </div>
                 )}
 
-                {/* Article Content */}
-                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-32">
-                    {/* Social Share Bar */}
-                    <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-agency-primary/5 dark:border-white/5">
-                        <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
-                        <div className="flex items-center gap-4">
-                            <button 
-                                onClick={() => handleShare('facebook')}
-                                title="Share on Facebook" 
-                                aria-label="Share on Facebook" 
-                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                            >
-                                <Facebook className="size-5" />
-                            </button>
-                            <button 
-                                onClick={() => handleShare('twitter')}
-                                title="Share on Twitter" 
-                                aria-label="Share on Twitter" 
-                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                            >
-                                <Twitter className="size-5" />
-                            </button>
-                            <button 
-                                onClick={() => handleShare('linkedin')}
-                                title="Share on LinkedIn" 
-                                aria-label="Share on LinkedIn" 
-                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                            >
-                                <Linkedin className="size-5" />
-                            </button>
-                            <button 
-                                onClick={handleCopyLink}
-                                title="Copy Link" 
-                                aria-label="Copy Link" 
-                                className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                            >
-                                <Share2 className="size-5" />
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Minimal Podcast Player (Conditional) */}
-                    {insight.podcast && (insight.podcast.media_full_url || insight.podcast.media_url) && (
-                        <div className="mb-16">
-                            <div className="mb-6 flex items-center gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent">Featured Podcast</span>
-                                <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                            </div>
-                            <PodcastPlayer 
-                                src={insight.podcast.media_full_url || insight.podcast.media_url}
-                                title={insight.podcast.title}
-                                artist={insight.author?.name}
-                                thumbnail={insight.podcast.thumbnail_url || insight.podcast.thumbnail || insight.featured_image}
-                                mediaType={insight.podcast.media_type || 'audio'}
-                                variant="compact"
-                                className="border border-agency-primary/10 dark:border-white/10 bg-white/5 backdrop-blur-md rounded-3xl"
-                            />
-                        </div>
-                    )}
-
-                    <div className="w-full">
-                        <div className="prose prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-10 prose-p:text-[25px] prose-p:md:text-[33px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-[25px] prose-li:md:text-[33px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-3xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
+                <div className="w-full">
+                    <div className="prose prose-xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-8 prose-p:text-[20px] prose-p:md:text-[23px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-[20px] prose-li:md:text-[23px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
                             {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
                             {insight.content?.body ? (
                                 <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />

@@ -1183,5 +1183,75 @@ return [
                 'gradient-accent'        => 'oklch(0.5500 0.0700 220)',     // Bright teal
             ],
         ],
+        'aftermath_tracks' => [
+            'name' => 'Aftermath Tracks',
+            'description' => 'A clean, celestial blue aesthetic with deep oceanic contrasts.',
+            'fonts' => [
+                'sans' => 'Outfit',
+                'serif' => 'Merriweather',
+                'mono' => 'JetBrains Mono',
+                'display' => 'Outfit',
+            ],
+            'radius' => '0.75rem',
+            'light' => [
+                'background'             => 'oklch(0.9700 0.0150 205)',     // Soft sky-white
+                'foreground'             => 'oklch(0.2500 0.0400 245)',     // Deep navy text
+                'card'                   => 'oklch(0.9800 0.0100 205)',
+                'card-foreground'        => 'oklch(0.2500 0.0400 245)',
+                'popover'                => 'oklch(0.9850 0.0080 205)',
+                'popover-foreground'     => 'oklch(0.2500 0.0400 245)',
+                'primary'                => 'oklch(0.4200 0.0800 245)',     // Deep royal blue
+                'primary-foreground'     => 'oklch(1.0000 0 0)',
+                'secondary'              => 'oklch(0.9000 0.0400 205)',
+                'secondary-foreground'   => 'oklch(0.2500 0.0400 245)',
+                'accent'                 => 'oklch(0.7062 0.0990 195)',     // Electric Cyan (matching provided asset)
+                'accent-foreground'      => 'oklch(0.1500 0.0300 195)',
+                'muted'                  => 'oklch(0.9400 0.0200 205)',
+                'muted-foreground'       => 'oklch(0.4500 0.0300 245)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.8800 0.0300 205)',
+                'input'                  => 'oklch(0.9200 0.0200 205)',
+                'ring'                   => 'oklch(0.4200 0.0800 245)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.4200 0.0800 245)',
+                'gradient-end'           => 'oklch(0.7062 0.0990 195)',
+                'gradient-accent'        => 'oklch(0.6000 0.0800 220)',
+            ],
+            'dark' => [
+                'background'             => 'oklch(0.1600 0.0300 245)',     // Deep oceanic dark
+                'foreground'             => 'oklch(0.9200 0.0200 210)',
+                'card'                   => 'oklch(0.1900 0.0350 245)',
+                'card-foreground'        => 'oklch(0.9200 0.0200 210)',
+                'popover'                => 'oklch(0.1900 0.0350 245)',
+                'popover-foreground'     => 'oklch(0.9200 0.0200 210)',
+                'primary'                => 'oklch(0.7062 0.0990 195)',     // Electric Cyan
+                'primary-foreground'     => 'oklch(0.1200 0.0200 195)',
+                'secondary'              => 'oklch(0.2600 0.0400 245)',
+                'secondary-foreground'   => 'oklch(0.9200 0.0200 210)',
+                'accent'                 => 'oklch(0.5500 0.0700 220)',
+                'accent-foreground'      => 'oklch(1.0000 0 0)',
+                'muted'                  => 'oklch(0.2200 0.0350 245)',
+                'muted-foreground'       => 'oklch(0.7000 0.0250 210)',
+                'destructive'            => 'oklch(0.6368 0.2078 25.33)',
+                'destructive-foreground' => 'oklch(1.0000 0 0)',
+                'border'                 => 'oklch(0.2800 0.0400 245)',
+                'input'                  => 'oklch(0.2500 0.0370 245)',
+                'ring'                   => 'oklch(0.7062 0.0990 195)',
+                // Sidebar
+                'sidebar'                => 'oklch(0.1400 0.0280 245)',
+                'sidebar-foreground'     => 'oklch(0.9000 0.0200 210)',
+                'sidebar-primary'        => 'oklch(0.7062 0.0990 195)',
+                'sidebar-primary-foreground' => 'oklch(0.1200 0.0200 195)',
+                'sidebar-accent'         => 'oklch(0.2200 0.0350 245)',
+                'sidebar-accent-foreground'  => 'oklch(0.9000 0.0200 210)',
+                'sidebar-border'         => 'oklch(0.2600 0.0380 245)',
+                'sidebar-ring'           => 'oklch(0.7062 0.0990 195)',
+                // Gradient tokens
+                'gradient-start'         => 'oklch(0.4200 0.0800 245)',
+                'gradient-end'           => 'oklch(0.7062 0.0990 195)',
+                'gradient-accent'        => 'oklch(0.5500 0.0700 220)',
+            ],
+        ],
     ],
 ];
