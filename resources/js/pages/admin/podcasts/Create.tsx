@@ -41,6 +41,10 @@ export default function PodcastCreate({ categories }: Props) {
         media_type: 'audio' as 'audio' | 'video',
         thumbnail: '',
         podcast_category_id: '',
+        category_id: '',
+        additional_categories: [] as number[],
+        transcript_url: '',
+        transcript_link_text: '',
         season_number: '',
         episode_number: '',
         tags: [] as string[],
@@ -300,13 +304,13 @@ export default function PodcastCreate({ categories }: Props) {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <Label>Category</Label>
+                                        <Label>Primary Category</Label>
                                         <Select
-                                            value={formData.podcast_category_id}
-                                            onValueChange={(v) => setFormData(prev => ({ ...prev, podcast_category_id: v }))}
+                                            value={String(formData.category_id)}
+                                            onValueChange={(v) => setFormData(prev => ({ ...prev, category_id: v }))}
                                         >
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select a category" />
+                                                <SelectValue placeholder="Select primary category" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {categories.map(cat => (
@@ -314,6 +318,7 @@ export default function PodcastCreate({ categories }: Props) {
                                                 ))}
                                             </SelectContent>
                                         </Select>
+                                        {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
                                     </div>
                                     <div className="space-y-2">
                                         <Label>Media Type</Label>
@@ -329,6 +334,63 @@ export default function PodcastCreate({ categories }: Props) {
                                                 <SelectItem value="video"><Video className="size-3 inline mr-2" />Video</SelectItem>
                                             </SelectContent>
                                         </Select>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <Label>Additional Categories</Label>
+                                    <div className="flex flex-wrap gap-3 p-4 rounded-xl border bg-muted/20">
+                                        {categories.filter(c => String(c.id) !== String(formData.category_id)).map(cat => (
+                                            <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
+                                                <div 
+                                                    className={`size-5 rounded border flex items-center justify-center transition-colors ${
+                                                        formData.additional_categories.includes(cat.id) 
+                                                            ? 'bg-primary border-primary text-primary-foreground' 
+                                                            : 'bg-background border-input group-hover:border-primary/50'
+                                                    }`}
+                                                    onClick={() => {
+                                                        setFormData(prev => ({
+                                                            ...prev,
+                                                            additional_categories: prev.additional_categories.includes(cat.id)
+                                                                ? prev.additional_categories.filter(id => id !== cat.id)
+                                                                : [...prev.additional_categories, cat.id]
+                                                        }));
+                                                    }}
+                                                >
+                                                    {formData.additional_categories.includes(cat.id) && <Check className="size-3 stroke-[3]" />}
+                                                </div>
+                                                <span className="text-sm">{cat.name}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="transcript_url">Transcript / Blog Link</Label>
+                                        <div className="relative">
+                                            <Link className="absolute left-3 top-3 size-4 text-muted-foreground" />
+                                            <Input
+                                                id="transcript_url"
+                                                className="pl-9"
+                                                value={formData.transcript_url}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, transcript_url: e.target.value }))}
+                                                placeholder="https://tge.test/insights/..."
+                                            />
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">Link to a blog post or transcript file.</p>
+                                        {errors.transcript_url && <p className="text-sm text-destructive">{errors.transcript_url}</p>}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="transcript_link_text">Button Text</Label>
+                                        <Input
+                                            id="transcript_link_text"
+                                            value={formData.transcript_link_text}
+                                            onChange={(e) => setFormData(prev => ({ ...prev, transcript_link_text: e.target.value }))}
+                                            placeholder="e.g. Read Full Transcript"
+                                        />
+                                        <p className="text-xs text-muted-foreground">Text to display on the button.</p>
+                                        {errors.transcript_link_text && <p className="text-sm text-destructive">{errors.transcript_link_text}</p>}
                                     </div>
                                 </div>
 
@@ -386,11 +448,32 @@ export default function PodcastCreate({ categories }: Props) {
                                             <p className="font-medium truncate">{mediaSource === 'link' ? formData.media_url : mediaFileName || 'Library Media'}</p>
                                         </div>
                                         <div>
-                                            <p className="text-muted-foreground">Category</p>
+                                            <p className="text-muted-foreground">Primary Category</p>
                                             <p className="font-medium">
-                                                {categories.find(c => String(c.id) === formData.podcast_category_id)?.name || '—'}
+                                                {categories.find(c => String(c.id) === String(formData.category_id))?.name || '—'}
                                             </p>
                                         </div>
+                                        {formData.additional_categories.length > 0 && (
+                                            <div className="col-span-2">
+                                                <p className="text-muted-foreground mb-1">Additional Categories</p>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {formData.additional_categories.map(id => (
+                                                        <Badge key={id} variant="outline" className="text-xs">
+                                                            {categories.find(c => c.id === id)?.name}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                        {formData.transcript_url && (
+                                            <div className="col-span-2">
+                                                <p className="text-muted-foreground">Transcript Link</p>
+                                                <p className="font-medium flex items-center gap-2">
+                                                    <Link className="size-3" />
+                                                    {formData.transcript_link_text || 'Link'} ({formData.transcript_url})
+                                                </p>
+                                            </div>
+                                        )}
                                         {formData.tags.length > 0 && (
                                             <div className="col-span-2">
                                                 <p className="text-muted-foreground mb-1">Tags</p>

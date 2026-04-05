@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Podcast extends Model
 {
@@ -22,6 +24,7 @@ class Podcast extends Model
         'duration',
         'file_size',
         'podcast_category_id',
+        'category_id',
         'author_id',
         'season_number',
         'episode_number',
@@ -31,6 +34,8 @@ class Podcast extends Model
         'published_at',
         'play_count',
         'share_count',
+        'transcript_url',
+        'transcript_link_text',
     ];
 
     protected $casts = [
@@ -68,9 +73,19 @@ class Podcast extends Model
 
     // ── Relationships ──
 
-    public function category(): BelongsTo
+    public function podcastCategory(): BelongsTo
     {
         return $this->belongsTo(PodcastCategory::class, 'podcast_category_id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_podcast');
     }
 
     public function author(): BelongsTo

@@ -46,6 +46,15 @@ class CategoryController extends Controller
     }
 
     /**
+     * Show the form for creating a new category.
+     */
+    public function create(): RedirectResponse
+    {
+        return redirect()->route('admin.categories.index');
+    }
+
+
+    /**
      * Store a newly created category.
      */
     public function store(Request $request): RedirectResponse
@@ -65,6 +74,14 @@ class CategoryController extends Controller
         Category::create($validated);
 
         return back()->with('success', 'Category created successfully.');
+    }
+
+    /**
+     * Show the form for editing the specified category.
+     */
+    public function edit(Category $category): RedirectResponse
+    {
+        return redirect()->route('admin.categories.index');
     }
 
     /**

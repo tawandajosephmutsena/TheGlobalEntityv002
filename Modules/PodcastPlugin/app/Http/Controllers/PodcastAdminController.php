@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Modules\PodcastPlugin\Models\Podcast;
-use Modules\PodcastPlugin\Models\PodcastCategory;
+use App\Models\Category;
 
 class PodcastAdminController extends Controller
 {
@@ -39,7 +39,7 @@ class PodcastAdminController extends Controller
         }
 
         $podcasts = $query->latest()->paginate(15)->withQueryString();
-        $categories = PodcastCategory::active()->orderBy('sort_order')->get();
+        $categories = Category::where('type', 'insight')->orderBy('name')->get();
 
         // Stats
         $stats = [
@@ -59,7 +59,7 @@ class PodcastAdminController extends Controller
 
     public function create()
     {
-        $categories = PodcastCategory::active()->orderBy('sort_order')->get();
+        $categories = Category::where('type', 'insight')->orderBy('name')->get();
 
         return Inertia::render('admin/podcasts/Create', [
             'categories' => $categories,
@@ -76,7 +76,12 @@ class PodcastAdminController extends Controller
             'media_url' => 'required|string',
             'media_type' => 'required|in:audio,video',
             'thumbnail' => 'nullable|string',
-            'podcast_category_id' => 'nullable|exists:podcast_categories,id',
+            'podcast_category_id' => 'nullable',
+            'category_id' => 'nullable|exists:categories,id',
+            'additional_categories' => 'nullable|array',
+            'additional_categories.*' => 'exists:categories,id',
+            'transcript_url' => 'nullable|url|max:255',
+            'transcript_link_text' => 'nullable|string|max:100',
             'season_number' => 'nullable|integer|min:1',
             'episode_number' => 'nullable|integer|min:1',
             'tags' => 'nullable|array',
@@ -96,6 +101,9 @@ class PodcastAdminController extends Controller
             'duration' => $validated['duration'] ?? 0,
             'file_size' => 0,
             'podcast_category_id' => $validated['podcast_category_id'] ?? null,
+            'category_id' => $validated['category_id'] ?? null,
+            'transcript_url' => $validated['transcript_url'] ?? null,
+            'transcript_link_text' => $validated['transcript_link_text'] ?? null,
             'author_id' => Auth::id(),
             'season_number' => $validated['season_number'] ?? null,
             'episode_number' => $validated['episode_number'] ?? null,
@@ -104,14 +112,18 @@ class PodcastAdminController extends Controller
             'published_at' => ($validated['is_published'] ?? false) ? ($validated['published_at'] ?? now()) : ($validated['published_at'] ?? null),
         ]);
 
+        if (!empty($validated['additional_categories'])) {
+            $podcast->categories()->sync($validated['additional_categories']);
+        }
+
         return redirect()->route('admin.podcasts.index')
             ->with('success', "Podcast \"{$podcast->title}\" created successfully.");
     }
 
     public function edit(int $id)
     {
-        $podcast = Podcast::with(['category', 'author'])->findOrFail($id);
-        $categories = PodcastCategory::active()->orderBy('sort_order')->get();
+        $podcast = Podcast::with(['category', 'categories', 'author'])->findOrFail($id);
+        $categories = Category::where('type', 'insight')->orderBy('name')->get();
 
         return Inertia::render('admin/podcasts/Edit', [
             'podcast' => $podcast,
@@ -130,7 +142,12 @@ class PodcastAdminController extends Controller
             'media_url' => 'required|string',
             'media_type' => 'required|in:audio,video',
             'thumbnail' => 'nullable|string',
-            'podcast_category_id' => 'nullable|exists:podcast_categories,id',
+            'podcast_category_id' => 'nullable',
+            'category_id' => 'nullable|exists:categories,id',
+            'additional_categories' => 'nullable|array',
+            'additional_categories.*' => 'exists:categories,id',
+            'transcript_url' => 'nullable|url|max:255',
+            'transcript_link_text' => 'nullable|string|max:100',
             'season_number' => 'nullable|integer|min:1',
             'episode_number' => 'nullable|integer|min:1',
             'tags' => 'nullable|array',
@@ -149,12 +166,17 @@ class PodcastAdminController extends Controller
             'media_type' => $validated['media_type'],
             'thumbnail' => $validated['thumbnail'] ?? null,
             'podcast_category_id' => $validated['podcast_category_id'] ?? null,
+            'category_id' => $validated['category_id'] ?? null,
+            'transcript_url' => $validated['transcript_url'] ?? null,
+            'transcript_link_text' => $validated['transcript_link_text'] ?? null,
             'season_number' => $validated['season_number'] ?? null,
             'episode_number' => $validated['episode_number'] ?? null,
             'tags' => $validated['tags'] ?? null,
             'is_published' => $validated['is_published'] ?? false,
             'published_at' => ($validated['is_published'] ?? false) ? ($validated['published_at'] ?? now()) : ($validated['published_at'] ?? null),
         ]);
+
+        $podcast->categories()->sync($validated['additional_categories'] ?? []);
 
         if (isset($validated['duration'])) {
             $podcast->duration = (int) $validated['duration'];

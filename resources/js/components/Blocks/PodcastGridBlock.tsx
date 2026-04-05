@@ -17,6 +17,7 @@ interface PodcastItem {
     play_count: number;
     published_at: string;
     category?: { id: number; name: string; slug: string; color: string } | null;
+    categories?: Array<{ id: number; name: string; slug: string; color: string }> | null;
 }
 
 interface CategoryItem {

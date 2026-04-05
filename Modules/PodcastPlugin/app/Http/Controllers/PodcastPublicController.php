@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Modules\PodcastPlugin\Models\Podcast;
-use Modules\PodcastPlugin\Models\PodcastCategory;
+use App\Models\Category;
 use Modules\PodcastPlugin\Models\PodcastPlay;
 
 class PodcastPublicController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Podcast::with(['category', 'author'])->published();
+        $query = Podcast::with(['category', 'categories', 'author'])->published();
 
         // Search
         if ($request->filled('search')) {
@@ -22,16 +22,28 @@ class PodcastPublicController extends Controller
 
         // Category filter
         if ($request->filled('category')) {
-            $query->where('podcast_category_id', $request->category);
+            $categorySlug = $request->category;
+            $query->where(function ($q) use ($categorySlug) {
+                $q->whereHas('category', function ($sq) use ($categorySlug) {
+                    $sq->where('slug', $categorySlug);
+                })->orWhereHas('categories', function ($sq) use ($categorySlug) {
+                    $sq->where('slug', $categorySlug);
+                });
+            });
         }
 
         $perPage = config('podcastplugin.episodes_per_page', 12);
 
         $podcasts = $query->latest('published_at')->paginate($perPage)->withQueryString();
-        $featured = Podcast::with(['category'])->published()->featured()->latest('published_at')->take(3)->get();
-        $categories = PodcastCategory::active()->withCount(['podcasts' => function ($q) {
-            $q->published();
-        }])->orderBy('sort_order')->get();
+        $featured = Podcast::with(['category', 'categories'])->published()->featured()->latest('published_at')->take(3)->get();
+        
+        $categories = Category::where('type', 'insight')
+            ->withCount(['podcasts' => function ($q) {
+                $q->published();
+            }])
+            ->having('podcasts_count', '>', 0)
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('Podcasts', [
             'podcasts' => $podcasts,
@@ -43,16 +55,24 @@ class PodcastPublicController extends Controller
 
     public function show(string $slug)
     {
-        $podcast = Podcast::with(['category', 'author'])
+        $podcast = Podcast::with(['category', 'categories', 'author'])
             ->published()
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $related = Podcast::with(['category'])
+        $related = Podcast::with(['category', 'categories'])
             ->published()
             ->where('id', '!=', $podcast->id)
-            ->when($podcast->podcast_category_id, function ($q) use ($podcast) {
-                $q->where('podcast_category_id', $podcast->podcast_category_id);
+            ->where(function ($q) use ($podcast) {
+                if ($podcast->category_id) {
+                    $q->where('category_id', $podcast->category_id);
+                }
+                $categoryIds = $podcast->categories->pluck('id')->toArray();
+                if (!empty($categoryIds)) {
+                    $q->orWhereHas('categories', function ($sq) use ($categoryIds) {
+                        $sq->whereIn('categories.id', $categoryIds);
+                    });
+                }
             })
             ->latest('published_at')
             ->take(4)
@@ -85,9 +105,10 @@ class PodcastPublicController extends Controller
     {
         // Handle categories request for the grid block
         if ($request->boolean('categories')) {
-            $categories = PodcastCategory::active()
+            $categories = Category::where('type', 'insight')
                 ->withCount(['podcasts' => fn ($q) => $q->published()])
-                ->orderBy('sort_order')
+                ->having('podcasts_count', '>', 0)
+                ->orderBy('name')
                 ->get();
             return response()->json(['categories' => $categories]);
         }
@@ -97,7 +118,7 @@ class PodcastPublicController extends Controller
         $categorySlug = $request->input('category');
         $slug = $request->input('slug');
 
-        $query = Podcast::with(['category', 'author'])->published();
+        $query = Podcast::with(['category', 'categories', 'author'])->published();
 
         if ($slug) {
             $query->where('slug', $slug);
@@ -108,8 +129,12 @@ class PodcastPublicController extends Controller
         }
 
         if ($categorySlug) {
-            $query->whereHas('category', function ($q) use ($categorySlug) {
-                $q->where('slug', $categorySlug);
+            $query->where(function ($q) use ($categorySlug) {
+                $q->whereHas('category', function ($sq) use ($categorySlug) {
+                    $sq->where('slug', $categorySlug);
+                })->orWhereHas('categories', function ($sq) use ($categorySlug) {
+                    $sq->where('slug', $categorySlug);
+                });
             });
         }
 
@@ -117,7 +142,7 @@ class PodcastPublicController extends Controller
         if ($request->has('q') && !$request->has('limit')) {
             $results = $query->latest('published_at')
                 ->take(10)
-                ->get(['id', 'title', 'slug', 'thumbnail_url', 'media_type', 'duration', 'podcast_category_id']);
+                ->get(['id', 'title', 'slug', 'thumbnail_url', 'media_type', 'duration', 'category_id']);
         } else {
             // Otherwise, get full models for the grid and attach formatted data via resources/appends 
             $results = $query->latest('published_at')

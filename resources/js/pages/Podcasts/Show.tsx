@@ -9,6 +9,7 @@ import { PodcastCard } from '@/components/podcast/PodcastCard';
 import { ShareButtons } from '@/components/podcast/ShareButtons';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { PodcastCategoryBadge } from '@/components/podcast/PodcastCategoryBadge';
 import MainLayout from '@/layouts/MainLayout';
 import { SeoHead } from '@/components/SeoHead';
 import { SharedData } from '@/types';
@@ -38,10 +39,13 @@ interface Episode {
     tags: string[] | null;
     published_at: string | null;
     category: Category | null;
+    categories: Category[];
     author: { id: number; name: string } | null;
     thumbnail: string | null;
     external_link: string | null;
     media_path: string;
+    transcript_url: string | null;
+    transcript_link_text: string | null;
     created_at: string;
 }
 
@@ -158,14 +162,13 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
                             {/* Info */}
                             <div className="space-y-6 flex-1 max-w-2xl">
                                 <div className="flex flex-wrap items-center gap-3">
-                                    {podcast.category && (
-                                        <Badge 
-                                            style={{ backgroundColor: `${podcast.category.color}20`, color: podcast.category.color }}
-                                            className="border-none px-4 py-1.5 font-black uppercase tracking-widest text-[10px] backdrop-blur-md"
-                                        >
-                                            {podcast.category.name}
-                                        </Badge>
-                                    )}
+                                    {podcast.categories && podcast.categories.length > 0 ? (
+                                        podcast.categories.map((cat) => (
+                                            <PodcastCategoryBadge key={cat.id} category={cat} />
+                                        ))
+                                    ) : podcast.category ? (
+                                        <PodcastCategoryBadge category={podcast.category} />
+                                    ) : null}
                                     {podcast.media_type === 'video' && (
                                         <Badge variant="secondary" className="gap-1.5 px-4 py-1.5 bg-white/10 backdrop-blur-md border-white/20 text-[10px] font-black uppercase tracking-widest">
                                             <Video className="size-3" /> Video
@@ -276,12 +279,16 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
                                         <h3 className="font-bold">Spread the word</h3>
                                     </div>
                                     <ShareButtons url={currentUrl} title={podcast.title} />
-                                    <div className="pt-4 border-t">
-                                        <Button variant="outline" className="w-full rounded-2xl h-12 border-muted-foreground/20 hover:bg-muted group">
-                                            Download Transcript
-                                            <Headphones className="ml-2 size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-                                        </Button>
-                                    </div>
+                                    {podcast.transcript_url && (
+                                        <div className="pt-4 border-t">
+                                            <Button asChild variant="outline" className="w-full rounded-2xl h-12 border-muted-foreground/20 hover:bg-muted group">
+                                                <a href={podcast.transcript_url} target="_blank" rel="noopener noreferrer">
+                                                    {podcast.transcript_link_text || 'View Transcript'}
+                                                    <Headphones className="ml-2 size-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                                </a>
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

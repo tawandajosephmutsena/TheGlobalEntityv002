@@ -21,6 +21,11 @@ interface PodcastCardProps {
             name: string;
             color: string;
         } | null;
+        categories?: Array<{
+            id: number;
+            name: string;
+            color: string;
+        }> | null;
     };
     variant?: 'default' | 'featured' | 'compact';
     className?: string;
@@ -86,10 +91,14 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
 
                     {/* Content Area */}
                     <div className="p-8 md:p-10 space-y-6 relative">
-                        <div className="flex items-center gap-4">
-                            {podcast.category && (
+                        <div className="flex flex-wrap items-center gap-4">
+                            {podcast.categories && podcast.categories.length > 0 ? (
+                                podcast.categories.map((cat) => (
+                                    <PodcastCategoryBadge key={cat.id} category={cat} />
+                                ))
+                            ) : podcast.category ? (
                                 <PodcastCategoryBadge category={podcast.category} />
-                            )}
+                            ) : null}
                             <div className="h-4 w-px bg-border/50" />
                             <span className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">
                                 {displayDate}
@@ -199,9 +208,15 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
             {/* Content Area */}
             <div className="p-6 flex-1 flex flex-col space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                    {podcast.category && (
-                        <PodcastCategoryBadge category={podcast.category} size="sm" />
-                    )}
+                    <div className="flex flex-wrap gap-2">
+                        {podcast.categories && podcast.categories.length > 0 ? (
+                            podcast.categories.map((cat) => (
+                                <PodcastCategoryBadge key={cat.id} category={cat} size="sm" />
+                            ))
+                        ) : podcast.category ? (
+                            <PodcastCategoryBadge category={podcast.category} size="sm" />
+                        ) : null}
+                    </div>
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 shrink-0">
                         {podcast.media_type}
                     </span>

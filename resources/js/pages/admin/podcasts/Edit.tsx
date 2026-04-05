@@ -11,6 +11,7 @@ import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
 import MediaLibrary from '@/components/admin/MediaLibrary';
+import { Separator } from '@/components/ui/separator';
 import { MediaAsset } from '@/types';
 import {
     X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check
@@ -45,6 +46,10 @@ interface PodcastData {
     is_published: boolean;
     is_featured: boolean;
     published_at: string | null;
+    category_id: number | null;
+    categories: { id: number; name: string }[];
+    transcript_url: string | null;
+    transcript_link_text: string | null;
 }
 
 interface Props {
@@ -62,6 +67,10 @@ export default function PodcastEdit({ podcast, categories }: Props) {
         media_type: podcast.media_type,
         thumbnail: podcast.thumbnail || '',
         podcast_category_id: podcast.podcast_category_id ? String(podcast.podcast_category_id) : '',
+        category_id: podcast.category_id ? String(podcast.category_id) : '',
+        additional_categories: podcast.categories ? podcast.categories.map(c => c.id) : [],
+        transcript_url: podcast.transcript_url || '',
+        transcript_link_text: podcast.transcript_link_text || '',
         season_number: podcast.season_number ? String(podcast.season_number) : '',
         episode_number: podcast.episode_number ? String(podcast.episode_number) : '',
         tags: podcast.tags || [],
@@ -183,9 +192,40 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                                 value={formData.content}
                                 onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
                                 rows={8}
-                                placeholder="Links, timestamps, credits..."
-                            />
+                            placeholder="Links, timestamps, credits..."
+                        />
+                    </div>
+
+                    {/* Transcript / Blog Link */}
+                    <div className="rounded-xl border border-border p-6 space-y-4">
+                        <h3 className="font-bold text-sm">Transcript & External Links</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="transcript_url">Transcript / Blog URL</Label>
+                                <div className="relative">
+                                    <Link className="absolute left-3 top-3 size-4 text-muted-foreground" />
+                                    <Input
+                                        id="transcript_url"
+                                        className="pl-9"
+                                        value={formData.transcript_url}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, transcript_url: e.target.value }))}
+                                        placeholder="https://tge.test/insights/..."
+                                    />
+                                </div>
+                                {errors.transcript_url && <p className="text-sm text-destructive">{errors.transcript_url}</p>}
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="transcript_link_text">Button Text</Label>
+                                <Input
+                                    id="transcript_link_text"
+                                    value={formData.transcript_link_text}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, transcript_link_text: e.target.value }))}
+                                    placeholder="e.g. Read Full Transcript"
+                                />
+                                {errors.transcript_link_text && <p className="text-sm text-destructive">{errors.transcript_link_text}</p>}
+                            </div>
                         </div>
+                    </div>
 
                         {/* Replace Media */}
                         <div className="rounded-xl border border-border p-6 space-y-4">
@@ -318,14 +358,13 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                             />
                         </div>
 
-                        {/* Settings */}
                         <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-                            <h3 className="font-bold text-sm">Settings</h3>
+                            <h3 className="font-bold text-sm">Categories</h3>
                             <div className="space-y-2">
-                                <Label>Category</Label>
+                                <Label>Primary Category</Label>
                                 <Select
-                                    value={formData.podcast_category_id}
-                                    onValueChange={(v) => setFormData(prev => ({ ...prev, podcast_category_id: v }))}
+                                    value={String(formData.category_id)}
+                                    onValueChange={(v) => setFormData(prev => ({ ...prev, category_id: v }))}
                                 >
                                     <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
                                     <SelectContent>
@@ -334,7 +373,39 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
+                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
                             </div>
+                            
+                            <div className="space-y-2">
+                                <Label>Additional Categories</Label>
+                                <div className="flex flex-col gap-2 p-3 rounded-lg border bg-muted/20">
+                                    {categories.filter(c => String(c.id) !== String(formData.category_id)).map(cat => (
+                                        <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
+                                            <div 
+                                                className={`size-4 rounded border flex items-center justify-center transition-colors ${
+                                                    formData.additional_categories.includes(cat.id) 
+                                                        ? 'bg-primary border-primary text-primary-foreground' 
+                                                        : 'bg-background border-input group-hover:border-primary/50'
+                                                }`}
+                                                onClick={() => {
+                                                    setFormData(prev => ({
+                                                        ...prev,
+                                                        additional_categories: prev.additional_categories.includes(cat.id)
+                                                            ? prev.additional_categories.filter(id => id !== cat.id)
+                                                            : [...prev.additional_categories, cat.id]
+                                                    }));
+                                                }}
+                                            >
+                                                {formData.additional_categories.includes(cat.id) && <Check className="size-2.5 stroke-[3]" />}
+                                            </div>
+                                            <span className="text-xs">{cat.name}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <Separator className="my-2" />
+
                             <div className="space-y-2">
                                 <Label>Media Type</Label>
                                 <Select

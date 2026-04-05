@@ -23,9 +23,14 @@ class Category extends Model
         return $this->hasMany(Festival::class);
     }
 
-    public function insights(): HasMany
+    public function insights()
     {
-        return $this->hasMany(Insight::class);
+        return $this->belongsToMany(Insight::class, 'category_insight');
+    }
+
+    public function podcasts()
+    {
+        return $this->belongsToMany(\Modules\PodcastPlugin\Models\Podcast::class, 'category_podcast');
     }
 
     public function services(): HasMany

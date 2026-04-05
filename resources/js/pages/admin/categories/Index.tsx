@@ -34,6 +34,7 @@ interface Props {
         insights: number;
         services: number;
         portfolio: number;
+        festivals: number;
     };
 }
 
@@ -136,7 +137,7 @@ export default function Index({ categories, filters, stats }: Props) {
         if (confirm('Are you sure you want to delete this category?')) {
             router.delete(route('admin.categories.destroy', category.slug), {
                 onSuccess: () => toast.success('Category deleted successfully'),
-                onError: (errors: any) => {
+                onError: (errors: { error?: string }) => {
                     if (errors.error) toast.error(errors.error);
                 }
             });
@@ -173,7 +174,7 @@ export default function Index({ categories, filters, stats }: Props) {
                                     <Label htmlFor="type">Type</Label>
                                     <Select 
                                         value={data.type} 
-                                        onValueChange={(val) => setData('type', val as any)}
+                                        onValueChange={(val) => setData('type', val as Category['type'])}
                                         disabled={!!editingCategory}
                                     >
                                         <SelectTrigger>
@@ -183,6 +184,7 @@ export default function Index({ categories, filters, stats }: Props) {
                                             <SelectItem value="insight">Insight</SelectItem>
                                             <SelectItem value="service">Service</SelectItem>
                                             <SelectItem value="portfolio">Portfolio</SelectItem>
+                                            <SelectItem value="festival">Festival</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     {errors.type && <p className="text-xs text-destructive">{errors.type}</p>}
@@ -266,7 +268,7 @@ export default function Index({ categories, filters, stats }: Props) {
                     </Dialog>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                     <Card className="p-4 bg-muted/10">
                         <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Total</div>
                         <div className="text-2xl font-black">{stats.total}</div>
@@ -282,6 +284,10 @@ export default function Index({ categories, filters, stats }: Props) {
                     <Card className="p-4 bg-blue-500/5 border-blue-500/20">
                         <div className="text-[10px] font-bold uppercase tracking-widest text-blue-500">Portfolio</div>
                         <div className="text-2xl font-black">{stats.portfolio}</div>
+                    </Card>
+                    <Card className="p-4 bg-purple-500/5 border-purple-500/20">
+                        <div className="text-[10px] font-bold uppercase tracking-widest text-purple-500">Festivals</div>
+                        <div className="text-2xl font-black">{stats.festivals}</div>
                     </Card>
                 </div>
 
@@ -306,6 +312,8 @@ export default function Index({ categories, filters, stats }: Props) {
                     pagination={categories}
                     searchPlaceholder="Search categories..."
                     onSearch={(query) => router.get('/admin/categories', { ...filters, search: query }, { preserveState: true })}
+                    disableEditAction={true}
+                    disableViewAction={true}
                 />
             </div>
         </AdminLayout>
@@ -317,7 +325,7 @@ function Card({ children, className }: { children: React.ReactNode, className?: 
 }
 
 // Mock route helper if not globally available
-function route(name: string, params?: any) {
+function route(name: string, params?: string | number) {
     if (name === 'admin.categories.store') return '/admin/categories';
     if (name === 'admin.categories.update') return `/admin/categories/${params}`;
     if (name === 'admin.categories.destroy') return `/admin/categories/${params}`;
