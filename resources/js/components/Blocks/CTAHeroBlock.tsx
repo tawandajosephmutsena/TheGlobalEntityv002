@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
 import CategoryIcon from "@/components/CategoryIcon";
+import { GLSLHills } from "@/components/ui/GLSLHills";
 
 export default function CTAHeroBlock({
   badge = "New Feature",
@@ -32,8 +33,15 @@ export default function CTAHeroBlock({
 
   return (
     <section className="relative w-full overflow-hidden gradient-mesh gradient-motion-bg px-4 pt-48 pb-32">
-      {/* Animated gradient background blobs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
+      {/* GLSL Hills Background Overlay */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <GLSLHills 
+          speed={0.4} 
+          cameraZ={110} 
+          className="opacity-80"
+        />
+        
+        {/* Animated gradient background blobs */}
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
