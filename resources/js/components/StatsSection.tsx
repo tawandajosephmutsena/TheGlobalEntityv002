@@ -1,6 +1,7 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
 import React from 'react';
+import { usePage } from '@inertiajs/react';
 
 interface StatItem {
     value: string;
@@ -20,13 +21,6 @@ interface StatsSectionProps {
     className?: string;
 }
 
-const defaultStats: StatItem[] = [
-    { value: '150', label: 'Projects Completed', suffix: '+' },
-    { value: '50', label: 'Happy Clients', suffix: '+' },
-    { value: '5', label: 'Years Experience', suffix: '+' },
-    { value: '24/7', label: 'Support' },
-];
-
 /**
  * Stats Section component with animated counters
  * Displays key statistics with scroll-triggered animations
@@ -37,21 +31,42 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
     subtitle = 'Our Impact',
     className,
 }) => {
-    // Convert stats object to array if needed
-    const statsArray: StatItem[] = Array.isArray(stats) 
-        ? stats 
-        : [
-            { value: String(stats?.projects_completed || 0), label: 'Projects Completed', suffix: '+' },
-            { value: String(stats?.services_offered || 0), label: 'Services Offered', suffix: '+' },
-            { value: String(stats?.insights_published || 0), label: 'Insights Published', suffix: '+' },
-            { value: String(stats?.years_experience || 5), label: 'Years Experience', suffix: '+' },
-          ];
+    const { props: pageProps } = usePage();
+    const globalStats = (pageProps as any).global_stats;
 
-    // Ensure we have 4 stats by merging with defaults
-    const displayStats = [
-        ...statsArray,
-        ...defaultStats.slice(statsArray.length)
-    ].slice(0, 4);
+    // Convert stats object to array if provided from CMS, otherwise use dynamic platform stats
+    const statsArray: StatItem[] = React.useMemo(() => {
+        if (Array.isArray(stats) && stats.length > 0) return stats;
+        
+        if (stats && typeof stats === 'object' && !Array.isArray(stats) && Object.keys(stats).length > 0) {
+            return [
+                { value: String(stats?.projects_completed || 0), label: 'Projects Completed', suffix: '+' },
+                { value: String(stats?.services_offered || 0), label: 'Services Offered', suffix: '+' },
+                { value: String(stats?.insights_published || 0), label: 'Insights Published', suffix: '+' },
+                { value: String(stats?.years_experience || 5), label: 'Years Experience', suffix: '+' },
+            ];
+        }
+
+        // Default to Global Platform Stats if no specific block content
+        if (globalStats) {
+            return [
+                { value: String(globalStats.festivals_total), label: 'Festivals Tracked', suffix: '+' },
+                { value: String(globalStats.podcasts_total), label: 'Podcast Episodes', suffix: '+' },
+                { value: String(globalStats.reviews_avg_rating), label: 'Average Rating', suffix: '/5' },
+                { value: String(globalStats.reviews_total), label: 'Community Reviews', suffix: '+' },
+            ];
+        }
+
+        // Legacy Fallback
+        return [
+            { value: '150', label: 'Projects Completed', suffix: '+' },
+            { value: '50', label: 'Happy Clients', suffix: '+' },
+            { value: '5', label: 'Years Experience', suffix: '+' },
+            { value: '24/7', label: 'Support' },
+        ];
+    }, [stats, globalStats]);
+
+    const displayStats = statsArray.slice(0, 4);
     return (
         <section className={cn('gradient-aurora py-32', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">

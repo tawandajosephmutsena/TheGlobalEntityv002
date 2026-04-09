@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { usePage } from '@inertiajs/react';
 import type { StitchCommunityReviewBlock } from '@/types/page-blocks';
 import AnimatedSection from '@/components/AnimatedSection';
 import { cn } from '@/lib/utils';
@@ -105,6 +106,20 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
         socialProofPlatform = "Shared on TrailChat Community",
         footerCounterText = "45,000+ Reviews and counting"
     } = blockContent;
+    
+    const { props: pageProps } = usePage();
+    const globalStats = (pageProps as any).global_stats;
+
+    // Derived dynamic stats
+    const displayStatsRating = globalStats ? globalStats.reviews_avg_rating.toString() : statsRating;
+    const displayStatsTitle = globalStats ? "Community Verified" : statsTitle;
+    const displayStatsDescription = globalStats 
+        ? `Across ${globalStats.festivals_total.toLocaleString()}+ festivals tracked this season alone.` 
+        : statsDescription;
+    const displayStatsCount = globalStats ? `+${(globalStats.explorers_total / 1000).toFixed(1)}k` : statsCount;
+    const displayFooterCounterText = globalStats 
+        ? `${globalStats.reviews_total.toLocaleString()}+ Reviews and counting` 
+        : footerCounterText;
 
     const [reviews, setReviews] = useState<ReviewData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -242,11 +257,11 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                         {/* 3. STATS: The Radial Meter Card */}
                         <AnimatedSection animation="fade-up" delay={400} className="lg:col-span-4">
                             <div className="h-full bg-surface-container-highest rounded-[3rem] p-12 flex flex-col items-center text-center justify-between shadow-lg border border-outline-variant/30 hover:bg-surface-container transition-colors">
-                                <RadialMeter value={statsRating} label="RATING" />
+                                <RadialMeter value={displayStatsRating} label="RATING" />
                                 
                                 <div className="my-8">
-                                    <h3 className="text-2xl font-display font-black leading-tight mb-3 italic tracking-tight">{statsTitle}</h3>
-                                    <p className="font-medium text-on-surface-variant opacity-70 px-4">{statsDescription}</p>
+                                    <h3 className="text-2xl font-display font-black leading-tight mb-3 italic tracking-tight">{displayStatsTitle}</h3>
+                                    <p className="font-medium text-on-surface-variant opacity-70 px-4">{displayStatsDescription}</p>
                                 </div>
 
                                 <div className="flex flex-col items-center gap-4">
@@ -261,7 +276,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                             />
                                         ))}
                                         <div className="w-12 h-12 rounded-full bg-secondary text-on-secondary border-4 border-surface-container-highest flex items-center justify-center text-xs font-black shadow-xl">
-                                            {statsCount}
+                                            {displayStatsCount}
                                         </div>
                                     </div>
                                     <span className="text-[10px] font-black tracking-[0.3em] opacity-40 lowercase [font-variant-caps:small-caps]">TRUSTED BY EXPLORERS</span>
@@ -414,7 +429,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                 <AnimatedSection animation="slide-up" delay={800} className="mt-32 pt-24 border-t border-outline-variant/20 text-center">
                     <div className="inline-flex items-center gap-4 px-8 py-3 bg-surface-container-highest rounded-full shadow-inner mb-12 border border-outline-variant/30">
                         <ThumbsUp className="w-4 h-4 text-primary" />
-                        <span className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-[0.2em]">{footerCounterText}</span>
+                        <span className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-[0.2em]">{displayFooterCounterText}</span>
                     </div>
 
                     <h2 className="text-5xl md:text-7xl font-display font-black leading-[0.9] tracking-tighter mb-16 max-w-4xl mx-auto">

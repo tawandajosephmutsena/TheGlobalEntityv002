@@ -23,6 +23,14 @@ class PodcastPluginServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+
+        // Register dashboard source
+        $this->app->booted(function () {
+            if ($this->app->bound(\App\Services\Dashboard\DashboardRegistry::class)) {
+                $registry = $this->app->make(\App\Services\Dashboard\DashboardRegistry::class);
+                $registry->register(new \Modules\PodcastPlugin\Services\PodcastDashboardSource());
+            }
+        });
     }
 
     public function register(): void

@@ -16,11 +16,12 @@ interface FestivalData {
     date: string;
     locationAddress: string;
     url: string;
-    activities: string[];
     author: {
         name: string;
         avatar: string;
     };
+    rating?: number | null;
+    review_count?: number;
 }
 
 export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeaturedFestivalsBlock['content']) {
@@ -101,18 +102,16 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
         return fest || { title: '', description: '', url: '#', image: '', locationAddress: '', date: '' };
     };
     
-    // For rendering avatars
     const defaultAvatars = [
         "https://lh3.googleusercontent.com/aida-public/AB6AXuCFyzPdyqFBkgZGhUGYrOz8V66ZkOk-SuJLsJH-3uX8beYYkA8v5h-vF9a5hm22bR9UOGbVDOxfjy0Mg9Oycnh1GPVFou2SKklxwpWDgXDQ05h1fC6LfeyX0pw8zz73vIleQc4brXuYrSo8iLjL_cT_2BfmlhMWIxpqw4wLgK7yJq8G3zwwF3cTdVgSwl2AXS8CkU0ho7snAXipIB2SGB6j1TrQodCZips-vAL4smTFj1F4m2iemHPMqXfHt_SaLbZQGFJUjQcLq9My",
         "https://lh3.googleusercontent.com/aida-public/AB6AXuCWW5_JYWiRfhQbcqbjOH6_fxA5CKf4BRyi9tNDby6PClSx3IZhjHFpsizleZBUldUIAmyfpeoQY-xrlRRxtNHOPQY-pqU31-XcJ-X92hBgg5YyP1hdk6MVcrIql4ehyI5pzfYMR2AsjxuLwmoa-J6Ee_EwesWUZ0xM708O67Q3zUixLiVPF4QAQVJy_45UKXCgbSq4s9vHNuqPZkToLyj5EyzTXtt-M8zt1Li4N7kvfNIdUnPqlDPuPDq0er1Ec6yrsP2i_I62W9Sg",
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuC09aG3hfcpxNzPh0YZBZZnrADxag3d-4tTInbm5dSf2g6RpSwHPNnlJT0PmloLubQyBjN5MhE23h3EgPbzCgzjt6Cz4-DnB7sR95lUgGgSm3vy9mnSipseY6XT-SgggCodZD0Mx575SjdTUzaBdYY6Hr1ZMue_JX6x7fFSbrvf8LL5hBJJNejnXzwMT7jvRjD_fKV8kG5MaDjsCn4_IKL0yaa_3erdFVEHd7yFphrJ1X4Q4uokgVFQ-8S4AmdSeH0Ud9nooWCwebrf"
     ];
 
     return (
-        <section className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-primary/5 dark:to-primary/10 rounded-3xl my-8">
+        <section className="w-full py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-primary/5 dark:to-primary/10">
             <div className="tge-bg-pattern opacity-[0.5] dark:opacity-[0.35]" />
             
-            <div className="relative z-10">
+            <div className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-12">
                 {/* Hero Section */}
                 <div className="mb-20">
                     <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4">
@@ -225,8 +224,8 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                                 {defaultAvatars.map((src, i) => (
                                                     <img key={i} className="w-10 h-10 rounded-full border-2 border-background object-cover" src={src} alt="Attendee" />
                                                 ))}
-                                                <div className="w-10 h-10 rounded-full border-2 border-background bg-surface text-[10px] text-on-surface flex items-center justify-center font-black">
-                                                    +2k
+                                                <div className="min-w-10 h-10 px-2 rounded-full border-2 border-background bg-surface text-[10px] text-on-surface flex items-center justify-center font-black">
+                                                    +{getFest(3).review_count || 0}
                                                 </div>
                                             </div>
                                         </div>
@@ -259,7 +258,9 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                 </div>
                                 <div className="absolute top-8 right-8 bg-surface/90 backdrop-blur-md px-4 py-2 rounded-2xl flex items-center gap-2 shadow-xl border border-primary/10">
                                     <Star className="w-4 h-4 text-secondary fill-secondary" />
-                                    <span className="text-xs font-black text-on-surface tracking-tighter">4.9 / 5</span>
+                                    <span className="text-xs font-black text-on-surface tracking-tighter">
+                                        {getFest(4).rating ? `${getFest(4).rating} / 5` : 'New'}
+                                    </span>
                                 </div>
                             </div>
                         )}

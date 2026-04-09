@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Mail, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import type { NewsletterSignupBlock as NewsletterSignupBlockType } from "@/types/page-blocks";
 
 export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['content']) {
@@ -24,6 +24,14 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
     trustIndicatorNumber = "10,000+",
     trustIndicatorText = "subscribers already getting our updates"
   } = props;
+
+  const { props: pageProps } = usePage();
+  const globalStats = (pageProps as any).global_stats;
+  
+  // Dynamic trust indicator based on total users
+  const displayTrustNumber = globalStats 
+    ? `${globalStats.explorers_total.toLocaleString()}+` 
+    : trustIndicatorNumber;
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -260,7 +268,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                   animate={{ scale: [1, 1.1, 1] }}
                   transition={{ repeat: Infinity, duration: 2, repeatDelay: 3 }}
                 >
-                  {trustIndicatorNumber}
+                  {displayTrustNumber}
                 </motion.span>{" "}
                 {trustIndicatorText}
               </>

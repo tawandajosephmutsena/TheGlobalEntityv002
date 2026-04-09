@@ -277,6 +277,7 @@ class HandleInertiaRequests extends Middleware
                 'warning' => $request->session()->get('warning'),
                 'info' => $request->session()->get('info'),
             ],
+            'global_stats' => (new \App\Services\Stats\GlobalStatsService())->getStats(),
         ];
     }
 }

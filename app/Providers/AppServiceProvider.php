@@ -72,6 +72,18 @@ class AppServiceProvider extends ServiceProvider
 
         // Performance: Use strict mode for models (better data integrity)
         \Illuminate\Database\Eloquent\Model::shouldBeStrict(!$this->app->isProduction());
+
+        // Register default dashboard sources
+        $this->app->booted(function () {
+            $registry = $this->app->make(\App\Services\Dashboard\DashboardRegistry::class);
+            $registry->register(new \App\Services\Dashboard\Sources\FestivalSource());
+            $registry->register(new \App\Services\Dashboard\Sources\ReviewSource());
+            $registry->register(new \App\Services\Dashboard\Sources\InsightSource());
+            $registry->register(new \App\Services\Dashboard\Sources\ContactInquirySource());
+            $registry->register(new \App\Services\Dashboard\Sources\PortfolioItemsSource());
+            $registry->register(new \App\Services\Dashboard\Sources\ServicesSource());
+            $registry->register(new \App\Services\Dashboard\Sources\TeamMembersSource());
+        });
     }
 
 }

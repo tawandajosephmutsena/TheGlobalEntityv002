@@ -19,135 +19,34 @@ class AdminController extends Controller
     /**
      * Display the admin dashboard with overview statistics and quick actions.
      */
-    public function dashboard(): Response
+    public function dashboard(\App\Services\Dashboard\DashboardRegistry $registry): \Inertia\Response
     {
-        $stats = [
-            'portfolio_items' => [
-                'total' => PortfolioItem::count(),
-                'published' => PortfolioItem::published()->count(),
-                'featured' => PortfolioItem::featured()->count(),
-            ],
-            'services' => [
-                'total' => Service::count(),
-                'published' => Service::published()->count(),
-                'featured' => Service::featured()->count(),
-            ],
-            'insights' => [
-                'total' => Insight::count(),
-                'published' => Insight::published()->count(),
-                'featured' => Insight::featured()->count(),
-            ],
-            'team_members' => [
-                'total' => TeamMember::count(),
-                'active' => TeamMember::active()->count(),
-                'featured' => TeamMember::featured()->count(),
-            ],
-            'media_assets' => [
-                'total' => MediaAsset::count(),
-                'images' => MediaAsset::images()->count(),
-                'videos' => MediaAsset::videos()->count(),
-            ],
-            'users' => [
-                'total' => User::count(),
-                'admins' => User::where('role', 'admin')->count(),
-                'editors' => User::where('role', 'editor')->count(),
-            ],
-            'contact_inquiries' => [
-                'total' => ContactInquiry::count(),
-                'new' => ContactInquiry::where('status', 'new')->count(),
-                'unread' => ContactInquiry::whereIn('status', ['new', 'read'])->count(),
-            ],
-        ];
-
-        // Recent activity
-        $recent_portfolio = PortfolioItem::latest()->take(5)->get(['id', 'title', 'created_at', 'is_published']);
-        $recent_insights = Insight::latest()->take(5)->get(['id', 'title', 'created_at', 'is_published']);
-        $recent_inquiries = ContactInquiry::latest()->take(5)->get(['id', 'name', 'subject', 'status', 'created_at']);
-
-        // Content distribution for PieChart
-        $content_distribution = [
-            ['name' => 'Portfolio', 'value' => PortfolioItem::count(), 'color' => '#C25E2E'],
-            ['name' => 'Services', 'value' => Service::count(), 'color' => '#3b82f6'],
-            ['name' => 'Insights', 'value' => Insight::count(), 'color' => '#a855f7'],
-            ['name' => 'Pages', 'value' => Page::count(), 'color' => '#10b981'],
-        ];
-
-        // Content timeline (items created per day, last 7 days)
-        $content_timeline = [];
-        for ($i = 6; $i >= 0; $i--) {
-            $date = now()->subDays($i);
-            $dayStart = $date->copy()->startOfDay();
-            $dayEnd = $date->copy()->endOfDay();
-            $content_timeline[] = [
-                'date' => $date->format('M d'),
-                'portfolio' => PortfolioItem::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
-                'insights' => Insight::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
-                'services' => Service::whereBetween('created_at', [$dayStart, $dayEnd])->count(),
-            ];
-        }
-
-        // SEO Stats
-        $seo_stats = [
-            'average_score' => 85,
-            'pages_needing_attention' => 
-                Insight::published()->whereNull('excerpt')->count() + 
-                PortfolioItem::published()->whereNull('description')->count(),
-            'total_pages' => 
-                Insight::published()->count() + 
-                PortfolioItem::published()->count() + 
-                Service::published()->count() + 
-                Page::published()->count(),
-        ];
+        $pagesNeedingAttention = \App\Models\Insight::where('is_published', true)->whereNull('excerpt')->count() +
+            \App\Models\Page::where('is_published', true)->whereNull('description')->count();
+        $totalPages = \App\Models\Insight::where('is_published', true)->count() + \App\Models\Page::where('is_published', true)->count();
+        $averageScore = $totalPages > 0 ? round(100 - (($pagesNeedingAttention / $totalPages) * 100)) : 100;
 
         return Inertia::render('admin/Dashboard', [
-            'stats' => $stats,
-            'recent_activity' => [
-                'portfolio' => $recent_portfolio,
-                'insights' => $recent_insights,
-                'inquiries' => $recent_inquiries,
+            'sources' => $registry->aggregateStats(),
+            'recent_activity' => $registry->aggregateRecentActivity(),
+            'content_distribution' => $registry->aggregateDistribution(),
+            'content_timeline' => $registry->aggregateTimeline(),
+            'next_update_timestamp' => $registry->getNextUpdateTimestamp(),
+            'seo_stats' => [
+                'average_score' => $averageScore,
+                'pages_needing_attention' => $pagesNeedingAttention,
+                'total_pages' => $totalPages,
             ],
-            'content_distribution' => $content_distribution,
-            'content_timeline' => $content_timeline,
-            'seo_stats' => $seo_stats,
         ]);
     }
 
     /**
      * Get quick action data for dashboard widgets.
      */
-    public function quickActions()
+    public function quickActions(\App\Services\Dashboard\DashboardRegistry $registry)
     {
         return response()->json([
-            'actions' => [
-                [
-                    'title' => 'New Portfolio Item',
-                    'description' => 'Add a new project to showcase',
-                    'route' => 'admin.portfolio.create',
-                    'icon' => 'plus-circle',
-                    'color' => 'blue',
-                ],
-                [
-                    'title' => 'New Blog Post',
-                    'description' => 'Write a new insight or article',
-                    'route' => 'admin.insights.create',
-                    'icon' => 'document-text',
-                    'color' => 'green',
-                ],
-                [
-                    'title' => 'Upload Media',
-                    'description' => 'Add images and files',
-                    'route' => 'admin.media.upload',
-                    'icon' => 'photograph',
-                    'color' => 'purple',
-                ],
-                [
-                    'title' => 'Manage Team',
-                    'description' => 'Add or update team members',
-                    'route' => 'admin.team.index',
-                    'icon' => 'user-group',
-                    'color' => 'orange',
-                ],
-            ],
+            'actions' => $registry->aggregateQuickActions(),
         ]);
     }
 }

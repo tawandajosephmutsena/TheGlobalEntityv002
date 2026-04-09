@@ -194,6 +194,7 @@ Route::middleware(['auth', 'verified', 'cache.headers:no-cache'])->prefix('cms')
 Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('analytics');
+    Route::get('/analytics/export', [App\Http\Controllers\Admin\AnalyticsController::class, 'export'])->name('analytics.export');
     Route::get('/quick-actions', [App\Http\Controllers\Admin\AdminController::class, 'quickActions'])->name('quick-actions');
 
     // User Management

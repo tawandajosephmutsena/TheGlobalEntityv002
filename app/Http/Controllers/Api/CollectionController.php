@@ -102,6 +102,8 @@ class CollectionController extends Controller
                         return $query->where('is_featured', true);
                     })
                     ->with(['author', 'category', 'activities'])
+                    ->withAvg(['reviews' => fn($query) => $query->where('status', 'approved')], 'vibe_rating')
+                    ->withCount(['reviews' => fn($query) => $query->where('status', 'approved')])
                     ->latest()
                     ->when(!$request->has('ids'), function ($query) use ($limit) {
                         return $query->take($limit);
@@ -126,6 +128,8 @@ class CollectionController extends Controller
                         'social_tags' => $item->social_tags ?? [],
                         'gallery' => $item->gallery ?? [],
                         'activities' => $item->activities->pluck('name')->toArray(),
+                        'rating' => $item->reviews_avg_vibe_rating ? round($item->reviews_avg_vibe_rating, 1) : null,
+                        'review_count' => $item->reviews_count ?? 0,
                     ];
                 });
                 break;

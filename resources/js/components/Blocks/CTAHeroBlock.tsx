@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
 import CategoryIcon from "@/components/CategoryIcon";
 import { GLSLHills } from "@/components/ui/GLSLHills";
@@ -29,6 +29,18 @@ export default function CTAHeroBlock({
   image = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
   imageLink = "",
 }: CTAHeroBlock['content']) {
+  const { props: pageProps } = usePage();
+  const globalStats = (pageProps as any).global_stats;
+
+  // Derive dynamic stats from backend
+  const displayStatsValue = globalStats 
+    ? `${globalStats.reviews_avg_rating}/5` 
+    : statsValue;
+  
+  const displayStatsLabel = globalStats 
+    ? `from ${globalStats.reviews_total.toLocaleString()}+ reviews` 
+    : statsLabel;
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { data, setData, post, processing, reset } = useForm({
@@ -220,9 +232,9 @@ export default function CTAHeroBlock({
                   ))}
                 </div>
                 <div className="text-sm">
-                  <span className="font-bold">{statsValue}</span>
+                  <span className="font-bold">{displayStatsValue}</span>
                   <span className="text-muted-foreground ml-1">
-                    {statsLabel}
+                    {displayStatsLabel}
                   </span>
                 </div>
               </div>
