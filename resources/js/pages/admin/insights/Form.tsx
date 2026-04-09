@@ -14,7 +14,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Insight, Category, User } from '@/types';
 import { useForm, Link } from '@inertiajs/react';
 import React, { useEffect, useRef } from 'react';
-import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye } from 'lucide-react';
+import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, GripVertical, List, Type, ImageIcon } from 'lucide-react';
 import {
     Select,
     SelectContent,
@@ -70,6 +70,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         is_published: boolean;
         is_featured: boolean;
         published_at: string;
+        quick_tips: any[];
     }>({
         title: insight?.title || '',
         slug: insight?.slug || '',
@@ -86,6 +87,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         is_published: insight?.is_published ?? false,
         is_featured: insight?.is_featured ?? false,
         published_at: insight?.published_at ? formatDateForInput(insight.published_at) : '',
+        quick_tips: insight?.quick_tips || [],
     });
 
     // Auto-generate slug from title
@@ -166,6 +168,20 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         setComparisonVersions([version1, version2]);
         setShowVersionComparison(true);
         setShowVersionHistory(false);
+    };
+
+    const addTip = () => {
+        setData('quick_tips', [...data.quick_tips, { type: 'text', title: '', content: '', image: '' }]);
+    };
+
+    const removeTip = (index: number) => {
+        setData('quick_tips', data.quick_tips.filter((_, i) => i !== index));
+    };
+
+    const updateTip = (index: number, field: string, value: any) => {
+        const newTips = [...data.quick_tips];
+        newTips[index] = { ...newTips[index], [field]: value };
+        setData('quick_tips', newTips);
     };
 
     return (
@@ -269,6 +285,125 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                                     <p className="text-sm text-destructive mt-1">{(errors as Record<string, string>)['content.body']}</p>
                                 )}
                             </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader className="flex flex-row items-center justify-between">
+                            <CardTitle>Quick Tips</CardTitle>
+                            <Button type="button" size="sm" onClick={addTip} className="bg-agency-accent/10 text-agency-accent hover:bg-agency-accent/20 border-agency-accent/20">
+                                <Plus className="h-4 w-4 mr-2" />
+                                Add Tip
+                            </Button>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            {data.quick_tips.length === 0 && (
+                                <div className="text-center py-10 border-2 border-dashed rounded-xl opacity-40">
+                                    <List className="mx-auto h-8 w-8 mb-2" />
+                                    <p className="text-sm">No quick tips added yet.</p>
+                                </div>
+                            )}
+
+                            {data.quick_tips.map((tip, index) => (
+                                <div key={index} className="relative p-6 rounded-2xl border border-agency-primary/5 dark:border-white/5 bg-agency-primary/[0.02] dark:bg-white/[0.02] group">
+                                    <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Button 
+                                            type="button" 
+                                            size="icon" 
+                                            variant="ghost" 
+                                            className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                                            onClick={() => removeTip(index)}
+                                        >
+                                            <Trash2 className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-4">
+                                            <div className="grid gap-2">
+                                                <Label>Tip Type</Label>
+                                                <div className="flex gap-2">
+                                                    <Button 
+                                                        type="button" 
+                                                        size="sm" 
+                                                        variant={tip.type === 'text' ? 'default' : 'outline'}
+                                                        className={tip.type === 'text' ? 'bg-agency-accent text-agency-primary' : ''}
+                                                        onClick={() => updateTip(index, 'type', 'text')}
+                                                    >
+                                                        <Type className="h-4 w-4 mr-2" /> Text
+                                                    </Button>
+                                                    <Button 
+                                                        type="button" 
+                                                        size="sm" 
+                                                        variant={tip.type === 'points' ? 'default' : 'outline'}
+                                                        className={tip.type === 'points' ? 'bg-agency-accent text-agency-primary' : ''}
+                                                        onClick={() => updateTip(index, 'type', 'points')}
+                                                    >
+                                                        <List className="h-4 w-4 mr-2" /> Points
+                                                    </Button>
+                                                    <Button 
+                                                        type="button" 
+                                                        size="sm" 
+                                                        variant={tip.type === 'image_paragraph' ? 'default' : 'outline'}
+                                                        className={tip.type === 'image_paragraph' ? 'bg-agency-accent text-agency-primary' : ''}
+                                                        onClick={() => updateTip(index, 'type', 'image_paragraph')}
+                                                    >
+                                                        <ImageIcon className="h-4 w-4 mr-2" /> Image
+                                                    </Button>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid gap-2">
+                                                <Label>Title (Optional)</Label>
+                                                <Input 
+                                                    value={tip.title || ''} 
+                                                    onChange={(e) => updateTip(index, 'title', e.target.value)}
+                                                    placeholder="Tip Heading..."
+                                                />
+                                            </div>
+
+                                            <div className="grid gap-2">
+                                                <Label>Content {tip.type === 'points' && '(Separate by new lines for points)'}</Label>
+                                                <Textarea 
+                                                    value={tip.content || ''} 
+                                                    onChange={(e) => updateTip(index, 'content', e.target.value)}
+                                                    placeholder={tip.type === 'points' ? "- Point one\n- Point two" : "Write your tip here..."}
+                                                    rows={4}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {(tip.type === 'image_paragraph' || tip.type === 'text') && (
+                                            <div className="space-y-4">
+                                                <Label>Tip Image {tip.type === 'text' && '(Optional)'}</Label>
+                                                <MediaLibrary 
+                                                    type="image"
+                                                    currentValue={tip.image}
+                                                    onSelect={(asset) => updateTip(index, 'image', asset.url)}
+                                                    trigger={
+                                                        <div className="aspect-video rounded-xl border border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-agency-primary/5 dark:hover:bg-white/5 transition-colors overflow-hidden">
+                                                            {tip.image ? (
+                                                                <img src={tip.image} alt="" className="w-full h-full object-cover" />
+                                                            ) : (
+                                                                <>
+                                                                    <ImagePlus className="h-6 w-6 mb-2 opacity-20" />
+                                                                    <span className="text-[10px] uppercase tracking-widest opacity-40">Select Image</span>
+                                                                </>
+                                                            )}
+                                                        </div>
+                                                    }
+                                                />
+                                                <Input 
+                                                    value={tip.image || ''} 
+                                                    onChange={(e) => updateTip(index, 'image', e.target.value)}
+                                                    placeholder="Image URL..."
+                                                    className="text-xs"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                         </CardContent>
                     </Card>
                 </div>

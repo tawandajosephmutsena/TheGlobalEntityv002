@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/MainLayout';
 import { Comment, Insight, ReactionType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { SeoHead } from '@/components/SeoHead';
-import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2, Github, Globe } from 'lucide-react';
+import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2, Github, Globe, Lightbulb, CheckCircle2 } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
 import DOMPurify from 'dompurify';
@@ -268,6 +268,55 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 <p className="italic opacity-40">Article content is being developed...</p>
                             )}
                         </div>
+
+                        {/* Quick Tips Section */}
+                        {insight.quick_tips && insight.quick_tips.length > 0 && (
+                            <div className="mt-24">
+                                <div className="mb-12 flex items-center gap-4">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-agency-accent flex items-center gap-2">
+                                        <Lightbulb className="size-4" /> Quick Tips
+                                    </span>
+                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
+                                </div>
+                                
+                                <div className="grid grid-cols-1 gap-8">
+                                    {insight.quick_tips.map((tip, idx) => (
+                                        <div key={idx} className="relative overflow-hidden rounded-[40px] border border-agency-primary/5 dark:border-white/5 bg-agency-primary/[0.02] dark:bg-white/[0.02] group hover:border-agency-accent/30 transition-all duration-700">
+                                            <div className="p-8 md:p-12 flex flex-col lg:flex-row gap-10">
+                                                <div className="flex-1">
+                                                    {tip.title && (
+                                                        <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 group-hover:text-agency-accent transition-colors duration-500">
+                                                            {tip.title}
+                                                        </h4>
+                                                    )}
+                                                    
+                                                    {tip?.type === 'points' ? (
+                                                        <ul className="space-y-4">
+                                                            {(tip.content || '').split('\n').filter(Boolean).map((point: string, pIdx: number) => (
+                                                                <li key={pIdx} className="flex items-start gap-4 text-base md:text-lg opacity-80 leading-relaxed font-light font-sans">
+                                                                    <CheckCircle2 className="size-5 text-agency-accent shrink-0 mt-1" />
+                                                                    {point.replace(/^[-*]\s*/, '')}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    ) : (
+                                                        <p className="text-base md:text-lg opacity-80 leading-relaxed font-light font-sans">
+                                                            {tip.content}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                                
+                                                {tip.image && (
+                                                    <div className="w-full lg:w-1/3 aspect-video lg:aspect-square rounded-3xl overflow-hidden shadow-2xl">
+                                                        <img src={tip.image} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Associated Festival Card (Conditional) */}
                         {(insight.festival_id || insight.festival) && (

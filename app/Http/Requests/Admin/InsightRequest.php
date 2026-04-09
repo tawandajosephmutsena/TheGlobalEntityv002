@@ -48,6 +48,7 @@ class InsightRequest extends SecureFormRequest
             'is_featured' => 'boolean',
             'is_published' => 'boolean',
             'published_at' => 'nullable|date',
+            'quick_tips' => 'nullable|array',
         ];
     }
 

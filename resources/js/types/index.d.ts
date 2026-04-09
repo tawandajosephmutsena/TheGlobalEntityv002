@@ -225,6 +225,12 @@ export interface Insight {
     additionalCategories?: Category[];
     podcast?: Podcast | null;
     festival?: Festival | null;
+    quick_tips?: Array<{
+        type: 'text' | 'points' | 'image_paragraph';
+        title?: string;
+        content: string;
+        image?: string;
+    }> | null;
 }
 
 export type ReactionType = 'like' | 'love' | 'celebrate' | 'insightful';

@@ -36,6 +36,7 @@ class Insight extends Model
         'is_featured',
         'is_published',
         'published_at',
+        'quick_tips',
     ];
 
     protected $casts = [
@@ -45,6 +46,7 @@ class Insight extends Model
         'is_published' => 'boolean',
         'published_at' => 'datetime',
         'reading_time' => 'integer',
+        'quick_tips' => 'array',
     ];
 
     protected $attributes = [
