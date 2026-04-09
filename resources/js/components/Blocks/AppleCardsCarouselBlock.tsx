@@ -113,15 +113,20 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
     }
 
     return (
-        <div className="w-full h-full py-20 bg-background overflow-hidden">
-             {title && (
-                 <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-4">
-                    {title}
-                 </h2>
-             )}
-             <Carousel items={cards} />
+        <div className="w-full h-full py-20 bg-background overflow-hidden relative">
+             <div className="tge-bg-pattern opacity-[0.40] dark:opacity-[0.30]" />
+             
+             <div className="relative z-10">
+                 {title && (
+                     <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-4">
+                        {title}
+                     </h2>
+                 )}
+                 <Carousel items={cards} />
+             </div>
         </div>
     );
 };
+
 
 export default AppleCardsCarouselBlock;

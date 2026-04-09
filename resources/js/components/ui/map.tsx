@@ -28,11 +28,11 @@ const defaultStyles = {
 type Theme = "light" | "dark";
 
 // Check document class for theme (works with next-themes, etc.)
-function getDocumentTheme(): Theme | null {
-  if (typeof document === "undefined") return null;
+function getDocumentTheme(): Theme {
+  if (typeof document === "undefined") return "light";
   if (document.documentElement.classList.contains("dark")) return "dark";
-  if (document.documentElement.classList.contains("light")) return "light";
-  return null;
+  // If explicitly light, or if not dark (defaulting to light)
+  return "light";
 }
 
 // Get system preference
@@ -45,7 +45,7 @@ function getSystemTheme(): Theme {
 
 function useResolvedTheme(themeProp?: "light" | "dark"): Theme {
   const [detectedTheme, setDetectedTheme] = useState<Theme>(
-    () => getDocumentTheme() ?? getSystemTheme()
+    () => getDocumentTheme()
   );
 
   useEffect(() => {
@@ -66,8 +66,8 @@ function useResolvedTheme(themeProp?: "light" | "dark"): Theme {
     // Also watch for system preference changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleSystemChange = (e: MediaQueryListEvent) => {
-      // Only use system preference if no document class is set
-      if (!getDocumentTheme()) {
+      // Only use system preference if no explicit dark class is present
+      if (!document.documentElement.classList.contains("dark")) {
         setDetectedTheme(e.matches ? "dark" : "light");
       }
     };
@@ -229,16 +229,13 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     });
 
     const styleDataHandler = () => {
-      clearStyleTimeout();
-      // Delay to ensure style is fully processed before allowing layer operations
-      // This is a workaround to avoid race conditions with the style loading
-      // else we have to force update every layer on setStyle change
-      styleTimeoutRef.current = setTimeout(() => {
+      if (map.isStyleLoaded()) {
+        clearStyleTimeout();
         setIsStyleLoaded(true);
         if (projection) {
           map.setProjection(projection);
         }
-      }, 100);
+      }
     };
     const loadHandler = () => setIsLoaded(true);
 

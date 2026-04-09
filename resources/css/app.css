@@ -1252,3 +1252,21 @@
     background-color: rgba(179, 82, 39, 0.2); /* RGBA Fallback */
     background-color: oklch(0.6 0.18 41.116 / 0.2);
 }
+
+@layer utilities {
+    .tge-bg-pattern {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        -webkit-mask-image: url('/images/stitch/TGE-bg.svg');
+        mask-image: url('/images/stitch/TGE-bg.svg');
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        -webkit-mask-position: center;
+        mask-position: center;
+        background-color: currentColor;
+    }
+}
