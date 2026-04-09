@@ -618,16 +618,38 @@
         box-shadow: 0 0 20px color-mix(in srgb, var(--primary) 5%, transparent);
     }
 
-    .apple-shadow {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-    }
-
     .apple-shadow-hover {
-        @apply transition-shadow duration-500;
+        @apply transition-all duration-500;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
     }
 
     .apple-shadow-hover:hover {
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .premium-glass {
+        @apply backdrop-blur-2xl;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.05)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .premium-glass {
+        background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.2),
+            rgba(0, 0, 0, 0.1)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .micro-interaction-scale {
+        @apply transition-transform duration-300 ease-out active:scale-95 hover:scale-[1.02];
     }
 
     /* Staggered Entrance Utilities */

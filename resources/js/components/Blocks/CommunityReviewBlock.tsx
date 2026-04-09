@@ -60,7 +60,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                             >
-                                <Card className="h-full border-primary/10 bg-white/30 dark:bg-black/20 backdrop-blur-xl shadow-2xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-500 group overflow-hidden flex flex-col">
+                                <Card className="h-full border-none premium-glass apple-shadow-hover group overflow-hidden flex flex-col">
                                     <CardContent className="p-10 relative flex-1 flex flex-col">
                                         <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/5 group-hover:text-primary/10 group-hover:scale-110 transition-all duration-700 ease-out" />
                                         

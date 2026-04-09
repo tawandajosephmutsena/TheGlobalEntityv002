@@ -2,26 +2,22 @@ import React from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { SeoHead } from '@/components/SeoHead';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
-import { Page, PageBlock } from '@/types';
+import { Page, PageBlock, Service, PortfolioItem, Insight, TeamMember, Review, Category } from '@/types';
 
 interface CustomPage extends Page {
     content: {
         blocks: PageBlock[];
-    };
+    } | null;
 }
 
 interface DynamicPageProps {
     page: CustomPage;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    featuredServices?: any[]; 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    featuredProjects?: any[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    recentInsights?: any[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    teamMembers?: any[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    reviews?: any[];
+    featuredServices?: Service[]; 
+    featuredProjects?: PortfolioItem[];
+    recentInsights?: Insight[];
+    teamMembers?: TeamMember[];
+    reviews?: Review[];
+    categories?: Category[];
 }
 
 export default function DynamicPage({ 

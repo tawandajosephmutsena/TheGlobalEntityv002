@@ -159,13 +159,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 className={cn(
                     'min-h-screen bg-background font-sans text-foreground',
                     'antialiased selection:bg-agency-accent/20',
-                    'relative',
+                    'relative overflow-hidden', // Ensure background stays contained
                     className,
                 )}
             >
-                {/* Ambient theme gradient overlay — subtle radial wash behind content */}
+                {/* Ambient dynamic background — premium motion wash */}
                 <div
-                    className="pointer-events-none fixed inset-0 z-0 opacity-60 theme-gradient-bg-radial"
+                    className="pointer-events-none fixed inset-0 z-0 opacity-60 gradient-motion-bg"
+                    aria-hidden="true"
+                />
+                
+                {/* Secondary aurora depth layer */}
+                <div
+                    className="pointer-events-none fixed inset-0 z-0 opacity-30 gradient-aurora mix-blend-soft-light"
                     aria-hidden="true"
                 />
                 {showNavigation && <Navigation />}

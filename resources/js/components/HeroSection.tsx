@@ -129,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 />
             </div>
             {/* Infinite Background Marquee */}
-            <div className="absolute inset-0 z-0 flex items-center justify-start opacity-[0.03] dark:opacity-[0.08] pointer-events-none select-none overflow-hidden">
+            <div className="absolute inset-0 z-0 flex items-center justify-start opacity-[0.03] dark:opacity-[0.08] pointer-events-none select-none overflow-hidden" aria-hidden="true">
                 <div 
                     ref={marqueeRef}
                     className="whitespace-nowrap flex flex-none will-change-transform"
@@ -161,7 +161,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <div className="relative w-40 md:w-56 aspect-[3/4] rounded-brand overflow-hidden shadow-2xl transition-transform duration-500 ease-out hover:scale-105 pointer-events-auto -rotate-6">
                             <img 
                                 src={backgroundImages[0] || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop'} 
-                                alt=""
+                                alt="Abstract creative brand visual"
                                 loading="lazy"
                                 fetchPriority="auto"
                                 className="absolute inset-0 !w-full !h-full object-cover transition-transform duration-700 hover:scale-110"
@@ -177,7 +177,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         <div className="relative w-48 md:w-64 aspect-square rounded-brand overflow-hidden shadow-2xl transition-transform duration-500 ease-out hover:scale-105 pointer-events-auto rotate-3">
                             <img 
                                 src={backgroundImages[1] || 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2670&auto=format&fit=crop'} 
-                                alt=""
+                                alt="Modern digital interface showcase"
                                 loading="lazy"
                                 fetchPriority="auto"
                                 className="absolute inset-0 !w-full !h-full object-cover transition-transform duration-700 hover:scale-110"

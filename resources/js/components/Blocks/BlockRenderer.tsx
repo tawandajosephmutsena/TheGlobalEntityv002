@@ -2,8 +2,8 @@ import React from 'react';
 import { blockRegistry } from '@/lib/BlockRegistry';
 import DOMPurify from 'dompurify';
 import AnimatedSection from '@/components/AnimatedSection';
-import CinematicHero from './CinematicHero';
 import VideoPlayer from '@/components/ui/video-player';
+
 import { 
     PageBlock, 
     VideoBlock as VideoBlockType, 
@@ -31,75 +31,52 @@ import {
     CommunityReviewBlock as CommunityReviewBlockType
 } from '@/types/page-blocks';
 import { cn } from '@/lib/utils';
-import { TeamMember } from '@/types'; // Import real type
 
 import AnimatedShaderHero from '@/components/ui/animated-shader-hero';
 
 
-// Import all block components
-import HeroSection from '@/components/HeroSection';
-import StatsSection from '@/components/StatsSection';
-import ServicesSection from '@/components/ServicesSection';
-import FeaturedProjects from '@/components/FeaturedProjects';
-import RecentInsights from '@/components/RecentInsights';
-import FormSection from '@/components/FormSection';
-import StoryBlock from './StoryBlock';
-import ManifestoBlock from './ManifestoBlock';
-import ProcessBlock from './ProcessBlock';
-import ContactInfoBlock from './ContactInfoBlock';
-import FAQBlock from './FAQBlock';
-import CtaBlock from './CtaBlock';
-import TestimonialBlock from './TestimonialBlock';
-import LogoCloudBlock from './LogoCloudBlock';
-import AppleCardsCarouselBlock from './AppleCardsCarouselBlock';
-import CoverDemoBlock from './CoverDemoBlock';
-import VideoBackgroundHero from './VideoBackgroundHero';
-import ParallaxFeaturesBlock from './ParallaxFeaturesBlock';
-import GSAPHorizontalScrollBlock from './GSAPHorizontalScrollBlock';
-import CreativeGridBlock from './CreativeGridBlock';
-import TeamHeroBlock from './TeamHeroBlock';
-import TeamGridBlock from './TeamGridBlock';
-import CultureBentoBlock from './CultureBentoBlock';
-import TeamJoinBlock from './TeamJoinBlock';
-import CommunityReviewBlock from './CommunityReviewBlock';
-import JournalHeroBlock from './JournalHeroBlock';
-import JournalCategoryFilterBlock from './JournalCategoryFilterBlock';
-import JournalArticleGridBlock from './JournalArticleGridBlock';
-import JournalNewsletterBlock from './JournalNewsletterBlock';
+// Lazy load block components for performance optimization
+const HeroSection = React.lazy(() => import('@/components/HeroSection'));
+const StatsSection = React.lazy(() => import('@/components/StatsSection'));
+const ServicesSection = React.lazy(() => import('@/components/ServicesSection'));
+const FeaturedProjects = React.lazy(() => import('@/components/FeaturedProjects'));
+const RecentInsights = React.lazy(() => import('@/components/RecentInsights'));
+const FormSection = React.lazy(() => import('@/components/FormSection'));
+const StoryBlock = React.lazy(() => import('./StoryBlock'));
+const ManifestoBlock = React.lazy(() => import('./ManifestoBlock'));
+const ProcessBlock = React.lazy(() => import('./ProcessBlock'));
+const ContactInfoBlock = React.lazy(() => import('./ContactInfoBlock'));
+const FAQBlock = React.lazy(() => import('./FAQBlock'));
+const CtaBlock = React.lazy(() => import('./CtaBlock'));
+const TestimonialBlock = React.lazy(() => import('./TestimonialBlock'));
+const LogoCloudBlock = React.lazy(() => import('./LogoCloudBlock'));
+const AppleCardsCarouselBlock = React.lazy(() => import('./AppleCardsCarouselBlock'));
+const CoverDemoBlock = React.lazy(() => import('./CoverDemoBlock'));
+const VideoBackgroundHero = React.lazy(() => import('./VideoBackgroundHero'));
+const ParallaxFeaturesBlock = React.lazy(() => import('./ParallaxFeaturesBlock'));
+const GSAPHorizontalScrollBlock = React.lazy(() => import('./GSAPHorizontalScrollBlock'));
+const CreativeGridBlock = React.lazy(() => import('./CreativeGridBlock'));
+const TeamHeroBlock = React.lazy(() => import('./TeamHeroBlock'));
+const TeamGridBlock = React.lazy(() => import('./TeamGridBlock'));
+const CultureBentoBlock = React.lazy(() => import('./CultureBentoBlock'));
+const TeamJoinBlock = React.lazy(() => import('./TeamJoinBlock'));
+const CommunityReviewBlock = React.lazy(() => import('./CommunityReviewBlock'));
+const JournalHeroBlock = React.lazy(() => import('./JournalHeroBlock'));
+const JournalCategoryFilterBlock = React.lazy(() => import('./JournalCategoryFilterBlock'));
+const JournalArticleGridBlock = React.lazy(() => import('./JournalArticleGridBlock'));
+const JournalNewsletterBlock = React.lazy(() => import('./JournalNewsletterBlock'));
+const CinematicHero = React.lazy(() => import('./CinematicHero'));
 
 
-// Type definitions for external data
-interface ServiceItem {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    icon?: string | null;
-    featured_image?: string | null;
-    price_range?: string | null;
-}
 
-interface ProjectItem {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;
-    featured_image?: string | null;
-    client?: string | null;
-    technologies?: string[] | null;
-}
-
-interface InsightItem {
-    id: number;
-    title: string;
-    slug: string;
-    excerpt: string;
-    featured_image?: string | null;
-    author?: { name: string; avatar?: string | null };
-    category?: { name: string; slug: string };
-    published_at: string | null;
-    reading_time?: number | null;
-}
+import { 
+    Service, 
+    PortfolioItem as ProjectItem, 
+    Insight as InsightItem, 
+    Category,
+    Review,
+    TeamMember 
+} from '@/types';
 
 // Column content type for text blocks
 interface ColumnContent {
@@ -115,13 +92,12 @@ interface ColumnContent {
 
 interface BlockRendererProps {
     blocks: PageBlock[];
-    featuredServices?: ServiceItem[];
+    featuredServices?: Service[];
     featuredProjects?: ProjectItem[];
     recentInsights?: InsightItem[];
-    categories?: any[];
+    categories?: Category[];
     teamMembers?: TeamMember[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    reviews?: any[];
+    reviews?: Review[];
 }
 
 const VideoBlock = ({ content }: { content: VideoBlockType['content'] }) => {
@@ -391,228 +367,245 @@ export default function BlockRenderer({
 
     return (
         <div className="flex flex-col">
-            {blocks.map((block) => {
-                if (block.is_enabled === false) return null;
+            <React.Suspense fallback={<div className="min-h-[200px] flex items-center justify-center bg-background/50 animate-pulse rounded-2xl m-4 border-2 border-dashed border-muted-foreground/20 text-muted-foreground h-full w-full">Loading section...</div>}>
+                {blocks.map((block, index) => {
+                    if (block.is_enabled === false) return null;
 
-                switch (block.type) {
-                    case 'animated_shader_hero': {
-                        const content = block.content as AnimatedShaderHeroBlock['content'];
-                        return (
-                            <div key={block.id} className="relative z-0">
-                                <AnimatedShaderHero
-                                    trustBadge={content.trustBadge}
-                                    headline={content.headline}
-                                    subtitle={content.subtitle}
-                                    buttons={{
-                                        primary: { 
-                                            text: content.buttons?.primary?.text || '', 
-                                            onClick: () => {
-                                                if (typeof window !== 'undefined') {
-                                                    window.location.href = content.buttons?.primary?.url || '#';
+                    const blockKey = block.id || `block-${index}`;
+                    
+                    // Centralized animation properties for blocks
+                    const animationProps = {
+                        animation: "fade-up",
+                        delay: 0, // Individual blocks can still override internally
+                        className: "w-full overflow-hidden"
+                    };
+
+                    const renderBlock = () => {
+                        switch (block.type) {
+                            case 'animated_shader_hero': {
+                                const content = block.content as AnimatedShaderHeroBlock['content'];
+                                return (
+                                    <div className="relative z-0">
+                                        <AnimatedShaderHero
+                                            trustBadge={content.trustBadge}
+                                            headline={content.headline}
+                                            subtitle={content.subtitle}
+                                            buttons={{
+                                                primary: { 
+                                                    text: content.buttons?.primary?.text || '', 
+                                                    onClick: () => {
+                                                        if (typeof window !== 'undefined') {
+                                                            window.location.href = content.buttons?.primary?.url || '#';
+                                                        }
+                                                    }
+                                                },
+                                                secondary: { 
+                                                    text: content.buttons?.secondary?.text || '', 
+                                                    onClick: () => {
+                                                        if (typeof window !== 'undefined') {
+                                                            window.location.href = content.buttons?.secondary?.url || '#';
+                                                        }
+                                                    }
                                                 }
-                                            }
-                                        },
-                                        secondary: { 
-                                            text: content.buttons?.secondary?.text || '', 
-                                            onClick: () => {
-                                                if (typeof window !== 'undefined') {
-                                                    window.location.href = content.buttons?.secondary?.url || '#';
-                                                }
-                                            }
-                                        }
-                                    }}
-                                />
-                            </div>
-                        );
-                    }
-                    case 'hero':
-                        return (
-                            <HeroSection
-                                key={block.id}
-                                title={block.content.title}
-                                subtitle={block.content.subtitle}
-                                description={block.content.description}
-                                ctaText={block.content.ctaText}
-                                ctaHref={block.content.ctaHref}
-                                marqueeText={block.content.marqueeText}
-                                backgroundImages={block.content.backgroundImages}
-                                showFloatingImages={block.content.showFloatingImages !== false}
-                                secondaryCtaText={block.content.secondaryCtaText}
-                                secondaryCtaHref={block.content.secondaryCtaHref}
-                            />
-                        );
-                    case 'text':
-                        return <TextBlock key={block.id} content={block.content as TextBlockType['content']} />;
-                    case 'image':
-                        return <ImageBlock key={block.id} content={block.content as ImageBlockType['content']} />;
-                    case 'features':
-                        return <FeaturesBlock key={block.id} content={block.content as FeaturesBlockType['content']} />;
-                    case 'stats':
-                        return <StatsSection key={block.id} stats={block.content.items} title={block.content.title} subtitle={block.content.subtitle} />;
-                    case 'services':
-                        return <ServicesSection key={block.id} title={block.content.title} services={featuredServices?.slice(0, Number(block.content.limit) || 3)} useStackedCards={block.content.useStackedCards} />;
-                    case 'portfolio':
-                        return (
-                            <FeaturedProjects 
-                                key={block.id} 
-                                title={block.content.title} 
-                                subtitle={block.content.subtitle} 
-                                description={block.content.description}
-                                showViewAll={block.content.showViewAll}
-                                projects={featuredProjects?.slice(0, Number(block.content.limit) || 3)} 
-                            />
-                        );
-                    case 'insights':
-                        return <RecentInsights key={block.id} title={block.content.title} insights={recentInsights?.slice(0, Number(block.content.limit) || 3)} />;
-                    case 'cta':
-                        return (
-                            <CtaBlock 
-                                key={block.id}
-                                title={block.content.title}
-                                subtitle={block.content.subtitle}
-                                ctaText={block.content.ctaText}
-                                ctaHref={block.content.ctaHref}
-                                email={block.content.email}
-                            />
-                        );
-                    case 'cinematic_hero':
-                        return <CinematicHero key={block.id} slides={block.content.slides || []} />;
-                    case 'video':
-                        return <VideoBlock key={block.id} content={block.content as VideoBlockType['content']} />;
-                    case 'form':
-                        return (
-                            <FormSection 
-                                key={block.id}
-                                title={block.content.title}
-                                description={block.content.description}
-                                steps={(block.content.steps || []).map((step) => ({
-                                    ...step,
-                                    id: step.id || Math.random().toString(36).substring(2, 9),
-                                    title: step.title || '',
-                                    fields: step.fields || [],
-                                }))}
-                                submitText={block.content.submitText}
-                                adminEmail={block.content.adminEmail}
-                                replyToEmail={block.content.replyToEmail}
-                                confirmationEmailBody={block.content.confirmationEmailBody}
-                                successMessage={block.content.successMessage}
-                                allowMultipleSubmissions={block.content.allowMultipleSubmissions}
-                            />
-                        );
-                    case 'story':
-                        return <StoryBlock key={block.id} {...(block.content as StoryBlockType['content'])} />;
-                    case 'manifesto':
-                        return <ManifestoBlock key={block.id} {...(block.content as ManifestoBlockType['content'])} />;
-                    case 'process':
-                        return <ProcessBlock key={block.id} {...(block.content as ProcessBlockType['content'])} />;
-                    case 'contact_info':
-                        return <ContactInfoBlock key={block.id} {...(block.content as ContactInfoBlockType['content'])} />;
-                    case 'faq':
-                        return <FAQBlock key={block.id} {...(block.content as FaqBlockType['content'])} />;
-                    case 'testimonials':
-                        return <TestimonialBlock key={block.id} {...(block.content as TestimonialBlockType['content'])} />;
-                    case 'logo_cloud':
-                        return <LogoCloudBlock key={block.id} {...(block.content as LogoCloudBlockType['content'])} />;
-                    case 'apple_cards_carousel':
-                        return (
-                            <AppleCardsCarouselBlock 
-                                key={block.id} 
-                                {...(block.content as AppleCardsCarouselBlockType['content'])} 
-                                services={featuredServices}
-                                portfolio={featuredProjects}
-                                insights={recentInsights}
-                            />
-                        );
-                    case 'cover_demo':
-                        return <CoverDemoBlock key={block.id} {...(block.content as CoverDemoBlockType['content'])} />;
-                    case 'video_background_hero':
-                        return <VideoBackgroundHero key={block.id} {...(block.content as VideoBackgroundHeroBlockType['content'])} />;
-                    case 'parallax_features':
-                        return <ParallaxFeaturesBlock key={block.id} {...(block.content as ParallaxFeaturesBlockType['content'])} />;
-                    case 'gsap_horizontal_scroll':
-                        return <GSAPHorizontalScrollBlock key={block.id} {...(block.content as GSAPHorizontalScrollBlockType['content'])} />;
-                    case 'creative_grid':
-                        return (
-                            <CreativeGridBlock 
-                                key={block.id} 
-                                {...(block.content as CreativeGridBlockType['content'])} 
-                                services={featuredServices}
-                                portfolio={featuredProjects}
-                                insights={recentInsights}
-                            />
-                        );
-                    case 'team_hero':
-                        return <TeamHeroBlock key={block.id} {...(block.content as TeamHeroBlockType['content'])} />;
-                    case 'team_grid':
-                        return (
-                            <TeamGridBlock 
-                                key={block.id} 
-                                {...(block.content as TeamGridBlockType['content'])} 
-                                teamMembers={teamMembers}
-                            />
-                        );
-                    case 'culture_bento':
-                        return <CultureBentoBlock key={block.id} {...(block.content as CultureBentoBlockType['content'])} />;
-                    case 'team_join':
-                        return <TeamJoinBlock key={block.id} {...(block.content as TeamJoinBlockType['content'])} />;
+                                            }}
+                                        />
+                                    </div>
+                                );
+                            }
+                            case 'hero':
+                                return (
+                                    <HeroSection
+                                        title={block.content.title}
+                                        subtitle={block.content.subtitle}
+                                        description={block.content.description}
+                                        ctaText={block.content.ctaText}
+                                        ctaHref={block.content.ctaHref}
+                                        marqueeText={block.content.marqueeText}
+                                        backgroundImages={block.content.backgroundImages}
+                                        showFloatingImages={block.content.showFloatingImages !== false}
+                                        secondaryCtaText={block.content.secondaryCtaText}
+                                        secondaryCtaHref={block.content.secondaryCtaHref}
+                                    />
+                                );
+                            case 'text':
+                                return <TextBlock content={block.content as TextBlockType['content']} />;
+                            case 'image':
+                                return <ImageBlock content={block.content as ImageBlockType['content']} />;
+                            case 'features':
+                                return <FeaturesBlock content={block.content as FeaturesBlockType['content']} />;
+                            case 'stats':
+                                return <StatsSection stats={block.content.items} title={block.content.title} subtitle={block.content.subtitle} />;
+                            case 'services':
+                                return <ServicesSection title={block.content.title} services={featuredServices?.slice(0, Number(block.content.limit) || 3)} useStackedCards={block.content.useStackedCards} />;
+                            case 'portfolio':
+                                return (
+                                    <FeaturedProjects 
+                                        title={block.content.title} 
+                                        subtitle={block.content.subtitle} 
+                                        description={block.content.description}
+                                        showViewAll={block.content.showViewAll}
+                                        projects={featuredProjects?.slice(0, Number(block.content.limit) || 3)} 
+                                    />
+                                );
+                            case 'insights':
+                                return <RecentInsights title={block.content.title} insights={recentInsights?.slice(0, Number(block.content.limit) || 3)} />;
+                            case 'cta':
+                                return (
+                                    <CtaBlock 
+                                        title={block.content.title}
+                                        subtitle={block.content.subtitle}
+                                        ctaText={block.content.ctaText}
+                                        ctaHref={block.content.ctaHref}
+                                        email={block.content.email}
+                                    />
+                                );
+                            case 'cinematic_hero':
+                                return <CinematicHero slides={block.content.slides || []} />;
+                            case 'video':
+                                return <VideoBlock content={block.content as VideoBlockType['content']} />;
+                            case 'form':
+                                return (
+                                    <FormSection 
+                                        title={block.content.title}
+                                        description={block.content.description}
+                                        steps={(block.content.steps || []).map((step) => ({
+                                            ...step,
+                                            id: step.id || Math.random().toString(36).substring(2, 9),
+                                            title: step.title || '',
+                                            fields: step.fields || [],
+                                        }))}
+                                        submitText={block.content.submitText}
+                                        adminEmail={block.content.adminEmail}
+                                        replyToEmail={block.content.replyToEmail}
+                                        confirmationEmailBody={block.content.confirmationEmailBody}
+                                        successMessage={block.content.successMessage}
+                                        allowMultipleSubmissions={block.content.allowMultipleSubmissions}
+                                    />
+                                );
+                            case 'story':
+                                return <StoryBlock {...(block.content as StoryBlockType['content'])} />;
+                            case 'manifesto':
+                                return <ManifestoBlock {...(block.content as ManifestoBlockType['content'])} />;
+                            case 'process':
+                                return <ProcessBlock {...(block.content as ProcessBlockType['content'])} />;
+                            case 'contact_info':
+                                return <ContactInfoBlock {...(block.content as ContactInfoBlockType['content'])} />;
+                            case 'faq':
+                                return <FAQBlock {...(block.content as FaqBlockType['content'])} />;
+                            case 'testimonials':
+                                return <TestimonialBlock {...(block.content as TestimonialBlockType['content'])} />;
+                            case 'logo_cloud':
+                                return <LogoCloudBlock {...(block.content as LogoCloudBlockType['content'])} />;
+                            case 'apple_cards_carousel':
+                                return (
+                                    <AppleCardsCarouselBlock 
+                                        {...(block.content as AppleCardsCarouselBlockType['content'])} 
+                                        services={featuredServices}
+                                        portfolio={featuredProjects}
+                                        insights={recentInsights}
+                                    />
+                                );
+                            case 'cover_demo':
+                                return <CoverDemoBlock {...(block.content as CoverDemoBlockType['content'])} />;
+                            case 'video_background_hero':
+                                return <VideoBackgroundHero {...(block.content as VideoBackgroundHeroBlockType['content'])} />;
+                            case 'parallax_features':
+                                return <ParallaxFeaturesBlock {...(block.content as ParallaxFeaturesBlockType['content'])} />;
+                            case 'gsap_horizontal_scroll':
+                                return <GSAPHorizontalScrollBlock {...(block.content as GSAPHorizontalScrollBlockType['content'])} />;
+                            case 'creative_grid':
+                                return (
+                                    <CreativeGridBlock 
+                                        {...(block.content as CreativeGridBlockType['content'])} 
+                                        services={featuredServices}
+                                        portfolio={featuredProjects}
+                                        insights={recentInsights}
+                                    />
+                                );
+                            case 'team_hero':
+                                return <TeamHeroBlock {...(block.content as TeamHeroBlockType['content'])} />;
+                            case 'team_grid':
+                                return (
+                                    <TeamGridBlock 
+                                        {...(block.content as TeamGridBlockType['content'])} 
+                                        teamMembers={teamMembers}
+                                    />
+                                );
+                            case 'culture_bento':
+                                return <CultureBentoBlock {...(block.content as CultureBentoBlockType['content'])} />;
+                            case 'team_join':
+                                return <TeamJoinBlock {...(block.content as TeamJoinBlockType['content'])} />;
 
-                    case 'community_review':
-                        return (
-                            <CommunityReviewBlock 
-                                key={block.id} 
-                                {...(block.content as CommunityReviewBlockType['content'])} 
-                                reviews={reviews}
-                            />
-                        );
+                            case 'community_review':
+                                return (
+                                    <CommunityReviewBlock 
+                                        {...(block.content as CommunityReviewBlockType['content'])} 
+                                        reviews={reviews}
+                                    />
+                                );
 
-                    case 'journal_hero':
-                        return (
-                            <JournalHeroBlock 
-                                key={block.id} 
-                                content={block.content as any} 
-                                recentInsights={recentInsights as any} 
-                            />
-                        );
-                    case 'journal_category_filter':
-                        return (
-                            <JournalCategoryFilterBlock 
-                                key={block.id} 
-                                content={block.content as any} 
-                                categories={categories} 
-                            />
-                        );
-                    case 'journal_article_grid':
-                        return (
-                            <JournalArticleGridBlock 
-                                key={block.id} 
-                                content={block.content as any} 
-                                recentInsights={recentInsights as any} 
-                            />
-                        );
-                    case 'journal_newsletter':
-                        return (
-                            <JournalNewsletterBlock 
-                                key={block.id} 
-                                content={block.content as any} 
-                            />
-                        );
+                            case 'journal_hero':
+                                return (
+                                    <JournalHeroBlock 
+                                        content={block.content as any} 
+                                        recentInsights={recentInsights as any} 
+                                    />
+                                );
+                            case 'journal_category_filter':
+                                return (
+                                    <JournalCategoryFilterBlock 
+                                        content={block.content as any} 
+                                        categories={categories} 
+                                    />
+                                );
+                            case 'journal_article_grid':
+                                return (
+                                    <JournalArticleGridBlock 
+                                        content={block.content as any} 
+                                        recentInsights={recentInsights as any} 
+                                    />
+                                );
+                            case 'journal_newsletter':
+                                return (
+                                    <JournalNewsletterBlock 
+                                        content={block.content as any} 
+                                    />
+                                );
 
-                    default: {
-                        const unknownBlock = block as unknown as {
-                            type: string;
-                            id: string | number;
-                            content: Record<string, unknown>;
-                        };
-                        const dynamicBlock = blockRegistry.get(unknownBlock.type);
-                        if (dynamicBlock) {
-                            const Renderer = dynamicBlock.renderer;
-                            return <Renderer key={unknownBlock.id} {...unknownBlock.content} />;
+                            default: {
+                                const unknownBlock = block as unknown as {
+                                    type: string;
+                                    id: string | number;
+                                    content: Record<string, unknown>;
+                                };
+                                const dynamicBlock = blockRegistry.get(unknownBlock.type);
+                                if (dynamicBlock) {
+                                    const Renderer = dynamicBlock.renderer;
+                                    return <Renderer {...unknownBlock.content} />;
+                                }
+                                return null;
+                            }
                         }
-                        return null;
+                    };
+
+                    // Only wrap non-hero blocks in AnimatedSection to avoid double animations with internal logic
+                    // Hero blocks usually handle their own entrance for LCP optimization
+                    const isHero = ['hero', 'animated_shader_hero', 'cinematic_hero', 'video_background_hero', 'journal_hero'].includes(block.type);
+                    
+                    if (isHero) {
+                        return <div key={blockKey}>{renderBlock()}</div>;
                     }
-                }
-            })}
+
+                    return (
+                        <AnimatedSection key={blockKey} {...animationProps}>
+                            {renderBlock()}
+                        </AnimatedSection>
+                    );
+                })}
+
+            </React.Suspense>
         </div>
+
     );
 }
 
