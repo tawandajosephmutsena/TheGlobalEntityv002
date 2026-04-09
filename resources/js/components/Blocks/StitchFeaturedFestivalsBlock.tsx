@@ -109,8 +109,8 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
     ];
 
     return (
-        <section className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden">
-            <div className="tge-bg-pattern opacity-[0.35] dark:opacity-[0.25]" />
+        <section className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-primary/5 dark:to-primary/10 rounded-3xl my-8">
+            <div className="tge-bg-pattern opacity-[0.5] dark:opacity-[0.35]" />
             
             <div className="relative z-10">
                 {/* Hero Section */}

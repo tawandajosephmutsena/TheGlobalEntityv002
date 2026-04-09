@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
 import CategoryIcon from "@/components/CategoryIcon";
 import { GLSLHills } from "@/components/ui/GLSLHills";
@@ -29,7 +29,28 @@ export default function CTAHeroBlock({
   image = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
   imageLink = "",
 }: CTAHeroBlock['content']) {
-  const [email, setEmail] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const { data, setData, post, processing, reset } = useForm({
+    email: "",
+    form_title: "CTA Hero Form",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (data.email) {
+      post('/contact', {
+        preserveScroll: true,
+        onSuccess: () => {
+          setIsSubmitted(true);
+          reset();
+          setTimeout(() => {
+            setIsSubmitted(false);
+          }, 3000);
+        }
+      });
+    }
+  };
 
   return (
     <section className="relative w-full overflow-hidden gradient-mesh gradient-motion-bg px-4 pt-48 pb-32">
@@ -135,21 +156,36 @@ export default function CTAHeroBlock({
               transition={{ duration: 0.5, delay: 0.3 }}
               className="w-full max-w-md space-y-4"
             >
-              <div className="relative flex flex-col gap-3 sm:flex-row">
+              <form onSubmit={handleSubmit} className="relative flex flex-col gap-3 sm:flex-row">
                 <Input
                   type="email"
                   placeholder={emailPlaceholder}
                   className="border-theme-soft h-12 bg-background/50 backdrop-blur-sm focus-visible:ring-2"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={data.email}
+                  onChange={(e) => setData("email", e.target.value)}
+                  disabled={processing || isSubmitted}
+                  required
                 />
-                <Button className="group h-12 px-8 theme-gradient-animated text-white border-none hover:shadow-lg theme-gradient-glow" asChild>
-                    <Link href={buttonLink}>
-                        {buttonText}
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                <Button 
+                  type="submit"
+                  disabled={processing || isSubmitted || !data.email}
+                  className="group h-12 px-8 theme-gradient-animated text-white border-none hover:shadow-lg theme-gradient-glow"
+                >
+                  {isSubmitted ? (
+                    <>
+                      <CheckCircle2 className="mr-2 h-4 w-4" />
+                      Saved!
+                    </>
+                  ) : processing ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      {buttonText}
+                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </>
+                  )}
                 </Button>
-              </div>
+              </form>
 
               <div className="flex flex-wrap items-center gap-y-2 gap-x-6 sm:gap-x-8">
                 {benefits.map((benefit, index) => (

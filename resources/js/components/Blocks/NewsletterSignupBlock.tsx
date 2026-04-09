@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Mail, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { useForm } from "@inertiajs/react";
 import type { NewsletterSignupBlock as NewsletterSignupBlockType } from "@/types/page-blocks";
 
 export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['content']) {
@@ -24,18 +25,27 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
     trustIndicatorText = "subscribers already getting our updates"
   } = props;
 
-  const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
+  const { data, setData, post, processing, reset } = useForm({
+    email: "",
+    form_title: "Newsletter signup",
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setEmail("");
-      }, 3000);
+    if (data.email) {
+      post('/contact', {
+        preserveScroll: true,
+        onSuccess: () => {
+          setIsSubmitted(true);
+          reset();
+          setTimeout(() => {
+            setIsSubmitted(false);
+          }, 3000);
+        }
+      });
     }
   };
 
@@ -157,11 +167,12 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                           <Input
                             type="email"
                             placeholder={placeholderText}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={data.email}
+                            onChange={(e) => setData("email", e.target.value)}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => setIsFocused(false)}
                             className="pl-10"
+                            disabled={processing}
                             required
                           />
                         </div>
@@ -172,9 +183,11 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                       type="submit"
                       size="lg"
                       className="group w-full"
-                      disabled={!email}
+                      disabled={!data.email || processing}
                     >
-                      <span className="[font-variant-caps:small-caps] font-black tracking-tighter">{buttonText}</span>
+                      <span className="[font-variant-caps:small-caps] font-black tracking-tighter">
+                        {processing ? "Submitting..." : buttonText}
+                      </span>
                       <motion.div
                         className="ml-2"
                         animate={{ x: [0, 5, 0] }}

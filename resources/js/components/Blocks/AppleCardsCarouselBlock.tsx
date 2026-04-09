@@ -113,8 +113,8 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
     }
 
     return (
-        <div className="w-full h-full py-20 bg-background overflow-hidden relative">
-             <div className="tge-bg-pattern opacity-[0.40] dark:opacity-[0.30]" />
+        <div className="w-full h-full py-20 overflow-hidden relative bg-gradient-to-br from-background via-surface-container-low to-primary/5 dark:to-primary/10">
+             <div className="tge-bg-pattern opacity-[0.5] dark:opacity-[0.40]" />
              
              <div className="relative z-10">
                  {title && (
