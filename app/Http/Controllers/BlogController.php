@@ -51,7 +51,7 @@ class BlogController extends Controller
         });
 
         $categories = \Illuminate\Support\Facades\Cache::flexible('blog.categories', [60 * 60 * 24, 60 * 60 * 48], function () {
-            return Category::where('type', 'insight')->get(['id', 'name', 'slug']);
+            return Category::where('type', 'insight')->get(['id', 'name', 'slug', 'icon']);
         });
 
         $dynamicPage = Page::published()->where('slug', 'blog')->first();

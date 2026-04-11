@@ -12,40 +12,18 @@ interface BaseCollectionItem {
     content?: string | null;
 }
 
-interface PortfolioItem extends BaseCollectionItem {
-    category?: string | null;
-    client?: string | null;
-}
-
-interface Insight extends BaseCollectionItem {
-    category?: { name: string; slug: string } | string | null;
+interface CollectionItem extends BaseCollectionItem {
+    category?: { name: string; slug: string; icon?: string } | string | null;
+    published_at?: string | null;
     author?: { name: string; avatar?: string | null };
-    published_at: string | null;
+    client?: string | null;
+    price_range?: string | null;
 }
 
-interface AppleCardsCarouselBlockProps {
-    title?: string;
-    feedSource?: 'manual' | 'services' | 'portfolio' | 'insights';
-    maxItems?: number;
-    sourceCategory?: string;
-    items?: {
-        category: string;
-        title: string;
-        subtitle?: string;
-        description?: string;
-        categoryIcon?: string;
-        image: string;
-        content?: string;
-        link?: string;
-    }[];
-    // Collection data passed from BlockRenderer
-    services?: BaseCollectionItem[];
-    portfolio?: PortfolioItem[];
-    insights?: Insight[];
-}
-
-const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
+const AppleCardsCarouselBlock: React.FC<any> = ({
     title,
+    subtitle,
+    description,
     feedSource = 'manual',
     maxItems = 6,
     sourceCategory = 'all',
@@ -63,34 +41,46 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
     }));
 
     if (feedSource !== 'manual') {
-        let sourceData: (BaseCollectionItem | PortfolioItem | Insight)[] = [];
-        if (feedSource === 'services') sourceData = services;
-        else if (feedSource === 'portfolio') sourceData = portfolio;
-        else if (feedSource === 'insights') sourceData = insights;
+        let sourceData: CollectionItem[] = [];
+        if (feedSource === 'services') sourceData = services as CollectionItem[];
+        else if (feedSource === 'portfolio') sourceData = portfolio as CollectionItem[];
+        else if (feedSource === 'insights') sourceData = insights as CollectionItem[];
 
         displayItems = sourceData.map((item) => {
             let category = 'Service';
             let categoryIcon = 'Layout';
+            let subtitle = '';
             
+            // Extract category and icon
+            if (item.category && typeof item.category === 'object') {
+                category = item.category.name;
+                categoryIcon = item.category.icon || 'Layout';
+            } else if (typeof item.category === 'string') {
+                category = item.category;
+            }
+
+            // Enhanced subtitles based on feed source
             if (feedSource === 'insights') {
-                const insight = item as Insight;
-                category = (insight.category && typeof insight.category === 'object') ? insight.category.name : (typeof insight.category === 'string' ? insight.category : 'Insight');
-                categoryIcon = 'BookOpen';
+                category = category || 'Insight';
+                categoryIcon = categoryIcon === 'Layout' ? 'BookOpen' : categoryIcon;
+                subtitle = item.published_at ? new Date(item.published_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : '';
             } else if (feedSource === 'portfolio') {
-                category = (item as PortfolioItem).category || 'Project';
-                categoryIcon = 'Briefcase';
+                category = category || 'Project';
+                categoryIcon = categoryIcon === 'Layout' ? 'Briefcase' : categoryIcon;
+                subtitle = item.client || '';
             } else if (feedSource === 'services') {
-                categoryIcon = 'Cog';
+                categoryIcon = categoryIcon === 'Layout' ? 'Cog' : categoryIcon;
+                subtitle = item.price_range || '';
             }
 
             return {
                 category,
                 categoryIcon,
                 title: item.title,
-                subtitle: '', // Not available directly in shared schema easily
-                description: item.excerpt || '',
-                image: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=1200&auto=format&fit=crop&q=75',
-                content: item.description || item.excerpt || item.content || '',
+                subtitle: subtitle,
+                description: item.excerpt || item.description || '',
+                image: item.featured_image || 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=1200&auto=format&fit=crop',
+                content: item.content || item.description || item.excerpt || '',
                 link: `/${feedSource === 'insights' ? 'blog' : feedSource}/${item.slug}`
             };
         });
@@ -137,12 +127,13 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
     return (
         <div className="w-full h-full py-10 overflow-visible relative">
              <div className="relative z-10">
-                 {title && (
-                     <h2 className="max-w-7xl pl-4 mx-auto text-3xl md:text-5xl font-black tracking-tighter text-foreground font-sans mb-4 [font-variant-caps:small-caps]">
-                        {title}
-                     </h2>
-                 )}
-                 <Carousel items={cards} cardsData={cardsData} />
+                 <Carousel 
+                    items={cards} 
+                    cardsData={cardsData} 
+                    title={title}
+                    subtitle={subtitle}
+                    description={description}
+                 />
              </div>
         </div>
     );

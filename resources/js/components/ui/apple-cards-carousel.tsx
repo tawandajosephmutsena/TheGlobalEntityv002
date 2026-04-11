@@ -13,7 +13,7 @@ import {
   IconArrowNarrowRight,
   IconX,
 } from "@tabler/icons-react";
-import * as LucideIcons from "lucide-react";
+import CategoryIcon from "@/components/CategoryIcon";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/use-outside-click";
@@ -21,6 +21,9 @@ import { useOutsideClick } from "@/hooks/use-outside-click";
 interface CarouselProps {
   items: React.ReactNode[];
   initialScroll?: number;
+  title?: string;
+  subtitle?: string;
+  description?: string;
   // Metadata for filtering
   cardsData?: Card[];
 }
@@ -44,13 +47,7 @@ export const CarouselContext = createContext<{
   currentIndex: 0,
 });
 
-const CategoryIcon = ({ name, className }: { name?: string; className?: string }) => {
-  // Map common strings to Lucide icons if not found or provide fallback
-  const IconComponent = (LucideIcons as any)[name || "Layout"] || LucideIcons.Layout;
-  return <IconComponent className={cn("h-4 w-4", className)} />;
-};
-
-export const Carousel = ({ items, initialScroll = 0, cardsData }: CarouselProps) => {
+export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle, description }: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
@@ -76,7 +73,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData }: CarouselProps)
       carouselRef.current.scrollLeft = initialScroll;
       checkScrollability();
     }
-  }, [initialScroll, checkScrollability, activeCategory]); // Re-check when category changes
+  }, [initialScroll, checkScrollability, activeCategory]);
 
   const scrollLeft = () => {
     if (carouselRef.current) {
@@ -117,46 +114,72 @@ export const Carousel = ({ items, initialScroll = 0, cardsData }: CarouselProps)
       value={{ onCardClose: handleCardClose, currentIndex }}
     >
       <div className="relative w-full">
-        {/* Navigation and Filters Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between px-4 mb-6 max-w-7xl mx-auto gap-4">
-            <div className="flex flex-wrap gap-2 order-2 md:order-1">
-                {categories.length > 1 && categories.map((cat) => (
-                    <button
-                        key={cat}
-                        onClick={() => setActiveCategory(cat)}
-                        className={cn(
-                            "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 border",
-                            activeCategory === cat 
-                                ? "bg-foreground text-background border-foreground shadow-lg scale-105" 
-                                : "bg-background/50 text-foreground/60 border-border hover:border-foreground/30 hover:bg-background"
-                        )}
-                    >
-                        {cat !== "All" && cardsData && (
-                            <CategoryIcon name={cardsData.find(c => c.category === cat)?.categoryIcon} />
-                        )}
-                        {cat}
-                    </button>
-                ))}
+        {/* Navigation and Metadata Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between px-4 mb-6 max-w-7xl mx-auto gap-8 overflow-visible">
+            <div className="flex flex-col gap-2 order-2 md:order-1 flex-1">
+                {subtitle && (
+                    <p className="text-[10px] md:text-xs font-black tracking-[0.2em] text-primary [font-variant-caps:small-caps] opacity-80 decoration-primary decoration-2 underline-offset-4 mb-1">
+                        {subtitle}
+                    </p>
+                )}
+                <motion.h2 
+                    layoutId="carousel-title"
+                    className="text-4xl md:text-6xl font-black text-on-surface [font-variant-caps:small-caps] tracking-tighter leading-none"
+                >
+                    {title}
+                </motion.h2>
+                {description && (
+                    <p className="text-on-surface-variant text-base md:text-lg font-light max-w-2xl leading-relaxed mt-4 opacity-70">
+                        {description}
+                    </p>
+                )}
             </div>
-
-            <div className="flex justify-end gap-2 order-1 md:order-2">
+            
+            <div className="flex gap-3 items-center order-1 md:order-2 self-end pb-2">
                 <button
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-md border border-border shadow-sm disabled:opacity-30 transition-all hover:bg-background active:scale-95"
+                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/5"
                     onClick={scrollLeft}
                     disabled={!canScrollLeft}
-                    aria-label="Scroll left"
+                    title="Scroll Left"
                 >
-                    <IconArrowNarrowLeft className="h-6 w-6 text-foreground" />
+                    <IconArrowNarrowLeft className="h-6 w-6 text-on-surface group-hover:text-primary transition-colors" />
                 </button>
                 <button
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-background/80 backdrop-blur-md border border-border shadow-sm disabled:opacity-30 transition-all hover:bg-background active:scale-95"
+                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/5"
                     onClick={scrollRight}
                     disabled={!canScrollRight}
-                    aria-label="Scroll right"
+                    title="Scroll Right"
                 >
-                    <IconArrowNarrowRight className="h-6 w-6 text-foreground" />
+                    <IconArrowNarrowRight className="h-6 w-6 text-on-surface group-hover:text-primary transition-colors" />
                 </button>
             </div>
+        </div>
+
+        {/* CATEGORY FILTERING BUTTONS */}
+        <div className="flex flex-wrap gap-2 mb-8 md:mb-12 px-4 md:px-10 max-w-7xl mx-auto overflow-x-auto pb-4 scrollbar-hide no-scrollbar">
+            {categories.length > 1 && categories.map((cat) => (
+                <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={cn(
+                        "group flex items-center gap-3 px-6 py-2.5 rounded-full text-[10px] font-black tracking-widest transition-all [font-variant-caps:small-caps] whitespace-nowrap border",
+                        activeCategory === cat 
+                            ? "bg-primary text-on-primary border-primary shadow-xl shadow-primary/20 scale-105" 
+                            : "liquid-glass text-on-surface/40 border-on-surface/5 hover:text-on-surface hover:border-on-surface/20 hover:bg-on-surface/5"
+                    )}
+                >
+                    {cat !== "All" && cardsData && (
+                        <CategoryIcon 
+                            category={cat.toLowerCase().replace(/\s+/g, '-')} 
+                            icon={cardsData.find(c => c.category === cat)?.categoryIcon}
+                            className={cn("transition-transform", activeCategory === cat ? "scale-110" : "group-hover:scale-110")} 
+                            variant="icon-only"
+                            size={16}
+                        />
+                    )}
+                    {cat}
+                </button>
+            ))}
         </div>
 
         <div
@@ -292,14 +315,19 @@ export const Card = ({
                     className="flex items-center gap-2 mb-4"
                 >
                     <div className="p-2 rounded-lg bg-foreground/5 backdrop-blur-sm border border-foreground/10">
-                        <CategoryIcon name={card.categoryIcon} className="text-foreground" />
+                        <CategoryIcon 
+                            category={card.category} 
+                            icon={card.categoryIcon} 
+                            className="text-foreground" 
+                            size={20}
+                        />
                     </div>
-                    <span className="text-sm font-bold uppercase tracking-widest text-foreground/60">{card.category}</span>
+                    <span className="text-sm font-bold uppercase tracking-widest text-foreground/60 leading-none">{card.category}</span>
                 </motion.div>
                 
                 <motion.h3
                   layoutId={layout ? `title-${card.title}` : undefined}
-                  className="text-4xl md:text-6xl font-black text-foreground [font-variant-caps:small-caps] tracking-tighter"
+                  className="text-4xl md:text-6xl font-black text-foreground [font-variant-caps:small-caps] tracking-tighter leading-none"
                 >
                   {card.title}
                 </motion.h3>
@@ -325,7 +353,7 @@ export const Card = ({
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleClick}
-        className="relative z-10 flex h-[28rem] w-64 flex-col items-start justify-start overflow-hidden rounded-3xl bg-muted md:h-[32rem] md:w-96 group border border-border/50 shadow-sm transition-all hover:shadow-xl hover:border-foreground/20"
+        className="relative z-10 flex h-[28rem] w-80 flex-col items-start justify-start overflow-hidden rounded-3xl bg-muted md:h-[32rem] md:w-96 group border border-border/50 shadow-sm transition-all hover:shadow-xl hover:border-foreground/20"
         type="button"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -336,9 +364,14 @@ export const Card = ({
             className="flex items-center gap-2 mb-3"
           >
               <div className="p-1.5 rounded-md bg-white/10 backdrop-blur-md border border-white/20">
-                  <CategoryIcon name={card.categoryIcon} className="text-white h-3 w-3" />
+                  <CategoryIcon 
+                    category={card.category} 
+                    icon={card.categoryIcon} 
+                    className="text-white" 
+                    size={14}
+                  />
               </div>
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white/80">{card.category}</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white/80 leading-none">{card.category}</span>
           </motion.div>
           
           <motion.h4
@@ -347,18 +380,6 @@ export const Card = ({
           >
             {card.title}
           </motion.h4>
-
-          {card.subtitle && (
-              <p className="mt-2 text-sm md:text-base font-medium text-white/70 italic line-clamp-1">
-                  {card.subtitle}
-              </p>
-          )}
-
-          {card.description && (
-              <p className="mt-4 text-xs md:text-sm text-white/60 line-clamp-2 md:line-clamp-3 leading-relaxed">
-                  {card.description}
-              </p>
-          )}
         </div>
 
         <BlurImage

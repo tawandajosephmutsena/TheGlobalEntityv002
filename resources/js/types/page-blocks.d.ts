@@ -504,6 +504,11 @@ export interface AppleCardsCarouselBlock extends BaseBlock {
     type: 'apple_cards_carousel';
     content: {
         title?: string;
+        subtitle?: string;
+        description?: string;
+        feedSource?: 'manual' | 'services' | 'portfolio' | 'insights';
+        maxItems?: number;
+        sourceCategory?: string;
         items?: Array<{
             image: string;
             title: string;

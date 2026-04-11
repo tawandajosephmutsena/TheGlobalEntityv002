@@ -581,6 +581,7 @@ export default function BlockRenderer({
                                     <JournalArticleGridBlock 
                                         content={block.content as any} 
                                         recentInsights={recentInsights as any} 
+                                        categories={categories}
                                     />
                                 );
                             case 'journal_newsletter':

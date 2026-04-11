@@ -19,11 +19,11 @@ class PageController extends Controller
         $hasBlock = fn($type) => $blocks->contains('type', $type);
 
         $featuredServices = $hasBlock('services') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\Service::orderBy('sort_order')->take(10)->get()
+            ? \App\Models\Service::with('category')->orderBy('sort_order')->take(10)->get()
             : [];
 
         $featuredProjects = $hasBlock('portfolio') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\PortfolioItem::orderBy('sort_order')->take(10)->get()
+            ? \App\Models\PortfolioItem::with('category')->orderBy('sort_order')->take(10)->get()
             : [];
         
         $recentInsights = [];

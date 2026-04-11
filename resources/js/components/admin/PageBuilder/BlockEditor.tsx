@@ -1125,9 +1125,19 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
 
             return (
                 <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label>Title</Label>
+                            <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Subtitle (Small top text)</Label>
+                            <Input value={String(block.content.subtitle || '')} onChange={(e) => updateContent({ subtitle: e.target.value })} />
+                        </div>
+                    </div>
                     <div className="space-y-2">
-                        <Label>Title</Label>
-                        <Input value={String(block.content.title || '')} onChange={(e) => updateContent({ title: e.target.value })} />
+                        <Label>Header Description</Label>
+                        <Textarea value={String(block.content.description || '')} onChange={(e) => updateContent({ description: e.target.value })} placeholder="Enter block description..." />
                     </div>
 
                     <div className="space-y-4 pt-4 border-t">
