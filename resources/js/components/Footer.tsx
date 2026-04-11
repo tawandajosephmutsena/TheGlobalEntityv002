@@ -31,13 +31,12 @@ const footerLinks = {
     ],
 };
 
-
-
 export const Footer: React.FC<FooterProps> = ({ className }) => {
     const { props } = usePage<SharedData>();
     const site = props.site || { name: 'Ottomate', logo: '', tagline: 'High-Performance Website Platform' };
     const menuItems = props.menus?.main || [];
     const compliance = props.site?.compliance;
+    const footerType = site.footer?.type || 'enterprise';
 
     // Build legal links dynamically from compliance settings
     const legalLinks = [
@@ -98,6 +97,89 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const footerBackToTop = site.footer?.back_to_top || 'Back to top';
     const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
+    // Minimalistic Footer Design
+    if (footerType === 'minimalistic') {
+        return (
+            <footer className={cn('relative py-12 md:py-20 overflow-hidden border-t border-border/10 text-center', className)}>
+                {/* Extra Thick Texture Overlay - Very Small Grains */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-30 mix-blend-overlay"
+                    style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+                    }}
+                />
+                
+                <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-8">
+                    {/* Brand Logo */}
+                    <div>
+                        {props.menus?.logo ? (
+                            <Link 
+                                href={props.menus.logo.href} 
+                                target={props.menus.logo.target}
+                                className="inline-flex items-center group overflow-visible bg-transparent"
+                            >
+                                <AppLogo 
+                                    className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110" 
+                                />
+                            </Link>
+                        ) : (
+                            <div className="inline-flex items-center group overflow-visible bg-transparent">
+                                <AppLogo 
+                                    className="transition-transform duration-500 group-hover:rotate-[5deg] group-hover:scale-110" 
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Minimalist Heading (Text from left side) */}
+                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] max-w-3xl mx-auto">
+                        {footerHeadingLine1} <br/>
+                        <span className="text-agency-accent">{footerHeadingLine2}</span> {footerHeadingLine3}
+                    </h2>
+
+                    {/* Social Icons - Clean Row */}
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {socialLinks.map((social) => (
+                            <a 
+                                key={social.name} 
+                                href={social.href} 
+                                aria-label={social.name}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="size-14 rounded-full border border-border/40 flex items-center justify-center hover:theme-gradient-bg hover:text-white hover:border-transparent transition-all duration-500 hover:scale-110 shadow-sm hover:shadow-xl theme-gradient-glow backdrop-blur-sm"
+                            >
+                                <social.icon className="size-6" />
+                            </a>
+                        ))}
+                    </div>
+
+                    {/* Bottom Metadata */}
+                    <div className="flex flex-col items-center gap-4 pt-8 border-t border-border/20 w-full">
+                        <div className="flex items-center gap-8 group cursor-pointer mb-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                            <span className="text-xs font-bold uppercase tracking-[0.2em] group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
+                            <div className="size-8 rounded-full border border-border/40 flex items-center justify-center group-hover:theme-gradient-bg group-hover:border-transparent group-hover:text-white transition-all transform group-hover:-translate-y-1">
+                                <span className="material-symbols-outlined text-sm">arrow_upward</span>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+                            <span className="text-sm opacity-40 font-medium tracking-wide">
+                                © {new Date().getFullYear()} {site.name?.toUpperCase() || 'OTTOMATE'} {footerCopyrightSuffix}
+                            </span>
+                            <div className="flex gap-6">
+                                {legalLinks.map((link) => (
+                                    <Link key={link.name} href={link.href} className="text-[10px] opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
+
+    // Default Enterprise Footer (Original Design)
     return (
         <footer className={cn('relative pt-16 md:pt-32 pb-12 overflow-visible liquid-glass border-t border-border/10', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -88,6 +88,17 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'footer_office_title', label: 'Footer Office Title', type: 'text', placeholder: 'Office' },
         { key: 'footer_back_to_top', label: 'Back to Top Text', type: 'text', placeholder: 'Back to top' },
         { key: 'footer_copyright_suffix', label: 'Copyright Suffix', type: 'text', placeholder: 'AGY' },
+        { 
+            key: 'footer_type', 
+            label: 'Footer Layout Style', 
+            type: 'select', 
+            placeholder: 'enterprise',
+            description: 'Choose between a standard multi-column layout or a centered minimalistic layout.',
+            options: [
+                { value: 'enterprise', label: 'Enterprise (Multi-column)' },
+                { value: 'minimalistic', label: 'Minimalistic (Centered)' },
+            ]
+        },
     ],
     branding: [
         { 

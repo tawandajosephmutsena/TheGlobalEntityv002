@@ -66,6 +66,7 @@ export interface SharedData {
             office_title?: string;
             back_to_top?: string;
             copyright_suffix?: string;
+            type?: 'minimalistic' | 'enterprise';
         };
         compliance?: {
             cookie_consent_enabled?: boolean;

@@ -129,7 +129,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
                     {title}
                 </motion.h2>
                 {description && (
-                    <p className="text-on-surface-variant text-base md:text-lg font-light max-w-2xl leading-relaxed mt-4 opacity-70">
+                    <p className="text-on-surface-variant text-base md:text-lg font-light max-w-2xl leading-relaxed mt-4 opacity-90">
                         {description}
                     </p>
                 )}
@@ -137,7 +137,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
             
             <div className="flex gap-3 items-center order-1 md:order-2 self-end pb-2">
                 <button
-                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/5"
+                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/10"
                     onClick={scrollLeft}
                     disabled={!canScrollLeft}
                     title="Scroll Left"
@@ -145,7 +145,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
                     <IconArrowNarrowLeft className="h-6 w-6 text-on-surface group-hover:text-primary transition-colors" />
                 </button>
                 <button
-                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/5"
+                    className="relative z-40 h-10 w-10 md:h-12 md:w-12 rounded-full liquid-glass flex items-center justify-center disabled:opacity-50 transition-all hover:scale-110 active:scale-95 group border border-on-surface/10"
                     onClick={scrollRight}
                     disabled={!canScrollRight}
                     title="Scroll Right"
@@ -164,15 +164,20 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
                     className={cn(
                         "group flex items-center gap-3 px-6 py-2.5 rounded-full text-[10px] font-black tracking-widest transition-all [font-variant-caps:small-caps] whitespace-nowrap border",
                         activeCategory === cat 
-                            ? "bg-primary text-on-primary border-primary shadow-xl shadow-primary/20 scale-105" 
-                            : "liquid-glass text-on-surface/40 border-on-surface/5 hover:text-on-surface hover:border-on-surface/20 hover:bg-on-surface/5"
+                            ? "bg-primary text-white border-primary shadow-xl shadow-primary/30 scale-105" 
+                            : "liquid-glass text-on-surface/70 border-on-surface/10 hover:text-on-surface hover:border-on-surface/30 hover:bg-on-surface/5"
                     )}
                 >
                     {cat !== "All" && cardsData && (
                         <CategoryIcon 
                             category={cat.toLowerCase().replace(/\s+/g, '-')} 
                             icon={cardsData.find(c => c.category === cat)?.categoryIcon}
-                            className={cn("transition-transform", activeCategory === cat ? "scale-110" : "group-hover:scale-110")} 
+                            className={cn(
+                                "transition-transform h-4 w-4", 
+                                activeCategory === cat 
+                                    ? "scale-110 text-white" 
+                                    : "group-hover:scale-110 text-on-surface/60 group-hover:text-on-surface"
+                            )} 
                             variant="icon-only"
                             size={16}
                         />
@@ -363,12 +368,12 @@ export const Card = ({
             layoutId={layout ? `category-container-${card.title}` : undefined}
             className="flex items-center gap-2 mb-3"
           >
-              <div className="p-1.5 rounded-md bg-white/10 backdrop-blur-md border border-white/20">
+              <div className="p-2 rounded-lg bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
                   <CategoryIcon 
                     category={card.category} 
                     icon={card.categoryIcon} 
                     className="text-white" 
-                    size={14}
+                    size={20}
                   />
               </div>
               <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white/80 leading-none">{card.category}</span>

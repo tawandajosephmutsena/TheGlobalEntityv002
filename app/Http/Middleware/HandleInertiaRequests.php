@@ -143,6 +143,7 @@ class HandleInertiaRequests extends Middleware
                     'office_title' => $settings['footer_office_title'] ?? null,
                     'back_to_top' => $settings['footer_back_to_top'] ?? null,
                     'copyright_suffix' => $settings['footer_copyright_suffix'] ?? null,
+                    'type' => $settings['footer_type'] ?? 'enterprise',
                 ],
                 'compliance' => [
                     'cookie_consent_enabled' => (function ($val) {

@@ -9,6 +9,13 @@ import type { JournalArticleGridBlock } from '@/types/page-blocks';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '../CategoryIcon';
 
+interface Category {
+    id: number;
+    name: string;
+    slug: string;
+    icon?: string | null;
+}
+
 interface InsightItem {
     id: number;
     title: string;
@@ -16,9 +23,9 @@ interface InsightItem {
     excerpt: string;
     featured_image?: string | null;
     author?: { name: string; avatar?: string | null };
-    category?: { name: string; slug: string; icon?: string | null };
-    additional_categories?: { name: string; slug: string; icon?: string | null }[];
-    additionalCategories?: { name: string; slug: string; icon?: string | null }[];
+    category?: { id?: number; name: string; slug: string; icon?: string | null };
+    additional_categories?: { id: number; name: string; slug: string; icon?: string | null }[];
+    additionalCategories?: { id: number; name: string; slug: string; icon?: string | null }[];
     published_at: string | null;
     reading_time?: number | null;
     category_id: number;
@@ -41,11 +48,19 @@ interface PaginatedInsights {
 interface Props {
     content: JournalArticleGridBlock['content'];
     recentInsights?: InsightItem[] | PaginatedInsights;
+    categories?: Category[];
 }
 
-export default function JournalArticleGridBlock({ content, recentInsights = [] }: Props) {
+export default function JournalArticleGridBlock({ content, recentInsights = [], categories = [] }: Props) {
     const { columns = 3, staggered = true, showBentoCards = true, limit = 9 } = content;
     const [activeCategoryId, setActiveCategoryId] = useState<number | 'all'>('all');
+
+    // Handle cross-block communication
+    const handleCategoryClick = (id: number | 'all') => {
+        setActiveCategoryId(id);
+        const event = new CustomEvent('journal-category-filter', { detail: id });
+        window.dispatchEvent(event);
+    };
 
     // Extract posts and pagination links
     const isPaginated = !Array.isArray(recentInsights) && recentInsights !== null && 'data' in recentInsights;
@@ -63,6 +78,36 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
         return () => window.removeEventListener('journal-category-filter', handleFilter as EventListener);
     }, [limit]);
 
+    const categoriesList = useMemo(() => {
+        if (categories && categories.length > 0) return categories;
+        
+        // Fallback: Extract unique categories from posts
+        const catsMap = new Map<number, Category>();
+        allPosts.forEach(post => {
+            if (post.category) {
+                catsMap.set(post.category_id, {
+                    id: post.category_id,
+                    name: post.category.name,
+                    slug: post.category.slug,
+                    icon: post.category.icon
+                });
+            }
+            const additional = (post.additional_categories || (post as any).additionalCategories || []);
+            additional.forEach((cat: any) => {
+                if (cat.id) {
+                    catsMap.set(cat.id, {
+                        id: cat.id,
+                        name: cat.name,
+                        slug: cat.slug,
+                        icon: cat.icon
+                    });
+                }
+            });
+        });
+        return Array.from(catsMap.values());
+    }, [categories, allPosts]);
+
+
     const filteredPosts = useMemo(() => {
         return activeCategoryId === 'all' 
             ? allPosts 
@@ -75,27 +120,65 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
 
     const hasMore = visibleCount < filteredPosts.length;
 
-    if (filteredPosts.length === 0) {
-        return (
-            <div className="py-32 text-center">
-                <div className="inline-block p-12 rounded-full liquid-glass mb-8 opacity-40">
-                    <Search className="size-20" />
-                </div>
-                <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">No chronicles found</h3>
-                <p className="text-on-surface-variant max-w-md mx-auto font-light">
-                    The map remains blank for this category. Explore other coordinates or search for hidden paths.
-                </p>
-            </div>
-        );
-    }
+
 
     return (
         <section className="relative container mx-auto px-6 py-24 overflow-visible rounded-[3rem]">
             <div className="relative z-10">
-            <div className={cn(
-                "grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16",
-                columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
-            )}>
+                {/* Category Filter Row */}
+                <div className="flex items-center gap-4 overflow-x-auto hide-scrollbar pb-12 mb-4 scroll-smooth">
+                    <button 
+                        onClick={() => handleCategoryClick('all')}
+                        className={cn(
+                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
+                            activeCategoryId === 'all' 
+                                ? "bg-on-surface text-surface shadow-xl scale-105" 
+                                : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
+                        )}
+                    >
+                        All Chronicles
+                    </button>
+                    {categoriesList.map((cat) => (
+                        <button 
+                            key={cat.id}
+                            onClick={() => handleCategoryClick(cat.id)}
+                            className={cn(
+                                "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
+                                activeCategoryId === cat.id 
+                                    ? "bg-primary text-on-primary shadow-xl scale-105" 
+                                    : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
+                            )}
+                        >
+                            <CategoryIcon 
+                                category={cat.slug} 
+                                icon={cat.icon}
+                                size={18} 
+                                glow={activeCategoryId === cat.id}
+                                variant="badge"
+                            />
+                            {cat.name}
+                        </button>
+                    ))}
+
+                </div>
+            
+            {filteredPosts.length === 0 ? (
+                <div className="py-32 text-center">
+                    <div className="inline-block p-12 rounded-full liquid-glass mb-8 opacity-40">
+                        <Search className="size-20" />
+                    </div>
+                    <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">No chronicles found</h3>
+                    <p className="text-on-surface-variant max-w-md mx-auto font-light">
+                        The map remains blank for this category. Explore other coordinates or search for hidden paths.
+                    </p>
+                </div>
+            ) : (
+                <>
+                    <div className={cn(
+                        "grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16",
+                        columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
+                    )}>
+
                 {visiblePosts.map((post, i) => {
                     const isBento = showBentoCards && i === 3;
                     const allCategories = [
@@ -212,17 +295,19 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                         </TooltipProvider>
                     );
                 })}
-            </div>
-
-            {hasMore && (
-                <div className="mt-24 flex items-center justify-center">
-                    <button
-                        onClick={() => setVisibleCount(prev => prev + 12)}
-                        className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black tracking-widest transition-all hover:scale-105 hover:shadow-xl active:scale-95 [font-variant-caps:small-caps]"
-                    >
-                        Show More Articles
-                    </button>
                 </div>
+
+                {hasMore && (
+                    <div className="mt-24 flex items-center justify-center">
+                        <button
+                            onClick={() => setVisibleCount(prev => prev + 12)}
+                            className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black tracking-widest transition-all hover:scale-105 hover:shadow-xl active:scale-95 [font-variant-caps:small-caps]"
+                        >
+                            Show More Articles
+                        </button>
+                    </div>
+                )}
+                </>
             )}
             </div>
         </section>
