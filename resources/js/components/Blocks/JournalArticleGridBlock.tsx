@@ -200,9 +200,10 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                         >
                             {isBento ? (
                                 <>
-                                    <div className="relative aspect-video md:aspect-square w-full md:w-1/2 overflow-hidden rounded-lg shadow-lg">
+                                    <div className="relative aspect-video md:aspect-square w-full md:w-1/2 overflow-hidden rounded-lg shadow-lg bg-on-surface/5">
                                         <img 
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
                                             alt={post.title} 
                                         />
@@ -244,9 +245,10 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                                 </>
                             ) : (
                                 <Link href={`/blog/${post.slug}`} className="block">
-                                    <div className="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg liquid-glass group-hover:shadow-2xl transition-all duration-500">
+                                    <div className="relative aspect-[4/5] mb-6 overflow-hidden rounded-lg liquid-glass bg-on-surface/5 group-hover:shadow-2xl transition-all duration-500">
                                         <img 
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
                                             alt={post.title} 
                                         />

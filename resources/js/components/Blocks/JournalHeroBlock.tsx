@@ -76,9 +76,10 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
             
             <div className="col-span-12 lg:col-span-5 relative h-[400px] lg:h-[600px]">
                 <div className="absolute inset-0 bg-primary/5 rounded-lg transform translate-x-4 translate-y-4 -z-10 blur-xl opacity-30"></div>
-                <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl relative border border-white/10">
+                <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl relative border border-white/10 bg-on-surface/5">
                     <img 
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                         src={featuredPost?.featured_image || '/images/placeholder-blog.jpg'} 
                         alt={displayTitle} 
                     />
