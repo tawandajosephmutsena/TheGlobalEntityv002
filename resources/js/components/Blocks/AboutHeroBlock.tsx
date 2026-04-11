@@ -46,7 +46,7 @@ export default function AboutHeroBlockRenderer({
                         {title.includes('…') ? (
                             <>
                                 {title.split('…')[0]}… <br/>
-                                <span className="text-secondary italic mix-blend-multiply dark:mix-blend-normal">{title.split('…')[1] || 'What?'}</span>
+                                <span className="text-secondary italic drop-shadow-sm">{title.split('…')[1] || 'What?'}</span>
                             </>
                         ) : title}
                     </h1>
@@ -57,7 +57,7 @@ export default function AboutHeroBlockRenderer({
                     <motion.button 
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-primary text-on-primary px-10 py-5 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
+                        className="bg-primary text-white px-10 py-5 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
                     >
                         <a href={ctaLink}>{ctaText}</a>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -106,7 +106,7 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
         <motion.div 
             whileHover={{ scale: 1.1, rotate: 0 }}
             className={cn(
-                "aspect-square rounded-[2.5rem] p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default border border-primary/5 hover:border-primary/20 shadow-sm hover:shadow-xl group liquid-glass",
+                "aspect-square rounded-[2.5rem] p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default border border-primary/10 hover:border-primary/30 shadow-sm hover:shadow-2xl group liquid-glass",
                 className
             )}
         >
@@ -115,9 +115,10 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
                 size={48} 
                 glow={true} 
                 variant="badge" 
+                wrapperClassName="vibrant-badge scale-110 mb-2"
             />
 
-            <span className="text-[10px] font-black tracking-widest text-on-surface-variant text-center leading-tight [font-variant-caps:small-caps]">
+            <span className="text-[10px] font-black tracking-widest text-on-surface text-center leading-tight [font-variant-caps:small-caps] opacity-80 group-hover:opacity-100 transition-opacity">
                 {label}
             </span>
         </motion.div>

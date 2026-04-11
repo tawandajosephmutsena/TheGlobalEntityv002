@@ -123,6 +123,18 @@
     box-shadow: 0 0 35px color-mix(in srgb, var(--cat-color) 45%, transparent);
 }
 
+/* Vibrancy Modifiers */
+.category-icon-wrapper.vibrant-badge {
+    background-color: color-mix(in srgb, var(--cat-color) 35%, transparent) !important;
+    border-color: color-mix(in srgb, var(--cat-color) 50%, transparent) !important;
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--cat-color) 25%, transparent) !important;
+}
+
+.category-icon-wrapper.vibrant-badge:hover {
+    background-color: color-mix(in srgb, var(--cat-color) 45%, transparent) !important;
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--cat-color) 40%, transparent) !important;
+}
+
 
 /* Podcast Badge styles preserved */
 .podcast-category-badge {
