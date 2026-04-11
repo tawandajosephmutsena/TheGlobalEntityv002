@@ -51,7 +51,7 @@ export default function Globe3DBlockRenderer({
 
     const globeContent = (
         <div
-            className="relative rounded-3xl overflow-hidden border border-border/30 bg-background/50 backdrop-blur-sm w-full"
+            className="relative overflow-hidden w-full"
             style={{ height, minHeight: '300px' }}
         >
             <Suspense
