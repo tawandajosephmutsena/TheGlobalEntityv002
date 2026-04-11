@@ -362,6 +362,16 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
             ]
         },
     ],
+    background: [
+        { key: 'bg_watercolor_enabled', label: 'Enable Watercolor Background', type: 'boolean', placeholder: 'true', description: 'Show the animated watercolor blobs sitewide.' },
+        { key: 'bg_watercolor_opacity', label: 'Global Opacity', type: 'text', placeholder: '1', description: 'Overall transparency of the background layer (0-1).' },
+        { key: 'bg_watercolor_blob1_opacity', label: 'Primary Blob Opacity', type: 'text', placeholder: '0.4', description: 'Opacity of the first blob (0-1).' },
+        { key: 'bg_watercolor_blob2_opacity', label: 'Secondary Blob Opacity', type: 'text', placeholder: '0.35', description: 'Opacity of the second blob (0-1).' },
+        { key: 'bg_watercolor_blob3_opacity', label: 'Accent Blob Opacity', type: 'text', placeholder: '0.3', description: 'Opacity of the third blob (0-1).' },
+        { key: 'bg_watercolor_noise_opacity', label: 'Noise Texture Opacity', type: 'text', placeholder: '0.15', description: 'How visible the grain texture is (0-1).' },
+        { key: 'bg_watercolor_blur', label: 'Backdrop Blur (px)', type: 'text', placeholder: '140', description: 'Blur amount for the blobs in pixels.' },
+        { key: 'bg_watercolor_overlay_opacity', label: 'Gradient Overlay Opacity', type: 'text', placeholder: '0.5', description: 'Opacity of the theme-wash gradient over the blobs.' },
+    ],
 };
 
 /**
@@ -781,6 +791,7 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                             <TabsTrigger value="seo">SEO & Analytics</TabsTrigger>
 
                             <TabsTrigger value="theme">Theme & Visuals</TabsTrigger>
+                            <TabsTrigger value="background">Background</TabsTrigger>
                             <TabsTrigger value="compliance">Compliance</TabsTrigger>
                         </TabsList>
 

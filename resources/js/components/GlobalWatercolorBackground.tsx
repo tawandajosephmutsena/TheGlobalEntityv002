@@ -1,15 +1,49 @@
-"use client";
-
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
+import { usePage } from "@inertiajs/react";
+import { SharedData } from "@/types";
 
 export const GlobalWatercolorBackground = () => {
-  // Optimized color pools for light/dark transition
-  // We use CSS variables so they are theme-aware automatically
+  const { settings } = usePage<SharedData>().props;
+
+  // Helper to extract a background setting with a default fallback
+  const getBGSetting = (key: string, defaultValue: string | number | boolean) => {
+    const bgSettings = settings?.background || [];
+    const item = bgSettings.find((s) => s.key === key);
+    if (!item || item.value === null || item.value === '') return defaultValue;
+    
+    // Handle specific types
+    if (typeof defaultValue === 'boolean') {
+      return item.value === 'true' || item.value === true || item.value === '1';
+    }
+    if (typeof defaultValue === 'number') {
+      return parseFloat(item.value as string);
+    }
+    return item.value;
+  };
+
+  const isEnabled = getBGSetting('bg_watercolor_enabled', true);
+  if (!isEnabled) return null;
+
+  // Configuration from settings
+  const globalOpacity = getBGSetting('bg_watercolor_opacity', 1) as number;
+  const blob1Opacity = getBGSetting('bg_watercolor_blob1_opacity', 0.4) as number;
+  const blob2Opacity = getBGSetting('bg_watercolor_blob2_opacity', 0.35) as number;
+  const blob3Opacity = getBGSetting('bg_watercolor_blob3_opacity', 0.3) as number;
+  const noiseOpacity = getBGSetting('bg_watercolor_noise_opacity', 0.15) as number;
+  const blurAmount = getBGSetting('bg_watercolor_blur', 140) as number;
+  const overlayOpacity = getBGSetting('bg_watercolor_overlay_opacity', 0.5) as number;
+
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div 
+      className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
+      style={{ opacity: globalOpacity }}
+    >
       {/* Base Gradient Surface - semi-transparent to allow deep immersion */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface opacity-50" />
+      <div 
+        className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface" 
+        style={{ opacity: overlayOpacity }}
+      />
 
       {/* Animated Liquid Blobs */}
       <div className="absolute inset-0">
@@ -25,7 +59,11 @@ export const GlobalWatercolorBackground = () => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full blur-[140px] opacity-[0.4] dark:opacity-[0.3]"
+          className="bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full"
+          style={{ 
+            filter: `blur(${blurAmount}px)`,
+            opacity: blob1Opacity 
+          }}
         />
 
         {/* Blob 2: End Color */}
@@ -40,7 +78,11 @@ export const GlobalWatercolorBackground = () => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full blur-[120px] opacity-[0.35] dark:opacity-[0.25]"
+          className="bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full"
+          style={{ 
+            filter: `blur(${Math.round(blurAmount * 0.85)}px)`,
+            opacity: blob2Opacity 
+          }}
         />
 
         {/* Blob 3: Accent Color */}
@@ -55,12 +97,19 @@ export const GlobalWatercolorBackground = () => {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full blur-[100px] opacity-[0.3] dark:opacity-[0.2]"
+          className="bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full"
+          style={{ 
+            filter: `blur(${Math.round(blurAmount * 0.7)}px)`,
+            opacity: blob3Opacity
+          }}
         />
       </div>
 
       {/* SVG Grain Texture Overlay */}
-      <div className="absolute inset-0 opacity-[0.15] dark:opacity-[0.25] mix-blend-overlay pointer-events-none">
+      <div 
+        className="absolute inset-0 mix-blend-overlay pointer-events-none"
+        style={{ opacity: noiseOpacity }}
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
           <filter id="global-noise">
             <feTurbulence
