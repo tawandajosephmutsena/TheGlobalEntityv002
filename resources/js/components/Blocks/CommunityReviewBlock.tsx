@@ -1,3 +1,4 @@
+import { SharedData, SettingItem } from '@/types';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
@@ -5,7 +6,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import type { CommunityReviewBlock as CommunityReviewBlockType } from '@/types/page-blocks';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
     title = "Community Voices",
@@ -21,9 +21,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
     const displayReviews = reviews.slice(0, limit);
 
     return (
-        <section className="relative py-24 overflow-hidden gradient-mesh-community-review">
-            <WatercolorBackground variant="communityReview" />
-
+        <section className="relative py-24 overflow-visible">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-16">
                     <motion.div
@@ -56,12 +54,12 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                             >
-                                <Card className="h-full border-none premium-glass apple-shadow-hover group overflow-hidden flex flex-col">
+                                <Card className="h-full border-none liquid-glass apple-shadow-hover group overflow-hidden flex flex-col">
                                     <CardContent className="p-10 relative flex-1 flex flex-col">
                                         <Quote className="absolute top-6 right-8 w-16 h-16 text-primary/5 group-hover:text-primary/10 group-hover:scale-110 transition-all duration-700 ease-out" />
                                         
                                         <div className="flex items-center gap-5 mb-8">
-                                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/30 flex items-center justify-center border border-white/20 shadow-inner group-hover:rotate-3 transition-transform duration-500">
+                                            <div className="w-14 h-14 rounded-2xl liquid-glass flex items-center justify-center border border-white/20 shadow-inner group-hover:rotate-3 transition-transform duration-500">
                                                 <span className="font-display text-primary text-2xl drop-shadow-sm">
                                                     {review.user.charAt(0)}
                                                 </span>
@@ -73,7 +71,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                         </div>
 
                                         {showRatings && (
-                                            <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl bg-primary/5 border border-primary/10">
+                                            <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl liquid-glass border border-primary/10">
                                                 <div className="flex flex-col gap-1.5">
                                                     <span className="text-[10px] [font-variant-caps:small-caps] font-black tracking-widest text-primary/70">Vibe</span>
                                                     <div className="flex gap-1">
@@ -109,7 +107,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                         
                                         <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                                             <span className="text-xs font-mono text-muted-foreground tracking-widest [font-variant-caps:small-caps]">Verified Guest</span>
-                                            <Badge variant="secondary" className="text-[10px] h-5 bg-primary/5 text-primary hover:bg-primary/10">Slow Travel</Badge>
+                                            <Badge variant="secondary" className="text-[10px] h-5 liquid-glass text-primary hover:bg-primary/10">Slow Travel</Badge>
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -117,7 +115,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-20 bg-muted/10 rounded-[40px] border border-dashed border-primary/20 backdrop-blur-sm">
+                    <div className="text-center py-20 liquid-glass rounded-[40px] border border-dashed border-primary/20 backdrop-blur-sm">
                         <p className="text-muted-foreground font-medium italic">No reviews found yet. Be the first to share your journey!</p>
                     </div>
                 )}

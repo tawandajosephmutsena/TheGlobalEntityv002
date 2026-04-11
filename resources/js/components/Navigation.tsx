@@ -150,8 +150,8 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     className={cn(
                         'relative mx-auto flex h-20 items-center justify-between px-6 transition-all duration-500',
                         isScrolled
-                            ? 'max-w-full rounded-none border-b border-border gradient-glass shadow-sm dark:border-white/10 md:rounded-none'
-                            : 'max-w-7xl rounded-full border border-border bg-white shadow-2xl dark:border-white/5 dark:bg-black',
+                            ? 'max-w-full rounded-none border-b border-border/10 liquid-glass shadow-sm md:rounded-none'
+                            : 'max-w-7xl rounded-full border border-border/10 liquid-glass shadow-2xl',
                         // On mobile, even when scrolled, we want a bit of breathing room if it's not meant to be full-width
                         // but the user said "navigation should have more padding so its not on the edges"
                         isScrolled && 'max-md:px-4'
@@ -247,7 +247,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 )}
             >
                 {/* Background layers to ensure full opacity */}
-                <div className="absolute inset-0 bg-white dark:bg-black"></div>
+                <div className="absolute inset-0 liquid-glass border-none"></div>
                 
                 {/* Background Blobs for Visual Interest */}
                 <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">

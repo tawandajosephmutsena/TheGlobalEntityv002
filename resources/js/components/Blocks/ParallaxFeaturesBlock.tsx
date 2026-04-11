@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,9 +96,8 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
     return (
         <section 
             ref={sectionRef}
-            className={cn("relative py-24 md:py-32 overflow-hidden gradient-mesh-parallax", className)}
+            className={cn("relative py-24 md:py-32 overflow-visible", className)}
         >
-            <WatercolorBackground variant="parallaxFeatures" />
             <div className="container mx-auto px-4 md:px-8">
                 {(title || subtitle) && (
                     <div className="mb-20 text-center max-w-3xl mx-auto">
@@ -127,7 +125,7 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
                         >
                             {/* Image Part */}
                             <div className="flex-1 relative group">
-                                <div className="relative aspect-[4/5] md:aspect-square overflow-hidden rounded-3xl bg-muted">
+                                <div className="relative aspect-[4/5] md:aspect-square overflow-hidden rounded-3xl liquid-glass">
                                     {item.image ? (
                                         <img 
                                             src={item.image} 

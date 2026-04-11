@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalHeroBlock } from '@/types/page-blocks';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface InsightItem {
     id: number;
@@ -56,7 +55,7 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
                 
                 {featuredPost && (
                     <div className="flex items-center gap-4 group/author">
-                        <div className="w-12 h-12 rounded-full overflow-hidden bg-surface-container-high border-2 border-primary/10">
+                        <div className="w-12 h-12 rounded-full overflow-hidden liquid-glass border-2 border-primary/10">
                             {featuredPost.author?.avatar ? (
                                 <img className="w-full h-full object-cover" src={featuredPost.author.avatar} alt={featuredPost.author.name} />
                             ) : (
@@ -76,8 +75,8 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
             </div>
             
             <div className="col-span-12 lg:col-span-5 relative h-[400px] lg:h-[600px]">
-                <div className="absolute inset-0 bg-surface-container-low rounded-lg transform translate-x-4 translate-y-4 -z-10 opacity-50"></div>
-                <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl">
+                <div className="absolute inset-0 bg-primary/5 rounded-lg transform translate-x-4 translate-y-4 -z-10 blur-xl opacity-30"></div>
+                <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl relative border border-white/10">
                     <img 
                         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
                         src={featuredPost?.featured_image || '/images/placeholder-blog.jpg'} 
@@ -92,8 +91,7 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
 
     return (
         <section className="container mx-auto px-6 pt-48 mb-24">
-            <AnimatedSection animation="fade-in" className="relative group cursor-pointer overflow-hidden rounded-[2rem] gradient-mesh-journal-hero p-8 md:p-12">
-                <WatercolorBackground variant="journalHero" />
+            <AnimatedSection animation="fade-in" className="relative group cursor-pointer overflow-visible rounded-[2rem] liquid-glass p-8 md:p-12">
                 
                 <div className="relative z-10">
                     {featuredPost ? (

@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import WatercolorBackground from '@/components/WatercolorBackground';
 import gsap from 'gsap';
 import AnimatedSection from '@/components/AnimatedSection';
 
@@ -86,9 +85,8 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-mesh-festival-archive pt-64 pb-32"
+            className="relative min-h-screen flex items-center justify-center overflow-visible pt-64 pb-32"
         >
-            <WatercolorBackground variant="festivalArchiveHero" />
 
             {/* Grain Texture Overlay */}
             <div className="absolute inset-0 z-[1] opacity-[0.05] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
@@ -103,7 +101,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
                     >
                         <div 
                             className={cn(
-                                "px-4 py-2 border border-agency-primary/10 rounded-sm backdrop-blur-md bg-white/5",
+                                "px-4 py-2 border border-agency-primary/10 rounded-sm liquid-glass",
                                 "text-[10px] font-mono tracking-[0.3em] [font-variant-caps:small-caps] transition-colors duration-500",
                                 item.type === 'stamp' ? "bg-agency-accent/5 border-agency-accent/20 text-agency-accent rotate-12" : "text-agency-primary/40",
                                 `rotate-[${item.rotation || 0}deg]`

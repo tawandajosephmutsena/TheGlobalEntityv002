@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, MessageSquare, Anchor } from 'lucide-react';
 import DynamicForm from '@/components/DynamicForm';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersContactProps {
     title?: string;
@@ -27,14 +26,15 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     submitText = "Dispatch Inquiry"
 }) => {
     return (
-        <section className="relative py-32 overflow-hidden gradient-mesh-partners-contact theme-stitch">
-            <WatercolorBackground variant="partnersContact" />
+        <section className="relative py-32 overflow-visible">
             
             <div className="container mx-auto px-4 relative z-10">
-                <div className="bg-surface-container/30 backdrop-blur-3xl text-foreground rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-primary/10">
+                <div className="liquid-glass text-foreground rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-primary/10">
                     {/* Left Column: Content & Benefits */}
-                    <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-primary/5 to-transparent relative overflow-hidden">
+                    <div className="flex-1 p-12 md:p-20 bg-transparent relative overflow-hidden">
                         {/* Decorative Background Icon */}
+                        {/* Bottom Gradient Fade */}
+                        <div className="absolute bottom-0 left-0 right-0 h-32 bg-transparent z-[5]" />
                         <div className="absolute -bottom-10 -right-10 opacity-5 -rotate-12 pointer-events-none text-primary">
                             <Anchor size={300} strokeWidth={1} />
                         </div>
@@ -56,7 +56,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                                         transition={{ delay: 0.8 + (i * 0.1) }}
                                         className="flex items-center gap-4 group"
                                     >
-                                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors duration-500">
+                                        <div className="w-16 h-16 liquid-glass text-secondary rounded-full flex items-center justify-center mx-auto shadow-sea-mist ring-8 ring-white/10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[360deg] z-20 relative">
                                             <CheckCircle2 size={24} />
                                         </div>
                                         <span className="text-lg font-bold tracking-tight text-on-surface">{feature}</span>
@@ -77,7 +77,7 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                     </div>
 
                     {/* Right Column: Form */}
-                    <div className="flex-1 p-12 md:p-20 bg-surface-container relative">
+                    <div className="flex-1 p-12 md:p-20 bg-transparent relative">
                         <AnimatedSection animation="fade-up" delay={400} className="relative z-10 h-full flex flex-col">
                             <div className="mb-10">
                                 <h3 className="font-display text-4xl font-black lowercase [font-variant-caps:small-caps] tracking-tighter mb-3 text-on-surface">{formTitle}</h3>

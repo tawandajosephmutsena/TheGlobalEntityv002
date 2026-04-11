@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersProcessProps {
     title?: string;
@@ -59,8 +58,7 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative py-32 overflow-hidden gradient-mesh-partners-process text-foreground theme-stitch">
-            <WatercolorBackground variant="partnersProcess" />
+        <section ref={sectionRef} className="relative py-32 overflow-visible">
             
             <div className="container mx-auto px-4 relative z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-24">
@@ -89,7 +87,7 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
                         {steps.map((step, index) => (
                             <AnimatedSection key={step.id} animation="fade-up" delay={index * 200} className="text-center group">
                                 <div className="relative mb-8">
-                                    <div className="w-16 h-16 bg-secondary text-on-secondary rounded-full flex items-center justify-center mx-auto shadow-sea-mist ring-8 ring-background transition-all duration-700 group-hover:scale-110 group-hover:rotate-[360deg] z-20 relative">
+                                    <div className="w-16 h-16 liquid-glass text-secondary rounded-full flex items-center justify-center mx-auto shadow-sea-mist ring-8 ring-white/10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[360deg] z-20 relative">
                                         <span className="text-2xl font-black">{step.id}</span>
                                     </div>
                                     {/* Pulsing indicator background */}

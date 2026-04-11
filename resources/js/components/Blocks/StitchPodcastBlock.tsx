@@ -140,7 +140,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
     const getPod = (index: number) => podcasts[index % podcasts.length];
 
     return (
-        <section className="relative overflow-hidden bg-surface text-on-surface py-24 md:py-32 theme-stitch selection:bg-primary/20">
+        <section className="relative overflow-hidden bg-transparent text-on-surface py-24 md:py-32 theme-stitch selection:bg-primary/20">
             {/* Background Decorative Elements */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2" />
             
@@ -176,7 +176,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     "group relative h-[500px] rounded-[2.5rem] overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-primary/10 border border-outline-variant/30",
                                     card1Shadow && "shadow-shadow"
                                 )}
-                                animate={{ backgroundColor: card1BgColor || 'var(--surface-container-low)' }}
+                                animate={{ backgroundColor: card1BgColor || 'transparent' }}
                             >
                                 {/* Layered Background Visualizer */}
                                 <div className="absolute inset-0 z-0">
@@ -246,7 +246,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
 
                         {/* SECONDARY: Album Art Focus */}
                         <AnimatedSection animation="fade-left" delay={300} className="md:col-span-4">
-                            <div className="h-full bg-surface-container-highest rounded-[2.5rem] overflow-hidden group relative card-3d-hover">
+                            <div className="h-full liquid-glass rounded-[2.5rem] overflow-hidden group relative card-3d-hover">
                                 <img 
                                     src={getPod(1).image} 
                                     className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" 
@@ -273,7 +273,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                         </AnimatedSection>
 
                         <AnimatedSection animation="fade-up" delay={400} className="md:col-span-4">
-                            <div className="h-full bg-surface-container-lowest border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner transition-colors duration-500">
+                            <div className="h-full liquid-glass border border-primary/10 rounded-[2.5rem] p-10 flex flex-col shadow-inner transition-colors duration-500">
                                 <div className="flex items-center justify-between mb-10">
                                     <h3 className="font-display text-2xl font-black flex items-center gap-3 [font-variant-caps:small-caps] tracking-tighter">
                                         <History className="w-6 h-6 text-primary" />
@@ -382,14 +382,14 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     card5Shadow && "shadow-shadow"
                                 )}
                                 animate={{ 
-                                    backgroundColor: card5BgColor || 'var(--primary-container)', 
+                                    backgroundColor: card5BgColor || 'transparent', 
                                     color: card5BgColor ? 'inherit' : 'var(--on-primary-container)' 
                                 }}
                             >
                                 <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 blur-[80px] rounded-full -translate-x-1/2 -translate-y-1/2 transition-transform duration-1000 group-hover:scale-150" />
                                 
                                 <div className="relative z-10 mb-10">
-                                    <div className="w-48 h-48 rounded-full bg-surface-container shadow-2xl p-6 relative group/disk hover-lift transition-all duration-500 border border-outline-variant/10">
+                                    <div className="w-48 h-48 rounded-full liquid-glass shadow-2xl p-6 relative group/disk hover-lift transition-all duration-500 border border-outline-variant/10">
                                         <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping opacity-20" />
                                         <img 
                                             src={getPod(1).image} 
@@ -419,7 +419,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
 
                         {/* INTERVIEW: Wide Split Screen */}
                         <AnimatedSection animation="fade-left" delay={700} className="md:col-span-7">
-                            <div className="h-full bg-surface-container rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row border border-outline-variant/30 group hover:border-primary/30 transition-colors duration-500 shadow-xl">
+                            <div className="h-full liquid-glass rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row border border-outline-variant/30 group hover:border-primary/30 transition-colors duration-500 shadow-xl">
                                 <div className="lg:w-1/2 p-12 flex flex-col justify-between items-start">
                                     <div className="w-full">
                                         <div className="flex items-center gap-3 mb-10">
@@ -451,7 +451,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent mix-blend-overlay" />
                                     <div className="absolute top-0 right-0 p-10 flex flex-col items-end">
-                                        <div className="w-12 h-12 bg-surface/20 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center text-white">
+                                        <div className="w-12 h-12 liquid-glass backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center text-white">
                                             <Library className="w-6 h-6" />
                                         </div>
                                     </div>
@@ -464,7 +464,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
                         </AnimatedSection>
                     </div>
                 ) : (
-                    <AnimatedSection animation="fade-up" className="text-center py-32 rounded-[3rem] border-2 border-dashed border-outline-variant/30 bg-surface-container-lowest relative overflow-hidden">
+                    <AnimatedSection animation="fade-up" className="text-center py-32 rounded-[3rem] border-2 border-dashed border-outline-variant/30 liquid-glass relative overflow-hidden">
                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--primary)_0%,transparent_70%)] opacity-[0.03]" />
                          <PlayCircle className="w-24 h-24 text-primary/20 mx-auto mb-8 animate-pulse" />
                          <h3 className="font-display text-4xl font-black mb-4 tracking-tight [font-variant-caps:small-caps]">static on the frequency.</h3>
@@ -476,7 +476,7 @@ export default function StitchPodcastBlockRenderer(props: StitchPodcastBlock['co
             </div>
             
             {/* Bottom Marquee Decoration */}
-            <div className="mt-32 border-y border-outline-variant/20 py-8 overflow-hidden bg-surface-container-low/30 backdrop-blur-sm">
+            <div className="mt-32 border-y border-outline-variant/20 py-8 overflow-hidden bg-transparent backdrop-blur-sm">
                 <div className="animate-marquee-slow flex whitespace-nowrap gap-12 text-[10px] font-black tracking-[0.5em] text-primary/30 [font-variant-caps:small-caps]">
                     {Array.from({ length: 12 }).map((_, i) => (
                         <span key={i} className="flex items-center gap-12">

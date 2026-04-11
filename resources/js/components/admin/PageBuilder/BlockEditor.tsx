@@ -6,9 +6,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2 } from 'lucide-react';
+import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2, Globe } from 'lucide-react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import Globe3DBlockEditor from '@/components/admin/PageBuilder/editors/Globe3DBlockEditor';
 import { MediaAsset } from '@/types';
 import { Block } from '@/pages/admin/pages/Edit';
 
@@ -49,7 +50,7 @@ interface FormStep {
 
 interface Column {
     id: string;
-    type: 'text' | 'image' | 'video' | 'button';
+    type: 'text' | 'image' | 'video' | 'button' | 'globe_3d';
     content: Record<string, unknown>;
 }
 
@@ -218,13 +219,14 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             const layout = String(block.content.layout || '1');
             const columns = (block.content.columns as Column[]) || [];
             
-            const addColumn = (type: 'text' | 'image' | 'video' | 'button') => {
+            const addColumn = (type: 'text' | 'image' | 'video' | 'button' | 'globe_3d') => {
                 const newCol: Column = {
                     id: 'col-' + Date.now(),
                     type,
                     content: type === 'text' ? { body: '', textSize: 'base', textAlign: 'left' } 
                            : type === 'image' ? { url: '', alt: '', caption: '' }
                            : type === 'video' ? { url: '' }
+                           : type === 'globe_3d' ? { markers: [], ambientIntensity: 1.2, pointLightIntensity: 2.0, autoRotateSpeed: 0.3, height: '400px' }
                            : { text: '', url: '', style: 'primary' }
                 };
                 updateContent({ columns: [...columns, newCol] });
@@ -282,6 +284,9 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <Button variant="outline" size="sm" onClick={() => addColumn('button')} title="Add Button">
                                     <MousePointer className="h-3 w-3" />
                                 </Button>
+                                <Button variant="outline" size="sm" onClick={() => addColumn('globe_3d')} title="Add 3D Globe">
+                                    <Globe className="h-3 w-3" />
+                                </Button>
                             </div>
                         </div>
 
@@ -290,7 +295,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <div key={col.id || i} className="group relative p-4 border rounded-lg bg-muted/10">
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : 'Button'}
+                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : col.type === 'globe_3d' ? '3D Globe' : 'Button'}
                                         </span>
                                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeColumn(i)} title="Remove">
                                             <Trash className="h-3 w-3" />
@@ -364,6 +369,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                                     <SelectItem value="ghost">Ghost</SelectItem>
                                                 </SelectContent>
                                             </Select>
+                                        </div>
+                                    )}
+
+                                    {col.type === 'globe_3d' && (
+                                        <div className="bg-background/50 p-2 rounded-lg border border-border/50">
+                                            <p className="text-[10px] text-muted-foreground italic mb-4">
+                                                Editing globe appearance and markers directly within this column.
+                                            </p>
+                                            <Globe3DBlockEditor 
+                                                content={col.content as any} 
+                                                onUpdate={(updates) => updateColumn(i, updates)} 
+                                            />
                                         </div>
                                     )}
                                 </div>

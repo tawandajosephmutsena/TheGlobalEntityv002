@@ -108,7 +108,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
     ];
 
     return (
-        <section className="w-full py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden bg-gradient-to-b from-surface via-surface-container-low to-primary/5 dark:to-primary/10">
+        <section className="w-full py-12 pb-32 gradient-aurora text-on-surface font-body selection:bg-primary/20 selection:text-on-primary-container theme-stitch relative overflow-hidden bg-transparent">
             <div className="tge-bg-pattern opacity-[0.5] dark:opacity-[0.35]" />
             
             <div className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-12">
@@ -131,7 +131,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
                         {/* 1. Immersive Card with Map Pin */}
                         {festivals.length > 0 && (
-                            <Link href={getFest(0).url} className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] aspect-video md:aspect-auto md:h-[500px] bg-surface-container-low shadow-sea-mist">
+                            <Link href={getFest(0).url} className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] aspect-video md:aspect-auto md:h-[500px] liquid-glass shadow-sea-mist">
                                 <img 
                                     alt={getFest(0).title} 
                                     src={getFest(0).image} 
@@ -156,7 +156,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 2. Glass-morphic Info Overlay */}
                         {festivals.length > 1 && (
-                            <Link href={getFest(1).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] aspect-square bg-surface-container shadow-sea-mist">
+                            <Link href={getFest(1).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] aspect-square liquid-glass shadow-sea-mist">
                                 <img 
                                     alt={getFest(1).title} 
                                     src={getFest(1).image} 
@@ -179,7 +179,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 3. Minimalist Date/Location Card */}
                         {festivals.length > 2 && (
-                            <Link href={getFest(2).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] bg-surface-container transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist">
+                            <Link href={getFest(2).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] liquid-glass transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist">
                                 <div className="p-10 h-full flex flex-col justify-between relative z-10">
                                     <div>
                                         <div className="flex justify-between items-start mb-8">
@@ -236,7 +236,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 5. Dynamic Grid Tile with Hover Details */}
                         {festivals.length > 4 && (
-                            <div className="md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] bg-surface-container shadow-sea-mist">
+                            <div className="md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] liquid-glass shadow-sea-mist">
                                 <img 
                                     alt={getFest(4).title} 
                                     src={getFest(4).image} 
@@ -267,7 +267,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 6. Video-Style Motion Card */}
                         {festivals.length > 5 && (
-                            <Link href={getFest(5).url} className="block md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] bg-surface-container shadow-sea-mist">
+                            <Link href={getFest(5).url} className="block md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] liquid-glass shadow-sea-mist">
                                 <div className="absolute inset-0 animate-pulse opacity-50" style={{ background: 'var(--theme-gradient-subtle)' }}></div>
                                 <img 
                                     alt={getFest(5).title} 
@@ -285,7 +285,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                         )}
                     </div>
                 ) : (
-                    <div className="text-center py-40 bg-surface-container-lowest rounded-[3rem] border-2 border-primary/10 border-dashed backdrop-blur-sm relative overflow-hidden max-w-4xl mx-auto shadow-sea-mist">
+                    <div className="text-center py-40 liquid-glass rounded-[3rem] border-2 border-primary/10 border-dashed backdrop-blur-sm relative overflow-hidden max-w-4xl mx-auto shadow-sea-mist">
                         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
                         <Compass className="w-20 h-20 text-primary/20 mx-auto mb-8 animate-spin-slow" />
                         <p className="font-display text-3xl md:text-4xl font-black text-on-surface-variant mb-4 italic tracking-tighter [font-variant-caps:small-caps] leading-none">no spectacles on the horizon.</p>

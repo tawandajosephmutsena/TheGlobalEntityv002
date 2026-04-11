@@ -34,7 +34,8 @@ import type {
     FestivalArchiveHeroBlock as FestivalArchiveHeroBlockType,
     FestivalFilterBarBlock as FestivalFilterBarBlockType,
     FestivalBentoGridBlock as FestivalBentoGridBlockType,
-    FestivalProgressTrailBlock as FestivalProgressTrailBlockType
+    FestivalProgressTrailBlock as FestivalProgressTrailBlockType,
+    Globe3DBlock as Globe3DBlockType
 } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
 import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe, Mail, HelpCircle, Layers, User, Search, History, Newspaper } from 'lucide-react';
@@ -168,6 +169,10 @@ const FestivalBentoGrid = React.lazy(() => import('@/components/Blocks/FestivalB
 const FestivalBentoGridEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FestivalBentoGridEditor'));
 const FestivalProgressTrail = React.lazy(() => import('@/components/Blocks/FestivalProgressTrail'));
 const FestivalProgressTrailEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/FestivalProgressTrailEditor'));
+
+// Globe 3D Block
+const Globe3DBlock = React.lazy(() => import('@/components/Blocks/Globe3DBlock'));
+const Globe3DBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Globe3DBlockEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -1031,6 +1036,26 @@ export function registerBlocks() {
         editor: (props: { content: FestivalProgressTrailBlockType['content']; onUpdate: (updates: Partial<FestivalProgressTrailBlockType['content']>) => void }) => (
             <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
                 <FestivalProgressTrailEditor {...props} />
+            </React.Suspense>
+        )
+    });
+
+    // ── 3D Globe Block ──────────────────────────────────────────────────
+
+    blockRegistry.register({
+        type: 'globe_3d',
+        label: '3D Globe',
+        icon: <Globe className="h-4 w-4" />,
+        desc: 'Interactive 3D globe with configurable markers, lighting, and atmosphere.',
+        category: 'Media',
+        renderer: (props: any) => (
+            <React.Suspense fallback={<div className="h-[500px] bg-muted animate-pulse rounded-3xl" />}>
+                <Globe3DBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: any; onUpdate: (updates: any) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <Globe3DBlockEditor {...props} />
             </React.Suspense>
         )
     });

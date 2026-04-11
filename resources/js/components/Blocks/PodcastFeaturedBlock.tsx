@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { Play, Headphones, Video, Clock, ArrowRight } from 'lucide-react';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 
 interface Podcast {
@@ -63,8 +62,7 @@ export default function PodcastFeaturedBlock({
     const rest = podcasts.slice(1);
 
     return (
-        <section className="relative py-20 overflow-hidden gradient-mesh-podcast-featured">
-            <WatercolorBackground variant="podcastFeatured" />
+        <section className="relative py-20 overflow-visible">
 
             <div className="container px-4 mx-auto relative">
                 <div className="max-w-3xl mb-12">
@@ -138,7 +136,7 @@ export default function PodcastFeaturedBlock({
                                 <div className="space-y-4">
                                     {rest.map((podcast, index) => (
                                         <AnimatedSection key={podcast.id} animation="fade-up" delay={200 + index * 100}>
-                                            <a href={`/podcasts/${podcast.slug}`} className="group flex gap-4 p-4 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300">
+                                            <a href={`/podcasts/${podcast.slug}`} className="group flex gap-4 p-4 rounded-2xl liquid-glass border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300">
                                                 <div className="size-20 rounded-xl overflow-hidden bg-muted shrink-0 relative">
                                                     {podcast.thumbnail_url ? (
                                                         <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -169,7 +167,7 @@ export default function PodcastFeaturedBlock({
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {podcasts.map((podcast, index) => (
                             <AnimatedSection key={podcast.id} animation="fade-up" delay={100 + index * 80}>
-                                <a href={`/podcasts/${podcast.slug}`} className="group block rounded-2xl overflow-hidden bg-card border border-border shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                <a href={`/podcasts/${podcast.slug}`} className="group block rounded-2xl overflow-hidden liquid-glass border border-border shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                                     <div className="aspect-video relative overflow-hidden bg-muted">
                                         {podcast.thumbnail_url ? (
                                             <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
@@ -212,7 +210,7 @@ export default function PodcastFeaturedBlock({
                     <div className="space-y-4">
                         {podcasts.map((podcast, index) => (
                             <AnimatedSection key={podcast.id} animation="fade-up" delay={100 + index * 60}>
-                                <a href={`/podcasts/${podcast.slug}`} className="group flex items-center gap-6 p-5 rounded-2xl bg-card border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300">
+                                <a href={`/podcasts/${podcast.slug}`} className="group flex items-center gap-6 p-5 rounded-2xl liquid-glass border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300">
                                     <div className="size-24 rounded-xl overflow-hidden bg-muted shrink-0 relative">
                                         {podcast.thumbnail_url ? (
                                             <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -287,7 +285,7 @@ export default function PodcastFeaturedBlock({
                                         key={podcast.id} 
                                         animation="fade-up" 
                                         delay={150}
-                                        className="relative md:col-span-2 lg:col-span-1 md:row-span-2 rounded-2xl md:rounded-3xl overflow-hidden group border border-border bg-card shadow-xl"
+                                        className="relative md:col-span-2 lg:col-span-1 md:row-span-2 rounded-2xl md:rounded-3xl overflow-hidden group border border-border liquid-glass shadow-xl"
                                     >
                                         <a href={`/podcasts/${podcast.slug}`} className="flex flex-col h-full">
                                             <div className="h-2/3 relative overflow-hidden">
@@ -324,7 +322,7 @@ export default function PodcastFeaturedBlock({
                                         delay={250}
                                         className="relative md:col-span-2 lg:col-span-2 md:row-span-1 rounded-2xl md:rounded-3xl overflow-hidden group bg-primary p-1 shadow-xl"
                                     >
-                                        <a href={`/podcasts/${podcast.slug}`} className="flex h-full bg-card rounded-xl md:rounded-2xl overflow-hidden relative group">
+                                        <a href={`/podcasts/${podcast.slug}`} className="flex h-full liquid-glass rounded-xl md:rounded-2xl overflow-hidden relative group">
                                             <div className="flex-1 p-6 flex flex-col justify-center pr-24">
                                                 <div className="text-[10px] font-black tracking-widest lowercase [font-variant-caps:small-caps] text-primary mb-2">TGE Original</div>
                                                 <h3 className="text-xl font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
@@ -353,7 +351,7 @@ export default function PodcastFeaturedBlock({
                                     key={podcast.id} 
                                     animation="fade-up" 
                                     delay={350}
-                                    className="group relative flex lg:col-span-1 lg:row-span-1 rounded-2xl md:rounded-3xl overflow-hidden glass-effect border border-white/20 shadow-inner"
+                                    className="group relative flex lg:col-span-1 lg:row-span-1 rounded-2xl md:rounded-3xl overflow-hidden liquid-glass shadow-inner"
                                 >
                                     <a href={`/podcasts/${podcast.slug}`} className="flex-1 p-5 flex flex-col group">
                                         <div className="relative size-12 rounded-lg overflow-hidden mb-4 border border-white/20">

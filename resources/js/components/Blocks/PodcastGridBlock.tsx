@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 import { PodcastCard } from '@/components/podcast/PodcastCard';
 import { PodcastCategoryBadge } from '@/components/podcast/PodcastCategoryBadge';
 import { PodcastSearch } from '@/components/podcast/PodcastSearch';
@@ -90,8 +89,7 @@ export default function PodcastGridBlock({
             : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
     return (
-        <section className="relative py-20 px-4 md:px-8 overflow-hidden gradient-mesh-podcast-grid">
-            <WatercolorBackground variant="podcastGrid" />
+        <section className="relative py-20 px-4 md:px-8 overflow-visible">
             
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
@@ -147,7 +145,7 @@ export default function PodcastGridBlock({
                 {isLoading ? (
                     <div className={cn('grid gap-6', gridColsClass)}>
                         {Array.from({ length: limit }).map((_, i) => (
-                            <div key={i} className="h-72 bg-muted animate-pulse rounded-2xl" />
+                            <div key={i} className="h-72 liquid-glass animate-pulse rounded-2xl" />
                         ))}
                     </div>
                 ) : podcasts.length === 0 ? (

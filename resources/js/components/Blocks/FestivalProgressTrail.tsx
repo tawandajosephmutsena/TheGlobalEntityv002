@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface FestivalProgressTrailProps {
     steps: Array<{
@@ -28,8 +27,7 @@ const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
     color = "var(--agency-accent)"
 }) => {
     return (
-        <section className="relative h-64 md:h-96 w-full overflow-hidden flex items-center justify-center gradient-mesh-festival-trail">
-             <WatercolorBackground variant="festivalProgressTrail" />
+        <section className="relative h-64 md:h-96 w-full overflow-visible flex items-center justify-center">
 
             {/* SVG Path (Static) */}
             <svg 

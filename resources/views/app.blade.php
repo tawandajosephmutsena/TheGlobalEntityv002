@@ -15,12 +15,12 @@
         <style>
             /* Critical CSS for LCP optimization */
             html {
-                background-color: oklch(0.9818 0.0054 95.0986);
+                background-color: transparent;
                 font-family: 'Instrument Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
             }
 
             html.dark {
-                background-color: oklch(0.2679 0.0036 106.6427);
+                background-color: transparent;
             }
 
             body {

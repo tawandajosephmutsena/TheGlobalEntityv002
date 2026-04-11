@@ -29,7 +29,15 @@ export default defineConfig({
         legalComments: 'none',
     },
     optimizeDeps: {
-        include: ['gsap', 'lenis', 'react', 'react-dom'],
+        include: [
+            'gsap', 
+            'lenis', 
+            'react', 
+            'react-dom', 
+            'three', 
+            '@react-three/fiber', 
+            '@react-three/drei'
+        ],
         exclude: ['@vite/client', '@vite/env'],
     },
     build: {

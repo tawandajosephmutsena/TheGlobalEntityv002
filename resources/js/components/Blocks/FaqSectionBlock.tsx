@@ -25,7 +25,7 @@ export default function FaqSectionBlockRenderer(props: FaqSectionBlock['content'
     } = props || {};
 
     return (
-        <AnimatedSection className="gradient-motion-bg gradient-mesh py-20">
+        <AnimatedSection className="py-20 overflow-visible">
             {/* Gradient section divider */}
             <div className="gradient-divider-glow mb-20" aria-hidden="true" />
             <div className="mx-auto max-w-5xl px-4 md:px-6 relative z-10">
@@ -48,7 +48,7 @@ export default function FaqSectionBlockRenderer(props: FaqSectionBlock['content'
                                 <AccordionItem
                                     key={item.id}
                                     value={item.id}
-                                    className="theme-gradient-card rounded-lg px-4 last:border-b"
+                                    className="liquid-glass border border-white/10 rounded-lg px-4 last:border-b"
                                 >
                                     <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline text-foreground">
                                         <div className="flex items-center gap-3">

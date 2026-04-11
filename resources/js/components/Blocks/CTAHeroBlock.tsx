@@ -68,7 +68,7 @@ export default function CTAHeroBlock({
   };
 
   return (
-    <section className="relative w-full overflow-hidden gradient-mesh gradient-motion-bg px-4 pt-48 pb-32">
+    <section className="relative w-full overflow-visible px-4 pt-48 pb-32">
       {/* GLSL Hills Background Overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <GLSLHills 
@@ -175,7 +175,7 @@ export default function CTAHeroBlock({
                 <Input
                   type="email"
                   placeholder={emailPlaceholder}
-                  className="border-theme-soft h-12 bg-background/50 backdrop-blur-sm focus-visible:ring-2"
+                  className="border-theme-soft h-12 bg-background/30 backdrop-blur-xl focus-visible:ring-2 liquid-glass"
                   value={data.email}
                   onChange={(e) => setData("email", e.target.value)}
                   disabled={processing || isSubmitted}

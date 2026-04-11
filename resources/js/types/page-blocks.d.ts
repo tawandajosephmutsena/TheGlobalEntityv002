@@ -100,7 +100,7 @@ export interface TextBlock extends BaseBlock {
         textAlign?: string;
         columns?: Array<{
             id: string;
-            type: 'text' | 'image' | 'video' | 'button';
+            type: 'text' | 'image' | 'video' | 'button' | 'globe_3d';
             content: Record<string, unknown>; // Using Record for flexibility
         }>;
     };
@@ -385,7 +385,8 @@ export type PageBlock =
     | FestivalArchiveHeroBlock
     | FestivalFilterBarBlock
     | FestivalBentoGridBlock
-    | FestivalProgressTrailBlock;
+    | FestivalProgressTrailBlock
+    | Globe3DBlock;
 
 
 export interface CTAHeroBlock extends BaseBlock {
@@ -1233,5 +1234,28 @@ export interface FestivalProgressTrailBlock extends BaseBlock {
         scriptText?: string;
         pathType?: 'wave' | 'loop' | 'zigzag';
         color?: string;
+    };
+}
+
+export interface Globe3DBlock extends BaseBlock {
+    type: 'globe_3d';
+    content: {
+        markers?: Array<{
+            id: string;
+            lat: number;
+            lng: number;
+            label?: string;
+            src?: string;
+        }>;
+        showAtmosphere?: boolean;
+        atmosphereColor?: string;
+        atmosphereIntensity?: number;
+        ambientIntensity?: number;
+        pointLightIntensity?: number;
+        autoRotateSpeed?: number;
+        bumpScale?: number;
+        enableZoom?: boolean;
+        showWireframe?: boolean;
+        height?: string;
     };
 }

@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import type { AboutWhoAreYouBlock } from '@/types/page-blocks';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 export default function AboutWhoAreYouBlockRenderer({
     title = "Who Are You?",
@@ -26,8 +25,7 @@ export default function AboutWhoAreYouBlockRenderer({
     ]
 }: AboutWhoAreYouBlock['content']) {
     return (
-        <section className="relative py-32 overflow-hidden gradient-mesh-about-who">
-             <WatercolorBackground variant="aboutWhoAreYou" />
+        <section className="relative py-32 overflow-visible">
             <div className="max-w-4xl mx-auto text-center relative z-10 px-8">
                 <motion.h2 
                     initial={{ opacity: 0, y: 20 }}
@@ -63,7 +61,7 @@ function AboutWhoAreYouCard({ title, description, colorClass, delay }: { title: 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay, duration: 0.6 }}
-            className="p-10 bg-surface-container-low rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/10 hover:border-primary/30 group"
+            className="p-10 liquid-glass rounded-[2rem] shadow-sea-mist hover:shadow-2xl transition-all duration-500 border border-primary/10 hover:border-primary/30 group"
         >
             <h3 className={`font-display font-black text-3xl mb-6 transition-transform origin-left group-hover:scale-105 tracking-tighter italic ${colorClass} [font-variant-caps:small-caps] lowercase`}>
                 {title}

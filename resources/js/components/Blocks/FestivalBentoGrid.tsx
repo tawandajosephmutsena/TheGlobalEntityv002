@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 import { ArrowUpRight, Search, Play, Zap, Mail, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
@@ -209,8 +208,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
     };
 
     return (
-        <section id="festival-grid-section" className="relative py-32 overflow-hidden gradient-mesh-festival-bento">
-            <WatercolorBackground variant="festivalBentoGrid" />
+        <section id="festival-grid-section" className="relative py-32 overflow-visible">
             
             <div className="container mx-auto px-6 relative z-10">
 
@@ -233,7 +231,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                         >
                             <div className={cn(
                                 "h-full w-full relative overflow-hidden transition-all duration-700",
-                                "border border-agency-primary/10 bg-agency-primary/[0.02] backdrop-blur-md",
+                                "liquid-glass border border-agency-primary/10",
                                 "group-hover:border-agency-accent/30 group-hover:shadow-[0_0_50px_rgba(var(--agency-accent-rgb),0.1)]",
                                 isLoading && item.type === 'festival' && "animate-pulse"
                             )}>
@@ -322,7 +320,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                             <input 
                                                 type="email" 
                                                 placeholder="email address"
-                                                className="flex-1 bg-agency-primary/5 border border-agency-primary/10 px-4 py-4 text-[10px] font-mono tracking-widest outline-none focus:border-agency-accent/40"
+                                                className="flex-1 liquid-glass border border-agency-primary/10 px-4 py-4 text-[10px] font-mono tracking-widest outline-none focus:border-agency-accent/40"
                                             />
                                             <button 
                                                 className="bg-agency-primary text-agency-surface p-4 hover:bg-agency-accent transition-colors duration-500"

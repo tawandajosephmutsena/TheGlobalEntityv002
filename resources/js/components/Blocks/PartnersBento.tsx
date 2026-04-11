@@ -1,7 +1,7 @@
+import React from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { Map, Store, PartyPopper, ShieldCheck, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersBentoProps {
     title?: string;
@@ -56,8 +56,7 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
     ]
 }) => {
     return (
-        <section className="relative py-32 overflow-hidden gradient-mesh-partners-bento theme-stitch">
-            <WatercolorBackground variant="partnersBento" />
+        <section className="relative py-32 overflow-visible">
             
             <div className="container mx-auto px-4 relative z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-20">
@@ -86,14 +85,8 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                 )}
                             >
                                 <div className={cn(
-                                    "h-full rounded-[3rem] p-10 md:p-14 transition-all duration-700 overflow-hidden group border-none flex flex-col justify-between shadow-sea-mist hover:shadow-2xl",
-                                    index === 0
-                                        ? "bg-secondary text-on-secondary"
-                                        : index === 3 
-                                        ? "bg-tertiary text-on-tertiary" 
-                                        : index === 1
-                                        ? "bg-surface-container-highest/20 border-2 border-primary/20 text-on-surface"
-                                        : "bg-surface-container-low hover:bg-surface-container transition-colors"
+                                    "h-full rounded-[3rem] p-10 md:p-14 transition-all duration-700 overflow-hidden group border-none flex flex-col justify-between shadow-sea-mist hover:shadow-2xl liquid-glass",
+                                    index === 0 ? "border-secondary/20" : index === 3 ? "border-tertiary/20" : "border-primary/10"
                                 )}>
                                     {/* Abstract background pattern for cards */}
                                     <div className={cn(
@@ -110,17 +103,14 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
                                                 ? "bg-secondary text-on-secondary" 
                                                 : index === 1
                                                 ? "bg-secondary text-on-secondary"
-                                                : "bg-surface text-secondary shadow-inner"
+                                                : "liquid-glass text-secondary shadow-inner"
                                         )}>
                                             <Icon size={40} strokeWidth={1} />
                                         </div>
                                         <h3 className="font-display text-4xl font-black [font-variant-caps:small-caps] tracking-tighter mb-6 leading-tight">
                                             {card.title}
                                         </h3>
-                                        <p className={cn(
-                                            "text-xl leading-relaxed max-w-xl font-medium italic",
-                                            index === 0 || index === 3 ? "text-white/80" : "text-on-surface-variant"
-                                        )}>
+                                        <p className="text-xl leading-relaxed max-w-xl font-medium italic text-on-surface-variant">
                                             {card.description}
                                         </p>
                                     </div>

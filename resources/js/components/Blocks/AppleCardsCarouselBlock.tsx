@@ -1,7 +1,6 @@
 import React from 'react';
 import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
 import DOMPurify from 'dompurify';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface BaseCollectionItem {
     id: number;
@@ -107,20 +106,17 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
 
     if (displayItems.length === 0) {
         return (
-            <div className="w-full py-20 bg-background text-center border-dashed border-2 rounded-xl my-4">
+            <div className="w-full py-20 liquid-glass text-center border-dashed border-2 rounded-xl my-4">
                 <p className="text-muted-foreground">Apple Cards Carousel: No items found for the current configuration ({feedSource}).</p>
             </div>
         );
     }
 
     return (
-        <div className="w-full h-full py-20 overflow-hidden relative gradient-mesh-apple-cards">
-             <div className="tge-bg-pattern opacity-[0.3] dark:opacity-[0.20] z-0" />
-             <WatercolorBackground variant="appleCards" />
-             
+        <div className="w-full h-full py-20 overflow-visible relative">
              <div className="relative z-10">
                  {title && (
-                     <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-4">
+                     <h2 className="max-w-7xl pl-4 mx-auto text-3xl md:text-5xl font-black tracking-tighter text-foreground font-sans mb-8 [font-variant-caps:small-caps]">
                         {title}
                      </h2>
                  )}

@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import WatercolorBackground from '@/components/WatercolorBackground';
 import { gsap } from 'gsap';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -68,9 +67,8 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden gradient-mesh-partners-hero text-foreground pt-48 pb-32 theme-stitch"
+            className="relative min-h-[90vh] flex items-center justify-center overflow-visible text-foreground pt-48 pb-32"
         >
-            <WatercolorBackground variant="partnersHero" />
 
             {/* Floating Decorative Elements (Static) */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-[1]">
@@ -89,7 +87,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                 <div className="max-w-5xl mx-auto text-center">
                     <AnimatedSection animation="fade-up" delay={100}>
                         <div className="flex justify-center mb-8">
-                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold tracking-widest backdrop-blur-sm [font-variant-caps:small-caps]">
+                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 text-primary text-xs font-bold tracking-widest liquid-glass [font-variant-caps:small-caps]">
                                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                                 {badgeText}
                             </span>
@@ -143,7 +141,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
             </div>
 
             {/* Bottom Gradient Fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-[5]" />
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-transparent z-[5]" />
         </section>
     );
 };

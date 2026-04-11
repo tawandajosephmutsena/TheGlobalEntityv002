@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
 import type { FestivalMapBlock as FestivalMapBlockType } from '@/types/page-blocks';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface FestivalData {
     id: number;
@@ -110,8 +109,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
         return Object.values(groups);
     }, [filteredFestivals]);
     return (
-        <section className="relative py-24 overflow-hidden gradient-mesh-festival-map border-t border-border/10">
-            <WatercolorBackground variant="festivalMap" />
+        <section className="relative py-24 overflow-visible border-t border-border/10">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-12">
                     <motion.div
@@ -130,7 +128,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                     </motion.div>
                 </div>
 
-                <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl bg-background h-[600px] group">
+                <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl liquid-glass h-[600px] group">
                     <div className="absolute inset-0 z-0">
                         <Map
                             ref={setMapInstance}
@@ -162,7 +160,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                                 <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
                                             </div>
                                         </MarkerContent>
-                                            <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl bg-background/50 backdrop-blur-2xl flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+                                            <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl liquid-glass flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
                                                 {festivalsInGroup.map((festival, index) => (
                                                     <div key={festival.id} className={`flex flex-col gap-3 ${index > 0 ? "pt-3 border-t border-white/10 mt-1" : ""}`}>
                                                         {/* Top Text Section */}
@@ -225,14 +223,14 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                             <div className="relative flex-1 max-w-md pointer-events-auto">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                 <Input 
-                                    className="pl-10 h-11 bg-background/80 dark:bg-card/80 backdrop-blur-xl border-border/20 shadow-xl rounded-2xl text-sm"
+                                    className="pl-10 h-11 border-border/20 shadow-xl rounded-2xl text-sm liquid-glass"
                                     placeholder="Search festivals or locations..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
                             <div className="flex gap-2 pointer-events-auto">
-                                <button className="h-11 px-5 bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 shadow-xl rounded-2xl text-xs font-bold [font-variant-caps:small-caps] tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground">
+                                <button className="h-11 px-5 border border-border/20 shadow-xl rounded-2xl text-xs font-bold [font-variant-caps:small-caps] tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground liquid-glass">
                                     <Filter className="w-3.5 h-3.5" />
                                     Filter
                                 </button>
@@ -252,7 +250,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 exit={{ opacity: 0, y: 20 }}
                                 className="absolute bottom-6 left-6 z-20 pointer-events-none"
                             >
-                                <div className="bg-background/80 dark:bg-card/80 backdrop-blur-xl border border-border/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto">
+                                <div className="border border-border/20 p-4 rounded-2xl shadow-xl flex items-center gap-4 pointer-events-auto liquid-glass">
                                     <div className="flex gap-1">
                                         <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]" />
                                         <div className="w-2 h-2 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]" />

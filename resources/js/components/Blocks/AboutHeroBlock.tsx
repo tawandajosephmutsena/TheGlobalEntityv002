@@ -6,7 +6,6 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { AboutHeroBlock } from '@/types/page-blocks';
 import CategoryIcon from '@/components/CategoryIcon';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 export default function AboutHeroBlockRenderer({
     title = "The Global… What?",
@@ -17,8 +16,7 @@ export default function AboutHeroBlockRenderer({
     ctaLink = "#"
 }: AboutHeroBlock['content']) {
     return (
-        <section className="theme-stitch relative px-8 pt-56 pb-20 overflow-hidden gradient-mesh-about-hero text-on-background">
-            <WatercolorBackground variant="aboutHero" />
+        <section className="relative px-8 pt-56 pb-20 overflow-visible text-on-background">
             
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                 <motion.div 
@@ -70,32 +68,32 @@ export default function AboutHeroBlockRenderer({
                     <AboutHeroIcon 
                         category="social-sustainability" 
                         label="Sustainability" 
-                        className="bg-surface-container-low transform -rotate-3 hover:rotate-0"
+                        className="transform -rotate-3 hover:rotate-0"
                     />
                     <AboutHeroIcon 
                         category="living-from-the-heart" 
                         label="Heart-Led" 
-                        className="bg-surface-container-high transform rotate-6 hover:rotate-0 mt-8 shadow-lg"
+                        className="transform rotate-6 hover:rotate-0 mt-8 shadow-lg"
                     />
                     <AboutHeroIcon 
                         category="solo-travel" 
                         label="Solo Travel" 
-                        className="bg-surface-container-low transform -rotate-6 hover:rotate-0 ml-4"
+                        className="transform -rotate-6 hover:rotate-0 ml-4"
                     />
                     <AboutHeroIcon 
                         category="festival-fever" 
                         label="Festivals" 
-                        className="bg-surface-container-high transform rotate-2 hover:rotate-0 mt-4"
+                        className="transform rotate-2 hover:rotate-0 mt-4"
                     />
                     <AboutHeroIcon 
                         category="glocal-gems" 
                         label="Hidden Gems" 
-                        className="bg-surface-container-lowest shadow-sm transform -rotate-12 hover:rotate-0"
+                        className="shadow-sm transform -rotate-12 hover:rotate-0"
                     />
                     <AboutHeroIcon 
                         category="travel-trouble" 
                         label="The Truth" 
-                        className="bg-surface-container-low transform rotate-12 hover:rotate-0 mt-12 shadow-md"
+                        className="transform rotate-12 hover:rotate-0 mt-12 shadow-md"
                     />
                 </div>
             </div>
@@ -108,7 +106,7 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
         <motion.div 
             whileHover={{ scale: 1.1, rotate: 0 }}
             className={cn(
-                "aspect-square rounded-[2.5rem] p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default border border-primary/5 hover:border-primary/20 shadow-sm hover:shadow-xl group",
+                "aspect-square rounded-[2.5rem] p-6 flex flex-col items-center justify-center transition-all duration-300 cursor-default border border-primary/5 hover:border-primary/20 shadow-sm hover:shadow-xl group liquid-glass",
                 className
             )}
         >

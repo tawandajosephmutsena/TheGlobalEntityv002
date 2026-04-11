@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Mail, CheckCircle2 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
-import WatercolorBackground from '@/components/WatercolorBackground';
 import type { JournalNewsletterBlock } from '@/types/page-blocks';
 
 interface Props {
@@ -39,8 +38,7 @@ export default function JournalNewsletterBlock({ content }: Props) {
 
     return (
         <section className="container mx-auto px-6 mt-32">
-            <AnimatedSection animation="fade-in" className="relative group overflow-hidden rounded-[2rem] p-12 lg:p-24 text-center gradient-mesh-journal-newsletter border border-tertiary/10">
-                <WatercolorBackground variant="journalNewsletter" />
+            <AnimatedSection animation="fade-in" className="relative group overflow-visible rounded-[2rem] p-12 lg:p-24 text-center liquid-glass border border-tertiary/10">
                 
                 <div className="relative z-10 max-w-2xl mx-auto">
                     <Mail className="size-16 text-tertiary mx-auto mb-8 opacity-80" />
@@ -61,7 +59,7 @@ export default function JournalNewsletterBlock({ content }: Props) {
                     ) : (
                         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
                             <input 
-                                className="flex-1 bg-surface border-none rounded-full px-10 py-5 text-on-surface shadow-inner focus:ring-2 focus:ring-tertiary/30 placeholder:text-on-surface-variant/40" 
+                                className="flex-1 liquid-glass border-none rounded-full px-10 py-5 text-on-surface shadow-inner focus:ring-2 focus:ring-tertiary/30 placeholder:text-on-surface-variant/40" 
                                 placeholder={placeholder} 
                                 type="email"
                                 value={data.email}

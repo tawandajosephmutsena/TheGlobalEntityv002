@@ -124,11 +124,7 @@ export default function FeaturedFestivalsBlockRenderer({
     if (festivals.length === 0) return null;
 
     return (
-        <section className="py-24 bg-background overflow-hidden relative">
-            {/* Background Glows */}
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
-
+        <section className="py-24 overflow-visible relative">
             <div className="max-w-7xl mx-auto px-8 relative">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div>
@@ -206,7 +202,7 @@ export default function FeaturedFestivalsBlockRenderer({
                             >
                                 <Link 
                                     href={festival.url}
-                                    className="relative aspect-[3/4] rounded-[2rem] overflow-hidden bg-surface-container-low border border-border/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/10 block"
+                                    className="relative aspect-[3/4] rounded-[2rem] overflow-hidden liquid-glass border border-border/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/10 block"
                                 >
                                     <img 
                                         src={festival.image} 

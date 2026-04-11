@@ -66,6 +66,7 @@ const JournalCategoryFilterBlock = React.lazy(() => import('./JournalCategoryFil
 const JournalArticleGridBlock = React.lazy(() => import('./JournalArticleGridBlock'));
 const JournalNewsletterBlock = React.lazy(() => import('./JournalNewsletterBlock'));
 const CinematicHero = React.lazy(() => import('./CinematicHero'));
+const Globe3DBlockRenderer = React.lazy(() => import('./Globe3DBlock'));
 
 
 
@@ -232,6 +233,23 @@ const ColumnRenderer = ({ column }: { column: NonNullable<TextBlockType['content
                     >
                         {text}
                     </a>
+                </div>
+            );
+        }
+        case 'globe_3d': {
+            // Note: Since Globe3DBlockRenderer expects props based on Globe3DBlock['content'],
+            // we cast rawContent to any and pass it down. 
+            // In ColumnRenderer we don't have the nice layout wrapper around the block, so we 
+            // just pass the properties directly. The Globe3DBlockRenderer component itself provides
+            // a nice padded section wrapper. To use it in a column, we might want to avoid the extra 
+            // section padding. Let's pass the rawContent and a flag or just let Globe3DBlockRenderer 
+            // handle it. Alternatively, to keep it clean in a column:
+            const globeContent = rawContent as any;
+            return (
+                <div className="w-full flex justify-center">
+                    <React.Suspense fallback={<div className="h-[400px] w-full animate-pulse bg-muted rounded-2xl" />}>
+                        <Globe3DBlockRenderer {...globeContent} disableSectionPadding={true} />
+                    </React.Suspense>
                 </div>
             );
         }

@@ -99,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
     const footerCopyrightSuffix = site.footer?.copyright_suffix || 'AGY';
 
     return (
-        <footer className={cn('relative theme-gradient-bg-subtle dark:bg-background text-foreground pt-16 md:pt-32 pb-12 overflow-hidden theme-gradient-border-top', className)}>
+        <footer className={cn('relative pt-16 md:pt-32 pb-12 overflow-visible liquid-glass border-t border-border/10', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-16 md:mb-32">
                     {/* Massive Brand Side */}

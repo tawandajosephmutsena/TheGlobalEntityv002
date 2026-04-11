@@ -8,7 +8,6 @@ import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalArticleGridBlock } from '@/types/page-blocks';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '../CategoryIcon';
-import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface InsightItem {
     id: number;
@@ -79,7 +78,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
     if (filteredPosts.length === 0) {
         return (
             <div className="py-32 text-center">
-                <div className="inline-block p-12 rounded-full bg-surface-container-low mb-8 opacity-20">
+                <div className="inline-block p-12 rounded-full liquid-glass mb-8 opacity-40">
                     <Search className="size-20" />
                 </div>
                 <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">No chronicles found</h3>
@@ -91,9 +90,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
     }
 
     return (
-        <section className="relative container mx-auto px-6 py-24 overflow-hidden gradient-mesh-journal-grid rounded-[3rem]">
-            <WatercolorBackground variant="journalArticleGrid" />
-            
+        <section className="relative container mx-auto px-6 py-24 overflow-visible rounded-[3rem]">
             <div className="relative z-10">
             <div className={cn(
                 "grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16",
@@ -114,7 +111,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                             delay={(i % 12) * 100}
                             className={cn(
                                 "group relative",
-                                isBento && "md:col-span-2 bg-surface-container-low p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center",
+                                isBento && "md:col-span-2 liquid-glass p-8 rounded-xl flex flex-col md:flex-row gap-8 items-center",
                                 staggered && !isBento && i % columns === 1 && "lg:mt-12"
                             )}
                         >
@@ -164,7 +161,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                                 </>
                             ) : (
                                 <Link href={`/blog/${post.slug}`} className="block">
-                                    <div className="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg bg-surface-container-low group-hover:shadow-2xl transition-all duration-500">
+                                    <div className="relative aspect-[4/5] mb-8 overflow-hidden rounded-lg liquid-glass group-hover:shadow-2xl transition-all duration-500">
                                         <img 
                                             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 

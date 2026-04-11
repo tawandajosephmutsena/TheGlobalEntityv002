@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Navigation from '@/components/Navigation';
+import GlobalWatercolorBackground from '@/components/GlobalWatercolorBackground';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { useGSAPInit, useSmoothScroll } from '@/hooks/useAnimations';
 import { GlobalPodcastPlayer } from '@/components/podcast/GlobalPodcastPlayer';
@@ -157,23 +158,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 
             <div
                 className={cn(
-                    'min-h-screen bg-background font-sans text-foreground',
+                    'min-h-screen bg-transparent font-sans text-foreground',
                     'antialiased selection:bg-agency-accent/20',
                     'relative overflow-hidden', // Ensure background stays contained
                     className,
                 )}
             >
-                {/* Ambient dynamic background — premium motion wash */}
-                <div
-                    className="pointer-events-none fixed inset-0 z-0 opacity-60 gradient-motion-bg"
-                    aria-hidden="true"
-                />
+                <GlobalWatercolorBackground />
                 
-                {/* Secondary aurora depth layer */}
-                <div
-                    className="pointer-events-none fixed inset-0 z-0 opacity-30 gradient-aurora mix-blend-soft-light"
-                    aria-hidden="true"
-                />
                 {showNavigation && <Navigation />}
 
                 {shouldShowBreadcrumbs && (
