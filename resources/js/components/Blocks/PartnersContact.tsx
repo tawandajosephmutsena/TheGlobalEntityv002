@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, MessageSquare, Anchor } from 'lucide-react';
 import DynamicForm from '@/components/DynamicForm';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersContactProps {
     title?: string;
@@ -26,8 +27,10 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     submitText = "Dispatch Inquiry"
 }) => {
     return (
-        <section className="py-32 bg-background overflow-hidden theme-stitch">
-            <div className="container mx-auto px-4">
+        <section className="relative py-32 overflow-hidden gradient-mesh-partners-contact theme-stitch">
+            <WatercolorBackground variant="partnersContact" />
+            
+            <div className="container mx-auto px-4 relative z-10">
                 <div className="bg-surface-container/30 backdrop-blur-3xl text-foreground rounded-[3rem] overflow-hidden flex flex-col lg:flex-row shadow-2xl border border-primary/10">
                     {/* Left Column: Content & Benefits */}
                     <div className="flex-1 p-12 md:p-20 bg-gradient-to-br from-primary/5 to-transparent relative overflow-hidden">

@@ -403,6 +403,7 @@ export interface CTAHeroBlock extends BaseBlock {
         statsLabel?: string;
         image?: string;
         imageLink?: string;
+        imagePosition?: 'left' | 'right';
     };
 }
 

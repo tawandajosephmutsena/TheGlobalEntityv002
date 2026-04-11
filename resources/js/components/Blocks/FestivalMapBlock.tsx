@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Map, MapMarker, MapControls, MarkerContent, MarkerPopup } from '@/components/ui/map';
 import type { FestivalMapBlock as FestivalMapBlockType } from '@/types/page-blocks';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface FestivalData {
     id: number;
@@ -109,7 +110,8 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
         return Object.values(groups);
     }, [filteredFestivals]);
     return (
-        <section className="py-24 bg-background text-foreground border-t border-border/10">
+        <section className="relative py-24 overflow-hidden gradient-mesh-festival-map border-t border-border/10">
+            <WatercolorBackground variant="festivalMap" />
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-12">
                     <motion.div

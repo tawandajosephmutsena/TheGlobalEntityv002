@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { Play, Headphones, Video, Clock, ArrowRight } from 'lucide-react';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 
 interface Podcast {
@@ -62,10 +63,8 @@ export default function PodcastFeaturedBlock({
     const rest = podcasts.slice(1);
 
     return (
-        <section className="py-20 overflow-hidden relative">
-             {/* Decorative Background Elements */}
-             <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 size-96 bg-primary/5 rounded-full blur-3xl" />
-             <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 size-96 bg-primary/10 rounded-full blur-3xl opacity-50" />
+        <section className="relative py-20 overflow-hidden gradient-mesh-podcast-featured">
+            <WatercolorBackground variant="podcastFeatured" />
 
             <div className="container px-4 mx-auto relative">
                 <div className="max-w-3xl mb-12">

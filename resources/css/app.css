@@ -847,7 +847,7 @@
     .dark .gradient-aurora::before { opacity: 0.20; }
     .dark .gradient-aurora::after  { opacity: 0.18; }
 
-    /* Mesh gradient (multi-stop radial) */
+    /* Mesh gradient (multi-stop radial) — base */
     .gradient-mesh {
         background:
             radial-gradient(ellipse at 0% 0%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 50%),
@@ -860,6 +860,332 @@
             radial-gradient(ellipse at 0% 0%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 50%),
             radial-gradient(ellipse at 100% 0%, color-mix(in oklch, var(--gradient-accent) 25%, transparent) 0%, transparent 50%),
             radial-gradient(ellipse at 50% 100%, color-mix(in oklch, var(--gradient-end) 28%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* ── Per-component mesh gradient variants with unique angles ── */
+
+    /* Manifesto — top-right diagonal wash */
+    .gradient-mesh-manifesto {
+        background:
+            radial-gradient(ellipse at 85% 10%, color-mix(in oklch, var(--gradient-start) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 15% 60%, color-mix(in oklch, var(--gradient-end) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 60% 90%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-manifesto {
+        background:
+            radial-gradient(ellipse at 85% 10%, color-mix(in oklch, var(--gradient-start) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 15% 60%, color-mix(in oklch, var(--gradient-end) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 60% 90%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Apple Cards — center bloom */
+    .gradient-mesh-apple-cards {
+        background:
+            radial-gradient(ellipse at 40% 30%, color-mix(in oklch, var(--gradient-accent) 22%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 90% 80%, color-mix(in oklch, var(--gradient-start) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 90%, color-mix(in oklch, var(--gradient-end) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-apple-cards {
+        background:
+            radial-gradient(ellipse at 40% 30%, color-mix(in oklch, var(--gradient-accent) 32%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 90% 80%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 90%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Podcast Featured — bottom atmospheric */
+    .gradient-mesh-podcast-featured {
+        background:
+            radial-gradient(ellipse at 30% 95%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 80% 15%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 45%),
+            radial-gradient(ellipse at 10% 40%, color-mix(in oklch, var(--gradient-start) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-podcast-featured {
+        background:
+            radial-gradient(ellipse at 30% 95%, color-mix(in oklch, var(--gradient-end) 34%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 80% 15%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 45%),
+            radial-gradient(ellipse at 10% 40%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* Community Review — side sweep */
+    .gradient-mesh-community-review {
+        background:
+            radial-gradient(ellipse at 95% 40%, color-mix(in oklch, var(--gradient-end) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 5% 20%, color-mix(in oklch, var(--gradient-start) 18%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 85%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-community-review {
+        background:
+            radial-gradient(ellipse at 95% 40%, color-mix(in oklch, var(--gradient-end) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 5% 20%, color-mix(in oklch, var(--gradient-start) 28%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 85%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Newsletter Signup — dramatic top sweep */
+    .gradient-mesh-newsletter {
+        background:
+            radial-gradient(ellipse at 25% 5%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-start) 18%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 55% 85%, color-mix(in oklch, var(--gradient-end) 12%, transparent) 0%, transparent 40%),
+            var(--background);
+    }
+    .dark .gradient-mesh-newsletter {
+        background:
+            radial-gradient(ellipse at 25% 5%, color-mix(in oklch, var(--gradient-accent) 36%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-start) 28%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 55% 85%, color-mix(in oklch, var(--gradient-end) 22%, transparent) 0%, transparent 40%),
+            var(--background);
+    }
+
+    /* Festival Map — corner scatter */
+    .gradient-mesh-festival-map {
+        background:
+            radial-gradient(ellipse at 90% 85%, color-mix(in oklch, var(--gradient-start) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 15%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 40%, color-mix(in oklch, var(--gradient-end) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-festival-map {
+        background:
+            radial-gradient(ellipse at 90% 85%, color-mix(in oklch, var(--gradient-start) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 10% 15%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 40%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* About Hero — dramatic diagonal slash */
+    .gradient-mesh-about-hero {
+        background:
+            radial-gradient(ellipse at 5% 10%, color-mix(in oklch, var(--gradient-start) 24%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 75% 25%, color-mix(in oklch, var(--gradient-end) 18%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 40% 80%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-about-hero {
+        background:
+            radial-gradient(ellipse at 5% 10%, color-mix(in oklch, var(--gradient-start) 34%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 75% 25%, color-mix(in oklch, var(--gradient-end) 28%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 40% 80%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* About Who Are You — intimate bottom bloom */
+    .gradient-mesh-about-who {
+        background:
+            radial-gradient(ellipse at 35% 80%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 15%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 50%, color-mix(in oklch, var(--gradient-start) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-about-who {
+        background:
+            radial-gradient(ellipse at 35% 80%, color-mix(in oklch, var(--gradient-end) 34%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 15%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 50%, color-mix(in oklch, var(--gradient-start) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Parallax Features — alternating dynamic */
+    .gradient-mesh-parallax {
+        background:
+            radial-gradient(ellipse at 10% 20%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 30%, color-mix(in oklch, var(--gradient-end) 16%, transparent) 0%, transparent 45%),
+            radial-gradient(ellipse at 20% 75%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 85%, color-mix(in oklch, var(--gradient-start) 18%, transparent) 0%, transparent 55%),
+            var(--background);
+    }
+    .dark .gradient-mesh-parallax {
+        background:
+            radial-gradient(ellipse at 10% 20%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 30%, color-mix(in oklch, var(--gradient-end) 26%, transparent) 0%, transparent 45%),
+            radial-gradient(ellipse at 20% 75%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 85%, color-mix(in oklch, var(--gradient-start) 28%, transparent) 0%, transparent 55%),
+            var(--background);
+    }
+
+    /* Journal Hero — asymmetric right */
+    .gradient-mesh-journal-hero {
+        background:
+            radial-gradient(ellipse at 10% 15%, color-mix(in oklch, var(--gradient-accent) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 75% 20%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 30% 90%, color-mix(in oklch, var(--gradient-end) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-journal-hero {
+        background:
+            radial-gradient(ellipse at 10% 15%, color-mix(in oklch, var(--gradient-accent) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 75% 20%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 30% 90%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Journal Article Grid — wide bottom spread */
+    .gradient-mesh-journal-grid {
+        background:
+            radial-gradient(ellipse at 20% 80%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 75% 10%, color-mix(in oklch, var(--gradient-end) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 90% 60%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-journal-grid {
+        background:
+            radial-gradient(ellipse at 20% 80%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 75% 10%, color-mix(in oklch, var(--gradient-end) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 90% 60%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Journal Newsletter — tight center glow */
+    .gradient-mesh-journal-newsletter {
+        background:
+            radial-gradient(ellipse at 45% 35%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 90%, color-mix(in oklch, var(--gradient-start) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 10%, color-mix(in oklch, var(--gradient-end) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-journal-newsletter {
+        background:
+            radial-gradient(ellipse at 45% 35%, color-mix(in oklch, var(--gradient-accent) 34%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 90%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 10%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Podcast Grid — grid-like scatter */
+    .gradient-mesh-podcast-grid {
+        background:
+            radial-gradient(ellipse at 15% 25%, color-mix(in oklch, var(--gradient-end) 18%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 30%, color-mix(in oklch, var(--gradient-start) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 40% 90%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-podcast-grid {
+        background:
+            radial-gradient(ellipse at 15% 25%, color-mix(in oklch, var(--gradient-end) 28%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 30%, color-mix(in oklch, var(--gradient-start) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 40% 90%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* Partners Hero — dramatic multi-layer */
+    .gradient-mesh-partners-hero {
+        background:
+            radial-gradient(ellipse at 30% 5%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 90% 20%, color-mix(in oklch, var(--gradient-accent) 18%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 70%, color-mix(in oklch, var(--gradient-end) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 90%, color-mix(in oklch, var(--gradient-start) 12%, transparent) 0%, transparent 40%),
+            var(--background);
+    }
+    .dark .gradient-mesh-partners-hero {
+        background:
+            radial-gradient(ellipse at 30% 5%, color-mix(in oklch, var(--gradient-start) 36%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 90% 20%, color-mix(in oklch, var(--gradient-accent) 28%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 10% 70%, color-mix(in oklch, var(--gradient-end) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 90%, color-mix(in oklch, var(--gradient-start) 22%, transparent) 0%, transparent 40%),
+            var(--background);
+    }
+
+    /* Partners Bento — grounded bottom-heavy */
+    .gradient-mesh-partners-bento {
+        background:
+            radial-gradient(ellipse at 15% 85%, color-mix(in oklch, var(--gradient-end) 24%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 50%, color-mix(in oklch, var(--gradient-start) 12%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-partners-bento {
+        background:
+            radial-gradient(ellipse at 15% 85%, color-mix(in oklch, var(--gradient-end) 34%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 50%, color-mix(in oklch, var(--gradient-start) 22%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Partners Process — horizontal flow */
+    .gradient-mesh-partners-process {
+        background:
+            radial-gradient(ellipse at 10% 35%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 55% 10%, color-mix(in oklch, var(--gradient-accent) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 75%, color-mix(in oklch, var(--gradient-end) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-partners-process {
+        background:
+            radial-gradient(ellipse at 10% 35%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 55% 10%, color-mix(in oklch, var(--gradient-accent) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 85% 75%, color-mix(in oklch, var(--gradient-end) 26%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* Partners Contact — split composition */
+    .gradient-mesh-partners-contact {
+        background:
+            radial-gradient(ellipse at 5% 15%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 70% 20%, color-mix(in oklch, var(--gradient-start) 16%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 85%, color-mix(in oklch, var(--gradient-end) 20%, transparent) 0%, transparent 55%),
+            var(--background);
+    }
+    .dark .gradient-mesh-partners-contact {
+        background:
+            radial-gradient(ellipse at 5% 15%, color-mix(in oklch, var(--gradient-accent) 34%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 70% 20%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 50%),
+            radial-gradient(ellipse at 85% 85%, color-mix(in oklch, var(--gradient-end) 30%, transparent) 0%, transparent 55%),
+            var(--background);
+    }
+
+    /* Festival Archive Hero — atmospheric mist */
+    .gradient-mesh-festival-archive {
+        background:
+            radial-gradient(ellipse at 30% 30%, color-mix(in oklch, var(--gradient-start) 26%, transparent) 0%, transparent 65%),
+            radial-gradient(ellipse at 85% 80%, color-mix(in oklch, var(--gradient-end) 22%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 60% 10%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-festival-archive {
+        background:
+            radial-gradient(ellipse at 30% 30%, color-mix(in oklch, var(--gradient-start) 36%, transparent) 0%, transparent 65%),
+            radial-gradient(ellipse at 85% 80%, color-mix(in oklch, var(--gradient-end) 32%, transparent) 0%, transparent 60%),
+            radial-gradient(ellipse at 60% 10%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+
+    /* Festival Bento Grid — diagonal scatter */
+    .gradient-mesh-festival-bento {
+        background:
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-end) 22%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 15% 80%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 45% 45%, color-mix(in oklch, var(--gradient-accent) 14%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+    .dark .gradient-mesh-festival-bento {
+        background:
+            radial-gradient(ellipse at 80% 10%, color-mix(in oklch, var(--gradient-end) 32%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 15% 80%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 45% 45%, color-mix(in oklch, var(--gradient-accent) 24%, transparent) 0%, transparent 45%),
+            var(--background);
+    }
+
+    /* Festival Progress Trail — horizontal stretch */
+    .gradient-mesh-festival-trail {
+        background:
+            radial-gradient(ellipse at 10% 50%, color-mix(in oklch, var(--gradient-start) 20%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 90% 50%, color-mix(in oklch, var(--gradient-end) 20%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 40%, color-mix(in oklch, var(--gradient-accent) 16%, transparent) 0%, transparent 50%),
+            var(--background);
+    }
+    .dark .gradient-mesh-festival-trail {
+        background:
+            radial-gradient(ellipse at 10% 50%, color-mix(in oklch, var(--gradient-start) 30%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 90% 50%, color-mix(in oklch, var(--gradient-end) 30%, transparent) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 40%, color-mix(in oklch, var(--gradient-accent) 26%, transparent) 0%, transparent 50%),
             var(--background);
     }
 

@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalArticleGridBlock } from '@/types/page-blocks';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '../CategoryIcon';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface InsightItem {
     id: number;
@@ -90,7 +91,10 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
     }
 
     return (
-        <section className="container mx-auto px-6">
+        <section className="relative container mx-auto px-6 py-24 overflow-hidden gradient-mesh-journal-grid rounded-[3rem]">
+            <WatercolorBackground variant="journalArticleGrid" />
+            
+            <div className="relative z-10">
             <div className={cn(
                 "grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16",
                 columns === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
@@ -223,6 +227,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [] }
                     </button>
                 </div>
             )}
+            </div>
         </section>
     );
 }

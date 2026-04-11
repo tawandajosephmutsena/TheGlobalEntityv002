@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+import WatercolorBackground from '@/components/WatercolorBackground';
 import { gsap } from 'gsap';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/AnimatedSection';
@@ -66,28 +68,20 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background text-foreground pt-48 pb-32 theme-stitch"
+            className="relative min-h-[90vh] flex items-center justify-center overflow-hidden gradient-mesh-partners-hero text-foreground pt-48 pb-32 theme-stitch"
         >
-            {/* Watercolor Background Effect */}
-            <div className="absolute inset-0 z-0 watercolor-bg pointer-events-none">
-                <div className="absolute top-[-15%] left-[-10%] w-[70%] h-[70%] rounded-full bg-secondary/10 blur-[140px] mix-blend-multiply dark:mix-blend-soft-light opacity-60" />
-                <div className="absolute bottom-[-10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-primary/15 blur-[120px] mix-blend-multiply dark:mix-blend-soft-light opacity-50" />
-                <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] rounded-full bg-tertiary/5 blur-[100px] mix-blend-overlay opacity-30" />
-            </div>
+            <WatercolorBackground variant="partnersHero" />
 
-            {/* Grain Texture Overlay */}
-            <div className="absolute inset-0 z-[1] opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-            {/* Floating Decorative Elements */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-[2]">
+            {/* Floating Decorative Elements (Static) */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-[1]">
                 <div className="absolute top-[15%] left-[10%] opacity-20 dark:opacity-40">
-                    <Wind ref={floatRef1} className="text-secondary w-20 h-20 -rotate-12" />
+                    <Wind className="text-secondary w-20 h-20 -rotate-12" />
                 </div>
                 <div className="absolute bottom-[20%] left-[8%] opacity-20 dark:opacity-40">
-                    <Anchor ref={floatRef2} className="text-secondary w-28 h-28 rotate-12" />
+                    <Anchor className="text-secondary w-28 h-28 rotate-12" />
                 </div>
                 <div className="absolute top-[25%] right-[10%] opacity-20 dark:opacity-40">
-                    <Compass ref={floatRef3} className="text-secondary w-24 h-24 rotate-45" />
+                    <Compass className="text-secondary w-24 h-24 rotate-45" />
                 </div>
             </div>
 

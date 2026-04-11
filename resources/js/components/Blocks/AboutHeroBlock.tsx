@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { AboutHeroBlock } from '@/types/page-blocks';
 import CategoryIcon from '@/components/CategoryIcon';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 export default function AboutHeroBlockRenderer({
     title = "The Global… What?",
@@ -16,9 +17,8 @@ export default function AboutHeroBlockRenderer({
     ctaLink = "#"
 }: AboutHeroBlock['content']) {
     return (
-        <section className="theme-stitch relative px-8 pt-56 pb-20 overflow-hidden bg-background text-on-background">
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[60px] opacity-40"></div>
-            <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-tertiary/20 rounded-full blur-[60px] opacity-40"></div>
+        <section className="theme-stitch relative px-8 pt-56 pb-20 overflow-hidden gradient-mesh-about-hero text-on-background">
+            <WatercolorBackground variant="aboutHero" />
             
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                 <motion.div 

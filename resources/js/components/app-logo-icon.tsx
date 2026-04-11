@@ -1,6 +1,30 @@
 import { SVGAttributes } from 'react';
+import { usePage } from '@inertiajs/react';
+import { SharedData } from '@/types';
+import { BrandingIcon } from './Branding/BrandingIcon';
+import { cn } from '@/lib/utils';
 
 export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
+    const { props: inertiaProps } = usePage<SharedData>();
+    
+    // Find dynamic setting
+    const settings = inertiaProps.settings ? Object.values(inertiaProps.settings).flat() : [];
+    const dynamicSetting = settings.find(s => s.key === 'brand_logo_dynamic');
+    const val = dynamicSetting?.value;
+    const isDynamic = val === true || val === 'true' || (Array.isArray(val) && (val[0] === true || val[0] === 'true'));
+
+    if (isDynamic) {
+        return (
+            <BrandingIcon 
+                {...(props as any)} 
+                className={cn(
+                    "h-full w-auto", 
+                    props.className?.replace(/fill-[^ ]+/g, '')?.replace(/text-[^ ]+/g, '')
+                )} 
+            />
+        );
+    }
+
     return (
         <svg {...props} viewBox="0 0 40 42" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -11,3 +35,4 @@ export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
         </svg>
     );
 }
+

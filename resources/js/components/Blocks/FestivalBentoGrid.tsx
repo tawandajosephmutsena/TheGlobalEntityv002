@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 import { ArrowUpRight, Search, Play, Zap, Mail, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
@@ -208,8 +209,10 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
     };
 
     return (
-        <section id="festival-grid-section" className="py-32 bg-agency-surface">
-            <div className="container mx-auto px-6">
+        <section id="festival-grid-section" className="relative py-32 overflow-hidden gradient-mesh-festival-bento">
+            <WatercolorBackground variant="festivalBentoGrid" />
+            
+            <div className="container mx-auto px-6 relative z-10">
 
                 <AnimatedSection animation="fade-up" className="mb-20">
                     <div className="flex flex-col items-center text-center">

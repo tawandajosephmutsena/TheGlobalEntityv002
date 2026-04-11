@@ -1,6 +1,7 @@
 import React from 'react';
 import { Carousel, Card } from '@/components/ui/apple-cards-carousel';
 import DOMPurify from 'dompurify';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface BaseCollectionItem {
     id: number;
@@ -113,8 +114,9 @@ const AppleCardsCarouselBlock: React.FC<AppleCardsCarouselBlockProps> = ({
     }
 
     return (
-        <div className="w-full h-full py-20 overflow-hidden relative bg-gradient-to-br from-background via-surface-container-low to-primary/5 dark:to-primary/10">
-             <div className="tge-bg-pattern opacity-[0.5] dark:opacity-[0.40]" />
+        <div className="w-full h-full py-20 overflow-hidden relative gradient-mesh-apple-cards">
+             <div className="tge-bg-pattern opacity-[0.3] dark:opacity-[0.20] z-0" />
+             <WatercolorBackground variant="appleCards" />
              
              <div className="relative z-10">
                  {title && (

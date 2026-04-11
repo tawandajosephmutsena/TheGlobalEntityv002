@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import WatercolorBackground from '@/components/WatercolorBackground';
 import gsap from 'gsap';
 import AnimatedSection from '@/components/AnimatedSection';
 
@@ -85,22 +86,9 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
     return (
         <section 
             ref={containerRef}
-            className="relative min-h-screen flex items-center justify-center overflow-hidden bg-agency-surface pt-64 pb-32"
+            className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-mesh-festival-archive pt-64 pb-32"
         >
-            {/* Watercolor Blurs */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                {watercolorBlurs.map((blur, i) => (
-                    <div 
-                        key={i}
-                        className={cn(
-                            "absolute rounded-full blur-[120px] watercolor-blur opacity-40 mix-blend-multiply dark:mix-blend-soft-light",
-                            blur.color,
-                            blur.size,
-                            `left-[${blur.position.x}] top-[${blur.position.y}]`
-                        )}
-                    />
-                ))}
-            </div>
+            <WatercolorBackground variant="festivalArchiveHero" />
 
             {/* Grain Texture Overlay */}
             <div className="absolute inset-0 z-[1] opacity-[0.05] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />

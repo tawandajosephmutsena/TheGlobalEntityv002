@@ -9,6 +9,7 @@ import { Check, Mail, Send, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useForm, usePage } from "@inertiajs/react";
 import type { NewsletterSignupBlock as NewsletterSignupBlockType } from "@/types/page-blocks";
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['content']) {
   const {
@@ -58,32 +59,8 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
   };
 
   return (
-    <section className="theme-stitch relative w-full overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-16">
-      {/* Animated background elements */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 90, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute right-0 top-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl"
-      />
-      <motion.div
-        animate={{
-          scale: [1.2, 1, 1.2],
-          rotate: [0, -90, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-primary/5 blur-3xl"
-      />
+    <section className="theme-stitch relative w-full overflow-hidden gradient-mesh-newsletter px-4 py-16">
+      <WatercolorBackground variant="newsletterSignup" />
 
       <div className="relative mx-auto max-w-4xl">
         <Card className="overflow-hidden border-border/50 bg-card/50 shadow-xl backdrop-blur-sm">

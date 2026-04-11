@@ -89,6 +89,99 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'footer_back_to_top', label: 'Back to Top Text', type: 'text', placeholder: 'Back to top' },
         { key: 'footer_copyright_suffix', label: 'Copyright Suffix', type: 'text', placeholder: 'AGY' },
     ],
+    branding: [
+        { 
+            key: 'brand_logo_dynamic', 
+            label: 'Use Dynamic SVG Logo', 
+            type: 'boolean', 
+            placeholder: 'false',
+            description: 'If enabled, the site will use a theme-aware dynamic SVG logo instead of the uploaded image.'
+        },
+        { 
+            key: 'brand_logo_primary', 
+            label: 'Main Logo - Primary Color', 
+            type: 'color', 
+            placeholder: '#041766',
+            description: 'The main color for the main logo. Defaults to site primary color if empty.'
+        },
+        { 
+            key: 'brand_logo_secondary', 
+            label: 'Main Logo - Secondary Color', 
+            type: 'color', 
+            placeholder: '#d13091',
+            description: 'The secondary color for the main logo. Defaults to site secondary color if empty.'
+        },
+        { 
+            key: 'brand_logo_accent', 
+            label: 'Main Logo - Accent Color', 
+            type: 'color', 
+            placeholder: '#d03691',
+            description: 'The accent color for the main logo (used for highlights/overlays).'
+        },
+        { 
+            key: 'brand_logo_primary_dark', 
+            label: 'Main Logo - Primary Color (Dark)', 
+            type: 'color', 
+            placeholder: '#ADFFFE',
+            description: 'The primary color for the main logo when in dark mode.'
+        },
+        { 
+            key: 'brand_logo_secondary_dark', 
+            label: 'Main Logo - Secondary Color (Dark)', 
+            type: 'color', 
+            placeholder: '#d13091',
+            description: 'The secondary color for the main logo when in dark mode.'
+        },
+        { 
+            key: 'brand_logo_accent_dark', 
+            label: 'Main Logo - Accent Color (Dark)', 
+            type: 'color', 
+            placeholder: '#d03691',
+            description: 'The accent color for the main logo when in dark mode.'
+        },
+        { 
+            key: 'brand_secondary_primary', 
+            label: 'Decorative Logo - Primary Color', 
+            type: 'color', 
+            placeholder: '#041766',
+            description: 'Main color for the secondary branding (e.g. Artboard-8). Defaults to logo primary if empty.'
+        },
+        { 
+            key: 'brand_secondary_secondary', 
+            label: 'Decorative Logo - Secondary Color', 
+            type: 'color', 
+            placeholder: '#d13091',
+            description: 'Secondary color for the secondary branding.'
+        },
+        { 
+            key: 'brand_secondary_accent', 
+            label: 'Decorative Logo - Accent Color', 
+            type: 'color', 
+            placeholder: '#d03691',
+            description: 'Accent color for the secondary branding.'
+        },
+        { 
+            key: 'brand_secondary_primary_dark', 
+            label: 'Decorative Logo - Primary Color (Dark)', 
+            type: 'color', 
+            placeholder: '#ADFFFE',
+            description: 'Primary color for the secondary branding in dark mode.'
+        },
+        { 
+            key: 'brand_secondary_secondary_dark', 
+            label: 'Decorative Logo - Secondary Color (Dark)', 
+            type: 'color', 
+            placeholder: '#d13091',
+            description: 'Secondary color for the secondary branding in dark mode.'
+        },
+        { 
+            key: 'brand_secondary_accent_dark', 
+            label: 'Decorative Logo - Accent Color (Dark)', 
+            type: 'color', 
+            placeholder: '#d03691',
+            description: 'Accent color for the secondary branding in dark mode.'
+        },
+    ],
     contact: [
         { key: 'contact_email', label: 'Contact Email', type: 'text', placeholder: 'hello@example.com' },
         { key: 'contact_phone', label: 'Phone Number', type: 'text', placeholder: '+1 (555) 000-0000' },
@@ -430,13 +523,16 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
         if (typeof document === 'undefined') return;
         
         const root = document.documentElement;
+        // Detect current theme mode to apply correct overrides for preview
+        const isDark = root.classList.contains('dark');
+
         const applyVar = (name: string, value: string) => {
             if (!value) {
                 root.style.removeProperty(name);
                 return;
             }
             // Use oklchToHex if it's not already oklch/rgb
-            const finalValue = (value.startsWith('oklch') || value.startsWith('rgb')) ? value : oklchToHex(value);
+            const finalValue = (value.startsWith('oklch') || value.startsWith('rgb') || value.startsWith('var')) ? value : oklchToHex(value);
             root.style.setProperty(name, finalValue);
         };
 
@@ -465,13 +561,74 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
 
         if (data['brand_ring']) applyVar('--ring', data['brand_ring'] as string);
         else root.style.removeProperty('--ring');
+
+        // Branding Preview logic
+        // We evaluate fallbacks for preview just like ThemeStyles.tsx does
+        const logoPrimary = isDark 
+            ? (data['brand_logo_primary_dark'] || data['brand_logo_primary'] || 'var(--primary)')
+            : (data['brand_logo_primary'] || 'var(--primary)');
+            
+        const logoSecondary = isDark 
+            ? (data['brand_logo_secondary_dark'] || data['brand_logo_secondary'] || 'var(--secondary)')
+            : (data['brand_logo_secondary'] || 'var(--secondary)');
+            
+        const logoAccent = isDark 
+            ? (data['brand_logo_accent_dark'] || data['brand_logo_accent'] || 'var(--accent)')
+            : (data['brand_logo_accent'] || 'var(--accent)');
+
+        // Apply Logo Colors
+        applyVar('--logo-primary', logoPrimary as string);
+        applyVar('--logo-secondary', logoSecondary as string);
+        applyVar('--logo-accent', logoAccent as string);
+
+        // Secondary Branding (Decorative Logo)
+        const secondaryPrimary = isDark
+            ? (data['brand_secondary_primary_dark'] || data['brand_secondary_primary'] || '--logo-primary-placeholder')
+            : (data['brand_secondary_primary'] || '--logo-primary-placeholder');
+
+        const secondarySecondary = isDark
+            ? (data['brand_secondary_secondary_dark'] || data['brand_secondary_secondary'] || '--logo-secondary-placeholder')
+            : (data['brand_secondary_secondary'] || '--logo-secondary-placeholder');
+
+        const secondaryAccent = isDark
+            ? (data['brand_secondary_accent_dark'] || data['brand_secondary_accent'] || '--logo-accent-placeholder')
+            : (data['brand_secondary_accent'] || '--logo-accent-placeholder');
+
+        // Note: For preview, we explicitly resolve the placeholders to the logo variables 
+        // to match the fallback behavior in ThemeStyles.tsx
+        applyVar('--logo-secondary-primary', secondaryPrimary === '--logo-primary-placeholder' ? 'var(--logo-primary)' : secondaryPrimary as string);
+        applyVar('--logo-secondary-secondary', secondarySecondary === '--logo-secondary-placeholder' ? 'var(--logo-secondary)' : secondarySecondary as string);
+        applyVar('--logo-secondary-accent', secondaryAccent === '--logo-accent-placeholder' ? 'var(--logo-accent)' : secondaryAccent as string);
         
+        // Gradient system preview
+        const presetColors = isDark ? themePresets?.themes[data.theme_preset]?.dark : themePresets?.themes[data.theme_preset]?.light;
+        const gradStart = (data['brand_primary'] as string) || (presetColors as any)?.['gradient-start'] || (presetColors as any)?.primary || 'oklch(0.55 0.13 43)';
+        const gradEnd = (data['brand_accent'] as string) || (presetColors as any)?.['gradient-end'] || (presetColors as any)?.accent || 'oklch(0.88 0.03 93)';
+        const gradAccent = (data['brand_accent'] as string) || (presetColors as any)?.['gradient-accent'] || (presetColors as any)?.accent || 'oklch(0.70 0.10 200)';
+
+        applyVar('--gradient-start', gradStart);
+        applyVar('--gradient-end', gradEnd);
+        applyVar('--gradient-accent', gradAccent);
+        
+        // Complex computed variables for gradients
+        root.style.setProperty('--theme-gradient', `linear-gradient(135deg, var(--gradient-start), var(--gradient-end))`);
+        root.style.setProperty('--theme-gradient-subtle', `linear-gradient(135deg, color-mix(in oklch, var(--gradient-start) 8%, var(--background)), color-mix(in oklch, var(--gradient-end) 8%, var(--background)))`);
+        root.style.setProperty('--theme-gradient-radial', `radial-gradient(ellipse at 20% 50%, color-mix(in oklch, var(--gradient-start) 15%, transparent), color-mix(in oklch, var(--gradient-end) 10%, transparent), transparent 70%)`);
+        root.style.setProperty('--theme-gradient-animated', `linear-gradient(135deg, var(--gradient-start), var(--gradient-accent), var(--gradient-end), var(--gradient-start))`);
+
         if (data['border_radius']) root.style.setProperty('--radius', data['border_radius'] as string);
         else root.style.removeProperty('--radius');
 
         return () => {
              // Clean up on unmount to restore site defaults
-             const vars = ['--primary', '--secondary', '--accent', '--muted', '--background', '--foreground', '--border', '--ring', '--radius'];
+             const vars = [
+                '--primary', '--secondary', '--accent', '--muted', 
+                '--background', '--foreground', '--border', '--ring', 
+                '--radius', '--logo-primary', '--logo-secondary', '--logo-accent',
+                '--logo-secondary-primary', '--logo-secondary-secondary', '--logo-secondary-accent',
+                '--gradient-start', '--gradient-end', '--gradient-accent',
+                '--theme-gradient', '--theme-gradient-subtle', '--theme-gradient-radial', '--theme-gradient-animated'
+             ];
              vars.forEach(v => root.style.removeProperty(v));
         };
     }, [data]);
@@ -492,6 +649,19 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
             brand_foreground: '',
             brand_border: '',
             brand_ring: '',
+            // Clear branding overrides
+            brand_logo_primary: '',
+            brand_logo_secondary: '',
+            brand_logo_accent: '',
+            brand_logo_primary_dark: '',
+            brand_logo_secondary_dark: '',
+            brand_logo_accent_dark: '',
+            brand_secondary_primary: '',
+            brand_secondary_secondary: '',
+            brand_secondary_accent: '',
+            brand_secondary_primary_dark: '',
+            brand_secondary_secondary_dark: '',
+            brand_secondary_accent_dark: '',
             // Font settings
             font_display: themePresets?.themes[presetKey]?.fonts.sans || '',
             font_body: themePresets?.themes[presetKey]?.fonts.sans || '',
@@ -605,11 +775,12 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
                     <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
                         <TabsList className="mb-4">
                             <TabsTrigger value="general">General</TabsTrigger>
+                            <TabsTrigger value="branding">Branding</TabsTrigger>
                             <TabsTrigger value="contact">Contact Info</TabsTrigger>
                             <TabsTrigger value="social">Social Media</TabsTrigger>
                             <TabsTrigger value="seo">SEO & Analytics</TabsTrigger>
 
-                            <TabsTrigger value="theme">Theme & Branding</TabsTrigger>
+                            <TabsTrigger value="theme">Theme & Visuals</TabsTrigger>
                             <TabsTrigger value="compliance">Compliance</TabsTrigger>
                         </TabsList>
 

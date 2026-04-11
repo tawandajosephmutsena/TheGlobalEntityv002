@@ -10,6 +10,7 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import type { CTAHeroBlock } from "@/types/page-blocks";
 import CategoryIcon from "@/components/CategoryIcon";
 import { GLSLHills } from "@/components/ui/GLSLHills";
+import { BrandingSecondary } from "@/components/Branding/BrandingSecondary";
 
 export default function CTAHeroBlock({
   badge = "New Feature",
@@ -28,7 +29,9 @@ export default function CTAHeroBlock({
   statsLabel = "from 2,000+ reviews",
   image = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
   imageLink = "",
+  imagePosition = "right",
 }: CTAHeroBlock['content']) {
+  const isDynamicImage = image?.includes('Artboard-8');
   const { props: pageProps } = usePage();
   const globalStats = (pageProps as any).global_stats;
 
@@ -246,17 +249,21 @@ export default function CTAHeroBlock({
             initial={{ opacity: 0, scale: 0.95, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative lg:ml-auto"
+            className={`relative ${imagePosition === 'left' ? 'lg:order-first lg:mr-auto' : 'lg:ml-auto'}`}
           >
             <div className="relative aspect-[4/3] w-full md:aspect-video lg:aspect-square lg:w-[500px]">
               <div className="relative h-full w-full">
                 {imageLink ? (
                   <Link href={imageLink} className="block h-full w-full group">
-                    <img 
-                      src={image} 
-                      alt={titleHighlight || "Hero visual"} 
-                      className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105" 
-                    />
+                    {isDynamicImage ? (
+                      <BrandingSecondary className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105" />
+                    ) : (
+                      <img 
+                        src={image} 
+                        alt={titleHighlight || "Hero visual"} 
+                        className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105" 
+                      />
+                    )}
                     <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] rounded-xl">
                       <div className="rounded-full bg-background/90 p-4 shadow-xl text-primary">
                         <ArrowRight className="h-6 w-6" />
@@ -264,11 +271,15 @@ export default function CTAHeroBlock({
                     </div>
                   </Link>
                 ) : (
-                  <img 
-                    src={image} 
-                    alt={titleHighlight || "Hero visual"} 
-                    className="h-full w-full object-contain" 
-                  />
+                  isDynamicImage ? (
+                    <BrandingSecondary className="h-full w-full object-contain" />
+                  ) : (
+                    <img 
+                      src={image} 
+                      alt={titleHighlight || "Hero visual"} 
+                      className="h-full w-full object-contain" 
+                    />
+                  )
                 )}
               </div>
 

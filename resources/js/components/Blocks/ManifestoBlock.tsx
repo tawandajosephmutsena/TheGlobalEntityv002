@@ -1,5 +1,6 @@
 import React from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface ManifestoBlockProps {
     title: string;
@@ -13,8 +14,10 @@ interface ManifestoBlockProps {
 
 const ManifestoBlock: React.FC<ManifestoBlockProps> = ({ title, subtitle, items }) => {
     return (
-        <section className="py-24 bg-muted/20 dark:bg-black/40 px-4">
-            <div className="max-w-7xl mx-auto">
+        <section className="relative py-24 overflow-hidden gradient-mesh-manifesto px-4">
+            <WatercolorBackground variant="manifesto" />
+
+            <div className="container relative mx-auto max-w-7xl z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-20">
                     <span className="inline-block px-4 py-1.5 mb-8 text-xs font-bold lowercase [font-variant-caps:small-caps] tracking-[0.3em] text-primary bg-primary/10 rounded-full border border-primary/20">
                         {subtitle}

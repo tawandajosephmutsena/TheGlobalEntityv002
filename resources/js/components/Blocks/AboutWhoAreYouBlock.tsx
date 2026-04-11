@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import type { AboutWhoAreYouBlock } from '@/types/page-blocks';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 export default function AboutWhoAreYouBlockRenderer({
     title = "Who Are You?",
@@ -25,8 +26,9 @@ export default function AboutWhoAreYouBlockRenderer({
     ]
 }: AboutWhoAreYouBlock['content']) {
     return (
-        <section className="theme-stitch bg-gradient-to-b from-surface-container-low to-surface py-32 px-8 text-on-surface">
-            <div className="max-w-4xl mx-auto text-center">
+        <section className="relative py-32 overflow-hidden gradient-mesh-about-who">
+             <WatercolorBackground variant="aboutWhoAreYou" />
+            <div className="max-w-4xl mx-auto text-center relative z-10 px-8">
                 <motion.h2 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

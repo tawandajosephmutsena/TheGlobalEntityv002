@@ -3,7 +3,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Plus, Trash2, GripVertical, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Image as ImageIcon, ArrowLeftRight } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 import type { CTAHeroBlock } from '@/types/page-blocks';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import type { MediaAsset } from '@/types';
@@ -145,6 +146,26 @@ export default function CTAHeroBlockEditor({ content, onUpdate }: CTAHeroBlockEd
                         onChange={(e) => onUpdate({ imageLink: e.target.value })} 
                         placeholder="e.g. /features/new"
                     />
+                </div>
+            </div>
+
+            <div className="flex items-center justify-between p-4 rounded-lg border bg-muted/30 mt-4">
+                <div className="space-y-0.5">
+                    <Label className="text-base flex items-center gap-2">
+                        <ArrowLeftRight className="h-4 w-4 text-muted-foreground" />
+                        Image Position
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                        Toggle to swap the image between the right and left sides.
+                    </p>
+                </div>
+                <div className="flex items-center space-x-3">
+                    <span className="text-sm text-muted-foreground font-medium">Left</span>
+                    <Switch
+                        checked={content.imagePosition !== 'left'}
+                        onCheckedChange={(checked) => onUpdate({ imagePosition: checked ? 'right' : 'left' })}
+                    />
+                    <span className="text-sm text-muted-foreground font-medium">Right</span>
                 </div>
             </div>
 

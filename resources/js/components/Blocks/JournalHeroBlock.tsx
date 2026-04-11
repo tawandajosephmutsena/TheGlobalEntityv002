@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalHeroBlock } from '@/types/page-blocks';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface InsightItem {
     id: number;
@@ -91,14 +92,18 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
 
     return (
         <section className="container mx-auto px-6 pt-48 mb-24">
-            <AnimatedSection animation="fade-in" className="relative group cursor-pointer overflow-hidden rounded-xl">
-                {featuredPost ? (
-                    <Link href={`/blog/${featuredPost.slug}`} className="block">
-                        {contentInside}
-                    </Link>
-                ) : (
-                    contentInside
-                )}
+            <AnimatedSection animation="fade-in" className="relative group cursor-pointer overflow-hidden rounded-[2rem] gradient-mesh-journal-hero p-8 md:p-12">
+                <WatercolorBackground variant="journalHero" />
+                
+                <div className="relative z-10">
+                    {featuredPost ? (
+                        <Link href={`/blog/${featuredPost.slug}`} className="block">
+                            {contentInside}
+                        </Link>
+                    ) : (
+                        contentInside
+                    )}
+                </div>
             </AnimatedSection>
         </section>
     );

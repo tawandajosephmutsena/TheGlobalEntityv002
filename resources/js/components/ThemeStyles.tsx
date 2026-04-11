@@ -231,6 +231,17 @@ export default function ThemeStyles() {
                 __html: `
                     :root {
                         ${generateCssVariables(preset.light, false, '                        ')}
+                        /* Logo Colors - allow manual override or fallback to theme colors */
+                        --logo-primary: ${getSettingValue('brand_logo_primary') || 'var(--primary)'};
+                        --logo-secondary: ${getSettingValue('brand_logo_secondary') || 'var(--secondary)'};
+                        --logo-accent: ${getSettingValue('brand_logo_accent') || 'var(--accent)'};
+                        --logo-dynamic: ${getSettingValue('brand_logo_dynamic') || 'false'};
+
+                        /* Decorative Branding Colors (Artboard-8) - fallback to Logo colors */
+                        --logo-secondary-primary: ${getSettingValue('brand_secondary_primary') || 'var(--logo-primary)'};
+                        --logo-secondary-secondary: ${getSettingValue('brand_secondary_secondary') || 'var(--logo-secondary)'};
+                        --logo-secondary-accent: ${getSettingValue('brand_secondary_accent') || 'var(--logo-accent)'};
+
                         --radius: ${customRadius || preset.radius || '0.5rem'};
                         --font-sans: "${customBodyFont || preset.fonts.sans || 'Inter'}", ui-sans-serif, system-ui, sans-serif;
                         --font-display: "${customDisplayFont || preset.fonts.display || preset.fonts.sans || 'Inter'}", ui-sans-serif, system-ui, sans-serif;
@@ -270,6 +281,16 @@ export default function ThemeStyles() {
                     .dark {
                         ${generateCssVariables(preset.dark, true, '                        ')}
                         
+                        /* Logo Colors - Dark Mode overrides */
+                        --logo-primary: ${getSettingValue('brand_logo_primary_dark') || getSettingValue('brand_logo_primary') || 'var(--primary)'};
+                        --logo-secondary: ${getSettingValue('brand_logo_secondary_dark') || getSettingValue('brand_logo_secondary') || 'var(--secondary)'};
+                        --logo-accent: ${getSettingValue('brand_logo_accent_dark') || getSettingValue('brand_logo_accent') || 'var(--accent)'};
+
+                        /* Decorative Branding Colors - Dark Mode overrides */
+                        --logo-secondary-primary: ${getSettingValue('brand_secondary_primary_dark') || getSettingValue('brand_secondary_primary') || 'var(--logo-primary)'};
+                        --logo-secondary-secondary: ${getSettingValue('brand_secondary_secondary_dark') || getSettingValue('brand_secondary_secondary') || 'var(--logo-secondary)'};
+                        --logo-secondary-accent: ${getSettingValue('brand_secondary_accent_dark') || getSettingValue('brand_secondary_accent') || 'var(--logo-accent)'};
+
                         /* Chart colors - dark mode variants */
                         --chart-1: ${preset.dark.primary || 'oklch(0.55 0.13 43)'};
                         --chart-2: ${preset.dark.secondary || 'oklch(0.69 0.16 290)'};

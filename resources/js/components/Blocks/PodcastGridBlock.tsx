@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 import { PodcastCard } from '@/components/podcast/PodcastCard';
 import { PodcastCategoryBadge } from '@/components/podcast/PodcastCategoryBadge';
 import { PodcastSearch } from '@/components/podcast/PodcastSearch';
@@ -89,8 +90,10 @@ export default function PodcastGridBlock({
             : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
     return (
-        <section className="py-20 px-4 md:px-8 bg-background">
-            <div className="max-w-7xl mx-auto">
+        <section className="relative py-20 px-4 md:px-8 overflow-hidden gradient-mesh-podcast-grid">
+            <WatercolorBackground variant="podcastGrid" />
+            
+            <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
                 <AnimatedSection animation="fade-up" className="text-center mb-12">
                     {subtitle && (

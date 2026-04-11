@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { 
@@ -10,6 +10,27 @@ import {
 import { cn } from '@/lib/utils';
 import DynamicForm from '@/components/DynamicForm';
 import AnimatedSection from '@/components/AnimatedSection';
+
+// Lazy-load the 3D globe to avoid SSR issues and reduce initial bundle
+const Globe3D = lazy(() => import('@/components/ui/3d-globe').then(m => ({ default: m.Globe3D })));
+
+import type { GlobeMarker } from '@/components/ui/3d-globe';
+
+const globeMarkers: GlobeMarker[] = [
+    { lat: 40.7128, lng: -74.006, src: "https://assets.aceternity.com/avatars/1.webp", label: "New York" },
+    { lat: 51.5074, lng: -0.1278, src: "https://assets.aceternity.com/avatars/2.webp", label: "London" },
+    { lat: 35.6762, lng: 139.6503, src: "https://assets.aceternity.com/avatars/3.webp", label: "Tokyo" },
+    { lat: -33.8688, lng: 151.2093, src: "https://assets.aceternity.com/avatars/4.webp", label: "Sydney" },
+    { lat: 48.8566, lng: 2.3522, src: "https://assets.aceternity.com/avatars/5.webp", label: "Paris" },
+    { lat: 28.6139, lng: 77.209, src: "https://assets.aceternity.com/avatars/6.webp", label: "New Delhi" },
+    { lat: 55.7558, lng: 37.6173, src: "https://assets.aceternity.com/avatars/7.webp", label: "Moscow" },
+    { lat: -22.9068, lng: -43.1729, src: "https://assets.aceternity.com/avatars/8.webp", label: "Rio de Janeiro" },
+    { lat: 31.2304, lng: 121.4737, src: "https://assets.aceternity.com/avatars/9.webp", label: "Shanghai" },
+    { lat: 25.2048, lng: 55.2708, src: "https://assets.aceternity.com/avatars/10.webp", label: "Dubai" },
+    { lat: -34.6037, lng: -58.3816, src: "https://assets.aceternity.com/avatars/11.webp", label: "Buenos Aires" },
+    { lat: 1.3521, lng: 103.8198, src: "https://assets.aceternity.com/avatars/12.webp", label: "Singapore" },
+    { lat: 37.5665, lng: 126.978, src: "https://assets.aceternity.com/avatars/13.webp", label: "Seoul" },
+];
 
 interface InquiryCard {
     id: string;
@@ -98,8 +119,8 @@ const ContactCartographerBlock: React.FC<ContactCartographerBlockProps> = ({
             <div className="relative z-10 max-w-[1440px] mx-auto w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
                     
-                    {/* Left Column: Editorial Hero */}
-                    <div className="lg:col-span-5 flex flex-col gap-8 relative">
+                    {/* Left Column: Editorial Hero + Globe */}
+                    <div className="lg:col-span-5 flex flex-col gap-8 relative lg:sticky lg:top-24">
                         <div ref={mapIconRef} className="absolute -top-10 -left-10 text-muted-foreground/20 z-0">
                             <MapIcon size={120} strokeWidth={1} />
                         </div>
@@ -118,6 +139,35 @@ const ContactCartographerBlock: React.FC<ContactCartographerBlockProps> = ({
                                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                                     className="absolute top-0 h-full w-1/3 bg-tertiary/40 rounded-full" 
                                 />
+                            </div>
+                        </AnimatedSection>
+
+                        {/* 3D Globe */}
+                        <AnimatedSection animation="fade-up" delay={300} className="relative z-10">
+                            <div className="relative flex items-center justify-center aspect-square max-w-[480px] mx-auto">
+                                <Suspense fallback={
+                                    <div className="flex items-center justify-center h-full w-full aspect-square">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="w-12 h-12 rounded-full border-2 border-muted-foreground/20 border-t-primary animate-spin" />
+                                            <span className="text-sm text-muted-foreground">Loading globe...</span>
+                                        </div>
+                                    </div>
+                                }>
+                                    <Globe3D
+                                        markers={globeMarkers}
+                                        className="w-full h-full aspect-square"
+                                        config={{
+                                            bumpScale: 3,
+                                            autoRotateSpeed: 0.3,
+                                            showAtmosphere: false,
+                                            enableZoom: false,
+                                            enablePan: false,
+                                            backgroundColor: null,
+                                            ambientIntensity: 1.2,
+                                            pointLightIntensity: 2.0,
+                                        }}
+                                    />
+                                </Suspense>
                             </div>
                         </AnimatedSection>
                     </div>

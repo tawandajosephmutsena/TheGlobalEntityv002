@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import { Mail, CheckCircle2 } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 import type { JournalNewsletterBlock } from '@/types/page-blocks';
 
 interface Props {
@@ -38,9 +39,9 @@ export default function JournalNewsletterBlock({ content }: Props) {
 
     return (
         <section className="container mx-auto px-6 mt-32">
-            <AnimatedSection animation="fade-in" className="bg-tertiary-container/20 rounded-xl p-12 lg:p-24 text-center relative overflow-hidden border border-tertiary/10">
-                <div className="absolute -top-20 -left-20 w-80 h-80 bg-tertiary/5 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl"></div>
+            <AnimatedSection animation="fade-in" className="relative group overflow-hidden rounded-[2rem] p-12 lg:p-24 text-center gradient-mesh-journal-newsletter border border-tertiary/10">
+                <WatercolorBackground variant="journalNewsletter" />
+                
                 <div className="relative z-10 max-w-2xl mx-auto">
                     <Mail className="size-16 text-tertiary mx-auto mb-8 opacity-80" />
                     <h2 className="font-display font-black text-4xl lg:text-6xl mb-8 tracking-tighter text-on-surface">

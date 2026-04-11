@@ -1,6 +1,7 @@
 import AnimatedSection from '@/components/AnimatedSection';
 import { Map, Store, PartyPopper, ShieldCheck, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersBentoProps {
     title?: string;
@@ -55,8 +56,10 @@ const PartnersBento: React.FC<PartnersBentoProps> = ({
     ]
 }) => {
     return (
-        <section className="py-32 bg-background text-foreground overflow-hidden theme-stitch">
-            <div className="container mx-auto px-4">
+        <section className="relative py-32 overflow-hidden gradient-mesh-partners-bento theme-stitch">
+            <WatercolorBackground variant="partnersBento" />
+            
+            <div className="container mx-auto px-4 relative z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-20">
                     <h2 className="font-display text-5xl md:text-7xl font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface mb-4 leading-none">
                         {title.split(' ').map((word, i) => (

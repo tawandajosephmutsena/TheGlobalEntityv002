@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -96,8 +97,9 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
     return (
         <section 
             ref={sectionRef}
-            className={cn("py-24 md:py-32 overflow-hidden bg-background", className)}
+            className={cn("relative py-24 md:py-32 overflow-hidden gradient-mesh-parallax", className)}
         >
+            <WatercolorBackground variant="parallaxFeatures" />
             <div className="container mx-auto px-4 md:px-8">
                 {(title || subtitle) && (
                     <div className="mb-20 text-center max-w-3xl mx-auto">

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface FestivalProgressTrailProps {
     steps: Array<{
@@ -27,22 +28,21 @@ const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
     color = "var(--agency-accent)"
 }) => {
     return (
-        <section className="relative h-64 md:h-96 w-full overflow-hidden flex items-center justify-center bg-agency-surface">
-            {/* Animated SVG Path */}
+        <section className="relative h-64 md:h-96 w-full overflow-hidden flex items-center justify-center gradient-mesh-festival-trail">
+             <WatercolorBackground variant="festivalProgressTrail" />
+
+            {/* SVG Path (Static) */}
             <svg 
-                className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
+                className="absolute inset-0 w-full h-full pointer-events-none opacity-20 z-0"
                 viewBox="0 0 1000 200"
                 preserveAspectRatio="none"
             >
-                <motion.path 
+                <path 
                     d={paths[pathType]}
                     fill="none"
                     stroke={color}
                     strokeWidth="3"
                     strokeDasharray="12 12"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 1 }}
-                    transition={{ duration: 3, ease: "easeInOut" }}
                 />
             </svg>
 
@@ -78,9 +78,7 @@ const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
                 </AnimatedSection>
             </div>
 
-            {/* Watercolor Blur (Subtle) */}
-            <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-agency-accent/5 rounded-full blur-[100px] pointer-events-none" />
-            <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-agency-primary/5 rounded-full blur-[100px] pointer-events-none" />
+
         </section>
     );
 };

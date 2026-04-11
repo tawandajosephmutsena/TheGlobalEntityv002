@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import type { CommunityReviewBlock as CommunityReviewBlockType } from '@/types/page-blocks';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
     title = "Community Voices",
@@ -20,13 +21,8 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
     const displayReviews = reviews.slice(0, limit);
 
     return (
-        <section className="py-24 relative overflow-hidden bg-background">
-            {/* Dreamy watercolor background effect using theme variables */}
-            <div className="absolute inset-0 pointer-events-none opacity-30 overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[140px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-accent/20 rounded-full blur-[140px]" />
-                <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-secondary/15 rounded-full blur-[100px]" />
-            </div>
+        <section className="relative py-24 overflow-hidden gradient-mesh-community-review">
+            <WatercolorBackground variant="communityReview" />
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-3xl mx-auto text-center mb-16">

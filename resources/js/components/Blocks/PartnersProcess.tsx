@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import AnimatedSection from '@/components/AnimatedSection';
+import WatercolorBackground from '@/components/WatercolorBackground';
 
 interface PartnersProcessProps {
     title?: string;
@@ -58,8 +59,10 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-32 bg-background text-foreground relative overflow-hidden theme-stitch">
-            <div className="container mx-auto px-4">
+        <section ref={sectionRef} className="relative py-32 overflow-hidden gradient-mesh-partners-process text-foreground theme-stitch">
+            <WatercolorBackground variant="partnersProcess" />
+            
+            <div className="container mx-auto px-4 relative z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-24">
                     <h2 className="font-display text-5xl md:text-7xl font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface">
                         {title}
