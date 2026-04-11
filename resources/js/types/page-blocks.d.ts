@@ -507,7 +507,10 @@ export interface AppleCardsCarouselBlock extends BaseBlock {
         items?: Array<{
             image: string;
             title: string;
+            subtitle?: string;
+            description?: string;
             category: string;
+            categoryIcon?: string;
             content: string;
             link?: string;
         }>;

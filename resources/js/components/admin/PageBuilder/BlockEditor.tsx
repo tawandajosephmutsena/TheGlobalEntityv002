@@ -27,7 +27,7 @@ interface FAQItem { q: string; a: string; }
 interface ContactItem { label: string; value: string; href?: string; }
 interface TestimonialItem { text: string; name: string; role: string; image?: string; }
 interface LogoItem { name: string; url: string; }
-interface AppleCardItem { category: string; title: string; src: string; content: string; link: string; }
+interface AppleCardItem { category: string; title: string; subtitle?: string; description?: string; categoryIcon?: string; src: string; content: string; link: string; }
 interface CinematicSlide { title: string; subtitle?: string; tagline?: string; image?: string; }
 interface ParallaxItem { title: string; description: string; image: string; link?: string; }
 interface HorizontalScrollItem { title: string; description: string; tag: string; image: string; }
@@ -1169,7 +1169,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                         <div className="space-y-4 pt-4 border-t">
                             <div className="flex items-center justify-between">
                                 <Label className="text-xs font-bold uppercase tracking-wider">Manual Cards</Label>
-                                <Button variant="outline" size="sm" onClick={() => updateContent({ items: [...items, { category: 'New', title: 'New Card', src: '', content: '', link: '' }] })}>
+                                <Button variant="outline" size="sm" onClick={() => updateContent({ items: [...items, { category: 'New', title: 'New Card', subtitle: '', description: '', categoryIcon: '', src: '', content: '', link: '' }] })}>
                                     <Plus className="h-3 w-3 mr-1" /> Add Card
                                 </Button>
                             </div>
@@ -1180,8 +1180,28 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                             <Trash className="h-3 w-3" />
                                         </button>
                                         <div className="grid grid-cols-2 gap-2">
-                                            <Input className="h-8 text-xs" value={item.category} onChange={(e) => { const n = [...items]; n[i] = { ...item, category: e.target.value }; updateContent({ items: n }); }} placeholder="Category" />
-                                            <Input className="h-8 text-xs font-semibold" value={item.title} onChange={(e) => { const n = [...items]; n[i] = { ...item, title: e.target.value }; updateContent({ items: n }); }} placeholder="Title" />
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] text-muted-foreground">Category</Label>
+                                                <Input className="h-8 text-xs" value={item.category} onChange={(e) => { const n = [...items]; n[i] = { ...item, category: e.target.value }; updateContent({ items: n }); }} placeholder="Category" />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] text-muted-foreground">Category Icon (Lucide name)</Label>
+                                                <Input className="h-8 text-xs" value={item.categoryIcon || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, categoryIcon: e.target.value }; updateContent({ items: n }); }} placeholder="e.g. Layout" />
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] text-muted-foreground">Main Title</Label>
+                                                <Input className="h-8 text-xs font-semibold" value={item.title} onChange={(e) => { const n = [...items]; n[i] = { ...item, title: e.target.value }; updateContent({ items: n }); }} placeholder="Title" />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px] text-muted-foreground">Subtitle (Optional)</Label>
+                                                <Input className="h-8 text-xs" value={item.subtitle || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, subtitle: e.target.value }; updateContent({ items: n }); }} placeholder="Subtitle" />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <Label className="text-[10px] text-muted-foreground">Description (Optional)</Label>
+                                            <Input className="h-8 text-xs" value={item.description || ''} onChange={(e) => { const n = [...items]; n[i] = { ...item, description: e.target.value }; updateContent({ items: n }); }} placeholder="Short description..." />
                                         </div>
                                         <div className="space-y-2">
                                             <Label className="text-[10px] text-muted-foreground">Card Image</Label>
