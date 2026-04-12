@@ -177,7 +177,7 @@ const ColumnRenderer = ({ column }: { column: NonNullable<TextBlockType['content
             const sizeClass = getTextSizeClass(content?.textSize || 'base');
             const alignClass = getTextAlignClass(content?.textAlign || 'left');
             return (
-                <div className={cn('prose dark:prose-invert max-w-none', sizeClass, alignClass)}>
+                <div className={cn('prose dark:prose-invert max-w-none font-sans', sizeClass, alignClass)}>
                     <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
                 </div>
             );
@@ -284,7 +284,7 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
 
         return (
             <section className="py-20 px-4">
-                <div className="max-w-4xl mx-auto prose dark:prose-invert">
+                <div className="max-w-4xl mx-auto prose dark:prose-invert font-sans">
                     {title && <h2>{title}</h2>}
                     <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
                 </div>
@@ -303,7 +303,7 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
                         <h2 className="text-4xl font-black [font-variant-caps:small-caps] tracking-tight">{title}</h2>
                     </AnimatedSection>
                 )}
-                <div className={gridClass}>
+                <div className={cn(gridClass, "items-center")}>
                     {columns.map((col, idx) => (
                         <AnimatedSection key={col.id || idx} animation="fade-up" delay={idx * 100}>
                             <ColumnRenderer column={col} />

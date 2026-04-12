@@ -50,7 +50,7 @@ export default function AboutHeroBlockRenderer({
                             </>
                         ) : title}
                     </h1>
-                    <p className="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed mb-12 font-medium italic">
+                    <p className="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed mb-12 font-medium italic font-sans">
                         {description}
                     </p>
                     
