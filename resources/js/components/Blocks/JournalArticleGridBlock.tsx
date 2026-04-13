@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link } from '@inertiajs/react';
 import { cn } from '@/lib/utils';
 import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
@@ -69,20 +69,23 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
 
     const [visibleCount, setVisibleCount] = useState(limit);
 
+    // Reset visibility on search or activeCategoryId change directly in render if needed
+    // or through synchronization
+    const [prevFilters, setPrevFilters] = useState({ searchQuery, activeCategoryId });
+    if (prevFilters.searchQuery !== searchQuery || 
+        prevFilters.activeCategoryId !== activeCategoryId) {
+        setPrevFilters({ searchQuery, activeCategoryId });
+        setVisibleCount(limit);
+    }
+
     // Subscribe to category filter events
     useEffect(() => {
-        const handleFilter = (e: CustomEvent<number | 'all'>) => {
+        const handleFilter = (e: CustomEvent<number | "all">) => {
             setActiveCategoryId(e.detail);
-            setVisibleCount(limit); // Reset visibility on filter change
         };
-        window.addEventListener('journal-category-filter', handleFilter as EventListener);
-        return () => window.removeEventListener('journal-category-filter', handleFilter as EventListener);
-    }, [limit]);
-
-    // Reset visibility on search change
-    useEffect(() => {
-        setVisibleCount(limit);
-    }, [searchQuery, limit]);
+        window.addEventListener("journal-category-filter", handleFilter as EventListener);
+        return () => window.removeEventListener("journal-category-filter", handleFilter as EventListener);
+    }, []);
 
 
     const categoriesList = useMemo(() => {
@@ -91,23 +94,13 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
         // Fallback: Extract unique categories from posts
         const catsMap = new Map<number, Category>();
         allPosts.forEach(post => {
-            if (post.category) {
-                catsMap.set(post.category_id, {
-                    id: post.category_id,
-                    name: post.category.name,
-                    slug: post.category.slug,
-                    icon: post.category.icon
-                });
+            if (post.category && post.category.id) {
+                catsMap.set(post.category.id, post.category);
             }
-            const additional = (post.additional_categories || (post as any).additionalCategories || []);
-            additional.forEach((cat: any) => {
+            const additional = post.additionalCategories || [];
+            additional.forEach((cat: Category) => {
                 if (cat.id) {
-                    catsMap.set(cat.id, {
-                        id: cat.id,
-                        name: cat.name,
-                        slug: cat.slug,
-                        icon: cat.icon
-                    });
+                    catsMap.set(cat.id, cat);
                 }
             });
         });
@@ -118,7 +111,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
     const filteredPosts = useMemo(() => {
         let results = activeCategoryId === 'all' 
             ? allPosts 
-            : allPosts.filter(p => p.category_id === activeCategoryId || p.additional_categories?.some(c => (c as any).id === activeCategoryId));
+            : allPosts.filter(p => p.category_id === activeCategoryId || p.additionalCategories?.some(c => c.id === activeCategoryId));
         
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase();
@@ -246,7 +239,6 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                                     <div className="relative aspect-video md:aspect-square w-full md:w-1/2 overflow-hidden rounded-lg shadow-lg bg-on-surface/5">
                                         <img 
                                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
-                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
                                             alt={post.title} 
                                         />
@@ -291,7 +283,6 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                                     <div className="relative aspect-[4/5] mb-6 overflow-hidden rounded-lg liquid-glass bg-on-surface/5 group-hover:shadow-2xl transition-all duration-500">
                                         <img 
                                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
-                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
                                             alt={post.title} 
                                         />

@@ -152,6 +152,8 @@ export interface PaginatedData<T> {
     last_page: number;
     per_page: number;
     total: number;
+    next_page_url: string | null;
+    prev_page_url: string | null;
     links: {
         url: string | null;
         label: string;
@@ -224,6 +226,7 @@ export interface Insight {
     author?: User;
     category?: Category;
     additionalCategories?: Category[];
+    additional_categories?: Category[];
     podcast?: Podcast | null;
     festival?: Festival | null;
     quick_tips?: Array<{

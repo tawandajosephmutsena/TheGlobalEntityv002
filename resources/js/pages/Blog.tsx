@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, router } from '@inertiajs/react';
 import MainLayout from '@/layouts/MainLayout';
 import AnimatedSection from '@/components/AnimatedSection';
-import { Search, ArrowRight, ArrowUpRight, CheckCircle2, Mail } from 'lucide-react';
-import React, { useState, useMemo } from 'react';
+import { Search, ArrowRight, ArrowUpRight, CheckCircle2, Mail, Loader2 } from 'lucide-react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import BlockRenderer from '@/components/Blocks/BlockRenderer';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '@/components/CategoryIcon';
@@ -21,6 +21,18 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
         email: '',
     });
     const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
+    
+    // Infinite Scroll State - All posts including loaded ones
+    const [allPosts, setAllPosts] = useState<Insight[]>(insights.data);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const observerTarget = useRef<HTMLDivElement>(null);
+
+    // Reset list when category or search changes (full refresh)
+    const [prevCategoryId, setPrevCategoryId] = useState(activeCategoryId);
+    if (prevCategoryId !== activeCategoryId) {
+        setPrevCategoryId(activeCategoryId);
+        setAllPosts(insights.data);
+    }
 
     const handleNewsletterSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -29,13 +41,49 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
         });
     };
 
-    // Extract posts from insights
-    const posts = insights.data;
+    const loadMore = () => {
+        if (!insights.next_page_url || loadingMore) return;
+
+        setLoadingMore(true);
+        router.get(insights.next_page_url, {}, {
+            preserveScroll: true,
+            preserveState: true,
+            only: ['insights'],
+            onSuccess: (page) => {
+                const newInsights = page.props.insights as unknown as PaginatedData<Insight>;
+                setAllPosts(prev => {
+                    const existingIds = new Set(prev.map(p => p.id));
+                    const uniqueNew = newInsights.data.filter(p => !existingIds.has(p.id));
+                    return [...prev, ...uniqueNew];
+                });
+            },
+            onFinish: () => setLoadingMore(false)
+        });
+    };
+
+    // Handle Infinite Scroll Visibility
+    useEffect(() => {
+        if (!insights.next_page_url) return;
+
+        const observer = new IntersectionObserver(
+            entries => {
+                if (entries[0].isIntersecting && !loadingMore) {
+                    loadMore();
+                }
+            },
+            { threshold: 0.1, rootMargin: '100px' }
+        );
+
+        if (observerTarget.current) {
+            observer.observe(observerTarget.current);
+        }
+
+        return () => observer.disconnect();
+    }, [insights.next_page_url, loadingMore, loadMore]);
 
     const gridPosts = useMemo(() => {
-        // If we're on the first page, we might want to highlight some posts
-        return posts;
-    }, [posts]);
+        return allPosts;
+    }, [allPosts]);
 
     return (
         <MainLayout>
@@ -47,7 +95,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                     <div className="space-y-0">
                         <BlockRenderer 
                             blocks={blocks} 
-                            recentInsights={posts}
+                            recentInsights={insights.data}
                             categories={categories}
                         />
                     </div>
@@ -130,8 +178,8 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                              <div className="flex flex-wrap gap-2">
                                                                 {[
                                                                     post.category,
-                                                                    ...(post.additionalCategories || (post as any).additional_categories || [])
-                                                                ].filter(Boolean).map((cat: Category, ci: number) => {
+                                                                    ...(post.additionalCategories || post.additional_categories || [])
+                                                                ].filter((cat): cat is Category => Boolean(cat)).map((cat, ci) => {
                                                                     const slug = cat?.slug || '';
                                                                     return (
                                                                         <Tooltip key={ci}>
@@ -171,8 +219,8 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                             <div className="absolute top-6 right-6 flex flex-col items-end gap-3">
                                                                 {[
                                                                     post.category,
-                                                                    ...(post.additionalCategories || (post as any).additional_categories || [])
-                                                                ].filter(Boolean).map((cat: Category, ci: number) => {
+                                                                    ...(post.additionalCategories || post.additional_categories || [])
+                                                                ].filter((cat): cat is Category => Boolean(cat)).map((cat, ci) => {
                                                                     const slug = cat?.slug || '';
 
                                                                     return (
@@ -212,8 +260,8 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                              <div className="flex flex-wrap gap-2">
                                                                 {[
                                                                     post.category,
-                                                                    ...(post.additionalCategories || (post as any).additional_categories || [])
-                                                                ].filter(Boolean).map((cat: Category, ci: number) => {
+                                                                    ...(post.additionalCategories || post.additional_categories || [])
+                                                                ].filter((cat): cat is Category => Boolean(cat)).map((cat, ci) => {
                                                                     const slug = cat?.slug || '';
                                                                     return (
                                                                         <Tooltip key={ci}>
@@ -250,8 +298,24 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                 </div>
                             </TooltipProvider>
 
+                            {/* Sentinel for Infinite Scroll */}
+                            <div ref={observerTarget} className="h-20 flex items-center justify-center mt-20">
+                                {loadingMore && (
+                                    <div className="flex flex-col items-center gap-4">
+                                        <Loader2 className="size-8 text-primary animate-spin" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant opacity-60">Scanning deeper coordinates...</span>
+                                    </div>
+                                )}
+                                {!insights.next_page_url && allPosts.length > 0 && (
+                                    <div className="text-center opacity-40">
+                                        <div className="w-12 h-px bg-on-surface mx-auto mb-6" />
+                                        <p className="text-[10px] font-black uppercase tracking-widest">End of the Journal</p>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Empty State */}
-                            {posts.length === 0 && (
+                            {allPosts.length === 0 && (
                                 <div className="py-32 text-center">
                                     <div className="inline-block p-12 rounded-full bg-surface-container-low mb-8 opacity-20">
                                         <Search className="size-20" />
@@ -260,26 +324,6 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                     <p className="text-on-surface-variant max-w-md mx-auto font-light">
                                         The map remains blank for this category. Explore other coordinates or search for hidden paths.
                                     </p>
-                                </div>
-                            )}
-
-                            {/* Pagination */}
-                            {insights.links.length > 3 && (
-                                <div className="mt-32 flex justify-center gap-4">
-                                    {insights.links.map((link: any, i: number) => (
-                                        <Link
-                                            key={i}
-                                            href={link.url || '#'}
-                                            className={cn(
-                                                "px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500",
-                                                link.active 
-                                                    ? "bg-primary text-on-primary shadow-xl scale-105" 
-                                                    : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105",
-                                                !link.url && "opacity-30 cursor-not-allowed hidden"
-                                            )}
-                                            dangerouslySetInnerHTML={{ __html: link.label }}
-                                        />
-                                    ))}
                                 </div>
                             )}
                         </section>

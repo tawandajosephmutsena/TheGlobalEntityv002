@@ -49,18 +49,19 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
 
                             <ul className="space-y-6">
                                 {features.map((feature, i) => (
-                                    <motion.li 
-                                        key={i} 
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.8 + (i * 0.1) }}
-                                        className="flex items-center gap-4 group"
-                                    >
-                                        <div className="w-16 h-16 liquid-glass text-secondary rounded-full flex items-center justify-center mx-auto shadow-sea-mist ring-8 ring-white/10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[360deg] z-20 relative">
-                                            <CheckCircle2 size={24} />
-                                        </div>
-                                        <span className="text-lg font-bold tracking-tight text-on-surface">{feature}</span>
-                                    </motion.li>
+                                    <li key={i}>
+                                        <motion.div 
+                                            initial={{ opacity: 0, x: -20 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.8 + (i * 0.1) }}
+                                            className="flex items-center gap-4 group"
+                                        >
+                                            <div className="w-16 h-16 liquid-glass text-secondary rounded-full flex items-center justify-center mx-auto shadow-sea-mist ring-8 ring-white/10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-[360deg] z-20 relative">
+                                                <CheckCircle2 size={24} />
+                                            </div>
+                                            <span className="text-lg font-bold tracking-tight text-on-surface">{feature}</span>
+                                        </motion.div>
+                                    </li>
                                 ))}
                             </ul>
 

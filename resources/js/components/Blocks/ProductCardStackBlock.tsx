@@ -50,7 +50,7 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                 zIndex: totalCards - index,
             }}
             className={cn(
-                "absolute inset-0 w-full rounded-2xl p-6",
+                "absolute inset-y-0 left-1/2 -ml-40 w-full max-w-[320px] rounded-2xl p-6",
                 "bg-gradient-to-br from-white/40 via-neutral-50/30 to-neutral-100/20",
                 "dark:from-neutral-800/40 dark:via-neutral-900/30 dark:to-black/20",
                 "border border-white/20 dark:border-neutral-800/20",
@@ -69,7 +69,7 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                 "hover:bg-gradient-to-br hover:from-white/50 hover:via-neutral-50/40 hover:to-neutral-100/30",
                 "dark:hover:from-neutral-800/50 dark:hover:via-neutral-900/40 dark:hover:to-black/30",
                 "transition-all duration-500 ease-out",
-                "transform-gpu overflow-hidden"
+                "transform-gpu overflow-hidden [transform-style:preserve-3d] [perspective:2000px]"
             )}
             initial={{
                 x: defaultX,
@@ -78,11 +78,6 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                 scale: defaultScale,
             }}
             style={{
-                maxWidth: "320px",
-                transformStyle: "preserve-3d",
-                perspective: "2000px",
-                left: "50%",
-                marginLeft: "-160px",
                 transform: isExpanded ? "" : `
                     translateY(${index * 10}px)
                     translateX(${index * 1}px)

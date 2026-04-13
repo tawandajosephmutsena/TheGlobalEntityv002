@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Link } from '@inertiajs/react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalHeroBlock } from '@/types/page-blocks';
@@ -79,7 +78,6 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
                 <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl relative border border-white/10 bg-on-surface/5">
                     <img 
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
-                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                         src={featuredPost?.featured_image || '/images/placeholder-blog.jpg'} 
                         alt={displayTitle} 
                     />

@@ -268,7 +268,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                         {/* 6. Video-Style Motion Card */}
                         {festivals.length > 5 && (
                             <Link href={getFest(5).url} className="block md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] liquid-glass shadow-sea-mist">
-                                <div className="absolute inset-0 animate-pulse opacity-50" style={{ background: 'var(--theme-gradient-subtle)' }}></div>
+                                <div className="absolute inset-0 animate-pulse opacity-50 bg-[var(--theme-gradient-subtle)]"></div>
                                 <img 
                                     alt={getFest(5).title} 
                                     src={getFest(5).image} 
