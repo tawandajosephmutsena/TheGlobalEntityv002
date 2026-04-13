@@ -1,26 +1,30 @@
-import AnimatedSection from '@/components/AnimatedSection';
-import CommentSection from '@/components/Comments/CommentSection';
-import ReactionButton from '@/components/Reactions/ReactionButton';
+import React, { Suspense, useMemo, lazy } from 'react';
 import MainLayout from '@/layouts/MainLayout';
 import { Comment, Insight, ReactionType } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { SeoHead } from '@/components/SeoHead';
-import { ArrowLeft, Clock, User, Facebook, Twitter, Linkedin, Share2, Github, Globe, Lightbulb, CheckCircle2 } from 'lucide-react';
-import React from 'react';
+import { ArrowLeft, Clock, Share2, Globe, Lightbulb, CheckCircle2, Facebook, Twitter, Linkedin, Github } from 'lucide-react';
 import { toast } from 'sonner';
 import DOMPurify from 'dompurify';
-
-
-import { PodcastPlayer } from '@/components/podcast/PodcastPlayer';
-import FestivalCardBlock from '@/components/Blocks/FestivalCardBlock';
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '@/components/CategoryIcon';
 
+// Lazy loaded components for better initial bundle size
+const CommentSection = lazy(() => import('@/components/Comments/CommentSection'));
+const ReactionButton = lazy(() => import('@/components/Reactions/ReactionButton'));
+const PodcastPlayer = lazy(() => import('@/components/podcast/PodcastPlayer').then(m => ({ default: m.PodcastPlayer })));
+const FestivalCardBlock = lazy(() => import('@/components/Blocks/FestivalCardBlock'));
+const AnimatedSection = lazy(() => import('@/components/AnimatedSection'));
 
 interface Podcast {
+    id: number;
+    slug: string;
     media_url: string;
+    media_full_url?: string;
     media_type: 'audio' | 'video';
     title: string;
     thumbnail?: string | null;
+    thumbnail_url?: string | null;
     episode_number?: number | null;
     season_number?: number | null;
 }
@@ -42,9 +46,11 @@ interface Props {
     reactionCounts: Record<string, number>;
     userReaction: ReactionType | null;
     relatedInsights?: Insight[];
+    allCategories?: any[];
+    relatedPodcasts?: Podcast[];
 }
 
-export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [] }: Props) {
+export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [], allCategories = [], relatedPodcasts = [] }: Props) {
     const { site } = usePage<{ 
         site: { 
             url: string; 
@@ -53,6 +59,20 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
 
         } 
     }>().props;
+
+    React.useEffect(() => {
+        const updateProgress = () => {
+            const progress = document.getElementById('reading-progress');
+            if (!progress) return;
+            
+            const totalWidth = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (window.scrollY / totalWidth) * 100;
+            progress.style.width = scrollPercent + '%';
+        };
+
+        window.addEventListener('scroll', updateProgress);
+        return () => window.removeEventListener('scroll', updateProgress);
+    }, []);
 
 
 
@@ -77,6 +97,11 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
             window.open(shareUrl, '_blank', 'noopener,noreferrer');
         }
     };
+    // Memoized sanitized content to prevent heavy blocking on every re-render
+    const sanitizedBody = useMemo(() => {
+        if (!insight.content?.body) return null;
+        return DOMPurify.sanitize(String(insight.content.body));
+    }, [insight.content?.body]);
 
     const handleCopyLink = () => {
         const url = window.location.origin + window.location.pathname;
@@ -138,312 +163,368 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     },
                 }}
             />
+            {/* Redundant background removed as it is handled by MainLayout */}
 
             {/* Reading Progress Bar (Fixed at top) */}
-            <div className="fixed top-[80px] left-0 w-full h-1 z-50 bg-agency-accent/20">
-                <div className="h-full bg-agency-accent w-0 transition-all duration-300 transition-all" id="reading-progress"></div>
+            <div className="fixed top-[80px] left-0 w-full h-1.5 z-[60] bg-agency-accent/5">
+                <div className="h-full bg-gradient-to-r from-agency-accent to-agency-accent/40 w-0 transition-all duration-300" id="reading-progress"></div>
             </div>
 
-            {/* Article Hero */}
-            <article className="bg-white dark:bg-agency-dark">
-            {/* Article Hero Split Layout */}
-            <div className="flex flex-col lg:flex-row min-h-[85vh] border-b border-agency-primary/5 dark:border-white/5 overflow-hidden">
-                {/* Left Content Column */}
-                <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 lg:px-24 py-32 bg-white dark:bg-agency-dark order-2 lg:order-1">
-                    <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-bold uppercase tracking-widest text-[9px] mb-12 hover:gap-4 transition-all">
-                        <ArrowLeft className="h-3 w-3" /> Back to Insights
-                    </Link>
+            <div className="relative h-[calc(100vh-120px)] min-h-[700px] pt-12 flex items-center bg-transparent">
+                <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
                     
-                    <AnimatedSection animation="slide-up">
-                        <div className="flex flex-col gap-6 mb-8">
-                            <div className="flex flex-wrap gap-2">
-                                {[insight.category, ...(insight.additionalCategories || [])].filter(Boolean).map((cat, idx) => (
-                                    <div key={idx} className="category-icon-wrapper flex items-center gap-2 px-3 py-1.5 rounded-lg bg-agency-primary/5 dark:bg-white/5 border border-agency-primary/10 dark:border-white/10"
-                                         data-category={cat?.slug || ''}>
-                                        <CategoryIcon category={cat?.slug || ''} icon={cat?.icon} size={14} glow={true} />
-                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-agency-primary/60 dark:text-white/60">{cat?.name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black [font-variant-caps:small-caps] tracking-[0.02em] leading-tight mb-8 text-agency-primary dark:text-white">
-                            {insight.title}
-                        </h1>
-                        
-                        <div className="relative mb-10">
-                            <div className="absolute -left-6 top-0 bottom-0 w-1 bg-agency-accent/30 rounded-full" />
-                            <p className="text-base md:text-lg text-agency-primary/70 dark:text-white/70 font-light leading-relaxed max-w-lg">
-                                {insight.excerpt}
-                            </p>
-                        </div>
-
-                        <div className="flex items-center gap-8 text-[9px] font-bold uppercase tracking-[0.2em] opacity-40">
-                            <div className="flex items-center gap-2.5"><Clock className="size-3.5" /> {insight.reading_time || 5} min read</div>
-                            <div className="flex items-center gap-2.5"><User className="size-3.5" /> {insight.author?.name || 'Anonymous'}</div>
-                        </div>
-                    </AnimatedSection>
-                </div>
-
-                {/* Right Image Column */}
-                {insight.featured_image && (
-                    <div className="w-full lg:w-1/2 h-[50vh] lg:h-auto relative overflow-hidden bg-agency-primary/5 dark:bg-white/5 order-1 lg:order-2">
-                        <img 
-                            src={insight.featured_image} 
-                            alt={insight.title} 
-                            className="absolute inset-0 w-full h-full object-cover transition-all duration-1000"
-                        />
-                        {/* Overlay to bridge the themes */}
-                        <div className="absolute inset-0 bg-agency-primary/10 dark:bg-black/20" />
-                    </div>
-                )}
-            </div>
-
-            {/* Article Content Container */}
-            <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-32">
-                {/* Social Share Bar */}
-                <div className="flex flex-wrap items-center gap-6 mb-8 pb-8 border-b border-agency-primary/5 dark:border-white/5">
-                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Share Article</span>
-                    <div className="flex items-center gap-4">
-                        <button 
-                            onClick={() => handleShare('facebook')}
-                            title="Share on Facebook" 
-                            aria-label="Share on Facebook" 
-                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                        >
-                            <Facebook className="size-5" />
-                        </button>
-                        <button 
-                            onClick={() => handleShare('twitter')}
-                            title="Share on Twitter" 
-                            aria-label="Share on Twitter" 
-                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                        >
-                            <Twitter className="size-5" />
-                        </button>
-                        <button 
-                            onClick={() => handleShare('linkedin')}
-                            title="Share on LinkedIn" 
-                            aria-label="Share on LinkedIn" 
-                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                        >
-                            <Linkedin className="size-5" />
-                        </button>
-                        <button 
-                            onClick={handleCopyLink}
-                            title="Copy Link" 
-                            aria-label="Copy Link" 
-                            className="size-12 rounded-full bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center hover:bg-agency-accent hover:text-white transition-all"
-                        >
-                            <Share2 className="size-5" />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Minimal Podcast Player (Conditional) */}
-                {insight.podcast && (insight.podcast.media_full_url || insight.podcast.media_url) && (
-                    <div className="mb-16">
-                        <div className="mb-6 flex items-center gap-4">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent">Featured Podcast</span>
-                            <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                        </div>
-                        <PodcastPlayer 
-                            src={insight.podcast.media_full_url || insight.podcast.media_url}
-                            title={insight.podcast.title}
-                            artist={insight.author?.name}
-                            thumbnail={insight.podcast.thumbnail_url || insight.podcast.thumbnail || insight.featured_image}
-                            mediaType={insight.podcast.media_type || 'audio'}
-                            variant="compact"
-                            className="border border-agency-primary/10 dark:border-white/10 bg-white/5 backdrop-blur-md rounded-3xl"
-                        />
-                    </div>
-                )}
-
-                <div className="w-full">
-                    <div className="prose prose-xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:mt-24 prose-headings:mb-10 prose-p:my-8 prose-p:text-[20px] prose-p:md:text-[23px] prose-p:leading-[1.8] prose-p:md:leading-[1.9] prose-li:text-[20px] prose-li:md:text-[23px] prose-li:leading-[1.8] prose-li:md:leading-[1.9] prose-a:text-agency-accent prose-a:transition-colors prose-a:duration-300 hover:prose-a:text-agency-primary dark:hover:prose-a:text-white prose-strong:text-agency-primary dark:prose-strong:text-white prose-blockquote:border-l-8 prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:py-10 prose-blockquote:px-12 prose-blockquote:rounded-r-3xl prose-blockquote:italic prose-blockquote:text-2xl prose-blockquote:font-serif first-of-type:prose-p:first-letter:text-8xl first-of-type:prose-p:first-letter:font-black first-of-type:prose-p:first-letter:mr-4 first-of-type:prose-p:first-letter:float-left first-of-type:prose-p:first-letter:leading-[0.8] first-of-type:prose-p:first-letter:text-agency-accent">
-                            {/* Using dangerouslySetInnerHTML because we expect rich text from the CMS */}
-                            {insight.content?.body ? (
-                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(String(insight.content.body)) }} />
-                            ) : (
-                                <p className="italic opacity-40">Article content is being developed...</p>
-                            )}
-                        </div>
-
-                        {/* Quick Tips Section */}
-                        {insight.quick_tips && insight.quick_tips.length > 0 && (
-                            <div className="mt-24">
-                                <div className="mb-12 flex items-center gap-4">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-agency-accent flex items-center gap-2">
-                                        <Lightbulb className="size-4" /> Quick Tips
-                                    </span>
-                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                                </div>
+                    {/* Split Hero Section (50/50) */}
+                    <Suspense fallback={<div className="h-96 w-full animate-pulse bg-white/5 rounded-[50px] mb-24" />}>
+                        <AnimatedSection animation="slide-up" className="mb-24 lg:mb-40 w-full">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch min-h-[500px] lg:h-[65vh]">
                                 
-                                <div className="grid grid-cols-1 gap-8">
-                                    {insight.quick_tips.map((tip, idx) => (
-                                        <div key={idx} className="relative overflow-hidden rounded-[40px] border border-agency-primary/5 dark:border-white/5 bg-agency-primary/[0.02] dark:bg-white/[0.02] group hover:border-agency-accent/30 transition-all duration-700">
-                                            <div className="p-8 md:p-12 flex flex-col lg:flex-row gap-10">
-                                                <div className="flex-1">
-                                                    {tip.title && (
-                                                        <h4 className="text-xl md:text-2xl font-black uppercase tracking-tight mb-4 group-hover:text-agency-accent transition-colors duration-500">
-                                                            {tip.title}
-                                                        </h4>
-                                                    )}
-                                                    
-                                                    {tip?.type === 'points' ? (
-                                                        <ul className="space-y-4">
-                                                            {(tip.content || '').split('\n').filter(Boolean).map((point: string, pIdx: number) => (
-                                                                <li key={pIdx} className="flex items-start gap-4 text-base md:text-lg opacity-80 leading-relaxed font-light font-sans">
-                                                                    <CheckCircle2 className="size-5 text-agency-accent shrink-0 mt-1" />
-                                                                    {point.replace(/^[-*]\s*/, '')}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    ) : (
-                                                        <p className="text-base md:text-lg opacity-80 leading-relaxed font-light font-sans">
-                                                            {tip.content}
-                                                        </p>
-                                                    )}
+                                {/* Left Side: Header Text & Meta (Vertically Centered) */}
+                                <div className="flex flex-col justify-center">
+                                    <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-black uppercase tracking-widest text-[10px] mb-8 hover:gap-4 transition-all">
+                                        <ArrowLeft className="h-3 w-3" /> Chronicles
+                                    </Link>
+
+                                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter leading-[0.95] mb-12 uppercase italic">
+                                        {insight.title.split(' ').map((word, i) => (
+                                            <span key={i} className={i % 2 === 0 ? "text-agency-primary dark:text-white" : "text-agency-accent/40 not-italic"}>
+                                                {word}{' '}
+                                            </span>
+                                        ))}
+                                    </h1>
+                                    
+                                    {insight.excerpt && (
+                                        <p className="text-lg md:text-xl opacity-60 leading-relaxed font-serif mb-8 line-clamp-4 italic">
+                                            {insight.excerpt}
+                                        </p>
+                                    )}
+
+                                    <div className="flex flex-wrap items-center gap-8 mb-8">
+                                        <div className="flex items-center gap-4">
+                                            {insight.author?.avatar && (
+                                                <div className="size-10 rounded-full overflow-hidden border-2 border-agency-accent p-0.5">
+                                                    <img src={insight.author.avatar} alt={insight.author.name} className="size-full object-cover rounded-full" loading="lazy" decoding="async" />
                                                 </div>
-                                                
-                                                {tip.image && (
-                                                    <div className="w-full lg:w-1/3 aspect-video lg:aspect-square rounded-3xl overflow-hidden shadow-2xl">
-                                                        <img src={tip.image} alt="" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
-                                                    </div>
-                                                )}
+                                            )}
+                                            <div className="flex flex-col">
+                                                <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Visionary</span>
+                                                <span className="text-xs font-bold uppercase">{insight.author?.name}</span>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                                        
+                                        <div className="h-8 w-px bg-agency-primary/10 dark:bg-white/10 hidden md:block" />
+                                        
+                                        <div className="flex flex-col">
+                                            <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Duration</span>
+                                            <div className="flex items-center gap-2 font-bold uppercase text-xs">
+                                                <Clock className="size-3 text-agency-accent" /> {insight.reading_time || 5} Min
+                                            </div>
+                                        </div>
 
-                        {/* Associated Festival Card (Conditional) */}
-                        {(insight.festival_id || insight.festival) && (
-                            <div className="mt-24">
-                                <div className="mb-8 flex items-center gap-4">
-                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Associated Experience</span>
-                                    <div className="h-px flex-1 bg-agency-primary/5 dark:bg-white/5" />
-                                </div>
-                                <FestivalCardBlock 
-                                    festivalId={Number(insight.festival_id || insight.festival?.id)} 
-                                    variant="dreamy" 
-                                    showActivities={true} 
-                                    showTags={true} 
-                                />
-                            </div>
-                        )}
+                                        <div className="h-8 w-px bg-agency-primary/10 dark:bg-white/10 hidden md:block" />
 
-                        {/* Reactions on Post */}
-                        <div className="mt-16 pt-10 border-t border-agency-primary/5 dark:border-white/5">
-                            <ReactionButton
-                                reactableId={insight.id}
-                                reactableType="insight"
-                                counts={reactionCounts}
-                                userReaction={userReaction}
-                            />
-                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Vibration</span>
+                                            <div className="flex items-center gap-2 font-bold uppercase text-xs">
+                                                {insight.published_at ? new Date(insight.published_at).toLocaleDateString() : 'Now'}
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        {/* Tags */}
-                        {insight.tags && insight.tags.length > 0 && (
-                            <div className="mt-12 pt-10 border-t border-agency-primary/5 dark:border-white/5">
-                                <div className="flex flex-wrap gap-3">
-                                    {insight.tags.map(tag => (
-                                        <span key={tag} className="px-5 py-2 rounded-full bg-agency-secondary dark:bg-white/5 text-[10px] font-bold uppercase tracking-widest">
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
+                                    <div className="flex flex-wrap items-center gap-12">
+                                        <Suspense fallback={<div className="h-10 w-20 animate-pulse bg-white/5 rounded-full" />}>
+                                            <ReactionButton
+                                                reactableId={insight.id}
+                                                reactableType="insight"
+                                                counts={reactionCounts}
+                                                userReaction={userReaction}
+                                            />
+                                        </Suspense>
 
-                        {/* Author Bio */}
-                        <div className="mt-24 p-12 rounded-[50px] bg-agency-secondary dark:bg-white/5 flex flex-col md:flex-row items-center gap-10">
-                            {insight.author?.avatar && (
-                                <div className="size-24 rounded-full overflow-hidden shrink-0 border-2 border-agency-accent p-1">
-                                    <img 
-                                        src={insight.author.avatar} 
-                                        alt={insight.author.name} 
-                                        className="w-full h-full object-cover rounded-full"
-                                    />
+                                        {insight.podcast && (insight.podcast.media_full_url || insight.podcast.media_url) && (
+                                            <div className="flex-1 max-w-sm glass-effect p-3 rounded-2xl border border-white/10">
+                                                <Suspense fallback={<div className="h-20 w-full animate-pulse bg-white/5 rounded-xl" />}>
+                                                    <PodcastPlayer 
+                                                        src={insight.podcast.media_full_url || insight.podcast.media_url}
+                                                        title={insight.podcast.title}
+                                                        artist={insight.author?.name}
+                                                        thumbnail={insight.podcast.thumbnail_url || insight.podcast.thumbnail || insight.featured_image}
+                                                        mediaType={insight.podcast.media_type || 'audio'}
+                                                        variant="compact"
+                                                        className="bg-transparent border-none shadow-none p-0"
+                                                    />
+                                                </Suspense>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                            )}
-                            <div className="text-center md:text-left">
-                                <span className="text-agency-accent font-bold uppercase tracking-widest text-xs mb-2 block">Written by</span>
-                                <h4 className="text-2xl font-black uppercase tracking-tighter mb-4">{insight.author?.name || 'Anonymous'}</h4>
-                                <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed font-light mb-6">
-                                    {insight.author?.about || 'Thought leader and creative visionary, exploring the intersection of design, technology, and human experience.'}
-                                </p>
-                                
-                                {insight.author?.social_links && Object.values(insight.author.social_links).some(Boolean) && (
-                                    <div className="flex items-center gap-4">
-                                        {insight.author.social_links.twitter && (
-                                            <a href={insight.author.social_links.twitter} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
-                                                <Twitter className="size-4" />
-                                            </a>
-                                        )}
-                                        {insight.author.social_links.linkedin && (
-                                            <a href={insight.author.social_links.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
-                                                <Linkedin className="size-4" />
-                                            </a>
-                                        )}
-                                        {insight.author.social_links.github && (
-                                            <a href={insight.author.social_links.github} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
-                                                <Github className="size-4" />
-                                            </a>
-                                        )}
-                                        {insight.author.social_links.website && (
-                                            <a href={insight.author.social_links.website} target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-agency-primary/5 hover:bg-agency-accent hover:text-white transition-all">
-                                                <Globe className="size-4" />
-                                            </a>
-                                        )}
+
+                                {/* Right Side: Featured Image (50%) */}
+                                {insight.featured_image && (
+                                    <div className="relative group h-full">
+                                        <div className="h-full min-h-[500px] lg:min-h-[700px] overflow-hidden rounded-[50px] shadow-3xl bg-agency-primary/5 dark:bg-white/5 border border-white/10 relative transform transition-all duration-1000 group-hover:scale-[1.02]">
+                                            <img 
+                                                src={insight.featured_image} 
+                                                alt={insight.title} 
+                                                loading="eager"
+                                                decoding="async"
+                                                className="absolute inset-0 size-full object-cover transition-transform duration-[4s] group-hover:scale-110"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-1000" />
+                                        </div>
                                     </div>
                                 )}
                             </div>
-                        </div>
-                        {/* Comments Section */}
-                        <CommentSection insightSlug={insight.slug} insightId={insight.id} comments={comments} />
+                        </AnimatedSection>
+                    </Suspense>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-20">
+                        
+                        {/* Main Content (Left) - 3/4 Width */}
+                        <main className="lg:col-span-3 min-w-0">
+                            
+                            {/* Article Body (Glass Container) */}
+                            <div className="relative">
+                                {/* The Glass frosted background */}
+                                <div className="absolute -inset-8 md:-inset-16 lg:-inset-24 bg-white/30 dark:bg-black/40 backdrop-blur-[120px] rounded-[60px] md:rounded-[80px] border border-white/30 dark:border-white/10 shadow-4xl -z-10" />
+                                
+                                <div className="prose prose-xl lg:prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:italic prose-p:text-[20px] lg:prose-p:text-[24px] prose-p:leading-[1.8] prose-p:dark:text-white/90 prose-blockquote:border-l-[12px] prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:p-8 lg:prose-blockquote:p-12 prose-blockquote:rounded-3xl prose-blockquote:not-italic prose-blockquote:text-2xl lg:prose-blockquote:text-3xl prose-blockquote:font-display first-letter:text-7xl lg:first-letter:text-9xl first-letter:font-black first-letter:text-agency-accent first-letter:mr-4 lg:first-letter:mr-6 first-letter:float-left first-letter:leading-[0.7] first-letter:mt-3">
+                                    {sanitizedBody ? (
+                                        <div dangerouslySetInnerHTML={{ __html: sanitizedBody }} />
+                                    ) : (
+                                        <p className="italic opacity-40">Assembling the narrative structure...</p>
+                                    )}
+                                </div>
+
+                                {/* Quick Tips Section */}
+                                {insight.quick_tips && insight.quick_tips.length > 0 && (
+                                    <div className="mt-40 space-y-12">
+                                        <div className="flex items-center gap-6">
+                                            <div className="size-14 rounded-full bg-agency-accent/10 flex items-center justify-center text-agency-accent">
+                                                <Lightbulb className="size-8" />
+                                            </div>
+                                            <h2 className="text-4xl font-display font-black uppercase tracking-tight">Executive <span className="text-agency-accent italic">Tips</span></h2>
+                                        </div>
+                                        
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                            {insight.quick_tips.map((tip, idx) => (
+                                                <div key={idx} className="glass-effect p-12 rounded-[50px] border border-white/10 hover:border-agency-accent/40 transition-all duration-700 group hover:-translate-y-2">
+                                                    <div className="space-y-6">
+                                                        <h4 className="text-2xl font-black uppercase tracking-tight group-hover:text-agency-accent transition-colors">{tip.title}</h4>
+                                                        <div className="text-lg opacity-70 leading-relaxed font-sans font-light">
+                                                            {tip?.type === 'points' ? (
+                                                                <ul className="space-y-4">
+                                                                    {(tip.content || '').split('\n').filter(Boolean).map((pt: string, pi: number) => (
+                                                                        <li key={pi} className="flex gap-4 items-start">
+                                                                            <CheckCircle2 className="size-5 text-agency-accent shrink-0 mt-1" />
+                                                                            {pt.replace(/^[-*]\s*/, '')}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            ) : <p>{tip.content}</p>}
+                                                        </div>
+                                                        {tip.image && (
+                                                            <div className="aspect-video rounded-3xl overflow-hidden mt-8">
+                                                                 <img src={tip.image} alt="" className="size-full object-cover group-hover:scale-110 transition-transform duration-[2s]" loading="lazy" decoding="async" />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Festival Association */}
+                                {(insight.festival_id || insight.festival) && (
+                                    <div className="mt-40">
+                                        <div className="mb-12 flex items-center justify-between">
+                                            <h2 className="text-4xl font-display font-black uppercase tracking-tight">The <span className="italic opacity-30">Experience</span></h2>
+                                            <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Manifesting Now</span>
+                                        </div>
+                                        <Suspense fallback={<div className="h-64 w-full animate-pulse bg-white/5 rounded-[50px]" />}>
+                                            <FestivalCardBlock festival={insight.festival} />
+                                        </Suspense>
+                                    </div>
+                                )}
+
+                                {/* Reactions on Post */}
+                                <div className="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-10">
+                                    <div className="flex flex-col gap-2">
+                                        <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Interaction Index</span>
+                                        <h3 className="text-xl font-black uppercase">Share your vibration</h3>
+                                    </div>
+                                    <Suspense fallback={<div className="h-10 w-20 animate-pulse bg-white/5 rounded-full" />}>
+                                        <ReactionButton
+                                            reactableId={insight.id}
+                                            reactableType="insight"
+                                            counts={reactionCounts}
+                                            userReaction={userReaction}
+                                        />
+                                    </Suspense>
+                                </div>
+
+                                {/* Tags Pillbox */}
+                                {insight.tags && insight.tags.length > 0 && (
+                                    <div className="mt-16 flex flex-wrap gap-4">
+                                        {insight.tags.map(tag => (
+                                            <span key={tag} className="px-8 py-3 rounded-full bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest hover:bg-agency-accent/20 transition-all cursor-pointer">
+                                                #{tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Author Signature */}
+                                <div className="mt-40 glass-effect p-16 rounded-[80px] flex flex-col md:flex-row items-center gap-16 border border-white/10 relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 size-64 bg-agency-accent/5 rounded-full blur-[100px] -mr-32 -mt-32" />
+                                    
+                                    {insight.author?.avatar && (
+                                        <div className="size-40 rounded-full overflow-hidden border-8 border-white/10 shadow-2xl shrink-0 group-hover:scale-105 transition-transform duration-1000">
+                                            <img src={insight.author.avatar} alt={insight.author.name} className="size-full object-cover" loading="lazy" decoding="async" />
+                                        </div>
+                                    )}
+                                    <div className="flex-1 text-center md:text-left relative z-10">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.5em] text-agency-accent mb-4 block">Manifested By</span>
+                                        <h4 className="text-5xl font-display font-black uppercase tracking-tight mb-8">{insight.author?.name}</h4>
+                                        <p className="text-xl opacity-60 leading-relaxed font-light font-serif mb-10 max-w-2xl">
+                                            {insight.author?.about || "A strategic explorer mapping the intersection of global culture and local identity."}
+                                        </p>
+                                        <div className="flex justify-center md:justify-start gap-6">
+                                            {insight.author?.social_links && Object.entries(insight.author.social_links).map(([platform, url]) => (
+                                                url && (
+                                                    <a key={platform} href={url as string} target="_blank" className="p-4 rounded-full bg-white/5 hover:bg-agency-accent transition-all">
+                                                        {platform === 'twitter' && <Twitter className="size-5" />}
+                                                        {platform === 'linkedin' && <Linkedin className="size-5" />}
+                                                        {platform === 'github' && <Github className="size-5" />}
+                                                        {platform === 'website' && <Globe className="size-5" />}
+                                                    </a>
+                                                )
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Comment System */}
+                                <div className="mt-40">
+                                    <Suspense fallback={<div className="h-64 w-full animate-pulse bg-white/5 rounded-[50px]" />}>
+                                        <CommentSection insightSlug={insight.slug} insightId={insight.id} comments={comments} />
+                                    </Suspense>
+                                </div>
+                            </div>
+                        </main>
+
+                        {/* Sidebar (Right) - Exactly 25% Width with Independent Scroll */}
+                        <aside className="lg:col-span-1 lg:sticky lg:top-32 h-fit z-30">
+                            <div className="flex flex-col gap-12 pl-4">
+                            
+                            {/* Discover More Podcasts */}
+                            {relatedPodcasts.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4">
+                                            <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
+                                            <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">More Media</span>
+                                            <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
+                                        </div>
+                                                <div className="flex flex-col gap-4">
+                                                    {relatedPodcasts.map((pod) => (
+                                                        <Link 
+                                                            key={pod.id} 
+                                                            href={`/blog/${pod.slug}`}
+                                                            className="group flex items-center gap-4 p-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-agency-accent/30 transition-all duration-500"
+                                                        >
+                                                            <div className="size-14 rounded-xl overflow-hidden shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-700">
+                                                                <img 
+                                                                    src={pod.thumbnail_url || pod.thumbnail || '/images/placeholder.jpg'} 
+                                                                    alt={pod.title} 
+                                                                    className="size-full object-cover"
+                                                                    loading="lazy"
+                                                                    decoding="async"
+                                                                />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <h4 className="text-xs font-black uppercase tracking-tight group-hover:text-agency-accent transition-colors line-clamp-2 leading-tight">{pod.title}</h4>
+                                                                <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 mt-1">Podcast</p>
+                                                            </div>
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                    </div>
+                            )}
+
+                            {/* Related Chronicles */}
+                            {relatedInsights.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Related Chronicles</span>
+                                            <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
+                                        </div>
+                                        <div className="flex flex-col gap-6">
+                                            {relatedInsights.map((relPost) => (
+                                                <Link 
+                                                    key={relPost.id} 
+                                                    href={`/blog/${relPost.slug}`}
+                                                    className="group flex items-center gap-4 p-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-agency-accent/30 transition-all duration-500"
+                                                >
+                                                    <div className="size-16 rounded-xl overflow-hidden shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-700">
+                                                        <img 
+                                                            src={relPost.featured_image || '/images/placeholder.jpg'} 
+                                                            alt={relPost.title} 
+                                                            className="size-full object-cover grayscale group-hover:grayscale-0"
+                                                            loading="lazy"
+                                                            decoding="async"
+                                                        />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <h4 className="text-xs font-black uppercase tracking-tight group-hover:text-agency-accent transition-colors line-clamp-2 leading-tight mb-1">{relPost.title}</h4>
+                                                        <p className="text-[9px] font-bold uppercase tracking-widest opacity-40">
+                                                            {relPost.published_at ? new Date(relPost.published_at).toLocaleDateString() : 'Recent'}
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                            )}
+
+                            {/* Category Cloud */}
+                            {allCategories.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40">Insight Universe</span>
+                                            <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
+                                        </div>
+                                        <TooltipProvider>
+                                            <div className="flex flex-wrap gap-2">
+                                                {allCategories.map((cat) => (
+                                                    <Link 
+                                                        key={cat.id} 
+                                                         href={`/blog?category=${cat.slug}`}
+                                                        className="flex items-center gap-3 px-5 py-3 rounded-full bg-agency-primary/90 dark:bg-white/10 border border-white/20 hover:bg-agency-accent hover:border-agency-accent hover:text-white transition-all duration-500 group shadow-lg"
+                                                    >
+                                                        <CategoryIcon category={cat.slug} icon={cat.icon} size={14} glow={true} className="brightness-150" />
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-white group-hover:text-white">{cat.name}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </TooltipProvider>
+                                    </div>
+                            )}
+                            </div>
+                        </aside>
                     </div>
                 </div>
-            </article>
+            </div>
 
-            {/* Related Insights Grid */}
-            {relatedInsights.length > 0 && (
-                <section className="bg-agency-secondary dark:bg-black/40 py-40">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <header className="mb-20 flex justify-between items-end">
-                            <div>
-                                <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-4 block">Keep Reading</span>
-                                <h2 className="text-5xl font-black uppercase tracking-tighter">More <span className="italic opacity-30">Insights.</span></h2>
-                            </div>
-                            <Link href="/blog" className="text-xs font-black uppercase tracking-widest hover:text-agency-accent transition-colors">See all articles</Link>
-                        </header>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                            {relatedInsights.map((post, i) => (
-                                <AnimatedSection key={post.id} animation="slide-up" delay={i * 100} className="group flex flex-col">
-                                    <Link href={`/blog/${post.slug}`} className="block">
-                                        <div className="relative aspect-video rounded-[40px] overflow-hidden mb-8 shadow-xl bg-agency-primary/5 dark:bg-white/5">
-                                            {post.featured_image && (
-                                                <img 
-                                                    src={post.featured_image} 
-                                                    alt={post.title} 
-                                                    loading="lazy"
-                                                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out"
-                                                />
-                                            )}
-                                        </div>
-                                        <h3 className="text-2xl font-black uppercase tracking-tighter text-agency-primary dark:text-white group-hover:text-agency-accent transition-colors duration-500">
-                                            {post.title}
-                                        </h3>
-                                    </Link>
-                                </AnimatedSection>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
+            {/* Float Share Bar (Mobile Only) */}
+            <div className="lg:hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-[100]">
+                <div className="glass-effect px-8 py-4 rounded-full border border-white/20 shadow-4xl flex items-center gap-6">
+                    <button onClick={() => handleShare('facebook')} className="hover:text-agency-accent transition-colors"><Facebook className="size-5" /></button>
+                    <button onClick={() => handleShare('twitter')} className="hover:text-agency-accent transition-colors"><Twitter className="size-5" /></button>
+                    <button onClick={() => handleShare('linkedin')} className="hover:text-agency-accent transition-colors"><Linkedin className="size-5" /></button>
+                    <div className="w-px h-6 bg-white/10" />
+                    <button onClick={handleCopyLink} className="hover:text-agency-accent transition-colors"><Share2 className="size-5" /></button>
+                </div>
+            </div>
 
         </MainLayout>
     );

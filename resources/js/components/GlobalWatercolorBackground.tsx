@@ -62,7 +62,8 @@ export const GlobalWatercolorBackground = () => {
           className="bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full"
           style={{ 
             filter: `blur(${blurAmount}px)`,
-            opacity: blob1Opacity 
+            opacity: blob1Opacity,
+            willChange: "transform, opacity"
           }}
         />
 
@@ -100,7 +101,8 @@ export const GlobalWatercolorBackground = () => {
           className="bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full"
           style={{ 
             filter: `blur(${Math.round(blurAmount * 0.7)}px)`,
-            opacity: blob3Opacity
+            opacity: blob3Opacity,
+            willChange: "transform, opacity"
           }}
         />
       </div>
@@ -115,7 +117,7 @@ export const GlobalWatercolorBackground = () => {
             <feTurbulence
               type="fractalNoise"
               baseFrequency="0.6"
-              numOctaves="2"
+              numOctaves="1"
               stitchTiles="stitch"
             />
           </filter>

@@ -103,12 +103,24 @@ class BlogController extends Controller
             ->limit(3)
             ->get();
 
+        $allCategories = \Illuminate\Support\Facades\Cache::flexible('blog.categories', [60 * 60 * 24, 60 * 60 * 48], function () {
+            return Category::where('type', 'insight')->get(['id', 'name', 'slug', 'icon']);
+        });
+
+        $relatedPodcasts = \Modules\PodcastPlugin\Models\Podcast::published()
+            ->where('id', '!=', $insight->podcast_id)
+            ->latest('published_at')
+            ->limit(3)
+            ->get();
+
         return Inertia::render('Blog/Show', [
             'insight' => $insight,
             'comments' => $comments,
             'reactionCounts' => $reactionCounts,
             'userReaction' => $userReaction,
             'relatedInsights' => $relatedInsights,
+            'allCategories' => $allCategories,
+            'relatedPodcasts' => $relatedPodcasts,
         ]);
     }
 }

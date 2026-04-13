@@ -54,6 +54,7 @@ interface Props {
 export default function JournalArticleGridBlock({ content, recentInsights = [], categories = [] }: Props) {
     const { columns = 3, staggered = true, showBentoCards = true, limit = 9 } = content;
     const [activeCategoryId, setActiveCategoryId] = useState<number | 'all'>('all');
+    const [searchQuery, setSearchQuery] = useState('');
 
     // Handle cross-block communication
     const handleCategoryClick = (id: number | 'all') => {
@@ -77,6 +78,12 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
         window.addEventListener('journal-category-filter', handleFilter as EventListener);
         return () => window.removeEventListener('journal-category-filter', handleFilter as EventListener);
     }, [limit]);
+
+    // Reset visibility on search change
+    useEffect(() => {
+        setVisibleCount(limit);
+    }, [searchQuery, limit]);
+
 
     const categoriesList = useMemo(() => {
         if (categories && categories.length > 0) return categories;
@@ -109,10 +116,20 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
 
 
     const filteredPosts = useMemo(() => {
-        return activeCategoryId === 'all' 
+        let results = activeCategoryId === 'all' 
             ? allPosts 
             : allPosts.filter(p => p.category_id === activeCategoryId || p.additional_categories?.some(c => (c as any).id === activeCategoryId));
-    }, [activeCategoryId, allPosts]);
+        
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            results = results.filter(p => 
+                p.title.toLowerCase().includes(query) || 
+                p.excerpt.toLowerCase().includes(query)
+            );
+        }
+        
+        return results;
+    }, [activeCategoryId, allPosts, searchQuery]);
 
     const visiblePosts = useMemo(() => {
         return filteredPosts.slice(0, visibleCount);
@@ -125,6 +142,28 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
     return (
         <section className="relative container mx-auto px-6 py-24 overflow-visible rounded-[3rem]">
             <div className="relative z-10">
+                {/* Search Bar */}
+                <div className="relative mb-12 group">
+                    <div className="absolute inset-y-0 left-8 flex items-center pointer-events-none">
+                        <Search className="size-5 text-on-surface-variant/40 group-focus-within:text-primary transition-colors duration-500" />
+                    </div>
+                    <input 
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search coordinates, themes, or chronicles..."
+                        className="w-full bg-surface/40 backdrop-blur-md border border-white/10 rounded-full py-6 pl-20 pr-12 text-on-surface placeholder:text-on-surface-variant/30 focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/20 transition-all duration-700 font-light text-lg tracking-tight"
+                    />
+                    {searchQuery && (
+                        <button 
+                            onClick={() => setSearchQuery('')}
+                            className="absolute inset-y-0 right-8 flex items-center text-on-surface-variant/40 hover:text-primary transition-colors active:scale-95"
+                        >
+                            <span className="text-[10px] font-black uppercase tracking-widest [font-variant-caps:small-caps]">Clear</span>
+                        </button>
+                    )}
+                </div>
+
                 {/* Category Filter Row */}
                 <div className="flex items-center gap-4 overflow-x-auto hide-scrollbar pb-12 mb-4 scroll-smooth">
                     <button 
@@ -167,9 +206,13 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                     <div className="inline-block p-12 rounded-full liquid-glass mb-8 opacity-40">
                         <Search className="size-20" />
                     </div>
-                    <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">No chronicles found</h3>
-                    <p className="text-on-surface-variant max-w-md mx-auto font-light">
-                        The map remains blank for this category. Explore other coordinates or search for hidden paths.
+                    <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">
+                        {searchQuery ? `No matches for "${searchQuery}"` : "No chronicles found"}
+                    </h3>
+                    <p className="text-on-surface-variant max-w-md mx-auto font-light leading-relaxed">
+                        {searchQuery 
+                            ? "Our records show no chronicles matching these coordinates. Try refining your keywords or clearing the search." 
+                            : "The map remains blank for this category. Explore other coordinates or search for hidden paths."}
                     </p>
                 </div>
             ) : (

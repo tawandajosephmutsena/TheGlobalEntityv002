@@ -238,9 +238,60 @@ export function PodcastPlayer({
                 />
             )}
 
+            {/* Minimal variant UI */}
+            {variant === 'minimal' && (
+                <div className="flex items-center gap-6 p-2 px-4 h-full">
+                    {thumbnail && (
+                        <div className="size-10 rounded-lg overflow-hidden shrink-0 shadow-sm border border-white/10">
+                            <img src={thumbnail} className="size-full object-cover" alt="" />
+                        </div>
+                    )}
+                    
+                    <div className="flex flex-col justify-center min-w-0 max-w-[150px]">
+                        <h3 className="text-[11px] font-black uppercase tracking-tight truncate leading-none mb-1" title={title}>{title}</h3>
+                        {artist && <p className="text-[9px] opacity-40 font-bold uppercase truncate leading-none">{artist}</p>}
+                    </div>
+
+                    <div className="flex-1 h-6 min-w-[100px] hidden sm:block">
+                        <WaveformVisualizer
+                            progress={progress}
+                            isPlaying={isPlaying}
+                            onClick={handleProgressClick}
+                            ref={progressRef}
+                            className="h-full"
+                            barCount={60}
+                            barWidth={2}
+                            barGap={2}
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-4 shrink-0">
+                        <div className="text-[9px] font-black opacity-30 tabular-nums hidden md:block">
+                            {formatTime(currentTime)}
+                        </div>
+                        
+                        <button
+                            onClick={togglePlay}
+                            className="size-10 rounded-full bg-primary/10 hover:bg-primary text-primary hover:text-primary-foreground flex items-center justify-center transition-all duration-300 active:scale-90"
+                            aria-label={isPlaying ? 'Pause' : 'Play'}
+                        >
+                            {isPlaying ? <Pause className="size-4 fill-current" /> : <Play className="size-4 fill-current ml-0.5" />}
+                        </button>
+
+                        <button
+                            onClick={cyclePlaybackRate}
+                            className="h-7 px-2 rounded-lg bg-secondary/30 text-[9px] font-black uppercase tracking-widest text-secondary-foreground hover:bg-secondary transition-all hidden lg:block"
+                        >
+                            {playbackRate}x
+                        </button>
+                    </div>
+                </div>
+            )}
+
             {/* Player controls */}
-            <div className={cn("p-8 md:p-10", mediaType === 'video' && "pt-6")}>
-                <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
+            {variant !== 'minimal' && (
+                <div className={cn("p-8 md:p-10", mediaType === 'video' && "pt-6")}>
+                    <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-10">
                     {/* Thumbnail */}
                     {mediaType === 'audio' && variant !== 'compact' && thumbnail && (
                         <div className="relative group shrink-0 self-center md:self-auto">
@@ -359,8 +410,9 @@ export function PodcastPlayer({
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
