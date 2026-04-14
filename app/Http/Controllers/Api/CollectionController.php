@@ -39,6 +39,7 @@ class CollectionController extends Controller
                         'date' => $item->published_at ? $item->published_at->format('M d, Y') : $item->created_at->format('M d, Y'),
                         'readTime' => $item->reading_time ? $item->reading_time . ' min read' : '5 min read',
                         'url' => route('blog.show', $item->slug),
+                        'image_conversions' => $item->getOptimizedImage('featured_image'),
                     ];
                 });
                 break;
@@ -64,6 +65,7 @@ class CollectionController extends Controller
                         'date' => $item->project_date ? Carbon::parse($item->project_date)->format('M d, Y') : $item->created_at->format('M d, Y'),
                         'readTime' => 'View Project',
                         'url' => route('portfolio.show', $item->slug),
+                        'image_conversions' => $item->getOptimizedImage('featured_image'),
                     ];
                 });
                 break;
@@ -88,6 +90,7 @@ class CollectionController extends Controller
                         'date' => $item->created_at->format('M d, Y'),
                         'readTime' => 'Learn More',
                         'url' => route('services.show', $item->slug),
+                        'image_conversions' => $item->getOptimizedImage('featured_image'),
                     ];
                 });
                 break;
@@ -130,6 +133,7 @@ class CollectionController extends Controller
                         'activities' => $item->activities->pluck('name')->toArray(),
                         'rating' => $item->reviews_avg_vibe_rating ? round($item->reviews_avg_vibe_rating, 1) : null,
                         'review_count' => $item->reviews_count ?? 0,
+                        'image_conversions' => $item->getOptimizedImage('image'),
                     ];
                 });
                 break;

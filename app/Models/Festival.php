@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+use App\Traits\HasOptimizableImage;
+
 class Festival extends Model
 {
-    use HasFactory, HasVersions;
+    use HasFactory, HasVersions, HasOptimizableImage;
 
     protected $fillable = [
         'name',

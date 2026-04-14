@@ -1,8 +1,8 @@
 "use client";
 
-import React from 'react';
 import { Link } from '@inertiajs/react';
 import AnimatedSection from '@/components/AnimatedSection';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import type { JournalHeroBlock } from '@/types/page-blocks';
 
 interface InsightItem {
@@ -11,6 +11,9 @@ interface InsightItem {
     slug: string;
     excerpt: string;
     featured_image?: string | null;
+    image_conversions?: {
+        featured_image?: any;
+    };
     author?: { name: string; avatar?: string | null };
     category?: { name: string; slug: string };
     published_at: string | null;
@@ -76,10 +79,13 @@ export default function JournalHeroBlock({ content, recentInsights = [] }: Props
             <div className="col-span-12 lg:col-span-5 relative h-[400px] lg:h-[600px]">
                 <div className="absolute inset-0 bg-primary/5 rounded-lg transform translate-x-4 translate-y-4 -z-10 blur-xl opacity-30"></div>
                 <div className="w-full h-full overflow-hidden rounded-lg shadow-2xl relative border border-white/10 bg-on-surface/5">
-                    <img 
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                    <OptimizedImage 
+                        className="absolute inset-0 w-full h-full" 
                         src={featuredPost?.featured_image || '/images/placeholder-blog.jpg'} 
-                        alt={displayTitle} 
+                        conversions={featuredPost?.image_conversions?.featured_image}
+                        alt={displayTitle}
+                        priority={true}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                 </div>
                 {/* Decorative Watercolor Overlap */}

@@ -271,11 +271,6 @@
         @apply border-border;
     }
 
-    /* Override: force normal caps everywhere — no small-caps */
-    *, *::before, *::after {
-        font-variant-caps: normal !important;
-    }
-
     /* Site-wide Typography */
     h1, h2, h3, h4, h5, h6, .display-lg, .headline-lg {
         @apply font-display tracking-tighter;

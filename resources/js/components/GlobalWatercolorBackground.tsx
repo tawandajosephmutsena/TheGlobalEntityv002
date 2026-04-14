@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usePage } from "@inertiajs/react";
 import { SharedData } from "@/types";
 import { useReducedMotion } from "@/hooks/useAccessibility";
+import { cn } from "@/lib/utils";
 
 export const GlobalWatercolorBackground = () => {
   const { settings } = usePage<SharedData>().props;
@@ -55,41 +56,54 @@ export const GlobalWatercolorBackground = () => {
     // 6.3 — contain: paint on root div
     <div 
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
-      style={{ '--global-opacity': globalOpacity, contain: 'paint' } as React.CSSProperties}
+      style={{ 
+        '--global-opacity': globalOpacity, 
+        '--overlay-opacity': overlayOpacity,
+        '--blur-amount': `${isMobile ? Math.min(blurAmount, 60) : blurAmount}px`,
+        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 60) : Math.round(blurAmount * 0.85)}px`,
+        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 60) : Math.round(blurAmount * 0.7)}px`,
+        contain: 'paint' 
+      } as React.CSSProperties}
     >
-      <div 
-        className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface opacity-[var(--overlay-opacity)]" 
-        style={{ '--overlay-opacity': overlayOpacity } as React.CSSProperties}
-      />
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-surface opacity-[var(--overlay-opacity)]" />
 
       <div className="absolute inset-0">
-        {/* 6.2 — blob 1: cap blur at 60px on mobile */}
+        {/* Blob 1 */}
         <div
-          className={`bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full ${pulseClass}`}
+          className={cn(
+            "bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full will-change-[transform,opacity]",
+            pulseClass
+          )}
           style={{ 
-            filter: `blur(${isMobile ? Math.min(blurAmount, 60) : blurAmount}px)`,
+            filter: 'blur(var(--blur-amount))',
             opacity: blob1Opacity,
-            transform: 'translate(5%, 10%)'
+            transform: 'translate3d(5%, 10%, 0)'
           } as React.CSSProperties}
         />
 
-        {/* 6.2 — blob 2: cap blur at 60px on mobile */}
+        {/* Blob 2 */}
         <div
-          className={`bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full ${pulseClass}`}
+          className={cn(
+            "bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full will-change-[transform,opacity]",
+            pulseClass
+          )}
           style={{ 
-            filter: `blur(${isMobile ? Math.min(Math.round(blurAmount * 0.85), 60) : Math.round(blurAmount * 0.85)}px)`,
+            filter: 'blur(var(--blur-amount-secondary))',
             opacity: blob2Opacity,
-            transform: 'translate(-5%, -5%)'
+            transform: 'translate3d(-5%, -5%, 0)'
           } as React.CSSProperties}
         />
 
-        {/* 6.2 — blob 3: cap blur at 60px on mobile */}
+        {/* Blob 3 */}
         <div
-          className={`bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full ${pulseClass}`}
+          className={cn(
+            "bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full will-change-[transform,opacity]",
+            pulseClass
+          )}
           style={{ 
-            filter: `blur(${isMobile ? Math.min(Math.round(blurAmount * 0.7), 60) : Math.round(blurAmount * 0.7)}px)`,
+            filter: 'blur(var(--blur-amount-tertiary))',
             opacity: blob3Opacity,
-            transform: 'translate(2%, 4%)'
+            transform: 'translate3d(2%, 4%, 0)'
           } as React.CSSProperties}
         />
       </div>

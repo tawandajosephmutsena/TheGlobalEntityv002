@@ -10,9 +10,11 @@ use App\Traits\HasSemanticAnalysis;
 use App\Traits\HasImageSeo;
 use App\Traits\HasWebCoreVitals;
 
+use App\Traits\HasOptimizableImage;
+
 class PortfolioItem extends Model
 {
-    use HasFactory, HasSeoOptimization, HasSemanticAnalysis, HasImageSeo, HasWebCoreVitals;
+    use HasFactory, HasSeoOptimization, HasSemanticAnalysis, HasImageSeo, HasWebCoreVitals, HasOptimizableImage;
 
     protected $fillable = [
         'title',

@@ -19,11 +19,11 @@ class PageController extends Controller
         $hasBlock = fn($type) => $blocks->contains('type', $type);
 
         $featuredServices = $hasBlock('services') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\Service::with('category')->orderBy('sort_order')->take(10)->get()
+            ? \App\Models\Service::with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
             : [];
 
         $featuredProjects = $hasBlock('portfolio') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\PortfolioItem::with('category')->orderBy('sort_order')->take(10)->get()
+            ? \App\Models\PortfolioItem::with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
             : [];
         
         $recentInsights = [];
@@ -33,9 +33,9 @@ class PageController extends Controller
                 ->orderBy('published_at', 'desc');
 
             if (in_array($slug, ['journal', 'blog', 'insights'])) {
-                $recentInsights = $insightsQuery->get();
+                $recentInsights = $insightsQuery->get()->each->appendOptimizedImages(['featured_image']);
             } else {
-                $recentInsights = $insightsQuery->take(10)->get();
+                $recentInsights = $insightsQuery->take(10)->get()->each->appendOptimizedImages(['featured_image']);
             }
         }
 

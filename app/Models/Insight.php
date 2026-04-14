@@ -15,9 +15,11 @@ use App\Traits\HasSemanticAnalysis;
 use App\Traits\HasImageSeo;
 use App\Traits\HasWebCoreVitals;
 
+use App\Traits\HasOptimizableImage;
+
 class Insight extends Model
 {
-    use HasFactory, HasVersions, HasSeoOptimization, HasSemanticAnalysis, HasImageSeo, HasWebCoreVitals;
+    use HasFactory, HasVersions, HasSeoOptimization, HasSemanticAnalysis, HasImageSeo, HasWebCoreVitals, HasOptimizableImage;
 
     protected $fillable = [
         'title',

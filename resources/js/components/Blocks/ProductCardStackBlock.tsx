@@ -50,26 +50,14 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                 zIndex: totalCards - index,
             }}
             className={cn(
-                "absolute inset-y-0 left-1/2 -ml-40 w-full max-w-[320px] rounded-2xl p-6",
-                "bg-gradient-to-br from-white/40 via-neutral-50/30 to-neutral-100/20",
-                "dark:from-neutral-800/40 dark:via-neutral-900/30 dark:to-black/20",
-                "border border-white/20 dark:border-neutral-800/20",
-                "before:absolute before:inset-0 before:rounded-2xl",
-                "before:bg-gradient-to-b before:from-white/20 before:via-neutral-100/10 before:to-transparent",
-                "dark:before:from-white/5 dark:before:via-neutral-500/5 dark:before:to-transparent",
-                "before:opacity-100 before:transition-opacity before:duration-500",
-                "after:absolute after:inset-0 after:rounded-2xl after:bg-gradient-to-br",
-                "after:from-white/80 after:to-neutral-100/70 dark:after:from-neutral-900/80 dark:after:to-black/70",
-                "after:z-[-1] after:blur-xl",
-                "backdrop-blur-xl backdrop-saturate-150",
-                "shadow-[0_8px_20px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_20px_rgb(0,0,0,0.3)]",
-                "hover:border-white/30 dark:hover:border-neutral-700/30",
-                "hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_12px_40px_rgb(0,0,0,0.4)]",
-                "hover:backdrop-blur-2xl",
-                "hover:bg-gradient-to-br hover:from-white/50 hover:via-neutral-50/40 hover:to-neutral-100/30",
-                "dark:hover:from-neutral-800/50 dark:hover:via-neutral-900/40 dark:hover:to-black/30",
-                "transition-all duration-500 ease-out",
-                "transform-gpu overflow-hidden [transform-style:preserve-3d] [perspective:2000px]"
+                "absolute inset-y-0 left-1/2 -ml-40 w-full max-w-[320px] rounded-[2rem] p-8",
+                "bg-surface/30 dark:bg-surface-container-high/30",
+                "border border-white/10 dark:border-white/5",
+                "backdrop-blur-2xl backdrop-saturate-150",
+                "shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)]",
+                "hover:scale-[1.02] hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] dark:hover:shadow-[0_40px_80px_rgba(0,0,0,0.5)]",
+                "transition-all duration-700 ease-out italic-not-really",
+                "transform-gpu overflow-hidden"
             )}
             initial={{
                 x: defaultX,
@@ -77,67 +65,49 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                 rotate: defaultRotate,
                 scale: defaultScale,
             }}
-            style={{
-                transform: isExpanded ? "" : `
-                    translateY(${index * 10}px)
-                    translateX(${index * 1}px)
-                    rotate(${index * 3}deg)
-                    scale(${1 - index * 0.02})
-                `,
-                zIndex: totalCards - index,
-            }}
             transition={{
                 type: "spring",
-                stiffness: 350,
-                damping: 30,
+                stiffness: 300,
+                damping: 25,
                 mass: 0.8,
-                restDelta: 0.001,
-                restSpeed: 0.001,
             }}
         >
-            <div className="absolute inset-1 rounded-xl border border-neutral-200/50 bg-neutral-50/50 backdrop-blur-sm dark:border-neutral-700/50 dark:bg-neutral-900/50" />
-
-            <div className="relative z-10">
-                {product.specs && product.specs.length > 0 && (
-                    <dl className="mb-4 grid grid-cols-4 justify-center gap-2">
-                        {product.specs.map((spec: { label: string; value: string }, i: number) => (
-                            <div className="flex flex-col items-start text-left text-[10px] backdrop-blur-sm" key={i}>
-                                <dd className="w-full text-left font-medium text-gray-500 dark:text-gray-400">
-                                    {spec.value}
-                                </dd>
-                                <dt className="mb-0.5 w-full text-left text-gray-900 dark:text-gray-100 whitespace-nowrap overflow-hidden text-ellipsis">
-                                    {spec.label}
-                                </dt>
-                            </div>
-                        ))}
-                    </dl>
-                )}
-
+            <div className="relative z-10 flex flex-col h-full">
                 <div className={cn(
-                    "aspect-[16/11] w-full overflow-hidden rounded-lg",
-                    "bg-neutral-100 dark:bg-neutral-900",
-                    "transition-transform duration-300 ease-out",
-                    "group-hover:scale-[1.02]",
-                    "border border-neutral-200/50 dark:border-neutral-700/50",
-                    "shadow-inner"
+                    "aspect-[4/5] w-full overflow-hidden rounded-2xl mb-8",
+                    "bg-neutral-100 dark:bg-neutral-900 shadow-inner"
                 )}>
                     <img
                         alt={product.title}
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-1000 hover:scale-105"
                         loading="lazy"
                         src={sanitizeImageUrl(product.imageSrc, 'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?q=80&w=2940&auto=format&fit=crop')}
+                        sizes="320px"
                     />
                 </div>
 
-                <div className="mt-4">
+                <div className="flex-1 flex flex-col justify-end text-left">
                     <div className="space-y-1">
-                        <h2 className="text-left font-bold text-3xl text-gray-900 tracking-tight dark:text-white">
+                        <h2 className="font-display font-black text-3xl text-on-surface tracking-tighter leading-none [font-variant-caps:small-caps] italic-not-really">
                             {product.title}
                         </h2>
-                        <span className="block bg-gradient-to-r from-gray-400 via-gray-300 to-gray-500 bg-clip-text text-left font-semibold text-3xl text-transparent tracking-tight dark:from-gray-200 dark:via-white dark:to-gray-300">
-                            {product.subtitle}
-                        </span>
+                        {product.subtitle && (
+                            <span className="block italic text-on-surface-variant font-medium text-lg leading-tight tracking-tight">
+                                {product.subtitle}
+                            </span>
+                        )}
                     </div>
+                    
+                    {product.specs && product.specs.length > 0 && (
+                        <div className="mt-8 pt-8 border-t border-primary/10 grid grid-cols-2 gap-4">
+                            {product.specs.slice(0, 2).map((spec: { label: string; value: string }, i: number) => (
+                                <div key={i} className="flex flex-col gap-1">
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary/60">{spec.label}</span>
+                                    <span className="text-sm font-bold text-on-surface">{spec.value}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </motion.div>

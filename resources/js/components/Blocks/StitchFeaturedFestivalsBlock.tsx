@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { MapPin, ArrowRight, Calendar, Sun, Music, Star, Play, Compass } from 'lucide-react';
+import { MapPin, ArrowRight, Calendar, Sun, Music, Star, Play, Compass, User } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 import axios from 'axios';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import type { StitchFeaturedFestivalsBlock } from '@/types/page-blocks';
 
 const EMPTY_ARRAY: number[] = [];
@@ -13,6 +14,7 @@ interface FestivalData {
     title: string;
     description: string;
     image: string;
+    image_conversions?: any;
     date: string;
     locationAddress: string;
     url: string;
@@ -99,7 +101,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
     // Helper functions to safely extract data
     const getFest = (index: number) => {
         const fest = festivals[index % (festivals.length || 1)];
-        return fest || { title: '', description: '', url: '#', image: '', locationAddress: '', date: '' };
+        return fest || { title: '', description: '', url: '#', image: '', image_conversions: null, locationAddress: '', date: '' };
     };
     
     const defaultAvatars = [
@@ -131,11 +133,17 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
                         {/* 1. Immersive Card with Map Pin */}
                         {festivals.length > 0 && (
-                            <Link href={getFest(0).url} className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] aspect-video md:aspect-auto md:h-[500px] liquid-glass shadow-sea-mist">
-                                <img 
-                                    alt={getFest(0).title} 
+                            <Link 
+                                href={getFest(0).url} 
+                                aria-label={`View details for ${getFest(0).title} festival`}
+                                className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] aspect-video md:aspect-auto md:h-[500px] liquid-glass shadow-sea-mist"
+                            >
+                                <OptimizedImage 
+                                    className="w-full h-full" 
                                     src={getFest(0).image} 
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                                    conversions={getFest(0).image_conversions}
+                                    alt=""
+                                    sizes="(max-width: 768px) 100vw, 66vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
                                 <div className="absolute top-8 left-8">
@@ -156,11 +164,17 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 2. Glass-morphic Info Overlay */}
                         {festivals.length > 1 && (
-                            <Link href={getFest(1).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] aspect-square liquid-glass shadow-sea-mist">
-                                <img 
-                                    alt={getFest(1).title} 
+                            <Link 
+                                href={getFest(1).url} 
+                                aria-label={`View details for ${getFest(1).title} festival`}
+                                className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] aspect-square liquid-glass shadow-sea-mist"
+                            >
+                                <OptimizedImage 
+                                    className="w-full h-full grayscale group-hover:grayscale-0" 
                                     src={getFest(1).image} 
-                                    className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-110" 
+                                    conversions={getFest(1).image_conversions}
+                                    alt=""
+                                    sizes="(max-width: 768px) 100vw, 33vw"
                                 />
                                 <div className="absolute inset-0 flex items-end p-6">
                                     <div className="bg-surface/70 dark:bg-surface-container-high/70 backdrop-blur-xl w-full p-8 rounded-3xl border border-primary/10 shadow-2xl transform transition-transform duration-500 group-hover:-translate-y-2 text-on-surface">
@@ -179,7 +193,11 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 3. Minimalist Date/Location Card */}
                         {festivals.length > 2 && (
-                            <Link href={getFest(2).url} className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] liquid-glass transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist">
+                            <Link 
+                                href={getFest(2).url} 
+                                aria-label={`View details for ${getFest(2).title} festival`}
+                                className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] liquid-glass transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist"
+                            >
                                 <div className="p-10 h-full flex flex-col justify-between relative z-10">
                                     <div>
                                         <div className="flex justify-between items-start mb-8">
@@ -205,11 +223,17 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
 
                         {/* 4. Full-bleed Interactive Card (Carousel Style) */}
                         {festivals.length > 3 && (
-                            <Link href={getFest(3).url} className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] h-[400px] shadow-sea-mist">
-                                <img 
-                                    alt={getFest(3).title} 
+                            <Link 
+                                href={getFest(3).url} 
+                                aria-label={`Read story about ${getFest(3).title}`}
+                                className="block md:col-span-8 group relative overflow-hidden rounded-[2.5rem] h-[400px] shadow-sea-mist"
+                            >
+                                <OptimizedImage 
+                                    className="w-full h-full grayscale group-hover:grayscale-0" 
                                     src={getFest(3).image} 
-                                    className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105" 
+                                    conversions={getFest(3).image_conversions}
+                                    alt=""
+                                    sizes="(max-width: 768px) 100vw, 66vw"
                                 />
                                 <div className="absolute inset-0 bg-background/40 mix-blend-multiply transition-all duration-700 group-hover:bg-transparent"></div>
                                 <div className="absolute inset-0 p-12 flex flex-col justify-end bg-gradient-to-t from-background/80 via-transparent to-transparent">
@@ -221,9 +245,9 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                                                 read story
                                             </div>
                                             <div className="flex -space-x-3 items-center">
-                                                {defaultAvatars.map((src, i) => (
-                                                    <img key={i} className="w-10 h-10 rounded-full border-2 border-background object-cover" src={src} alt="Attendee" />
-                                                ))}
+                                                <div className="w-10 h-10 rounded-full border-2 border-background bg-primary/20 flex items-center justify-center text-primary">
+                                                    <User className="size-5" />
+                                                </div>
                                                 <div className="min-w-10 h-10 px-2 rounded-full border-2 border-background bg-surface text-[10px] text-on-surface flex items-center justify-center font-black">
                                                     +{getFest(3).review_count || 0}
                                                 </div>
@@ -237,10 +261,12 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                         {/* 5. Dynamic Grid Tile with Hover Details */}
                         {festivals.length > 4 && (
                             <div className="md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] liquid-glass shadow-sea-mist">
-                                <img 
-                                    alt={getFest(4).title} 
+                                <OptimizedImage 
+                                    className="w-full h-full grayscale group-hover:grayscale-0" 
                                     src={getFest(4).image} 
-                                    className="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0" 
+                                    conversions={getFest(4).image_conversions}
+                                    alt=""
+                                    sizes="(max-width: 768px) 100vw, 50vw"
                                 />
                                 <div className="absolute inset-0 bg-surface/90 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center p-12 backdrop-blur-xl">
                                     <div className="text-center">
@@ -269,10 +295,11 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                         {festivals.length > 5 && (
                             <Link href={getFest(5).url} className="block md:col-span-6 group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] liquid-glass shadow-sea-mist">
                                 <div className="absolute inset-0 animate-pulse opacity-50 bg-[var(--theme-gradient-subtle)]"></div>
-                                <img 
-                                    alt={getFest(5).title} 
+                                <OptimizedImage 
+                                    className="w-full h-full mix-blend-overlay grayscale group-hover:grayscale-0" 
                                     src={getFest(5).image} 
-                                    className="w-full h-full object-cover mix-blend-overlay grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" 
+                                    conversions={getFest(5).image_conversions}
+                                    alt={getFest(5).title} 
                                 />
                                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-12 bg-background/20 backdrop-blur-[2px] transition-all duration-700 group-hover:backdrop-blur-none">
                                     <div className="w-24 h-24 rounded-full border-4 border-primary/20 flex items-center justify-center mb-8 bg-surface/30 backdrop-blur-xl group-hover:bg-primary group-hover:border-primary transition-all duration-700 shadow-2xl">

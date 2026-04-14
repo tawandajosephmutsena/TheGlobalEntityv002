@@ -7,6 +7,7 @@ import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import type { JournalArticleGridBlock } from '@/types/page-blocks';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import CategoryIcon from '../CategoryIcon';
 
 interface Category {
@@ -22,6 +23,9 @@ interface InsightItem {
     slug: string;
     excerpt: string;
     featured_image?: string | null;
+    image_conversions?: {
+        featured_image?: any;
+    };
     author?: { name: string; avatar?: string | null };
     category?: { id?: number; name: string; slug: string; icon?: string | null };
     additional_categories?: { id: number; name: string; slug: string; icon?: string | null }[];
@@ -140,7 +144,9 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                     <div className="absolute inset-y-0 left-8 flex items-center pointer-events-none">
                         <Search className="size-5 text-on-surface-variant/40 group-focus-within:text-primary transition-colors duration-500" />
                     </div>
+                    <label htmlFor="journal-search" className="sr-only">Search chronicles</label>
                     <input 
+                        id="journal-search"
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -150,6 +156,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                     {searchQuery && (
                         <button 
                             onClick={() => setSearchQuery('')}
+                            aria-label="Clear search"
                             className="absolute inset-y-0 right-8 flex items-center text-on-surface-variant/40 hover:text-primary transition-colors active:scale-95"
                         >
                             <span className="text-[10px] font-black uppercase tracking-widest [font-variant-caps:small-caps]">Clear</span>
@@ -161,6 +168,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                 <div className="flex items-center gap-4 overflow-x-auto hide-scrollbar pb-12 mb-4 scroll-smooth">
                     <button 
                         onClick={() => handleCategoryClick('all')}
+                        aria-current={activeCategoryId === 'all' ? 'true' : undefined}
                         className={cn(
                             "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
                             activeCategoryId === 'all' 
@@ -174,6 +182,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                         <button 
                             key={cat.id}
                             onClick={() => handleCategoryClick(cat.id)}
+                            aria-current={activeCategoryId === cat.id ? 'true' : undefined}
                             className={cn(
                                 "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
                                 activeCategoryId === cat.id 
@@ -237,10 +246,12 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                             {isBento ? (
                                 <>
                                     <div className="relative aspect-video md:aspect-square w-full md:w-1/2 overflow-hidden rounded-lg shadow-lg bg-on-surface/5">
-                                        <img 
-                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                                        <OptimizedImage 
+                                            className="absolute inset-0 w-full h-full" 
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
-                                            alt={post.title} 
+                                            conversions={post.image_conversions?.featured_image}
+                                            alt={post.title}
+                                            sizes="(max-width: 768px) 100vw, 40vw"
                                         />
                                     </div>
                                     <div className="w-full md:w-1/2 space-y-6">
@@ -281,10 +292,12 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                             ) : (
                                 <Link href={`/blog/${post.slug}`} className="block">
                                     <div className="relative aspect-[4/5] mb-6 overflow-hidden rounded-lg liquid-glass bg-on-surface/5 group-hover:shadow-2xl transition-all duration-500">
-                                        <img 
-                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-125 focus:scale-125" 
+                                        <OptimizedImage 
+                                            className="absolute inset-0 w-full h-full" 
                                             src={post.featured_image || '/images/placeholder-blog.jpg'} 
+                                            conversions={post.image_conversions?.featured_image}
                                             alt={post.title} 
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                                     </div>
