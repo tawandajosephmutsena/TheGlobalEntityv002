@@ -71,6 +71,15 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
 }) => {
     const { url } = usePage();
 
+    // 15.1: Detect reduced-motion and mobile viewport
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    // 15.2: Skip AnimatePresence and motion.div entirely when reduced-motion is active
+    if (prefersReducedMotion) {
+        return <>{children}</>;
+    }
+
     const variants = {
         fade: {
             initial: { opacity: 0 },
@@ -89,6 +98,9 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
         }
     };
 
+    // 15.3: Use 150ms duration on mobile instead of 400ms
+    const duration = isMobile ? 0.15 : 0.4;
+
     return (
         <AnimatePresence mode="wait" initial={false}>
             <motion.div
@@ -98,7 +110,7 @@ export const PageTransition: React.FC<PageTransitionProps> = ({
                 exit="exit"
                 variants={variants[mode]}
                 transition={{ 
-                    duration: 0.4, 
+                    duration, 
                     ease: [0.22, 1, 0.36, 1] 
                 }}
                 className="relative w-full flex-grow flex flex-col overflow-x-hidden"

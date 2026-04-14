@@ -1,5 +1,6 @@
 import AppLogo from '@/components/app-logo';
 import { useMagneticEffect } from '@/hooks/useAnimations';
+import { useReducedMotion } from '@/hooks/useAccessibility';
 import { cn } from '@/lib/utils';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
@@ -16,15 +17,18 @@ interface NavigationProps {
 const NavLink = ({
     item,
     isActive,
+    isTouch,
 }: {
     item: { name: string; href: string };
     isActive: boolean;
+    isTouch: boolean;
 }) => {
     const linkRef = useRef<HTMLAnchorElement>(null);
 
     useMagneticEffect(linkRef as React.RefObject<HTMLElement>, {
         strength: 0.3,
         speed: 0.3,
+        isTouch,
     });
 
     return (
@@ -51,6 +55,12 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     const navRef = useRef<HTMLElement>(null);
     const logoRef = useRef<HTMLDivElement>(null);
 
+    // Evaluate touch capability once at mount — stored in a ref to avoid re-renders
+    const isTouchRef = useRef(typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches);
+
+    // Reduced motion preference for mobile menu blobs
+    const prefersReducedMotion = useReducedMotion();
+
     // Fallback if no menu data
     const menuItems =
         menus?.main && menus.main.length > 0
@@ -68,6 +78,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     useMagneticEffect(logoRef as React.RefObject<HTMLElement>, {
         strength: 0.2,
         speed: 0.4,
+        isTouch: isTouchRef.current,
     });
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -189,6 +200,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                     (item.href !== '/' &&
                                         url.startsWith(item.href))
                                 }
+                                isTouch={isTouchRef.current}
                             />
                         ))}
                     </div>
@@ -250,10 +262,12 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 <div className="absolute inset-0 liquid-glass border-none"></div>
                 
                 {/* Background Blobs for Visual Interest */}
+                {!prefersReducedMotion && (
                 <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">
                     <div className="bg-theme-start absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse"></div>
                     <div className="bg-theme-end absolute bottom-[10%] -right-[10%] size-80 rounded-full blur-[120px] animation-delay-2000"></div>
                 </div>
+                )}
 
                 <div className="relative z-10 flex h-full flex-col p-8 pt-32">
                     <div className="flex flex-col gap-6">

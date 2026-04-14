@@ -34,9 +34,6 @@ export default defineConfig({
             'lenis', 
             'react', 
             'react-dom', 
-            'three', 
-            '@react-three/fiber', 
-            '@react-three/drei'
         ],
         exclude: ['@vite/client', '@vite/env'],
     },
@@ -77,6 +74,8 @@ export default defineConfig({
                         }
 
                         // 4. Specific Vendor Groups
+                        // Three.js and React Three Fiber go into a dedicated on-demand chunk (Req 1.1, 1.3)
+                        if (id.includes('three') || id.includes('@react-three')) return 'three-vendor';
                         if (id.includes('gsap')) return 'gsap';
                         if (id.includes('framer-motion') || id.includes('motion')) return 'animations';
                         if (id.includes('@radix-ui')) return 'radix-vendor';

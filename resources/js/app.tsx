@@ -34,7 +34,13 @@ import { initPrefetching, prefetchCriticalRoutes } from './lib/prefetchLinks';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
+    // Defer ScrollTrigger registration on touch devices until first scroll (Requirement 1.4)
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    if (isTouch) {
+        window.addEventListener('scroll', () => gsap.registerPlugin(ScrollTrigger), { once: true });
+    } else {
+        gsap.registerPlugin(ScrollTrigger);
+    }
 
     // Set GSAP defaults for the avant-garde theme
     gsap.defaults({

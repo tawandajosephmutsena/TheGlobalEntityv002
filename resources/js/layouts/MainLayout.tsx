@@ -160,7 +160,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 className={cn(
                     'min-h-screen bg-transparent font-sans text-foreground',
                     'antialiased selection:bg-agency-accent/20',
-                    'relative overflow-hidden', // Ensure background stays contained
+                    'relative overflow-x-hidden', // Ensure background stays contained, allow vertical scroll on mobile
                     className,
                 )}
             >
@@ -204,56 +204,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             
             <FloatingSocials settings={settings} social={site?.social} />
 
-            {/* Web Core Vitals: Performance monitoring script */}
-            <script
-                nonce={nonce as string | undefined}
-                dangerouslySetInnerHTML={{
-                    __html: `
-                        // Web Core Vitals: Enhanced performance monitoring
-                        if ('performance' in window && 'PerformanceObserver' in window) {
-                            // Track layout shifts specifically for this layout
-                            let layoutShiftScore = 0;
-                            const clsObserver = new PerformanceObserver((list) => {
-                                for (const entry of list.getEntries()) {
-                                    if (!entry.hadRecentInput) {
-                                        layoutShiftScore += entry.value;
-                                        if (entry.value > 0.1) {
-                                            console.warn('Significant layout shift detected in MainLayout:', entry);
-                                        }
-                                    }
-                                }
-                            });
-                            
-                            try {
-                                clsObserver.observe({ type: 'layout-shift', buffered: true });
-                            } catch (e) {
-                                // Layout shift observer not supported
-                            }
-                            
-                            // Track LCP elements
-                            const lcpObserver = new PerformanceObserver((list) => {
-                                const entries = list.getEntries();
-                                const lastEntry = entries[entries.length - 1];
-                                if (lastEntry && lastEntry.element) {
-                                    console.log('LCP element detected:', {
-                                        element: lastEntry.element.tagName,
-                                        time: lastEntry.startTime,
-                                        size: lastEntry.size,
-                                        id: lastEntry.element.id,
-                                        className: lastEntry.element.className
-                                    });
-                                }
-                            });
-                            
-                            try {
-                                lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
-                            } catch (e) {
-                                // LCP observer not supported
-                            }
-                        }
-                    `,
-                }}
-            />
+
         </>
     );
 };

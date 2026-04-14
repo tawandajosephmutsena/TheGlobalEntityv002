@@ -117,14 +117,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Animated gradient background orbs */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
                 <div
-                    className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
+                    className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[60px] md:blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
                 />
                 <div
-                    className="bg-theme-end dynamic-delay absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
+                    className="bg-theme-end dynamic-delay absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[60px] md:blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
                     style={{ '--delay': '2s' } as React.CSSProperties}
                 />
                 <div
-                    className="bg-theme-accent dynamic-delay absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
+                    className="bg-theme-accent dynamic-delay absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[60px] md:blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
                     style={{ '--delay': '4s' } as React.CSSProperties}
                 />
             </div>
@@ -216,7 +216,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
 
                 {/* Title with Gradient and Custom Typography */}
-                <h1 className="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
+                <h1 className="text-[clamp(2.5rem,10vw,9rem)] font-black tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
                     <div className="overflow-visible">
                         <span className="block animate-[bloom_1s_cubic-bezier(0.2,0,0.2,1)_0.4s_both]">
                            {(title || '').split(' ').slice(0, 2).join(' ')} 

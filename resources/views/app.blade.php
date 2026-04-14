@@ -85,41 +85,9 @@
                     }
                 }
 
-                // Web Core Vitals: Performance monitoring initialization
-                if ('performance' in window && 'PerformanceObserver' in window) {
-                    // Mark critical timing points
+                // Web Core Vitals: Mark critical timing point
+                if ('performance' in window) {
                     performance.mark('app-start');
-                    
-                    // Monitor LCP
-                    try {
-                        const lcpObserver = new PerformanceObserver((list) => {
-                            const entries = list.getEntries();
-                            const lastEntry = entries[entries.length - 1];
-                            if (lastEntry) {
-                                performance.mark('lcp-detected');
-                                console.log('LCP:', lastEntry.startTime);
-                            }
-                        });
-                        lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
-                    } catch (e) {
-                        // LCP observer not supported
-                    }
-
-                    // Monitor CLS
-                    try {
-                        let clsValue = 0;
-                        const clsObserver = new PerformanceObserver((list) => {
-                            for (const entry of list.getEntries()) {
-                                if (!entry.hadRecentInput) {
-                                    clsValue += entry.value;
-                                }
-                            }
-                            console.log('CLS:', clsValue);
-                        });
-                        clsObserver.observe({ type: 'layout-shift', buffered: true });
-                    } catch (e) {
-                        // CLS observer not supported
-                    }
                 }
             })();
         </script>
@@ -131,17 +99,13 @@
         <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 
-        {{-- Web Core Vitals: Non-render-blocking font loading --}}
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" />
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" media="print" onload="this.media='all'" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" media="print" onload="this.media='all'" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" media="print" onload="this.media='all'" />
+        {{-- Web Core Vitals: Non-render-blocking font loading (consolidated into a single request) --}}
+        {{-- Primary body font WOFF2 preload for fastest text rendering --}}
+        <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v8/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_KU7NSg.woff2" crossorigin>
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" media="print" onload="this.media='all'" />
         <noscript>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" />
         </noscript>
 
         @viteReactRefresh

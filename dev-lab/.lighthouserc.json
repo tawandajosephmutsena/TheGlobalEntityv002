@@ -5,7 +5,11 @@
       "url": [
         "http://localhost:8080/",
         "http://localhost:8080/services",
-        "http://localhost:8080/contact"
+        "http://localhost:8080/contact",
+        "http://localhost:8080/blog",
+        "http://localhost:8080/blog/future-of-web-development-2024",
+        "http://localhost:8080/podcasts",
+        "http://localhost:8080/festivals/tech-summit-2024"
       ],
       "numberOfRuns": 1
     },

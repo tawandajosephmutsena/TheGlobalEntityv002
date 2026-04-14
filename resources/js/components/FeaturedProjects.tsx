@@ -150,7 +150,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
             <div className="flex flex-col lg:flex-row max-w-[1920px] mx-auto min-h-screen">
                 {/* Left column - Sticky Sidebar */}
                 <div className="lg:w-[40%] relative lg:border-r border-agency-primary/5 dark:border-white/5">
-                    <aside className="lg:sticky lg:top-0 lg:h-screen p-10 lg:p-24 flex flex-col justify-center gap-8">
+                    <aside className="lg:sticky lg:top-0 lg:h-screen p-6 lg:p-24 flex flex-col justify-center gap-8">
                         <header className="space-y-4">
                             <span className="text-agency-accent font-bold uppercase tracking-widest text-sm block">
                                 {subtitle}
@@ -183,7 +183,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                     </aside>
                 </div>
 
-                <main className="lg:w-[60%] lg:ml-auto p-6 lg:p-20 lg:py-40 flex flex-col gap-24 lg:gap-48 border-l border-agency-primary/5 dark:border-white/5">
+                <main className="lg:w-[60%] lg:ml-auto p-6 lg:p-20 lg:py-40 flex flex-col gap-12 lg:gap-48 border-l border-agency-primary/5 dark:border-white/5">
                 {projects.map((project: ProjectItem, index: number) => (
                     <AnimatedSection
                         key={project.id}

@@ -59,7 +59,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
     className,
 }) => {
     return (
-        <section className={cn('bg-foreground text-background dark:bg-card dark:text-card-foreground py-32 overflow-hidden', className)}>
+        <section className={cn('bg-foreground text-background dark:bg-card dark:text-card-foreground py-32', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <header className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
                     <div className="max-w-2xl">
@@ -82,10 +82,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                             key={service.id}
                             href={`/services/${service.slug}`}
                             className="group flex flex-col md:flex-row items-start md:items-center justify-between py-12 border-b border-current/10 hover:bg-primary hover:text-primary-foreground transition-all duration-500 px-4 md:px-8 -mx-4 md:-mx-8 relative overflow-hidden"
+                            style={{ touchAction: 'manipulation' }}
                         >
                             <div className="flex items-center gap-8 relative z-10">
                                 <span className="text-sm font-mono opacity-40">0{index + 1}</span>
-                                <h3 className="text-2xl md:text-6xl font-black uppercase tracking-tighter md:group-hover:translate-x-4 transition-transform duration-500">
+                                <h3 className="text-2xl md:text-6xl font-black uppercase tracking-tighter group-hover:translate-x-4 transition-transform duration-500">
                                     {service.title}
                                 </h3>
                             </div>
@@ -96,7 +97,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                                 </p>
                             </div>
 
-                            <div className="absolute right-0 top-0 h-full aspect-square bg-primary/20 flex items-center justify-center translate-x-full md:group-hover:translate-x-0 transition-transform duration-500 pointer-events-none">
+                            <div className="hidden md:block absolute right-0 top-0 h-full aspect-square bg-primary/20 flex items-center justify-center translate-x-full group-hover:translate-x-0 transition-transform duration-500 pointer-events-none">
                                 <span className="material-symbols-outlined text-6xl">arrow_outward</span>
                             </div>
                         </Link>

@@ -44,6 +44,7 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
     useTextReveal(containerRef, {
         splitType: textRevealType,
         stagger: prefersReducedMotion ? 0 : 0.05,
+        enabled: textReveal === true,
     });
 
     // Apply intersection-based animations for immediate trigger
@@ -58,6 +59,10 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
             delay: prefersReducedMotion ? 0 : delay / 1000,
             ease: animation === 'scale' ? 'back.out(1.7)' : 'power2.out',
             onComplete: () => {
+                // Reset will-change after animation to release compositor resources
+                if (containerRef.current) {
+                    containerRef.current.style.willChange = 'auto';
+                }
                 // Announce to screen readers when animation completes
                 if (textReveal) {
                     announceToScreenReader('Content loaded', 'polite');
@@ -127,15 +132,11 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
             container.setAttribute('data-text-reveal', animation);
         }
 
-        // Add accessibility attributes
-        container.setAttribute('aria-hidden', prefersReducedMotion ? 'false' : 'true');
-
         return () => {
             // Cleanup
             if (textReveal) {
                 container.removeAttribute('data-text-reveal');
             }
-            container.removeAttribute('aria-hidden');
         };
     }, [animation, delay, trigger, textReveal, prefersReducedMotion]);
 
@@ -143,7 +144,6 @@ export const AnimatedSection: React.FC<AnimatedSectionProps> = ({
         <div
             ref={containerRef}
             className={cn(
-                'will-change-transform',
                 prefersReducedMotion && 'motion-reduce:transform-none motion-reduce:opacity-100',
                 className
             )}

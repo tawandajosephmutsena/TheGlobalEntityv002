@@ -1,0 +1,44 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.06,
+    "values": [
+      0.06
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:8080/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.27,
+    "values": [
+      0.27
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:8080/services"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.26,
+    "values": [
+      0.26
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:8080/contact"
+  }
+]

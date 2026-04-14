@@ -195,6 +195,7 @@ export const useTextReveal = (
         end?: string;
         stagger?: number;
         splitType?: 'words' | 'chars' | 'lines';
+        enabled?: boolean;
     } = {},
 ) => {
     const {
@@ -203,10 +204,11 @@ export const useTextReveal = (
         end = 'bottom 20%',
         stagger = 0.05,
         splitType = 'words',
+        enabled = true,
     } = options;
 
     useEffect(() => {
-        if (typeof window === 'undefined' || !containerRef.current) return;
+        if (!enabled || typeof window === 'undefined' || !containerRef.current) return;
 
         const container = containerRef.current;
         const textElements = container.querySelectorAll('[data-text-reveal]');
@@ -313,7 +315,7 @@ export const useTextReveal = (
         return () => {
             scrollTriggers.forEach((trigger) => trigger.kill());
         };
-    }, [containerRef, trigger, start, end, stagger, splitType]);
+    }, [containerRef, trigger, start, end, stagger, splitType, enabled]);
 };
 
 /**
@@ -598,18 +600,19 @@ export const useMagneticEffect = (
     options: {
         strength?: number;
         speed?: number;
+        isTouch?: boolean;
     } = {},
 ) => {
-    const { strength = 0.3, speed = 0.3 } = options;
+    const { strength = 0.3, speed = 0.3, isTouch = false } = options;
 
     useEffect(() => {
         if (typeof window === 'undefined' || !elementRef.current) return;
+        // Skip attaching listeners entirely on touch devices
+        if (isTouch) return;
 
         const element = elementRef.current;
 
         const handleMouseMove = (e: MouseEvent) => {
-            // Skip on touch devices
-            if (window.matchMedia('(hover: none)').matches) return;
 
             const rect = element.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -642,5 +645,5 @@ export const useMagneticEffect = (
             element.removeEventListener('mousemove', handleMouseMove);
             element.removeEventListener('mouseleave', handleMouseLeave);
         };
-    }, [elementRef, strength, speed]);
+    }, [elementRef, strength, speed, isTouch]);
 };
