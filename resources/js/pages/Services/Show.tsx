@@ -51,12 +51,12 @@ export default function ServiceShow({ service }: Props) {
                 <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-[80px] animate-pulse delay-1000 mix-blend-multiply dark:mix-blend-screen" />
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-                    <Link href="/services" className="inline-flex items-center gap-2 text-muted-foreground font-bold uppercase tracking-widest text-xs mb-12 hover:text-primary hover:gap-4 transition-all">
+                    <Link href="/services" className="inline-flex items-center gap-2 text-muted-foreground font-bold tracking-widest text-xs mb-12 hover:text-primary hover:gap-4 transition-all">
                         <ArrowLeft className="h-4 w-4" /> Back to Services
                     </Link>
                     
                     <AnimatedSection animation="slide-up">
-                        <h1 className="text-6xl md:text-9xl font-display font-black uppercase tracking-tighter leading-[0.85] mb-8 text-foreground">
+                        <h1 className="text-6xl md:text-9xl font-display font-black tracking-tighter leading-[0.85] mb-8 text-foreground">
                             {service.title}
                         </h1>
                         <p className="text-2xl md:text-3xl text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
@@ -84,7 +84,7 @@ export default function ServiceShow({ service }: Props) {
                         <div className="lg:col-span-2 space-y-20">
                             {/* The Scope Section */}
                             <div className="space-y-12">
-                                <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">The Scope.</h2>
+                                <h2 className="text-4xl md:text-6xl font-black tracking-tighter">The Scope.</h2>
                                 <div className="prose prose-xl prose-agency dark:prose-invert max-w-none">
                                     {scope ? (
                                         <div 
@@ -99,7 +99,7 @@ export default function ServiceShow({ service }: Props) {
 
                             {body && (
                                 <div className="space-y-12">
-                                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Details.</h2>
+                                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter">Details.</h2>
                                     <div className="prose prose-xl prose-agency dark:prose-invert max-w-none">
                                         <div 
                                             className="text-agency-primary/80 dark:text-white/80"
@@ -113,7 +113,7 @@ export default function ServiceShow({ service }: Props) {
                         {/* Sidebar Info */}
                         <div className="space-y-12">
                             <div className="p-10 rounded-[40px] bg-agency-secondary dark:bg-white/5 border border-agency-primary/5 dark:border-white/5 sticky top-32">
-                                <h3 className="text-3xl font-black uppercase tracking-tighter mb-8">What's Included</h3>
+                                <h3 className="text-3xl font-black tracking-tighter mb-8">What's Included</h3>
                                 <ul className="space-y-6">
                                     {(content.features as string[] || service.content?.features || [
                                         'Deep Strategic Analysis',
@@ -130,11 +130,11 @@ export default function ServiceShow({ service }: Props) {
                                 </ul>
 
                                 <div className="mt-12 pt-12 border-t border-agency-primary/10 dark:border-white/10">
-                                    <h3 className="text-2xl font-black uppercase tracking-tighter mb-4 text-agency-accent">Investment</h3>
+                                    <h3 className="text-2xl font-black tracking-tighter mb-4 text-agency-accent">Investment</h3>
                                     <p className="text-5xl font-black mb-8 dark:text-white">{service.price_range || 'Custom Quote'}</p>
                                     <Link 
                                         href="/contact" 
-                                        className="flex h-16 w-full items-center justify-center rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-widest text-sm hover:scale-[1.02] transition-all shadow-xl"
+                                        className="flex h-16 w-full items-center justify-center rounded-full bg-black dark:bg-white text-white dark:text-black font-black tracking-widest text-sm hover:scale-[1.02] transition-all shadow-xl"
                                     >
                                         Inquire Now
                                     </Link>
@@ -148,11 +148,11 @@ export default function ServiceShow({ service }: Props) {
             {/* Success Stories Related CTA */}
             <section className="bg-agency-secondary dark:bg-[#0a0a0a] py-40">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-12 flex flex-col items-center">
+                    <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-12 flex flex-col items-center">
                         See it in <br/>
                         <span className="italic opacity-30">Action.</span>
                     </h2>
-                    <Link href="/portfolio" className="group inline-flex items-center gap-4 text-xl font-black uppercase tracking-tighter text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
+                    <Link href="/portfolio" className="group inline-flex items-center gap-4 text-xl font-black tracking-tighter text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
                         Browse our success stories <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
                     </Link>
                 </div>

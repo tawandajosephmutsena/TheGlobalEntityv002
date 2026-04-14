@@ -39,10 +39,10 @@ export default function AboutHeroBlockRenderer({
 
                         )}
                     </div>
-                    <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic [font-variant-caps:small-caps]">
+                    <span className="text-primary font-black tracking-[0.3em] text-xs mb-6 block italic">
                         {subtitle}
                     </span>
-                    <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter [font-variant-caps:small-caps]">
+                    <h1 className="font-display font-black text-6xl md:text-8xl lg:text-9xl text-on-background leading-[0.8] mb-10 tracking-tighter">
                         {title.includes('…') ? (
                             <>
                                 {title.split('…')[0]}… <br/>
@@ -57,7 +57,7 @@ export default function AboutHeroBlockRenderer({
                     <motion.button 
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="bg-primary text-white px-10 py-5 rounded-full font-black text-xs [font-variant-caps:small-caps] tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
+                        className="bg-primary text-white px-10 py-5 rounded-full font-black text-xs tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
                     >
                         <a href={ctaLink}>{ctaText}</a>
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +118,7 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
                 wrapperClassName="vibrant-badge scale-110 mb-2"
             />
 
-            <span className="text-[10px] font-black tracking-widest text-on-surface text-center leading-tight [font-variant-caps:small-caps] opacity-80 group-hover:opacity-100 transition-opacity">
+            <span className="text-[10px] font-black tracking-widest text-on-surface text-center leading-tight opacity-80 group-hover:opacity-100 transition-opacity">
                 {label}
             </span>
         </motion.div>

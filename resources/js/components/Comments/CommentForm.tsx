@@ -80,7 +80,7 @@ export default function CommentForm({ insightSlug, parentId = null, placeholder 
                     {errors.body && <p className="text-red-500 text-xs mt-1">{errors.body}</p>}
 
                     <div className={`flex items-center justify-between mt-3 ${compact ? 'mt-2' : ''}`}>
-                        <span className={`text-[10px] font-bold uppercase tracking-widest opacity-30 ${data.body.length > 1800 ? 'text-red-500 opacity-100' : ''}`}>
+                        <span className={`text-[10px] font-bold tracking-widest opacity-30 ${data.body.length > 1800 ? 'text-red-500 opacity-100' : ''}`}>
                             {data.body.length}/2000
                         </span>
                         <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export default function CommentForm({ insightSlug, parentId = null, placeholder 
                                 <button
                                     type="button"
                                     onClick={onCancel}
-                                    className="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity"
+                                    className="px-4 py-2 rounded-full text-xs font-bold tracking-widest opacity-40 hover:opacity-100 transition-opacity"
                                 >
                                     Cancel
                                 </button>

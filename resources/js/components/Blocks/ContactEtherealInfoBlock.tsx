@@ -85,7 +85,7 @@ export default function ContactEtherealInfoBlock({
                         <p className="text-muted-foreground text-lg max-w-sm mb-6">{archive.description}</p>
                         <Link 
                             href={archive.buttonLink || "#"} 
-                            className="inline-flex items-center gap-4 font-serif font-bold text-primary [font-variant-caps:small-caps] text-sm tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary transition-all"
+                            className="inline-flex items-center gap-4 font-serif font-bold text-primary text-sm tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary transition-all"
                         >
                             {archive.buttonText} <ArrowRight className="h-4 w-4" />
                         </Link>
@@ -103,7 +103,7 @@ export default function ContactEtherealInfoBlock({
                     </div>
                     <div className="relative z-10">
                         <span className="font-serif font-black text-8xl block leading-none opacity-20">{directPort.number}</span>
-                        <h4 className="font-serif font-bold text-3xl mt-4 [font-variant-caps:small-caps] tracking-tighter">{directPort.title}</h4>
+                        <h4 className="font-serif font-bold text-3xl mt-4 tracking-tighter">{directPort.title}</h4>
                     </div>
                     <p className="font-sans text-xl opacity-90 relative z-10">{directPort.description}</p>
                 </motion.div>
@@ -115,7 +115,7 @@ export default function ContactEtherealInfoBlock({
                     style={roughEdgeStyle}
                 >
                     <Sparkles className="text-secondary-foreground/80 w-24 h-24" />
-                    <h5 className="font-serif font-bold text-secondary-foreground text-2xl [font-variant-caps:small-caps] tracking-widest leading-tight">{instantMagic.title}</h5>
+                    <h5 className="font-serif font-bold text-secondary-foreground text-2xl tracking-widest leading-tight">{instantMagic.title}</h5>
                 </motion.div>
 
                 {/* Voice Frequency Card */}
@@ -128,7 +128,7 @@ export default function ContactEtherealInfoBlock({
                         <Phone className="text-primary-foreground w-16 h-16" />
                     </div>
                     <div>
-                        <h4 className="font-serif font-bold text-3xl text-foreground [font-variant-caps:small-caps] tracking-tight">{voiceFrequency.title}</h4>
+                        <h4 className="font-serif font-bold text-3xl text-foreground tracking-tight">{voiceFrequency.title}</h4>
                         <p className="text-muted-foreground font-sans mt-4 text-xl">
                             {voiceFrequency.description} <br/>
                             <span className="font-bold text-foreground text-2xl">{voiceFrequency.phone}</span>
@@ -144,7 +144,7 @@ export default function ContactEtherealInfoBlock({
                 >
                     <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-primary/5 rounded-full rotate-45 border border-primary/10"></div>
                     <div className="relative z-10">
-                        <h4 className="font-serif font-bold text-xl [font-variant-caps:small-caps] text-muted-foreground tracking-[0.4em] mb-8">{socialTether.title}</h4>
+                        <h4 className="font-serif font-bold text-xl text-muted-foreground tracking-[0.4em] mb-8">{socialTether.title}</h4>
                         <div className="flex flex-wrap gap-x-12 gap-y-6">
                             {(socialTether.links || []).map((link, idx) => (
                                 <Link 

@@ -66,7 +66,7 @@ const RadialMeter = ({ value, label }: { value: string; label: string }) => {
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
                 <span className="text-3xl font-black tracking-tighter">{value}</span>
-                <span className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest opacity-40">{label}</span>
+                <span className="text-[10px] font-black tracking-widest opacity-40">{label}</span>
             </div>
         </div>
     );
@@ -223,7 +223,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                     </p>
                                     <div className="pt-8 border-t border-outline-variant/30">
                                         <p className="font-black text-xl tracking-tight">{getRev(0).author.name}</p>
-                                        <p className="text-sm font-bold opacity-40 lowercase [font-variant-caps:small-caps] tracking-[0.2em]">{getRev(0).event_name}</p>
+                                        <p className="text-sm font-bold opacity-40 tracking-[0.2em]">{getRev(0).event_name}</p>
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                 <div className="relative z-10 pt-10 border-t border-white/10 flex items-center justify-between">
                                     <div>
                                         <p className="font-black text-2xl tracking-tight">{getRev(1).author.name}</p>
-                                        <p className="text-[10px] font-black opacity-60 lowercase [font-variant-caps:small-caps] tracking-[0.3em]">{getRev(1).role}</p>
+                                        <p className="text-[10px] font-black opacity-60 tracking-[0.3em]">{getRev(1).role}</p>
                                     </div>
                                     <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center">
                                         <ArrowRight className="w-6 h-6 rotate-[-45deg]" />
@@ -279,7 +279,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                             {displayStatsCount}
                                         </div>
                                     </div>
-                                    <span className="text-[10px] font-black tracking-[0.3em] opacity-40 lowercase [font-variant-caps:small-caps]">TRUSTED BY EXPLORERS</span>
+                                    <span className="text-[10px] font-black tracking-[0.3em] opacity-40">TRUSTED BY EXPLORERS</span>
                                 </div>
                             </div>
                         </AnimatedSection>
@@ -297,14 +297,14 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                                 <PenTool className="w-8 h-8" />
                                             </div>
                                             <div>
-                                                <p className="text-[10px] font-black text-primary tracking-[0.3em] lowercase [font-variant-caps:small-caps] mb-1">JOURNAL LOG NO. {entryNumber}</p>
+                                                <p className="text-[10px] font-black text-primary tracking-[0.3em] mb-1">JOURNAL LOG NO. {entryNumber}</p>
                                                 <h4 className="text-3xl font-display font-black tracking-tighter flex items-center gap-3">
                                                     <MapPin className="w-6 h-6 text-primary" />
                                                     {entryLocation}
                                                 </h4>
                                             </div>
                                         </div>
-                                        <div className="bg-surface-container px-6 py-2 rounded-full border border-outline-variant/30 text-[10px] font-black tracking-widest lowercase [font-variant-caps:small-caps] flex items-center gap-2">
+                                        <div className="bg-surface-container px-6 py-2 rounded-full border border-outline-variant/30 text-[10px] font-black tracking-widest flex items-center gap-2">
                                             <Calendar className="w-3 h-3 text-primary" />
                                             OCTOBER 23, 2026
                                         </div>
@@ -326,12 +326,12 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                             </div>
                                             <div>
                                                 <p className="font-black text-lg tracking-tight">{getRev(2).author.name}</p>
-                                                <p className="text-xs font-bold opacity-40 lowercase [font-variant-caps:small-caps] tracking-widest italic">{getRev(2).role}</p>
+                                                <p className="text-xs font-bold opacity-40 tracking-widest italic">{getRev(2).role}</p>
                                             </div>
                                         </div>
                                         <div className="flex gap-3">
                                             {entryTags.map((tag) => (
-                                                <span key={tag} className="px-5 py-2 glass rounded-full text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest">{tag}</span>
+                                                <span key={tag} className="px-5 py-2 glass rounded-full text-[10px] font-black tracking-widest">{tag}</span>
                                             ))}
                                         </div>
                                     </div>
@@ -368,7 +368,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                      <motion.button 
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="w-full mt-10 py-5 bg-white text-on-surface rounded-full font-black text-[10px] tracking-[0.4em] lowercase [font-variant-caps:small-caps] hover:bg-primary hover:text-on-primary transition-all shadow-2xl relative overflow-hidden group/btn"
+                                        className="w-full mt-10 py-5 bg-white text-on-surface rounded-full font-black text-[10px] tracking-[0.4em] hover:bg-primary hover:text-on-primary transition-all shadow-2xl relative overflow-hidden group/btn"
                                      >
                                         <span className="relative z-10">Sign the Manifest</span>
                                         <div className="absolute inset-0 bg-primary translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
@@ -390,7 +390,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                     <div className="w-20 h-20 rounded-3xl bg-on-secondary-container flex items-center justify-center text-secondary shadow-2xl animate-float">
                                         <Award className="w-10 h-10" />
                                     </div>
-                                    <div className="glass px-6 py-2 rounded-full border border-white/20 text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-widest text-on-secondary-container">
+                                    <div className="glass px-6 py-2 rounded-full border border-white/20 text-[10px] font-black tracking-widest text-on-secondary-container">
                                         VERIFIED JOURNEY
                                     </div>
                                  </div>
@@ -400,7 +400,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                     <p className="text-3xl md:text-4xl font-display font-black text-on-secondary-container leading-[1.1] mb-6 italic group-hover:translate-x-3 transition-transform duration-700">
                                         "{getRev(3).content}"
                                     </p>
-                                    <p className="text-on-secondary-container/50 font-black text-xs tracking-widest lowercase [font-variant-caps:small-caps]">{socialProofPlatform}</p>
+                                    <p className="text-on-secondary-container/50 font-black text-xs tracking-widest">{socialProofPlatform}</p>
                                  </div>
 
                                  <div className="flex items-center gap-6 pt-10 border-t border-on-secondary-container/10 relative z-10">
@@ -409,7 +409,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                                     </div>
                                     <div>
                                         <p className="font-black text-2xl tracking-tight text-on-secondary-container">{getRev(3).author.name}</p>
-                                        <p className="text-xs font-bold opacity-60 lowercase [font-variant-caps:small-caps] tracking-widest text-on-secondary-container">{getRev(3).role}</p>
+                                        <p className="text-xs font-bold opacity-60 tracking-widest text-on-secondary-container">{getRev(3).role}</p>
                                     </div>
                                  </div>
                             </div>
@@ -429,7 +429,7 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                 <AnimatedSection animation="slide-up" delay={800} className="mt-32 pt-24 border-t border-outline-variant/20 text-center">
                     <div className="inline-flex items-center gap-4 px-8 py-3 bg-surface-container-highest rounded-full shadow-inner mb-12 border border-outline-variant/30">
                         <ThumbsUp className="w-4 h-4 text-primary" />
-                        <span className="text-[10px] font-black lowercase [font-variant-caps:small-caps] tracking-[0.2em]">{displayFooterCounterText}</span>
+                        <span className="text-[10px] font-black tracking-[0.2em]">{displayFooterCounterText}</span>
                     </div>
 
                     <h2 className="text-5xl md:text-7xl font-display font-black leading-[0.9] tracking-tighter mb-16 max-w-4xl mx-auto">
@@ -447,14 +447,14 @@ export default function StitchCommunityReviewBlockRenderer(props: StitchCommunit
                         <motion.button 
                             whileHover={{ scale: 1.05, y: -5 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-12 py-6 bg-primary text-on-primary rounded-full font-black text-xs tracking-[0.4em] lowercase [font-variant-caps:small-caps] shadow-2xl shadow-primary/30 active:shadow-none transition-shadow"
+                            className="px-12 py-6 bg-primary text-on-primary rounded-full font-black text-xs tracking-[0.4em] shadow-2xl shadow-primary/30 active:shadow-none transition-shadow"
                         >
                             {ctaButtonText}
                         </motion.button>
                         <motion.button 
                             whileHover={{ scale: 1.05, y: -5 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-12 py-6 bg-surface-container-highest text-on-surface rounded-full font-black text-xs tracking-[0.4em] lowercase [font-variant-caps:small-caps] hover:bg-surface-container transition-colors shadow-lg"
+                            className="px-12 py-6 bg-surface-container-highest text-on-surface rounded-full font-black text-xs tracking-[0.4em] hover:bg-surface-container transition-colors shadow-lg"
                         >
                             Browse the Map
                         </motion.button>

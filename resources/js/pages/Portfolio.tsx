@@ -45,15 +45,15 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                     <section className="bg-white dark:bg-agency-dark pt-40 pb-32 relative overflow-hidden">
                         {/* Background Branding Marquee */}
                         <div className="absolute top-20 left-0 w-full overflow-hidden opacity-[0.03] select-none pointer-events-none">
-                            <span className="text-[20vw] font-black uppercase whitespace-nowrap leading-none block marquee">
-                                PORTFOLIO PORTFOLIO PORTFOLIO PORTFOLIO
+                            <span className="text-[20vw] font-black whitespace-nowrap leading-none block marquee">
+                                Portfolio Portfolio Portfolio Portfolio
                             </span>
                         </div>
 
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center md:text-left">
                             <div className="max-w-4xl">
-                                <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Selected Works</span>
-                                <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
+                                <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">Selected Works</span>
+                                <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
                                     Digital <br/>
                                     <span className="opacity-30 italic">Showcase.</span>
                                 </h1>
@@ -71,7 +71,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                             <div className="flex flex-wrap justify-center gap-4">
                                 <button
                                     onClick={() => setActiveCategory('All')}
-                                    className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                    className={`px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] transition-all duration-500 border ${
                                         activeCategory === 'All' 
                                             ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
                                             : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
@@ -83,7 +83,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                     <button
                                         key={cat.id}
                                         onClick={() => setActiveCategory(cat.id)}
-                                        className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                        className={`px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] transition-all duration-500 border ${
                                             activeCategory === cat.id 
                                                 ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
                                                 : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
@@ -121,24 +121,24 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                                         <div className="absolute inset-0 bg-agency-accent/5 group-hover:scale-110 transition-transform duration-700 ease-out"></div>
                                                     )}
                                                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                                        <div className="size-24 rounded-full bg-agency-accent flex items-center justify-center text-agency-primary font-black text-xs uppercase tracking-tighter scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
-                                                            VIEW WORK
+                                                        <div className="size-24 rounded-full bg-agency-accent flex items-center justify-center text-agency-primary font-black text-xs tracking-tighter scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500">
+                                                            View Work
                                                         </div>
                                                     </div>
                                                 </div>
                                                 
                                                 <div className="px-4">
                                                     <div className="flex items-center gap-2 mb-4">
-                                                        <span className="text-agency-accent font-bold uppercase tracking-[0.3em] text-[10px] block">
+                                                        <span className="text-agency-accent font-bold tracking-[0.3em] text-[10px] block">
                                                             {project.category?.name || 'Project'}
                                                         </span>
                                                         <span className="opacity-20">•</span>
-                                                        <span className="text-agency-primary/40 dark:text-white/40 font-bold uppercase tracking-[0.3em] text-[10px] block">
+                                                        <span className="text-agency-primary/40 dark:text-white/40 font-bold tracking-[0.3em] text-[10px] block">
                                                             {project.client || 'Featured'}
                                                         </span>
                                                     </div>
 
-                                                    <h3 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-4 transition-colors group-hover:text-agency-accent">
+                                                    <h3 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white mb-4 transition-colors group-hover:text-agency-accent">
                                                         {project.title}
                                                     </h3>
                                                     <p className="text-agency-primary/60 dark:text-white/60 mb-6 font-light leading-relaxed max-w-lg">
@@ -146,7 +146,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                                     </p>
                                                     <div className="flex flex-wrap gap-2">
                                                         {project.technologies?.map(tag => (
-                                                            <span key={tag} className="text-[10px] font-bold uppercase tracking-widest text-agency-primary/30 dark:text-white/30 border border-agency-primary/10 dark:border-white/10 px-3 py-1 rounded-full group-hover:border-agency-accent/30 transition-colors">
+                                                            <span key={tag} className="text-[10px] font-bold tracking-widest text-agency-primary/30 dark:text-white/30 border border-agency-primary/10 dark:border-white/10 px-3 py-1 rounded-full group-hover:border-agency-accent/30 transition-colors">
                                                                 {tag}
                                                             </span>
                                                         ))}
@@ -157,7 +157,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                     ))
                                 ) : (
                                     <div className="col-span-full py-20 text-center">
-                                        <h3 className="text-3xl font-black uppercase tracking-tighter mb-4 opacity-50">No projects found</h3>
+                                        <h3 className="text-3xl font-black tracking-tighter mb-4 opacity-50">No projects found</h3>
                                         <p className="text-lg opacity-40 max-w-md mx-auto">
                                             We couldn't find any projects matching your selection.
                                         </p>
@@ -172,7 +172,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                         <Link
                                             key={i}
                                             href={link.url || '#'}
-                                            className={`px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${
+                                            className={`px-6 py-3 rounded-full text-xs font-bold tracking-widest transition-all ${
                                                 link.active 
                                                     ? 'bg-agency-accent text-agency-primary' 
                                                     : 'bg-white dark:bg-white/5 text-agency-primary/40 dark:text-white/40 hover:bg-agency-accent hover:text-agency-primary'
@@ -188,8 +188,8 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                     {/* Results / Stats Section */}
                     <section className="bg-white dark:bg-agency-dark py-40 border-t border-agency-primary/5">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Project Impact</span>
-                            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-24 leading-none">
+                            <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">Project Impact</span>
+                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-24 leading-none">
                                 Our work <br/>
                                 <span className="opacity-30 italic">by the numbers.</span>
                             </h2>
@@ -205,7 +205,7 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                                         <div className="text-6xl md:text-8xl font-black text-agency-primary dark:text-white mb-4 group-hover:text-agency-accent transition-colors duration-500">
                                             {stat.value}
                                         </div>
-                                        <div className="text-xs font-bold uppercase tracking-widest opacity-40">{stat.label}</div>
+                                        <div className="text-xs font-bold tracking-widest opacity-40">{stat.label}</div>
                                     </div>
                                 ))}
                             </div>
@@ -215,20 +215,20 @@ export default function Portfolio({ portfolioItems, categories, page }: Props) {
                     {/* CTA Shared Component/Style */}
                     <section className="bg-agency-primary dark:bg-white text-white dark:text-agency-primary py-40 text-center relative overflow-hidden">
                         <div className="mx-auto max-w-4xl px-4 relative z-10">
-                            <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter mb-12">
+                            <h2 className="text-6xl md:text-9xl font-black tracking-tighter mb-12">
                                 Start <br/>
                                 <span className="italic opacity-30">Fresh.</span>
                             </h2>
                             <Link
                                 href="/contact"
-                                className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-accent text-agency-primary text-xl font-black uppercase tracking-tighter hover:scale-105 transition-all shadow-2xl"
+                                className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-accent text-agency-primary text-xl font-black tracking-tighter hover:scale-105 transition-all shadow-2xl"
                             >
-                                TRANSFORM YOUR BRAND
+                                Transform Your Brand
                             </Link>
                         </div>
                         {/* Background Large Text */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full opacity-[0.05] pointer-events-none select-none">
-                            <span className="text-[30vw] font-black uppercase whitespace-nowrap leading-none">BUILD WITH US</span>
+                            <span className="text-[30vw] font-black whitespace-nowrap leading-none">Build With Us</span>
                         </div>
                     </section>
                 </>

@@ -58,15 +58,15 @@ export default function Services({ services, categories, page }: Props) {
                     {/* Artistic Hero Section */}
                     <section className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-agency-secondary dark:bg-agency-dark pt-32">
                         <div className="absolute inset-0 z-0 opacity-[0.03] select-none pointer-events-none">
-                            <span className="text-[25vw] font-black uppercase whitespace-nowrap leading-none block marquee">
+                            <span className="text-[25vw] font-black whitespace-nowrap leading-none block marquee">
                                 CREATIVITY TECHNOLOGY INNOVATION
                             </span>
                         </div>
 
                         <div className="relative z-10 max-w-5xl px-4 text-center">
                             <AnimatedSection animation="slide-up">
-                                <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Our Expertise</span>
-                                <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
+                                <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">Our Expertise</span>
+                                <h1 className="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
                                     Elevating <br/>
                                     <span className="opacity-30 italic">Interfaces.</span>
                                 </h1>
@@ -80,7 +80,7 @@ export default function Services({ services, categories, page }: Props) {
                             <div className="flex flex-wrap justify-center gap-4">
                                 <button
                                     onClick={() => setActiveCategory('all')}
-                                    className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                    className={`px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] transition-all duration-500 border ${
                                         activeCategory === 'all' 
                                             ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
                                             : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
@@ -92,7 +92,7 @@ export default function Services({ services, categories, page }: Props) {
                                     <button
                                         key={cat.id}
                                         onClick={() => setActiveCategory(cat.id)}
-                                        className={`px-8 py-3 rounded-full text-xs font-bold uppercase tracking-[0.2em] transition-all duration-500 border ${
+                                        className={`px-8 py-3 rounded-full text-xs font-bold tracking-[0.2em] transition-all duration-500 border ${
                                             activeCategory === cat.id 
                                                 ? 'bg-agency-accent border-agency-accent text-agency-primary shadow-lg shadow-agency-accent/20' 
                                                 : 'bg-transparent border-agency-primary/10 dark:border-white/10 text-agency-primary/40 dark:text-white/40 hover:border-agency-accent hover:text-agency-accent'
@@ -126,7 +126,7 @@ export default function Services({ services, categories, page }: Props) {
                                                     <div className="size-16 rounded-2xl bg-agency-primary/5 dark:bg-white/5 flex items-center justify-center group-hover:bg-white/20 transition-colors">
                                                         {renderIcon(service.icon)}
                                                     </div>
-                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-agency-accent group-hover:text-white/60">
+                                                    <span className="text-[10px] font-black tracking-[0.2em] text-agency-accent group-hover:text-white/60">
                                                         {service.category?.name || 'Service'}
                                                     </span>
                                                 </div>
@@ -134,7 +134,7 @@ export default function Services({ services, categories, page }: Props) {
                                             </div>
 
                                             
-                                            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-agency-primary dark:text-white group-hover:text-white dark:group-hover:text-agency-primary mb-6 transition-all group-hover:translate-x-4">
+                                            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-agency-primary dark:text-white group-hover:text-white dark:group-hover:text-agency-primary mb-6 transition-all group-hover:translate-x-4">
                                                 {service.title}
                                             </h2>
                                             
@@ -146,7 +146,7 @@ export default function Services({ services, categories, page }: Props) {
                                         <div className="relative z-10">
                                             <div className="flex flex-wrap gap-2 mb-10 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
                                                 {service.price_range && (
-                                                    <span className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-current/20">
+                                                    <span className="text-[10px] font-bold tracking-widest px-3 py-1 rounded-full border border-current/20">
                                                         Starting at {service.price_range}
                                                     </span>
                                                 )}
@@ -154,7 +154,7 @@ export default function Services({ services, categories, page }: Props) {
                                             
                                             <Link 
                                                 href={`/services/${service.slug}`} 
-                                                className="inline-flex items-center gap-4 text-xs font-black uppercase tracking-widest text-agency-accent group-hover:text-white dark:group-hover:text-agency-primary"
+                                                className="inline-flex items-center gap-4 text-xs font-black tracking-widest text-agency-accent group-hover:text-white dark:group-hover:text-agency-primary"
                                             >
                                                 Explore Scope <ArrowRight className="size-4 group-hover:translate-x-2 transition-transform" />
                                             </Link>
@@ -169,8 +169,8 @@ export default function Services({ services, categories, page }: Props) {
                     <section className="bg-agency-secondary dark:bg-agency-dark py-40 overflow-hidden">
                         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                             <header className="mb-24">
-                                <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-4 block">Our Process</span>
-                                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                                <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-4 block">Our Process</span>
+                                <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-agency-primary dark:text-white">
                                     From Vision <br/>
                                     <span className="opacity-30 italic">to Reality.</span>
                                 </h2>
@@ -188,7 +188,7 @@ export default function Services({ services, categories, page }: Props) {
                                             {item.step}
                                         </div>
                                         <div className="relative z-10 pt-16">
-                                            <h3 className="text-2xl font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-4">
+                                            <h3 className="text-2xl font-black tracking-tighter text-agency-primary dark:text-white mb-4">
                                                 {item.title}
                                             </h3>
                                             <p className="text-agency-primary/60 dark:text-white/60 leading-relaxed">
@@ -205,10 +205,10 @@ export default function Services({ services, categories, page }: Props) {
                     <section className="bg-agency-primary dark:bg-black py-40 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-1/2 h-full bg-agency-accent/5 blur-[120px] rounded-full pointer-events-none"></div>
                         <div className="mx-auto max-w-5xl px-4 text-center relative z-10">
-                            <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-tight mb-12">
+                            <h2 className="text-5xl md:text-8xl font-black text-white tracking-tighter leading-tight mb-12">
                                 Ready to <span className="text-agency-accent italic">Evolve?</span>
                             </h2>
-                            <Link href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-accent text-agency-primary font-black text-lg uppercase tracking-widest hover:scale-105 transition-all shadow-2xl shadow-agency-accent/20">
+                            <Link href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-accent text-agency-primary font-black text-lg tracking-widest hover:scale-105 transition-all shadow-2xl shadow-agency-accent/20">
                                 Start your journey <ArrowRight className="ml-4 size-6" />
                             </Link>
                         </div>

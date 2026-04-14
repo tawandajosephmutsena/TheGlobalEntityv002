@@ -30,10 +30,10 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <Badge variant="outline" className="mb-4 font-black [font-variant-caps:small-caps] tracking-wider text-primary border-primary/20 bg-primary/5 px-4 py-1">
+                        <Badge variant="outline" className="mb-4 font-black tracking-wider text-primary border-primary/20 bg-primary/5 px-4 py-1">
                             Community Feedback
                         </Badge>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 text-foreground tracking-tighter [font-variant-caps:small-caps]">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 text-foreground tracking-tighter">
                             {title}
                         </h2>
                         {subtitle && <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">{subtitle}</p>}
@@ -73,7 +73,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                         {showRatings && (
                                             <div className="flex flex-wrap gap-6 mb-8 p-4 rounded-xl liquid-glass border border-primary/10">
                                                 <div className="flex flex-col gap-1.5">
-                                                    <span className="text-[10px] [font-variant-caps:small-caps] font-black tracking-widest text-primary/70">Vibe</span>
+                                                    <span className="text-[10px] font-black tracking-widest text-primary/70">Vibe</span>
                                                     <div className="flex gap-1">
                                                         {[...Array(5)].map((_, i) => (
                                                             <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.vibe ? "text-primary fill-primary scale-110" : "text-primary/20")} />
@@ -81,7 +81,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-1.5">
-                                                    <span className="text-[10px] [font-variant-caps:small-caps] font-black tracking-widest text-accent/70">Safety</span>
+                                                    <span className="text-[10px] font-black tracking-widest text-accent/70">Safety</span>
                                                     <div className="flex gap-1">
                                                         {[...Array(5)].map((_, i) => (
                                                             <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < review.safety ? "text-accent fill-accent scale-110" : "text-accent/20")} />
@@ -89,7 +89,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-1.5">
-                                                    <span className="text-[10px] [font-variant-caps:small-caps] font-black tracking-widest text-[#2ecc71]/70">Sustainability</span>
+                                                    <span className="text-[10px] font-black tracking-widest text-[#2ecc71]/70">Sustainability</span>
                                                     <div className="flex gap-1">
                                                         {[...Array(5)].map((_, i) => (
                                                             <Star key={i} className={cn("w-3.5 h-3.5 transition-all duration-300", i < (review.sustainability || 5) ? "text-[#2ecc71] fill-[#2ecc71] scale-110" : "text-[#2ecc71]/20")} />
@@ -106,7 +106,7 @@ const CommunityReviewBlock: React.FC<CommunityReviewBlockType['content']> = ({
                                         </div>
                                         
                                         <div className="mt-8 pt-6 border-t border-primary/5 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                            <span className="text-xs font-mono text-muted-foreground tracking-widest [font-variant-caps:small-caps]">Verified Guest</span>
+                                            <span className="text-xs font-mono text-muted-foreground tracking-widest">Verified Guest</span>
                                             <Badge variant="secondary" className="text-[10px] h-5 liquid-glass text-primary hover:bg-primary/10">Slow Travel</Badge>
                                         </div>
                                     </CardContent>

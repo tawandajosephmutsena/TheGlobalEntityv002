@@ -105,7 +105,7 @@ class Podcast extends Model
         return $query->where('is_published', true)
             ->where(function ($q) {
                 $q->whereNull('published_at')
-                  ->orWhere('published_at', '<=', now());
+                  ->orWhere('published_at', '<=', now()->toDateTimeString());
             });
     }
 

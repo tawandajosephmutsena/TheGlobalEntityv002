@@ -104,7 +104,7 @@ export default function Show({ festival }: Props) {
                                 transition={{ delay: 0.5 }}
                                 className="flex flex-wrap items-center gap-3 mb-6"
                             >
-                                <span className="px-4 py-1.5 rounded-full bg-primary text-black text-sm font-semibold tracking-wide uppercase">
+                                <span className="px-4 py-1.5 rounded-full bg-primary text-black text-sm font-semibold tracking-wide">
                                     {festival.category}
                                 </span>
                                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/10">
@@ -226,7 +226,7 @@ export default function Show({ festival }: Props) {
                                             className="w-16 h-16 rounded-2xl object-cover ring-2 ring-primary/20"
                                         />
                                         <div>
-                                            <span className="block text-sm text-muted-foreground mb-1 uppercase tracking-widest">Organized by</span>
+                                            <span className="block text-sm text-muted-foreground mb-1 tracking-widest">Organized by</span>
                                             <h4 className="text-xl font-medium">{festival.author.name}</h4>
                                         </div>
                                     </div>
@@ -360,7 +360,7 @@ export default function Show({ festival }: Props) {
                             {/* Map floating coordinates tag */}
                             <div className="absolute top-8 left-8 z-20 px-6 py-3 rounded-2xl bg-background/60 backdrop-blur-2xl border border-white/10 shadow-2xl group/coord">
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-[10px] uppercase tracking-[0.2em] text-primary/60 font-semibold">Location Data</span>
+                                    <span className="text-[10px] tracking-[0.2em] text-primary/60 font-semibold">Location Data</span>
                                     <div className="flex items-center gap-3">
                                         <div className="flex flex-col">
                                             <span className="text-xs font-mono text-foreground/80">{lat.toFixed(6)}° N</span>
@@ -368,7 +368,7 @@ export default function Show({ festival }: Props) {
                                         </div>
                                         <div className="w-px h-8 bg-white/10" />
                                         <div className="flex flex-col">
-                                            <span className="text-[10px] text-muted-foreground uppercase">Altitude</span>
+                                            <span className="text-[10px] text-muted-foreground">Altitude</span>
                                             <span className="text-xs font-mono text-foreground/80">342m MSL</span>
                                         </div>
                                     </div>

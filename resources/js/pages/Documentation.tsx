@@ -43,7 +43,7 @@ export default function Documentation() {
                     title: 'Overview',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Welcome to Your CMS
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70 leading-relaxed">
@@ -74,7 +74,7 @@ export default function Documentation() {
                     title: 'Logging In',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Accessing the Admin Panel
                             </h2>
                             <div className="space-y-4">
@@ -99,7 +99,7 @@ export default function Documentation() {
                     title: 'Dashboard Overview',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Your Admin Dashboard
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -140,7 +140,7 @@ export default function Documentation() {
                     title: 'Portfolio Items',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Managing Portfolio Items
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -176,7 +176,7 @@ export default function Documentation() {
                     title: 'Services',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Managing Services
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -207,7 +207,7 @@ export default function Documentation() {
                     title: 'Blog Posts (Insights)',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Writing Blog Posts
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -255,7 +255,7 @@ export default function Documentation() {
                     title: 'Block System Overview',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Building Dynamic Pages
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -290,7 +290,7 @@ export default function Documentation() {
                     title: 'Adding & Configuring Blocks',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Working with Blocks
                             </h2>
                             <div className="space-y-4">
@@ -350,7 +350,7 @@ export default function Documentation() {
                     title: 'Uploading Files',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Media Management
                             </h2>
                             <div className="p-6 bg-gradient-to-br from-agency-accent/10 to-purple-500/5 border border-agency-accent/20 rounded-2xl">
@@ -407,7 +407,7 @@ export default function Documentation() {
                     title: 'Organizing Media',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Media Organization
                             </h2>
                             <p className="text-lg text-agency-primary/70 dark:text-white/70">
@@ -448,7 +448,7 @@ export default function Documentation() {
                     title: 'General Settings',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Site Configuration
                             </h2>
                             <div className="grid gap-4">
@@ -482,7 +482,7 @@ export default function Documentation() {
                     title: 'SEO Settings',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Search Engine Optimization
                             </h2>
                             <div className="p-6 bg-gradient-to-br from-purple-500/10 to-transparent border border-purple-400/20 rounded-2xl">
@@ -526,7 +526,7 @@ export default function Documentation() {
                     title: 'Architecture Overview',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Technical Architecture
                             </h2>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -559,7 +559,7 @@ export default function Documentation() {
                     title: 'Creating Custom Blocks',
                     content: (
                         <div className="space-y-6">
-                            <h2 className="text-4xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-4xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 Custom Block Development
                             </h2>
                             <div className="p-6 bg-gray-900 text-white rounded-2xl">
@@ -676,7 +676,7 @@ php artisan migrate --force`}
                 <div className="bg-gradient-to-br from-agency-accent/10 via-purple-500/5 to-transparent border-b border-agency-primary/10 dark:border-white/10 py-16">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="max-w-3xl">
-                            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-6">
+                            <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-agency-primary dark:text-white mb-6">
                                 Documentation
                             </h1>
                             <p className="text-xl text-agency-primary/70 dark:text-white/70 leading-relaxed">
@@ -732,7 +732,7 @@ php artisan migrate --force`}
 
                                 {/* Quick Links */}
                                 <div className="pt-6 mt-6 border-t border-agency-primary/10 dark:border-white/10">
-                                    <p className="text-xs font-bold uppercase tracking-wider text-agency-primary/40 dark:text-white/40 mb-3 px-4">
+                                    <p className="text-xs font-bold tracking-wider text-agency-primary/40 dark:text-white/40 mb-3 px-4">
                                         Quick Links
                                     </p>
                                     <Link

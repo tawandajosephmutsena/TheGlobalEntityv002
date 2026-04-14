@@ -159,7 +159,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                             aria-label="Clear search"
                             className="absolute inset-y-0 right-8 flex items-center text-on-surface-variant/40 hover:text-primary transition-colors active:scale-95"
                         >
-                            <span className="text-[10px] font-black uppercase tracking-widest [font-variant-caps:small-caps]">Clear</span>
+                            <span className="text-[10px] font-black tracking-widest">Clear</span>
                         </button>
                     )}
                 </div>
@@ -170,7 +170,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                         onClick={() => handleCategoryClick('all')}
                         aria-current={activeCategoryId === 'all' ? 'true' : undefined}
                         className={cn(
-                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
+                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
                             activeCategoryId === 'all' 
                                 ? "bg-on-surface text-surface shadow-xl scale-105" 
                                 : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
@@ -184,7 +184,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                             onClick={() => handleCategoryClick(cat.id)}
                             aria-current={activeCategoryId === cat.id ? 'true' : undefined}
                             className={cn(
-                                "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-500",
+                                "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
                                 activeCategoryId === cat.id 
                                     ? "bg-primary text-on-primary shadow-xl scale-105" 
                                     : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
@@ -208,7 +208,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                     <div className="inline-block p-12 rounded-full liquid-glass mb-8 opacity-40">
                         <Search className="size-20" />
                     </div>
-                    <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface [font-variant-caps:small-caps]">
+                    <h3 className="text-3xl font-black tracking-tight mb-4 text-on-surface">
                         {searchQuery ? `No matches for "${searchQuery}"` : "No chronicles found"}
                     </h3>
                     <p className="text-on-surface-variant max-w-md mx-auto font-light leading-relaxed">
@@ -271,20 +271,20 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                                                             />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
-                                                            <p className="font-black text-xs tracking-widest [font-variant-caps:small-caps]">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
+                                                            <p className="font-black text-xs tracking-widest">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );
                                             })}
                                         </div>
-                                        <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface [font-variant-caps:small-caps]">
+                                        <h3 className="font-display font-black text-3xl group-hover:text-primary transition-colors leading-[1.1] text-on-surface">
                                             {post.title}
                                         </h3>
                                         <p className="text-on-surface-variant text-base leading-relaxed font-light line-clamp-3">
                                             {post.excerpt}
                                         </p>
-                                        <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all [font-variant-caps:small-caps]">
-                                            {"READ FULL FEATURE"}
+                                        <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all">
+                                            {"Read full feature"}
                                             <ArrowUpRight className="size-4" />
                                         </Link>
                                     </div>
@@ -318,21 +318,21 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                                                             />
                                                         </TooltipTrigger>
                                                         <TooltipContent side="top" sideOffset={8} className="bg-primary text-on-primary border-none shadow-xl px-4 py-2 rounded-xl">
-                                                            <p className="font-black text-xs tracking-widest [font-variant-caps:small-caps]">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
+                                                            <p className="font-black text-xs tracking-widest">{cat?.name?.replace(/\s\s+/g, ' ')}</p>
                                                         </TooltipContent>
                                                     </Tooltip>
                                                 );
                                             })}
                                         </div>
 
-                                        <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface [font-variant-caps:small-caps]">
+                                        <h3 className="font-display font-black text-2xl group-hover:text-primary transition-colors leading-tight tracking-tighter text-on-surface">
                                             {post.title}
                                         </h3>
                                         <p className="text-on-surface-variant line-clamp-2 text-sm leading-relaxed font-light">
                                             {post.excerpt}
                                         </p>
                                         <div className="pt-2 flex items-center justify-between">
-                                            <span className="text-[10px] text-on-surface-variant font-bold [font-variant-caps:small-caps] tracking-widest opacity-60">
+                                            <span className="text-[10px] text-on-surface-variant font-bold tracking-widest opacity-60">
                                                 {post.published_at ? new Date(post.published_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'}
                                             </span>
                                             <ArrowRight className="size-5 text-primary group-hover:translate-x-2 transition-transform duration-500" />
@@ -350,7 +350,7 @@ export default function JournalArticleGridBlock({ content, recentInsights = [], 
                     <div className="mt-24 flex items-center justify-center">
                         <button
                             onClick={() => setVisibleCount(prev => prev + 12)}
-                            className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black tracking-widest transition-all hover:scale-105 hover:shadow-xl active:scale-95 [font-variant-caps:small-caps]"
+                            className="px-8 py-4 bg-primary text-on-primary rounded-full text-[10px] font-black tracking-widest transition-all hover:scale-105 hover:shadow-xl active:scale-95"
                         >
                             Show More Articles
                         </button>

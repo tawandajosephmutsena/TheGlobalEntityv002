@@ -134,7 +134,7 @@ export default function KimiHeroSection({
                             {title}
                         </span>
                         <span
-                            className="block font-black text-4xl sm:text-5xl lg:text-6xl tracking-tighter font-[family-name:var(--font-display-local)] text-[color:var(--text-color-primary)] [font-variant-caps:small-caps]"
+                            className="block font-black text-4xl sm:text-5xl lg:text-6xl tracking-tighter font-[family-name:var(--font-display-local)] text-[color:var(--text-color-primary)]"
                         >
                             {subtitle}
                         </span>
@@ -151,7 +151,7 @@ export default function KimiHeroSection({
                     <div className="flex flex-wrap items-center justify-center gap-4">
                         <a
                             href={ctaLink}
-                            className="group kimi-hero-cta inline-flex items-center gap-2 px-6 py-3 rounded-full font-black text-sm transition-colors bg-[var(--btn-bg)] text-[color:var(--btn-text)] [font-variant-caps:small-caps]"
+                            className="group kimi-hero-cta inline-flex items-center gap-2 px-6 py-3 rounded-full font-black text-sm transition-colors bg-[var(--btn-bg)] text-[color:var(--btn-text)]"
                         >
                             {ctaText}
                             <span
@@ -163,7 +163,7 @@ export default function KimiHeroSection({
                         {ctaSecondaryText && (
                             <a
                                 href={ctaSecondaryLink || '#'}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-black text-sm border-2 transition-colors border-[var(--btn-border)] text-[color:var(--text-color-primary)] [font-variant-caps:small-caps]"
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-black text-sm border-2 transition-colors border-[var(--btn-border)] text-[color:var(--text-color-primary)]"
                             >
                                 {ctaSecondaryText}
                             </a>

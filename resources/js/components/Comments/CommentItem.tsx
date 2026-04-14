@@ -82,7 +82,7 @@ export default function CommentItem({ comment, insightSlug, insightId, depth = 0
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-bold text-sm">{comment.user?.name || 'Anonymous'}</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest opacity-30">
+                            <span className="text-[10px] font-bold tracking-widest opacity-30">
                                 {timeAgo(comment.created_at)}
                             </span>
                         </div>
@@ -107,7 +107,7 @@ export default function CommentItem({ comment, insightSlug, insightId, depth = 0
                             {depth < maxDepth && (
                                 <button
                                     onClick={() => auth?.user ? setShowReplyForm(!showReplyForm) : router.visit('/login')}
-                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider opacity-40 hover:opacity-100 hover:bg-agency-primary/5 dark:hover:bg-white/5 transition-all"
+                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold tracking-wider opacity-40 hover:opacity-100 hover:bg-agency-primary/5 dark:hover:bg-white/5 transition-all"
                                 >
                                     <Reply className="size-3.5" />
                                     Reply

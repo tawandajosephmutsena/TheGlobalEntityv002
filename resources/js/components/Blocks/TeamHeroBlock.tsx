@@ -25,8 +25,8 @@ const TeamHeroBlock: React.FC<TeamHeroBlockProps> = ({
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-4xl">
                     <AnimatedSection animation="fade-up">
-                        <span className="text-agency-accent font-bold tracking-widest text-xs mb-8 block [font-variant-caps:small-caps]">{subtitle}</span>
-                        <h1 className="font-display text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12 [font-variant-caps:small-caps]">
+                        <span className="text-agency-accent font-bold tracking-widest text-xs mb-8 block">{subtitle}</span>
+                        <h1 className="font-display text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
                             {title.split(' ')[0]} <br/>
                             <span className="opacity-30 italic">{title.split(' ').slice(1).join(' ')}</span>
                         </h1>

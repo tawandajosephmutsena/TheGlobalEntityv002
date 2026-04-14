@@ -41,7 +41,9 @@ class PodcastPublicController extends Controller
             ->withCount(['podcasts' => function ($q) {
                 $q->published();
             }])
-            ->having('podcasts_count', '>', 0)
+            ->whereHas('podcasts', function ($q) {
+                $q->published();
+            })
             ->orderBy('name')
             ->get();
 
@@ -107,7 +109,7 @@ class PodcastPublicController extends Controller
         if ($request->boolean('categories')) {
             $categories = Category::where('type', 'insight')
                 ->withCount(['podcasts' => fn ($q) => $q->published()])
-                ->having('podcasts_count', '>', 0)
+                ->whereHas('podcasts', fn ($q) => $q->published())
                 ->orderBy('name')
                 ->get();
             return response()->json(['categories' => $categories]);

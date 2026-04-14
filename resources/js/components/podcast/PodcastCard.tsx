@@ -78,12 +78,12 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                         {/* Top Badges */}
                         <div className="absolute inset-x-6 top-6 flex justify-between items-start pointer-events-none">
                             <div className="flex gap-2">
-                                <div className="px-4 py-2 rounded-full bg-black/40 text-white text-[10px] font-black uppercase tracking-widest backdrop-blur-xl border border-white/10 flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-700">
+                                <div className="px-4 py-2 rounded-full bg-black/40 text-white text-[10px] font-black tracking-widest backdrop-blur-xl border border-white/10 flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-700">
                                     {podcast.media_type === 'video' ? <Video className="size-3.5" /> : <Headphones className="size-3.5" />}
                                     {podcast.media_type}
                                 </div>
                             </div>
-                            <div className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 animate-in fade-in slide-in-from-top-4 duration-700 delay-100">
+                            <div className="px-4 py-2 rounded-full bg-primary text-primary-foreground text-[10px] font-black tracking-widest shadow-lg shadow-primary/20 animate-in fade-in slide-in-from-top-4 duration-700 delay-100">
                                 Featured
                             </div>
                         </div>
@@ -100,7 +100,7 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                                 <PodcastCategoryBadge category={podcast.category} />
                             ) : null}
                             <div className="h-4 w-px bg-border/50" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">
+                            <span className="text-[11px] font-black tracking-[0.2em] text-muted-foreground/50">
                                 {displayDate}
                             </span>
                         </div>
@@ -116,11 +116,11 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                         )}
 
                         <div className="flex items-center gap-8 pt-4 border-t border-border/40">
-                            <span className="flex items-center gap-2.5 text-xs font-black uppercase tracking-widest text-muted-foreground/60 group-hover:text-foreground transition-colors">
+                            <span className="flex items-center gap-2.5 text-xs font-black tracking-widest text-muted-foreground/60 group-hover:text-foreground transition-colors">
                                 <Play className="size-4 text-primary fill-current opacity-40" />
                                 {podcast.play_count.toLocaleString()} Plays
                             </span>
-                            <span className="flex items-center gap-2.5 text-xs font-black uppercase tracking-widest text-muted-foreground/60">
+                            <span className="flex items-center gap-2.5 text-xs font-black tracking-widest text-muted-foreground/60">
                                 <Clock className="size-4 text-primary opacity-40" />
                                 {podcast.formatted_duration}
                             </span>
@@ -157,9 +157,9 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                 <div className="flex-1 min-w-0 space-y-2">
                     <h4 className="text-base font-black truncate group-hover:text-primary transition-colors duration-500">{podcast.title}</h4>
                     <div className="flex items-center gap-3">
-                        <span className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">{podcast.formatted_duration}</span>
+                        <span className="text-[10px] text-muted-foreground font-black tracking-widest">{podcast.formatted_duration}</span>
                         <div className="size-1 rounded-full bg-border" />
-                        <span className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">{displayDate}</span>
+                        <span className="text-[10px] text-muted-foreground font-black tracking-widest">{displayDate}</span>
                     </div>
                 </div>
             </Link>
@@ -200,7 +200,7 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                     </div>
                 </div>
 
-                <div className="absolute bottom-6 right-6 px-3 py-1.5 rounded-full bg-black/60 text-white text-[10px] font-black uppercase tracking-widest backdrop-blur-xl border border-white/10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                <div className="absolute bottom-6 right-6 px-3 py-1.5 rounded-full bg-black/60 text-white text-[10px] font-black tracking-widest backdrop-blur-xl border border-white/10 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
                     {podcast.formatted_duration}
                 </div>
             </div>
@@ -217,14 +217,14 @@ export function PodcastCard({ podcast, variant = 'default', className }: Podcast
                             <PodcastCategoryBadge category={podcast.category} size="sm" />
                         ) : null}
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40 shrink-0">
+                    <span className="text-[10px] font-black tracking-widest text-muted-foreground/40 shrink-0">
                         {podcast.media_type}
                     </span>
                 </div>
                 <h3 className="font-black leading-[1.2] tracking-tight line-clamp-2 group-hover:text-primary transition-colors duration-500 text-lg">
                     {podcast.title}
                 </h3>
-                <div className="pt-3 mt-auto flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 border-t border-border/40">
+                <div className="pt-3 mt-auto flex items-center justify-between text-[10px] font-black tracking-widest text-muted-foreground/60 border-t border-border/40">
                     <span className="flex items-center gap-1.5">
                         <Play className="size-3 text-primary fill-current opacity-30" /> 
                         {podcast.play_count.toLocaleString()}

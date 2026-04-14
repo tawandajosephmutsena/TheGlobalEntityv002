@@ -97,15 +97,15 @@ export const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews, festivalI
 
                             <div className="space-y-4 mb-8">
                                 <div className="flex items-center justify-between">
-                                    <span className="text-xs uppercase tracking-widest text-muted-foreground">Vibe</span>
+                                    <span className="text-xs tracking-widest text-muted-foreground">Vibe</span>
                                     <StarRating rating={review.vibe_rating} />
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-xs uppercase tracking-widest text-muted-foreground">Safety</span>
+                                    <span className="text-xs tracking-widest text-muted-foreground">Safety</span>
                                     <StarRating rating={review.safety_rating} />
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-xs uppercase tracking-widest text-muted-foreground">Earth</span>
+                                    <span className="text-xs tracking-widest text-muted-foreground">Earth</span>
                                     <StarRating rating={review.sustainability_rating} />
                                 </div>
                             </div>

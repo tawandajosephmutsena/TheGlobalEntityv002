@@ -134,16 +134,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     ref={marqueeRef}
                     className="whitespace-nowrap flex flex-none will-change-transform"
                 >
-                    <span className="text-[20vw] font-black uppercase leading-none px-4 font-display">
+                    <span className="text-[20vw] font-black leading-none px-4 font-display">
                         {marqueeText}
                     </span>
-                    <span className="text-[20vw] font-black uppercase leading-none px-4 font-display">
+                    <span className="text-[20vw] font-black leading-none px-4 font-display">
                         {marqueeText}
                     </span>
-                    <span className="text-[20vw] font-black uppercase leading-none px-4 font-display">
+                    <span className="text-[20vw] font-black leading-none px-4 font-display">
                         {marqueeText}
                     </span>
-                    <span className="text-[20vw] font-black uppercase leading-none px-4 font-display">
+                    <span className="text-[20vw] font-black leading-none px-4 font-display">
                         {marqueeText}
                     </span>
                 </div>
@@ -212,7 +212,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 {/* Floating Tag */}
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-current/10 bg-current/5 backdrop-blur-sm mb-8 animate-[bloom_1s_ease-out_0.2s_both]">
                     <div className="size-2 rounded-full bg-agency-accent animate-pulse"></div>
-                    <span className="text-xs font-bold tracking-widest uppercase opacity-80">{subtitle}</span>
+                    <span className="text-xs font-bold tracking-widest opacity-80">{subtitle}</span>
                 </div>
 
                 {/* Title with Gradient and Custom Typography */}
@@ -265,7 +265,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Scroll Indicator */}
             <div className="relative z-20 flex flex-col items-center gap-2 opacity-40 animate-bounce pb-10 mt-8">
-                <span className="text-[10px] uppercase tracking-widest font-bold">Scroll Down</span>
+                <span className="text-[10px] tracking-widest font-bold">Scroll Down</span>
                 <div className="w-[1px] h-10 bg-current"></div>
             </div>
 

@@ -113,12 +113,12 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                 {(title || subtitle) && (
                     <div className="horizontal-header container mx-auto px-4 md:px-8 mb-12">
                         {subtitle && (
-                            <span className="text-primary font-bold [font-variant-caps:small-caps] tracking-widest text-xs mb-4 block">
+                            <span className="text-primary font-bold tracking-widest text-xs mb-4 block">
                                 {subtitle}
                             </span>
                         )}
                         {title && (
-                            <h2 className="text-5xl md:text-8xl font-black [font-variant-caps:small-caps] tracking-tighter leading-none">
+                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none">
                                 {title}
                             </h2>
                         )}
@@ -143,7 +143,7 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                             
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end transform transition-transform duration-500 group-hover:translate-y-[-10px]">
                                 {item.tag && (
-                                    <span className="text-xs font-bold [font-variant-caps:small-caps] tracking-widest text-primary mb-2">
+                                    <span className="text-xs font-bold tracking-widest text-primary mb-2">
                                         {item.tag}
                                     </span>
                                 )}
@@ -169,7 +169,7 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                     {/* Final call to action or spacer */}
                     <div className="w-[300px] md:w-[600px] shrink-0 flex items-center justify-center">
                         <div className="text-center group cursor-pointer">
-                            <h3 className="text-3xl md:text-6xl font-black [font-variant-caps:small-caps] transition-colors group-hover:text-primary">
+                            <h3 className="text-3xl md:text-6xl font-black transition-colors group-hover:text-primary">
                                 See All <br /> Projects
                             </h3>
                             <div className="mt-8 mx-auto w-20 h-20 rounded-full bg-primary flex items-center justify-center transition-transform group-hover:scale-125">

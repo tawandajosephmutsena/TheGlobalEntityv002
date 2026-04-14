@@ -154,7 +154,7 @@ export function PodcastPlayer({
                                     href={getYouTubeWatchUrl(ytId)}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="absolute bottom-4 right-4 z-10 text-[10px] font-black uppercase tracking-widest text-white/40 hover:text-white bg-black/40 hover:bg-black/60 px-4 py-2 rounded-full backdrop-blur-md border border-white/5 transition-all flex items-center gap-2"
+                                    className="absolute bottom-4 right-4 z-10 text-[10px] font-black tracking-widest text-white/40 hover:text-white bg-black/40 hover:bg-black/60 px-4 py-2 rounded-full backdrop-blur-md border border-white/5 transition-all flex items-center gap-2"
                                 >
                                     Watch on YouTube <ExternalLink className="size-3" />
                                 </a>
@@ -217,7 +217,7 @@ export function PodcastPlayer({
                     {mediaType === 'video' && !isPlaying && (
                          <div className="absolute bottom-6 left-6 z-10 px-4 py-2 rounded-2xl bg-black/40 backdrop-blur-md border border-white/10">
                             <h3 className="text-white font-black text-sm tracking-tight">{title}</h3>
-                            {artist && <p className="text-white/60 text-[11px] font-bold uppercase tracking-wider">{artist}</p>}
+                            {artist && <p className="text-white/60 text-[11px] font-bold tracking-wider">{artist}</p>}
                          </div>
                     )}
                 </div>
@@ -248,8 +248,8 @@ export function PodcastPlayer({
                     )}
                     
                     <div className="flex flex-col justify-center min-w-0 max-w-[150px]">
-                        <h3 className="text-[11px] font-black uppercase tracking-tight truncate leading-none mb-1" title={title}>{title}</h3>
-                        {artist && <p className="text-[9px] opacity-40 font-bold uppercase truncate leading-none">{artist}</p>}
+                        <h3 className="text-[11px] font-black tracking-tight truncate leading-none mb-1" title={title}>{title}</h3>
+                        {artist && <p className="text-[9px] opacity-40 font-bold truncate leading-none">{artist}</p>}
                     </div>
 
                     <div className="flex-1 h-6 min-w-[100px] hidden sm:block">
@@ -280,7 +280,7 @@ export function PodcastPlayer({
 
                         <button
                             onClick={cyclePlaybackRate}
-                            className="h-7 px-2 rounded-lg bg-secondary/30 text-[9px] font-black uppercase tracking-widest text-secondary-foreground hover:bg-secondary transition-all hidden lg:block"
+                            className="h-7 px-2 rounded-lg bg-secondary/30 text-[9px] font-black tracking-widest text-secondary-foreground hover:bg-secondary transition-all hidden lg:block"
                         >
                             {playbackRate}x
                         </button>
@@ -312,7 +312,7 @@ export function PodcastPlayer({
                             <div className="space-y-1 mb-6 text-center md:text-left">
                                 <h3 className="text-2xl md:text-3xl font-black tracking-tighter leading-none truncate" title={title}>{title}</h3>
                                 {artist && (
-                                    <p className="text-sm md:text-base font-bold text-muted-foreground/60 uppercase tracking-widest truncate" title={artist}>{artist}</p>
+                                    <p className="text-sm md:text-base font-bold text-muted-foreground/60 tracking-widest truncate" title={artist}>{artist}</p>
                                 )}
                             </div>
                         )}
@@ -329,7 +329,7 @@ export function PodcastPlayer({
                             />
 
                             {/* Time display */}
-                            <div className="flex items-center justify-between text-[11px] font-black uppercase tracking-widest text-muted-foreground/40">
+                            <div className="flex items-center justify-between text-[11px] font-black tracking-widest text-muted-foreground/40">
                                 <span>{formatTime(currentTime)}</span>
                                 <span>-{formatTime(duration - currentTime)}</span>
                             </div>
@@ -371,11 +371,11 @@ export function PodcastPlayer({
                             {/* Secondary Controls Area */}
                             <div className="flex items-center gap-6 w-full sm:w-auto justify-center sm:justify-end">
                                 {/* Playback speed */}
-                                <button
-                                    onClick={cyclePlaybackRate}
-                                    className="h-10 px-4 rounded-xl bg-secondary/50 text-[11px] font-black uppercase tracking-widest text-secondary-foreground hover:bg-secondary transition-all active:scale-95"
-                                    title="Playback Speed"
-                                >
+                                    <button
+                                        onClick={cyclePlaybackRate}
+                                        className="h-10 px-4 rounded-xl bg-secondary/50 text-[11px] font-black tracking-widest text-secondary-foreground hover:bg-secondary transition-all active:scale-95"
+                                        title="Playback Speed"
+                                    >
                                     {playbackRate}x
                                 </button>
 

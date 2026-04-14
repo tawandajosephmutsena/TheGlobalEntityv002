@@ -22,15 +22,15 @@ export default function Team({ teamMembers }: Props) {
             {/* Minimal High-Impact Hero */}
             <section className="bg-white dark:bg-agency-dark pt-40 pb-20 relative overflow-hidden">
                 <div className="absolute top-20 right-0 w-full overflow-hidden opacity-[0.03] select-none pointer-events-none text-right">
-                    <span className="text-[25vw] font-black uppercase whitespace-nowrap leading-none block marquee-reverse">
-                        COLLECTIVE GENIUS COLLECTIVE GENIUS
+                    <span className="text-[25vw] font-black whitespace-nowrap leading-none block marquee-reverse">
+                        Collective Genius Collective Genius
                     </span>
                 </div>
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="max-w-4xl">
-                        <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Who We Are</span>
-                        <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
+                        <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">Who We Are</span>
+                        <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
                             The <br/>
                             <span className="opacity-30 italic">Dream Team.</span>
                         </h1>
@@ -81,8 +81,8 @@ export default function Team({ teamMembers }: Props) {
 
                                 {/* Base Content */}
                                 <div className="text-center w-full px-4">
-                                    <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-agency-accent mb-2 block">{member.position}</span>
-                                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-agency-primary dark:text-white group-hover:italic group-hover:translate-x-2 transition-all duration-500">
+                                    <span className="text-[10px] font-bold tracking-[0.5em] text-agency-accent mb-2 block">{member.position}</span>
+                                    <h3 className="text-3xl md:text-5xl font-black tracking-tighter text-agency-primary dark:text-white group-hover:italic group-hover:translate-x-2 transition-all duration-500">
                                         {member.name.split(' ')[0]} <br/>
                                         <span className="opacity-30">{member.name.split(' ').slice(1).join(' ')}</span>
                                     </h3>
@@ -98,13 +98,13 @@ export default function Team({ teamMembers }: Props) {
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
                         <div className="md:col-span-8 p-16 rounded-[60px] bg-agency-accent text-agency-primary flex flex-col justify-between min-h-[400px]">
-                            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-none">
                                 We Value <br/>
                                 Quality Above <br/>
                                 <span className="italic">Everything.</span>
                             </h2>
                             <div className="flex justify-between items-end">
-                                <p className="max-w-md font-bold uppercase tracking-tight opacity-70">
+                                <p className="max-w-md font-bold tracking-tight opacity-70">
                                     Our culture is built on mutual respect, continuous learning, and a relentless pursuit of excellence.
                                 </p>
                                 <div className="size-20 rounded-full border border-agency-primary/20 flex items-center justify-center">
@@ -114,7 +114,7 @@ export default function Team({ teamMembers }: Props) {
                         </div>
                         <div className="md:col-span-4 p-12 rounded-[60px] bg-agency-primary dark:bg-white/5 text-agency-secondary dark:text-white flex flex-col justify-center text-center dark:border dark:border-white/10">
                             <span className="text-6xl font-black mb-4 text-agency-secondary dark:text-white">100%</span>
-                            <span className="text-xs font-bold uppercase tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">Human Centered</span>
+                            <span className="text-xs font-bold tracking-widest text-agency-secondary dark:text-white opacity-70 dark:opacity-90">Human Centered</span>
                         </div>
                     </div>
                 </div>
@@ -123,13 +123,13 @@ export default function Team({ teamMembers }: Props) {
             {/* Join the Tribe */}
             <section className="bg-agency-primary dark:bg-black py-40 relative">
                 <div className="mx-auto max-w-5xl px-4 text-center">
-                    <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Careers</span>
-                    <h2 className="text-5xl md:text-8xl font-black text-agency-secondary dark:text-white uppercase tracking-tighter mb-12">
+                    <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">Careers</span>
+                    <h2 className="text-5xl md:text-8xl font-black text-agency-secondary dark:text-white tracking-tighter mb-12">
                         Be Part of <br/>
                         <span className="text-agency-accent italic">The Movement.</span>
                     </h2>
-                    <a href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-secondary dark:bg-white text-agency-primary font-black text-lg uppercase tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
-                        JOIN OUR TEAM
+                    <a href="/contact" className="inline-flex h-20 px-12 items-center justify-center rounded-full bg-agency-secondary dark:bg-white text-agency-primary font-black text-lg tracking-widest hover:bg-agency-accent transition-all shadow-2xl">
+                        Join Our Team
                     </a>
                 </div>
             </section>

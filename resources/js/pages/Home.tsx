@@ -56,17 +56,17 @@ export default function Home() {
                 <section className="gradient-mesh gradient-motion-bg py-40 relative overflow-hidden">
                     <div className="gradient-divider-glow absolute top-0 left-0 right-0" aria-hidden="true"></div>
                     <div className="mx-auto max-w-7xl px-4 flex flex-col items-center text-center relative z-10">
-                        <span className="theme-gradient-text font-bold uppercase tracking-[0.4em] text-xs mb-8 block">Start a Project</span>
-                        <h2 className="text-6xl md:text-9xl font-black uppercase tracking-tighter text-agency-primary dark:text-white leading-[0.8] mb-12">
+                        <span className="theme-gradient-text font-bold tracking-[0.4em] text-xs mb-8 block">Start a Project</span>
+                        <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-agency-primary dark:text-white leading-[0.8] mb-12">
                             Build the <br/>
                             <span className="italic theme-gradient-text">future.</span>
                         </h2>
                         <div className="flex flex-col sm:flex-row items-center gap-8">
                             <Link href="/contact" className="group relative inline-flex items-center justify-center size-48 md:size-64 rounded-full theme-gradient-animated text-white font-black text-xl tracking-tighter hover:scale-105 transition-all shadow-2xl theme-gradient-glow">
-                                <span className="relative z-10">GET STARTED</span>
+                                <span className="relative z-10">Get Started</span>
                             </Link>
                             <div className="text-left">
-                                <p className="text-agency-primary/60 dark:text-white/60 mb-2 font-mono uppercase tracking-widest text-xs">Email us at</p>
+                                <p className="text-agency-primary/60 dark:text-white/60 mb-2 font-mono tracking-widest text-xs">Email us at</p>
                                 <a href="mailto:hello@otto-mate.space" className="text-2xl md:text-3xl font-bold dark:text-white hover:theme-gradient-text transition-colors">hello@otto-mate.space</a>
                             </div>
                         </div>

@@ -36,9 +36,9 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
         { color: 'bg-agency-secondary/10', position: { x: '30%', y: '70%' }, size: 'w-80 h-80' },
     ],
     marginalia = [
-        { id: '1', type: 'text', content: 'VOL. 018 // SHIFTING SANDS', position: { x: '15%', y: '25%' }, rotation: -12, parallaxSpeed: 1.5 },
-        { id: '2', type: 'stamp', content: 'AUTHENTIC REVELRY', position: { x: '80%', y: '15%' }, rotation: 8, parallaxSpeed: 2 },
-        { id: '3', type: 'text', content: 'COORDINATES: LAT 51.5, LONG 0.12', position: { x: '10%', y: '75%' }, rotation: 5, parallaxSpeed: 1.2 },
+        { id: '1', type: 'text', content: 'Vol. 018 // Shifting Sands', position: { x: '15%', y: '25%' }, rotation: -12, parallaxSpeed: 1.5 },
+        { id: '2', type: 'stamp', content: 'Authentic Revelry', position: { x: '80%', y: '15%' }, rotation: 8, parallaxSpeed: 2 },
+        { id: '3', type: 'text', content: 'Coordinates: Lat 51.5, Long 0.12', position: { x: '10%', y: '75%' }, rotation: 5, parallaxSpeed: 1.2 },
     ]
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -102,7 +102,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
                         <div 
                             className={cn(
                                 "px-4 py-2 border border-agency-primary/10 rounded-sm liquid-glass",
-                                "text-[10px] font-mono tracking-[0.3em] [font-variant-caps:small-caps] transition-colors duration-500",
+                                "text-[10px] font-mono tracking-[0.3em] transition-colors duration-500",
                                 item.type === 'stamp' ? "bg-agency-accent/5 border-agency-accent/20 text-agency-accent rotate-12" : "text-agency-primary/40",
                                 `rotate-[${item.rotation || 0}deg]`
                             )}
@@ -118,7 +118,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
                     <AnimatedSection animation="fade-up" delay={200}>
                         <div className="flex items-center gap-4 mb-12">
                             <span className="w-12 h-[1px] bg-agency-primary/20" />
-                            <span className="text-xs font-bold [font-variant-caps:small-caps] tracking-[0.4em] text-agency-primary/60">
+                            <span className="text-xs font-bold tracking-[0.4em] text-agency-primary/60">
                                 {badge}
                             </span>
                             <span className="w-12 h-[1px] bg-agency-primary/20" />
@@ -147,7 +147,7 @@ const FestivalArchiveHero: React.FC<FestivalArchiveHeroProps> = ({
 
             {/* Scroll Indicator Trail (Partial) */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-40 z-20">
-                <span className="text-[10px] font-mono tracking-[0.5em] [font-variant-caps:small-caps] vertical-text">Scroll to Unravel</span>
+                <span className="text-[10px] font-mono tracking-[0.5em] vertical-text">Scroll to Unravel</span>
                 <div className="w-[1px] h-20 bg-gradient-to-b from-agency-primary to-transparent" />
             </div>
         </section>

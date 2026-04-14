@@ -155,7 +155,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     {/* Bottom Metadata */}
                     <div className="flex flex-col items-center gap-4 pt-8 border-t border-border/20 w-full">
                         <div className="flex items-center gap-8 group cursor-pointer mb-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                            <span className="text-xs font-bold uppercase tracking-[0.2em] group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
+                            <span className="text-xs font-bold tracking-[0.2em] group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
                             <div className="size-8 rounded-full border border-border/40 flex items-center justify-center group-hover:theme-gradient-bg group-hover:border-transparent group-hover:text-white transition-all transform group-hover:-translate-y-1">
                                 <span className="material-symbols-outlined text-sm">arrow_upward</span>
                             </div>
@@ -163,11 +163,11 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
 
                         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
                             <span className="text-sm opacity-40 font-medium tracking-wide">
-                                © {new Date().getFullYear()} {site.name?.toUpperCase() || 'OTTOMATE'} {footerCopyrightSuffix}
+                                © {new Date().getFullYear()} {site.name || 'Ottomate'} {footerCopyrightSuffix}
                             </span>
                             <div className="flex gap-6">
                                 {legalLinks.map((link) => (
-                                    <Link key={link.name} href={link.href} className="text-[10px] opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
+                                    <Link key={link.name} href={link.href} className="text-[10px] opacity-30 hover:opacity-100 transition-opacity tracking-widest font-bold">
                                         {link.name}
                                     </Link>
                                 ))}
@@ -308,10 +308,10 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                 {/* Bottom Bar */}
                 <div className="pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex items-center gap-8 order-2 md:order-1">
-                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name?.toUpperCase() || 'OTTOMATE'} {footerCopyrightSuffix}</span>
+                        <span className="text-sm opacity-30 font-medium">© {new Date().getFullYear()} {site.name || 'Ottomate'} {footerCopyrightSuffix}</span>
                         <div className="hidden md:flex gap-6">
                             {legalLinks.map((link) => (
-                                <Link key={link.name} href={link.href} className="text-xs opacity-30 hover:opacity-100 transition-opacity uppercase tracking-widest font-bold">
+                                <Link key={link.name} href={link.href} className="text-xs opacity-30 hover:opacity-100 transition-opacity tracking-widest font-bold">
                                     {link.name}
                                 </Link>
                             ))}
@@ -319,7 +319,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
                     </div>
 
                     <div className="flex items-center gap-2 order-1 md:order-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                        <span className="text-xs font-bold uppercase tracking-widest group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
+                        <span className="text-xs font-bold tracking-widest group-hover:theme-gradient-text transition-colors">{footerBackToTop}</span>
                         <div className="size-10 rounded-full border border-border flex items-center justify-center group-hover:theme-gradient-bg group-hover:border-transparent group-hover:text-white transition-all">
                             <span className="material-symbols-outlined">arrow_upward</span>
                         </div>
@@ -329,7 +329,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
 
             {/* Background Massive Text */}
             <div className="absolute bottom-[-5%] left-1/2 -translate-x-1/2 pointer-events-none select-none opacity-[0.03] whitespace-nowrap">
-                <span className="text-[25vw] font-black uppercase leading-none">{site.name || 'OTTOMATE'}</span>
+                <span className="text-[25vw] font-black leading-none">{site.name || 'Ottomate'}</span>
             </div>
         </footer>
     );

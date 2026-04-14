@@ -67,12 +67,12 @@ const TeamGridBlock: React.FC<TeamGridBlockProps> = ({
                 {(title || subtitle) && (
                     <div className="mb-24 text-center">
                         {subtitle && (
-                            <span className="text-agency-accent font-black [font-variant-caps:small-caps] tracking-tighter text-xs mb-4 block">
+                            <span className="text-agency-accent font-black tracking-tighter text-xs mb-4 block">
                                 {subtitle}
                             </span>
                         )}
                         {title && (
-                            <h2 className="text-5xl md:text-7xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white">
+                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-agency-primary dark:text-white">
                                 {title}
                             </h2>
                         )}
@@ -114,8 +114,8 @@ const TeamGridBlock: React.FC<TeamGridBlockProps> = ({
 
                             {/* Base Content */}
                             <div className="text-center w-full px-4">
-                                <span className="text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-agency-accent mb-2 block">{member.position}</span>
-                                <h3 className="text-3xl md:text-5xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white group-hover:italic group-hover:translate-x-2 transition-all duration-500">
+                                <span className="text-[10px] font-black tracking-tighter text-agency-accent mb-2 block">{member.position}</span>
+                                <h3 className="text-3xl md:text-5xl font-black tracking-tighter text-agency-primary dark:text-white group-hover:italic group-hover:translate-x-2 transition-all duration-500">
                                     {member.name ? member.name.split(' ')[0] : ''} <br/>
                                     <span className="opacity-30">{member.name ? member.name.split(' ').slice(1).join(' ') : ''}</span>
                                 </h3>

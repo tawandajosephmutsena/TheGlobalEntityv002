@@ -23,7 +23,7 @@ const RatingSelector = ({
 }) => {
     return (
         <div className="flex flex-col gap-2">
-            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{label}</span>
+            <span className="text-sm font-medium text-muted-foreground tracking-wider">{label}</span>
             <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((star) => (
                     <motion.button
@@ -102,7 +102,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ festivalId, onSuccess, o
                 </div>
 
                 <div className="space-y-3">
-                    <Label htmlFor="body" className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Your Experience</Label>
+                    <Label htmlFor="body" className="text-sm font-medium text-muted-foreground tracking-wider">Your Experience</Label>
                     <Textarea
                         id="body"
                         value={data.body}

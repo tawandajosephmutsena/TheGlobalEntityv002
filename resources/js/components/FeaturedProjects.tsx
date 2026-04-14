@@ -152,10 +152,10 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                 <div className="lg:w-[40%] relative lg:border-r border-agency-primary/5 dark:border-white/5">
                     <aside className="lg:sticky lg:top-0 lg:h-screen p-6 lg:p-24 flex flex-col justify-center gap-8">
                         <header className="space-y-4">
-                            <span className="text-agency-accent font-bold uppercase tracking-widest text-sm block">
+                            <span className="text-agency-accent font-bold tracking-widest text-sm block">
                                 {subtitle}
                             </span>
-                            <h2 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-agency-primary dark:text-white leading-[0.85]">
+                            <h2 className="text-5xl lg:text-7xl font-black tracking-tighter text-agency-primary dark:text-white leading-[0.85]">
                                 {title.split(' ')[0]} <br/>
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-current to-transparent opacity-30">
                                     {title.split(' ').slice(1).join(' ') || 'Projects'}
@@ -213,7 +213,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                             <div className="flex items-center gap-4 mb-8">
                                 <button 
                                     onClick={() => handleDownload(project)}
-                                    className="flex items-center gap-2 bg-agency-accent text-agency-primary px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-lg active:scale-95"
+                                    className="flex items-center gap-2 bg-agency-accent text-agency-primary px-6 py-3 rounded-full font-bold text-xs tracking-widest hover:scale-105 transition-all shadow-lg active:scale-95"
                                 >
                                     <Download className="size-4" />
                                     Download
@@ -250,9 +250,9 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                             <div className="flex justify-between items-end border-b border-agency-primary/10 dark:border-white/10 pb-10">
                                 <div className="max-w-md">
                                     <div className="flex items-center gap-3 mb-4">
-                                        <span className="text-xs font-mono opacity-40 uppercase tracking-widest">0{index + 1}</span>
+                                        <span className="text-xs font-mono opacity-40 tracking-widest">0{index + 1}</span>
                                         <div className="h-px w-8 bg-current opacity-20"></div>
-                                        <span className="text-xs font-bold text-agency-accent uppercase tracking-widest">{project.client || 'Client'}</span>
+                                        <span className="text-xs font-bold text-agency-accent tracking-widest">{project.client || 'Client'}</span>
                                     </div>
                                     <Link href={`/portfolio/${project.slug}`}>
                                         <h3 className="text-4xl md:text-5xl font-black text-agency-primary dark:text-white group-hover:text-agency-accent transition-colors duration-300 tracking-tighter cursor-pointer">
@@ -266,7 +266,7 @@ export const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                                 <div className="text-right hidden sm:block">
                                     <div className="flex flex-wrap justify-end gap-2">
                                         {project.technologies?.slice(0, 3).map((tech: string, i: number) => (
-                                            <span key={i} className="text-[10px] font-bold uppercase tracking-widest border border-current/20 px-3 py-1 rounded-full opacity-60">
+                                            <span key={i} className="text-[10px] font-bold tracking-widest border border-current/20 px-3 py-1 rounded-full opacity-60">
                                                 {tech}
                                             </span>
                                         ))}

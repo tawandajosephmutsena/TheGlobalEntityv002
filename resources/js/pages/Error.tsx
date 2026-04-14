@@ -93,7 +93,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ status }) => {
                         </div>
                     </div>
 
-                    <h1 className="reveal-text text-4xl md:text-6xl font-black uppercase tracking-tighter mb-6">
+                    <h1 className="reveal-text text-4xl md:text-6xl font-black tracking-tighter mb-6">
                         {title}
                     </h1>
                     

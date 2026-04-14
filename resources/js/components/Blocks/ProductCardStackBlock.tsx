@@ -88,7 +88,7 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
 
                 <div className="flex-1 flex flex-col justify-end text-left">
                     <div className="space-y-1">
-                        <h2 className="font-display font-black text-3xl text-on-surface tracking-tighter leading-none [font-variant-caps:small-caps] italic-not-really">
+                        <h2 className="font-display font-black text-3xl text-on-surface tracking-tighter leading-none italic-not-really">
                             {product.title}
                         </h2>
                         {product.subtitle && (
@@ -102,7 +102,7 @@ const Card = ({ product, index, totalCards, isExpanded }: CardProps) => {
                         <div className="mt-8 pt-8 border-t border-primary/10 grid grid-cols-2 gap-4">
                             {product.specs.slice(0, 2).map((spec: { label: string; value: string }, i: number) => (
                                 <div key={i} className="flex flex-col gap-1">
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-primary/60">{spec.label}</span>
+                                    <span className="text-[10px] font-black tracking-widest text-primary/60">{spec.label}</span>
                                     <span className="text-sm font-bold text-on-surface">{spec.value}</span>
                                 </div>
                             ))}

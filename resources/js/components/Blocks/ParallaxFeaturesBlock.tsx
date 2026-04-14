@@ -102,12 +102,12 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
                 {(title || subtitle) && (
                     <div className="mb-20 text-center max-w-3xl mx-auto">
                         {subtitle && (
-                            <span className="inline-block text-primary font-bold [font-variant-caps:small-caps] tracking-widest text-xs mb-4">
+                            <span className="inline-block text-primary font-bold tracking-widest text-xs mb-4">
                                 {subtitle}
                             </span>
                         )}
                         {title && (
-                            <h2 className="text-4xl md:text-6xl font-black [font-variant-caps:small-caps] tracking-tighter leading-none mb-6">
+                            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-6">
                                 {title}
                             </h2>
                         )}
@@ -153,7 +153,7 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
                                     <div className="text-5xl md:text-7xl font-outline text-transparent opacity-10 font-black">
                                         0{index + 1}
                                     </div>
-                                    <h3 className="text-3xl md:text-5xl font-black [font-variant-caps:small-caps] tracking-tight">
+                                    <h3 className="text-3xl md:text-5xl font-black tracking-tight">
                                         {item.title}
                                     </h3>
                                 </div>
@@ -163,7 +163,7 @@ export const ParallaxFeaturesBlock: React.FC<ParallaxFeaturesBlockProps> = ({
                                 />
                                 {item.link && (
                                     <div className="pt-4">
-                                        <a href={item.link} className="group flex items-center gap-2 text-sm font-bold [font-variant-caps:small-caps] tracking-widest hover:text-primary transition-colors">
+                                        <a href={item.link} className="group flex items-center gap-2 text-sm font-bold tracking-widest hover:text-primary transition-colors">
                                             Learn More
                                             <div className="w-8 h-[2px] bg-foreground group-hover:bg-primary group-hover:w-12 transition-all duration-300" />
                                         </a>

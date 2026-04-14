@@ -22,7 +22,7 @@ const paths = {
 
 const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
     steps = [],
-    scriptText = "FOLLOW THE RHYTHM",
+    scriptText = "Follow the rhythm",
     pathType = 'wave',
     color = "var(--agency-accent)"
 }) => {
@@ -47,7 +47,7 @@ const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
             {/* Floating Text */}
             <div className="relative z-10 text-center px-6">
                 <AnimatedSection animation="fade-up">
-                    <h3 className="text-4xl md:text-7xl font-serif italic text-agency-accent/60 leading-none [font-variant-caps:small-caps]">
+                    <h3 className="text-4xl md:text-7xl font-serif italic text-agency-accent/60 leading-none">
                         {scriptText}
                     </h3>
                     <div className="flex items-center justify-center gap-4 mt-8">
@@ -61,7 +61,7 @@ const FestivalProgressTrail: React.FC<FestivalProgressTrailProps> = ({
                                         step.status === 'upcoming' && "bg-agency-primary/20"
                                     )} />
                                     <span className={cn(
-                                        "text-[8px] font-mono tracking-widest mt-2 transition-opacity duration-500 [font-variant-caps:small-caps]",
+                                        "text-[8px] font-mono tracking-widest mt-2 transition-opacity duration-500",
                                         step.status === 'upcoming' ? "text-agency-primary/20" : "text-agency-primary/40"
                                     )}>
                                         {step.label}

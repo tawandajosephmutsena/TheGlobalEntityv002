@@ -128,7 +128,7 @@ const FestivalCardBlock: React.FC<FestivalCardBlockType['content']> = ({
                     
                     {/* Badge Overlay */}
                     <div className="absolute top-6 left-6">
-                        <Badge className="bg-primary/90 text-white backdrop-blur-md border-none px-4 py-1.5 rounded-full text-xs font-bold tracking-widest lowercase [font-variant-caps:small-caps]">
+                        <Badge className="bg-primary/90 text-white backdrop-blur-md border-none px-4 py-1.5 rounded-full text-xs font-bold tracking-widest">
                             Upcoming
                         </Badge>
                     </div>
@@ -158,7 +158,7 @@ const FestivalCardBlock: React.FC<FestivalCardBlockType['content']> = ({
                             <User className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                            <p className="text-[10px] font-mono lowercase [font-variant-caps:small-caps] tracking-widest text-muted-foreground mb-0.5">Hosted by</p>
+                            <p className="text-[10px] font-mono tracking-widest text-muted-foreground mb-0.5">Hosted by</p>
                             <p className="text-sm font-bold">{activeFestival.host}</p>
                         </div>
                         <Sparkles className="w-4 h-4 text-primary ml-auto animate-pulse" />
@@ -176,7 +176,7 @@ const FestivalCardBlock: React.FC<FestivalCardBlockType['content']> = ({
 
                     {showActivities && (
                         <div className="space-y-4">
-                            <h5 className="text-xs font-bold lowercase [font-variant-caps:small-caps] tracking-[0.2em] text-muted-foreground flex items-center gap-2">
+                            <h5 className="text-xs font-bold tracking-[0.2em] text-muted-foreground flex items-center gap-2">
                                 <span className="w-8 h-px bg-primary/30" />
                                 What to expect
                             </h5>
@@ -192,7 +192,7 @@ const FestivalCardBlock: React.FC<FestivalCardBlockType['content']> = ({
                     )}
 
                     <div className="pt-4 flex items-center gap-4">
-                        <Button className="flex-1 h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-bold lowercase [font-variant-caps:small-caps] tracking-widest transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-primary/20" asChild>
+                        <Button className="flex-1 h-14 rounded-2xl bg-primary hover:bg-primary/90 text-white font-bold tracking-widest transition-all duration-300 hover:scale-[1.02] shadow-xl shadow-primary/20" asChild>
                             <Link href={activeFestival.url}>
                                 <Ticket className="w-5 h-5 mr-3" />
                                 {ctaText}

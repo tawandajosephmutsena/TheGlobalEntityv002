@@ -113,7 +113,7 @@ export default function VideoBackgroundHero({
             <div className="relative z-20 flex-grow flex items-center px-6 md:px-12">
                 <div className="max-w-7xl mx-auto w-full pt-48">
                     <div className="max-w-3xl">
-                        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight tracking-tighter mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700 [font-variant-caps:small-caps]">
+                        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-black text-white leading-tight tracking-tighter mb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
                             {title}
                         </h1>
                         <p className="text-xl md:text-2xl text-white/70 max-w-2xl mb-12 animate-in fade-in slide-in-from-bottom-8 delay-150 duration-700">
@@ -123,7 +123,7 @@ export default function VideoBackgroundHero({
                             <Button
                                 asChild
                                 size="lg"
-                                className="h-14 px-8 rounded-full text-lg font-black group bg-primary hover:bg-primary/90 text-primary-foreground border-none [font-variant-caps:small-caps]"
+                                className="h-14 px-8 rounded-full text-lg font-black group bg-primary hover:bg-primary/90 text-primary-foreground border-none"
                             >
                                 <Link href={ctaLink1 || '#'}>
                                     {ctaText1}
@@ -134,7 +134,7 @@ export default function VideoBackgroundHero({
                                 asChild
                                 size="lg"
                                 variant="outline"
-                                className="h-14 px-8 rounded-full text-lg font-black border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black hover:border-white transition-all [font-variant-caps:small-caps]"
+                                className="h-14 px-8 rounded-full text-lg font-black border-white/30 bg-white/10 backdrop-blur-sm text-white hover:bg-white hover:text-black hover:border-white transition-all"
                             >
                                 <Link href={ctaLink2 || '#'}>
                                     {ctaText2}
@@ -150,7 +150,7 @@ export default function VideoBackgroundHero({
                 <div className="relative z-30 bg-black/40 backdrop-blur-md border-t border-white/10 py-12">
                     <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center gap-8">
                         <div className="shrink-0 px-4">
-                                <p className="text-white/40 text-sm font-medium tracking-widest whitespace-nowrap [font-variant-caps:small-caps]">
+                                <p className="text-white/40 text-sm font-medium tracking-widest whitespace-nowrap">
                                 {trustedByText}
                             </p>
                         </div>

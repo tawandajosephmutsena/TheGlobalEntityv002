@@ -16,8 +16,8 @@ const ProcessBlock: React.FC<ProcessBlockProps> = ({ title, subtitle, items }) =
         <section className="py-24 bg-white dark:bg-black px-4">
             <div className="max-w-7xl mx-auto">
                 <AnimatedSection animation="fade-up" className="mb-20">
-                    <span className="text-agency-accent font-bold [font-variant-caps:small-caps] tracking-[0.4em] text-xs mb-8 block">{subtitle}</span>
-                    <h2 className="text-6xl md:text-8xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white leading-none">
+                    <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">{subtitle}</span>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter text-agency-primary dark:text-white leading-none">
                         {title}
                     </h2>
                 </AnimatedSection>
@@ -28,7 +28,7 @@ const ProcessBlock: React.FC<ProcessBlockProps> = ({ title, subtitle, items }) =
                             <div className="relative group">
                                 <div className="text-8xl font-black text-agency-primary/5 dark:text-white/5 absolute -top-12 -left-4 group-hover:text-agency-accent/10 transition-colors duration-500">{item.step}</div>
                                 <div className="relative pt-4">
-                                    <h3 className="text-2xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary dark:text-white mb-4 group-hover:text-agency-accent transition-colors">
+                                    <h3 className="text-2xl font-black tracking-tighter text-agency-primary dark:text-white mb-4 group-hover:text-agency-accent transition-colors">
                                         {item.title}
                                     </h3>
                                     <p className="text-agency-primary/60 dark:text-white/60 font-medium leading-relaxed">

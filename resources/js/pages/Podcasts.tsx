@@ -68,7 +68,7 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
                     
                     <div className="relative max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-12">
                         {/* Status Badge */}
-                        <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-effect border border-white/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] shadow-xl animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-apple">
+                        <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass-effect border border-white/10 text-primary text-[10px] font-black tracking-[0.2em] shadow-xl animate-in fade-in slide-in-from-bottom-6 duration-1000 ease-apple">
                             <Sparkles className="size-3.5" />
                             Premium Content
                         </div>
@@ -92,7 +92,7 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
                         </div>
 
                         {/* Animated Performance Stats */}
-                        <div className="flex items-center justify-center gap-12 text-xs font-black uppercase tracking-widest text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400 ease-apple">
+                        <div className="flex items-center justify-center gap-12 text-xs font-black tracking-widest text-muted-foreground animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-400 ease-apple">
                             <div className="flex flex-col items-center gap-2 group">
                                 <div className="size-10 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500">
                                     <Headphones className="size-5" />
@@ -148,7 +148,7 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
                             <button
                                 onClick={() => router.get('/podcasts', {}, { preserveState: true })}
                                 className={cn(
-                                    'px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap',
+                                    'px-6 py-2.5 rounded-full text-[10px] font-black tracking-widest transition-all whitespace-nowrap',
                                     !filters.category
                                         ? 'bg-primary text-primary-foreground shadow-xl shadow-primary/20'
                                         : 'bg-muted/50 hover:bg-muted text-muted-foreground'
@@ -161,7 +161,7 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
                                     key={cat.id}
                                     onClick={() => router.get('/podcasts', { category: cat.id }, { preserveState: true })}
                                     className={cn(
-                                        'px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap',
+                                        'px-6 py-2.5 rounded-full text-[10px] font-black tracking-widest transition-all whitespace-nowrap',
                                         filters.category === String(cat.id)
                                             ? 'text-white shadow-xl'
                                             : 'bg-muted/50 hover:bg-muted text-muted-foreground'

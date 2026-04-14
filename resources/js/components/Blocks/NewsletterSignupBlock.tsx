@@ -75,7 +75,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
               >
                 {badgeText && (
-                  <Badge className="mb-4 w-fit bg-primary/20 text-primary border-primary/30 font-black tracking-widest [font-variant-caps:small-caps] py-1.5 px-4" variant="outline">
+                  <Badge className="mb-4 w-fit bg-primary/20 text-primary border-primary/30 font-black tracking-widest py-1.5 px-4" variant="outline">
                     <Sparkles className="mr-1 h-3 w-3" />
                     {badgeText}
                   </Badge>
@@ -83,7 +83,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
               </motion.div>
 
               {title && (
-                <h2 className="mb-4 text-3xl font-display font-black tracking-tighter md:text-4xl [font-variant-caps:small-caps]">
+                <h2 className="mb-4 text-3xl font-display font-black tracking-tighter md:text-4xl">
                   {title}
                 </h2>
               )}
@@ -167,7 +167,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                       className="group w-full"
                       disabled={!data.email || processing}
                     >
-                      <span className="[font-variant-caps:small-caps] font-black tracking-tighter">
+                      <span className="font-black tracking-tighter">
                         {processing ? "Submitting..." : buttonText}
                       </span>
                       <motion.div
@@ -211,7 +211,7 @@ export default function NewsletterSignupBlock(props: NewsletterSignupBlockType['
                     </motion.div>
 
                     <div className="text-center">
-                      <h3 className="mb-2 text-xl font-black tracking-tighter [font-variant-caps:small-caps]">
+                      <h3 className="mb-2 text-xl font-black tracking-tighter">
                         {successTitle}
                       </h3>
                       <p className="text-sm text-muted-foreground">

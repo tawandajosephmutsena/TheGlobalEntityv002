@@ -16,7 +16,7 @@ const FAQBlock: React.FC<FAQBlockProps> = ({ title, subtitle, items }) => {
         <section className="py-24 bg-muted/20 dark:bg-black/40 px-4">
             <div className="max-w-4xl mx-auto">
                 <AnimatedSection animation="fade-up" className="text-center mb-16">
-                    <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold [font-variant-caps:small-caps] tracking-[0.3em] text-primary bg-primary/10 rounded-full border border-primary/20">
+                    <span className="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-[0.3em] text-primary bg-primary/10 rounded-full border border-primary/20">
                         {subtitle}
                     </span>
                     <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-none">

@@ -71,7 +71,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
         <section className={cn('gradient-aurora py-16 md:py-32', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
                 <header className="mb-16">
-                    <span className="theme-gradient-text font-bold uppercase tracking-widest text-sm mb-2 block animate-[bloom_1s_ease-out_0.2s_both]">
+                    <span className="theme-gradient-text font-bold tracking-widest text-sm mb-2 block animate-[bloom_1s_ease-out_0.2s_both]">
                         {subtitle}
                     </span>
                     <h2 className="text-5xl md:text-7xl font-bold text-foreground dark:text-white animate-[bloom_1s_ease-out_0.4s_both]">
@@ -90,7 +90,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                             <div className="size-16 rounded-full flex items-center justify-center mb-8 theme-gradient-animated text-white shadow-lg">
                                 <span className="material-symbols-outlined text-4xl">groups</span>
                             </div>
-                            <h3 className="text-xl uppercase tracking-widest opacity-40 font-bold mb-4">{displayStats[0].label}</h3>
+                            <h3 className="text-xl tracking-widest opacity-40 font-bold mb-4">{displayStats[0].label}</h3>
                             <div className="text-6xl md:text-9xl font-black text-foreground dark:text-white group-hover:scale-110 transition-transform origin-left duration-700">
                                 {displayStats[0].value}<span className="theme-gradient-text">{displayStats[0].suffix || '+'}</span>
                             </div>
@@ -107,7 +107,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                         >
                             <div>
                                 <span className="material-symbols-outlined text-4xl mb-4">bolt</span>
-                                <h3 className="text-xl uppercase tracking-widest opacity-80 font-bold">{displayStats[1].label}</h3>
+                                <h3 className="text-xl tracking-widest opacity-80 font-bold">{displayStats[1].label}</h3>
                             </div>
                             <div className="text-4xl md:text-8xl font-black">{displayStats[1].value}{displayStats[1].suffix || '%'}</div>
                         </AnimatedSection>
@@ -118,7 +118,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                                 delay={400}
                                 className="bg-white dark:bg-[#161616] border border-current/5 p-6 md:p-8 rounded-3xl group hover:shadow-2xl transition-all cursor-default"
                             >
-                                <h3 className="text-xs md:text-sm uppercase tracking-widest opacity-40 font-bold mb-4 leading-tight">{displayStats[2].label}</h3>
+                                <h3 className="text-xs md:text-sm tracking-widest opacity-40 font-bold mb-4 leading-tight">{displayStats[2].label}</h3>
                                 <div className="text-4xl md:text-5xl font-black text-foreground dark:text-white group-hover:text-primary transition-colors">
                                     {displayStats[2].value}<span className="text-primary">{displayStats[2].suffix || '+'}</span>
                                 </div>
@@ -129,7 +129,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
                                 delay={600}
                                 className="gradient-mesh p-6 md:p-8 rounded-3xl group hover:scale-105 transition-all cursor-default gradient-dot-grid"
                             >
-                                <h3 className="text-xs md:text-sm uppercase tracking-widest opacity-60 font-bold mb-4 leading-tight">{displayStats[3].label}</h3>
+                                <h3 className="text-xs md:text-sm tracking-widest opacity-60 font-bold mb-4 leading-tight">{displayStats[3].label}</h3>
                                 <div className="text-4xl md:text-5xl font-black">{displayStats[3].value}</div>
                             </AnimatedSection>
                         </div>

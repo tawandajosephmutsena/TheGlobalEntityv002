@@ -21,10 +21,10 @@ export default function CommentSection({ insightSlug, insightId, comments }: Pro
                     <MessageCircle className="size-5 text-agency-accent" />
                 </div>
                 <div>
-                    <h3 className="text-2xl font-black uppercase tracking-tighter">
+                    <h3 className="text-2xl font-black tracking-tighter">
                         Discussion
                     </h3>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 mt-1">
+                    <p className="text-[10px] font-bold tracking-[0.3em] opacity-30 mt-1">
                         {commentCount} {commentCount === 1 ? 'comment' : 'comments'}
                     </p>
                 </div>
@@ -48,7 +48,7 @@ export default function CommentSection({ insightSlug, insightId, comments }: Pro
             ) : (
                 <div className="text-center py-16">
                     <MessageCircle className="size-8 mx-auto mb-4 opacity-10" />
-                    <p className="text-sm opacity-30 font-bold uppercase tracking-widest">
+                    <p className="text-sm opacity-30 font-bold tracking-widest">
                         Be the first to comment
                     </p>
                 </div>

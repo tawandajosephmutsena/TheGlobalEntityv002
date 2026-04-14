@@ -106,7 +106,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                     <>
                         <section className="container mx-auto px-6 mb-20">
                             <AnimatedSection animation="fade-in">
-                                <h1 className="font-display font-black text-6xl lg:text-8xl mb-8 tracking-tighter uppercase">
+                                <h1 className="font-display font-black text-6xl lg:text-8xl mb-8 tracking-tighter">
                                     THE <span className="text-primary italic">JOURNAL</span>
                                 </h1>
                             </AnimatedSection>
@@ -118,7 +118,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                         href="/blog?category=all"
                                         preserveScroll
                                         className={cn(
-                                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500",
+                                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
                                             activeCategoryId === 'all' 
                                                 ? "bg-on-surface text-surface shadow-xl scale-105" 
                                                 : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
@@ -132,7 +132,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                             href={`/blog?category=${cat.id}`}
                                             preserveScroll
                                             className={cn(
-                                                "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] uppercase tracking-widest transition-all duration-500 flex items-center gap-2",
+                                                "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500 flex items-center gap-2",
                                                 activeCategoryId === cat.id.toString() || activeCategoryId === cat.slug
                                                     ? "bg-primary text-on-primary shadow-xl scale-105" 
                                                     : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
@@ -189,7 +189,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                                                 </div>
                                                                             </TooltipTrigger>
                                                                             <TooltipContent side="top">
-                                                                                <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                                                <p className="font-bold tracking-wider">{cat?.name}</p>
                                                                             </TooltipContent>
                                                                         </Tooltip>
                                                                     );
@@ -201,8 +201,8 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                             <p className="text-on-surface-variant text-base leading-relaxed font-light line-clamp-3">
                                                                 {post.excerpt}
                                                             </p>
-                                                            <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all uppercase">
-                                                                READ FULL FEATURE
+                                                            <Link href={`/blog/${post.slug}`} className="flex items-center gap-2 font-black text-[10px] tracking-widest text-primary hover:gap-4 transition-all">
+                                                                Read Full Feature
                                                                 <ArrowUpRight className="size-4" />
                                                             </Link>
                                                         </div>
@@ -237,7 +237,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                                                 </div>
                                                                             </TooltipTrigger>
                                                                             <TooltipContent side="left">
-                                                                                <p className="font-bold tracking-wider [font-variant-caps:small-caps]">{cat?.name}</p>
+                                                                                <p className="font-bold tracking-wider">{cat?.name}</p>
                                                                             </TooltipContent>
                                                                         </Tooltip>
                                                                     );
@@ -245,12 +245,12 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                             </div>
                                                             <div className="absolute bottom-6 left-6 flex gap-2 items-center">
                                                                 {post.podcast && (
-                                                                    <span className="bg-primary/90 backdrop-blur-md text-on-primary text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                                                    <span className="bg-primary/90 backdrop-blur-md text-on-primary text-[10px] font-black tracking-widest px-3 py-1 rounded-full shadow-lg">
                                                                         🎙️ Podcast
                                                                     </span>
                                                                 )}
                                                                 {post.festival && (
-                                                                    <span className="bg-tertiary/90 backdrop-blur-md text-on-primary text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                                                    <span className="bg-tertiary/90 backdrop-blur-md text-on-primary text-[10px] font-black tracking-widest px-3 py-1 rounded-full shadow-lg">
                                                                         🎪 Festival
                                                                     </span>
                                                                 )}
@@ -271,7 +271,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                                                 </div>
                                                                             </TooltipTrigger>
                                                                             <TooltipContent side="top">
-                                                                                <p className="font-bold tracking-wider [font-variant-caps:small-caps] text-[10px]">{cat?.name}</p>
+                                                                                <p className="font-bold tracking-wider text-[10px]">{cat?.name}</p>
                                                                             </TooltipContent>
                                                                         </Tooltip>
                                                                     );
@@ -284,7 +284,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                                 {post.excerpt}
                                                             </p>
                                                             <div className="pt-2 flex items-center justify-between">
-                                                                <span className="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest opacity-60">
+                                                                <span className="text-[10px] text-on-surface-variant font-bold tracking-widest opacity-60">
                                                                     {post.published_at ? new Date(post.published_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently'}
                                                                 </span>
                                                                 <ArrowRight className="size-5 text-primary group-hover:translate-x-2 transition-transform duration-500" />
@@ -303,13 +303,13 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                 {loadingMore && (
                                     <div className="flex flex-col items-center gap-4">
                                         <Loader2 className="size-8 text-primary animate-spin" />
-                                        <span className="text-[10px] font-black uppercase tracking-widest text-on-surface-variant opacity-60">Scanning deeper coordinates...</span>
+                                        <span className="text-[10px] font-black tracking-widest text-on-surface-variant opacity-60">Scanning deeper coordinates...</span>
                                     </div>
                                 )}
                                 {!insights.next_page_url && allPosts.length > 0 && (
                                     <div className="text-center opacity-40">
                                         <div className="w-12 h-px bg-on-surface mx-auto mb-6" />
-                                        <p className="text-[10px] font-black uppercase tracking-widest">End of the Journal</p>
+                                        <p className="text-[10px] font-black tracking-widest">End of the Journal</p>
                                     </div>
                                 )}
                             </div>
@@ -320,7 +320,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                     <div className="inline-block p-12 rounded-full bg-surface-container-low mb-8 opacity-20">
                                         <Search className="size-20" />
                                     </div>
-                                    <h3 className="text-3xl font-black uppercase tracking-tight mb-4">No chronicles found</h3>
+                                    <h3 className="text-3xl font-black tracking-tight mb-4">No chronicles found</h3>
                                     <p className="text-on-surface-variant max-w-md mx-auto font-light">
                                         The map remains blank for this category. Explore other coordinates or search for hidden paths.
                                     </p>
@@ -345,7 +345,7 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                     {newsletterSubmitted ? (
                                         <div className="flex items-center justify-center gap-4 p-8 rounded-full bg-tertiary/10 border border-tertiary/20">
                                             <CheckCircle2 className="size-8 text-tertiary" />
-                                            <p className="text-tertiary font-black text-sm uppercase tracking-widest">Entry confirmed. Welcome aboard.</p>
+                                            <p className="text-tertiary font-black text-sm tracking-widest">Entry confirmed. Welcome aboard.</p>
                                         </div>
                                     ) : (
                                         <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4">
@@ -361,11 +361,11 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                                 className="bg-tertiary text-on-tertiary font-black text-xs tracking-widest px-12 py-5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-xl shadow-tertiary/20 disabled:opacity-50"
                                                 disabled={processing}
                                             >
-                                                SUBSCRIBE
+                                                Subscribe
                                             </button>
                                         </form>
                                     )}
-                                    <p className="mt-8 text-[10px] text-on-surface-variant font-black tracking-widest uppercase opacity-40">
+                                    <p className="mt-8 text-[10px] text-on-surface-variant font-black tracking-widest opacity-40">
                                         No noise. Only the signal. Unsubscribe anytime.
                                     </p>
                                 </div>
@@ -378,26 +378,26 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
             {/* Custom Footer for "The Journal" aesthetic */}
             <footer className="w-full px-8 lg:px-12 py-24 flex flex-col md:flex-row justify-between gap-16 border-t border-on-surface/5 bg-surface rounded-t-[4rem] mt-20 font-body text-sm tracking-wide relative overflow-hidden">
                 <div className="flex flex-col gap-8 max-w-sm relative z-10">
-                    <h3 className="font-display font-black text-2xl tracking-tighter uppercase italic">Ottoman <span className="text-primary not-italic">Entity</span></h3>
+                    <h3 className="font-display font-black text-2xl tracking-tighter italic">Ottoman <span className="text-primary not-italic">Entity</span></h3>
                     <p className="text-on-surface-variant font-light leading-relaxed">
                         A sanctuary for slow travel, conscious exploration, and human connection across global territories.
                     </p>
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-12 relative z-10">
                     <div className="flex flex-col gap-4">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">Expeditions</p>
+                        <p className="text-[10px] font-black tracking-widest text-primary mb-2">Expeditions</p>
                         <Link href="/blog?category=festival-fever" className="text-on-surface-variant hover:text-primary transition-colors font-light">Festival Fever</Link>
                         <Link href="/blog?category=glocal-gems" className="text-on-surface-variant hover:text-primary transition-colors font-light">Glocal Gems</Link>
                         <Link href="/blog?category=solo-travel" className="text-on-surface-variant hover:text-primary transition-colors font-light">Solo Exploration</Link>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">Philosophy</p>
+                        <p className="text-[10px] font-black tracking-widest text-primary mb-2">Philosophy</p>
                         <Link href="/manifesto" className="text-on-surface-variant hover:text-primary transition-colors font-light">The Manifesto</Link>
                         <Link href="/about" className="text-on-surface-variant hover:text-primary transition-colors font-light">Our Journey</Link>
                         <Link href="/impact" className="text-on-surface-variant hover:text-primary transition-colors font-light">Global Impact</Link>
                     </div>
                     <div className="flex flex-col gap-4">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">Coordinates</p>
+                        <p className="text-[10px] font-black tracking-widest text-primary mb-2">Coordinates</p>
                         <span className="text-on-surface-variant font-light">London, UK</span>
                         <span className="text-on-surface-variant font-light">Bali, Indonesia</span>
                         <a href="mailto:hello@ottoman.com" className="text-on-surface-variant hover:text-primary transition-colors font-light">Contact Vessel</a>

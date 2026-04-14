@@ -80,10 +80,10 @@ export const RecentInsights: React.FC<RecentInsightsProps> = ({
         <section className={cn('bg-agency-secondary dark:bg-agency-dark py-32', className)}>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <header className="mb-24 text-center">
-                    <span className="text-agency-accent font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
+                    <span className="text-agency-accent font-bold tracking-[0.3em] text-xs mb-4 block">
                         {subtitle}
                     </span>
-                    <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                    <h2 className="text-7xl md:text-9xl font-black tracking-tighter text-agency-primary dark:text-white">
                         {title}
                     </h2>
                 </header>
@@ -103,8 +103,8 @@ export const RecentInsights: React.FC<RecentInsightsProps> = ({
                                     <span className="text-xl font-mono opacity-30">0{index + 1}</span>
                                     <div className="max-w-2xl">
                                         <div className="flex items-center gap-4 mb-3">
-                                            <span className="text-xs font-bold text-agency-accent uppercase tracking-widest">{insight.category?.name || 'Article'}</span>
-                                            <span className="text-xs opacity-40 uppercase tracking-widest">{insight.reading_time || 5} MIN READ</span>
+                                            <span className="text-xs font-bold text-agency-accent tracking-widest">{insight.category?.name || 'Article'}</span>
+                                            <span className="text-xs opacity-40 tracking-widest">{insight.reading_time || 5} MIN READ</span>
                                         </div>
                                         <h3 className="text-3xl md:text-5xl font-bold text-agency-primary dark:text-white leading-tight group-hover:text-agency-accent transition-colors duration-300">
                                             {insight.title}
@@ -139,7 +139,7 @@ export const RecentInsights: React.FC<RecentInsightsProps> = ({
                     <div className="mt-20 text-center">
                         <Link
                             href="/blog"
-                            className="inline-flex items-center gap-4 text-agency-primary dark:text-white font-black text-2xl uppercase tracking-tighter hover:text-agency-accent transition-colors group"
+                            className="inline-flex items-center gap-4 text-agency-primary dark:text-white font-black text-2xl tracking-tighter hover:text-agency-accent transition-colors group"
                         >
                             <span>Explore all thoughts</span>
                             <div className="h-[2px] w-24 bg-agency-accent group-hover:w-32 transition-all"></div>

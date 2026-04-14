@@ -177,11 +177,11 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-stretch">
                             {/* Left Side: Header Text & Meta (Vertically Centered) */}
                             <div className="flex flex-col justify-center h-full">
-                                <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-black uppercase tracking-widest text-[10px] mb-8 hover:gap-4 transition-all">
+                                <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-black tracking-widest text-[10px] mb-8 hover:gap-4 transition-all">
                                     <ArrowLeft className="h-3 w-3" /> Chronicles
                                 </Link>
 
-                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter leading-[0.95] mb-12 uppercase italic">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter leading-[0.95] mb-12 italic">
                                     {insight.title.split(' ').map((word, i) => (
                                         <span key={i} className={i % 2 === 0 ? "text-agency-primary dark:text-white" : "text-agency-accent/40 not-italic"}>
                                             {word}{' '}
@@ -203,16 +203,16 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                             </div>
                                         )}
                                         <div className="flex flex-col">
-                                            <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Visionary</span>
-                                            <span className="text-xs font-bold uppercase">{insight.author?.name}</span>
+                                            <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Visionary</span>
+                                            <span className="text-xs font-bold">{insight.author?.name}</span>
                                         </div>
                                     </div>
                                     
                                     <div className="h-8 w-px bg-agency-primary/10 dark:bg-white/10 hidden md:block" />
                                     
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Duration</span>
-                                        <div className="flex items-center gap-2 font-bold uppercase text-xs">
+                                        <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Duration</span>
+                                        <div className="flex items-center gap-2 font-bold text-xs">
                                             <Clock className="size-3 text-agency-accent" /> {insight.reading_time || 5} Min
                                         </div>
                                     </div>
@@ -220,8 +220,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                     <div className="h-8 w-px bg-agency-primary/10 dark:bg-white/10 hidden md:block" />
 
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black uppercase tracking-widest opacity-40 leading-none mb-1">Vibration</span>
-                                        <div className="flex items-center gap-2 font-bold uppercase text-xs">
+                                        <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Vibration</span>
+                                        <div className="flex items-center gap-2 font-bold text-xs">
                                             {insight.published_at ? new Date(insight.published_at).toLocaleDateString() : 'Now'}
                                         </div>
                                     </div>
@@ -285,7 +285,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                             </div>
                         )}
 
-                        <div className="prose prose-xl lg:prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-headings:italic prose-p:text-[20px] lg:prose-p:text-[24px] prose-p:leading-[1.8] prose-p:dark:text-white/90 prose-blockquote:border-l-[12px] prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:p-8 lg:prose-blockquote:p-12 prose-blockquote:rounded-3xl prose-blockquote:not-italic prose-blockquote:text-2xl lg:prose-blockquote:text-3xl prose-blockquote:font-display first-letter:text-7xl lg:first-letter:text-9xl first-letter:font-black first-letter:text-agency-accent first-letter:mr-4 lg:first-letter:mr-6 first-letter:float-left first-letter:leading-[0.7] first-letter:mt-3">
+                        <div className="prose prose-xl lg:prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic prose-p:text-[20px] lg:prose-p:text-[24px] prose-p:leading-[1.8] prose-p:dark:text-white/90 prose-blockquote:border-l-[12px] prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:p-8 lg:prose-blockquote:p-12 prose-blockquote:rounded-3xl prose-blockquote:not-italic prose-blockquote:text-2xl lg:prose-blockquote:text-3xl prose-blockquote:font-display first-letter:text-7xl lg:first-letter:text-9xl first-letter:font-black first-letter:text-agency-accent first-letter:mr-4 lg:first-letter:mr-6 first-letter:float-left first-letter:leading-[0.7] first-letter:mt-3">
                             {sanitizedBody ? (
                                 <div dangerouslySetInnerHTML={{ __html: sanitizedBody }} />
                             ) : (
@@ -300,14 +300,14 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                     <div className="size-14 rounded-full bg-agency-accent/10 flex items-center justify-center text-agency-accent">
                                         <Lightbulb className="size-8" />
                                     </div>
-                                    <h2 className="text-4xl font-display font-black uppercase tracking-tight">Executive <span className="text-agency-accent italic">Tips</span></h2>
+                                    <h2 className="text-4xl font-display font-black tracking-tight">Executive <span className="text-agency-accent italic">Tips</span></h2>
                                 </div>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                     {insight.quick_tips.map((tip, idx) => (
                                         <div key={idx} className="glass-effect p-12 rounded-[50px] border border-white/10 hover:border-agency-accent/40 transition-all duration-700 group hover:-translate-y-2">
                                             <div className="space-y-6">
-                                                <h4 className="text-2xl font-black uppercase tracking-tight group-hover:text-agency-accent transition-colors">{tip.title}</h4>
+                                                <h4 className="text-2xl font-black tracking-tight group-hover:text-agency-accent transition-colors">{tip.title}</h4>
                                                 <div className="text-lg opacity-70 leading-relaxed font-sans font-light">
                                                     {tip?.type === 'points' ? (
                                                         <ul className="space-y-4">
@@ -336,8 +336,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         {(insight.festival_id || insight.festival) && (
                             <div className="mt-40">
                                 <div className="mb-12 flex items-center justify-between">
-                                    <h2 className="text-4xl font-display font-black uppercase tracking-tight">The <span className="italic opacity-30">Experience</span></h2>
-                                    <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Manifesting Now</span>
+                                    <h2 className="text-4xl font-display font-black tracking-tight">The <span className="italic opacity-30">Experience</span></h2>
+                                    <span className="text-[10px] font-black tracking-widest opacity-40">Manifesting Now</span>
                                 </div>
                                 <Suspense fallback={<div className="h-64 w-full animate-pulse bg-white/5 rounded-[50px]" />}>
                                     <FestivalCardBlock festivalId={insight.festival_id} />
@@ -348,8 +348,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         {/* Reactions on Post */}
                         <div className="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-10">
                             <div className="flex flex-col gap-2">
-                                <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Interaction Index</span>
-                                <h3 className="text-xl font-black uppercase">Share your vibration</h3>
+                                <span className="text-[10px] font-black tracking-widest opacity-40">Interaction Index</span>
+                                <h3 className="text-xl font-black">Share your vibration</h3>
                             </div>
                             <Suspense fallback={<div className="h-10 w-20 animate-pulse bg-white/5 rounded-full" />}>
                                 <ReactionButton
@@ -365,7 +365,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         {insight.tags && insight.tags.length > 0 && (
                             <div className="mt-16 flex flex-wrap gap-4">
                                 {insight.tags.map(tag => (
-                                    <span key={tag} className="px-8 py-3 rounded-full bg-white/5 border border-white/5 text-[10px] font-black uppercase tracking-widest hover:bg-agency-accent/20 transition-all cursor-pointer">
+                                    <span key={tag} className="px-8 py-3 rounded-full bg-white/5 border border-white/5 text-[10px] font-black tracking-widest hover:bg-agency-accent/20 transition-all cursor-pointer">
                                         #{tag}
                                     </span>
                                 ))}
@@ -382,8 +382,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 </div>
                             )}
                             <div className="flex-1 text-center md:text-left relative z-10">
-                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-agency-accent mb-4 block">Manifested By</span>
-                                <h4 className="text-5xl font-display font-black uppercase tracking-tight mb-8">{insight.author?.name}</h4>
+                                <span className="text-[10px] font-black tracking-[0.5em] text-agency-accent mb-4 block">Manifested By</span>
+                                <h4 className="text-5xl font-display font-black tracking-tight mb-8">{insight.author?.name}</h4>
                                 <p className="text-xl opacity-60 leading-relaxed font-light font-serif mb-10 max-w-2xl">
                                     {insight.author?.about || "A strategic explorer mapping the intersection of global culture and local identity."}
                                 </p>
@@ -419,7 +419,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     <div className="space-y-12">
                         <div className="flex items-center gap-6">
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
-                            <span className="text-xs font-black uppercase tracking-[0.5em] opacity-40 whitespace-nowrap">Audio Chronicles</span>
+                            <span className="text-xs font-black tracking-[0.5em] opacity-40 whitespace-nowrap">Audio Chronicles</span>
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -438,8 +438,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                             decoding="async"
                                         />
                                     </div>
-                                    <h4 className="text-xl font-black uppercase tracking-tight group-hover:text-agency-accent transition-colors line-clamp-2 leading-tight">{pod.title}</h4>
-                                    <p className="text-[10px] font-bold uppercase tracking-widest text-agency-accent mt-3">Podcast Insight</p>
+                                    <h4 className="text-xl font-black tracking-tight group-hover:text-agency-accent transition-colors line-clamp-2 leading-tight">{pod.title}</h4>
+                                    <p className="text-[10px] font-bold tracking-widest text-agency-accent mt-3">Podcast Insight</p>
                                 </Link>
                             ))}
                         </div>
@@ -451,7 +451,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     <div className="space-y-12">
                         <div className="flex items-center gap-6">
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
-                            <span className="text-xs font-black uppercase tracking-[0.5em] opacity-40 whitespace-nowrap">Deep Narratives</span>
+                            <span className="text-xs font-black tracking-[0.5em] opacity-40 whitespace-nowrap">Deep Narratives</span>
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -469,8 +469,8 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                         decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-10 flex flex-col justify-end">
-                                        <h4 className="text-2xl font-black uppercase tracking-tight text-white mb-2 line-clamp-2">{relPost.title}</h4>
-                                        <p className="text-xs font-medium text-white/60 tracking-widest uppercase">
+                                        <h4 className="text-2xl font-black tracking-tight text-white mb-2 line-clamp-2">{relPost.title}</h4>
+                                        <p className="text-xs font-medium text-white/60 tracking-widest">
                                             {relPost.published_at ? new Date(relPost.published_at).toLocaleDateString() : 'Recent Narrative'}
                                         </p>
                                     </div>
@@ -485,7 +485,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                     <div className="text-center space-y-12 pb-20">
                         <div className="flex items-center gap-6 max-w-2xl mx-auto">
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
-                            <span className="text-xs font-black uppercase tracking-[0.5em] opacity-40 whitespace-nowrap">Insight Universe</span>
+                            <span className="text-xs font-black tracking-[0.5em] opacity-40 whitespace-nowrap">Insight Universe</span>
                             <div className="h-px flex-1 bg-agency-primary/10 dark:bg-white/10" />
                         </div>
                         <TooltipProvider>
@@ -497,7 +497,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                         className="flex items-center gap-4 px-8 py-5 rounded-full bg-agency-primary/90 dark:bg-white/10 border border-white/20 hover:bg-agency-accent hover:border-agency-accent hover:text-white transition-all duration-500 group shadow-2xl"
                                     >
                                         <CategoryIcon category={cat.slug} icon={cat.icon} size={18} glow={true} className="brightness-150" />
-                                        <span className="text-[12px] font-black uppercase tracking-widest text-white group-hover:text-white">{cat.name}</span>
+                                        <span className="text-[12px] font-black tracking-widest text-white group-hover:text-white">{cat.name}</span>
                                     </Link>
                                 ))}
                             </div>

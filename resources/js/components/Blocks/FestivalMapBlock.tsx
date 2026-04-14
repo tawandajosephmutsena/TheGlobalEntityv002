@@ -118,7 +118,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <Badge variant="outline" className="mb-4 font-mono [font-variant-caps:small-caps] tracking-widest text-primary border-primary/20 bg-primary/5">
+                        <Badge variant="outline" className="mb-4 font-mono tracking-widest text-primary border-primary/20 bg-primary/5">
                             Festival Radar
                         </Badge>
                         <h2 className="text-4xl md:text-5xl font-display mb-6 tracking-tight">
@@ -230,11 +230,11 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                 />
                             </div>
                             <div className="flex gap-2 pointer-events-auto">
-                                <button className="h-11 px-5 border border-border/20 shadow-xl rounded-2xl text-xs font-bold [font-variant-caps:small-caps] tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground liquid-glass">
+                                <button className="h-11 px-5 border border-border/20 shadow-xl rounded-2xl text-xs font-bold tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground liquid-glass">
                                     <Filter className="w-3.5 h-3.5" />
                                     Filter
                                 </button>
-                                <button className="h-11 px-5 bg-primary text-primary-foreground shadow-xl shadow-primary/20 rounded-2xl text-xs font-bold [font-variant-caps:small-caps] tracking-widest hover:scale-105 transition-all duration-300">
+                                <button className="h-11 px-5 bg-primary text-primary-foreground shadow-xl shadow-primary/20 rounded-2xl text-xs font-bold tracking-widest hover:scale-105 transition-all duration-300">
                                     Map View
                                 </button>
                             </div>

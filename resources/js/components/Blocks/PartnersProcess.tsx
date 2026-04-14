@@ -62,7 +62,7 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
             
             <div className="container mx-auto px-4 relative z-10">
                 <AnimatedSection animation="fade-up" className="text-center mb-24">
-                    <h2 className="font-display text-5xl md:text-7xl font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface">
+                    <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface">
                         {title}
                     </h2>
                 </AnimatedSection>
@@ -93,7 +93,7 @@ const PartnersProcess: React.FC<PartnersProcessProps> = ({
                                     {/* Pulsing indicator background */}
                                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/5 -z-10 scale-0 group-hover:scale-100 transition-transform duration-1000 ease-out" />
                                 </div>
-                                <h4 className="font-display text-2xl font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface mb-3 transition-colors duration-500 group-hover:text-primary">
+                                <h4 className="font-display text-2xl font-black tracking-tighter text-on-surface mb-3 transition-colors duration-500 group-hover:text-primary">
                                     {step.title}
                                 </h4>
                                 <p className="text-on-surface-variant font-medium text-sm leading-relaxed max-w-[200px] mx-auto">

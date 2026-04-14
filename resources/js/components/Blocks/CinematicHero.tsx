@@ -159,7 +159,7 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
                     <div className="overflow-visible">
                         <h1 
                             key={`title-${activeIndex}`}
-                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6 [font-variant-caps:small-caps]"
+                            className="font-display font-black text-4xl md:text-6xl lg:text-8xl text-agency-accent leading-[0.85] tracking-tighter max-w-5xl drop-shadow-2xl flex flex-wrap gap-x-6"
                         >
                             {titleWords.map((word, i) => (
                                 <motion.span 

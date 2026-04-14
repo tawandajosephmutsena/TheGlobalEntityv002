@@ -85,7 +85,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                 <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-accent/20 rounded-full blur-[80px] animate-pulse delay-1000 mix-blend-multiply dark:mix-blend-screen" />
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-20 w-full text-center">
-                    <Link href="/portfolio" className="inline-flex items-center gap-2 text-muted-foreground font-bold uppercase tracking-widest text-xs mb-8 hover:text-primary hover:gap-4 transition-all">
+                    <Link href="/portfolio" className="inline-flex items-center gap-2 text-muted-foreground font-bold tracking-widest text-xs mb-8 hover:text-primary hover:gap-4 transition-all">
                         <ArrowLeft className="h-4 w-4" /> Back to Works
                     </Link>
 
@@ -93,33 +93,33 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                         {/* Tags */}
                         <div className="flex flex-wrap justify-center gap-3 mb-8">
                             {portfolioItem.technologies?.map((tech, i) => (
-                                <span key={tech} className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-colors ${i === 0 ? 'bg-agency-accent text-agency-primary border-agency-accent' : 'border-agency-primary/20 dark:border-white/20 text-agency-primary/60 dark:text-white/60'}`}>
+                                <span key={tech} className={`px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest border transition-colors ${i === 0 ? 'bg-agency-accent text-agency-primary border-agency-accent' : 'border-agency-primary/20 dark:border-white/20 text-agency-primary/60 dark:text-white/60'}`}>
                                     {tech}
                                 </span>
                             ))}
                         </div>
 
                         {/* Title - Reduced Size */}
-                        <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
+                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] text-agency-primary dark:text-white mb-8">
                              {portfolioItem.title}
                         </h1>
                         
                         {/* Project Meta Grid - Centered & Compact */}
                         <div className="flex flex-wrap justify-center gap-x-12 gap-y-6 pt-4 text-left md:text-center">
                             <div className="space-y-1">
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-agency-primary/40 dark:text-white/40 block">Client</span>
+                                <span className="text-[10px] font-bold tracking-widest text-agency-primary/40 dark:text-white/40 block">Client</span>
                                 <p className="text-lg font-medium text-agency-primary dark:text-white">
                                     {portfolioItem.client || 'Internal Project'}
                                 </p>
                             </div>
                             <div className="space-y-1">
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-agency-primary/40 dark:text-white/40 block">Timeline</span>
+                                <span className="text-[10px] font-bold tracking-widest text-agency-primary/40 dark:text-white/40 block">Timeline</span>
                                 <p className="text-lg font-medium text-agency-primary dark:text-white">
                                     {portfolioItem.project_date ? new Date(portfolioItem.project_date).getFullYear() : '2025'}
                                 </p>
                             </div>
                             <div className="space-y-1">
-                                <span className="text-[10px] font-bold uppercase tracking-widest text-agency-primary/40 dark:text-white/40 block">Impact</span>
+                                <span className="text-[10px] font-bold tracking-widest text-agency-primary/40 dark:text-white/40 block">Impact</span>
                                 <p className="text-lg font-medium text-agency-primary dark:text-white flex items-center gap-2 justify-center">
                                     High Conversion
                                 </p>
@@ -130,7 +130,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                                         href={portfolioItem.project_url} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
-                                        className="group inline-flex items-center gap-2 text-agency-accent font-black uppercase tracking-widest text-sm hover:underline"
+                                        className="group inline-flex items-center gap-2 text-agency-accent font-black tracking-widest text-sm hover:underline"
                                     >
                                         Visit Site <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                                     </a>
@@ -168,7 +168,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                                     <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                                         <Zap className="w-20 h-20 text-agency-accent rotate-12" />
                                     </div>
-                                    <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-agency-primary/40 dark:text-white/40 mb-4 block">The Brief</span>
+                                    <span className="text-[10px] font-bold tracking-[0.3em] text-agency-primary/40 dark:text-white/40 mb-4 block">The Brief</span>
                                     <p className="text-lg font-medium text-agency-primary/90 dark:text-white/90 leading-relaxed">
                                         "{portfolioItem.description}"
                                     </p>
@@ -181,8 +181,8 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                             {/* Vision */}
                             {portfolioItem.content?.overview && (
                                 <AnimatedSection className="space-y-6">
-                                    <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs pl-1">Overview</span>
-                                    <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-agency-primary dark:text-white">
+                                    <span className="text-agency-accent font-bold tracking-[0.4em] text-xs pl-1">Overview</span>
+                                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-agency-primary dark:text-white">
                                         The Vision.
                                     </h2>
                                     <div className="prose prose-xl prose-agency dark:prose-invert max-w-none text-agency-primary/60 dark:text-white/60 font-light leading-relaxed">
@@ -195,7 +195,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {portfolioItem.content?.challenge && (
                                     <AnimatedSection delay={100} className="p-8 rounded-[30px] bg-agency-secondary dark:bg-white/5 border border-agency-primary/5 dark:border-white/5 group">
-                                        <span className="text-red-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">The Challenge</span>
+                                        <span className="text-red-500 font-bold tracking-[0.3em] text-[10px] mb-4 block">The Challenge</span>
                                         <p className="text-base text-agency-primary/70 dark:text-white/70 leading-relaxed">
                                             {portfolioItem.content.challenge}
                                         </p>
@@ -203,7 +203,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                                 )}
                                 {portfolioItem.content?.solution && (
                                     <AnimatedSection delay={200} className="p-8 rounded-[30px] bg-agency-secondary dark:bg-white/5 border border-agency-primary/5 dark:border-white/5 group">
-                                        <span className="text-agency-accent font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Our Solution</span>
+                                        <span className="text-agency-accent font-bold tracking-[0.3em] text-[10px] mb-4 block">Our Solution</span>
                                         <p className="text-base text-agency-primary/70 dark:text-white/70 leading-relaxed">
                                             {portfolioItem.content.solution}
                                         </p>
@@ -214,7 +214,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                             {/* Gallery Carousel */}
                             {portfolioItem.gallery && portfolioItem.gallery.length > 0 && (
                                 <div className="space-y-8">
-                                     <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs pl-1">Gallery Showcase</span>
+                                     <span className="text-agency-accent font-bold tracking-[0.4em] text-xs pl-1">Gallery Showcase</span>
                                      <div className="-mx-4 md:-mx-0">
                                         <Carousel items={galleryCards} />
                                      </div>
@@ -228,8 +228,8 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                                      
                                      <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
                                         <div className="max-w-md">
-                                            <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-4 block">Project Outcomes</span>
-                                            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4 leading-[0.9] text-white">
+                                            <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-4 block">Project Outcomes</span>
+                                            <h2 className="text-3xl md:text-5xl font-black tracking-tighter mb-4 leading-[0.9] text-white">
                                                 Measured <br/>
                                                 <span className="opacity-40 italic">Success.</span>
                                             </h2>
@@ -248,7 +248,7 @@ export default function PortfolioShow({ portfolioItem }: Props) {
                                                     <div className={`text-4xl font-black mb-1 ${index === 0 ? 'text-agency-accent' : 'text-white'}`}>
                                                         {stat.value}
                                                     </div>
-                                                    <div className="text-[10px] font-bold uppercase tracking-widest text-white/40">
+                                                    <div className="text-[10px] font-bold tracking-widest text-white/40">
                                                         {stat.label}
                                                     </div>
                                                 </div>
@@ -265,16 +265,16 @@ export default function PortfolioShow({ portfolioItem }: Props) {
             {/* Footer CTA - Compact */}
             <section className="bg-agency-secondary dark:bg-[#050505] py-24 border-t border-agency-primary/5 dark:border-white/5">
                 <div className="mx-auto max-w-4xl px-4 text-center">
-                    <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-6 block">Ready for your project?</span>
-                    <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-agency-primary dark:text-white mb-8">
+                    <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-6 block">Ready for your project?</span>
+                    <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-agency-primary dark:text-white mb-8">
                         Let's Create <br/>
                         <span className="italic opacity-30">The Future.</span>
                     </h2>
                     <Link
                         href="/contact"
-                        className="inline-flex h-16 px-10 items-center justify-center rounded-full bg-agency-accent text-agency-primary text-lg font-black uppercase tracking-tighter hover:scale-105 transition-all shadow-lg"
+                        className="inline-flex h-16 px-10 items-center justify-center rounded-full bg-agency-accent text-agency-primary text-lg font-black tracking-tighter hover:scale-105 transition-all shadow-lg"
                     >
-                        START A CONVERSATION
+                        Start a Conversation
                     </Link>
                 </div>
             </section>

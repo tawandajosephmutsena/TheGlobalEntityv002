@@ -63,10 +63,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <header className="mb-24 flex flex-col md:flex-row justify-between items-end gap-8">
                     <div className="max-w-2xl">
-                        <span className="text-primary font-bold uppercase tracking-[0.2em] text-sm mb-6 block">
+                        <span className="text-primary font-bold tracking-[0.2em] text-sm mb-6 block">
                             {subtitle}
                         </span>
-                        <h2 className="text-4xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85]">
+                        <h2 className="text-4xl md:text-8xl font-black tracking-tighter leading-[0.85]">
                             {title.split(' ')[0]} <br/>
                             <span className="opacity-30 italic">{title.split(' ').slice(1).join(' ')}</span>
                         </h2>
@@ -86,7 +86,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                         >
                             <div className="flex items-center gap-8 relative z-10">
                                 <span className="text-sm font-mono opacity-40">0{index + 1}</span>
-                                <h3 className="text-2xl md:text-6xl font-black uppercase tracking-tighter group-hover:translate-x-4 transition-transform duration-500">
+                                <h3 className="text-2xl md:text-6xl font-black tracking-tighter group-hover:translate-x-4 transition-transform duration-500">
                                     {service.title}
                                 </h3>
                             </div>

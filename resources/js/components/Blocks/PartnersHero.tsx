@@ -87,7 +87,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                 <div className="max-w-5xl mx-auto text-center">
                     <AnimatedSection animation="fade-up" delay={100}>
                         <div className="flex justify-center mb-8">
-                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 text-primary text-xs font-bold tracking-widest liquid-glass [font-variant-caps:small-caps]">
+                            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-primary/30 text-primary text-xs font-bold tracking-widest liquid-glass">
                                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                                 {badgeText}
                             </span>
@@ -95,7 +95,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                     </AnimatedSection>
 
                     <AnimatedSection animation="fade-up" delay={300} textReveal textRevealType="words">
-                        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-on-surface leading-[0.85] [font-variant-caps:small-caps]">
+                        <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-on-surface leading-[0.85]">
                             {title.split(' ').map((word, i, arr) => (
                                 <span key={i} className={cn(
                                     "inline-block",
@@ -116,7 +116,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                     <AnimatedSection animation="fade-up" delay={900} className="mt-16 flex flex-col sm:flex-row gap-6 justify-center items-center">
                         <Button 
                             size="lg" 
-                            className="rounded-full px-10 h-16 text-base font-black tracking-widest bg-primary text-on-primary hover:scale-105 transition-transform duration-500 group relative overflow-hidden [font-variant-caps:small-caps]" 
+                            className="rounded-full px-10 h-16 text-base font-black tracking-widest bg-primary text-on-primary hover:scale-105 transition-transform duration-500 group relative overflow-hidden" 
                             asChild
                         >
                             <a href={cta1.href}>
@@ -129,7 +129,7 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                         <Button 
                             variant="outline" 
                             size="lg" 
-                            className="rounded-full px-10 h-16 text-base font-black tracking-widest border-primary/20 bg-transparent hover:bg-primary/5 hover:border-primary transition-all duration-500 [font-variant-caps:small-caps]" 
+                            className="rounded-full px-10 h-16 text-base font-black tracking-widest border-primary/20 bg-transparent hover:bg-primary/5 hover:border-primary transition-all duration-500" 
                             asChild
                         >
                             <a href={cta2.href}>

@@ -72,7 +72,7 @@ const FestivalPagination: React.FC<{
                             disabled={!link.url}
                             title={link.active ? `Current Page: ${label}` : `Go to page ${label}`}
                             className={cn(
-                                "lowercase h-10 min-w-[40px] px-4 flex items-center justify-center rounded-xl text-[10px] font-mono tracking-tighter [font-variant-caps:small-caps] transition-all duration-300",
+                                "h-10 min-w-[40px] px-4 flex items-center justify-center rounded-xl text-[10px] font-mono tracking-tighter transition-all duration-300",
                                 link.active 
                                     ? "bg-agency-accent text-agency-surface font-black shadow-lg shadow-agency-accent/20" 
                                     : "text-agency-primary/40 hover:bg-agency-primary/5 hover:text-agency-primary",
@@ -214,8 +214,8 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
 
                 <AnimatedSection animation="fade-up" className="mb-20">
                     <div className="flex flex-col items-center text-center">
-                        <span className="text-[10px] font-mono tracking-tighter text-agency-accent mb-4 [font-variant-caps:small-caps]">{subtitle}</span>
-                        <h2 className="text-5xl md:text-8xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary leading-none">
+                        <span className="text-[10px] font-mono tracking-tighter text-agency-accent mb-4">{subtitle}</span>
+                        <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-agency-primary leading-none">
                             {title}
                         </h2>
                     </div>
@@ -248,7 +248,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                         <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end h-full">
                                             <div className="flex items-center gap-2 mb-4">
                                                 {item.tags?.map(tag => (
-                                                    <span key={tag} className="px-3 py-1 bg-agency-accent text-agency-surface text-[8px] font-black tracking-tighter [font-variant-caps:small-caps]">
+                                                    <span key={tag} className="px-3 py-1 bg-agency-accent text-agency-surface text-[8px] font-black tracking-tighter">
                                                         {tag}
                                                     </span>
                                                 ))}
@@ -261,7 +261,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                                     <span className="text-[10px] font-mono">{item.rating}</span>
                                                 </a>
                                             </div>
-                                            <h3 className="text-2xl md:text-4xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary leading-none mb-2">
+                                            <h3 className="text-2xl md:text-4xl font-black tracking-tighter text-agency-primary leading-none mb-2">
                                                 {item.title}
                                             </h3>
                                             <div className="flex items-center justify-between">
@@ -282,7 +282,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                         <span className="text-7xl md:text-9xl font-black text-agency-accent leading-none mb-4 italic">
                                             {item.title}
                                         </span>
-                                        <span className="text-[10px] font-mono tracking-tighter text-agency-primary/40 [font-variant-caps:small-caps]">
+                                        <span className="text-[10px] font-mono tracking-tighter text-agency-primary/40">
                                             {item.subtitle}
                                         </span>
                                         <div className="absolute top-6 right-6 opacity-20">
@@ -297,10 +297,10 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                             <Zap size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-2xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary mb-2">
+                                            <h3 className="text-2xl font-black tracking-tighter text-agency-primary mb-2">
                                                 {item.title}
                                             </h3>
-                                            <p className="text-xs text-agency-primary/40 font-mono leading-relaxed [font-variant-caps:small-caps] tracking-tighter">
+                                            <p className="text-xs text-agency-primary/40 font-mono leading-relaxed tracking-tighter">
                                                 {item.subtitle}
                                             </p>
                                         </div>
@@ -310,7 +310,7 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                                 {item.type === 'signup' && (
                                     <div className="absolute inset-0 p-10 flex flex-col justify-center">
                                         <Mail className="text-agency-accent mb-6" size={32} />
-                                        <h3 className="text-3xl font-black [font-variant-caps:small-caps] tracking-tighter text-agency-primary mb-4">
+                                        <h3 className="text-3xl font-black tracking-tighter text-agency-primary mb-4">
                                             {item.title}
                                         </h3>
                                         <p className="text-sm text-agency-primary/60 mb-8 font-serif italic">

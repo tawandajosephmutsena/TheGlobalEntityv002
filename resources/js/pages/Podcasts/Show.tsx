@@ -132,7 +132,7 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
                     <div className="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 flex flex-col justify-end pb-12">
                         <Link 
                             href="/podcasts" 
-                            className="inline-flex items-center gap-2.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-primary transition-all mb-12 group"
+                            className="inline-flex items-center gap-2.5 text-[10px] font-black tracking-widest text-muted-foreground/60 hover:text-primary transition-all mb-12 group"
                         >
                             <div className="size-8 rounded-full border border-border/40 flex items-center justify-center transition-all group-hover:border-primary/40 group-hover:bg-primary/5">
                                 <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
@@ -170,7 +170,7 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
                                         <PodcastCategoryBadge category={podcast.category} />
                                     ) : null}
                                     {podcast.media_type === 'video' && (
-                                        <Badge variant="secondary" className="gap-1.5 px-4 py-1.5 bg-white/10 backdrop-blur-md border-white/20 text-[10px] font-black uppercase tracking-widest">
+                                        <Badge variant="secondary" className="gap-1.5 px-4 py-1.5 bg-white/10 backdrop-blur-md border-white/20 text-[10px] font-black tracking-widest">
                                             <Video className="size-3" /> Video
                                         </Badge>
                                     )}
@@ -180,7 +180,7 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
                                     {podcast.title}
                                 </h1>
 
-                                <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-xs font-black uppercase tracking-widest text-muted-foreground/80">
+                                <div className="flex flex-wrap items-center gap-x-8 gap-y-4 text-xs font-black tracking-widest text-muted-foreground/80">
                                     <div className="flex items-center gap-2.5">
                                         <div className="size-8 rounded-full bg-primary/10 flex items-center justify-center">
                                             <Calendar className="size-3.5 text-primary" />
@@ -247,7 +247,7 @@ export default function PodcastShow({ podcast, related, site: propSite }: Props)
 
                                 {podcast.tags && podcast.tags.length > 0 && (
                                     <section className="space-y-4 pt-6 border-t">
-                                        <div className="flex items-center gap-2 text-sm font-bold text-muted-foreground/60 uppercase tracking-widest">
+                                        <div className="flex items-center gap-2 text-sm font-bold text-muted-foreground/60 tracking-widest">
                                             <Tag className="size-4" />
                                             Tags
                                         </div>

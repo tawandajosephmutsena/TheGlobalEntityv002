@@ -91,7 +91,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-10">
                     <div className="max-w-3xl">
                         <AnimatedSection animation="fade-up" textReveal>
-                        <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-8 [font-variant-caps:small-caps]">
+                        <h2 className="font-display font-black text-5xl md:text-8xl tracking-tighter leading-[0.9] mb-8">
                                 {title.split(' ').map((word, i, arr) => (
                                     <span key={i} className={cn(
                                         "inline-block mr-3",
@@ -112,7 +112,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                     <AnimatedSection animation="fade-left" delay={300}>
                         <motion.button 
                             whileHover={{ x: 10 }}
-                            className="flex items-center gap-4 py-4 px-8 theme-gradient-animated text-white rounded-full font-black text-[10px] tracking-tighter [font-variant-caps:small-caps] transition-all group shadow-lg theme-gradient-glow"
+                            className="flex items-center gap-4 py-4 px-8 theme-gradient-animated text-white rounded-full font-black text-[10px] tracking-tighter transition-all group shadow-lg theme-gradient-glow"
                         >
                             view all stories 
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -164,7 +164,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                                     glow={true} 
                                                     variant="badge"
                                                 />
-                                                <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-white">
+                                                <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-white">
                                                     exploration
                                                 </span>
                                             </div>
@@ -185,7 +185,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                         "p-10 md:p-12 flex flex-col justify-center",
                                         index === 0 ? "md:w-1/2" : "flex-grow"
                                     )}>
-                                        <div className="flex items-center gap-6 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-on-surface-variant/40 mb-8 border-b border-outline-variant/10 pb-6">
+                                        <div className="flex items-center gap-6 text-[10px] font-black tracking-tighter text-on-surface-variant/40 mb-8 border-b border-outline-variant/10 pb-6">
                                             <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> {post.date}</span>
                                             <span className="flex items-center gap-2"><User className="w-4 h-4 text-primary" /> {post.author}</span>
                                         </div>
@@ -193,7 +193,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                         {post.link ? (
                                             <a href={post.link} className="hover:underline">
                                                 <h3 className={cn(
-                                                    "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter [font-variant-caps:small-caps]",
+                                                "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter",
                                                     index === 0 ? "text-4xl md:text-5xl" : "text-3xl"
                                                 )}>
                                                     {post.title}
@@ -201,7 +201,7 @@ export default function StitchFeaturedBlogBlockRenderer({
                                             </a>
                                         ) : (
                                             <h3 className={cn(
-                                                "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter [font-variant-caps:small-caps]",
+                                                "font-display font-black mb-6 group-hover:text-primary transition-colors leading-[1.1] tracking-tighter",
                                                 index === 0 ? "text-4xl md:text-5xl" : "text-3xl"
                                             )}>
                                                 {post.title}
@@ -214,12 +214,12 @@ export default function StitchFeaturedBlogBlockRenderer({
                                         
                                         <div className="mt-auto">
                                             {post.link ? (
-                                                <a href={post.link} className="inline-flex items-center gap-3 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
+                                                <a href={post.link} className="inline-flex items-center gap-3 text-[10px] font-black tracking-tighter text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
                                                     read narrative
                                                     <div className="w-12 h-px bg-primary/30 group-hover:bg-primary transition-all group-hover:w-20"></div>
                                                 </a>
                                             ) : (
-                                                <div className="inline-flex items-center gap-3 text-[10px] font-black [font-variant-caps:small-caps] tracking-tighter text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
+                                                <div className="inline-flex items-center gap-3 text-[10px] font-black tracking-tighter text-primary group-hover:gap-6 transition-all duration-500 cursor-pointer">
                                                     read narrative
                                                     <div className="w-12 h-px bg-primary/30 group-hover:bg-primary transition-all group-hover:w-20"></div>
                                                 </div>

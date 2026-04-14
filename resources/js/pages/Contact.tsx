@@ -67,15 +67,15 @@ export default function Contact() {
             {/* Immersive Hero Section */}
             <section className="bg-white dark:bg-agency-dark pt-40 pb-20 relative overflow-hidden">
                 <div className="absolute top-20 left-0 w-full overflow-hidden opacity-[0.03] select-none pointer-events-none">
-                    <span className="text-[20vw] font-black uppercase whitespace-nowrap leading-none block marquee">
-                        GET IN TOUCH GET IN TOUCH GET IN TOUCH
+                    <span className="text-[20vw] font-black whitespace-nowrap leading-none block marquee">
+                        Get in Touch Get in Touch Get in Touch
                     </span>
                 </div>
 
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
                     <div className="max-w-4xl mx-auto">
-                        <span className="text-agency-accent font-bold uppercase tracking-[0.4em] text-xs mb-8 block">{site?.contact?.hero_subtitle || "Let's Connect"}</span>
-                        <h1 className="text-6xl md:text-9xl font-black uppercase tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
+                        <span className="text-agency-accent font-bold tracking-[0.4em] text-xs mb-8 block">{site?.contact?.hero_subtitle || "Let's Connect"}</span>
+                        <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] text-agency-primary dark:text-white mb-12">
                             {site?.contact?.hero_title ? (
                                 <>
                                     {site.contact.hero_title.split('.').map((part, i, arr) => (
@@ -108,7 +108,7 @@ export default function Contact() {
                         {/* Contact Form */}
                         <AnimatedSection animation="slide-up" className="lg:col-span-7">
                             <div className="bg-white dark:bg-agency-dark rounded-[60px] p-12 md:p-16 shadow-2xl border border-agency-primary/5 dark:border-white/5">
-                                <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-12">
+                                <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-12">
                                     {site?.contact?.form_title ? (
                                         <>
                                             {site.contact.form_title.split(' ').map((word, i, arr) => (
@@ -146,7 +146,7 @@ export default function Contact() {
                                                 />
                                                 <label 
                                                     htmlFor="name"
-                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold uppercase tracking-widest transition-all duration-300 pointer-events-none 
+                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold tracking-widest transition-all duration-300 pointer-events-none 
                                                     peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-agency-primary/40 
                                                     peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-agency-accent
                                                     peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-agency-primary/60">
@@ -169,7 +169,7 @@ export default function Contact() {
                                                 />
                                                 <label 
                                                     htmlFor="email"
-                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold uppercase tracking-widest transition-all duration-300 pointer-events-none 
+                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold tracking-widest transition-all duration-300 pointer-events-none 
                                                     peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-agency-primary/40 
                                                     peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-agency-accent
                                                     peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-agency-primary/60">
@@ -193,7 +193,7 @@ export default function Contact() {
                                                 />
                                                 <label 
                                                     htmlFor="phone"
-                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold uppercase tracking-widest transition-all duration-300 pointer-events-none 
+                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold tracking-widest transition-all duration-300 pointer-events-none 
                                                     peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-agency-primary/40 
                                                     peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-agency-accent
                                                     peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-agency-primary/60">
@@ -214,7 +214,7 @@ export default function Contact() {
                                                 />
                                                 <label 
                                                     htmlFor="subject"
-                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold uppercase tracking-widest transition-all duration-300 pointer-events-none 
+                                                    className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold tracking-widest transition-all duration-300 pointer-events-none 
                                                     peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-agency-primary/40 
                                                     peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-agency-accent
                                                     peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-agency-primary/60">
@@ -237,7 +237,7 @@ export default function Contact() {
                                             />
                                             <label 
                                                 htmlFor="message"
-                                                className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold uppercase tracking-widest transition-all duration-300 pointer-events-none 
+                                                className="absolute left-6 top-5 text-agency-primary/40 dark:text-white/40 text-sm font-bold tracking-widest transition-all duration-300 pointer-events-none 
                                                 peer-placeholder-shown:top-5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-agency-primary/40 
                                                 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-agency-accent
                                                 peer-[:not(:placeholder-shown)]:-top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:text-agency-primary/60">
@@ -247,10 +247,10 @@ export default function Contact() {
                                         {errors.message && <p className="mt-2 text-sm text-red-500">{errors.message}</p>}
                                     </div>
 
-                                    <button
+                                        <button
                                         type="submit"
                                         disabled={processing}
-                                        className="w-full md:w-auto px-12 py-6 rounded-full bg-agency-accent text-agency-primary font-black text-sm uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-agency-accent/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                                        className="w-full md:w-auto px-12 py-6 rounded-full bg-agency-accent text-agency-primary font-black text-sm tracking-widest hover:scale-105 transition-all shadow-xl shadow-agency-accent/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
                                     >
                                         <Send className="size-5" />
                                         {processing ? 'Sending...' : 'Send Message'}
@@ -264,7 +264,7 @@ export default function Contact() {
                             
                             {/* Contact Details */}
                             <div className="space-y-8">
-                                <h3 className="text-3xl font-black uppercase tracking-tighter">
+                                <h3 className="text-3xl font-black tracking-tighter">
                                     Get in <span className="text-agency-accent">Touch</span>
                                 </h3>
                                 
@@ -274,7 +274,7 @@ export default function Contact() {
                                             <Mail className="size-5 text-agency-accent group-hover:text-agency-primary transition-colors" />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Email</p>
+                                            <p className="text-xs font-black tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Email</p>
                                             <a href={`mailto:${site?.contact?.email || 'hello@example.com'}`} className="text-lg font-bold text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
                                                 {site?.contact?.email || 'hello@example.com'}
                                             </a>
@@ -286,7 +286,7 @@ export default function Contact() {
                                             <Phone className="size-5 text-agency-accent group-hover:text-agency-primary transition-colors" />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Phone</p>
+                                            <p className="text-xs font-black tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Phone</p>
                                             <a href={`tel:${site?.contact?.phone?.replace(/\s+/g, '') || '+15551234567'}`} className="text-lg font-bold text-agency-primary dark:text-white hover:text-agency-accent transition-colors">
                                                 {site?.contact?.phone || '+1 (555) 123-4567'}
                                             </a>
@@ -298,7 +298,7 @@ export default function Contact() {
                                             <MapPin className="size-5 text-agency-accent group-hover:text-agency-primary transition-colors" />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Office</p>
+                                            <p className="text-xs font-black tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Office</p>
                                             <p className="text-lg font-bold text-agency-primary dark:text-white whitespace-pre-line">
                                                 {site?.contact?.address || '123 Creative Boulevard\nDesign District, CA 90210'}
                                             </p>
@@ -310,7 +310,7 @@ export default function Contact() {
                                             <Clock className="size-5 text-agency-accent group-hover:text-agency-primary transition-colors" />
                                         </div>
                                         <div>
-                                            <p className="text-xs font-black uppercase tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Hours</p>
+                                            <p className="text-xs font-black tracking-widest text-agency-primary/40 dark:text-white/40 mb-2">Hours</p>
                                             <p className="text-lg font-bold text-agency-primary dark:text-white whitespace-pre-line">
                                                 {site?.contact?.hours || 'Mon - Fri: 9:00 AM - 6:00 PM\nWeekend: By Appointment'}
                                             </p>
@@ -321,7 +321,7 @@ export default function Contact() {
 
                             {/* Social Media */}
                             <div>
-                                <h3 className="text-2xl font-black uppercase tracking-tighter mb-6">
+                                <h3 className="text-2xl font-black tracking-tighter mb-6">
                                     Follow <span className="text-agency-accent">Us</span>
                                 </h3>
                                 <div className="flex gap-4">
