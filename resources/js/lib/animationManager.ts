@@ -419,7 +419,7 @@ export class AnimationManager {
         
         if (isLowPowered || avgFps < 30) {
             return {
-                duration: 0.3,
+                duration: 0.6,
                 ease: 'power1.out',
                 stagger: 0.05,
                 quality: 'low',
@@ -428,7 +428,7 @@ export class AnimationManager {
         
         if (avgFps < 50) {
             return {
-                duration: 0.5,
+                duration: 0.7,
                 ease: 'power2.out',
                 stagger: 0.08,
                 quality: 'medium',

@@ -68,6 +68,7 @@ const JournalArticleGridBlock = React.lazy(() => import('./JournalArticleGridBlo
 const JournalNewsletterBlock = React.lazy(() => import('./JournalNewsletterBlock'));
 const CinematicHero = React.lazy(() => import('./CinematicHero'));
 const Globe3DBlockRenderer = React.lazy(() => import('./Globe3DBlock'));
+const PodcastArchiveBlock = React.lazy(() => import('./PodcastArchiveBlock'));
 
 
 
@@ -607,6 +608,16 @@ export default function BlockRenderer({
                                 return <CultureBentoBlock {...(block.content as CultureBentoBlockType['content'])} />;
                             case 'team_join':
                                 return <TeamJoinBlock {...(block.content as TeamJoinBlockType['content'])} />;
+                            case 'podcast_archive':
+                                return (
+                                    <PodcastArchiveBlock 
+                                        {...(block as any)} 
+                                        podcasts={props as any} 
+                                        featured={props.featuredProjects as any} 
+                                        categories={categories}
+                                        filters={(props as any).filters || {}}
+                                    />
+                                );
 
                             case 'community_review':
                                 return (

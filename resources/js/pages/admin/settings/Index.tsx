@@ -99,6 +99,8 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
                 { value: 'minimalistic', label: 'Minimalistic (Centered)' },
             ]
         },
+        { key: 'podcast_archive_title', label: 'Podcast Archive Title', type: 'text', placeholder: 'Signal Archive' },
+        { key: 'podcast_archive_subtitle', label: 'Podcast Archive Subtitle', type: 'textarea', placeholder: 'Explore our latest episodes' },
     ],
     branding: [
         { 

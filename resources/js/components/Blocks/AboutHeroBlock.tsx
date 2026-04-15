@@ -69,32 +69,26 @@ export default function AboutHeroBlockRenderer({
                 <div className="relative grid grid-cols-2 sm:grid-cols-3 gap-4">
                     <AboutHeroIcon 
                         category="social-sustainability" 
-                        label="Sustainability" 
                         className="transform -rotate-3 hover:rotate-0"
                     />
                     <AboutHeroIcon 
                         category="living-from-the-heart" 
-                        label="Heart-Led" 
                         className="transform rotate-6 hover:rotate-0 mt-8 shadow-lg"
                     />
                     <AboutHeroIcon 
                         category="solo-travel" 
-                        label="Solo Travel" 
                         className="transform -rotate-6 hover:rotate-0 ml-4"
                     />
                     <AboutHeroIcon 
                         category="festival-fever" 
-                        label="Festivals" 
                         className="transform rotate-2 hover:rotate-0 mt-4"
                     />
                     <AboutHeroIcon 
                         category="glocal-gems" 
-                        label="Hidden Gems" 
                         className="shadow-sm transform -rotate-12 hover:rotate-0"
                     />
                     <AboutHeroIcon 
                         category="travel-trouble" 
-                        label="The Truth" 
                         className="transform rotate-12 hover:rotate-0 mt-12 shadow-md"
                     />
                 </div>
@@ -103,7 +97,7 @@ export default function AboutHeroBlockRenderer({
     );
 }
 
-function AboutHeroIcon({ category, label, className }: { category: string, label: string, className: string }) {
+function AboutHeroIcon({ category, className }: { category: string, className: string }) {
     return (
         <motion.div 
             whileHover={{ scale: 1.1, rotate: 0 }}
@@ -117,12 +111,8 @@ function AboutHeroIcon({ category, label, className }: { category: string, label
                 size={48} 
                 glow={true} 
                 variant="badge" 
-                wrapperClassName="vibrant-badge scale-110 mb-2"
+                wrapperClassName="vibrant-badge scale-110"
             />
-
-            <span className="text-[10px] font-black tracking-widest text-on-surface text-center leading-tight opacity-80 group-hover:opacity-100 transition-opacity">
-                {label}
-            </span>
         </motion.div>
     );
 }

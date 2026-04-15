@@ -59,9 +59,9 @@ export const GlobalWatercolorBackground = () => {
       style={{ 
         '--global-opacity': globalOpacity, 
         '--overlay-opacity': overlayOpacity,
-        '--blur-amount': `${isMobile ? Math.min(blurAmount, 60) : blurAmount}px`,
-        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 60) : Math.round(blurAmount * 0.85)}px`,
-        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 60) : Math.round(blurAmount * 0.7)}px`,
+        '--blur-amount': `${isMobile ? Math.min(blurAmount, 40) : Math.min(blurAmount, 100)}px`,
+        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 35) : Math.min(Math.round(blurAmount * 0.85), 80)}px`,
+        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 30) : Math.min(Math.round(blurAmount * 0.7), 60)}px`,
         contain: 'paint' 
       } as React.CSSProperties}
     >
@@ -109,7 +109,7 @@ export const GlobalWatercolorBackground = () => {
       </div>
 
       <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-10 dark:opacity-15 mix-blend-overlay"
+        className="absolute inset-0 z-0 pointer-events-none opacity-5 dark:opacity-8"
         style={{ backgroundImage: 'var(--bg-noise-grain)' }}
       />
 

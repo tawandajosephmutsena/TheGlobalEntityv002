@@ -267,7 +267,7 @@ export class MobileAnimationOptimizer {
         switch (this.optimizationLevel) {
             case 'low':
                 return {
-                    duration: 0.2,
+                    duration: 0.5,
                     ease: 'power1.out',
                     stagger: 0.02,
                     quality: 'low',
@@ -276,7 +276,7 @@ export class MobileAnimationOptimizer {
                 };
             case 'medium':
                 return {
-                    duration: 0.4,
+                    duration: 0.6,
                     ease: 'power2.out',
                     stagger: 0.05,
                     quality: 'medium',

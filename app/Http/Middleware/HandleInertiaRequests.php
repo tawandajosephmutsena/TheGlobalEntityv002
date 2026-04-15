@@ -166,8 +166,12 @@ class HandleInertiaRequests extends Middleware
                     'google_tag_id' => $settings['google_tag_id'] ?? null,
                     'google_conversion_id' => $settings['google_conversion_id'] ?? null,
                     'privacy_policy_url' => $settings['privacy_policy_page'] ?? '/privacy',
-                    'terms_url' => $settings['terms_page'] ?? '/terms',
-                    'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/cookies',
+                    'terms_url' => $settings['terms_page'] ?? '/privacy',
+                    'cookie_policy_url' => $settings['cookie_policy_page'] ?? '/privacy',
+                ],
+                'podcast' => [
+                    'archive_title' => $settings['podcast_archive_title'] ?? 'Signal Archive',
+                    'archive_subtitle' => $settings['podcast_archive_subtitle'] ?? 'Explore our latest episodes',
                 ],
 
             ]),

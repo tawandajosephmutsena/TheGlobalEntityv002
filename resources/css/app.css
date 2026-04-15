@@ -89,8 +89,8 @@
     --animate-bloom: bloom 1s ease-out both;
     --animate-smoke: smoke-reveal 1s ease-out both;
     --animate-shimmer: shimmer 2s infinite;
-    --animate-gradient-shift: gradient-shift 6s ease infinite;
-    --animate-gradient-pulse: gradient-pulse 4s ease-in-out infinite;
+    --animate-gradient-shift: gradient-shift 18s ease infinite;
+    --animate-gradient-pulse: gradient-pulse 12s ease-in-out infinite;
 
     /* Gradient tokens — mapped from CSS vars injected by ThemeStyles */
     --color-gradient-start: var(--gradient-start);

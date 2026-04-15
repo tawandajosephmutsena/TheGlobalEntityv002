@@ -349,6 +349,7 @@ export type PageBlock =
     | ConnectBlock
     | PodcastGridBlock
     | PodcastFeaturedBlock
+    | PodcastArchiveBlock
     | PodcastPlayerBlock
     | CommunityReviewBlock
     | FestivalMapBlock
@@ -703,6 +704,18 @@ export interface PodcastFeaturedBlock extends BaseBlock {
         showPlayButton?: boolean;
         ctaText?: string;
         ctaHref?: string;
+    };
+}
+
+export interface PodcastArchiveBlock extends BaseBlock {
+    type: 'podcast_archive';
+    content: {
+        title?: string;
+        subtitle?: string;
+        showSidebar?: boolean;
+        showFeaturedGrid?: boolean;
+        featuredLimit?: number;
+        discoveryLayout?: 'list' | 'grid';
     };
 }
 
