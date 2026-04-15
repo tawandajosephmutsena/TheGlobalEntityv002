@@ -46,6 +46,7 @@ export const GlobalWatercolorBackground = () => {
   const blob1Opacity = getBGSetting('bg_watercolor_blob1_opacity', 0.4) as number;
   const blob2Opacity = getBGSetting('bg_watercolor_blob2_opacity', 0.35) as number;
   const blob3Opacity = getBGSetting('bg_watercolor_blob3_opacity', 0.3) as number;
+  const noiseOpacity = getBGSetting('bg_watercolor_noise_opacity', 0.15) as number;
   const blurAmount = getBGSetting('bg_watercolor_blur', 140) as number;
   const overlayOpacity = getBGSetting('bg_watercolor_overlay_opacity', 0.5) as number;
 
@@ -57,11 +58,11 @@ export const GlobalWatercolorBackground = () => {
     <div 
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
       style={{ 
-        '--global-opacity': globalOpacity, 
+        opacity: globalOpacity,
         '--overlay-opacity': overlayOpacity,
-        '--blur-amount': `${isMobile ? Math.min(blurAmount, 40) : Math.min(blurAmount, 100)}px`,
-        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 35) : Math.min(Math.round(blurAmount * 0.85), 80)}px`,
-        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 30) : Math.min(Math.round(blurAmount * 0.7), 60)}px`,
+        '--blur-amount': `${isMobile ? Math.min(blurAmount, 80) : Math.min(blurAmount, 240)}px`,
+        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 70) : Math.min(Math.round(blurAmount * 0.85), 200)}px`,
+        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 60) : Math.min(Math.round(blurAmount * 0.7), 180)}px`,
         contain: 'paint' 
       } as React.CSSProperties}
     >
@@ -109,8 +110,11 @@ export const GlobalWatercolorBackground = () => {
       </div>
 
       <div 
-        className="absolute inset-0 z-0 pointer-events-none opacity-5 dark:opacity-8"
-        style={{ backgroundImage: 'var(--bg-noise-grain)' }}
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ 
+          backgroundImage: 'var(--bg-noise-grain)',
+          opacity: noiseOpacity 
+        }}
       />
 
       <div 
