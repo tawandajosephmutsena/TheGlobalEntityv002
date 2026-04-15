@@ -28,7 +28,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     title = 'Create Digital Experiences That Inspire',
     subtitle = 'Creative Agency',
     description = 'We push the boundaries of design and technology to create extraordinary digital experiences that captivate and convert.',
-    ctaText = 'Start Your Project',
+    ctaText,
     ctaHref = '/contact',
     backgroundImages = [],
     marqueeText = 'Innovate Create Elevate Innovate Create Elevate',
@@ -238,16 +238,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
                 {/* CTA Actions */}
                 <div className="flex flex-wrap items-center justify-center gap-6 animate-[bloom_1s_ease-out_1s_both]">
-                    <Button
-                        asChild
-                        size="lg"
-                        className="group h-14 px-10 rounded-full theme-gradient-animated text-white font-bold text-lg hover:scale-105 transition-all shadow-xl theme-gradient-glow border-none btn-magnetic"
-                    >
-                        <a href={ctaHref}>
-                            {ctaText}
-                            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                        </a>
-                    </Button>
+                    {ctaText && (
+                        <Button
+                            asChild
+                            size="lg"
+                            className="group h-14 px-10 rounded-full theme-gradient-animated text-white font-bold text-lg hover:scale-105 transition-all shadow-xl theme-gradient-glow border-none btn-magnetic"
+                        >
+                            <a href={ctaHref}>
+                                {ctaText}
+                                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                            </a>
+                        </Button>
+                    )}
                     
                     {secondaryCtaText && (
                         <button 

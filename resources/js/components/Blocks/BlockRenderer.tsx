@@ -3,6 +3,7 @@ import { blockRegistry } from '@/lib/BlockRegistry';
 import DOMPurify from 'dompurify';
 import AnimatedSection from '@/components/AnimatedSection';
 import VideoPlayer from '@/components/ui/video-player';
+import DynamicIcon from '@/components/DynamicIcon';
 
 import { 
     PageBlock, 
@@ -89,6 +90,8 @@ interface ColumnContent {
     caption?: string;
     text?: string;
     style?: string;
+    icon?: string;
+    iconType?: 'lucide' | 'custom';
 }
 
 interface BlockRendererProps {
@@ -178,7 +181,34 @@ const ColumnRenderer = ({ column }: { column: NonNullable<TextBlockType['content
             const alignClass = getTextAlignClass(content?.textAlign || 'left');
             return (
                 <div className={cn('prose dark:prose-invert max-w-none font-sans', sizeClass, alignClass)}>
+                    {content?.icon && (
+                        <div className={cn("mb-4 flex", alignClass === 'text-center' ? 'justify-center' : alignClass === 'text-right' ? 'justify-end' : 'justify-start')}>
+                            <DynamicIcon 
+                                icon={content.icon} 
+                                type={content.iconType as any || 'lucide'} 
+                                size={32} 
+                                className="text-primary"
+                                glow={content.iconType === 'custom'}
+                            />
+                        </div>
+                    )}
                     <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+                </div>
+            );
+        }
+        case 'icon': {
+            const size = (content?.iconSize as number) || 48;
+            const alignClass = getTextAlignClass(content?.textAlign || 'left');
+            if (!content?.icon) return null;
+            return (
+                <div className={cn("flex w-full", alignClass === 'text-center' ? 'justify-center' : alignClass === 'text-right' ? 'justify-end' : 'justify-start')}>
+                    <DynamicIcon 
+                        icon={content.icon as string} 
+                        type={content.iconType as any || 'lucide'} 
+                        size={size} 
+                        className="text-primary"
+                        glow={content.iconType === 'custom'}
+                    />
                 </div>
             );
         }
@@ -285,6 +315,17 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
         return (
             <section className="py-20 px-4">
                 <div className="max-w-4xl mx-auto prose dark:prose-invert font-sans">
+                    {content.icon && (
+                        <div className="mb-6 flex">
+                            <DynamicIcon 
+                                icon={content.icon} 
+                                type={content.iconType as any || 'lucide'} 
+                                size={48} 
+                                className="text-primary"
+                                glow={content.iconType === 'custom'}
+                            />
+                        </div>
+                    )}
                     {title && <h2>{title}</h2>}
                     <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
                 </div>
@@ -298,11 +339,24 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
     return (
         <section className="py-20 px-4 md:px-8">
             <div className="max-w-7xl mx-auto">
-                {title && (
-                    <AnimatedSection animation="fade-up" className="mb-12 text-center">
-                        <h2 className="text-4xl font-black tracking-tight">{title}</h2>
-                    </AnimatedSection>
-                )}
+                <div className="flex flex-col items-center mb-12">
+                    {content.icon && (
+                        <AnimatedSection animation="fade-up" className="mb-6">
+                            <DynamicIcon 
+                                icon={content.icon} 
+                                type={content.iconType as any || 'lucide'} 
+                                size={64} 
+                                className="text-primary"
+                                glow={content.iconType === 'custom'}
+                            />
+                        </AnimatedSection>
+                    )}
+                    {title && (
+                        <AnimatedSection animation="fade-up" className="text-center">
+                            <h2 className="text-4xl font-black tracking-tight">{title}</h2>
+                        </AnimatedSection>
+                    )}
+                </div>
                 <div className={cn(gridClass, "items-center")}>
                     {columns.map((col, idx) => (
                         <AnimatedSection key={col.id || idx} animation="fade-up" delay={idx * 100}>

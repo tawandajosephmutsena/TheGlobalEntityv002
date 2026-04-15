@@ -6,10 +6,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2, Globe } from 'lucide-react';
+import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2, Globe, Star } from 'lucide-react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import Globe3DBlockEditor from '@/components/admin/PageBuilder/editors/Globe3DBlockEditor';
+import IconPicker from '@/components/admin/PageBuilder/IconPicker';
 import { MediaAsset } from '@/types';
 import { Block } from '@/pages/admin/pages/Edit';
 
@@ -50,7 +51,7 @@ interface FormStep {
 
 interface Column {
     id: string;
-    type: 'text' | 'image' | 'video' | 'button' | 'globe_3d';
+    type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon';
     content: Record<string, unknown>;
 }
 
@@ -219,14 +220,15 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             const layout = String(block.content.layout || '1');
             const columns = (block.content.columns as Column[]) || [];
             
-            const addColumn = (type: 'text' | 'image' | 'video' | 'button' | 'globe_3d') => {
+            const addColumn = (type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon') => {
                 const newCol: Column = {
                     id: 'col-' + Date.now(),
                     type,
-                    content: type === 'text' ? { body: '', textSize: 'base', textAlign: 'left' } 
+                    content: type === 'text' ? { body: '', textSize: 'base', textAlign: 'left', icon: '', iconType: 'lucide' } 
                            : type === 'image' ? { url: '', alt: '', caption: '' }
                            : type === 'video' ? { url: '' }
                            : type === 'globe_3d' ? { markers: [], ambientIntensity: 1.2, pointLightIntensity: 2.0, autoRotateSpeed: 0.3, height: '400px' }
+                           : type === 'icon' ? { icon: '', iconType: 'lucide', iconSize: 48, textAlign: 'center' }
                            : { text: '', url: '', style: 'primary' }
                 };
                 updateContent({ columns: [...columns, newCol] });
@@ -245,10 +247,19 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             return (
                 <div className="space-y-6">
                     <div className="space-y-2">
-                        <Label>Section Title (Optional)</Label>
+                        <Label>Title</Label>
                         <Input 
                             value={String(block.content.title || '')} 
                             onChange={(e) => updateContent({ title: e.target.value })}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label>Section Icon</Label>
+                        <IconPicker 
+                            value={String(block.content.icon || '')} 
+                            type={block.content.iconType as any || 'lucide'}
+                            onChange={(val, type) => updateContent({ icon: val, iconType: type })}
                         />
                     </div>
                     
@@ -287,6 +298,9 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <Button variant="outline" size="sm" onClick={() => addColumn('globe_3d')} title="Add 3D Globe">
                                     <Globe className="h-3 w-3" />
                                 </Button>
+                                <Button variant="outline" size="sm" onClick={() => addColumn('icon')} title="Add Icon">
+                                    <Star className="h-3 w-3" />
+                                </Button>
                             </div>
                         </div>
 
@@ -295,7 +309,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <div key={col.id || i} className="group relative p-4 border rounded-lg bg-muted/10">
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : col.type === 'globe_3d' ? '3D Globe' : 'Button'}
+                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : col.type === 'globe_3d' ? '3D Globe' : col.type === 'icon' ? 'Icon' : 'Button'}
                                         </span>
                                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeColumn(i)} title="Remove">
                                             <Trash className="h-3 w-3" />
@@ -305,6 +319,14 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                     {col.type === 'text' && (
                                         <div className="space-y-3">
                                             <div className="grid grid-cols-2 gap-2">
+                                                <div className="space-y-1 col-span-2">
+                                                    <Label className="text-[10px]">Icon (Optional)</Label>
+                                                    <IconPicker 
+                                                        value={String((col.content as any).icon || '')} 
+                                                        type={(col.content as any).iconType || 'lucide'}
+                                                        onChange={(val, type) => updateColumn(i, { icon: val, iconType: type })}
+                                                    />
+                                                </div>
                                                 <Select 
                                                     value={String((col.content as Record<string, unknown>).textSize || 'base')} 
                                                     onValueChange={(val) => updateColumn(i, { textSize: val })}
@@ -381,6 +403,44 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                                 content={col.content as any} 
                                                 onUpdate={(updates) => updateColumn(i, updates)} 
                                             />
+                                        </div>
+                                    )}
+
+                                    {col.type === 'icon' && (
+                                        <div className="space-y-4">
+                                            <div className="space-y-1">
+                                                <Label className="text-[10px]">Icon</Label>
+                                                <IconPicker 
+                                                    value={String((col.content as any).icon || '')} 
+                                                    type={(col.content as any).iconType || 'lucide'}
+                                                    onChange={(val, type) => updateColumn(i, { icon: val, iconType: type })}
+                                                />
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px]">Size (px)</Label>
+                                                    <Input 
+                                                        type="number"
+                                                        className="h-8 text-xs" 
+                                                        value={String((col.content as any).iconSize || 48)} 
+                                                        onChange={(e) => updateColumn(i, { iconSize: parseInt(e.target.value) })} 
+                                                    />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <Label className="text-[10px]">Alignment</Label>
+                                                    <Select 
+                                                        value={String((col.content as any).textAlign || 'center')} 
+                                                        onValueChange={(val) => updateColumn(i, { textAlign: val })}
+                                                    >
+                                                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="left">Left</SelectItem>
+                                                            <SelectItem value="center">Center</SelectItem>
+                                                            <SelectItem value="right">Right</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </div>
+                                            </div>
                                         </div>
                                     )}
                                 </div>

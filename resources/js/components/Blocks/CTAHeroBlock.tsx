@@ -18,7 +18,7 @@ export default function CTAHeroBlock({
   titleHighlight = "Digital Presence",
   description = "Transform your workflow with our cutting-edge platform designed for modern teams.",
   emailPlaceholder = "Enter your work email",
-  buttonText = "Get Started Free",
+  buttonText,
   buttonLink = "#",
   benefits = [
     "No credit card required",
@@ -181,25 +181,27 @@ export default function CTAHeroBlock({
                   disabled={processing || isSubmitted}
                   required
                 />
-                <Button 
-                  type="submit"
-                  disabled={processing || isSubmitted || !data.email}
-                  className="group h-12 px-8 theme-gradient-animated text-white border-none hover:shadow-lg theme-gradient-glow"
-                >
-                  {isSubmitted ? (
-                    <>
-                      <CheckCircle2 className="mr-2 h-4 w-4" />
-                      Saved!
-                    </>
-                  ) : processing ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      {buttonText}
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </>
-                  )}
-                </Button>
+                {buttonText && buttonText.trim() !== '' && (
+                  <Button 
+                    type="submit"
+                    disabled={processing || isSubmitted || !data.email}
+                    className="group h-12 px-8 theme-gradient-animated text-white border-none hover:shadow-lg theme-gradient-glow"
+                  >
+                    {isSubmitted ? (
+                      <>
+                        <CheckCircle2 className="mr-2 h-4 w-4" />
+                        Saved!
+                      </>
+                    ) : processing ? (
+                      "Sending..."
+                    ) : (
+                      <>
+                        {buttonText}
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </Button>
+                )}
               </form>
 
               <div className="flex flex-wrap items-center gap-y-2 gap-x-6 sm:gap-x-8">

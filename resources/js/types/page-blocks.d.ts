@@ -94,13 +94,15 @@ export interface TextBlock extends BaseBlock {
     type: 'text';
     content: {
         title?: string;
+        icon?: string;
+        iconType?: 'lucide' | 'custom';
         body: string;
         layout?: string;
         textSize?: string;
         textAlign?: string;
         columns?: Array<{
             id: string;
-            type: 'text' | 'image' | 'video' | 'button' | 'globe_3d';
+            type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon';
             content: Record<string, unknown>; // Using Record for flexibility
         }>;
     };

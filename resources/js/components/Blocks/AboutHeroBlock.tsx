@@ -12,8 +12,8 @@ export default function AboutHeroBlockRenderer({
     subtitle = "Identity & Soul",
     description = "Your brutally honest travel guide, your happy festival connoisseur, and the map for the souls who refuse to walk the paved path.",
     backgroundImage,
-    ctaText = "Join Journey",
-    ctaLink = "#"
+    ctaText,
+    ctaLink
 }: AboutHeroBlock['content']) {
     return (
         <section className="relative px-8 pt-56 pb-20 overflow-visible text-on-background">
@@ -54,14 +54,16 @@ export default function AboutHeroBlockRenderer({
                         {description}
                     </p>
                     
-                    <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="bg-primary text-white px-10 py-5 rounded-full font-black text-xs tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
-                    >
-                        <a href={ctaLink}>{ctaText}</a>
-                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </motion.button>
+                    {ctaText && ctaText.trim() !== '' && (
+                        <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-primary text-white px-10 py-5 rounded-full font-black text-xs tracking-[0.2em] shadow-xl shadow-primary/20 flex items-center gap-3 group transition-all duration-500"
+                        >
+                            <a href={ctaLink || '#'}>{ctaText}</a>
+                            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </motion.button>
+                    )}
                 </motion.div>
 
                 <div className="relative grid grid-cols-2 sm:grid-cols-3 gap-4">

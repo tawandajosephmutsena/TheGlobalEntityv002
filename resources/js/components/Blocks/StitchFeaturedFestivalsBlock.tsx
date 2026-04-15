@@ -116,6 +116,9 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
             <div className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-12">
                 {/* Hero Section */}
                 <div className="mb-20">
+                    <div className="theme-gradient-animated text-white px-4 py-1 rounded-full text-xs font-black tracking-tighter mb-4 inline-block shadow-lg">
+                        Featured Festivals
+                    </div>
                     <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4">
                         {title.split(' ').map((word: string, i: number) => (
                             <span key={i} className={i === 1 ? 'theme-gradient-text italic' : ''}>{word} </span>
@@ -191,21 +194,28 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                             </Link>
                         )}
 
-                        {/* 3. Minimalist Date/Location Card */}
+                        {/* 3. Minimalist Date/Location Card (Now with Image) */}
                         {festivals.length > 2 && (
                             <Link 
                                 href={getFest(2).url} 
                                 aria-label={`View details for ${getFest(2).title} festival`}
-                                className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] liquid-glass transition-all duration-700 hover:bg-surface-container-high border-none shadow-sea-mist"
+                                className="block md:col-span-4 group relative overflow-hidden rounded-[2.5rem] h-[400px] liquid-glass transition-all duration-700 shadow-sea-mist"
                             >
-                                <div className="p-10 h-full flex flex-col justify-between relative z-10">
+                                <OptimizedImage 
+                                    className="absolute inset-0 w-full h-full grayscale opacity-20 group-hover:opacity-40 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
+                                    src={getFest(2).image} 
+                                    conversions={getFest(2).image_conversions}
+                                    alt=""
+                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                />
+                                <div className="p-10 h-full flex flex-col justify-between relative z-10 bg-gradient-to-b from-surface/40 to-surface/80">
                                     <div>
                                         <div className="flex justify-between items-start mb-8">
-                                            <span className="text-6xl font-black text-primary/10 font-display group-hover:text-primary transition-colors duration-700">03</span>
-                                            <Calendar className="text-secondary w-8 h-8 group-hover:rotate-12 transition-transform duration-500" />
+                                            <span className="text-6xl font-black text-primary/20 font-display group-hover:text-primary transition-colors duration-700">03</span>
+                                            <Calendar className="text-secondary w-8 h-8 group-hover:rotate-12 transition-transform duration-500 border-2 border-primary/10 bg-surface/50 p-1.5 rounded-xl backdrop-blur-md" />
                                         </div>
                                         <h3 className="font-display text-3xl font-black text-on-surface leading-[0.9] mb-4 group-hover:text-primary transition-colors duration-500 tracking-tighter">{getFest(2).title}</h3>
-                                        <p className="text-on-surface-variant font-medium italic">{getFest(2).locationAddress}</p>
+                                        <p className="text-on-surface-variant font-medium italic bg-surface/30 backdrop-blur-sm px-3 py-1 rounded-lg inline-block border border-primary/5">{getFest(2).locationAddress}</p>
                                     </div>
                                     <div className="border-t border-primary/10 pt-6">
                                         <div className="flex items-center gap-2 text-[10px] font-black text-on-surface tracking-tighter">
