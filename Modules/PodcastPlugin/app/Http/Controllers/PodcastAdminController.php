@@ -16,7 +16,7 @@ class PodcastAdminController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Podcast::with(['category', 'author']);
+        $query = Podcast::with(['category', 'author', 'podcastCategory']);
 
         // Filter by status
         if ($request->filled('status')) {
@@ -122,7 +122,7 @@ class PodcastAdminController extends Controller
 
     public function edit(int $id)
     {
-        $podcast = Podcast::with(['category', 'categories', 'author'])->findOrFail($id);
+        $podcast = Podcast::with(['category', 'categories', 'author', 'podcastCategory'])->findOrFail($id);
         $categories = Category::where('type', 'insight')->orderBy('name')->get();
 
         return Inertia::render('admin/podcasts/Edit', [

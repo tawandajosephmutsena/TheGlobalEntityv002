@@ -144,7 +144,7 @@ class CollectionController extends Controller
                         ->when($request->has('featured'), function ($query) {
                             return $query->where('is_featured', true);
                         })
-                        ->with(['author', 'category'])
+                        ->with(['author', 'category', 'podcastCategory'])
                         ->latest('published_at')
                         ->take($limit)
                         ->get();
@@ -274,7 +274,7 @@ class CollectionController extends Controller
 
             case 'podcasts':
                 if (class_exists('\Modules\PodcastPlugin\Models\Podcast')) {
-                    $item = \Modules\PodcastPlugin\Models\Podcast::published()->find($id);
+                    $item = \Modules\PodcastPlugin\Models\Podcast::with(['podcastCategory', 'author'])->published()->find($id);
                     if ($item) {
                         $data = [
                             'id' => $item->id,

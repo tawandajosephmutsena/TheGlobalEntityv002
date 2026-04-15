@@ -108,6 +108,7 @@ class BlogController extends Controller
         });
 
         $relatedPodcasts = \Modules\PodcastPlugin\Models\Podcast::published()
+            ->with(['podcastCategory'])
             ->where('id', '!=', $insight->podcast_id)
             ->latest('published_at')
             ->limit(3)

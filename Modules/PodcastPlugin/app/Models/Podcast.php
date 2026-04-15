@@ -182,7 +182,7 @@ class Podcast extends Model
 
     public function getCategoryAttribute()
     {
-        return $this->podcastCategory;
+        return $this->relationLoaded('podcastCategory') ? $this->podcastCategory : null;
     }
 
     // ── Helpers ──
