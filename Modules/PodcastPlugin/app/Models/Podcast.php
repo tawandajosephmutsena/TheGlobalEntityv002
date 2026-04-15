@@ -54,6 +54,7 @@ class Podcast extends Model
         'formatted_file_size',
         'media_full_url',
         'thumbnail_url',
+        'category',
     ];
 
     protected static function booted(): void
@@ -177,6 +178,11 @@ class Podcast extends Model
             return $thumbnail;
         }
         return asset('storage/' . $thumbnail);
+    }
+
+    public function getCategoryAttribute()
+    {
+        return $this->podcastCategory;
     }
 
     // ── Helpers ──

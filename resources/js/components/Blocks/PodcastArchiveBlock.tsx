@@ -263,10 +263,6 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                         <header className="flex flex-col md:flex-row md:items-end justify-between gap-12 pb-16 border-b border-white/10">
                             <div className="space-y-8">
                                 <div className="flex items-center gap-5">
-                                    <div className="px-5 py-2 rounded-full bg-primary/10 text-primary text-[10px] font-black tracking-[0.3em] border border-primary/20 uppercase shadow-sm">
-                                        • Live in Archive
-                                    </div>
-                                    <span className="text-xs text-muted-foreground opacity-60 font-medium italic">Stationary Refinement</span>
                                 </div>
                                 <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.85] italic text-foreground">
                                     {activeCategory 
