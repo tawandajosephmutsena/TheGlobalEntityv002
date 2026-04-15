@@ -45,7 +45,7 @@ export default function PodcastsIndex({ podcasts, featured, categories, filters 
     const siteName = page.props.settings?.site_name || 'Our';
 
     return (
-        <MainLayout title={`Podcasts - ${siteName}`} className="bg-background">
+        <MainLayout title={`Podcasts - ${siteName}`} className="bg-transparent">
             <SeoHead
                 title="Podcasts"
                 description="Explore our collection of episodes — from engaging conversations to insightful deep dives."
