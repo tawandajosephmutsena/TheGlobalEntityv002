@@ -26,6 +26,7 @@ interface CarouselProps {
   description?: string;
   // Metadata for filtering
   cardsData?: Card[];
+  limit?: number;
 }
 
 type Card = {
@@ -47,7 +48,7 @@ export const CarouselContext = createContext<{
   currentIndex: 0,
 });
 
-export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle, description }: CarouselProps) => {
+export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle, description, limit }: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
@@ -105,9 +106,19 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
   };
 
   const filteredItems = useMemo(() => {
-    if (!cardsData || activeCategory === "All") return items;
-    return items.filter((_, idx) => cardsData[idx].category === activeCategory);
-  }, [items, cardsData, activeCategory]);
+    if (!cardsData) return items;
+    
+    let result = items;
+    if (activeCategory !== "All") {
+        result = items.filter((_, idx) => cardsData[idx].category === activeCategory);
+    }
+
+    if (limit && limit > 0) {
+        return result.slice(0, limit);
+    }
+    
+    return result;
+  }, [items, cardsData, activeCategory, limit]);
 
   return (
     <CarouselContext.Provider
@@ -118,18 +129,18 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
         <div className="flex flex-col md:flex-row md:items-end justify-between px-4 mb-6 max-w-7xl mx-auto gap-8 overflow-visible">
             <div className="flex flex-col gap-2 order-2 md:order-1 flex-1">
                 {subtitle && (
-                    <p className="text-[10px] md:text-xs font-black tracking-[0.2em] text-primary [font-variant-caps:small-caps] opacity-80 decoration-primary decoration-2 underline-offset-4 mb-1">
+                    <p className="text-[10px] md:text-xs font-black tracking-[0.2em] text-primary opacity-80 decoration-primary decoration-2 underline-offset-4 mb-1">
                         {subtitle}
                     </p>
                 )}
                 <motion.h2 
                     layoutId="carousel-title"
-                    className="text-4xl md:text-6xl font-black text-on-surface [font-variant-caps:small-caps] tracking-tighter leading-none"
+                    className="text-4xl md:text-6xl font-black text-on-surface tracking-tighter leading-none"
                 >
                     {title}
                 </motion.h2>
                 {description && (
-                    <p className="text-on-surface-variant text-base md:text-lg font-light max-w-2xl leading-relaxed mt-4 opacity-90">
+                    <p className="text-on-surface-variant text-base md:text-lg font-light max-w-4xl leading-relaxed mt-4 opacity-90">
                         {description}
                     </p>
                 )}
@@ -156,33 +167,28 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
         </div>
 
         {/* CATEGORY FILTERING BUTTONS */}
-        <div className="flex flex-wrap gap-2 mb-8 md:mb-12 px-4 md:px-10 max-w-7xl mx-auto overflow-x-auto pb-4 scrollbar-hide no-scrollbar">
+        <div className="flex flex-wrap gap-4 mb-8 md:mb-12 px-4 md:px-10 max-w-7xl mx-auto overflow-x-auto pb-4 scrollbar-hide no-scrollbar hide-scrollbar scroll-smooth">
             {categories.length > 1 && categories.map((cat) => (
                 <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={cn(
-                        "group flex items-center gap-3 px-6 py-2.5 rounded-full text-[10px] font-black tracking-widest transition-all [font-variant-caps:small-caps] whitespace-nowrap border",
+                        "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
                         activeCategory === cat 
-                            ? "bg-primary text-white border-primary shadow-xl shadow-primary/30 scale-105" 
-                            : "liquid-glass text-on-surface/70 border-on-surface/10 hover:text-on-surface hover:border-on-surface/30 hover:bg-on-surface/5"
+                            ? (cat === 'All' ? "bg-on-surface text-surface shadow-xl scale-105" : "bg-primary text-on-primary shadow-xl scale-105")
+                            : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
                     )}
                 >
-                    {cat !== "All" && cardsData && (
+                    {cat !== "All" && (
                         <CategoryIcon 
                             category={cat.toLowerCase().replace(/\s+/g, '-')} 
-                            icon={cardsData.find(c => c.category === cat)?.categoryIcon}
-                            className={cn(
-                                "transition-transform h-4 w-4", 
-                                activeCategory === cat 
-                                    ? "scale-110 text-white" 
-                                    : "group-hover:scale-110 text-on-surface/60 group-hover:text-on-surface"
-                            )} 
-                            variant="icon-only"
-                            size={16}
+                            icon={cardsData?.find(c => c.category === cat)?.categoryIcon}
+                            size={18} 
+                            glow={activeCategory === cat}
+                            variant="badge"
                         />
                     )}
-                    {cat}
+                    {cat === 'All' ? 'All Chronicles' : cat}
                 </button>
             ))}
         </div>
@@ -293,7 +299,7 @@ export const Card = ({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               ref={containerRef}
               layoutId={layout ? `card-${card.title}` : undefined}
-              className="relative z-[110] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-background border border-border font-sans overflow-hidden shadow-2xl"
+              className="relative z-[110] mx-auto my-10 h-fit max-w-7xl rounded-3xl bg-background border border-border font-sans overflow-hidden shadow-2xl"
             >
               <button
                 className="absolute top-4 right-4 z-[120] flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-background transition-transform hover:rotate-90"
@@ -319,20 +325,21 @@ export const Card = ({
                     layoutId={layout ? `category-container-${card.title}` : undefined}
                     className="flex items-center gap-2 mb-4"
                 >
-                    <div className="p-2 rounded-lg bg-foreground/5 backdrop-blur-sm border border-foreground/10">
-                        <CategoryIcon 
-                            category={card.category} 
-                            icon={card.categoryIcon} 
-                            className="text-foreground" 
-                            size={20}
-                        />
-                    </div>
-                    <span className="text-sm font-bold uppercase tracking-widest text-foreground/60 leading-none">{card.category}</span>
+                    <CategoryIcon 
+                        category={card.category} 
+                        icon={card.categoryIcon} 
+                        className="text-foreground" 
+                        size={20}
+                        variant="badge"
+                    />
+                    <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-foreground/60 leading-none">
+                        {card.category}
+                    </span>
                 </motion.div>
                 
                 <motion.h3
                   layoutId={layout ? `title-${card.title}` : undefined}
-                  className="text-4xl md:text-6xl font-black text-foreground [font-variant-caps:small-caps] tracking-tighter leading-none"
+                  className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-none"
                 >
                   {card.title}
                 </motion.h3>
@@ -344,7 +351,7 @@ export const Card = ({
                 )}
 
                 {card.description && (
-                   <motion.p className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                   <motion.p className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl">
                       {card.description}
                    </motion.p>
                 )}
@@ -368,20 +375,21 @@ export const Card = ({
             layoutId={layout ? `category-container-${card.title}` : undefined}
             className="flex items-center gap-2 mb-3"
           >
-              <div className="p-2 rounded-lg bg-black/40 backdrop-blur-md border border-white/20 shadow-lg">
-                  <CategoryIcon 
-                    category={card.category} 
-                    icon={card.categoryIcon} 
-                    className="text-white" 
-                    size={20}
-                  />
-              </div>
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-white/80 leading-none">{card.category}</span>
+              <CategoryIcon 
+                category={card.category} 
+                icon={card.categoryIcon} 
+                className="text-white" 
+                size={20}
+                variant="badge"
+              />
+              <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-white/80 leading-none">
+                {card.category}
+              </span>
           </motion.div>
           
           <motion.h4
             layoutId={layout ? `title-${card.title}` : undefined}
-            className="text-2xl md:text-4xl font-black text-white [font-variant-caps:small-caps] tracking-tighter leading-none"
+            className="text-2xl md:text-4xl font-black text-white tracking-tighter leading-none"
           >
             {card.title}
           </motion.h4>

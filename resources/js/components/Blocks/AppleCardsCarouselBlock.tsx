@@ -47,28 +47,29 @@ const AppleCardsCarouselBlock: React.FC<any> = ({
         else if (feedSource === 'insights') sourceData = insights as CollectionItem[];
 
         displayItems = sourceData.map((item) => {
-            let category = 'Service';
+            let category = 'Lifestyle';
             let categoryIcon = 'Layout';
             let subtitle = '';
             
             // Extract category and icon
             if (item.category && typeof item.category === 'object') {
-                category = item.category.name;
+                category = item.category.name || 'Lifestyle';
                 categoryIcon = item.category.icon || 'Layout';
-            } else if (typeof item.category === 'string') {
+            } else if (typeof item.category === 'string' && item.category) {
                 category = item.category;
             }
 
-            // Enhanced subtitles based on feed source
+            // Enhanced subtitles and category defaults based on feed source
             if (feedSource === 'insights') {
-                category = category || 'Insight';
+                category = category !== 'Lifestyle' ? category : 'Insight';
                 categoryIcon = categoryIcon === 'Layout' ? 'BookOpen' : categoryIcon;
                 subtitle = item.published_at ? new Date(item.published_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : '';
             } else if (feedSource === 'portfolio') {
-                category = category || 'Project';
+                category = category !== 'Lifestyle' ? category : 'Project';
                 categoryIcon = categoryIcon === 'Layout' ? 'Briefcase' : categoryIcon;
                 subtitle = item.client || '';
             } else if (feedSource === 'services') {
+                category = category !== 'Lifestyle' ? category : 'Service';
                 categoryIcon = categoryIcon === 'Layout' ? 'Cog' : categoryIcon;
                 subtitle = item.price_range || '';
             }
@@ -92,8 +93,8 @@ const AppleCardsCarouselBlock: React.FC<any> = ({
             );
         }
 
-        // Limit items
-        displayItems = displayItems.slice(0, maxItems);
+        // We move slicing to the UI component level so that the filters show all available categories
+        // displayItems = displayItems.slice(0, maxItems);
     }
 
     const cardsData = displayItems.map((card) => ({
@@ -133,6 +134,7 @@ const AppleCardsCarouselBlock: React.FC<any> = ({
                     title={title}
                     subtitle={subtitle}
                     description={description}
+                    limit={maxItems}
                  />
              </div>
         </div>
