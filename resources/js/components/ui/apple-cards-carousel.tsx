@@ -168,7 +168,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
         </div>
 
         {/* CATEGORY FILTERING BUTTONS */}
-        <div className="flex flex-wrap gap-4 mb-8 md:mb-12 px-4 md:px-10 max-w-7xl mx-auto overflow-x-auto pb-4 scrollbar-hide no-scrollbar hide-scrollbar scroll-smooth">
+        <div className="flex flex-wrap gap-4 mb-4 md:mb-6 px-4 md:px-10 max-w-7xl mx-auto overflow-x-auto pb-4 scrollbar-hide no-scrollbar hide-scrollbar scroll-smooth">
             {categories.length > 1 && categories.map((cat) => (
                 <button
                     key={cat}
@@ -195,7 +195,7 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
         </div>
 
         <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-4 [scrollbar-width:none] md:py-10"
+          className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth pt-0 pb-4 md:pt-0 md:pb-10 [scrollbar-width:none]"
           ref={carouselRef}
           onScroll={checkScrollability}
         >
