@@ -40,9 +40,21 @@ abstract class BaseDashboardSource implements DashboardSourceInterface
 
     public function getRecentActivity(int $limit = 5): Collection
     {
-        return app($this->getModelClass())
-            ->latest()
-            ->take($limit)
-            ->get();
+        $query = app($this->getModelClass())->latest();
+        
+        $eagerLoads = $this->getEagerLoads();
+        if (!empty($eagerLoads)) {
+            $query->with($eagerLoads);
+        }
+
+        return $query->take($limit)->get();
+    }
+
+    /**
+     * Define any relationships that should be eager loaded for recent activity.
+     */
+    protected function getEagerLoads(): array
+    {
+        return [];
     }
 }

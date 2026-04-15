@@ -60,4 +60,9 @@ class PodcastDashboardSource extends BaseDashboardSource
             ]
         ];
     }
+
+    protected function getEagerLoads(): array
+    {
+        return ['podcastCategory'];
+    }
 }
