@@ -113,8 +113,9 @@ export const GlobalWatercolorBackground = () => {
         className="absolute inset-0 z-0 pointer-events-none"
         style={{ 
           backgroundImage: 'var(--bg-noise-grain)',
-          opacity: noiseOpacity 
-        }}
+          opacity: noiseOpacity,
+          mixBlendMode: 'overlay'
+        } as React.CSSProperties}
       />
 
       <div 

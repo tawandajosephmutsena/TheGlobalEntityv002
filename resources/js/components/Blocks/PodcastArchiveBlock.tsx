@@ -71,7 +71,7 @@ const PodcastListItem = ({ podcast }: { podcast: Podcast }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="group relative flex items-center gap-6 p-4 rounded-3xl hover:bg-muted/40 transition-all duration-500 border border-transparent hover:border-border/40"
+            className="group relative flex items-center gap-6 p-4 rounded-3xl hover:bg-white/5 transition-all duration-500 border border-transparent hover:border-white/10"
         >
             <Link href={`/podcasts/${podcast.slug}`} className="relative size-24 md:size-32 rounded-2xl overflow-hidden shrink-0 shadow-lg group-hover:shadow-xl transition-all duration-500">
                 {podcast.thumbnail_url ? (
@@ -93,7 +93,7 @@ const PodcastListItem = ({ podcast }: { podcast: Podcast }) => {
                     <span className="text-[10px] font-black tracking-[0.2em] text-primary uppercase">
                         {podcast.media_type === 'video' ? 'Video Episode' : 'Audio Episode'}
                     </span>
-                    <div className="size-1 rounded-full bg-border" />
+                    <div className="size-1 rounded-full bg-white/20" />
                     <span className="text-[10px] font-black tracking-[0.2em] text-muted-foreground opacity-60">
                         {displayDate}
                     </span>
@@ -151,32 +151,37 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
     };
 
     return (
-        <section className="w-full min-h-screen bg-background text-foreground pt-32 pb-12 md:pt-48 md:pb-24 selection:bg-primary/20">
+        <section className="w-full min-h-screen bg-transparent text-foreground pt-32 pb-12 md:pt-48 md:pb-24 selection:bg-primary/20">
             <div className="max-w-[1600px] mx-auto px-4 md:px-8">
                 <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Sidebar - Apple Music Style with Custom Icons */}
-                    <aside className="w-full lg:w-72 shrink-0 space-y-10">
-                        <div className="space-y-6">
-                            <div className="flex items-center justify-between px-2">
+                    {/* Sidebar - Prominent Category Filter */}
+                    <aside className="w-full lg:w-80 shrink-0 space-y-12">
+                        <div className="space-y-8">
+                            <div className="flex items-center justify-between px-4">
                                 <h3 className="text-sm font-black tracking-[0.2em] text-muted-foreground uppercase opacity-40">Categories</h3>
                                 <Filter className="size-3.5 text-muted-foreground opacity-40" />
                             </div>
                             
-                            <nav className="flex flex-col gap-2">
+                            <nav className="flex flex-col gap-3">
                                 <button
                                     onClick={() => handleCategoryClick(null)}
                                     className={cn(
-                                        "flex items-center justify-between px-6 py-4 rounded-3xl transition-all duration-300 font-black text-[10px] tracking-[0.2em] uppercase group",
+                                        "flex items-center gap-4 px-6 py-4 rounded-[2rem] transition-all duration-500 font-black text-[10px] tracking-[0.2em] uppercase group border",
                                         !activeCategory 
-                                            ? "bg-on-surface text-surface shadow-xl scale-105" 
-                                            : "bg-muted/40 text-muted-foreground hover:bg-muted hover:translate-x-1"
+                                            ? "bg-on-surface text-surface border-on-surface shadow-2xl scale-105" 
+                                            : "bg-white/5 text-muted-foreground border-white/5 hover:bg-white/10 hover:border-white/20 hover:translate-x-1"
                                     )}
                                 >
-                                    <div className="flex items-center gap-3">
+                                    <div className={cn(
+                                        "size-10 rounded-2xl flex items-center justify-center transition-all duration-500",
+                                        !activeCategory ? "bg-surface/20" : "bg-white/10"
+                                    )}>
                                         <LayoutGrid className="size-4" />
-                                        All Episodes
                                     </div>
-                                    <span className="opacity-40">{podcasts.total}</span>
+                                    <div className="flex-1 text-left flex items-center justify-between">
+                                        <span>All Episodes</span>
+                                        <span className="opacity-40">{podcasts.total}</span>
+                                    </div>
                                 </button>
 
                                 {categories.map((cat) => (
@@ -184,18 +189,22 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                                         key={cat.id}
                                         onClick={() => handleCategoryClick(cat.id)}
                                         className={cn(
-                                            "flex items-center justify-between px-6 py-4 rounded-3xl transition-all duration-300 font-black text-[10px] tracking-[0.2em] uppercase group",
+                                            "flex items-center gap-4 px-6 py-4 rounded-[2rem] transition-all duration-500 font-black text-[10px] tracking-[0.2em] uppercase group border",
                                             activeCategory === String(cat.id)
-                                                ? "text-surface shadow-xl scale-105"
-                                                : "bg-muted/40 text-muted-foreground hover:bg-muted hover:translate-x-1"
+                                                ? "shadow-2xl scale-105"
+                                                : "bg-white/5 text-muted-foreground border-white/5 hover:bg-white/10 hover:border-white/20 hover:translate-x-1"
                                         )}
                                         style={activeCategory === String(cat.id) ? { 
                                             backgroundColor: cat.color,
-                                            boxShadow: `0 10px 25px ${cat.color}40`,
-                                            color: 'white' // Force white text on active colored background
+                                            borderColor: cat.color,
+                                            boxShadow: `0 15px 35px ${cat.color}40`,
+                                            color: 'white'
                                         } : undefined}
                                     >
-                                        <div className="flex items-center gap-3">
+                                        <div className={cn(
+                                            "size-10 rounded-2xl flex items-center justify-center transition-all duration-500",
+                                            activeCategory === String(cat.id) ? "bg-white/20" : "bg-white/5"
+                                        )}>
                                             <CategoryIcon 
                                                 category={cat.slug} 
                                                 icon={cat.icon}
@@ -204,33 +213,35 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                                                 variant="badge"
                                                 className={cn(activeCategory === String(cat.id) ? "brightness-0 invert" : "")}
                                             />
-                                            {cat.name}
                                         </div>
-                                        <span className="opacity-40 group-hover:opacity-100 transition-opacity">{cat.podcasts_count}</span>
+                                        <div className="flex-1 text-left flex items-center justify-between">
+                                            <span>{cat.name}</span>
+                                            <span className="opacity-40 group-hover:opacity-100 transition-opacity">{cat.podcasts_count}</span>
+                                        </div>
                                     </button>
                                 ))}
                             </nav>
                         </div>
 
                         {/* Quick Stats Widget */}
-                        <div className="hidden lg:block p-8 rounded-[2rem] glass-effect border border-white/5 space-y-6">
-                            <div className="flex items-center gap-3">
-                                <div className="size-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                                    <Headphones className="size-5" />
+                        <div className="hidden lg:block p-10 rounded-[2.5rem] glass-effect border border-white/5 space-y-8 shadow-2xl">
+                            <div className="flex items-center gap-4">
+                                <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+                                    <Headphones className="size-6" />
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black tracking-widest opacity-40 uppercase">Library Total</p>
-                                    <p className="text-xl font-black">{podcasts.total}</p>
+                                    <p className="text-2xl font-black">{podcasts.total}</p>
                                 </div>
                             </div>
-                            <div className="h-px bg-border/40" />
-                            <div className="flex items-center gap-3">
-                                <div className="size-10 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                                    <Video className="size-5" />
+                            <div className="h-px bg-white/5" />
+                            <div className="flex items-center gap-4">
+                                <div className="size-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 shadow-inner">
+                                    <Video className="size-6" />
                                 </div>
                                 <div>
                                     <p className="text-[10px] font-black tracking-widest opacity-40 uppercase">Video Episodes</p>
-                                    <p className="text-xl font-black">
+                                    <p className="text-2xl font-black">
                                         {podcasts.data.filter(p => p.media_type === 'video').length}
                                     </p>
                                 </div>
@@ -239,46 +250,46 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                     </aside>
 
                     {/* Main Content Area */}
-                    <main className="flex-1 space-y-16 lg:pt-2">
+                    <main className="flex-1 space-y-20 lg:pt-4">
                         {/* Header & Search */}
-                        <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b border-border/40">
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black tracking-widest border border-primary/20">
-                                        • Live in Archive
+                        <header className="flex flex-col md:flex-row md:items-end justify-between gap-10 pb-12 border-b border-white/5">
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black tracking-widest border border-primary/20">
+                                        • LIVE ARCHIVE
                                     </div>
                                     <span className="text-xs text-muted-foreground opacity-60 font-medium italic">Updated recently</span>
                                 </div>
-                                <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-none italic">
+                                <h1 className="text-6xl md:text-9xl font-black tracking-tighter leading-none italic">
                                     {activeCategory 
                                         ? categories.find(c => String(c.id) === activeCategory)?.name 
                                         : title
                                     }
                                 </h1>
-                                <p className="text-lg md:text-xl text-muted-foreground font-medium max-w-xl opacity-70 italic leading-relaxed">
+                                <p className="text-xl md:text-2xl text-muted-foreground font-medium max-w-2xl opacity-70 italic leading-relaxed">
                                     {subtitle}
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSearch} className="relative w-full md:w-96 group">
-                                <Search className="absolute left-6 top-1/2 -translate-y-1/2 size-5 text-muted-foreground transition-colors group-focus-within:text-primary" />
+                            <form onSubmit={handleSearch} className="relative w-full md:w-[450px] group">
+                                <Search className="absolute left-8 top-1/2 -translate-y-1/2 size-6 text-muted-foreground transition-colors group-focus-within:text-primary" />
                                 <input 
                                     type="text" 
                                     placeholder="Search library..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full bg-muted/50 border-white/5 rounded-[2rem] py-5 pl-16 pr-8 text-sm font-bold placeholder:text-muted-foreground/40 focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all apple-shadow-hover focus:border-primary/20"
+                                    className="w-full bg-white/5 border-white/5 rounded-[2.5rem] py-6 pl-20 pr-10 text-lg font-bold placeholder:text-muted-foreground/30 focus:bg-white/10 focus:ring-8 focus:ring-primary/5 transition-all apple-shadow-hover focus:border-white/20"
                                 />
                             </form>
                         </header>
 
                         {/* Featured Grid */}
                         {featured.length > 0 && !activeCategory && !searchQuery && (
-                            <section className="space-y-10">
+                            <section className="space-y-12">
                                 <div className="flex items-center justify-between">
-                                    <h2 className="text-3xl font-black tracking-tight">New Shows for You</h2>
+                                    <h2 className="text-4xl font-black tracking-tight">New Shows for You</h2>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                     {featured.slice(0, featuredLimit).map((pod, i) => (
                                         <PodcastCard 
                                             key={pod.id} 
@@ -295,9 +306,9 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                         )}
 
                         {/* Discovery Section - Always List Style as requested */}
-                        <section className="space-y-10">
+                        <section className="space-y-12">
                             <div className="flex items-center justify-between">
-                                <h2 className="text-3xl font-black tracking-tight">
+                                <h2 className="text-4xl font-black tracking-tight">
                                     {searchQuery ? `Search results for "${searchQuery}"` : 'More to Discover'}
                                 </h2>
                             </div>
@@ -307,16 +318,16 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                                     <motion.div 
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        className="text-center py-32 rounded-[3.5rem] border-2 border-dashed border-border/40 glass-effect"
+                                        className="text-center py-48 rounded-[4rem] border-2 border-dashed border-white/10 glass-effect"
                                     >
-                                        <Search className="size-16 mx-auto mb-6 text-muted-foreground/20" />
-                                        <h3 className="text-2xl font-black tracking-tight">No episodes found</h3>
-                                        <p className="text-muted-foreground mt-2 max-w-sm mx-auto opacity-60">
+                                        <Search className="size-24 mx-auto mb-8 text-muted-foreground/10" />
+                                        <h3 className="text-3xl font-black tracking-tight">No episodes found</h3>
+                                        <p className="text-xl text-muted-foreground mt-4 max-w-sm mx-auto opacity-50 font-medium">
                                             Try adjusting your search or filters to find what you're looking for.
                                         </p>
                                     </motion.div>
                                 ) : (
-                                    <div className="grid grid-cols-1 gap-6 animate-in fade-in duration-700">
+                                    <div className="grid grid-cols-1 gap-8 animate-in fade-in duration-700">
                                         {podcasts.data.map((podcast) => (
                                             <PodcastListItem key={podcast.id} podcast={podcast} />
                                         ))}
@@ -326,11 +337,11 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
 
                             {/* Load More Button */}
                             {podcasts.total > podcasts.data.length && (
-                                <div className="flex justify-center pt-20">
-                                    <button className="group relative flex items-center gap-4 px-12 py-5 bg-on-surface text-surface rounded-full font-black text-xs tracking-[0.2em] hover:bg-primary transition-all duration-500 overflow-hidden shadow-2xl hover:scale-105 active:scale-95">
-                                        <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                                <div className="flex justify-center pt-24">
+                                    <button className="group relative flex items-center gap-6 px-16 py-6 bg-white text-black rounded-full font-black text-xs tracking-[0.3em] hover:bg-primary hover:text-white transition-all duration-700 overflow-hidden shadow-2xl hover:scale-105 active:scale-95">
+                                        <span className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
                                         <span className="relative z-10 uppercase">Load more episodes</span>
-                                        <ChevronRight className="relative z-10 size-5 group-hover:translate-x-1 transition-transform" />
+                                        <ChevronRight className="relative z-10 size-6 group-hover:translate-x-2 transition-transform duration-500" />
                                     </button>
                                 </div>
                             )}
@@ -341,4 +352,3 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
         </section>
     );
 }
-
