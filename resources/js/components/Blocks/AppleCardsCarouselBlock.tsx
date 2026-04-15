@@ -48,34 +48,32 @@ const AppleCardsCarouselBlock: React.FC<any> = ({
 
         displayItems = sourceData.map((item) => {
             let category = 'Lifestyle';
-            let categoryIcon = 'Layout';
+            let categorySlug = 'lifestyle';
+            let categoryIcon = null;
             let subtitle = '';
             
             // Extract category and icon
             if (item.category && typeof item.category === 'object') {
                 category = item.category.name || 'Lifestyle';
-                categoryIcon = item.category.icon || 'Layout';
+                categorySlug = item.category.slug || 'lifestyle';
+                categoryIcon = item.category.icon || null;
             } else if (typeof item.category === 'string' && item.category) {
                 category = item.category;
+                categorySlug = item.category.toLowerCase().replace(/\s+/g, '-');
             }
 
             // Enhanced subtitles and category defaults based on feed source
             if (feedSource === 'insights') {
-                category = category !== 'Lifestyle' ? category : 'Insight';
-                categoryIcon = categoryIcon === 'Layout' ? 'BookOpen' : categoryIcon;
                 subtitle = item.published_at ? new Date(item.published_at).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }) : '';
             } else if (feedSource === 'portfolio') {
-                category = category !== 'Lifestyle' ? category : 'Project';
-                categoryIcon = categoryIcon === 'Layout' ? 'Briefcase' : categoryIcon;
                 subtitle = item.client || '';
             } else if (feedSource === 'services') {
-                category = category !== 'Lifestyle' ? category : 'Service';
-                categoryIcon = categoryIcon === 'Layout' ? 'Cog' : categoryIcon;
                 subtitle = item.price_range || '';
             }
 
             return {
                 category,
+                categorySlug,
                 categoryIcon,
                 title: item.title,
                 subtitle: subtitle,
@@ -103,6 +101,7 @@ const AppleCardsCarouselBlock: React.FC<any> = ({
         subtitle: card.subtitle,
         description: card.description,
         category: card.category,
+        categorySlug: card.categorySlug,
         categoryIcon: card.categoryIcon,
         link: card.link,
         content: <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(card.content || '') }} className="prose dark:prose-invert max-w-none text-base md:text-xl font-sans" />

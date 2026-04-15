@@ -35,6 +35,7 @@ type Card = {
   subtitle?: string;
   description?: string;
   category: string;
+  categorySlug?: string;
   categoryIcon?: string;
   content?: React.ReactNode;
   link?: string;
@@ -176,12 +177,12 @@ export const Carousel = ({ items, initialScroll = 0, cardsData, title, subtitle,
                         "group flex items-center gap-3 whitespace-nowrap px-6 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
                         activeCategory === cat 
                             ? (cat === 'All' ? "bg-on-surface text-surface shadow-xl scale-105" : "bg-primary text-on-primary shadow-xl scale-105")
-                            : "bg-surface/40 backdrop-blur-md border border-white/10 text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
+                            : "bg-surface/60 backdrop-blur-md border border-white/20 text-on-surface hover:bg-surface-container-high hover:scale-105"
                     )}
                 >
                     {cat !== "All" && (
                         <CategoryIcon 
-                            category={cat.toLowerCase().replace(/\s+/g, '-')} 
+                            category={cardsData?.find(c => c.category === cat)?.categorySlug || cat} 
                             icon={cardsData?.find(c => c.category === cat)?.categoryIcon}
                             size={18} 
                             glow={activeCategory === cat}
@@ -326,13 +327,13 @@ export const Card = ({
                     className="flex items-center gap-2 mb-4"
                 >
                     <CategoryIcon 
-                        category={card.category} 
+                        category={card.categorySlug || card.category} 
                         icon={card.categoryIcon} 
                         className="text-foreground" 
                         size={20}
                         variant="badge"
                     />
-                    <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-foreground/60 leading-none">
+                    <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-foreground leading-none">
                         {card.category}
                     </span>
                 </motion.div>
@@ -376,13 +377,13 @@ export const Card = ({
             className="flex items-center gap-2 mb-3"
           >
               <CategoryIcon 
-                category={card.category} 
+                category={card.categorySlug || card.category} 
                 icon={card.categoryIcon} 
                 className="text-white" 
                 size={20}
                 variant="badge"
               />
-              <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-white/80 leading-none">
+              <span className="gradient-glass px-4 py-1.5 rounded-full text-[10px] font-black tracking-tighter text-white leading-none border border-white/10">
                 {card.category}
               </span>
           </motion.div>
