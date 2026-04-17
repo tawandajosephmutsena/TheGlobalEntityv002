@@ -69,6 +69,7 @@ const JournalNewsletterBlock = React.lazy(() => import('./JournalNewsletterBlock
 const CinematicHero = React.lazy(() => import('./CinematicHero'));
 const Globe3DBlockRenderer = React.lazy(() => import('./Globe3DBlock'));
 const PodcastArchiveBlock = React.lazy(() => import('./PodcastArchiveBlock'));
+const StackedCardsBlock = React.lazy(() => import('./StackedCardsBlock'));
 
 
 
@@ -280,6 +281,16 @@ const ColumnRenderer = ({ column }: { column: NonNullable<TextBlockType['content
                 <div className="w-full flex justify-center">
                     <React.Suspense fallback={<div className="h-[400px] w-full animate-pulse bg-muted rounded-2xl" />}>
                         <Globe3DBlockRenderer {...globeContent} disableSectionPadding={true} />
+                    </React.Suspense>
+                </div>
+            );
+        }
+        case 'stacked_cards': {
+            const stackedContent = rawContent as any;
+            return (
+                <div className="w-full">
+                    <React.Suspense fallback={<div className="h-[500px] w-full animate-pulse bg-muted rounded-[3rem]" />}>
+                        <StackedCardsBlock {...stackedContent} disableSectionPadding={true} />
                     </React.Suspense>
                 </div>
             );

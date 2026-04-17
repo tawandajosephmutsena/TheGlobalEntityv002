@@ -52,15 +52,15 @@ export default function PartnersHeroEditor({ content, onUpdate }: PartnersHeroEd
                     <div className="space-y-2">
                         <Label>Label</Label>
                         <Input 
-                            value={content.cta1?.label || ''} 
-                            onChange={(e) => onUpdate({ cta1: { ...content.cta1, label: e.target.value } as any })} 
+                            value={content.cta1?.text || ''} 
+                            onChange={(e) => onUpdate({ cta1: { ...content.cta1, text: e.target.value } as any })} 
                         />
                     </div>
                     <div className="space-y-2">
                         <Label>Link</Label>
                         <Input 
-                            value={content.cta1?.link || ''} 
-                            onChange={(e) => onUpdate({ cta1: { ...content.cta1, link: e.target.value } as any })} 
+                            value={content.cta1?.href || ''} 
+                            onChange={(e) => onUpdate({ cta1: { ...content.cta1, href: e.target.value } as any })} 
                         />
                     </div>
                 </div>
@@ -70,15 +70,15 @@ export default function PartnersHeroEditor({ content, onUpdate }: PartnersHeroEd
                     <div className="space-y-2">
                         <Label>Label</Label>
                         <Input 
-                            value={content.cta2?.label || ''} 
-                            onChange={(e) => onUpdate({ cta2: { ...content.cta2, label: e.target.value } as any })} 
+                            value={content.cta2?.text || ''} 
+                            onChange={(e) => onUpdate({ cta2: { ...content.cta2, text: e.target.value } as any })} 
                         />
                     </div>
                     <div className="space-y-2">
                         <Label>Link</Label>
                         <Input 
-                            value={content.cta2?.link || ''} 
-                            onChange={(e) => onUpdate({ cta2: { ...content.cta2, link: e.target.value } as any })} 
+                            value={content.cta2?.href || ''} 
+                            onChange={(e) => onUpdate({ cta2: { ...content.cta2, href: e.target.value } as any })} 
                         />
                     </div>
                 </div>

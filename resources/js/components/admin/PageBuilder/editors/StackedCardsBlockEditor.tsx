@@ -56,6 +56,9 @@ export default function StackedCardsBlockEditor({ content, onUpdate }: Props) {
               <SelectItem value="insights">Insights / Blog</SelectItem>
               <SelectItem value="portfolio">Portfolio / Works</SelectItem>
               <SelectItem value="services">Services</SelectItem>
+              <SelectItem value="podcasts">Podcasts</SelectItem>
+              <SelectItem value="festivals">Festivals</SelectItem>
+              <SelectItem value="reviews">Reviews / Testimonials</SelectItem>
             </SelectContent>
           </Select>
           <p className="text-xs text-muted-foreground mt-1">Select which content collection to surface in this slider.</p>

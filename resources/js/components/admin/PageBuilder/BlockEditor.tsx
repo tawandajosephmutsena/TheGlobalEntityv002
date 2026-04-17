@@ -6,11 +6,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2, Globe, Star } from 'lucide-react';
+import { Plus, Trash, ImageIcon, AlertCircle, Type, Image, Video, MousePointer, Settings2, Globe, Star, Layers } from 'lucide-react';
 import MediaLibrary from '@/components/admin/MediaLibrary';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 import Globe3DBlockEditor from '@/components/admin/PageBuilder/editors/Globe3DBlockEditor';
 import IconPicker from '@/components/admin/PageBuilder/IconPicker';
+import StackedCardsBlockEditor from '@/components/admin/PageBuilder/editors/StackedCardsBlockEditor';
 import { MediaAsset } from '@/types';
 import { Block } from '@/pages/admin/pages/Edit';
 
@@ -51,7 +52,7 @@ interface FormStep {
 
 interface Column {
     id: string;
-    type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon';
+    type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon' | 'stacked_cards';
     content: Record<string, unknown>;
 }
 
@@ -220,7 +221,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
             const layout = String(block.content.layout || '1');
             const columns = (block.content.columns as Column[]) || [];
             
-            const addColumn = (type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon') => {
+            const addColumn = (type: 'text' | 'image' | 'video' | 'button' | 'globe_3d' | 'icon' | 'stacked_cards') => {
                 const newCol: Column = {
                     id: 'col-' + Date.now(),
                     type,
@@ -229,6 +230,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                            : type === 'video' ? { url: '' }
                            : type === 'globe_3d' ? { markers: [], ambientIntensity: 1.2, pointLightIntensity: 2.0, autoRotateSpeed: 0.3, height: '400px' }
                            : type === 'icon' ? { icon: '', iconType: 'lucide', iconSize: 48, textAlign: 'center' }
+                           : type === 'stacked_cards' ? { collection: 'insights', limit: 5, title: 'Discover More', description: 'Explore our latest updates.' }
                            : { text: '', url: '', style: 'primary' }
                 };
                 updateContent({ columns: [...columns, newCol] });
@@ -301,6 +303,9 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <Button variant="outline" size="sm" onClick={() => addColumn('icon')} title="Add Icon">
                                     <Star className="h-3 w-3" />
                                 </Button>
+                                <Button variant="outline" size="sm" onClick={() => addColumn('stacked_cards')} title="Add Stacked Cards">
+                                    <Layers className="h-3 w-3" />
+                                </Button>
                             </div>
                         </div>
 
@@ -309,7 +314,7 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                 <div key={col.id || i} className="group relative p-4 border rounded-lg bg-muted/10">
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : col.type === 'globe_3d' ? '3D Globe' : col.type === 'icon' ? 'Icon' : 'Button'}
+                                            {col.type === 'text' ? 'Rich Text' : col.type === 'image' ? 'Image' : col.type === 'video' ? 'Video' : col.type === 'globe_3d' ? '3D Globe' : col.type === 'icon' ? 'Icon' : col.type === 'stacked_cards' ? 'Stacked Cards' : 'Button'}
                                         </span>
                                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeColumn(i)} title="Remove">
                                             <Trash className="h-3 w-3" />
@@ -441,6 +446,18 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                                                     </Select>
                                                 </div>
                                             </div>
+                                        </div>
+                                    )}
+                                    
+                                    {col.type === 'stacked_cards' && (
+                                        <div className="bg-background/50 p-2 rounded-lg border border-border/50">
+                                            <p className="text-[10px] text-muted-foreground italic mb-4">
+                                                Configure the card stack appearing in this column.
+                                            </p>
+                                            <StackedCardsBlockEditor 
+                                                content={col.content as any} 
+                                                onUpdate={(updates) => updateColumn(i, updates)} 
+                                            />
                                         </div>
                                     )}
                                 </div>

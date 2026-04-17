@@ -18,8 +18,8 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
     badgeText = "Join Our Fleet",
     title = "Chart the Unseen with Us.",
     description = "We are not just a travel platform; we are the ink and parchment for modern explorers. By partnering with us, you join a legacy of ethereal storytelling and authentic discovery.",
-    cta1 = { text: "Propose a Partnership", href: "#contact" },
-    cta2 = { text: "View Mission Ledger", href: "#mission" },
+    cta1,
+    cta2,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const floatRef1 = useRef<SVGSVGElement>(null);
@@ -63,6 +63,10 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
+
+    const hasCta1 = cta1?.text && cta1.text.trim() !== '';
+    const hasCta2 = cta2?.text && cta2.text.trim() !== '';
+    const showCtaArea = hasCta1 || hasCta2;
 
     return (
         <section 
@@ -113,30 +117,36 @@ const PartnersHero: React.FC<PartnersHeroProps> = ({
                         </p>
                     </AnimatedSection>
 
-                    <AnimatedSection animation="fade-up" delay={900} className="mt-16 flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <Button 
-                            size="lg" 
-                            className="rounded-full px-10 h-16 text-base font-black tracking-widest bg-primary text-on-primary hover:scale-105 transition-transform duration-500 group relative overflow-hidden" 
-                            asChild
-                        >
-                            <a href={cta1.href}>
-                                <span className="relative z-10 flex items-center">
-                                    {cta1.text}
-                                    <Ship className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-2" />
-                                </span>
-                            </a>
-                        </Button>
-                        <Button 
-                            variant="outline" 
-                            size="lg" 
-                            className="rounded-full px-10 h-16 text-base font-black tracking-widest border-primary/20 bg-transparent hover:bg-primary/5 hover:border-primary transition-all duration-500" 
-                            asChild
-                        >
-                            <a href={cta2.href}>
-                                {cta2.text}
-                            </a>
-                        </Button>
-                    </AnimatedSection>
+                    {showCtaArea && (
+                        <AnimatedSection animation="fade-up" delay={900} className="mt-16 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                            {hasCta1 && (
+                                <Button 
+                                    size="lg" 
+                                    className="rounded-full px-10 h-16 text-base font-black tracking-widest bg-primary text-on-primary hover:scale-105 transition-transform duration-500 group relative overflow-hidden" 
+                                    asChild
+                                >
+                                    <a href={cta1.href || '#'}>
+                                        <span className="relative z-10 flex items-center">
+                                            {cta1.text}
+                                            <Ship className="ml-3 w-6 h-6 transition-transform group-hover:translate-x-2" />
+                                        </span>
+                                    </a>
+                                </Button>
+                            )}
+                            {hasCta2 && (
+                                <Button 
+                                    variant="outline" 
+                                    size="lg" 
+                                    className="rounded-full px-10 h-16 text-base font-black tracking-widest border-primary/20 bg-transparent hover:bg-primary/5 hover:border-primary transition-all duration-500" 
+                                    asChild
+                                >
+                                    <a href={cta2.href || '#'}>
+                                        {cta2.text}
+                                    </a>
+                                </Button>
+                            )}
+                        </AnimatedSection>
+                    )}
                 </div>
             </div>
 

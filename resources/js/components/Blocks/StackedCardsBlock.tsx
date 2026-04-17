@@ -12,6 +12,7 @@ import { ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { StackedCardsBlock } from '@/types/page-blocks';
+import { cn } from '@/lib/utils';
 
 interface CardData {
   id: number;
@@ -28,12 +29,13 @@ interface CardData {
   url?: string;
 }
 
-export default function StackedCardsBlockRenderer(props: StackedCardsBlock['content']) {
+export default function StackedCardsBlockRenderer(props: StackedCardsBlock['content'] & { disableSectionPadding?: boolean }) {
   const {
     collection = 'insights',
     limit = 5,
     title = 'Discover More',
     description = 'Explore our latest updates and insights.',
+    disableSectionPadding = false,
   } = props || {};
 
   const [cards, setCards] = useState<CardData[]>([]);
@@ -80,8 +82,8 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
   }
 
   return (
-    <section className="w-full py-20 lg:py-32 bg-background overflow-hidden relative">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className={cn("w-full bg-background overflow-hidden relative", disableSectionPadding ? "py-4" : "py-20 lg:py-32")}>
+      <div className={cn("container mx-auto", disableSectionPadding ? "px-0" : "px-4 md:px-6")}>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-20 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">

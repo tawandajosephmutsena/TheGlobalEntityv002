@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Southern Africa Expedition</title>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --magenta: #D33297;
+            --parchment: #F4EBD0;
+            --white: #FFFFFF;
+            --bg-opacity: 0.4;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: transparent;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            max-height: 700px;
+            background: transparent;
+        }
+
+        /* Parchment Overlay */
+        .parchment-layer {
+            fill: var(--parchment);
+            fill-opacity: var(--bg-opacity);
+            pointer-events: none;
+        }
+
+        /* Map Styles */
+        .country {
+            fill: #2c3e50;
+            stroke: #34495e;
+            stroke-width: 0.5;
+            transition: fill 0.5s;
+        }
+
+        .graticule {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 0.5;
+        }
+
+        /* Pulsing Dots */
+        .city-dot {
+            fill: var(--magenta);
+            filter: url(#glow);
+        }
+
+        .pulse {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+            transform-origin: center;
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.7); opacity: 0.8; }
+            50% { transform: scale(1.5); opacity: 0.3; }
+            100% { transform: scale(0.7); opacity: 0.8; }
+        }
+
+        /* Labels */
+        .city-label {
+            fill: var(--white);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .label-float {
+            animation: float-up 1s forwards;
+        }
+
+        @keyframes float-up {
+            from { opacity: 0; transform: translateY(0); }
+            to { opacity: 1; transform: translateY(-8px); }
+        }
+
+        /* Info Card */
+        #info-card {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            width: 280px;
+            padding: 20px;
+            background: rgba(211, 50, 151, 0.15);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--magenta);
+            color: var(--white);
+            border-radius: 0 8px 8px 0;
+            transform: translateX(-120%);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        #info-card.active {
+            transform: translateX(0);
+        }
+
+        #info-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--magenta);
+            letter-spacing: 2px;
+        }
+
+        #info-card p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Backpacker Animation */
+        .backpacker-group {
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+        }
+
+        .bobbing {
+            animation: bob-and-yaw 2s ease-in-out infinite;
+        }
+
+        @keyframes bob-and-yaw {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-5px) rotate(2deg); }
+        }
+
+        /* Route Path */
+        .route-path {
+            fill: none;
+            stroke: var(--magenta);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            filter: url(#glow);
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="info-card">
+        <h3 id="card-tag">Expedition Log</h3>
+        <p id="card-text">Initializing...</p>
+    </div>
+
+    <svg id="map-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+        <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                <feMerge>
+                    <feMergeNode in="coloredBlur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+
+            <!-- Backpacker Symbol (Low-poly style) -->
+            <g id="backpacker-icon">
+                <path d="M-6,8 L6,8 L4,-10 L-4,-10 Z" fill="#D33297" /> <!-- Body/Pack -->
+                <circle cx="0" cy="-14" r="3.5" fill="#FFFFFF" /> <!-- Head -->
+                <path d="M-5,2 L-8,12 M5,2 L8,12" stroke="#FFFFFF" stroke-width="2" /> <!-- Legs -->
+                <path d="M-4,-6 L-8,-2 M4,-6 L8,-2" stroke="#FFFFFF" stroke-width="1.5" /> <!-- Straps -->
+            </g>
+        </defs>
+
+        <rect class="parchment-layer" width="1200" height="700" />
+        
+        <g id="map-world"></g>
+        <path id="main-route" class="route-path" />
+        <g id="cities-layer"></g>
+        
+        <g id="traveler" class="backpacker-group" style="visibility: hidden;">
+            <g class="bobbing">
+                <use href="#backpacker-icon" />
+            </g>
+        </g>
+    </svg>
+</div>
+
+<script>
+    // Configuration
+    const width = 1200;
+    const height = 700;
+    
+    // Geographical coordinates [lon, lat]
+    const locations = [
+        { name: "Mozambique", coords: [32.57, -25.92], beat: 1, info: "Cultural Immersions" },
+        { name: "Eswatini", coords: [31.13, -26.31], beat: 1, info: "Cultural Immersions" },
+        { name: "Lesotho", coords: [27.48, -29.31], beat: 1, info: "Cultural Immersions" },
+        { name: "Johannesburg", coords: [28.05, -26.20], beat: 2, info: "Solo Travel Security" },
+        { name: "Zambia", coords: [28.28, -15.42], beat: 3, info: "Social Sustainable Tourism" },
+        { name: "Harare", coords: [31.05, -17.83], beat: 4, info: "Social Sustainable Tourism" }
+    ];
+
+    // Projection focused on Southern Africa
+    const projection = d3.geoMercator()
+        .center([30, -22]) 
+        .scale(1600)
+        .translate([width / 2, height / 2]);
+
+    const path = d3.geoPath().projection(projection);
+    const svg = d3.select("#map-svg");
+    const worldGroup = d3.select("#map-world");
+    const citiesGroup = d3.select("#cities-layer");
+    const routePath = d3.select("#main-route");
+    const traveler = d3.select("#traveler");
+    const card = d3.select("#info-card");
+
+    async function init() {
+        const worldData = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json");
+        const countries = topojson.feature(worldData, worldData.objects.countries).features;
+
+        // Draw Map
+        worldGroup.selectAll(".country")
+            .data(countries)
+            .enter().append("path")
+            .attr("class", "country")
+            .attr("d", path)
+            .style("fill", "#1a252f");
+
+        // Draw Graticule
+        worldGroup.append("path")
+            .datum(d3.geoGraticule()())
+            .attr("class", "graticule")
+            .attr("d", path);
+
+        // Prepare Route
+        const lineData = locations.map(d => d.coords);
+        const lineGenerator = d3.line()
+            .x(d => projection(d)[0])
+            .y(d => projection(d)[1])
+            .curve(d3.curveCatmullRom.alpha(0.5));
+
+        const fullRoutePath = lineGenerator(lineData);
+        routePath.attr("d", fullRoutePath);
+        const totalLength = routePath.node().getTotalLength();
+        routePath.style("stroke-dasharray", totalLength + " " + totalLength)
+                 .style("stroke-dashoffset", totalLength);
+
+        // Create City Dots
+        locations.forEach((loc, i) => {
+            const [x, y] = projection(loc.coords);
+            const group = citiesGroup.append("g")
+                .attr("id", `city-${i}`)
+                .attr("transform", `translate(${x},${y})`);
+
+            group.append("circle").attr("class", "city-dot pulse").attr("r", 8);
+            group.append("circle").attr("class", "city-dot").attr("r", 4);
+            
+            group.append("text")
+                .attr("class", "city-label")
+                .attr("id", `label-${i}`)
+                .attr("text-anchor", "middle")
+                .attr("y", -15)
+                .text(loc.name);
+        });
+
+        startAnimation();
+    }
+
+    function startAnimation() {
+        const totalLength = routePath.node().getTotalLength();
+        
+        // Define key timestamps (0-7s)
+        const durationBeat1 = 3000; // Moz -> Eswatini -> Lesotho
+        const pauseBeat2 = 1000;    // Joburg
+        const durationBeat3 = 3000; // Zambia -> Harare
+
+        // Use D3 transition for cinematic control
+        function runSequence() {
+            // Reset
+            routePath.interrupt().style("stroke-dashoffset", totalLength);
+            traveler.style("visibility", "visible").attr("transform", `translate(${projection(locations[0].coords)})`);
+            d3.selectAll(".city-label").style("opacity", 0).classed("label-float", false);
+            card.classed("active", false);
+
+            const t = d3.transition().duration(7000).ease(d3.easeLinear);
+
+            // Path and Traveler movement
+            routePath.transition(t)
+                .styleTween("stroke-dashoffset", function() {
+                    return function(pct) {
+                        const currentOffset = totalLength * (1 - pct);
+                        
+                        // Calculate pauses and beats
+                        let displayPct = pct;
+                        // Manual mapping for cinematic beats
+                        if (pct < 0.42) { // 0-3s is approx 42% of 7s
+                            displayPct = d3.easeCubicOut(pct / 0.42) * 0.42; 
+                        } else if (pct < 0.57) { // 3-4s is pause at Joburg (approx 57%)
+                            displayPct = 0.42; 
+                        } else { // 4-7s
+                            const subPct = (pct - 0.57) / 0.43;
+                            displayPct = 0.42 + d3.easeCubicInOut(subPct) * 0.58;
+                        }
+
+                        const point = routePath.node().getPointAtLength((displayPct) * totalLength);
+                        traveler.attr("transform", `translate(${point.x},${point.y})`);
+
+                        // Check triggers for UI
+                        updateTriggers(displayPct);
+
+                        return totalLength * (1 - displayPct);
+                    };
+                })
+                .on("end", () => {
+                    // Zoom Finale
+                    const finalPoint = projection(locations[5].coords);
+                    svg.transition().duration(1500).ease(d3.easeCubicInOut)
+                        .attr("viewBox", `${finalPoint[0]-200} ${finalPoint[1]-150} 400 300`)
+                        .on("end", () => {
+                            setTimeout(() => {
+                                svg.transition().duration(1000).attr("viewBox", "0 0 1200 700");
+                                setTimeout(runSequence, 1000);
+                            }, 2000);
+                        });
+                });
+        }
+
+        let lastIndex = -1;
+        function updateTriggers(pct) {
+            // Approximate progress points for locations
+            // 0: Moz, 1: Eswatini, 2: Lesotho, 3: Joburg, 4: Zambia, 5: Harare
+            const thresholds = [0, 0.1, 0.25, 0.42, 0.8, 0.99];
+            
+            thresholds.forEach((th, i) => {
+                if (pct >= th && lastIndex < i) {
+                    lastIndex = i;
+                    d3.select(`#label-${i}`).classed("label-float", true);
+                    
+                    // Card logic
+                    const loc = locations[i];
+                    if (loc) {
+                        card.classed("active", true);
+                        d3.select("#card-text").text(loc.info);
+                        d3.select("#card-tag").text(i < 3 ? "Cultural Immersions" : (i === 3 ? "Safety Protocols" : "Sustainable Impact"));
+                    }
+                }
+            });
+
+            if (pct < 0.01) lastIndex = -1;
+        }
+
+        runSequence();
+    }
+
+    init();
+</script>
+</body>
+</html>

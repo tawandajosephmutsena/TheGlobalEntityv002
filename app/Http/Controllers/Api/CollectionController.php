@@ -125,7 +125,7 @@ class CollectionController extends Controller
                             'avatar' => $item->author?->avatar_url ?? 'https://github.com/shadcn.png'
                         ],
                         'date' => $item->start_date ? $item->start_date->format('M d, Y') : '',
-                        'locationAddress' => $item->location['address'] ?? 'Multiple Locations',
+                        'readTime' => $item->location['address'] ?? 'Multiple Locations',
                         'url' => route('festivals.show', $item->slug),
                         'location' => $item->location,
                         'social_tags' => $item->social_tags ?? [],
@@ -153,12 +153,15 @@ class CollectionController extends Controller
                         return [
                             'id' => $item->id,
                             'title' => $item->title,
-                            'slug' => $item->slug,
                             'description' => $item->description ?? '',
-                            'category' => ['name' => $item->category?->name ?? 'Podcast'],
-                            'thumbnail_url' => $item->thumbnail_url,
-                            'duration' => $item->formatted_duration,
-                            'published_at' => $item->published_at ? $item->published_at->toIso8601String() : '',
+                            'category' => $item->podcastCategory?->name ?? $item->category?->name ?? 'Podcast',
+                            'image' => $item->thumbnail_url ?: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=80',
+                            'author' => [
+                                'name' => $item->author?->name ?? 'Host',
+                                'avatar' => $item->author?->avatar_url ?? 'https://github.com/shadcn.png'
+                            ],
+                            'date' => $item->published_at ? $item->published_at->format('M d, Y') : '',
+                            'readTime' => $item->formatted_duration ?? '30 min',
                             'url' => route('podcasts.show', $item->slug),
                         ];
                     });
@@ -168,7 +171,6 @@ class CollectionController extends Controller
             case 'reviews':
                 $query = \App\Models\Review::query()->approved();
                 
-                // Note: Review model doesn't have is_featured yet, so we just filter by approved
                 if ($request->has('featured') && $request->featured == 1) {
                     $query->latest();
                 }
@@ -183,7 +185,6 @@ class CollectionController extends Controller
                     $eventName = 'Platform Event';
                     
                     if ($reviewable) {
-                        // Safely get name or title without triggering MissingAttributeException
                         $eventName = $reviewable->getAttribute('name') 
                             ?? $reviewable->getAttribute('title') 
                             ?? $eventName;
@@ -191,15 +192,17 @@ class CollectionController extends Controller
 
                     return [
                         'id' => $item->id,
+                        'title' => $eventName,
+                        'description' => $item->body ?? '',
+                        'category' => 'Rating: ' . ($item->vibe_rating ?? 5) . '/5',
+                        'image' => $item->user?->avatar_url ?? 'https://github.com/shadcn.png',
                         'author' => [
                             'name' => $item->user?->name ?? 'Anonymous',
                             'avatar' => $item->user?->avatar_url ?? 'https://github.com/shadcn.png'
                         ],
-                        'rating' => $item->vibe_rating ?? 5,
-                        'content' => $item->body ?? '',
-                        'event_name' => $eventName,
-                        'role' => 'Community Member',
-                        'image' => $item->user?->avatar_url ?? 'https://github.com/shadcn.png'
+                        'date' => $item->created_at->format('M d, Y'),
+                        'readTime' => 'Verified Review',
+                        'url' => '#',
                     ];
                 });
                 break;
