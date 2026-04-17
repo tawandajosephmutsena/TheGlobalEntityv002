@@ -812,27 +812,27 @@
 }
 
 :is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h1 {
-    @apply font-black;
-    font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
-    line-height: 1 !important;
+    font-weight: 900 !important;
+    font-size: clamp(3rem, 10vw, 4.5rem) !important; /* Increased for display impact */
+    line-height: 0.9 !important;
     margin-top: 0 !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 2rem !important;
 }
 
 :is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h2 {
-    @apply font-bold;
-    font-size: clamp(1.875rem, 6vw, 2.25rem) !important;
-    line-height: 1.1 !important;
-    margin-top: 2.5rem !important;
-    margin-bottom: 1rem !important;
+    font-weight: 900 !important;
+    font-size: clamp(2.25rem, 8vw, 3.5rem) !important; /* Editorial scale */
+    line-height: 1 !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1.25rem !important;
 }
 
 :is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h3 {
-    @apply font-bold;
-    font-size: clamp(1.5rem, 5vw, 1.875rem) !important;
-    line-height: 1.2 !important;
-    margin-top: 2rem !important;
-    margin-bottom: 0.75rem !important;
+    font-weight: 800 !important;
+    font-size: clamp(1.75rem, 6vw, 2.5rem) !important;
+    line-height: 1.1 !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
 }
 
 .prose ul {
@@ -921,8 +921,10 @@
 }
 
 .prose p {
-    margin-bottom: 1.25rem;
-    line-height: 1.625;
+    font-weight: 300 !important; /* Force newly loaded Light weight */
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem) !important; /* Editorial body size */
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
     color: var(--muted-foreground);
 }
 

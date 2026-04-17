@@ -137,7 +137,7 @@ export default function ThemeStyles() {
 
         const formattedFonts = fontsToLoad.map(font => {
             const normalized = font.toLowerCase().replace(/\s+/g, '-');
-            return `${normalized}:400,500,600,700`;
+            return `${normalized}:300,400,500,600,700,800,900`;
         }).join('|');
 
         return `https://fonts.bunny.net/css?family=${formattedFonts}&display=swap`;
