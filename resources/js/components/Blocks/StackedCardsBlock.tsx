@@ -68,10 +68,10 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
 
   if (loading) {
     return (
-      <section className="w-full py-20 bg-background flex items-center justify-center">
-        <div className="animate-pulse flex flex-col items-center gap-4">
+      <section className="w-full py-20 bg-transparent flex items-center justify-center">
+        <div className="animate-pulse flex flex-col items-center gap-4 w-full max-w-4xl px-4">
           <div className="h-8 w-64 bg-muted rounded"></div>
-          <div className="h-96 w-full max-w-4xl bg-muted rounded-xl"></div>
+          <div className="h-96 w-full bg-muted rounded-3xl" />
         </div>
       </section>
     );
@@ -82,7 +82,7 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
   }
 
   return (
-    <section className={cn("w-full bg-background overflow-hidden relative", disableSectionPadding ? "py-4" : "py-20 lg:py-32")}>
+    <section className={cn("w-full bg-transparent overflow-hidden relative", disableSectionPadding ? "py-4" : "py-20 lg:py-32")}>
       <div className={cn("container mx-auto", disableSectionPadding ? "px-0" : "px-4 md:px-6")}>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-20 gap-6">
           <div className="max-w-2xl">
@@ -112,7 +112,7 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
           </div>
         </div>
 
-        <div className="relative h-[500px] md:h-[600px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-1000">
+        <div className="relative min-h-[450px] h-[60vh] max-h-[700px] w-full max-w-5xl mx-auto flex items-center justify-center perspective-1000">
           <AnimatePresence mode="popLayout">
             {cards.map((card, index) => {
               // Calculate positional offset
@@ -144,7 +144,7 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
                     stiffness: 260,
                     damping: 20,
                   }}
-                  className="absolute w-full max-w-4xl mx-auto cursor-grab active:cursor-grabbing origin-top"
+                  className="absolute w-full h-full max-w-4xl mx-auto cursor-grab active:cursor-grabbing origin-top"
                   style={{ transformStyle: "preserve-3d" }}
                   drag="y"
                   dragConstraints={{ top: 0, bottom: 0 }}
@@ -157,12 +157,13 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
                     }
                   }}
                 >
-                  <Card className="overflow-hidden border-border/50 bg-card shadow-2xl rounded-3xl h-[450px] md:h-[550px] flex flex-col md:flex-row">
-                    <div className="w-full md:w-1/2 h-48 md:h-full relative overflow-hidden">
+                  <Card className="overflow-hidden liquid-glass rounded-[2.5rem] h-[450px] md:h-[600px] relative group shadow-none border-none">
+                    {/* Full Size Image */}
+                    <div className="absolute inset-0 z-0">
                       <motion.div
                         className="w-full h-full"
                         whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.4 }}
+                        transition={{ duration: 0.6 }}
                       >
                         <img 
                           src={card.image} 
@@ -170,42 +171,35 @@ export default function StackedCardsBlockRenderer(props: StackedCardsBlock['cont
                           className="w-full h-full object-cover"
                         />
                       </motion.div>
-                      <div className="absolute top-4 left-4 z-10">
-                        <Badge variant="default" className="bg-primary/90 text-primary-foreground backdrop-blur-sm">
-                          {card.category}
-                        </Badge>
-                      </div>
+                    </div>
+
+                    {/* Gradient Overlay for Legibility */}
+                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                    {/* Badge Positioned Top Left */}
+                    <div className="absolute top-6 left-6 z-20">
+                      <Badge variant="default" className="bg-white/20 text-white backdrop-blur-md border-white/20 px-3 py-1 text-xs">
+                        {card.category}
+                      </Badge>
                     </div>
                     
-                    <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col justify-between">
-                      <div>
+                    {/* Content Overlayed at the bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 lg:p-12 z-20">
+                      <div className="max-w-3xl">
                         {card.url ? (
-                          <a href={card.url} className="hover:underline">
-                            <h3 className="text-2xl md:text-3xl font-bold mb-4 line-clamp-2">{card.title}</h3>
+                          <a href={card.url} className="hover:underline decoration-white/30 underline-offset-8">
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white leading-tight drop-shadow-sm">
+                              {card.title}
+                            </h3>
                           </a>
                         ) : (
-                          <h3 className="text-2xl md:text-3xl font-bold mb-4 line-clamp-2">{card.title}</h3>
+                          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-white leading-tight drop-shadow-sm">
+                            {card.title}
+                          </h3>
                         )}
-                        <p className="text-muted-foreground line-clamp-4 md:line-clamp-6 text-lg">
+                        <p className="text-white/80 line-clamp-3 md:line-clamp-4 text-base md:text-lg leading-relaxed max-w-2xl font-medium">
                           {card.description}
                         </p>
-                      </div>
-                      
-                      <div className="mt-8 pt-6 border-t border-border flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <Avatar className="h-10 w-10 border border-border">
-                            <AvatarImage src={card.author.avatar} alt={card.author.name} />
-                            <AvatarFallback>{card.author.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-medium">{card.author.name}</span>
-                            <span className="text-xs text-muted-foreground">{card.date}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center text-muted-foreground text-sm gap-1">
-                          <Clock className="w-4 h-4" />
-                          <span>{card.readTime}</span>
-                        </div>
                       </div>
                     </div>
                   </Card>

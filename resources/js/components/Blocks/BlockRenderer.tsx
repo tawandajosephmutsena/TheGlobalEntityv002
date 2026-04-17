@@ -365,7 +365,7 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
                     )}
                     {title && (
                         <AnimatedSection animation="fade-up" className="text-center">
-                            <h2 className="text-4xl font-black tracking-tight">{title}</h2>
+                            <h2 className="headline-lg text-foreground mb-2">{title}</h2>
                         </AnimatedSection>
                     )}
                 </div>

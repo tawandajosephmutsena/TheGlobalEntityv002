@@ -804,34 +804,35 @@
 }
 
 /* Frontend Content Rendering - Prose Enhancements */
-.prose {
-    font-family: var(--font-sans);
+/* High-specificity overrides to beat Tailwind Typography size variants */
+:is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) :is(h1, h2, h3, h4, h5, h6) {
+    font-family: var(--font-display) !important;
+    @apply tracking-tighter;
+    color: var(--foreground) !important;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-    font-family: var(--font-display);
-    font-weight: 900;
+:is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h1 {
+    @apply font-black;
+    font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
+    line-height: 1 !important;
+    margin-top: 0 !important;
+    margin-bottom: 1.5rem !important;
 }
 
-.prose h1 {
-    font-size: 2.25rem;
-    line-height: 1.2;
-    margin-top: 0;
-    margin-bottom: 1rem;
+:is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h2 {
+    @apply font-bold;
+    font-size: clamp(1.875rem, 6vw, 2.25rem) !important;
+    line-height: 1.1 !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 1rem !important;
 }
 
-.prose h2 {
-    font-size: 1.875rem;
-    line-height: 1.3;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-}
-
-.prose h3 {
-    font-size: 1.5rem;
-    line-height: 1.4;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
+:is(.prose, .prose-sm, .prose-base, .prose-lg, .prose-xl, .prose-2xl) h3 {
+    @apply font-bold;
+    font-size: clamp(1.5rem, 5vw, 1.875rem) !important;
+    line-height: 1.2 !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.75rem !important;
 }
 
 .prose ul {
@@ -920,8 +921,9 @@
 }
 
 .prose p {
-    margin-bottom: 1rem;
-    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    line-height: 1.625;
+    color: var(--muted-foreground);
 }
 
 .prose blockquote {
