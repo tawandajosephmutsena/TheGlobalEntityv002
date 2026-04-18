@@ -10,9 +10,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Traits\HasOptimizableImage;
 
 class Podcast extends Model
 {
+    use HasOptimizableImage;
     protected $fillable = [
         'title',
         'slug',

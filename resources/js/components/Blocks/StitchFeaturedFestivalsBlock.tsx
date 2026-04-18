@@ -41,10 +41,14 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
     const finalContent = (blockContent && typeof blockContent === 'object') ? blockContent : {} as StitchFeaturedFestivalsBlock['content'];
 
     const {
+        badge = "Featured Festivals",
         title = "Global Spectacles",
         subtitle = "Curated gatherings where culture, art, and geography collide. From the salt flats of Bolivia to the neon alleys of Tokyo.",
         limit = 6,
-        selectedFestivalIds = EMPTY_ARRAY
+        selectedFestivalIds = EMPTY_ARRAY,
+        ctaText,
+        ctaHref,
+        ctaLabel
     } = finalContent;
     const [festivals, setFestivals] = useState<FestivalData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -117,7 +121,7 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                 {/* Hero Section */}
                 <div className="mb-20">
                     <div className="theme-gradient-animated text-white px-4 py-1 rounded-full text-xs font-black tracking-tighter mb-4 inline-block shadow-lg">
-                        Featured Festivals
+                        {badge}
                     </div>
                     <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4">
                         {title.split(' ').map((word: string, i: number) => (
@@ -327,6 +331,26 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
                         <Compass className="w-20 h-20 text-primary/20 mx-auto mb-8 animate-spin-slow" />
                         <p className="font-display text-3xl md:text-4xl font-black text-on-surface-variant mb-4 italic tracking-tighter leading-none">No spectacles on the horizon.</p>
                         <p className="text-on-surface-variant font-medium max-w-md mx-auto leading-relaxed">The cultural map is waiting for its next great gathering. Check back as new voyages are charted.</p>
+                    </div>
+                )}
+
+                {/* Bottom CTA Section */}
+                {(ctaText || ctaLabel) && (
+                    <div className="mt-24 text-center">
+                        {ctaLabel && (
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/60 mb-6">
+                                {ctaLabel}
+                            </p>
+                        )}
+                        {ctaText && (
+                            <Link 
+                                href={ctaHref || '#'}
+                                className="inline-flex items-center gap-4 bg-on-surface text-surface px-12 py-5 rounded-full font-black text-xs tracking-tighter hover:scale-105 transition-all duration-500 shadow-2xl group"
+                            >
+                                <span>{ctaText}</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        )}
                     </div>
                 )}
             </div>

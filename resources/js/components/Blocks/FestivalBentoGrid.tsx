@@ -37,6 +37,8 @@ interface FestivalBentoGridProps {
     subtitle?: string;
     useDynamicFestivals?: boolean;
     dynamicLimit?: number;
+    ctaText?: string;
+    ctaLink?: string;
     items?: BentoItem[];
 }
 
@@ -92,6 +94,8 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
     subtitle = "explore the archive",
     useDynamicFestivals = false,
     dynamicLimit = 3,
+    ctaText,
+    ctaLink,
     items: manualItems = [
         {
             id: '1',
@@ -335,6 +339,28 @@ const FestivalBentoGrid: React.FC<FestivalBentoGridProps> = ({
                         </AnimatedSection>
                     ))}
                 </div>
+
+                {ctaText && (
+                    <AnimatedSection animation="fade-up" className="mt-20 flex justify-center">
+                        <a 
+                            href={ctaLink || '#'} 
+                            className={cn(
+                                "group relative inline-flex items-center gap-4 px-12 py-6 overflow-hidden transition-all duration-700",
+                                "liquid-glass border border-agency-primary/10",
+                                "hover:border-agency-accent/30 hover:shadow-[0_0_50px_rgba(var(--agency-accent-rgb),0.1)] shadow-2xl"
+                            )}
+                        >
+                            <span className="relative z-10 text-agency-primary font-black tracking-[0.2em] uppercase text-xs transition-colors duration-500 group-hover:text-agency-accent">
+                                {ctaText}
+                            </span>
+                            <ArrowRight 
+                                className="relative z-10 text-agency-primary transition-all duration-500 transform group-hover:translate-x-2 group-hover:text-agency-accent" 
+                                size={16} 
+                            />
+                            <div className="absolute inset-0 z-0 bg-agency-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                        </a>
+                    </AnimatedSection>
+                )}
 
                 {useDynamicFestivals && pagination && (
                     <FestivalPagination 

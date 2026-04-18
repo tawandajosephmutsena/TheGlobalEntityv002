@@ -23,6 +23,7 @@ interface FestivalData {
 }
 
 const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
+    badge = "Festival Radar",
     title = "Explore the Magic",
     subtitle = "Find festivals and sustainable hubs near you",
     description,
@@ -119,7 +120,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                         transition={{ duration: 0.8 }}
                     >
                         <Badge variant="outline" className="mb-4 font-mono tracking-widest text-primary border-primary/20 bg-primary/5">
-                            Festival Radar
+                            {badge}
                         </Badge>
                         <h2 className="text-4xl md:text-5xl font-display mb-6 tracking-tight">
                             {title}

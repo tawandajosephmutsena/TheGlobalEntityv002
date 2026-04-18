@@ -124,10 +124,14 @@ export interface ImageBlock extends BaseBlock {
 export interface StitchFeaturedFestivalsBlock extends BaseBlock {
     type: 'stitch_featured_festivals';
     content: {
+        badge?: string;
         title: string;
         subtitle?: string;
         limit?: number;
         selectedFestivalIds?: number[];
+        ctaText?: string;
+        ctaHref?: string;
+        ctaLabel?: string;
     };
 }
 
@@ -750,6 +754,7 @@ export interface CommunityReviewBlock extends BaseBlock {
 export interface FestivalMapBlock extends BaseBlock {
     type: 'festival_map';
     content: {
+        badge?: string;
         title?: string;
         subtitle?: string;
         description?: string;
@@ -1230,6 +1235,8 @@ export interface FestivalBentoGridBlock extends BaseBlock {
         subtitle?: string;
         useDynamicFestivals?: boolean;
         dynamicLimit?: number;
+        ctaText?: string;
+        ctaLink?: string;
         items: Array<{
             id: string;
             type: 'festival' | 'stat' | 'feature' | 'signup';

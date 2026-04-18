@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatedSection } from '@/components/AnimatedSection';
 import { Play, Headphones, Video, Clock, ArrowRight } from 'lucide-react';
-
+import { OptimizedImage } from '@/components/OptimizedImage';
 
 interface Podcast {
     id: number;
     title: string;
     slug: string;
     thumbnail_url?: string;
+    image?: string;
+    image_conversions?: any;
     description?: string;
     duration?: string;
     category?: { name: string };
@@ -85,11 +87,13 @@ export default function PodcastFeaturedBlock({
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <AnimatedSection animation="fade-right" className="relative group">
                             <a href={`/podcasts/${featured.slug}`} className="block relative aspect-video rounded-3xl overflow-hidden bg-muted shadow-2xl">
-                                {featured.thumbnail_url ? (
-                                    <img 
-                                        src={featured.thumbnail_url} 
+                                {(featured.thumbnail_url || featured.image) ? (
+                                    <OptimizedImage 
+                                        src={featured.thumbnail_url || featured.image || ''} 
                                         alt={featured.title}
+                                        conversions={featured.image_conversions}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        priority
                                     />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center bg-primary/10">
@@ -138,8 +142,13 @@ export default function PodcastFeaturedBlock({
                                         <AnimatedSection key={podcast.id} animation="fade-up" delay={200 + index * 100}>
                                             <a href={`/podcasts/${podcast.slug}`} className="group flex gap-4 p-4 rounded-2xl liquid-glass border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300">
                                                 <div className="size-20 rounded-xl overflow-hidden bg-muted shrink-0 relative">
-                                                    {podcast.thumbnail_url ? (
-                                                        <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                    {(podcast.thumbnail_url || podcast.image) ? (
+                                                        <OptimizedImage 
+                                                            src={podcast.thumbnail_url || podcast.image || ''} 
+                                                            alt={podcast.title} 
+                                                            conversions={podcast.image_conversions}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                                        />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center bg-primary/5">
                                                             <Headphones className="size-8 text-primary/20" />
@@ -169,8 +178,13 @@ export default function PodcastFeaturedBlock({
                             <AnimatedSection key={podcast.id} animation="fade-up" delay={100 + index * 80}>
                                 <a href={`/podcasts/${podcast.slug}`} className="group block rounded-2xl overflow-hidden liquid-glass border border-border shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                                     <div className="aspect-video relative overflow-hidden bg-muted">
-                                        {podcast.thumbnail_url ? (
-                                            <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                                        {(podcast.thumbnail_url || podcast.image) ? (
+                                            <OptimizedImage 
+                                                src={podcast.thumbnail_url || podcast.image || ''} 
+                                                alt={podcast.title} 
+                                                conversions={podcast.image_conversions}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                            />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center bg-primary/5">
                                                 <Headphones className="size-12 text-primary/20" />
@@ -253,8 +267,13 @@ export default function PodcastFeaturedBlock({
                                         className="relative md:col-span-4 lg:col-span-3 md:row-span-2 rounded-2xl md:rounded-3xl overflow-hidden group shadow-2xl"
                                     >
                                         <a href={`/podcasts/${podcast.slug}`} className="block h-full relative">
-                                            {podcast.thumbnail_url ? (
-                                                <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+                                            {(podcast.thumbnail_url || podcast.image) ? (
+                                                <OptimizedImage 
+                                                    src={podcast.thumbnail_url || podcast.image || ''} 
+                                                    alt={podcast.title} 
+                                                    conversions={podcast.image_conversions}
+                                                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+                                                />
                                             ) : (
                                                 <div className="w-full h-full bg-primary/10 flex items-center justify-center">
                                                     <Headphones className="size-32 text-primary/20" />
@@ -289,8 +308,13 @@ export default function PodcastFeaturedBlock({
                                     >
                                         <a href={`/podcasts/${podcast.slug}`} className="flex flex-col h-full">
                                             <div className="h-2/3 relative overflow-hidden">
-                                                {podcast.thumbnail_url ? (
-                                                    <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                                {(podcast.thumbnail_url || podcast.image) ? (
+                                                    <OptimizedImage 
+                                                        src={podcast.thumbnail_url || podcast.image || ''} 
+                                                        alt={podcast.title} 
+                                                        conversions={podcast.image_conversions}
+                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                                    />
                                                 ) : (
                                                     <div className="w-full h-full bg-muted flex items-center justify-center">
                                                         <Video className="size-12 text-muted-foreground/30" />
@@ -334,9 +358,14 @@ export default function PodcastFeaturedBlock({
                                                     <span>Play Now</span>
                                                 </div>
                                             </div>
-                                            {podcast.thumbnail_url && (
+                                            {(podcast.thumbnail_url || podcast.image) && (
                                                 <div className="absolute right-0 top-0 bottom-0 w-24 overflow-hidden">
-                                                    <img src={podcast.thumbnail_url} alt="" className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" />
+                                                    <OptimizedImage 
+                                                        src={podcast.thumbnail_url || podcast.image || ''} 
+                                                        alt="" 
+                                                        conversions={podcast.image_conversions}
+                                                        className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-110 group-hover:scale-100" 
+                                                    />
                                                     <div className="absolute inset-0 bg-primary/20 mix-blend-overlay" />
                                                 </div>
                                             )}
@@ -355,8 +384,13 @@ export default function PodcastFeaturedBlock({
                                 >
                                     <a href={`/podcasts/${podcast.slug}`} className="flex-1 p-5 flex flex-col group">
                                         <div className="relative size-12 rounded-lg overflow-hidden mb-4 border border-white/20">
-                                            {podcast.thumbnail_url ? (
-                                                <img src={podcast.thumbnail_url} alt={podcast.title} className="w-full h-full object-cover" />
+                                            {(podcast.thumbnail_url || podcast.image) ? (
+                                                <OptimizedImage 
+                                                    src={podcast.thumbnail_url || podcast.image || ''} 
+                                                    alt={podcast.title} 
+                                                    conversions={podcast.image_conversions}
+                                                    className="w-full h-full object-cover" 
+                                                />
                                             ) : (
                                                 <div className="w-full h-full bg-primary/20 flex items-center justify-center">
                                                     <Headphones className="size-6 text-primary" />

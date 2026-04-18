@@ -102,6 +102,22 @@ export default function FestivalBentoGridEditor({ content, onUpdate }: FestivalB
                         placeholder="EXPLORE THE ARCHIVE"
                     />
                 </div>
+                <div className="space-y-2">
+                    <Label>CTA Button Text</Label>
+                    <Input 
+                        value={content.ctaText || ''} 
+                        onChange={(e) => onUpdate({ ctaText: e.target.value })} 
+                        placeholder="View All Festivals"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label>CTA Link</Label>
+                    <Input 
+                        value={content.ctaLink || ''} 
+                        onChange={(e) => onUpdate({ ctaLink: e.target.value })} 
+                        placeholder="/festivals"
+                    />
+                </div>
             </div>
 
             <div className="p-4 border rounded-xl bg-agency-accent/5 border-agency-accent/20 space-y-4">

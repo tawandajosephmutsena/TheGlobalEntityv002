@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { X, Sparkles } from 'lucide-react';
+import { X, Sparkles, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import type { StitchFeaturedFestivalsBlock } from '@/types/page-blocks';
 
@@ -59,6 +59,16 @@ export default function StitchFeaturedFestivalsEditor({ block, onUpdate }: Stitc
         <div className="space-y-6">
             <div className="space-y-4">
                 <div className="grid gap-2">
+                    <Label htmlFor="badge">Badge Text (Top Label)</Label>
+                    <Input
+                        id="badge"
+                        value={block.content.badge || ''}
+                        onChange={(e) => handleUpdate('badge', e.target.value)}
+                        placeholder="e.g. Featured Festivals"
+                    />
+                </div>
+
+                <div className="grid gap-2">
                     <Label htmlFor="title">Block Title</Label>
                     <Input
                         id="title"
@@ -88,6 +98,42 @@ export default function StitchFeaturedFestivalsEditor({ block, onUpdate }: Stitc
                         value={block.content.limit ?? 6}
                         onChange={(e) => handleUpdate('limit', parseInt(e.target.value))}
                     />
+                </div>
+
+                <div className="pt-4 border-t border-border">
+                    <Label className="mb-4 block font-bold text-agency-accent flex items-center gap-2">
+                        <ArrowRight size={16} />
+                        Call to Action
+                    </Label>
+                    <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="ctaLabel">CTA Label (Small text above button)</Label>
+                            <Input
+                                id="ctaLabel"
+                                value={block.content.ctaLabel || ''}
+                                onChange={(e) => handleUpdate('ctaLabel', e.target.value)}
+                                placeholder="e.g. READY FOR THE JOURNEY?"
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="ctaText">Button Text</Label>
+                            <Input
+                                id="ctaText"
+                                value={block.content.ctaText || ''}
+                                onChange={(e) => handleUpdate('ctaText', e.target.value)}
+                                placeholder="e.g. View All Festivals"
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="ctaHref">Button Link</Label>
+                            <Input
+                                id="ctaHref"
+                                value={block.content.ctaHref || ''}
+                                onChange={(e) => handleUpdate('ctaHref', e.target.value)}
+                                placeholder="e.g. /festivals"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div className="pt-4 border-t border-border">

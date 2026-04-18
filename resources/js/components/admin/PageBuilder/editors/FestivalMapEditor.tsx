@@ -16,6 +16,15 @@ const FestivalMapEditor: React.FC<EditorProps> = ({ content, onUpdate }) => {
     return (
         <div className="space-y-6">
             <div className="space-y-2">
+                <Label>Badge / Pill Text</Label>
+                <Input
+                    value={content.badge || ''}
+                    onChange={(e) => onUpdate({ badge: e.target.value })}
+                    placeholder="Festival Radar"
+                />
+            </div>
+
+            <div className="space-y-2">
                 <Label>Block Title</Label>
                 <Input
                     value={content.title || ''}

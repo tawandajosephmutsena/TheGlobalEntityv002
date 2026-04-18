@@ -163,6 +163,8 @@ class CollectionController extends Controller
                             'date' => $item->published_at ? $item->published_at->format('M d, Y') : '',
                             'readTime' => $item->formatted_duration ?? '30 min',
                             'url' => route('podcasts.show', $item->slug),
+                            'thumbnail_url' => $item->thumbnail_url,
+                            'image_conversions' => $item->getOptimizedImage('thumbnail'),
                         ];
                     });
                 }
