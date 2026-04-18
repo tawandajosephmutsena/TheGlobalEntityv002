@@ -102,6 +102,7 @@ export default function ThemeStyles() {
 
     // Get specific overrides
     const customPrimary = getSettingValue('brand_primary');
+    const customSecondary = getSettingValue('brand_secondary');
     const customAccent = getSettingValue('brand_accent');
     const customBackground = getSettingValue('brand_background');
     const customForeground = getSettingValue('brand_foreground');
@@ -212,6 +213,7 @@ export default function ThemeStyles() {
         // Then apply user overrides ONLY if they are non-empty
         // Empty string means use preset colors
         if (customPrimary && customPrimary.trim()) baseColors.primary = customPrimary;
+        if (customSecondary && customSecondary.trim()) baseColors.secondary = customSecondary;
         if (customAccent && customAccent.trim()) baseColors.accent = customAccent;
         if (customBackground && customBackground.trim()) baseColors.background = customBackground;
         if (customForeground && customForeground.trim()) baseColors.foreground = customForeground;
@@ -268,9 +270,9 @@ export default function ThemeStyles() {
                         /* Primary RGB for effects (approximate) */
                         --primary-rgb: 194, 94, 46;
                         
-                        /* Gradient system — derived from theme tokens or fallback to primary/accent */
+                        /* Gradient system — derived from theme tokens mapping: primary, secondary, accent */
                         --gradient-start: ${ (customPrimary && customPrimary.trim()) || preset.light['gradient-start'] || preset.light.primary || 'oklch(0.55 0.13 43)'};
-                        --gradient-end: ${ (customAccent && customAccent.trim()) || preset.light['gradient-end'] || preset.light.accent || 'oklch(0.88 0.03 93)'};
+                        --gradient-end: ${ (customSecondary && customSecondary.trim()) || preset.light['gradient-end'] || preset.light.secondary || 'oklch(0.88 0.03 93)'};
                         --gradient-accent: ${ (customAccent && customAccent.trim()) || preset.light['gradient-accent'] || preset.light.accent || 'oklch(0.70 0.10 200)'};
                         --theme-gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
                         --theme-gradient-reverse: linear-gradient(135deg, var(--gradient-end), var(--gradient-start));
@@ -311,7 +313,7 @@ export default function ThemeStyles() {
                         
                         /* Gradient system — dark mode */
                         --gradient-start: ${ (customPrimary && customPrimary.trim()) || preset.dark['gradient-start'] || preset.dark.primary || 'oklch(0.55 0.13 43)'};
-                        --gradient-end: ${ (customAccent && customAccent.trim()) || preset.dark['gradient-end'] || preset.dark.accent || 'oklch(0.21 0.01 95)'};
+                        --gradient-end: ${ (customSecondary && customSecondary.trim()) || preset.dark['gradient-end'] || preset.dark.secondary || 'oklch(0.21 0.01 95)'};
                         --gradient-accent: ${ (customAccent && customAccent.trim()) || preset.dark['gradient-accent'] || preset.dark.accent || 'oklch(0.50 0.08 200)'};
 
                         --theme-gradient: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
