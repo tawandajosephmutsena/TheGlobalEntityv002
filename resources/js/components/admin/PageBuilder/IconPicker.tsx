@@ -107,9 +107,9 @@ export const IconPicker: React.FC<IconPickerProps> = ({
                     <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[300px] p-0" align="start">
+            <PopoverContent className="w-[300px] p-0 bg-background shadow-2xl border border-border/50 relative z-[100]" align="start">
                 <Tabs defaultValue={type} className="w-full">
-                    <TabsList className="w-full justify-start rounded-none border-b bg-transparent h-10 px-1">
+                    <TabsList className="w-full justify-start rounded-none border-b bg-muted/30 h-10 px-1">
                         <TabsTrigger value="lucide" className="text-[10px] uppercase font-bold tracking-wider">Lucide</TabsTrigger>
                         <TabsTrigger value="custom" className="text-[10px] uppercase font-bold tracking-wider">Custom (Stitch)</TabsTrigger>
                     </TabsList>
