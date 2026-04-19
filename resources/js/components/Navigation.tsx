@@ -225,7 +225,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                         <LogIn className="size-3" /> Sign In
                                     </Link>
                                     <Link
-                                        href="/registration"
+                                    href="/register"
                                         className="inline-flex h-10 items-center gap-2 rounded-full bg-agency-primary px-5 text-[12px] font-bold tracking-widest text-white shadow-lg transition-all hover:scale-105 dark:bg-white dark:text-agency-neutral"
                                     >
                                         <UserPlus className="size-3" /> Sign Up
@@ -298,7 +298,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                                     Log In
                                 </Link>
                                 <Link
-                                    href="/registration"
+                                    href="/register"
                                     onClick={() => setIsMenuOpen(false)}
                                     className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold tracking-widest text-lg"
                                 >
