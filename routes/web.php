@@ -165,8 +165,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->isEditor()) {
-            // For now, editors also go to admin dashboard, but this could be changed
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('cms.dashboard');
         } else {
             // For viewers and other roles, show a simple dashboard
             return Inertia::render('Dashboard');
