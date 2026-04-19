@@ -35,10 +35,11 @@ import type {
     FestivalFilterBarBlock as FestivalFilterBarBlockType,
     FestivalBentoGridBlock as FestivalBentoGridBlockType,
     FestivalProgressTrailBlock as FestivalProgressTrailBlockType,
-    Globe3DBlock as Globe3DBlockType
+    Globe3DBlock as Globe3DBlockType,
+    EditorialCtaBlock as EditorialCtaBlockType
 } from '@/types/page-blocks';
 import { blockRegistry } from './BlockRegistry';
-import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe, Mail, HelpCircle, Layers, User, Search, History, Newspaper } from 'lucide-react';
+import { Layout, Sparkles, Mic, Headphones, PlayCircle, Star, Globe, Mail, HelpCircle, Layers, User, Search, History, Newspaper, Plus } from 'lucide-react';
 
 // Dynamic imports for better performance
 const CarouselBlock = React.lazy(() => import('@/components/Blocks/CarouselBlock'));
@@ -173,6 +174,9 @@ const FestivalProgressTrailEditor = React.lazy(() => import('@/components/admin/
 // Globe 3D Block
 const Globe3DBlock = React.lazy(() => import('@/components/Blocks/Globe3DBlock'));
 const Globe3DBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/Globe3DBlockEditor'));
+
+const EditorialCtaBlock = React.lazy(() => import('@/components/Blocks/EditorialCtaBlock'));
+const EditorialCtaBlockEditor = React.lazy(() => import('@/components/admin/PageBuilder/editors/EditorialCtaBlockEditor'));
 
 export function registerBlocks() {
     blockRegistry.register({
@@ -1060,4 +1064,21 @@ export function registerBlocks() {
         )
     });
 
+    blockRegistry.register({
+        type: 'editorial_cta',
+        label: 'Editorial CTA',
+        icon: <Plus className="h-4 w-4" />,
+        desc: 'A premium call-to-action block with glassmorphism and trust indicators — mirrors the newsletter signup design.',
+        category: 'Content',
+        renderer: (props: EditorialCtaBlockType['content']) => (
+            <React.Suspense fallback={<div className="h-96 bg-muted animate-pulse rounded-2xl" />}>
+                <EditorialCtaBlock {...props} />
+            </React.Suspense>
+        ),
+        editor: (props: { content: EditorialCtaBlockType['content']; onUpdate: (updates: Partial<EditorialCtaBlockType['content']>) => void }) => (
+            <React.Suspense fallback={<div className="p-8 text-center text-muted-foreground">Loading Editor...</div>}>
+                <EditorialCtaBlockEditor {...props} />
+            </React.Suspense>
+        )
+    });
 }

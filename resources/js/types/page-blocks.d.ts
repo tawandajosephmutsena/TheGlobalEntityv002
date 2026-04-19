@@ -362,6 +362,7 @@ export type PageBlock =
     | CTAHeroBlock
     | GlassmorphismPricingBlock
     | NewsletterSignupBlock
+    | EditorialCtaBlock
     | EcosystemContentBlock
     | EnterprisePricingBlock
     | FaqSectionBlock
@@ -394,6 +395,22 @@ export type PageBlock =
     | FestivalBentoGridBlock
     | FestivalProgressTrailBlock
     | Globe3DBlock;
+
+
+export interface EditorialCtaBlock extends BaseBlock {
+    type: 'editorial_cta';
+    content: {
+        badgeText?: string;
+        title?: string;
+        description?: string;
+        features?: string[];
+        buttonText?: string;
+        buttonLink?: string;
+        footerText?: string;
+        trustIndicatorNumber?: string;
+        trustIndicatorText?: string;
+    };
+}
 
 
 export interface CTAHeroBlock extends BaseBlock {
@@ -1193,9 +1210,25 @@ export interface PartnersContactBlock extends BaseBlock {
         subtitle?: string;
         description?: string;
         features: string[];
+        
+        // Multi-step form configuration
         formTitle?: string;
         formDescription?: string;
         submitText?: string;
+        steps: Array<{
+            id: string;
+            title?: string;
+            description?: string;
+            fields: FormField[];
+        }>;
+        
+        // Form meta fields
+        adminEmail?: string;
+        replyToEmail?: string;
+        confirmationEmailBody?: string;
+        successMessage?: string;
+        allowMultipleSubmissions?: boolean;
+        
         averageResponseLabel?: string;
         averageResponseValue?: string;
     };

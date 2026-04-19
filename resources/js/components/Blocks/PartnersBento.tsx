@@ -16,21 +16,19 @@ export default function PartnersBento({
         <section className="py-24 relative overflow-hidden">
             <div className="container px-4 mx-auto relative z-10">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                    <div className="max-w-2xl">
-                        <motion.h2 
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="text-4xl md:text-6xl font-display font-light leading-tight"
-                        >
-                            {title || "Partnership Ecosystem"}
-                        </motion.h2>
-                    </div>
+                <div className="max-w-3xl mx-auto text-center mb-16 px-4">
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-4xl md:text-6xl font-display font-light leading-tight"
+                    >
+                        {title || "Partnership Ecosystem"}
+                    </motion.h2>
                 </div>
 
                 {/* Bento Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+                <div className="flex flex-wrap justify-center gap-6">
                     {cards.map((card, index) => {
                         const isWide = index === 0 || index === 3;
                         const variant = card.variant || 'glass';
@@ -44,7 +42,8 @@ export default function PartnersBento({
                                 transition={{ delay: index * 0.1 }}
                                 className={cn(
                                     "relative group rounded-[2.5rem] overflow-hidden p-8 flex flex-col justify-between transition-all duration-500 hover:scale-[1.02] min-h-[400px]",
-                                    isWide ? "md:col-span-3" : "md:col-span-2",
+                                    "w-full",
+                                    isWide ? "md:w-[calc(50%-12px)]" : "md:w-[calc(33.333%-16px)]",
                                     variant === 'primary' && "bg-primary text-primary-foreground shadow-xl shadow-primary/20",
                                     variant === 'secondary' && "bg-secondary text-secondary-foreground",
                                     variant === 'tertiary' && "bg-accent text-accent-foreground",
