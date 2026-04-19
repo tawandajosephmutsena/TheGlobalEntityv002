@@ -1,146 +1,141 @@
 import React from 'react';
-import AnimatedSection from '@/components/AnimatedSection';
-import { Map, Store, PartyPopper, ShieldCheck, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import DynamicIcon from '@/components/DynamicIcon';
+import type { PartnersBentoBlock } from '@/types/page-blocks';
 
-interface PartnersBentoProps {
-    title?: string;
-    subtitle?: string;
-    cards?: Array<{
-        id: string;
-        title: string;
-        description: string;
-        icon: string;
-        link?: string;
-    }>;
-}
-
-const iconMap: Record<string, React.ElementType> = {
-    map: Map,
-    storefront: Store,
-    festival: PartyPopper,
-    shield: ShieldCheck,
-};
-
-const PartnersBento: React.FC<PartnersBentoProps> = ({
-    title = "For the Ethereal Cartographers",
-    cards = [
-        {
-            id: '1',
-            title: 'Tourism Boards',
-            description: 'Put your region on the map through authentic storytelling that goes beyond the brochure. We focus on slow travel and hidden gems that define your heritage.',
-            icon: 'map',
-            link: '#'
-        },
-        {
-            id: '2',
-            title: 'Local Artisans',
-            description: 'From boutique stays to local craft workshops, we connect you with travelers seeking the real heart of a place.',
-            icon: 'storefront',
-            link: '#'
-        },
-        {
-            id: '3',
-            title: 'Festivals & Events',
-            description: 'Turn transient visitors into lifelong advocates. We map the energy of your events into digital narratives.',
-            icon: 'festival',
-            link: '#'
-        },
-        {
-            id: '4',
-            title: 'The Authenticity Ledger',
-            description: 'Every partnership must adhere to our \'Pirate Code\'—a commitment to zero-waste travel, fair-wage experiences, and cultural preservation.',
-            icon: 'shield',
-            link: '#'
-        }
-    ]
-}) => {
+export default function PartnersBento({ 
+    title, 
+    cards = [], 
+    showCollaborateButton = true,
+    averageResponseLabel = "Average Response",
+    averageResponseValue = "24-48 Moons"
+}: PartnersBentoBlock['content']) {
     return (
-        <section className="relative py-32 overflow-visible">
-            
-            <div className="container mx-auto px-4 relative z-10">
-                <AnimatedSection animation="fade-up" className="text-center mb-20">
-                    <h2 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-on-surface mb-4 leading-none">
-                        {title.split(' ').map((word, i) => (
-                            <span key={i} className={cn(i === 2 ? "text-primary italic font-serif font-light" : "")}>
-                                {word}{' '}
-                            </span>
-                        ))}
-                    </h2>
-                </AnimatedSection>
+        <section className="py-24 relative overflow-hidden">
+            <div className="container px-4 mx-auto relative z-10">
+                {/* Header Section */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                    <div className="max-w-2xl">
+                        <motion.h2 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-4xl md:text-6xl font-display font-light leading-tight"
+                        >
+                            {title || "Partnership Ecosystem"}
+                        </motion.h2>
+                    </div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Bento Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
                     {cards.map((card, index) => {
-                        const Icon = iconMap[card.icon] || Map;
-                        const isLarge = index === 0 || index === 3;
+                        const isWide = index === 0 || index === 3;
+                        const variant = card.variant || 'glass';
                         
                         return (
-                            <AnimatedSection 
-                                key={card.id} 
-                                animation="fade-up" 
-                                delay={index * 150}
+                            <motion.div
+                                key={card.id || index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
                                 className={cn(
-                                    "relative h-full",
-                                    isLarge ? "md:col-span-2" : "md:col-span-1"
+                                    "relative group rounded-[2.5rem] overflow-hidden p-8 flex flex-col justify-between transition-all duration-500 hover:scale-[1.02] min-h-[400px]",
+                                    isWide ? "md:col-span-3" : "md:col-span-2",
+                                    variant === 'primary' && "bg-primary text-primary-foreground shadow-xl shadow-primary/20",
+                                    variant === 'secondary' && "bg-secondary text-secondary-foreground",
+                                    variant === 'tertiary' && "bg-accent text-accent-foreground",
+                                    variant === 'glass' && "liquid-glass border border-primary/10 hover:border-primary/30"
                                 )}
                             >
-                                <div className={cn(
-                                    "h-full rounded-[3rem] p-10 md:p-14 transition-all duration-700 overflow-hidden group border-none flex flex-col justify-between shadow-sea-mist hover:shadow-2xl liquid-glass",
-                                    index === 0 ? "border-secondary/20" : index === 3 ? "border-tertiary/20" : "border-primary/10"
-                                )}>
-                                    {/* Abstract background pattern for cards */}
+                                <div className="relative z-10 w-full">
                                     <div className={cn(
-                                        "absolute top-0 right-0 w-80 h-80 rounded-full -mr-32 -mt-32 group-hover:scale-125 transition-transform duration-1000 pointer-events-none opacity-20",
-                                        index === 0 ? "bg-primary" : index === 3 ? "bg-on-primary" : index === 1 ? "bg-secondary" : "bg-primary/10"
-                                    )} />
-
-                                    <div className="relative z-10">
-                                        <div className={cn(
-                                            "w-20 h-20 rounded-3xl flex items-center justify-center mb-10 transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 shadow-sea-mist",
-                                            index === 0
-                                                ? "bg-primary text-on-primary shadow-lg shadow-primary/20"
-                                                : index === 3 
-                                                ? "bg-secondary text-on-secondary" 
-                                                : index === 1
-                                                ? "bg-secondary text-on-secondary"
-                                                : "liquid-glass text-secondary shadow-inner"
-                                        )}>
-                                            <Icon size={40} strokeWidth={1} />
-                                        </div>
-                                        <h3 className="font-display text-4xl font-black tracking-tighter mb-6 leading-tight">
-                                            {card.title}
-                                        </h3>
-                                        <p className="text-xl leading-relaxed max-w-xl font-medium italic text-on-surface-variant">
-                                            {card.description}
-                                        </p>
-                                    </div>
-
-                                    <div className="mt-14 relative z-10">
-                                        <a 
-                                            href={card.link} 
+                                        "w-12 h-12 rounded-2xl flex items-center justify-center mb-8 transition-transform duration-500 group-hover:scale-110",
+                                        variant === 'primary' ? "bg-white/20" : "bg-primary/10"
+                                    )}>
+                                        <DynamicIcon 
+                                            icon={card.icon} 
+                                            type={card.iconType || 'lucide'} 
+                                            size={24} 
                                             className={cn(
-                                                "inline-flex items-center gap-4 px-8 py-3 rounded-full font-black tracking-tighter text-[10px] group/link transition-all",
-                                                index === 0
-                                                    ? "bg-primary text-on-primary hover:bg-white hover:text-secondary"
-                                                    : index === 3 
-                                                    ? "bg-on-primary text-primary hover:bg-secondary hover:text-on-secondary" 
-                                                    : index === 1
-                                                    ? "bg-secondary text-on-secondary hover:bg-primary hover:text-on-primary"
-                                                    : "bg-primary text-on-primary hover:bg-secondary hover:text-on-secondary"
+                                                variant === 'primary' ? "text-white" : "text-primary"
+                                            )}
+                                        />
+                                    </div>
+                                    
+                                    <h3 className="text-2xl md:text-3xl font-display font-medium mb-4 leading-tight">
+                                        {card.title}
+                                    </h3>
+                                    <p className={cn(
+                                        "text-lg font-light leading-relaxed max-w-[90%]",
+                                        variant === 'primary' ? "text-white/80" : "text-muted-foreground"
+                                    )}>
+                                        {card.description}
+                                    </p>
+                                </div>
+
+                                <div className="mt-8 flex items-center justify-between relative z-10">
+                                    {showCollaborateButton && card.link && (
+                                        <motion.a
+                                            href={card.link}
+                                            whileHover={{ x: 5 }}
+                                            className={cn(
+                                                "flex items-center gap-2 text-sm font-medium tracking-wider uppercase group/link",
+                                                variant === 'primary' ? "text-white" : "text-primary"
                                             )}
                                         >
                                             Collaborate
-                                            <ArrowRight size={18} className="transition-transform duration-500 group-hover/link:translate-x-2" />
-                                        </a>
-                                    </div>
+                                            <ArrowRight size={16} className="transition-transform group-hover/link:translate-x-1" />
+                                        </motion.a>
+                                    )}
+                                    
+                                    {!isWide && (
+                                        <div className={cn(
+                                            "w-10 h-10 rounded-full flex items-center justify-center border",
+                                            variant === 'primary' ? "border-white/20 text-white" : "border-primary/10 text-primary/40"
+                                        )}>
+                                            <ArrowRight size={16} className="-rotate-45" />
+                                        </div>
+                                    )}
                                 </div>
-                            </AnimatedSection>
+
+                                {/* Background Accents */}
+                                {variant === 'primary' && (
+                                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl" />
+                                )}
+                                {variant === 'glass' && (
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                                )}
+                            </motion.div>
                         );
                     })}
                 </div>
+
+                {/* Response Meta Footer */}
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="mt-16 pt-8 border-t border-primary/10 flex flex-col md:flex-row items-center justify-center gap-6"
+                >
+                    <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-primary/5 border border-primary/10 backdrop-blur-sm">
+                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                            <MessageSquare size={16} />
+                        </div>
+                        <div className="flex flex-col">
+                            <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">
+                                {averageResponseLabel}
+                            </span>
+                            <span className="text-sm font-display font-medium text-primary">
+                                {averageResponseValue}
+                            </span>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
-};
-
-export default PartnersBento;
+}

@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Plus, Trash2, GripVertical } from 'lucide-react';
+import { Switch } from "@/components/ui/switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import IconPicker from '@/components/admin/PageBuilder/IconPicker';
 import type { PartnersBentoBlock } from '@/types/page-blocks';
 
 interface PartnersBentoEditorProps {
@@ -24,7 +27,9 @@ export default function PartnersBentoEditor({ content, onUpdate }: PartnersBento
             title: 'New Partner Category',
             description: 'Description of the partnership.',
             icon: 'map',
-            link: '#'
+            iconType: 'lucide' as const,
+            link: '#',
+            variant: 'glass' as const
         };
         onUpdate({ cards: [...(content.cards || []), newCard] });
     };
@@ -36,12 +41,41 @@ export default function PartnersBentoEditor({ content, onUpdate }: PartnersBento
 
     return (
         <div className="space-y-6 md:p-1">
-            <div className="space-y-2">
-                <Label>Section Title</Label>
-                <Input 
-                    value={content.title || ''} 
-                    onChange={(e) => onUpdate({ title: e.target.value })} 
-                />
+            <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-2">
+                    <Label>Section Title</Label>
+                    <Input 
+                        value={content.title || ''} 
+                        onChange={(e) => onUpdate({ title: e.target.value })} 
+                    />
+                </div>
+                <div className="flex items-center gap-2 pt-8">
+                    <Switch 
+                        id="show-collaborate"
+                        checked={content.showCollaborateButton ?? true}
+                        onCheckedChange={(checked) => onUpdate({ showCollaborateButton: checked })}
+                    />
+                    <Label htmlFor="show-collaborate">Show Collaborate Buttons</Label>
+                </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 pt-4 border-t">
+                <div className="space-y-2">
+                    <Label>Response Label</Label>
+                    <Input 
+                        value={content.averageResponseLabel || ''} 
+                        onChange={(e) => onUpdate({ averageResponseLabel: e.target.value })} 
+                        placeholder="Average Response"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label>Response Time</Label>
+                    <Input 
+                        value={content.averageResponseValue || ''} 
+                        onChange={(e) => onUpdate({ averageResponseValue: e.target.value })} 
+                        placeholder="24-48 Moons"
+                    />
+                </div>
             </div>
 
             <div className="space-y-4 pt-4 border-t">
@@ -72,11 +106,36 @@ export default function PartnersBentoEditor({ content, onUpdate }: PartnersBento
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Icon Name</Label>
-                                    <Input 
+                                    <Label>Color Theme / Variant</Label>
+                                    <Select 
+                                        value={card.variant || 'glass'} 
+                                        onValueChange={(value: any) => updateCard(index, { variant: value })}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select variant" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="primary">Primary (Glow)</SelectItem>
+                                            <SelectItem value="secondary">Secondary</SelectItem>
+                                            <SelectItem value="tertiary">Tertiary</SelectItem>
+                                            <SelectItem value="glass">Liquid Glass (Transparent)</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Icon</Label>
+                                    <IconPicker 
                                         value={card.icon} 
-                                        onChange={(e) => updateCard(index, { icon: e.target.value })} 
-                                        placeholder="map, storefront, festival, shield"
+                                        type={card.iconType || 'lucide'}
+                                        onChange={(val, type) => updateCard(index, { icon: val, iconType: type })}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Link (Optional)</Label>
+                                    <Input 
+                                        value={card.link || ''} 
+                                        onChange={(e) => updateCard(index, { link: e.target.value })} 
+                                        placeholder="Leave empty to hide link"
                                     />
                                 </div>
                                 <div className="space-y-2 sm:col-span-2">
@@ -85,13 +144,6 @@ export default function PartnersBentoEditor({ content, onUpdate }: PartnersBento
                                         value={card.description} 
                                         onChange={(e) => updateCard(index, { description: e.target.value })} 
                                         rows={2}
-                                    />
-                                </div>
-                                <div className="space-y-2 sm:col-span-2">
-                                    <Label>Link</Label>
-                                    <Input 
-                                        value={card.link || ''} 
-                                        onChange={(e) => updateCard(index, { link: e.target.value })} 
                                     />
                                 </div>
                             </div>

@@ -23,7 +23,9 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
     ],
     formTitle = "Start Your Journey",
     formDescription = "Fill out the parchment below and our dispatchers will reach out to your port of call.",
-    submitText = "Dispatch Inquiry"
+    submitText = "Dispatch Inquiry",
+    averageResponseLabel = "Average Response",
+    averageResponseValue = "24-48 Moons"
 }) => {
     return (
         <section className="relative py-32 overflow-visible">
@@ -70,8 +72,12 @@ const PartnersContact: React.FC<PartnersContactProps> = ({
                                     <MessageSquare size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-sm text-on-surface-variant font-black tracking-widest opacity-60">Average Response</p>
-                                    <p className="text-lg font-bold text-on-surface">24-48 Moons</p>
+                                    <p className="text-sm text-on-surface-variant font-black tracking-widest opacity-60">
+                                        {averageResponseLabel}
+                                    </p>
+                                    <p className="text-lg font-bold text-on-surface">
+                                        {averageResponseValue}
+                                    </p>
                                 </div>
                             </div>
                         </AnimatedSection>

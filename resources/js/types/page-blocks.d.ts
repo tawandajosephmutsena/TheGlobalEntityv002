@@ -1157,12 +1157,17 @@ export interface PartnersBentoBlock extends BaseBlock {
     content: {
         title?: string;
         subtitle?: string;
+        showCollaborateButton?: boolean;
+        averageResponseLabel?: string;
+        averageResponseValue?: string;
         cards: Array<{
             id: string;
             title: string;
             description: string;
             icon: string;
+            iconType?: 'lucide' | 'custom';
             link?: string;
+            variant?: 'primary' | 'secondary' | 'tertiary' | 'glass';
         }>;
     };
 }
@@ -1191,6 +1196,8 @@ export interface PartnersContactBlock extends BaseBlock {
         formTitle?: string;
         formDescription?: string;
         submitText?: string;
+        averageResponseLabel?: string;
+        averageResponseValue?: string;
     };
 }
 

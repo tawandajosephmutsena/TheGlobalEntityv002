@@ -82,7 +82,7 @@ export default function PartnersContactEditor({ content, onUpdate }: PartnersCon
             </div>
 
             <div className="space-y-4 pt-4 border-t">
-                <Label className="text-lg font-bold text-agency-accent">Form Details</Label>
+                <Label className="text-lg font-bold text-agency-accent">Form & Meta Details</Label>
                 <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                         <Label>Form Title</Label>
@@ -106,6 +106,25 @@ export default function PartnersContactEditor({ content, onUpdate }: PartnersCon
                         onChange={(e) => onUpdate({ formDescription: e.target.value })} 
                         rows={2}
                     />
+                </div>
+                
+                <div className="grid gap-4 sm:grid-cols-2 pt-4">
+                    <div className="space-y-2">
+                        <Label>Response Label</Label>
+                        <Input 
+                            value={content.averageResponseLabel || ''} 
+                            onChange={(e) => onUpdate({ averageResponseLabel: e.target.value })} 
+                            placeholder="Average Response"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Response Time</Label>
+                        <Input 
+                            value={content.averageResponseValue || ''} 
+                            onChange={(e) => onUpdate({ averageResponseValue: e.target.value })} 
+                            placeholder="24-48 Moons"
+                        />
+                    </div>
                 </div>
             </div>
         </div>

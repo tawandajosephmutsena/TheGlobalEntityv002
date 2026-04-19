@@ -111,39 +111,57 @@ export default function Blog({ insights, categories, activeCategoryId, blocks = 
                                 </h1>
                             </AnimatedSection>
 
-                            {/* Category Filter */}
-                            <TooltipProvider>
-                                <div className="flex items-center gap-4 overflow-x-auto pb-6 scrollbar-hide no-scrollbar">
-                                    <Link 
-                                        href="/blog?category=all"
-                                        preserveScroll
-                                        className={cn(
-                                            "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500",
-                                            activeCategoryId === 'all' 
-                                                ? "bg-on-surface text-surface shadow-xl scale-105" 
-                                                : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
-                                        )}
+                            {/* Category Filter - Modern Dropdown */}
+                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 py-8 border-y border-on-surface/5">
+                                <div className="max-w-xs w-full relative z-50">
+                                    <Select 
+                                        value={activeCategoryId.toString()} 
+                                        onValueChange={(value) => router.get(`/blog?category=${value}`, {}, { preserveScroll: true, preserveState: true })}
                                     >
-                                        All Archives
-                                    </Link>
-                                    {categories.map((cat) => (
-                                        <Link 
-                                            key={cat.id}
-                                            href={`/blog?category=${cat.id}`}
-                                            preserveScroll
-                                            className={cn(
-                                                "whitespace-nowrap px-8 py-2.5 rounded-full font-black text-[10px] tracking-widest transition-all duration-500 flex items-center gap-2",
-                                                activeCategoryId === cat.id.toString() || activeCategoryId === cat.slug
-                                                    ? "bg-primary text-on-primary shadow-xl scale-105" 
-                                                    : "bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high hover:scale-105"
-                                            )}
-                                        >
-                                            {cat.icon && <CategoryIcon category={cat.slug} icon={cat.icon} size={14} glow={false} />}
-                                            {cat.name}
-                                        </Link>
-                                    ))}
+                                        <SelectTrigger className="w-full h-14 rounded-2xl bg-surface-container-low border-primary/10 shadow-xl liquid-glass px-6 font-black text-[10px] tracking-widest uppercase transition-all hover:scale-[1.02] hover:bg-surface-container-high focus:ring-primary/20">
+                                            <div className="flex items-center gap-3">
+                                                <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                                    <Search size={14} className="text-primary" />
+                                                </div>
+                                                <SelectValue placeholder="Navigate Chronicles" />
+                                            </div>
+                                        </SelectTrigger>
+                                        <SelectContent className="rounded-2xl border-primary/10 bg-surface/95 backdrop-blur-xl shadow-2xl p-2 z-[100]">
+                                            <SelectItem 
+                                                value="all" 
+                                                className="rounded-xl py-3 px-4 font-black text-[10px] tracking-widest uppercase focus:bg-primary/10 focus:text-primary transition-colors cursor-pointer"
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <div className="size-6 rounded bg-on-surface/10 flex items-center justify-center">
+                                                        <Search size={10} />
+                                                    </div>
+                                                    All Archives
+                                                </div>
+                                            </SelectItem>
+                                            {categories.map((cat) => (
+                                                <SelectItem 
+                                                    key={cat.id} 
+                                                    value={cat.id.toString()}
+                                                    className="rounded-xl py-3 px-4 font-black text-[10px] tracking-widest uppercase focus:bg-primary/10 focus:text-primary transition-colors cursor-pointer"
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="size-6 rounded bg-primary/5 flex items-center justify-center">
+                                                            {cat.icon && <CategoryIcon category={cat.slug} icon={cat.icon} size={12} glow={false} />}
+                                                        </div>
+                                                        {cat.name}
+                                                    </div>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
                                 </div>
-                            </TooltipProvider>
+
+                                <div className="flex items-center gap-4 text-on-surface-variant/40">
+                                    <span className="text-[10px] font-black tracking-[0.2em] uppercase">Filtering coordinates</span>
+                                    <div className="h-px w-24 bg-current" />
+                                    <span className="text-[10px] font-black tracking-[0.2em] text-on-surface uppercase">{insights.total} Features found</span>
+                                </div>
+                            </div>
                         </section>
 
                         {/* Article Grid */}
