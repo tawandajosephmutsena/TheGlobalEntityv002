@@ -25,6 +25,8 @@ export const BrandingLogo = ({
         <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 1515.63 760.82" 
+            width="1516"
+            height="761"
             className={className}
             style={cssVars}
             {...props}

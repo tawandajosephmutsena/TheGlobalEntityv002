@@ -39,7 +39,7 @@
 
             /* Critical navigation styles to prevent CLS */
             nav {
-                height: 64px; /* Fixed height to prevent layout shift */
+                height: 80px; /* Matched to h-20 in Navigation.tsx to prevent layout shift */
             }
 
             /* Loading shimmer matching the app components */
@@ -69,9 +69,31 @@
             }
         </style>
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
+        {{-- Robust Polyfills: Defined synchronously to ensure third-party scripts (Grammarly, etc.) don't crash --}}
         <script nonce="{{ Vite::cspNonce() }}">
             (function() {
+                // Polyfill for crypto.randomUUID in non-secure contexts or older browsers
+                try {
+                    if (typeof window !== 'undefined' && (!window.crypto || !window.crypto.randomUUID)) {
+                        if (!window.crypto) window.crypto = {};
+                        if (!window.crypto.getRandomValues) {
+                            window.crypto.getRandomValues = function(array) {
+                                for (var i = 0, l = array.length; i < l; i++) {
+                                    array[i] = Math.floor(Math.random() * 256);
+                                }
+                                return array;
+                            };
+                        }
+                        window.crypto.randomUUID = function() {
+                            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, function(c) {
+                                return (c ^ (window.crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16);
+                            });
+                        };
+                    }
+                } catch (e) {
+                    console.warn('Crypto polyfill failure:', e);
+                }
+
                 const appearance = '{{ $appearance ?? "system" }}';
 
                 if (appearance === 'system') {
@@ -94,14 +116,13 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        {{-- Web Core Vitals: Optimized favicon loading --}}
+        {{-- Web Core Vitals: Optimized favicon and manifest loading --}}
         <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="32x32">
         <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
         <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+        <link rel="manifest" href="/manifest.webmanifest">
 
         {{-- Web Core Vitals: Non-render-blocking font loading (consolidated into a single request) --}}
-        {{-- Primary body font WOFF2 preload for fastest text rendering --}}
-        <link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/plusjakartasans/v8/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_KU7NSg.woff2" crossorigin>
         <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Epilogue:ital,wght@0,100..900;1,100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" media="print" onload="this.media='all'" />
         <noscript>

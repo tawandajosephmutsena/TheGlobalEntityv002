@@ -99,7 +99,7 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
         };
     }, [isInView, nextSlide, autoPlayInterval, slides.length]);
 
-    if (!slides || slides.length === 0) return null;
+    if (!slides || slides.length === 0) return <div className="relative w-full h-screen bg-black" />;
 
     return (
         <section 

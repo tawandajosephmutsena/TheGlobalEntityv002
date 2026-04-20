@@ -31,29 +31,35 @@ const AppLogo = React.forwardRef<HTMLDivElement, AppLogoProps>(({ className, log
     return (
         <div 
             ref={ref} 
-            className={cn("flex items-center justify-start shrink-0 !bg-transparent !bg-none overflow-visible border-none shadow-none h-auto w-auto max-w-[300px]", className)}
+            className={cn("flex items-center justify-start shrink-0 !bg-transparent !bg-none overflow-visible border-none shadow-none h-[50px] min-w-[120px]", className)}
         >
             {isDynamic ? (
                 <BrandingLogo 
                     className={cn(
-                        "h-[40px] w-auto max-w-full", 
+                        "h-[40px] w-auto", 
                         logoClassName?.replace(/fill-[^ ]+/g, '')?.replace(/text-[^ ]+/g, '')
                     )} 
+                    width="80"
+                    height="40"
                 />
             ) : (
                 <>
                     {site.logo && !imgError ? (
-                        <img 
-                            src={site.logo} 
-                            alt={site.name} 
-                            className={cn(
-                                "h-auto w-auto max-h-[50px] object-contain block",
-                                site.logo.endsWith('.svg') && "min-w-[120px]",
-                                logoClassName
-                            )} 
-                            loading="eager"
-                            onError={() => setImgError(true)}
-                        />
+                        <div className="relative h-[40px] w-auto min-w-[120px]">
+                            <img 
+                                src={site.logo} 
+                                alt={site.name} 
+                                className={cn(
+                                    "h-full w-auto object-contain block",
+                                    logoClassName
+                                )} 
+                                width="120"
+                                height="40"
+                                loading="eager"
+                                fetchPriority="high"
+                                onError={() => setImgError(true)}
+                            />
+                        </div>
                     ) : (
                         <div className={cn(
                             "flex aspect-square h-[40px] items-center justify-center rounded-lg bg-agency-accent text-agency-primary shadow-sm shrink-0",

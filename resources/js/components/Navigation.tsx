@@ -6,7 +6,7 @@ import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { LayoutDashboard, LogIn, UserPlus } from 'lucide-react';
+import { LayoutDashboard, LogIn, LogOut, UserPlus } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface NavigationProps {
@@ -209,13 +209,24 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     <div className="flex items-center gap-3">
                         <div className="mr-2 hidden items-center gap-2 md:flex">
                             {auth?.user ? (
-                                <Link
-                                    href="/admin"
-                                    className="inline-flex h-10 items-center gap-2 rounded-full border border-agency-accent/20 bg-agency-accent/15 px-5 text-[10px] font-bold tracking-widest text-agency-accent transition-all hover:bg-agency-accent hover:text-primary-foreground dark:bg-agency-accent/10 dark:text-agency-accent"
-                                >
-                                    <LayoutDashboard className="size-3" />{' '}
-                                    Dashboard
-                                </Link>
+                                (auth.user.role === 'admin' || auth.user.role === 'editor' || auth.user.role === 'festival_organizer' || auth.user.is_super_admin) ? (
+                                    <Link
+                                        href="/admin"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full border border-agency-accent/20 bg-agency-accent/15 px-5 text-[10px] font-bold tracking-widest text-agency-accent transition-all hover:bg-agency-accent hover:text-primary-foreground dark:bg-agency-accent/10 dark:text-agency-accent"
+                                    >
+                                        <LayoutDashboard className="size-3" />{' '}
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        href="/logout"
+                                        method="post"
+                                        as="button"
+                                        className="inline-flex h-10 items-center gap-2 rounded-full px-5 text-[12px] font-bold tracking-widest text-agency-primary/80 transition-all hover:text-agency-accent dark:text-white/60"
+                                    >
+                                        <LogOut className="size-3" /> Sign Out
+                                    </Link>
+                                )
                             ) : (
                                 <>
                                     <Link
@@ -307,13 +318,26 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                             </div>
                         )}
                         {auth?.user && (
-                            <Link
-                                href="/admin"
-                                onClick={() => setIsMenuOpen(false)}
-                                className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold tracking-widest text-lg"
-                            >
-                                Dashboard
-                            </Link>
+                            <div className="space-y-4">
+                                {(auth.user.role === 'admin' || auth.user.role === 'editor' || auth.user.role === 'festival_organizer' || auth.user.is_super_admin) && (
+                                    <Link
+                                        href="/admin"
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="flex h-14 items-center justify-center rounded-2xl bg-agency-accent text-agency-primary font-bold tracking-widest text-lg"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                )}
+                                <Link
+                                    href="/logout"
+                                    method="post"
+                                    as="button"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="flex w-full h-14 items-center justify-center rounded-2xl border border-border font-bold tracking-widest text-lg text-agency-primary/60 dark:text-white/60"
+                                >
+                                    Sign Out
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </div>

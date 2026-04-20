@@ -162,15 +162,28 @@ Route::middleware(['auth', 'verified'])->group(function () {
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if ($user->isAdmin()) {
+        if ($user->hasRole('admin') || $user->hasRole('super-admin')) {
             return redirect()->route('admin.dashboard');
-        } elseif ($user->isEditor()) {
+        } elseif ($user->hasRole('editor')) {
             return redirect()->route('cms.dashboard');
+        } elseif ($user->hasRole('festival_organizer')) {
+            return redirect()->route('organizer.dashboard');
+        } elseif ($user->hasRole('reviewer')) {
+            return redirect()->route('reviewer.dashboard');
         } else {
-            // For viewers and other roles, show a simple dashboard
-            return Inertia::render('Dashboard');
+            return Inertia::render('dashboard');
         }
     })->name('dashboard');
+
+    // Organizer Dashboard
+    Route::middleware(['auth', 'verified'])->prefix('organizer')->name('organizer.')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Organizer\DashboardController::class, 'index'])->name('dashboard');
+    });
+
+    // Reviewer Dashboard
+    Route::middleware(['auth', 'verified'])->prefix('reviewer')->name('reviewer.')->group(function () {
+        Route::get('/dashboard', [App\Http\Controllers\Reviewer\DashboardController::class, 'index'])->name('dashboard');
+    });
 });
 
 // CMS routes - require editor role or higher (no caching)

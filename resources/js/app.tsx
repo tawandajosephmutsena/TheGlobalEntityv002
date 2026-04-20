@@ -1,19 +1,6 @@
 import '../css/app.css';
 import '../css/category-icons.css';
 
-// Polyfill for crypto.randomUUID in non-secure contexts
-if (typeof window !== 'undefined' && !window.crypto?.randomUUID) {
-    if (!window.crypto) {
-        (window as Window & { crypto: Crypto }).crypto = {} as Crypto;
-    }
-    window.crypto.randomUUID = function() {
-        return ("10000000-1000-4000-8000-100000000000").replace(/[018]/g, (cString: string) => {
-            const c = Number(cString);
-            return (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16);
-        }) as `${string}-${string}-${string}-${string}-${string}`;
-    };
-}
-
 import { createInertiaApp } from '@inertiajs/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

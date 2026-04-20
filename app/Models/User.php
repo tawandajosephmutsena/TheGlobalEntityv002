@@ -32,7 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'role', // @deprecated: transition to RBAC roles relation
         'is_active',
         'avatar',
         'about',
@@ -113,7 +113,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->role === 'admin' || $this->hasRole('admin') || $this->hasRole('super-admin');
+        return $this->hasRole('admin') || $this->hasRole('super-admin');
     }
 
     /**
@@ -122,7 +122,7 @@ class User extends Authenticatable
     public function isEditor(): bool
     {
         if ($this->isAdmin()) return true;
-        return in_array($this->role, ['admin', 'editor']) || $this->hasRole('editor');
+        return $this->hasRole('editor');
     }
 
     /**
@@ -131,7 +131,7 @@ class User extends Authenticatable
     public function isViewer(): bool
     {
         if ($this->isEditor()) return true;
-        return in_array($this->role, ['admin', 'editor', 'viewer']) || $this->hasRole('viewer');
+        return $this->hasRole('viewer') || $this->hasRole('subscriber');
     }
 
 
@@ -140,7 +140,9 @@ class User extends Authenticatable
      */
     public function hasRole(string $role): bool
     {
-        return $this->role === $role || $this->roles->contains('slug', $role);
+        // Check for role cached in memory for performance if needed, 
+        // but for now simple collection check
+        return $this->roles->contains('slug', $role);
     }
 
     /**
@@ -148,7 +150,7 @@ class User extends Authenticatable
      */
     public function hasAnyRole(array $roles): bool
     {
-        return in_array($this->role, $roles) || $this->roles->whereIn('slug', $roles)->isNotEmpty();
+        return $this->roles->whereIn('slug', $roles)->isNotEmpty();
     }
 
     /**
