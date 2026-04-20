@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 interface AuthEditorialLayoutProps {
@@ -13,10 +13,17 @@ export default function AuthEditorialLayout({
     children,
     title,
     description,
-    editorialTitle = "Charting the",
-    editorialSubtitle = "Unseen Path.",
-    editorialDescription = "Return to your journal. Your adventures across the ethereal landscapes are waiting to be documented.",
+    editorialTitle: propsEditorialTitle,
+    editorialSubtitle: propsEditorialSubtitle,
+    editorialDescription: propsEditorialDescription,
 }: PropsWithChildren<AuthEditorialLayoutProps>) {
+    const { site } = usePage().props as any;
+    const authContent = site.auth_content;
+
+    const editorialTitle = propsEditorialTitle || authContent?.editorial_title || "Charting the";
+    const editorialSubtitle = propsEditorialSubtitle || authContent?.editorial_subtitle || "Unseen Path.";
+    const editorialDescription = propsEditorialDescription || authContent?.editorial_description || "Return to your journal. Your adventures across the ethereal landscapes are waiting to be documented.";
+
     return (
         <div className="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col relative overflow-hidden">
             {/* Background Layer: Drifting Watercolor Map Concept */}

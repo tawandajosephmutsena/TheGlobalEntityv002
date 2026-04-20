@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\PodcastPlugin\Http\Controllers\PodcastAdminController;
 use Modules\PodcastPlugin\Http\Controllers\PodcastCategoryAdminController;
 use Modules\PodcastPlugin\Http\Controllers\PodcastPublicController;
+use Modules\PodcastPlugin\Http\Controllers\PodcastFeedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,5 @@ Route::middleware(['auth', 'verified', 'admin', 'cache.headers:no-cache'])->pref
 Route::middleware([App\Http\Middleware\CacheHeadersMiddleware::class . ':public'])->group(function () {
     Route::get('/podcasts', [PodcastPublicController::class, 'index'])->name('podcasts');
     Route::get('/podcasts/{slug}', [PodcastPublicController::class, 'show'])->name('podcasts.show');
+    Route::get('/feed/podcast/{category:slug}', [PodcastFeedController::class, 'show'])->name('podcasts.feed');
 });

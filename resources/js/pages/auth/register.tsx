@@ -11,13 +11,13 @@ import { Spinner } from '@/components/ui/spinner';
 import AuthEditorialLayout from '@/layouts/auth/auth-editorial-layout';
 
 export default function Register() {
+    const { site } = usePage().props as any;
+    const authContent = site.auth_content;
+
     return (
         <AuthEditorialLayout
-            title="Welcome Crew"
-            description="Enter the manifest to continue your journey."
-            editorialTitle="Chart your"
-            editorialSubtitle="soul's course."
-            editorialDescription="More than a travel group—we are the cartographers of the ethereal. Join a crew of wanderers documenting the world's hidden magic."
+            title={authContent?.register_title || "Welcome Crew"}
+            description={authContent?.register_description || "Enter the manifest to continue your journey."}
         >
             <Head title="Register" />
             <Form

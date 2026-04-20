@@ -16,11 +16,20 @@ class PodcastCategory extends Model
         'icon',
         'sort_order',
         'is_active',
+        'artwork',
+        'author',
+        'owner_name',
+        'owner_email',
+        'itunes_category',
+        'itunes_explicit',
+        'itunes_type',
+        'language',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
         'sort_order' => 'integer',
+        'itunes_explicit' => 'boolean',
     ];
 
     protected static function booted(): void

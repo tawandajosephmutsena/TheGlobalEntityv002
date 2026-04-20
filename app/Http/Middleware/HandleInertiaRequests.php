@@ -144,6 +144,15 @@ class HandleInertiaRequests extends Middleware
                         return in_array(strtolower((string) $v), ['true', '1', 'yes', 'on'], true);
                     })($settings['show_contact_map'] ?? null),
                 ],
+                'auth_content' => [
+                    'editorial_title' => $settings['auth_editorial_title'] ?? 'Charting the',
+                    'editorial_subtitle' => $settings['auth_editorial_subtitle'] ?? 'Unseen Path.',
+                    'editorial_description' => $settings['auth_editorial_description'] ?? 'Return to your journal. Your adventures across the ethereal landscapes are waiting to be documented.',
+                    'login_title' => $settings['auth_login_title'] ?? 'Welcome Back',
+                    'login_description' => $settings['auth_login_description'] ?? 'Sign in to continue your expedition',
+                    'register_title' => $settings['auth_register_title'] ?? 'Chart Your Course',
+                    'register_description' => $settings['auth_register_description'] ?? 'Create an account to begin your journey',
+                ],
                 'footer' => [
                     'heading_line1' => $settings['footer_heading_line1'] ?? null,
                     'heading_line2' => $settings['footer_heading_line2'] ?? null,

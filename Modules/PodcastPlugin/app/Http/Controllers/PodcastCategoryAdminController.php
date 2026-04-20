@@ -28,6 +28,14 @@ class PodcastCategoryAdminController extends Controller
             'color' => 'nullable|string|max:7',
             'icon' => 'nullable|string|max:50',
             'sort_order' => 'nullable|integer',
+            'artwork' => 'nullable|string|max:255',
+            'author' => 'nullable|string|max:255',
+            'owner_name' => 'nullable|string|max:255',
+            'owner_email' => 'nullable|email|max:255',
+            'itunes_category' => 'nullable|string|max:255',
+            'itunes_explicit' => 'nullable|boolean',
+            'itunes_type' => 'nullable|string|in:episodic,serial',
+            'language' => 'nullable|string|max:10',
         ]);
 
         PodcastCategory::create($validated);
@@ -46,6 +54,14 @@ class PodcastCategoryAdminController extends Controller
             'icon' => 'nullable|string|max:50',
             'sort_order' => 'nullable|integer',
             'is_active' => 'boolean',
+            'artwork' => 'nullable|string|max:255',
+            'author' => 'nullable|string|max:255',
+            'owner_name' => 'nullable|string|max:255',
+            'owner_email' => 'nullable|email|max:255',
+            'itunes_category' => 'nullable|string|max:255',
+            'itunes_explicit' => 'nullable|boolean',
+            'itunes_type' => 'nullable|string|in:episodic,serial',
+            'language' => 'nullable|string|max:10',
         ]);
 
         $category->update($validated);

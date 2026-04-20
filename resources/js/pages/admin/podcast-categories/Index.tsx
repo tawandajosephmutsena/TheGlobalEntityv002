@@ -12,7 +12,13 @@ import {
 import {
     Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from '@/components/ui/dialog';
-import { Plus, Edit, Trash2, Folder, Loader2 } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+    Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/components/ui/select';
+import MediaLibrary from '@/components/admin/MediaLibrary';
+import { MediaAsset } from '@/types';
+import { Plus, Edit, Trash2, Folder, Loader2, Podcast, ShieldCheck, Mail, Globe, Image as ImageIcon, X } from 'lucide-react';
 
 declare function route(name: string, params?: unknown, absolute?: boolean): string;
 
@@ -25,6 +31,14 @@ interface Category {
     icon: string | null;
     sort_order: number;
     is_active: boolean;
+    artwork: string | null;
+    author: string | null;
+    owner_name: string | null;
+    owner_email: string | null;
+    itunes_category: string | null;
+    itunes_explicit: boolean;
+    itunes_type: string;
+    language: string;
     podcasts_count: number;
 }
 
@@ -53,66 +67,198 @@ function CategoryForm({
         icon: initial?.icon || '',
         sort_order: initial?.sort_order ?? 0,
         is_active: initial?.is_active ?? true,
+        artwork: initial?.artwork || '',
+        author: initial?.author || '',
+        owner_name: initial?.owner_name || '',
+        owner_email: initial?.owner_email || '',
+        itunes_category: initial?.itunes_category || '',
+        itunes_explicit: initial?.itunes_explicit ?? false,
+        itunes_type: initial?.itunes_type || 'episodic',
+        language: initial?.language || 'en',
     });
 
+    const handleArtworkSelect = (asset: MediaAsset) => {
+        setForm(prev => ({ ...prev, artwork: asset.url }));
+    };
+
     return (
-        <div className="space-y-4">
-            <div className="space-y-2">
-                <Label>Name *</Label>
-                <Input
-                    value={form.name}
-                    onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
-                    placeholder="e.g. Technology"
-                />
-            </div>
-            <div className="space-y-2">
-                <Label>Description</Label>
-                <Textarea
-                    value={form.description}
-                    onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
-                    rows={3}
-                />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+        <Tabs defaultValue="general" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="general">General</TabsTrigger>
+                <TabsTrigger value="rss" className="gap-2">
+                    <Podcast className="size-3.5" /> RSS & Apple fields
+                </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="general" className="space-y-4 py-2">
                 <div className="space-y-2">
-                    <Label>Color</Label>
-                    <div className="flex items-center gap-2">
-                        <input
-                            type="color"
-                            value={form.color}
-                            onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
-                            className="size-8 rounded border border-border cursor-pointer"
-                            title="Category color"
-                            aria-label="Category color"
-                        />
+                    <Label>Name *</Label>
+                    <Input
+                        value={form.name}
+                        onInput={(e) => setForm(prev => ({ ...prev, name: (e.target as HTMLInputElement).value }))}
+                        placeholder="e.g. Technology"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <Label>Description</Label>
+                    <Textarea
+                        value={form.description}
+                        onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))}
+                        rows={3}
+                    />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label>Color</Label>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="color"
+                                value={form.color}
+                                onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
+                                className="size-8 rounded border border-border cursor-pointer"
+                                title="Category color"
+                                aria-label="Category color"
+                            />
+                            <Input
+                                value={form.color}
+                                onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
+                                className="text-xs flex-1"
+                            />
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Sort Order</Label>
                         <Input
-                            value={form.color}
-                            onChange={(e) => setForm(prev => ({ ...prev, color: e.target.value }))}
-                            className="text-xs flex-1"
+                            type="number"
+                            value={form.sort_order}
+                            onChange={(e) => setForm(prev => ({ ...prev, sort_order: parseInt(e.target.value) || 0 }))}
                         />
                     </div>
                 </div>
-                <div className="space-y-2">
-                    <Label>Sort Order</Label>
-                    <Input
-                        type="number"
-                        value={form.sort_order}
-                        onChange={(e) => setForm(prev => ({ ...prev, sort_order: parseInt(e.target.value) || 0 }))}
+                <div className="flex items-center justify-between">
+                    <Label>Active</Label>
+                    <Switch
+                        checked={form.is_active}
+                        onCheckedChange={(v) => setForm(prev => ({ ...prev, is_active: v }))}
                     />
                 </div>
+            </TabsContent>
+
+            <TabsContent value="rss" className="space-y-4 py-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                        <Label>Show Artwork</Label>
+                        <MediaLibrary
+                            type="image"
+                            onSelect={handleArtworkSelect}
+                            trigger={
+                                <div className="aspect-square max-w-[160px] rounded-xl border-2 border-dashed border-border hover:border-primary/50 transition-all cursor-pointer flex items-center justify-center overflow-hidden">
+                                    {form.artwork ? (
+                                        <div className="relative w-full h-full group">
+                                            <img src={form.artwork.startsWith('http') ? form.artwork : `/storage/${form.artwork}`} alt="Show Artwork" className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <Edit className="size-6 text-white" />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="text-center p-4">
+                                            <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
+                                            <p className="text-xs text-muted-foreground">Select show image</p>
+                                        </div>
+                                    )}
+                                </div>
+                            }
+                        />
+                        <p className="text-[10px] text-muted-foreground">Recommended: 1400x1400px minimum JPEG/PNG.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <Label className="flex items-center gap-1.5"><Podcast className="size-3" /> Author Name</Label>
+                            <Input
+                                value={form.author}
+                                onChange={(e) => setForm(prev => ({ ...prev, author: e.target.value }))}
+                                placeholder="e.g. The Global Entity"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="flex items-center gap-1.5"><Globe className="size-3" /> Language</Label>
+                            <Select value={form.language} onValueChange={(v) => setForm(prev => ({ ...prev, language: v }))}>
+                                <SelectTrigger><SelectValue /></SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="en">English (en)</SelectItem>
+                                    <SelectItem value="fr">French (fr)</SelectItem>
+                                    <SelectItem value="es">Spanish (es)</SelectItem>
+                                    <SelectItem value="de">German (de)</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <Label>iTunes Category</Label>
+                        <Input
+                            value={form.itunes_category}
+                            onChange={(e) => setForm(prev => ({ ...prev, itunes_category: e.target.value }))}
+                            placeholder="e.g. Arts > Design"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Show Type</Label>
+                        <Select value={form.itunes_type} onValueChange={(v) => setForm(prev => ({ ...prev, itunes_type: v }))}>
+                            <SelectTrigger><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="episodic">Episodic</SelectItem>
+                                <SelectItem value="serial">Serial</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+
+                <div className="space-y-4 rounded-lg border bg-muted/30 p-4">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Owner Contact Info</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label className="text-xs">Name</Label>
+                            <Input
+                                value={form.owner_name}
+                                onChange={(e) => setForm(prev => ({ ...prev, owner_name: e.target.value }))}
+                                className="h-8 text-xs"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label className="text-xs flex items-center gap-1.5"><Mail className="size-3" /> Email</Label>
+                            <Input
+                                value={form.owner_email}
+                                onChange={(e) => setForm(prev => ({ ...prev, owner_email: e.target.value }))}
+                                className="h-8 text-xs"
+                                type="email"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between rounded-lg border p-3">
+                    <div className="space-y-0.5">
+                        <Label className="flex items-center gap-1.5"><ShieldCheck className="size-3" /> Explicit Content</Label>
+                        <p className="text-xs text-muted-foreground">Mark this show as containing explicit material.</p>
+                    </div>
+                    <Switch
+                        checked={form.itunes_explicit}
+                        onCheckedChange={(v) => setForm(prev => ({ ...prev, itunes_explicit: v }))}
+                    />
+                </div>
+            </TabsContent>
+
+            <div className="pt-4">
+                <Button onClick={() => onSubmit(form)} disabled={isLoading || !form.name} className="w-full gap-2">
+                    {isLoading ? <Loader2 className="size-4 animate-spin" /> : null}
+                    {initial ? 'Update Category' : 'Create Category'}
+                </Button>
             </div>
-            <div className="flex items-center justify-between">
-                <Label>Active</Label>
-                <Switch
-                    checked={form.is_active}
-                    onCheckedChange={(v) => setForm(prev => ({ ...prev, is_active: v }))}
-                />
-            </div>
-            <Button onClick={() => onSubmit(form)} disabled={isLoading || !form.name} className="w-full gap-2">
-                {isLoading ? <Loader2 className="size-4 animate-spin" /> : null}
-                {initial ? 'Update Category' : 'Create Category'}
-            </Button>
-        </div>
+        </Tabs>
     );
 }
 

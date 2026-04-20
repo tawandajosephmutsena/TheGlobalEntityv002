@@ -22,10 +22,13 @@ export default function Login({
     canResetPassword,
     canRegister,
 }: LoginProps) {
+    const { site } = usePage().props as any;
+    const authContent = site.auth_content;
+
     return (
         <AuthEditorialLayout
-            title="Welcome Back"
-            description="Sign in to continue your expedition"
+            title={authContent?.login_title || "Welcome Back"}
+            description={authContent?.login_description || "Sign in to continue your expedition"}
         >
             <Head title="Log in" />
 

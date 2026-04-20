@@ -385,6 +385,15 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'bg_watercolor_blur', label: 'Backdrop Blur (px)', type: 'text', placeholder: '140', description: 'Blur amount for the blobs in pixels.' },
         { key: 'bg_watercolor_overlay_opacity', label: 'Gradient Overlay Opacity', type: 'text', placeholder: '0.5', description: 'Opacity of the theme-wash gradient over the blobs.' },
     ],
+    auth: [
+        { key: 'auth_editorial_title', label: 'Editorial Title', type: 'text', placeholder: 'Charting the' },
+        { key: 'auth_editorial_subtitle', label: 'Editorial Subtitle', type: 'text', placeholder: 'Unseen Path.' },
+        { key: 'auth_editorial_description', label: 'Editorial Description', type: 'textarea', placeholder: 'Return to your journal. Your adventures across the ethereal landscapes are waiting to be documented.' },
+        { key: 'auth_login_title', label: 'Login Page Title', type: 'text', placeholder: 'Welcome Back' },
+        { key: 'auth_login_description', label: 'Login Page Description', type: 'text', placeholder: 'Sign in to continue your expedition' },
+        { key: 'auth_register_title', label: 'Register Page Title', type: 'text', placeholder: 'Chart Your Course' },
+        { key: 'auth_register_description', label: 'Register Page Description', type: 'text', placeholder: 'Create an account to begin your journey' },
+    ],
 };
 
 /**
@@ -796,15 +805,15 @@ export default function SettingsIndex({ settings, themePresets, pages = [] }: Pr
 
                 <form onSubmit={handleSubmit}>
                     <Tabs value={currentTab} onValueChange={handleTabChange} className="w-full">
-                        <TabsList className="mb-4">
+                        <TabsList className="mb-6 flex-wrap h-auto gap-1">
                             <TabsTrigger value="general">General</TabsTrigger>
                             <TabsTrigger value="branding">Branding</TabsTrigger>
-                            <TabsTrigger value="contact">Contact Info</TabsTrigger>
-                            <TabsTrigger value="social">Social Media</TabsTrigger>
-                            <TabsTrigger value="seo">SEO & Analytics</TabsTrigger>
-
-                            <TabsTrigger value="theme">Theme & Visuals</TabsTrigger>
+                            <TabsTrigger value="theme">Theme</TabsTrigger>
                             <TabsTrigger value="background">Background</TabsTrigger>
+                            <TabsTrigger value="auth">Authentication</TabsTrigger>
+                            <TabsTrigger value="contact">Contact</TabsTrigger>
+                            <TabsTrigger value="social">Social</TabsTrigger>
+                            <TabsTrigger value="seo">SEO</TabsTrigger>
                             <TabsTrigger value="compliance">Compliance</TabsTrigger>
                         </TabsList>
 
