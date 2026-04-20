@@ -49,6 +49,7 @@ const mainNavItems = [
         title: 'Analytics',
         href: '/admin/analytics',
         icon: TrendingUp,
+        capability: ['settings', 'read'], // Restricted to those who can manage settings/admin level
     },
 ];
 
@@ -57,46 +58,57 @@ const contentNavItems = [
         title: 'Portfolio',
         href: '/admin/portfolio',
         icon: FolderOpen,
+        capability: ['portfolio_items', 'read'],
     },
     {
         title: 'Services',
         href: '/admin/services',
         icon: Briefcase,
+        capability: ['services', 'read'],
     },
     {
         title: 'Insights',
         href: '/admin/insights',
         icon: FileText,
+        capability: ['insights', 'read'],
     },
     {
         title: 'Team',
         href: '/admin/team',
         icon: Users,
+        // Assuming team maps to users or a separate capability, let's use users.read
+        capability: ['users', 'read'],
     },
     {
         title: 'Pages',
         href: '/admin/pages',
         icon: LayoutDashboard,
+        capability: ['pages', 'read'],
     },
     {
         title: 'Menus',
         href: '/admin/menus',
         icon: List,
+        // Assuming menus map to pages or settings, we use settings.read
+        capability: ['settings', 'read'],
     },
     {
         title: 'Inquiries',
         href: '/admin/contact-inquiries',
         icon: MessageSquare,
+        capability: ['settings', 'read'], // Assuming settings/admin level
     },
     {
         title: 'Categories',
         href: '/admin/categories',
         icon: Tags,
+        capability: ['categories', 'read'],
     },
     {
         title: 'Podcasts',
         href: '/admin/podcasts',
         icon: Mic,
+        capability: ['insights', 'read'], // Binding to insights for now
     },
 ];
 
@@ -105,11 +117,13 @@ const tgeNavItems = [
         title: 'Festivals',
         href: '/admin/festivals',
         icon: Map,
+        capability: ['festivals', 'read'],
     },
     {
         title: 'Reviews',
         href: '/admin/reviews',
         icon: Star,
+        capability: ['reviews', 'read'],
     },
 ];
 
@@ -119,37 +133,37 @@ const systemNavItems = [
         title: 'Users',
         href: '/admin/users',
         icon: Users,
-        permission: 'users.view',
+        capability: ['users', 'read'],
     },
     {
         title: 'Roles',
         href: '/admin/roles',
         icon: Shield,
-        permission: 'roles.manage',
+        capability: ['users', 'read'], // Roles maps roughly to user admin
     },
     {
         title: 'Media Library',
         href: '/admin/media',
         icon: Image,
-        permission: 'media.manage',
+        capability: ['media', 'read'],
     },
     {
         title: 'Settings',
         href: '/admin/settings',
         icon: Settings,
-        permission: 'settings.manage',
+        capability: ['settings', 'read'],
     },
     {
         title: 'Branding',
-        href: '/admin/settings?tab=theme', // Assuming query param works or just to indicate intent
+        href: '/admin/settings?tab=theme', 
         icon: Palette,
-        permission: 'settings.manage',
+        capability: ['settings', 'read'],
     },
     {
         title: 'Plugins',
         href: '/admin/plugins/component-importer',
         icon: Package,
-        permission: 'settings.manage',
+        capability: ['settings', 'read'],
     },
 ];
 
@@ -169,7 +183,7 @@ const quickNavItems = [
 
 export function AdminSidebar() {
     const { url } = usePage();
-    const { can } = usePermissions();
+    const { hasRole, hasCapability } = usePermissions();
 
 
     const isActive = (href: string) => {
@@ -198,7 +212,7 @@ export function AdminSidebar() {
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {mainNavItems.map((item) => (
+                            {mainNavItems.filter((item: any) => !item.capability || hasCapability(item.capability[0], item.capability[1])).map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
                                         asChild
@@ -221,7 +235,7 @@ export function AdminSidebar() {
                     <SidebarGroupLabel>Content</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {contentNavItems.map((item) => (
+                            {contentNavItems.filter((item: any) => !item.capability || hasCapability(item.capability[0], item.capability[1])).map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
                                         asChild
@@ -240,12 +254,12 @@ export function AdminSidebar() {
                 </SidebarGroup>
 
                 {/* Global Entity Platform */}
-                {(can('festivals.view') || hasRole('admin')) && (
+                {tgeNavItems.filter((item: any) => !item.capability || hasCapability(item.capability[0], item.capability[1])).length > 0 && (
                     <SidebarGroup>
                         <SidebarGroupLabel>Global Entity</SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {tgeNavItems.map((item) => (
+                                {tgeNavItems.filter((item: any) => !item.capability || hasCapability(item.capability[0], item.capability[1])).map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton
                                             asChild
@@ -269,7 +283,7 @@ export function AdminSidebar() {
                     <SidebarGroupLabel>System</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {systemNavItems.filter(item => !item.permission || can(item.permission)).map((item) => (
+                            {systemNavItems.filter((item: any) => !item.capability || hasCapability(item.capability[0], item.capability[1])).map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton
                                         asChild

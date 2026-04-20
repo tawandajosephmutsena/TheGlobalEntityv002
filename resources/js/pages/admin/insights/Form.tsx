@@ -12,7 +12,7 @@ import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Insight, Category, User } from '@/types';
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import React, { useEffect, useRef } from 'react';
 import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, GripVertical, List, Type, ImageIcon } from 'lucide-react';
 import {
@@ -39,6 +39,9 @@ interface Props {
 }
 
 export default function InsightForm({ insight, categories, authors, podcasts = [], festivals = [] }: Props) {
+    const { auth } = usePage<any>().props;
+    const user = auth?.user;
+
     // Helper to format date for datetime-local input (YYYY-MM-DDTHH:mm)
     const formatDateForInput = (dateString: string | null) => {
         if (!dateString) return '';
@@ -77,7 +80,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         excerpt: insight?.excerpt || '',
         content: (insight?.content as { body: string }) || { body: '' },
         featured_image: insight?.featured_image || '',
-        author_id: insight?.author_id || authors[0]?.id || '',
+        author_id: insight?.author_id || user?.id || authors[0]?.id || '',
         category_id: insight?.category_id || categories[0]?.id || '',
         additional_categories: insight?.additionalCategories?.map((c: any) => c.id) || [],
         podcast_id: insight?.podcast_id || '',
@@ -441,24 +444,26 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                                     <p className="text-sm text-destructive mt-1">{errors.published_at}</p>
                                 )}
                             </div>
-                            <div className="grid gap-2 text-xs">
-                               <Label>Author</Label>
-                               <Select 
-                                    value={data.author_id.toString()} 
-                                    onValueChange={(val) => setData('author_id', parseInt(val))}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select author" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {authors.map(author => (
-                                            <SelectItem key={author.id} value={author.id.toString()}>
-                                                {author.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                               </Select>
-                            </div>
+                            {user?.is_super_admin && (
+                                <div className="grid gap-2 text-xs">
+                                   <Label>Author</Label>
+                                   <Select 
+                                        value={data.author_id.toString()} 
+                                        onValueChange={(val) => setData('author_id', parseInt(val))}
+                                    >
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select author" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {authors.map(author => (
+                                                <SelectItem key={author.id} value={author.id.toString()}>
+                                                    {author.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                   </Select>
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
 

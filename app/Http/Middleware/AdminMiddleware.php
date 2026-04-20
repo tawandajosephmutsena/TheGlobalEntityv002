@@ -19,8 +19,8 @@ class AdminMiddleware
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
-        if (!$user || !$user->isAdmin()) {
-            abort(403, 'Unauthorized. Admin access required.');
+        if (!$user || !$user->hasAnyRole(['admin', 'super-admin', 'editor', 'festival_organizer', 'reviewer'])) {
+            abort(403, 'Unauthorized. Staff access required.');
         }
 
         return $next($request);

@@ -85,7 +85,18 @@ class HandleInertiaRequests extends Middleware
 
                     return array_merge($user->toArray(), [
                         'roles' => $user->roles->map(fn($r) => ['slug' => $r->slug, 'name' => $r->name]),
-                        'permissions' => $user->permissions()->map(fn($p) => ['slug' => $p->slug]),
+                        'permissions' => (function () use ($user) {
+                            $structured = [];
+                            foreach ($user->permissions() as $p) {
+                                $parts = explode('.', $p->slug);
+                                if (count($parts) === 2) {
+                                    $resource = $parts[0];
+                                    $action = $parts[1];
+                                    $structured[$resource]["can_{$action}"] = true;
+                                }
+                            }
+                            return $structured;
+                        })(),
                         'is_super_admin' => $user->hasRole('super-admin'),
                     ]);
                 })($request->user()) : null,

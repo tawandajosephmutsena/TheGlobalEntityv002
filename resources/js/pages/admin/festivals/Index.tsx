@@ -7,6 +7,7 @@ import { Map, Edit } from 'lucide-react';
 import { router } from '@inertiajs/react';
 import React from 'react';
 import { AdvancedDataTable } from '@/components/admin/AdvancedDataTable';
+import { usePermissions } from '@/hooks/use-permissions';
 
 interface Props {
     festivals: PaginatedData<Festival>;
@@ -18,6 +19,8 @@ interface Props {
 }
 
 export default function Index({ festivals, filters }: Props) {
+    const { hasCapability } = usePermissions();
+
     const breadcrumbs = [
         { title: 'Admin', href: '/admin' },
         { title: 'Festivals', href: '/admin/festivals' },
@@ -63,9 +66,11 @@ export default function Index({ festivals, filters }: Props) {
                 <p className="text-[10px] opacity-60 italic">{typeof item.location === 'string' ? item.location : item.location?.address}</p>
             </CardHeader>
             <CardFooter className="p-4 pt-0 flex justify-between">
-                <Button size="sm" variant="ghost" onClick={() => router.get(`/admin/festivals/${item.slug}/edit`)}>
-                    <Edit className="h-3 w-3 mr-2" /> Edit
-                </Button>
+                {hasCapability('festivals', 'update') && (
+                    <Button size="sm" variant="ghost" onClick={() => router.get(`/admin/festivals/${item.slug}/edit`)}>
+                        <Edit className="h-3 w-3 mr-2" /> Edit
+                    </Button>
+                )}
             </CardFooter>
         </Card>
     );
@@ -75,9 +80,11 @@ export default function Index({ festivals, filters }: Props) {
             <div className="space-y-6">
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-black italic uppercase">Festivals</h1>
-                    <Button onClick={() => router.get('/admin/festivals/create')} className="bg-agency-accent">
-                        Register Festival
-                    </Button>
+                    {hasCapability('festivals', 'create') && (
+                        <Button onClick={() => router.get('/admin/festivals/create')} className="bg-agency-accent">
+                            Register Festival
+                        </Button>
+                    )}
                 </div>
 
                 {festivals && festivals.data && (

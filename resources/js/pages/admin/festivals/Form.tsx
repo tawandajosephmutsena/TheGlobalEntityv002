@@ -1,4 +1,4 @@
-import { useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -38,6 +38,9 @@ interface Props {
 }
 
 export default function FestivalForm({ festival, categories, authors }: Props) {
+    const { auth } = usePage<any>().props;
+    const user = auth?.user;
+
     const { data, setData, post, put, processing, errors } = useForm({
         name: festival?.name || '',
         description: festival?.description || '',
@@ -52,7 +55,7 @@ export default function FestivalForm({ festival, categories, authors }: Props) {
         image: festival?.image || '',
         gallery: festival?.gallery || [],
         category_id: festival?.category_id?.toString() || '',
-        author_id: festival?.author_id?.toString() || '',
+        author_id: festival?.author_id?.toString() || user?.id?.toString() || '',
     });
 
     const [newTag, setNewTag] = React.useState('');
@@ -193,21 +196,23 @@ export default function FestivalForm({ festival, categories, authors }: Props) {
                                     {errors.category_id && <p className="text-xs text-destructive font-bold">{errors.category_id}</p>}
                                 </div>
 
-                                <div className="grid gap-2">
-                                    <Label className="uppercase font-bold text-xs opacity-60">Designated Agent / Author</Label>
-                                    <Select value={data.author_id || '_none_'} onValueChange={(val) => setData('author_id', val === '_none_' ? '' : val)}>
-                                        <SelectTrigger className="border-agency-accent/20">
-                                            <SelectValue placeholder="Assign Intelligence Agent" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="_none_">Unassigned</SelectItem>
-                                            {authors.map((auth) => (
-                                                <SelectItem key={auth.id} value={auth.id.toString()}>{auth.name}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    {errors.author_id && <p className="text-xs text-destructive font-bold">{errors.author_id}</p>}
-                                </div>
+                                {user?.is_super_admin && (
+                                    <div className="grid gap-2">
+                                        <Label className="uppercase font-bold text-xs opacity-60">Designated Agent / Author</Label>
+                                        <Select value={data.author_id || '_none_'} onValueChange={(val) => setData('author_id', val === '_none_' ? '' : val)}>
+                                            <SelectTrigger className="border-agency-accent/20">
+                                                <SelectValue placeholder="Assign Intelligence Agent" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="_none_">Unassigned</SelectItem>
+                                                {authors.map((auth) => (
+                                                    <SelectItem key={auth.id} value={auth.id.toString()}>{auth.name}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.author_id && <p className="text-xs text-destructive font-bold">{errors.author_id}</p>}
+                                    </div>
+                                )}
                             </div>
                         </CardContent>
                     </Card>
