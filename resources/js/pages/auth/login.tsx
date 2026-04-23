@@ -9,7 +9,7 @@ import AuthEditorialLayout from '@/layouts/auth/auth-editorial-layout';
 import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, usePage } from '@inertiajs/react';
 
 interface LoginProps {
     status?: string;
