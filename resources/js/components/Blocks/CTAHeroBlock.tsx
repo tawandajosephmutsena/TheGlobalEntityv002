@@ -70,7 +70,10 @@ export default function CTAHeroBlock({
   return (
     <section className="relative w-full overflow-visible px-4 pt-48 pb-32">
       {/* GLSL Hills Background Overlay */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div 
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+        style={{ opacity: 'var(--bg-watercolor-opacity, 1)' }}
+      >
         <GLSLHills 
           speed={0.4} 
           cameraZ={110} 

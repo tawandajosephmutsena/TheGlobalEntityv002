@@ -275,7 +275,10 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 {/* Background Blobs for Visual Interest */}
                 {!prefersReducedMotion && (
                 <div className="absolute inset-0 z-0 opacity-40 dark:opacity-60">
-                    <div className="bg-theme-start absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse"></div>
+                    <div 
+                        className="bg-theme-start absolute -top-[10%] -left-[10%] size-96 rounded-full blur-[100px] animate-pulse"
+                        style={{ opacity: 'var(--bg-watercolor-opacity, 1)' }}
+                    ></div>
                     <div className="bg-theme-end absolute bottom-[10%] -right-[10%] size-80 rounded-full blur-[120px] animation-delay-2000"></div>
                 </div>
                 )}

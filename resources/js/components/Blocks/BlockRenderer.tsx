@@ -34,6 +34,7 @@ import {
 import { cn } from '@/lib/utils';
 
 import AnimatedShaderHero from '@/components/ui/animated-shader-hero';
+import { OptimizedImage } from '@/components/OptimizedImage';
 
 
 // Lazy load block components for performance optimization
@@ -385,17 +386,21 @@ const TextBlock = ({ content }: { content: TextBlockType['content'] }) => {
 
 const ImageBlock = ({ content }: { content: ImageBlockType['content'] }) => {
     const { image, aspectRatio, objectFit, caption } = content;
-    const { url, alt } = image || {};
+    
+    // Support legacy flat structure (content.url/alt) and new structured image object
+    const finalUrl = image?.url || (content as any).url;
+    const finalAlt = image?.alt || (content as any).alt;
+
+    if (!finalUrl) return null;
+
     return (
         <section className="py-20 bg-background px-4">
             <div className="mx-auto max-w-7xl">
                 <AnimatedSection animation="scale">
                     <figure className="relative">
-                        <img 
-                            src={url} 
-                            alt={alt || 'Image'} 
-                            loading="lazy"
-                            decoding="async"
+                        <OptimizedImage 
+                            src={finalUrl} 
+                            alt={finalAlt || 'Image'} 
                             className={cn(
                                 "w-full rounded-[40px] shadow-2xl",
                                 aspectRatio && `aspect-${aspectRatio}`,
@@ -498,21 +503,26 @@ export default function BlockRenderer({
                                     </div>
                                 );
                             }
-                            case 'hero':
+                            case 'hero': {
+                                const heroContent = block.content as any;
+                                // Handle both 'image' (singular from some editors) and 'backgroundImages' (array)
+                                const bgImages = heroContent.backgroundImages || (heroContent.image ? [heroContent.image] : []);
+                                
                                 return (
                                     <HeroSection
-                                        title={block.content.title}
-                                        subtitle={block.content.subtitle}
-                                        description={block.content.description}
-                                        ctaText={block.content.ctaText}
-                                        ctaHref={block.content.ctaHref}
-                                        marqueeText={block.content.marqueeText}
-                                        backgroundImages={block.content.backgroundImages}
-                                        showFloatingImages={block.content.showFloatingImages !== false}
-                                        secondaryCtaText={block.content.secondaryCtaText}
-                                        secondaryCtaHref={block.content.secondaryCtaHref}
+                                        title={heroContent.title}
+                                        subtitle={heroContent.subtitle}
+                                        description={heroContent.description}
+                                        ctaText={heroContent.ctaText}
+                                        ctaHref={heroContent.ctaHref}
+                                        marqueeText={heroContent.marqueeText}
+                                        backgroundImages={bgImages}
+                                        showFloatingImages={heroContent.showFloatingImages !== false}
+                                        secondaryCtaText={heroContent.secondaryCtaText}
+                                        secondaryCtaHref={heroContent.secondaryCtaHref}
                                     />
                                 );
+                            }
                             case 'text':
                                 return <TextBlock content={block.content as TextBlockType['content']} />;
                             case 'image':

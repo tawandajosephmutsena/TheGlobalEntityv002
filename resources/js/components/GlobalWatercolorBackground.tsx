@@ -26,16 +26,23 @@ export const GlobalWatercolorBackground = () => {
   const getBGSetting = (key: string, defaultValue: string | number | boolean) => {
     const bgSettings = settings?.background || [];
     const item = bgSettings.find((s) => s.key === key);
-    if (!item || item.value === null || item.value === '') return defaultValue;
+    if (!item) return defaultValue;
+
+    // Settings in grouped collections like 'settings?.background' often come wrapped as [value]
+    // because the Setting model casts 'value' as an array.
+    const rawValue = item.value;
+    const value = Array.isArray(rawValue) ? rawValue[0] : rawValue;
+
+    if (value === null || value === '' || value === undefined) return defaultValue;
     
     // Handle specific types
     if (typeof defaultValue === 'boolean') {
-      return item.value === 'true' || item.value === true || item.value === '1';
+      return value === 'true' || value === true || value === '1' || value === 'on' || value === 'yes';
     }
     if (typeof defaultValue === 'number') {
-      return parseFloat(item.value as string);
+      return parseFloat(value as string);
     }
-    return item.value;
+    return value;
   };
 
   const isEnabled = getBGSetting('bg_watercolor_enabled', true);

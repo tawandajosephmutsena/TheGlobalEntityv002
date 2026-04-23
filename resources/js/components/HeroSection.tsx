@@ -115,7 +115,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             )}
         >
             {/* Animated gradient background orbs */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+            <div 
+                className="absolute inset-0 z-0 pointer-events-none overflow-hidden" 
+                aria-hidden="true"
+                style={{ opacity: 'var(--bg-watercolor-opacity, 1)' }}
+            >
                 <div
                     className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[60px] md:blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
                 />

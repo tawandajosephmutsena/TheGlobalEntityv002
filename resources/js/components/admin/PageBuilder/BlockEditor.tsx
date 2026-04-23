@@ -88,30 +88,51 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                             onChange={(e) => updateContent({ description: e.target.value })}
                         />
                     </div>
-                    <div className="space-y-3">
-                        <Label>Main Image</Label>
-                        <div className="flex flex-col gap-3">
-                            {Boolean(block.content.image) && (
-                                <div className="aspect-video rounded-lg overflow-hidden border bg-muted">
-                                    <img src={String(block.content.image)} className="w-full h-full object-cover" alt="Hero" />
-                                </div>
-                            )}
-                            <div className="flex gap-2">
-                                <MediaLibrary 
-                                    onSelect={(asset: MediaAsset) => updateContent({ image: asset.url })}
-                                    trigger={
-                                        <Button type="button" variant="outline" size="sm" className="h-9">
-                                            <ImageIcon className="h-4 w-4 mr-2" /> Change
-                                        </Button>
-                                    }
-                                />
-                                <Input 
-                                    className="h-9 text-xs"
-                                    value={String(block.content.image || '')} 
-                                    onChange={(e) => updateContent({ image: e.target.value })}
-                                    placeholder="External URL..."
-                                />
-                            </div>
+                    <div className="space-y-4 pt-4 border-t">
+                        <Label className="text-xs font-bold uppercase tracking-wider">Background Images (Up to 3)</Label>
+                        <div className="space-y-4">
+                            {[0, 1, 2].map((idx) => {
+                                const images = (block.content.backgroundImages as string[]) || [];
+                                const currentUrl = images[idx] || (idx === 0 ? (block.content.image as string) : '');
+                                return (
+                                    <div key={idx} className="space-y-2 p-3 border rounded-lg bg-muted/5">
+                                        <Label className="text-[10px]">Image {idx + 1} {idx === 0 ? '(Main)' : ''}</Label>
+                                        {Boolean(currentUrl) && (
+                                            <div className="aspect-video rounded-md overflow-hidden border mb-2 h-24">
+                                                <img src={String(currentUrl)} className="w-full h-full object-cover" alt={`Hero ${idx + 1}`} />
+                                            </div>
+                                        )}
+                                        <div className="flex gap-2">
+                                            <MediaLibrary 
+                                                onSelect={(asset: MediaAsset) => {
+                                                    const n = [...images];
+                                                    // Backwards compatibility: if list is empty but image was set, initialize it
+                                                    if (idx === 0 && images.length === 0 && block.content.image) {
+                                                        n[0] = block.content.image as string;
+                                                    }
+                                                    n[idx] = asset.url;
+                                                    updateContent({ backgroundImages: n, image: n[0] });
+                                                }}
+                                                trigger={
+                                                    <Button type="button" variant="outline" size="sm" className="h-8">
+                                                        <ImageIcon className="h-3 w-3 mr-1" /> Choose
+                                                    </Button>
+                                                }
+                                            />
+                                            <Input 
+                                                className="h-8 text-[10px] flex-1"
+                                                value={String(currentUrl || '')} 
+                                                onChange={(e) => {
+                                                    const n = [...images];
+                                                    n[idx] = e.target.value;
+                                                    updateContent({ backgroundImages: n, image: n[0] });
+                                                }}
+                                                placeholder="External URL..."
+                                            />
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="space-y-4 pt-4 border-t">
@@ -1464,29 +1485,89 @@ export default function BlockEditor({ block, onUpdate }: BlockEditorProps) {
                 </div>
             );
 
-        case 'image':
+        case 'image': {
+            const imageContent = (block.content as any).image || {};
+            const url = imageContent.url || (block.content as any).url || '';
+            const alt = imageContent.alt || (block.content as any).alt || '';
+            
             return (
                 <div className="space-y-6">
                     <div className="space-y-3">
                         <Label>Image</Label>
-                        {Boolean(block.content.url) && (
-                            <img src={String(block.content.url)} className="w-full h-48 object-cover rounded-lg" alt="" />
+                        {Boolean(url) && (
+                            <img src={String(url)} className="w-full h-48 object-cover rounded-lg border shadow-sm" alt={alt} />
                         )}
-                        <MediaLibrary 
-                            onSelect={(asset: MediaAsset) => updateContent({ url: asset.url })}
-                            trigger={<Button type="button" variant="outline" size="sm"><ImageIcon className="h-4 w-4 mr-2" /> Select Image</Button>}
-                        />
+                        <div className="flex gap-2">
+                            <MediaLibrary 
+                                onSelect={(asset: MediaAsset) => updateContent({ 
+                                    image: { ...imageContent, url: asset.url } 
+                                })}
+                                trigger={<Button type="button" variant="outline" size="sm"><ImageIcon className="h-4 w-4 mr-2" /> Select Image</Button>}
+                            />
+                            <Input 
+                                className="flex-1"
+                                placeholder="External Image URL"
+                                value={String(url)} 
+                                onChange={(e) => updateContent({ 
+                                    image: { ...imageContent, url: e.target.value } 
+                                })} 
+                            />
+                        </div>
                     </div>
                     <div className="space-y-2">
                         <Label>Alt Text</Label>
-                        <Input value={String(block.content.alt || '')} onChange={(e) => updateContent({ alt: e.target.value })} />
+                        <Input 
+                            value={String(alt)} 
+                            onChange={(e) => updateContent({ 
+                                image: { ...imageContent, alt: e.target.value } 
+                            })} 
+                            placeholder="Describe the image for screen readers"
+                        />
                     </div>
                     <div className="space-y-2">
                         <Label>Caption (Optional)</Label>
-                        <Input value={String(block.content.caption || '')} onChange={(e) => updateContent({ caption: e.target.value })} />
+                        <Input value={String(block.content.caption || '')} onChange={(e) => updateContent({ caption: e.target.value })} placeholder="Write a short caption..." />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 pt-4 border-t">
+                        <div className="space-y-2">
+                            <Label>Aspect Ratio</Label>
+                            <Select 
+                                value={String(block.content.aspectRatio || 'auto')} 
+                                onValueChange={(val) => updateContent({ aspectRatio: val })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="auto">Original</SelectItem>
+                                    <SelectItem value="square">Square (1:1)</SelectItem>
+                                    <SelectItem value="video">Video (16:9)</SelectItem>
+                                    <SelectItem value="3/2">Classic (3:2)</SelectItem>
+                                    <SelectItem value="4/3">Standard (4:3)</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Object Fit</Label>
+                            <Select 
+                                value={String(block.content.objectFit || 'cover')} 
+                                onValueChange={(val) => updateContent({ objectFit: val })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="cover">Cover (Fill)</SelectItem>
+                                    <SelectItem value="contain">Contain (Fit)</SelectItem>
+                                    <SelectItem value="fill">Stretch</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
                 </div>
             );
+        }
 
         case 'video':
             return (

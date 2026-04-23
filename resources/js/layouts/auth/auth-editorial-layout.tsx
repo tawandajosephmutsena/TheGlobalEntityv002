@@ -17,8 +17,18 @@ export default function AuthEditorialLayout({
     editorialSubtitle: propsEditorialSubtitle,
     editorialDescription: propsEditorialDescription,
 }: PropsWithChildren<AuthEditorialLayoutProps>) {
-    const { site } = usePage().props as any;
+    const { site, settings } = usePage().props as any;
     const authContent = site.auth_content;
+
+    // Check if watercolor background is enabled
+    const bgSettings = settings?.background || [];
+    const bgEnabledSetting = bgSettings.find((s: any) => s.key === 'bg_watercolor_enabled');
+    const bgVal = bgEnabledSetting?.value;
+    const isBgEnabled = bgVal === undefined ? true : (
+        Array.isArray(bgVal) ? 
+        (bgVal[0] === true || bgVal[0] === 'true' || bgVal[0] === '1' || bgVal[0] === 'on' || bgVal[0] === 'yes') :
+        (bgVal === true || bgVal === 'true' || bgVal === '1' || bgVal === 'on' || bgVal === 'yes')
+    );
 
     const editorialTitle = propsEditorialTitle || authContent?.editorial_title || "Charting the";
     const editorialSubtitle = propsEditorialSubtitle || authContent?.editorial_subtitle || "Unseen Path.";
@@ -27,7 +37,7 @@ export default function AuthEditorialLayout({
     return (
         <div className="bg-background text-on-background font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col relative overflow-hidden">
             {/* Background Layer: Drifting Watercolor Map Concept */}
-            <div className="fixed inset-0 z-0 opacity-60 pointer-events-none watercolor-gradient-auth"></div>
+            {isBgEnabled && <div className="fixed inset-0 z-0 opacity-60 pointer-events-none watercolor-gradient-auth"></div>}
             <div className="fixed inset-0 z-0 opacity-10 pointer-events-none">
                 <img 
                     alt="Soft vintage map texture" 
@@ -97,7 +107,7 @@ export default function AuthEditorialLayout({
             </footer>
 
             {/* Decorative Watercolor Corner */}
-            <div className="fixed -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] pointer-events-none"></div>
+            {isBgEnabled && <div className="fixed -top-24 -left-24 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] pointer-events-none"></div>}
         </div>
     );
 }

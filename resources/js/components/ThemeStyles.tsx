@@ -251,6 +251,18 @@ export default function ThemeStyles() {
                         --font-mono: "${preset.fonts.mono || 'monospace'}", ui-monospace, SFMono-Regular, monospace;
                         --font-weight-base: ${customFontWeight || '400'};
                         --font-weight-heading: ${customFontWeightHeading || '700'};
+
+                        /* Global Display Toggle for Watercolor background elements */
+                        --bg-watercolor-display: ${(() => {
+                            const val = getSettingValue('bg_watercolor_enabled');
+                            const isEnabled = val === null ? true : (val === 'true' || val === true || val === '1' || val === 'on' || val === 'yes');
+                            return isEnabled ? 'block' : 'none';
+                        })()};
+                        --bg-watercolor-opacity: ${(() => {
+                            const val = getSettingValue('bg_watercolor_enabled');
+                            const isEnabled = val === null ? true : (val === 'true' || val === true || val === '1' || val === 'on' || val === 'yes');
+                            return isEnabled ? '1' : '0';
+                        })()};
                         
                         /* Chart colors - derived from theme */
                         --chart-1: ${preset.light.primary || 'oklch(0.55 0.13 43)'};

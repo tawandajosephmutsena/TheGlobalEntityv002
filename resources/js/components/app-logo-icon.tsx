@@ -11,7 +11,7 @@ export default function AppLogoIcon(props: SVGAttributes<SVGElement>) {
     const settings = inertiaProps.settings ? Object.values(inertiaProps.settings).flat() : [];
     const dynamicSetting = settings.find(s => s.key === 'brand_logo_dynamic');
     const val = dynamicSetting?.value;
-    const isDynamic = val === true || val === 'true' || (Array.isArray(val) && (val[0] === true || val[0] === 'true'));
+    const isDynamic = val === true || val === 'true' || val === '1' || (Array.isArray(val) && (val[0] === true || val[0] === 'true' || val[0] === '1'));
 
     if (isDynamic) {
         return (
