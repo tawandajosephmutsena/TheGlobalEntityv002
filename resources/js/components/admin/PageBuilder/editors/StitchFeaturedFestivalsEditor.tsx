@@ -121,7 +121,7 @@ export default function StitchFeaturedFestivalsEditor({ block, onUpdate }: Stitc
                                 id="ctaText"
                                 value={block.content.ctaText || ''}
                                 onChange={(e) => handleUpdate('ctaText', e.target.value)}
-                                placeholder="e.g. View All Festivals"
+                                placeholder="Explore Festival Archive"
                             />
                         </div>
                         <div className="grid gap-2">
@@ -130,7 +130,7 @@ export default function StitchFeaturedFestivalsEditor({ block, onUpdate }: Stitc
                                 id="ctaHref"
                                 value={block.content.ctaHref || ''}
                                 onChange={(e) => handleUpdate('ctaHref', e.target.value)}
-                                placeholder="e.g. /festivals"
+                                placeholder="/festivals"
                             />
                         </div>
                     </div>

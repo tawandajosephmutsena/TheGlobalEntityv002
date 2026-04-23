@@ -46,9 +46,9 @@ export default function StitchFeaturedFestivalsBlockRenderer(props: StitchFeatur
         subtitle = "Curated gatherings where culture, art, and geography collide. From the salt flats of Bolivia to the neon alleys of Tokyo.",
         limit = 6,
         selectedFestivalIds = EMPTY_ARRAY,
-        ctaText,
-        ctaHref,
-        ctaLabel
+        ctaText = "Explore Festival Archive",
+        ctaHref = "/festivals",
+        ctaLabel = "Ready for the journey?"
     } = finalContent;
     const [festivals, setFestivals] = useState<FestivalData[]>([]);
     const [loading, setLoading] = useState(true);
