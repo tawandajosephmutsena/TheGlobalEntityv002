@@ -152,6 +152,30 @@ class HandleInertiaRequests extends Middleware
                     'login_description' => $settings['auth_login_description'] ?? 'Sign in to continue your expedition',
                     'register_title' => $settings['auth_register_title'] ?? 'Chart Your Course',
                     'register_description' => $settings['auth_register_description'] ?? 'Create an account to begin your journey',
+                    
+                    // Login fields
+                    'login_email_label' => $settings['auth_login_email_label'] ?? 'Identity',
+                    'login_email_placeholder' => $settings['auth_login_email_placeholder'] ?? 'Your email address',
+                    'login_password_label' => $settings['auth_login_password_label'] ?? 'Secret Cipher',
+                    'login_password_placeholder' => $settings['auth_login_password_placeholder'] ?? 'Enter your password',
+                    'login_remember_label' => $settings['auth_login_remember_label'] ?? 'Keep me logged in',
+                    'login_forgot_password_text' => $settings['auth_login_forgot_password_text'] ?? 'Forgot password?',
+                    'login_button_text' => $settings['auth_login_button_text'] ?? 'Sign in',
+                    'login_register_prompt' => $settings['auth_login_register_prompt'] ?? 'Not in the fleet yet?',
+                    'login_register_link_text' => $settings['auth_login_register_link_text'] ?? 'Sign up',
+
+                    // Register fields
+                    'register_name_label' => $settings['auth_register_name_label'] ?? 'Nom de Guerre (Name)',
+                    'register_name_placeholder' => $settings['auth_register_name_placeholder'] ?? 'Your traveling moniker',
+                    'register_email_label' => $settings['auth_register_email_label'] ?? 'Manifest Identity (Email)',
+                    'register_email_placeholder' => $settings['auth_register_email_placeholder'] ?? 'explorer@ethereal.com',
+                    'register_password_label' => $settings['auth_register_password_label'] ?? 'Secret Cipher (Password)',
+                    'register_password_placeholder' => $settings['auth_register_password_placeholder'] ?? '••••••••',
+                    'register_password_confirmation_label' => $settings['auth_register_password_confirmation_label'] ?? 'Confirm Cipher',
+                    'register_password_confirmation_placeholder' => $settings['auth_register_password_confirmation_placeholder'] ?? 'Confirm your hidden sequence',
+                    'register_button_text' => $settings['auth_register_button_text'] ?? 'Board The Ship',
+                    'register_login_prompt' => $settings['auth_register_login_prompt'] ?? 'Already have an account?',
+                    'register_login_link_text' => $settings['auth_register_login_link_text'] ?? 'Log in',
                 ],
                 'footer' => [
                     'heading_line1' => $settings['footer_heading_line1'] ?? null,

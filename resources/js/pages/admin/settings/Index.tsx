@@ -393,6 +393,30 @@ const SETTINGS_STRUCT: Record<string, StructItem[]> = {
         { key: 'auth_login_description', label: 'Login Page Description', type: 'text', placeholder: 'Sign in to continue your expedition' },
         { key: 'auth_register_title', label: 'Register Page Title', type: 'text', placeholder: 'Chart Your Course' },
         { key: 'auth_register_description', label: 'Register Page Description', type: 'text', placeholder: 'Create an account to begin your journey' },
+
+        // Login Page Texts
+        { key: 'auth_login_email_label', label: 'Login: Email Label', type: 'text', placeholder: 'Identity' },
+        { key: 'auth_login_email_placeholder', label: 'Login: Email Placeholder', type: 'text', placeholder: 'Your email address' },
+        { key: 'auth_login_password_label', label: 'Login: Password Label', type: 'text', placeholder: 'Secret Cipher' },
+        { key: 'auth_login_password_placeholder', label: 'Login: Password Placeholder', type: 'text', placeholder: 'Enter your password' },
+        { key: 'auth_login_remember_label', label: 'Login: Remember Me Label', type: 'text', placeholder: 'Keep me logged in' },
+        { key: 'auth_login_forgot_password_text', label: 'Login: Forgot Password Text', type: 'text', placeholder: 'Forgot password?' },
+        { key: 'auth_login_button_text', label: 'Login: Button Text', type: 'text', placeholder: 'Sign in' },
+        { key: 'auth_login_register_prompt', label: 'Login: Registration Prompt', type: 'text', placeholder: 'Not in the fleet yet?' },
+        { key: 'auth_login_register_link_text', label: 'Login: Registration Link Text', type: 'text', placeholder: 'Sign up' },
+
+        // Register Page Texts
+        { key: 'auth_register_name_label', label: 'Register: Name Label', type: 'text', placeholder: 'Nom de Guerre (Name)' },
+        { key: 'auth_register_name_placeholder', label: 'Register: Name Placeholder', type: 'text', placeholder: 'Your traveling moniker' },
+        { key: 'auth_register_email_label', label: 'Register: Email Label', type: 'text', placeholder: 'Manifest Identity (Email)' },
+        { key: 'auth_register_email_placeholder', label: 'Register: Email Placeholder', type: 'text', placeholder: 'explorer@ethereal.com' },
+        { key: 'auth_register_password_label', label: 'Register: Password Label', type: 'text', placeholder: 'Secret Cipher (Password)' },
+        { key: 'auth_register_password_placeholder', label: 'Register: Password Placeholder', type: 'text', placeholder: '••••••••' },
+        { key: 'auth_register_password_confirmation_label', label: 'Register: Password Confirmation Label', type: 'text', placeholder: 'Confirm Cipher' },
+        { key: 'auth_register_password_confirmation_placeholder', label: 'Register: Password Confirmation Placeholder', type: 'text', placeholder: 'Confirm your hidden sequence' },
+        { key: 'auth_register_button_text', label: 'Register: Button Text', type: 'text', placeholder: 'Board The Ship' },
+        { key: 'auth_register_login_prompt', label: 'Register: Login Prompt', type: 'text', placeholder: 'Already have an account?' },
+        { key: 'auth_register_login_link_text', label: 'Register: Login Link Text', type: 'text', placeholder: 'Log in' },
     ],
 };
 

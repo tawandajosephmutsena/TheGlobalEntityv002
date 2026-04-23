@@ -19,18 +19,21 @@ export default function Register() {
             title={authContent?.register_title || "Welcome Crew"}
             description={authContent?.register_description || "Enter the manifest to continue your journey."}
         >
-            <Head title="Register" />
+            <Head title={authContent?.register_title || "Register"} />
+
             <Form
                 {...store.form()}
                 resetOnSuccess={['password', 'password_confirmation']}
                 disableWhileProcessing
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-8"
             >
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name" className="font-semibold text-on-surface-variant ml-1">Nom de Guerre (Name)</Label>
+                                <Label htmlFor="name" className="font-semibold text-on-surface-variant ml-1">
+                                    {authContent?.register_name_label || "Nom de Guerre (Name)"}
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="name"
@@ -40,7 +43,7 @@ export default function Register() {
                                         tabIndex={1}
                                         autoComplete="name"
                                         name="name"
-                                        placeholder="Your traveling moniker"
+                                        placeholder={authContent?.register_name_placeholder || "Your traveling moniker"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">person</span>
@@ -52,7 +55,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email" className="font-semibold text-on-surface-variant ml-1">Manifest Identity (Email)</Label>
+                                <Label htmlFor="email" className="font-semibold text-on-surface-variant ml-1">
+                                    {authContent?.register_email_label || "Manifest Identity (Email)"}
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="email"
@@ -61,7 +66,7 @@ export default function Register() {
                                         tabIndex={2}
                                         autoComplete="email"
                                         name="email"
-                                        placeholder="explorer@ethereal.com"
+                                        placeholder={authContent?.register_email_placeholder || "explorer@ethereal.com"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">alternate_email</span>
@@ -70,7 +75,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password" className="font-semibold text-on-surface-variant ml-1">Secret Cipher (Password)</Label>
+                                <Label htmlFor="password" className="font-semibold text-on-surface-variant ml-1">
+                                    {authContent?.register_password_label || "Secret Cipher (Password)"}
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="password"
@@ -79,7 +86,7 @@ export default function Register() {
                                         tabIndex={3}
                                         autoComplete="new-password"
                                         name="password"
-                                        placeholder="••••••••"
+                                        placeholder={authContent?.register_password_placeholder || "••••••••"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">key</span>
@@ -88,7 +95,9 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation" className="font-semibold text-on-surface-variant ml-1">Confirm Cipher</Label>
+                                <Label htmlFor="password_confirmation" className="font-semibold text-on-surface-variant ml-1">
+                                    {authContent?.register_password_confirmation_label || "Confirm Cipher"}
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="password_confirmation"
@@ -97,7 +106,7 @@ export default function Register() {
                                         tabIndex={4}
                                         autoComplete="new-password"
                                         name="password_confirmation"
-                                        placeholder="Confirm your hidden sequence"
+                                        placeholder={authContent?.register_password_confirmation_placeholder || "Confirm your hidden sequence"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">verified_user</span>
@@ -115,7 +124,7 @@ export default function Register() {
                             >
                                 {processing ? <Spinner /> : (
                                     <>
-                                        Board The Ship
+                                        {authContent?.register_button_text || "Board The Ship"}
                                         <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform" data-icon="sailing">sailing</span>
                                     </>
                                 )}
@@ -124,9 +133,9 @@ export default function Register() {
 
                         <div className="mt-12 text-center pt-8 border-t border-outline-variant/10">
                             <p className="text-on-surface-variant text-sm">
-                                Already in the fleet?{' '}
+                                {authContent?.register_login_prompt || "Already have an account?"}{' '}
                                 <TextLink href={login()} className="ml-2 font-bold text-secondary hover:text-primary-dim transition-colors underline underline-offset-4" tabIndex={6}>
-                                    Log in
+                                    {authContent?.register_login_link_text || "Log in"}
                                 </TextLink>
                             </p>
                         </div>

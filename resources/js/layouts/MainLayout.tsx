@@ -30,6 +30,7 @@ interface MainLayoutProps {
     showNavigation?: boolean;
     showFooter?: boolean;
     showBreadcrumbs?: boolean;
+    hideBackground?: boolean;
     customBreadcrumbs?: Array<{
         title: string;
         url?: string | null;
@@ -56,6 +57,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     showNavigation = true,
     showFooter = true,
     showBreadcrumbs = false,
+    hideBackground = false,
     customBreadcrumbs,
 }) => {
     // Get shared props including AI optimization settings
@@ -164,7 +166,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                     className,
                 )}
             >
-                <GlobalWatercolorBackground />
+                {!hideBackground && <GlobalWatercolorBackground />}
                 
                 {showNavigation && <Navigation />}
 

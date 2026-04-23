@@ -28,20 +28,22 @@ export default function Login({
     return (
         <AuthEditorialLayout
             title={authContent?.login_title || "Welcome Back"}
-            description={authContent?.login_description || "Sign in to continue your expedition"}
+            description={authContent?.login_description || "Sign in to continue your journey"}
         >
-            <Head title="Log in" />
+            <Head title={authContent?.login_title || "Log in"} />
 
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-8"
             >
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email" className="font-semibold text-on-surface-variant ml-1">Manifest Identity</Label>
+                                <Label htmlFor="email" className="font-semibold text-on-surface-variant ml-1">
+                                    {authContent?.login_email_label || "Identity"}
+                                </Label>
                                 <div className="relative">
                                     <Input
                                         id="email"
@@ -51,7 +53,7 @@ export default function Login({
                                         autoFocus
                                         tabIndex={1}
                                         autoComplete="email"
-                                        placeholder="Your registered parchment address"
+                                        placeholder={authContent?.login_email_placeholder || "Your email address"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">alternate_email</span>
@@ -61,14 +63,16 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex justify-between items-end px-1">
-                                    <Label htmlFor="password" className="font-semibold text-on-surface-variant">Secret Cipher</Label>
+                                    <Label htmlFor="password" className="font-semibold text-on-surface-variant">
+                                        {authContent?.login_password_label || "Secret Cipher"}
+                                    </Label>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
                                             className="text-xs font-bold text-tertiary hover:text-primary transition-colors no-underline"
                                             tabIndex={5}
                                         >
-                                            Lost your map?
+                                            {authContent?.login_forgot_password_text || "Forgot password?"}
                                         </TextLink>
                                     )}
                                 </div>
@@ -80,7 +84,7 @@ export default function Login({
                                         required
                                         tabIndex={2}
                                         autoComplete="current-password"
-                                        placeholder="Enter your hidden sequence"
+                                        placeholder={authContent?.login_password_placeholder || "Enter your password"}
                                         className="bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 text-on-surface placeholder:text-outline/60 transition-all duration-300 pr-10"
                                     />
                                     <span className="absolute right-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline/40 pointer-events-none text-sm">key</span>
@@ -95,7 +99,9 @@ export default function Login({
                                     tabIndex={3}
                                     className="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20 bg-surface-container-low"
                                 />
-                                <Label htmlFor="remember" className="text-sm text-on-surface-variant cursor-pointer select-none">Preserve this session</Label>
+                                <Label htmlFor="remember" className="text-sm text-on-surface-variant cursor-pointer select-none">
+                                    {authContent?.login_remember_label || "Keep me logged in"}
+                                </Label>
                             </div>
 
                             <Button
@@ -107,7 +113,7 @@ export default function Login({
                             >
                                 {processing ? <Spinner /> : (
                                     <>
-                                        Enter the Fleet
+                                        {authContent?.login_button_text || "Sign in"}
                                         <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_right_alt">arrow_right_alt</span>
                                     </>
                                 )}
@@ -117,9 +123,9 @@ export default function Login({
                         {canRegister && (
                             <div className="mt-12 text-center pt-8 border-t border-outline-variant/10">
                                 <p className="text-on-surface-variant text-sm">
-                                    Not in the fleet yet?{' '}
+                                    {authContent?.login_register_prompt || "Not in the fleet yet?"}{' '}
                                     <TextLink href={register()} className="ml-2 font-bold text-secondary hover:text-primary-dim transition-colors underline underline-offset-4" tabIndex={5}>
-                                        Sign up
+                                        {authContent?.login_register_link_text || "Sign up"}
                                     </TextLink>
                                 </p>
                             </div>
