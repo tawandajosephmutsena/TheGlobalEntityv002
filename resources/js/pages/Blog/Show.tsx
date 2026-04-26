@@ -178,7 +178,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                             {/* Left Side: Header Text & Meta (Vertically Centered) */}
                             <div className="flex flex-col justify-center h-full">
                                 <Link href="/blog" className="inline-flex items-center gap-2 text-agency-accent font-black tracking-widest text-[10px] mb-8 hover:gap-4 transition-all">
-                                    <ArrowLeft className="h-3 w-3" /> Chronicles
+                                    <ArrowLeft className="h-3 w-3" /> To go back
                                 </Link>
 
                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black tracking-tighter leading-[0.95] mb-12 italic">
@@ -203,7 +203,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                             </div>
                                         )}
                                         <div className="flex flex-col">
-                                            <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Visionary</span>
+                                            <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Written by</span>
                                             <span className="text-xs font-bold">{insight.author?.name}</span>
                                         </div>
                                     </div>
@@ -220,7 +220,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                     <div className="h-8 w-px bg-agency-primary/10 dark:bg-white/10 hidden md:block" />
 
                                     <div className="flex flex-col">
-                                        <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Vibration</span>
+                                        <span className="text-[9px] font-black tracking-widest opacity-40 leading-none mb-1">Published on</span>
                                         <div className="flex items-center gap-2 font-bold text-xs">
                                             {insight.published_at ? new Date(insight.published_at).toLocaleDateString() : 'Now'}
                                         </div>
@@ -348,7 +348,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         {/* Reactions on Post */}
                         <div className="mt-32 pt-16 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-10">
                             <div className="flex flex-col gap-2">
-                                <span className="text-[10px] font-black tracking-widest opacity-40">Interaction Index</span>
+                                <span className="text-[10px] font-black tracking-widest opacity-40">Interact with this publication</span>
                                 <h3 className="text-xl font-black">Share your vibration</h3>
                             </div>
                             <Suspense fallback={<div className="h-10 w-20 animate-pulse bg-white/5 rounded-full" />}>
@@ -382,7 +382,7 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                                 </div>
                             )}
                             <div className="flex-1 text-center md:text-left relative z-10">
-                                <span className="text-[10px] font-black tracking-[0.5em] text-agency-accent mb-4 block">Manifested By</span>
+                                <span className="text-[10px] font-black tracking-[0.5em] text-agency-accent mb-4 block">Written By</span>
                                 <h4 className="text-5xl font-display font-black tracking-tight mb-8">{insight.author?.name}</h4>
                                 <p className="text-xl opacity-60 leading-relaxed font-light font-serif mb-10 max-w-2xl">
                                     {insight.author?.about || "A strategic explorer mapping the intersection of global culture and local identity."}

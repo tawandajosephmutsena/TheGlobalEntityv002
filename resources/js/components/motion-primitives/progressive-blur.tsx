@@ -42,9 +42,10 @@ export function ProgressiveBlur({
       className={cn('absolute z-10', className)}
        
       style={{
-        backdropFilter: `blur(${blurIntensity * 8}px)`,
+        backdropFilter: `blur(${Math.min(blurIntensity * 8, typeof window !== 'undefined' && window.innerWidth < 768 ? 12 : 64)}px)`,
         maskImage: getGradient(),
         WebkitMaskImage: getGradient(),
+        willChange: 'backdrop-filter',
       }}
     />
   );

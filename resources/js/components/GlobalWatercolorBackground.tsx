@@ -67,9 +67,9 @@ export const GlobalWatercolorBackground = () => {
       style={{ 
         opacity: globalOpacity,
         '--overlay-opacity': overlayOpacity,
-        '--blur-amount': `${isMobile ? Math.min(blurAmount, 80) : Math.min(blurAmount, 240)}px`,
-        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 70) : Math.min(Math.round(blurAmount * 0.85), 200)}px`,
-        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 60) : Math.min(Math.round(blurAmount * 0.7), 180)}px`,
+        '--blur-amount': `${isMobile ? Math.min(blurAmount, 60) : Math.min(blurAmount, 240)}px`,
+        '--blur-amount-secondary': `${isMobile ? Math.min(Math.round(blurAmount * 0.85), 50) : Math.min(Math.round(blurAmount * 0.85), 200)}px`,
+        '--blur-amount-tertiary': `${isMobile ? Math.min(Math.round(blurAmount * 0.7), 40) : Math.min(Math.round(blurAmount * 0.7), 180)}px`,
         contain: 'paint' 
       } as React.CSSProperties}
     >

@@ -19,11 +19,11 @@ class PageController extends Controller
         $hasBlock = fn($type) => $blocks->contains('type', $type);
 
         $featuredServices = $hasBlock('services') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\Service::with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
+            ? \App\Models\Service::published()->with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
             : [];
 
         $featuredProjects = $hasBlock('portfolio') || $hasBlock('apple_cards_carousel') || $hasBlock('creative_grid')
-            ? \App\Models\PortfolioItem::with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
+            ? \App\Models\PortfolioItem::published()->with('category')->orderBy('sort_order')->take(10)->get()->each->appendOptimizedImages(['featured_image'])
             : [];
         
         $recentInsights = [];

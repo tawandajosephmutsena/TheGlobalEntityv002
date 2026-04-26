@@ -129,7 +129,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                     </motion.div>
                 </div>
 
-                <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl liquid-glass h-[600px] group">
+                <div className="relative rounded-3xl overflow-hidden border border-white/5 shadow-2xl liquid-glass h-[400px] md:h-[600px] group">
                     <div className="absolute inset-0 z-0">
                         <Map
                             ref={setMapInstance}
@@ -161,7 +161,7 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
                                                 <MapPin className="w-8 h-8 text-primary fill-primary/20 relative z-10" />
                                             </div>
                                         </MarkerContent>
-                                            <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl liquid-glass flex flex-col gap-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+                                            <MarkerPopup className="p-3 w-[220px] rounded-3xl border border-white/10 shadow-2xl liquid-glass flex flex-col gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto custom-scrollbar">
                                                 {festivalsInGroup.map((festival, index) => (
                                                     <div key={festival.id} className={`flex flex-col gap-3 ${index > 0 ? "pt-3 border-t border-white/10 mt-1" : ""}`}>
                                                         {/* Top Text Section */}
@@ -220,22 +220,22 @@ const FestivalMapBlock: React.FC<FestivalMapBlockType['content']> = ({
 
                     {/* Search & Interface Overlays */}
                     {showSearch && (
-                        <div className="absolute top-6 left-6 right-6 flex flex-col md:flex-row gap-3 z-20 pointer-events-none">
+                        <div className="absolute top-4 left-4 right-4 md:top-6 md:left-6 md:right-6 flex flex-col md:flex-row gap-2 md:gap-3 z-20 pointer-events-none">
                             <div className="relative flex-1 max-w-md pointer-events-auto">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                                 <Input 
-                                    className="pl-10 h-11 border-border/20 shadow-xl rounded-2xl text-sm liquid-glass"
-                                    placeholder="Search festivals or locations..."
+                                    className="pl-10 h-10 md:h-11 border-border/20 shadow-xl rounded-xl md:rounded-2xl text-xs md:text-sm liquid-glass"
+                                    placeholder="Search festivals..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                 />
                             </div>
-                            <div className="flex gap-2 pointer-events-auto">
-                                <button className="h-11 px-5 border border-border/20 shadow-xl rounded-2xl text-xs font-bold tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground liquid-glass">
+                            <div className="flex gap-2 pointer-events-auto shrink-0">
+                                <button className="h-10 md:h-11 px-3 md:px-5 border border-border/20 shadow-xl rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold tracking-widest flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-foreground liquid-glass">
                                     <Filter className="w-3.5 h-3.5" />
-                                    Filter
+                                    <span className="hidden xs:inline">Filter</span>
                                 </button>
-                                <button className="h-11 px-5 bg-primary text-primary-foreground shadow-xl shadow-primary/20 rounded-2xl text-xs font-bold tracking-widest hover:scale-105 transition-all duration-300">
+                                <button className="h-10 md:h-11 px-3 md:px-5 bg-primary text-primary-foreground shadow-xl shadow-primary/20 rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold tracking-widest hover:scale-105 transition-all duration-300">
                                     Map View
                                 </button>
                             </div>

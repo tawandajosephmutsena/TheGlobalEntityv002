@@ -51,6 +51,14 @@ class Festival extends Model
     ];
 
     /**
+     * Scope a query to only include published festivals.
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', true);
+    }
+
+    /**
      * Get the author that owns the festival.
      */
     public function author(): BelongsTo

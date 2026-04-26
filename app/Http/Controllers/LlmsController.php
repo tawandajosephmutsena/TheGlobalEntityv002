@@ -197,11 +197,10 @@ class LlmsController extends Controller
             return collect();
         }
 
-        return Service::query()
-            ->where('is_published', true)
-            ->orderBy('order')
+        return Service::published()
+            ->orderBy('sort_order')
             ->limit(20)
-            ->get(['title', 'slug', 'excerpt']);
+            ->get(['title', 'slug', 'description']);
     }
 
     /**
@@ -213,8 +212,7 @@ class LlmsController extends Controller
             return collect();
         }
 
-        return PortfolioItem::query()
-            ->where('is_published', true)
+        return PortfolioItem::published()
             ->orderByDesc('created_at')
             ->limit(15)
             ->get(['title', 'slug', 'client']);

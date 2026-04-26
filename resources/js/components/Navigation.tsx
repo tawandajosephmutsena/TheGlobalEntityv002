@@ -123,15 +123,24 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
             start: 'top top',
             end: 99999,
             onUpdate: (self) => {
-                // Skip hiding logic if menu is open
+                // Skip hiding logic if menu is open or on very small scrolls
                 if (isMenuOpen) return;
+                
+                const velocity = self.getVelocity();
+                const isMobile = window.innerWidth < 768;
+                const hideThreshold = isMobile ? 0.1 : 0.05;
+                const velocityThreshold = isMobile ? 500 : 200;
 
                 if (self.direction === -1) {
+                    // Scrolling up - show nav
                     showAnim.play();
                     hideAnim.pause();
-                } else if (self.direction === 1 && self.progress > 0.05) {
-                    hideAnim.play();
-                    showAnim.pause();
+                } else if (self.direction === 1 && self.progress > hideThreshold) {
+                    // Scrolling down - hide nav only if velocity is significant or past threshold
+                    if (Math.abs(velocity) > velocityThreshold || self.progress > 0.2) {
+                        hideAnim.play();
+                        showAnim.pause();
+                    }
                 }
             },
         });

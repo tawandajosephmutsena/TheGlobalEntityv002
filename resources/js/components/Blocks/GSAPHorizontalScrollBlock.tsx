@@ -46,10 +46,10 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
         // Detect mobile
         const isMobile = window.innerWidth < 768;
         if (isMobile) {
-            // On mobile, we don't use GSAP for horizontal scroll
-            // We'll let it be a native horizontal scroll container
             trigger.style.overflowX = 'auto';
+            trigger.style.overflowY = 'hidden';
             trigger.style.setProperty('-webkit-overflow-scrolling', 'touch');
+            trigger.style.scrollSnapType = 'x proximity';
             return;
         }
         
@@ -118,7 +118,7 @@ export const GSAPHorizontalScrollBlock: React.FC<GSAPHorizontalScrollBlockProps>
                             </span>
                         )}
                         {title && (
-                            <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-none">
+                            <h2 className="text-4xl md:text-8xl font-black tracking-tighter leading-none">
                                 {title}
                             </h2>
                         )}

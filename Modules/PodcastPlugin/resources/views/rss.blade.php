@@ -1,4 +1,4 @@
-<?= '<?xml version="1.0" encoding="UTF-8"?>' ?>
+{!! '<?xml version="1.0" encoding="UTF-8"?>' !!}
 <rss version="2.0" 
     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" 
     xmlns:content="http://purl.org/rss/1.0/modules/content/" 
@@ -12,7 +12,7 @@
         <copyright>℗ &amp; © {{ now()->year }} {{ $category->author ?? config('app.name') }}</copyright>
         <itunes:author>{{ $category->author ?? config('app.name') }}</itunes:author>
         <description>{{ $category->description }}</description>
-        <itunes:summary>{{ $category->description }}</itunes:summary>
+        <itunes:summary>{{ strip_tags($category->description) }}</itunes:summary>
         <itunes:owner>
             <itunes:name>{{ $category->owner_name ?? config('app.name') }}</itunes:name>
             <itunes:email>{{ $category->owner_email ?? config('mail.from.address') }}</itunes:email>
@@ -74,7 +74,7 @@
 
                 <enclosure url="{{ $mediaUrl }}" length="{{ $fileSize }}" type="{{ $mimeType }}" />
                 <guid isPermaLink="false">{{ $podcast->id }}@tge-podcast</guid>
-                <pubDate>{{ $podcast->published_at->toRfc2822String() }}</pubDate>
+                <pubDate>{{ $podcast->published_at ? $podcast->published_at->toRfc2822String() : now()->toRfc2822String() }}</pubDate>
                 <itunes:duration>{{ $podcast->duration }}</itunes:duration>
                 <itunes:explicit>{{ $category->itunes_explicit ? 'yes' : 'no' }}</itunes:explicit>
                 

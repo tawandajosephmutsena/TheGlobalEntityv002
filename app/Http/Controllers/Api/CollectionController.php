@@ -96,7 +96,7 @@ class CollectionController extends Controller
                 break;
                 
             case 'festivals':
-                $items = \App\Models\Festival::where('is_published', true)
+                $items = \App\Models\Festival::published()
                     ->when($request->has('ids'), function ($query) use ($request) {
                         $ids = explode(',', $request->get('ids'));
                         return $query->whereIn('id', $ids);
@@ -259,7 +259,7 @@ class CollectionController extends Controller
                 break;
 
             case 'festivals':
-                $item = \App\Models\Festival::with(['author', 'category', 'activities'])->find($id);
+                $item = \App\Models\Festival::published()->with(['author', 'category', 'activities'])->find($id);
                 if ($item) {
                     $data = [
                         'id' => $item->id,
