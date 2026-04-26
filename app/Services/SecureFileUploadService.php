@@ -164,6 +164,7 @@ class SecureFileUploadService
             'original_name' => $file->getClientOriginalName(),
             'size' => Storage::disk('public')->size($storedPath),
             'mime_type' => $file->getMimeType(),
+            'file_hash' => hash_file('sha256', $fullPath),
         ];
     }
 

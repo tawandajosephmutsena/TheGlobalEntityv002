@@ -96,6 +96,28 @@ class MediaController extends Controller
 
         foreach ($request->file('files') as $file) {
             try {
+                $originalName = $file->getClientOriginalName();
+                $folder = $validated['folder'] ?? 'uploads';
+
+                // Check for duplicate filename in the same folder
+                if (MediaAsset::where('original_name', $originalName)->where('folder', $folder)->exists()) {
+                    return response()->json([
+                        'message' => "A file named '{$originalName}' already exists in the '{$folder}' folder. Please rename your file and try again.",
+                        'error' => true,
+                    ], 422);
+                }
+
+                // Check for duplicate content using hash
+                $hash = hash_file('sha256', $file->getRealPath());
+                $duplicate = MediaAsset::where('file_hash', $hash)->first();
+                if ($duplicate) {
+                    return response()->json([
+                        'message' => "This exact file already exists in the library as '{$duplicate->original_name}'.",
+                        'error' => true,
+                        'duplicate' => $duplicate
+                    ], 422);
+                }
+
                 // Determine file category securely
                 $category = $uploadService->getCategoryByFile($file);
 
@@ -103,7 +125,7 @@ class MediaController extends Controller
                 $uploadResult = $uploadService->upload(
                     $file, 
                     $category, 
-                    $validated['folder'] ?? 'uploads'
+                    $folder
                 );
 
                 // Create media asset record
@@ -112,10 +134,11 @@ class MediaController extends Controller
                     'original_name' => $uploadResult['original_name'],
                     'mime_type' => $uploadResult['mime_type'],
                     'size' => $uploadResult['size'],
+                    'file_hash' => $uploadResult['file_hash'] ?? $hash,
                     'path' => $uploadResult['path'],
                     'alt_text' => $validated['alt_text'] ?? null,
                     'caption' => $validated['caption'] ?? null,
-                    'folder' => $validated['folder'] ?? 'uploads',
+                    'folder' => $folder,
                     'tags' => $validated['tags'] ?? [],
                 ]);
 

@@ -29,8 +29,15 @@ class PodcastPublicController extends Controller
         }
 
         $perPage = config('podcastplugin.episodes_per_page', 12);
+        
+        $sort = $request->input('sort', 'latest');
+        if ($sort === 'oldest') {
+            $query->oldest('published_at');
+        } else {
+            $query->latest('published_at');
+        }
 
-        $podcasts = $query->latest('published_at')->paginate($perPage)->withQueryString();
+        $podcasts = $query->paginate($perPage)->withQueryString();
         $featured = Podcast::with(['podcastCategory'])->published()->featured()->latest('published_at')->take(3)->get();
         
         $categories = Category::active()
@@ -47,7 +54,7 @@ class PodcastPublicController extends Controller
             'podcasts' => $podcasts,
             'featured' => $featured,
             'categories' => $categories,
-            'filters' => $request->only(['search', 'category']),
+            'filters' => $request->only(['search', 'category', 'sort']),
         ]);
     }
 

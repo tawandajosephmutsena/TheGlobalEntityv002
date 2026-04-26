@@ -159,6 +159,34 @@ export default function MediaLibrary(props: MediaLibraryProps): React.JSX.Elemen
         }
     };
 
+    const deleteAsset = async (asset: MediaAsset) => {
+        if (!asset || !asset.id) {
+            console.error('Cannot delete: Missing asset ID');
+            return;
+        }
+
+        if (confirm(`Are you sure you want to delete ${asset.original_name}?`)) {
+            try {
+                const response = await fetch(`/admin/media/${asset.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                        'Accept': 'application/json',
+                    },
+                });
+                
+                if (response.ok) {
+                    fetchAssets();
+                } else {
+                    const data = await response.json();
+                    alert(data.message || 'Failed to delete asset');
+                }
+            } catch (error) {
+                console.error('Failed to delete asset:', error);
+            }
+        }
+    };
+
     const formatFileSize = (bytes: number) => {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -230,7 +258,10 @@ export default function MediaLibrary(props: MediaLibraryProps): React.JSX.Elemen
                                     <Copy className="h-4 w-4 mr-2" />
                                     Copy URL
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="text-destructive">
+                                <DropdownMenuItem 
+                                    className="text-destructive"
+                                    onClick={() => deleteAsset(asset)}
+                                >
                                     <Trash2 className="h-4 w-4 mr-2" />
                                     Delete
                                 </DropdownMenuItem>

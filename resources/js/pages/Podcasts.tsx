@@ -37,6 +37,7 @@ interface Props {
     filters: {
         search?: string;
         category?: string;
+        sort?: 'latest' | 'oldest';
     };
 }
 

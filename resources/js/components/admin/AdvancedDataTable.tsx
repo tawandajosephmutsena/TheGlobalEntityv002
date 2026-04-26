@@ -184,8 +184,13 @@ export function AdvancedDataTable<T extends { id: number | string }>({
                                                         className="text-destructive focus:text-destructive"
                                                         onClick={(e) => {
                                                             e.preventDefault();
+                                                            const id = item[routeKey];
+                                                            if (!id) {
+                                                                console.error("Cannot delete: Missing ID for item", { item, routeKey });
+                                                                return;
+                                                            }
                                                             if (confirm('Are you sure you want to delete this item?')) {
-                                                                router.delete(`${basePath}/${String(item[routeKey])}`);
+                                                                router.delete(`${basePath}/${String(id)}`);
                                                             }
                                                         }}
                                                     >
