@@ -16,6 +16,7 @@ interface VisualPreviewProps {
     blocks: Block[];
     pageTitle: string;
     pageSlug: string;
+    previewBaseUrl: string;
     isFullscreen: boolean;
     onToggleFullscreen: () => void;
 }
@@ -26,6 +27,7 @@ export default function VisualPreview({
     blocks,
     pageTitle,
     pageSlug,
+    previewBaseUrl,
     isFullscreen,
     onToggleFullscreen
 }: VisualPreviewProps) {
@@ -36,29 +38,21 @@ export default function VisualPreview({
     const refreshPreview = React.useCallback(() => {
         setIsLoading(true);
         if (iframeRef.current) {
-            // Append a timestamp to bypass cache if needed
-            const url = pageSlug === 'home' ? '/' : `/${pageSlug}`;
+            // Build the URL correctly with the base URL
+            const url = pageSlug === 'home' ? '/' : `${previewBaseUrl}/${pageSlug}`;
             iframeRef.current.src = `${url}?preview=true&t=${Date.now()}`;
         }
-    }, [pageSlug]);
+    }, [pageSlug, previewBaseUrl]);
 
     // Initial load and manual refresh
     useEffect(() => {
-        const url = pageSlug === 'home' ? '/' : `/${pageSlug}`;
+        const url = pageSlug === 'home' ? '/' : `${previewBaseUrl}/${pageSlug}`;
         const newSrc = `${url}?preview=true&t=${Date.now()}`;
         
         if (iframeRef.current) {
-            // If it's the first load, just set the src
-            if (!iframeRef.current.src) {
-                iframeRef.current.src = newSrc;
-            } else {
-                // For subsequent refreshes, if we want to show loading we have to be careful
-                // For now, just set the src without triggering a direct state update in the same render cycle
-                // if it's already loading. But since we initialized it to true, we're safe.
-                iframeRef.current.src = newSrc;
-            }
+            iframeRef.current.src = newSrc;
         }
-    }, [pageSlug]);
+    }, [pageSlug, previewBaseUrl]);
 
     // Send data to iframe when blocks change
     useEffect(() => {
@@ -127,11 +121,11 @@ export default function VisualPreview({
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={refreshPreview}>
                         <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" asChild title="Open in new tab">
-                        <a href={pageSlug === 'home' ? '/' : `/${pageSlug}`} target="_blank" rel="noreferrer" aria-label="Open page in new tab">
-                            <ExternalLink className="h-4 w-4" />
-                        </a>
-                    </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8" asChild title="Open in new tab">
+                    <a href={pageSlug === 'home' ? '/' : `${previewBaseUrl}/${pageSlug}`} target="_blank" rel="noreferrer" aria-label="Open page in new tab">
+                        <ExternalLink className="h-4 w-4" />
+                    </a>
+                </Button>
                     <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onToggleFullscreen}>
                         {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
                     </Button>

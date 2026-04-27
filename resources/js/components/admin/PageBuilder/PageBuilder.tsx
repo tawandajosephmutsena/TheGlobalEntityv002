@@ -13,6 +13,7 @@ interface PageBuilderProps {
     onToggleBlock: (id: string) => void;
     pageTitle: string;
     pageSlug: string;
+    previewBaseUrl?: string;
 }
 
 export default function PageBuilder({
@@ -24,7 +25,8 @@ export default function PageBuilder({
     onDuplicateBlock,
     onToggleBlock,
     pageTitle,
-    pageSlug
+    pageSlug,
+    previewBaseUrl = ''
 }: PageBuilderProps) {
     const [activeBlockId, setActiveBlockId] = useState<string | null>(null);
     const [isPreviewFullscreen, setIsPreviewFullscreen] = useState(false);
@@ -61,6 +63,7 @@ export default function PageBuilder({
                     blocks={blocks}
                     pageTitle={pageTitle}
                     pageSlug={pageSlug}
+                    previewBaseUrl={previewBaseUrl}
                     isFullscreen={isPreviewFullscreen}
                     onToggleFullscreen={() => setIsPreviewFullscreen(!isPreviewFullscreen)}
                 />

@@ -229,6 +229,7 @@ export interface Insight {
     additional_categories?: Category[];
     podcast?: Podcast | null;
     festival?: Festival | null;
+    blocks?: PageBlock[];
     quick_tips?: Array<{
         type: 'text' | 'points' | 'image_paragraph';
         title?: string;

@@ -9,6 +9,7 @@ import DOMPurify from 'dompurify';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import CategoryIcon from '@/components/CategoryIcon';
 import AnimatedSection from '@/components/AnimatedSection';
+import BlockRenderer from '@/components/Blocks/BlockRenderer';
 
 // Lazy loaded components for better initial bundle size
 const CommentSection = lazy(() => import('@/components/Comments/CommentSection'));
@@ -46,11 +47,25 @@ interface Props {
     reactionCounts: Record<string, number>;
     userReaction: ReactionType | null;
     relatedInsights?: Insight[];
-    allCategories?: any[];
+    allCategories?: Category[];
     relatedPodcasts?: Podcast[];
 }
 
 export default function BlogShow({ insight, comments, reactionCounts, userReaction, relatedInsights = [], allCategories = [], relatedPodcasts = [] }: Props) {
+    const [blocks, setBlocks] = React.useState<PageBlock[]>(insight.blocks || []);
+
+    // Listen for preview updates from the admin builder
+    React.useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'PREVIEW_DATA_UPDATE') {
+                setBlocks(event.data.blocks);
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
+
     const { site } = usePage<{ 
         site: { 
             url: string; 
@@ -286,7 +301,11 @@ export default function BlogShow({ insight, comments, reactionCounts, userReacti
                         )}
 
                         <div className="prose prose-xl lg:prose-2xl dark:prose-invert max-w-none font-serif prose-headings:font-display prose-headings:font-black prose-headings:tracking-tighter prose-headings:italic prose-p:text-[20px] lg:prose-p:text-[24px] prose-p:leading-[1.8] prose-p:dark:text-white/90 prose-blockquote:border-l-[12px] prose-blockquote:border-agency-accent prose-blockquote:bg-agency-accent/5 prose-blockquote:p-8 lg:prose-blockquote:p-12 prose-blockquote:rounded-3xl prose-blockquote:not-italic prose-blockquote:text-2xl lg:prose-blockquote:text-3xl prose-blockquote:font-display first-letter:text-7xl lg:first-letter:text-9xl first-letter:font-black first-letter:text-agency-accent first-letter:mr-4 lg:first-letter:mr-6 first-letter:float-left first-letter:leading-[0.7] first-letter:mt-3">
-                            {sanitizedBody ? (
+                            {blocks && blocks.length > 0 ? (
+                                <div className="not-prose font-sans">
+                                    <BlockRenderer blocks={blocks} />
+                                </div>
+                            ) : sanitizedBody ? (
                                 <div dangerouslySetInnerHTML={{ __html: sanitizedBody }} />
                             ) : (
                                 <p className="italic opacity-40">Assembling the narrative structure...</p>

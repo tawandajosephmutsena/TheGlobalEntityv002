@@ -21,6 +21,11 @@ class Insight extends Model
 {
     use HasFactory, HasVersions, HasSeoOptimization, HasSemanticAnalysis, HasImageSeo, HasWebCoreVitals, HasOptimizableImage;
 
+    protected $appends = [
+        'blocks',
+        'content_body',
+    ];
+
     protected $fillable = [
         'title',
         'slug',
@@ -70,6 +75,70 @@ class Insight extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class)->select(['id', 'name', 'slug']);
+    }
+
+    /**
+     * Get the content as blocks, normalizing legacy content if necessary.
+     */
+    public function getBlocksAttribute(): array
+    {
+        $content = $this->content;
+        
+        // If it already has blocks, return them
+        if (isset($content['blocks']) && is_array($content['blocks'])) {
+            return $content['blocks'];
+        }
+        
+        // If it has legacy body content, wrap it in a text block
+        if (isset($content['body']) && !empty($content['body'])) {
+            return [
+                [
+                    'id' => 'legacy-' . $this->id,
+                    'type' => 'text',
+                    'is_enabled' => true,
+                    'content' => [
+                        'title' => '',
+                        'layout' => '1',
+                        'columns' => [
+                            [
+                                'id' => 'col-legacy',
+                                'type' => 'text',
+                                'content' => [
+                                    'body' => $content['body'],
+                                    'textSize' => 'base',
+                                    'textAlign' => 'left',
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+        
+        return [];
+    }
+
+    /**
+     * Get the primary content body (for backward compatibility).
+     */
+    public function getContentBodyAttribute(): ?string
+    {
+        $content = $this->content;
+        
+        if (isset($content['body'])) {
+            return $content['body'];
+        }
+        
+        if (isset($content['blocks']) && is_array($content['blocks'])) {
+            // Find the first text block and return its content
+            foreach ($content['blocks'] as $block) {
+                if ($block['type'] === 'text' && isset($block['content']['columns'][0]['content']['body'])) {
+                    return $block['content']['columns'][0]['content']['body'];
+                }
+            }
+        }
+        
+        return null;
     }
 
     /**

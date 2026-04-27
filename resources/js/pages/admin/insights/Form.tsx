@@ -11,10 +11,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Insight, Category, User } from '@/types';
+import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, List, Type, ImageIcon } from 'lucide-react';
+import { Insight, Category, User, SharedData } from '@/types';
 import { useForm, Link, usePage } from '@inertiajs/react';
-import React, { useEffect, useRef } from 'react';
-import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, GripVertical, List, Type, ImageIcon } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
     Select,
     SelectContent,
@@ -23,15 +23,204 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import MediaLibrary from '@/components/admin/MediaLibrary';
-import RichTextEditor from '@/components/admin/RichTextEditor';
 import VersionHistory from '@/components/admin/VersionHistory';
 import VersionComparison from '@/components/admin/VersionComparison';
 import RealTimePreview from '@/components/admin/RealTimePreview';
 import PreviewShare from '@/components/admin/PreviewShare';
 import { accessibilityManager } from '@/lib/accessibilityManager';
+import PageBuilder from '@/components/admin/PageBuilder/PageBuilder';
+import { toast } from 'sonner';
+
+export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | 'about_hero' | 'about_who_are_you' | 'about_truth_untangled' | 'about_more_than_entertainment' | 'about_origin_story' | 'stitch_featured_blog' | (string & {});
+
+export interface Block {
+    id: string;
+    type: string;
+    content: Record<string, unknown>;
+    is_enabled: boolean;
+}
+
+const getDefaultContentForType = (type: BlockType) => {
+    switch (type) {
+        case 'hero': return { 
+            title: 'Digital Innovation Redefined', 
+            subtitle: 'Creative Agency', 
+            description: 'We create inspiring digital experiences.', 
+            ctaText: 'View Our Work', 
+            ctaHref: '/portfolio', 
+            image: '/images/hero-bg.jpg',
+            marqueeText: 'Innovate Create Elevate Innovate Create Elevate',
+            backgroundImages: [
+                'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2670&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2670&auto=format&fit=crop'
+            ]
+        };
+        case 'text': return { 
+            title: '', 
+            layout: '1',
+            columns: [
+                {
+                    id: 'col-' + Date.now(),
+                    type: 'text',
+                    content: {
+                        body: '',
+                        textSize: 'base',
+                        textAlign: 'left',
+                    }
+                }
+            ],
+            body: '' // Legacy field for backward compatibility
+        };
+        case 'image': return { url: '', alt: '', caption: '' };
+        case 'features': return { title: 'Our Features', items: [{ title: 'Feature 1', desc: 'Description' }] };
+        case 'stats': return { 
+            title: 'By The Numbers', 
+            subtitle: 'Our Impact',
+            items: [{ value: '10', label: 'Projects', suffix: '+' }] 
+        };
+        case 'services': return { title: 'Our Services', limit: 3, useStackedCards: true };
+        case 'portfolio': return { title: 'Selected Works', limit: 3 };
+        case 'insights': return { title: 'Recent Insights', limit: 3 };
+        case 'cinematic_hero': return { slides: [
+            { title: 'This is not Compassion', subtitle: 'Compassion would have been a law that protected her before she was forced to give birth.', tagline: '#letherlive', image: '/images/hero-1.jpg' },
+            { title: 'A Childhood Stolen', subtitle: 'When laws fail to protect the vulnerable, they actively participate in the cycle of neglect.', tagline: '#protectourgirls', image: '/images/hero-2.jpg' },
+            { title: 'Break the Cycle', subtitle: 'Justice is the only path to a world where childhood is a non-negotiable right.', tagline: '#changethelaw', image: '/images/hero-3.jpg' }
+        ] };
+        case 'animated_shader_hero': return {
+            trustBadge: { text: "Trusted by visionaries", icons: ["✨", "🚀"] },
+            headline: { line1: "Launch Your", line2: "Next Big Idea" },
+            subtitle: "Create stunning digital experiences with our AI-powered platform.",
+            buttons: {
+                primary: { text: "Get Started", url: "#" },
+                secondary: { text: "Learn More", url: "#" }
+            }
+        };
+        case 'form': return {
+            title: 'Onboarding',
+            description: 'Tell us about your project',
+            submitText: 'Submit enquiry',
+            successMessage: 'Form submitted successfully!',
+            steps: [
+                {
+                    id: 'personal',
+                    title: 'Personal Info',
+                    description: 'Let\'s start with some basic information',
+                    fields: [
+                        { label: 'Full Name', type: 'text', required: true, name: 'name', placeholder: 'John Doe' },
+                        { label: 'Email Address', type: 'email', required: true, name: 'email', placeholder: 'john@example.com' },
+                        { label: 'Company/Organization (Optional)', type: 'text', required: false, name: 'company', placeholder: 'Your Company' }
+                    ]
+                },
+                {
+                    id: 'professional',
+                    title: 'Professional',
+                    description: 'Tell us about your professional background',
+                    fields: [
+                        { label: 'What\'s your profession?', type: 'text', required: true, name: 'profession', placeholder: 'e.g. Designer, Developer, Marketer' },
+                        { label: 'What industry do you work in?', type: 'select', required: true, name: 'industry', options: ['Technology', 'Healthcare', 'Education', 'Finance', 'Retail', 'Creative Arts', 'Other'] }
+                    ]
+                },
+                {
+                    id: 'goals',
+                    title: 'Website Goals',
+                    description: 'What are you trying to achieve?',
+                    fields: [
+                        { label: 'What\'s the primary goal of your website?', type: 'radio', required: true, name: 'primaryGoal', options: ['Showcase portfolio/work', 'Sell products/services', 'Generate leads/inquiries', 'Provide information', 'Blog/content publishing'] },
+                        { label: 'Who is your target audience?', type: 'textarea', required: false, name: 'targetAudience', placeholder: 'Describe your ideal visitors/customers' }
+                    ]
+                },
+                {
+                    id: 'design',
+                    title: 'Design',
+                    description: 'Tell us about your aesthetic preferences',
+                    fields: [
+                        { label: 'What style do you prefer for your website?', type: 'radio', required: true, name: 'stylePreference', options: ['Modern & Sleek', 'Minimalist', 'Bold & Creative', 'Corporate & Professional'] },
+                        { label: 'Any websites you like for inspiration?', type: 'textarea', required: false, name: 'inspirations', placeholder: 'List websites you admire or want to emulate' }
+                    ]
+                },
+                {
+                    id: 'budget',
+                    title: 'Budget',
+                    description: 'Let\'s talk about your investment',
+                    fields: [
+                        { label: 'What\'s your budget range? (USD)', type: 'select', required: true, name: 'budget', options: ['Under $1,000', '$1,000 - $3,000', '$3,000 - $5,000', '$5,000 - $10,000', 'Over $10,000'] },
+                        { label: 'What\'s your expected timeline?', type: 'radio', required: true, name: 'timeline', options: ['ASAP', 'Within 1 month', '1-3 months', 'Flexible'] }
+                    ]
+                },
+                {
+                    id: 'requirements',
+                    title: 'Requirements',
+                    description: 'Any other specific needs?',
+                    fields: [
+                        { label: 'Which features do you need?', type: 'checkbox', required: false, name: 'features', options: ['Contact Form', 'Blog/News', 'E-commerce', 'User Accounts', 'Search Functionality', 'Social Media Integration', 'Newsletter Signup', 'Analytics'] },
+                        { label: 'Anything else we should know?', type: 'textarea', required: false, name: 'additionalInfo', placeholder: 'Any additional requirements or information' }
+                    ]
+                }
+            ]
+        };
+        case 'video': return { url: 'https://videos.pexels.com/video-files/30333849/13003128_2560_1440_25fps.mp4' };
+        case 'story': return { 
+            title: 'A journey of obsession.', 
+            subtitle: 'Story',
+            body: 'Founded in 2019, we emerged from a singular conviction...', 
+            items: [
+                { value: '5+', label: 'Years of Craft' },
+                { value: '50+', label: 'Successes' }
+            ]
+        };
+        case 'manifesto': return { 
+            title: 'Our Core Pillars', 
+            subtitle: 'Manifesto',
+            items: [
+                { title: 'Radical Innovation', desc: 'We don\'t follow trends; we set them.', emoji: '🚀' },
+                { title: 'Obsessive Detail', desc: 'Every pixel is scrutinized for perfection.', emoji: '🎯' },
+                { title: 'Transparent Partnership', desc: 'We integrate with your team as partners.', emoji: '🤝' }
+            ]
+        };
+        case 'process': return { 
+            title: 'From Vision to Reality.', 
+            subtitle: 'Our Process',
+            items: [
+                { step: '01', title: 'Discovery', desc: 'In-depth research and strategy.' },
+                { step: '02', title: 'Ideation', desc: 'Creative brainstorming and conceptual design.' },
+                { step: '03', title: 'Realization', desc: 'Technical execution and design refinement.' },
+                { step: '04', title: 'Infinity', desc: 'Launch and continuous optimization.' }
+            ]
+        };
+        case 'contact_info': return { 
+            title: 'We\'re Listening.', 
+            subtitle: 'Inquiries',
+            items: [
+                { label: 'Email', value: 'hello@example.com', href: 'mailto:hello@example.com' },
+                { label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
+                { label: 'Address', value: 'San Francisco, CA', href: '' }
+            ],
+            office_hours: [
+                'Mon — Fri: 09:00 — 18:00',
+                'Sat: 10:00 — 14:00',
+                'Sun: Closed'
+            ],
+            show_map: true,
+            google_maps_url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d100939.98555098464!2d-122.507640204439!3d37.757814996609724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1710777326071!5m2!1sen!2sus',
+            show_form: true,
+            form_title: 'Send us a Message',
+            success_message: 'Thank you! Your message has been sent.'
+        };
+        case 'faq': return { 
+            title: 'Common Queries.', 
+            subtitle: 'Quick Answers',
+            items: [
+                { q: 'How long does a typical project take?', a: 'Most boutique projects take 4-12 weeks.' },
+                { q: 'Do you work with global clients?', a: 'Absolutely. We have clients across 4 continents.' }
+            ]
+        };
+        default: return {};
+    }
+};
 
 interface Props {
-    insight?: any; // any to bypass strict type for now given additional fields
+    insight?: Insight & { blocks?: Block[] };
     categories: Category[];
     authors: User[];
     podcasts?: { id: number; title: string }[];
@@ -39,7 +228,7 @@ interface Props {
 }
 
 export default function InsightForm({ insight, categories, authors, podcasts = [], festivals = [] }: Props) {
-    const { auth } = usePage<any>().props;
+    const { auth } = usePage<SharedData>().props;
     const user = auth?.user;
 
     // Helper to format date for datetime-local input (YYYY-MM-DDTHH:mm)
@@ -61,7 +250,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         title: string;
         slug: string;
         excerpt: string;
-        content: { body: string };
+        content: { blocks: Block[] };
         featured_image: string;
         author_id: string | number;
         category_id: string | number;
@@ -73,16 +262,21 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         is_published: boolean;
         is_featured: boolean;
         published_at: string;
-        quick_tips: any[];
+        quick_tips: Array<{
+            type: 'text' | 'points' | 'image_paragraph';
+            title?: string;
+            content: string;
+            image?: string;
+        }>;
     }>({
         title: insight?.title || '',
         slug: insight?.slug || '',
         excerpt: insight?.excerpt || '',
-        content: (insight?.content as { body: string }) || { body: '' },
+        content: { blocks: insight?.blocks || [] },
         featured_image: insight?.featured_image || '',
         author_id: insight?.author_id || user?.id || authors[0]?.id || '',
         category_id: insight?.category_id || categories[0]?.id || '',
-        additional_categories: insight?.additionalCategories?.map((c: any) => c.id) || [],
+        additional_categories: insight?.additionalCategories?.map((c: { id: number }) => c.id) || [],
         podcast_id: insight?.podcast_id || '',
         festival_id: insight?.festival_id || '',
         tags: insight?.tags || [],
@@ -103,7 +297,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                 .replace(/^-+|-+$/g, '');
             setData('slug', generatedSlug);
         }
-    }, [data.title, insight]);
+    }, [data.title, insight, setData]);
 
     const [newTag, setNewTag] = React.useState('');
     const [showVersionHistory, setShowVersionHistory] = React.useState(false);
@@ -112,11 +306,56 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
     const [showPreview, setShowPreview] = React.useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
+    const [blocks, setBlocks] = useState<Block[]>(data.content.blocks || []);
+
+    // Sync blocks state to form data
+    useEffect(() => {
+        setData('content', { blocks });
+    }, [blocks, setData]);
+
     useEffect(() => {
         if (formRef.current) {
             accessibilityManager.enhanceFormAccessibility(formRef.current);
         }
     }, []);
+
+    const addBlock = useCallback((type: BlockType) => {
+        const newBlock: Block = {
+            id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+            type,
+            content: getDefaultContentForType(type),
+            is_enabled: true,
+        };
+        setBlocks(current => [...current, newBlock]);
+    }, []);
+
+    const removeBlock = (id: string) => {
+        setBlocks(blocks.filter(b => b.id !== id));
+    };
+
+    const toggleBlock = (id: string) => {
+        setBlocks(blocks.map(b => b.id === id ? { ...b, is_enabled: !b.is_enabled } : b));
+    };
+
+    const updateBlockContent = (id: string, content: Record<string, unknown>) => {
+        setBlocks(blocks.map(b => b.id === id ? { ...b, content: { ...b.content, ...content } } : b));
+    };
+
+    const duplicateBlock = (id: string) => {
+        const blockToClone = blocks.find(b => b.id === id);
+        if (!blockToClone) return;
+        
+        const newBlock: Block = {
+            ...blockToClone,
+            id: Date.now().toString(36) + Math.random().toString(36).substr(2, 5),
+            content: { ...blockToClone.content },
+        };
+        const blockIndex = blocks.findIndex(b => b.id === id);
+        const newBlocks = [...blocks];
+        newBlocks.splice(blockIndex + 1, 0, newBlock);
+        setBlocks(newBlocks);
+        toast.success('Block duplicated');
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -181,7 +420,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
         setData('quick_tips', data.quick_tips.filter((_, i) => i !== index));
     };
 
-    const updateTip = (index: number, field: string, value: any) => {
+    const updateTip = (index: number, field: string, value: string) => {
         const newTips = [...data.quick_tips];
         newTips[index] = { ...newTips[index], [field]: value };
         setData('quick_tips', newTips);
@@ -267,26 +506,24 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                             </div>
 
                             <div className="grid gap-2">
-                                <Label>Content</Label>
-                                <RichTextEditor
-                                    content={data.content.body}
-                                    onChange={(content) => setData('content', { ...data.content, body: content })}
-                                    placeholder="Write your article here..."
-                                    limit={500000}
-                                    autoSave={true}
-                                    onSave={(content) => {
-                                        // Auto-save functionality - could save to localStorage or send to server
-                                        localStorage.setItem(`insight-draft-${insight?.id || 'new'}`, content);
-                                    }}
-                                    showWordCount={true}
-                                    showTableOfContents={true}
-                                />
-                                <p className="text-xs text-muted-foreground">
-                                    Rich text editor with auto-save, media integration, and advanced formatting options.
+                                <Label>Content & Layout Builder</Label>
+                                <div className="min-h-[600px] border rounded-xl overflow-hidden bg-muted/5">
+                                    <PageBuilder 
+                                        blocks={blocks}
+                                        setBlocks={setBlocks}
+                                        onUpdateBlock={updateBlockContent}
+                                        onAddBlock={addBlock}
+                                        onRemoveBlock={removeBlock}
+                                        onDuplicateBlock={duplicateBlock}
+                                        onToggleBlock={toggleBlock}
+                                        pageTitle={data.title}
+                                        pageSlug={data.slug}
+                                        previewBaseUrl="/blog"
+                                    />
+                                </div>
+                                <p className="text-xs text-muted-foreground mt-2">
+                                    Visual article builder. Add sections, images, and text with full layout control.
                                 </p>
-                                {(errors as Record<string, string>)['content.body'] && (
-                                    <p className="text-sm text-destructive mt-1">{(errors as Record<string, string>)['content.body']}</p>
-                                )}
                             </div>
                         </CardContent>
                     </Card>
