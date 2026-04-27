@@ -163,8 +163,8 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                 <div className="space-y-20">
                     {/* Main Content Area */}
                     <main className="flex-1 space-y-20">
-                        {/* Header & Search */}
-                        <header className="flex flex-col gap-12">
+                        {/* Header Area - Title & Subtitle only */}
+                        <header className="flex flex-col gap-6">
                             <div className="space-y-6">
                                 <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter leading-[0.85] italic text-foreground">
                                     {activeCategory 
@@ -176,8 +176,34 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                                     {subtitle}
                                 </p>
                             </div>
+                        </header>
 
-                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pt-8 border-t border-white/10">
+                        {/* Featured Grid */}
+                        {featured.length > 0 && !activeCategory && !searchQuery && (
+                            <section className="space-y-10">
+                                <div className="flex items-center gap-4 px-2">
+                                    <div className="size-2 rounded-full bg-primary animate-pulse" />
+                                    <h2 className="text-3xl font-black tracking-tight text-foreground uppercase italic">Featured Selection</h2>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {featured.slice(0, featuredLimit).map((pod, i) => (
+                                        <PodcastCard 
+                                            key={pod.id} 
+                                            podcast={pod} 
+                                            variant="featured" 
+                                            className={cn(
+                                                "animate-in fade-in slide-in-from-bottom-8 duration-700 ease-apple backdrop-blur-sm",
+                                                i === 0 ? "delay-0" : i === 1 ? "delay-150" : "delay-300"
+                                            )}
+                                        />
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
+                        {/* Search & Filters Section - Moved here */}
+                        <div className="space-y-12 pt-12 border-t border-white/10">
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
                                 <form onSubmit={handleSearch} className="relative w-full lg:max-w-xl group">
                                     <Search className="absolute left-8 top-1/2 -translate-y-1/2 size-5 text-muted-foreground transition-colors group-focus-within:text-primary" />
                                     <input 
@@ -252,30 +278,7 @@ export default function PodcastArchiveBlock(props: PodcastArchiveProps) {
                                     </button>
                                 ))}
                             </nav>
-                        </header>
-
-                        {/* Featured Grid */}
-                        {featured.length > 0 && !activeCategory && !searchQuery && (
-                            <section className="space-y-10">
-                                <div className="flex items-center gap-4 px-2">
-                                    <div className="size-2 rounded-full bg-primary animate-pulse" />
-                                    <h2 className="text-3xl font-black tracking-tight text-foreground uppercase italic">Featured Selection</h2>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {featured.slice(0, featuredLimit).map((pod, i) => (
-                                        <PodcastCard 
-                                            key={pod.id} 
-                                            podcast={pod} 
-                                            variant="featured" 
-                                            className={cn(
-                                                "animate-in fade-in slide-in-from-bottom-8 duration-700 ease-apple backdrop-blur-sm",
-                                                i === 0 ? "delay-0" : i === 1 ? "delay-150" : "delay-300"
-                                            )}
-                                        />
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                        </div>
 
                         {/* Discovery Section - Always List Style */}
                         <section className="space-y-10">

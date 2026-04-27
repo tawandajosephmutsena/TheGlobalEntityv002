@@ -69,39 +69,62 @@ class BlogController extends Controller
      */
     public function show(string $slug): Response
     {
-        $insight = Insight::published()
-            ->with(['author:id,name,avatar', 'category', 'additionalCategories', 'podcast', 'festival'])
-            ->where('slug', $slug)
-            ->firstOrFail();
-
-        // Load top-level approved comments with nested replies, users, and reactions
-        $comments = $insight->comments()
-            ->approved()
-            ->topLevel()
-            ->with(['user:id,name,avatar', 'replies.user:id,name,avatar', 'replies.reactions', 'reactions'])
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        // Load reaction counts for the insight
-        $reactionCounts = $insight->reactions()
-            ->selectRaw('type, count(*) as count')
-            ->groupBy('type')
-            ->pluck('count', 'type')
-            ->toArray();
-
-        // Get the current user's reaction on the insight (if logged in)
-        $userReaction = null;
-        if (auth()->check()) {
-            $userReaction = $insight->reactions()
-                ->where('user_id', auth()->id())
-                ->value('type');
+        if ($slug === 'preview-placeholder') {
+            $insight = new Insight([
+                'title' => 'New Article Preview',
+                'slug' => 'preview-placeholder',
+                'excerpt' => 'Article preview placeholder...',
+                'content' => ['blocks' => []],
+                'is_published' => false,
+            ]);
+            $insight->id = 0; // Use dummy ID
+            // Associate dummy relations if needed
+            $insight->setRelation('author', auth()->user() ?? new \App\Models\User(['name' => 'Author']));
+            $insight->setRelation('category', new Category(['name' => 'General']));
+            $insight->setRelation('additionalCategories', collect());
+            $insight->setRelation('comments', collect());
+            $insight->setRelation('reactions', collect());
+        } else {
+            $insight = Insight::published()
+                ->with(['author:id,name,avatar', 'category', 'additionalCategories', 'podcast', 'festival'])
+                ->where('slug', $slug)
+                ->firstOrFail();
         }
 
-        $relatedInsights = Insight::published()
-            ->where('id', '!=', $insight->id)
-            ->where('category_id', $insight->category_id)
-            ->limit(3)
-            ->get();
+        $comments = collect();
+        $reactionCounts = [];
+        $userReaction = null;
+        $relatedInsights = collect();
+
+        if ($slug !== 'preview-placeholder') {
+            // Load top-level approved comments with nested replies, users, and reactions
+            $comments = $insight->comments()
+                ->approved()
+                ->topLevel()
+                ->with(['user:id,name,avatar', 'replies.user:id,name,avatar', 'replies.reactions', 'reactions'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            // Load reaction counts for the insight
+            $reactionCounts = $insight->reactions()
+                ->selectRaw('type, count(*) as count')
+                ->groupBy('type')
+                ->pluck('count', 'type')
+                ->toArray();
+
+            // Get the current user's reaction on the insight (if logged in)
+            if (auth()->check()) {
+                $userReaction = $insight->reactions()
+                    ->where('user_id', auth()->id())
+                    ->value('type');
+            }
+
+            $relatedInsights = Insight::published()
+                ->where('id', '!=', $insight->id)
+                ->where('category_id', $insight->category_id)
+                ->limit(3)
+                ->get();
+        }
 
         $allCategories = \Illuminate\Support\Facades\Cache::flexible('blog.categories', [60 * 60 * 24, 60 * 60 * 48], function () {
             return Category::where('type', 'insight')->get(['id', 'name', 'slug', 'icon']);

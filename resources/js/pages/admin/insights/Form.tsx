@@ -28,7 +28,7 @@ import VersionComparison from '@/components/admin/VersionComparison';
 import RealTimePreview from '@/components/admin/RealTimePreview';
 import PreviewShare from '@/components/admin/PreviewShare';
 import { accessibilityManager } from '@/lib/accessibilityManager';
-import PageBuilder from '@/components/admin/PageBuilder/PageBuilder';
+import BlogArticleBuilder from '@/components/admin/BlogBuilder/BlogArticleBuilder';
 import { toast } from 'sonner';
 
 export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | 'about_hero' | 'about_who_are_you' | 'about_truth_untangled' | 'about_more_than_entertainment' | 'about_origin_story' | 'stitch_featured_blog' | (string & {});
@@ -508,7 +508,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                             <div className="grid gap-2">
                                 <Label>Content & Layout Builder</Label>
                                 <div className="min-h-[600px] border rounded-xl overflow-hidden bg-muted/5">
-                                    <PageBuilder 
+                                    <BlogArticleBuilder 
                                         blocks={blocks}
                                         setBlocks={setBlocks}
                                         onUpdateBlock={updateBlockContent}
@@ -516,9 +516,12 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                                         onRemoveBlock={removeBlock}
                                         onDuplicateBlock={duplicateBlock}
                                         onToggleBlock={toggleBlock}
-                                        pageTitle={data.title}
-                                        pageSlug={data.slug}
+                                        pageTitle={data.title || 'New Article'}
+                                        pageSlug={data.slug || 'preview-placeholder'}
                                         previewBaseUrl="/blog"
+                                        onSave={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+                                        isProcessing={processing}
+                                        isEdit={!!insight}
                                     />
                                 </div>
                                 <p className="text-xs text-muted-foreground mt-2">

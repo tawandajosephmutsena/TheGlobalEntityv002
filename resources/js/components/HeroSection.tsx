@@ -121,14 +121,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 style={{ opacity: 'var(--bg-watercolor-opacity, 1)' }}
             >
                 <div
-                    className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[60px] md:blur-[120px] opacity-30 dark:opacity-50 animate-gradient-pulse"
+                    className="bg-theme-start absolute -top-[20%] -left-[15%] w-[600px] h-[600px] rounded-full blur-[60px] md:blur-[120px] opacity-30 dark:opacity-50"
                 />
                 <div
-                    className="bg-theme-end dynamic-delay absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[60px] md:blur-[100px] opacity-25 dark:opacity-40 animate-gradient-pulse"
+                    className="bg-theme-end dynamic-delay absolute -bottom-[10%] -right-[10%] w-[500px] h-[500px] rounded-full blur-[60px] md:blur-[100px] opacity-25 dark:opacity-40"
                     style={{ '--delay': '2s' } as React.CSSProperties}
                 />
                 <div
-                    className="bg-theme-accent dynamic-delay absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[60px] md:blur-[80px] opacity-20 dark:opacity-35 animate-gradient-pulse"
+                    className="bg-theme-accent dynamic-delay absolute top-[40%] right-[20%] w-[300px] h-[300px] rounded-full blur-[60px] md:blur-[80px] opacity-20 dark:opacity-35"
                     style={{ '--delay': '4s' } as React.CSSProperties}
                 />
             </div>

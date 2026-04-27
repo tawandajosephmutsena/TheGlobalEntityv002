@@ -394,7 +394,10 @@ export type PageBlock =
     | FestivalFilterBarBlock
     | FestivalBentoGridBlock
     | FestivalProgressTrailBlock
-    | Globe3DBlock;
+    | Globe3DBlock
+    | QuoteBlock
+    | CodeSnippetBlock
+    | ImageGalleryBlock;
 
 
 export interface EditorialCtaBlock extends BaseBlock {
@@ -1327,5 +1330,34 @@ export interface Globe3DBlock extends BaseBlock {
         enableZoom?: boolean;
         showWireframe?: boolean;
         height?: string;
+    };
+}
+
+export interface QuoteBlock extends BaseBlock {
+    type: 'quote_block';
+    content: {
+        text: string;
+        author?: string;
+    };
+}
+
+export interface CodeSnippetBlock extends BaseBlock {
+    type: 'code_snippet';
+    content: {
+        code: string;
+        language: string;
+    };
+}
+
+export interface ImageGalleryBlock extends BaseBlock {
+    type: 'image_gallery';
+    content: {
+        images: Array<{
+            url: string;
+            alt?: string;
+            caption?: string;
+        }>;
+        layout?: 'grid' | 'masonry' | 'carousel';
+        columns?: number;
     };
 }

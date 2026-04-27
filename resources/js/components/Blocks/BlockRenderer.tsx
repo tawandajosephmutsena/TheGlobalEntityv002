@@ -27,9 +27,10 @@ import {
     CreativeGridBlock as CreativeGridBlockType,
     TeamHeroBlock as TeamHeroBlockType,
     TeamGridBlock as TeamGridBlockType,
-    CultureBentoBlock as CultureBentoBlockType,
-    TeamJoinBlock as TeamJoinBlockType,
-    CommunityReviewBlock as CommunityReviewBlockType
+    JournalNewsletterBlock as JournalNewsletterBlockType,
+    QuoteBlock as QuoteBlockType,
+    CodeSnippetBlock as CodeSnippetBlockType,
+    ImageGalleryBlock as ImageGalleryBlockType
 } from '@/types/page-blocks';
 import { cn } from '@/lib/utils';
 
@@ -116,6 +117,84 @@ const VideoBlock = ({ content }: { content: VideoBlockType['content'] }) => {
                 <AnimatedSection animation="fade-up">
                     <VideoPlayer src={url} />
                 </AnimatedSection>
+            </div>
+        </section>
+    );
+};
+
+const QuoteBlock = ({ content }: { content: QuoteBlockType['content'] }) => {
+    return (
+        <section className="py-20 px-4 md:px-8">
+            <div className="max-w-4xl mx-auto">
+                <blockquote className="border-l-8 border-agency-accent bg-agency-accent/5 p-12 rounded-3xl">
+                    <p className="text-3xl md:text-4xl font-display font-black tracking-tight italic mb-6 leading-tight text-white">
+                        "{content.text}"
+                    </p>
+                    {content.author && (
+                        <cite className="text-sm font-bold tracking-widest uppercase opacity-60 not-italic text-white">
+                            — {content.author}
+                        </cite>
+                    )}
+                </blockquote>
+            </div>
+        </section>
+    );
+};
+
+const CodeSnippetBlock = ({ content }: { content: CodeSnippetBlockType['content'] }) => {
+    return (
+        <section className="py-20 px-4 md:px-8">
+            <div className="max-w-5xl mx-auto">
+                <div className="rounded-2xl overflow-hidden bg-slate-950 border border-white/10 shadow-2xl">
+                    <div className="bg-white/5 px-6 py-3 border-b border-white/5 flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-40 text-white">
+                            {content.language || 'Code'}
+                        </span>
+                        <div className="flex gap-1.5">
+                            <div className="size-2 rounded-full bg-red-500/50" />
+                            <div className="size-2 rounded-full bg-yellow-500/50" />
+                            <div className="size-2 rounded-full bg-green-500/50" />
+                        </div>
+                    </div>
+                    <pre className="p-8 overflow-x-auto">
+                        <code className="text-sm font-mono text-slate-300 leading-relaxed">
+                            {content.code}
+                        </code>
+                    </pre>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+const ImageGalleryBlock = ({ content }: { content: ImageGalleryBlockType['content'] }) => {
+    const columns = content.columns || 3;
+    const gridCols = {
+        1: 'grid-cols-1',
+        2: 'grid-cols-2',
+        3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+        4: 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+    }[columns as 1|2|3|4] || 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
+    return (
+        <section className="py-20 px-4 md:px-8">
+            <div className="max-w-7xl mx-auto">
+                <div className={`grid ${gridCols} gap-4`}>
+                    {(content.images || []).map((img, i) => (
+                        <div key={i} className="aspect-square rounded-2xl overflow-hidden group relative">
+                            <img 
+                                src={img.url} 
+                                alt={img.alt || ''} 
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            {img.caption && (
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                                    <p className="text-white text-sm font-medium">{img.caption}</p>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
     );
@@ -678,6 +757,12 @@ export default function BlockRenderer({
                                         content={block.content as any} 
                                     />
                                 );
+                            case 'quote_block':
+                                return <QuoteBlock content={block.content as QuoteBlockType['content']} />;
+                            case 'code_snippet':
+                                return <CodeSnippetBlock content={block.content as CodeSnippetBlockType['content']} />;
+                            case 'image_gallery':
+                                return <ImageGalleryBlock content={block.content as ImageGalleryBlockType['content']} />;
 
                             default: {
                                 const unknownBlock = block as unknown as {

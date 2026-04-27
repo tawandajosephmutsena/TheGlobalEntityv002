@@ -57,9 +57,6 @@ export const GlobalWatercolorBackground = () => {
   const blurAmount = getBGSetting('bg_watercolor_blur', 140) as number;
   const overlayOpacity = getBGSetting('bg_watercolor_overlay_opacity', 0.5) as number;
 
-  // 6.4 — omit animation class when reduced-motion is active
-  const pulseClass = prefersReducedMotion ? '' : 'animate-gradient-pulse';
-
   return (
     // 6.3 — contain: paint on root div
     <div 
@@ -79,8 +76,7 @@ export const GlobalWatercolorBackground = () => {
         {/* Blob 1 */}
         <div
           className={cn(
-            "bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full will-change-[transform,opacity]",
-            pulseClass
+            "bg-theme-start absolute -top-[20%] -left-[10%] h-[70vw] w-[70vw] rounded-full will-change-[transform,opacity]"
           )}
           style={{ 
             filter: 'blur(var(--blur-amount))',
@@ -92,8 +88,7 @@ export const GlobalWatercolorBackground = () => {
         {/* Blob 2 */}
         <div
           className={cn(
-            "bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full will-change-[transform,opacity]",
-            pulseClass
+            "bg-theme-end absolute top-[10%] -right-[15%] h-[60vw] w-[60vw] rounded-full will-change-[transform,opacity]"
           )}
           style={{ 
             filter: 'blur(var(--blur-amount-secondary))',
@@ -105,8 +100,7 @@ export const GlobalWatercolorBackground = () => {
         {/* Blob 3 */}
         <div
           className={cn(
-            "bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full will-change-[transform,opacity]",
-            pulseClass
+            "bg-theme-accent absolute bottom-[-10%] left-[20%] h-[50vw] w-[50vw] rounded-full will-change-[transform,opacity]"
           )}
           style={{ 
             filter: 'blur(var(--blur-amount-tertiary))',
