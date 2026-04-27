@@ -8,7 +8,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Save, ArrowLeft, Plus, X, MapPin, ImagePlus, GripVertical } from 'lucide-react';
+import { Save, ArrowLeft, Plus, X, MapPin, ImagePlus, GripVertical, PanelRightClose, PanelRightOpen } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { Category, MediaAsset } from '@/types';
 import MediaLibrary from '@/components/admin/MediaLibrary';
@@ -58,6 +60,7 @@ export default function FestivalForm({ festival, categories, authors }: Props) {
         author_id: festival?.author_id?.toString() || user?.id?.toString() || '',
     });
 
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
     const [newTag, setNewTag] = React.useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -118,14 +121,28 @@ export default function FestivalForm({ festival, categories, authors }: Props) {
                         {festival ? 'Update' : 'Register'} <span className="text-agency-accent">Festival</span>
                     </h1>
                 </div>
-                <Button type="submit" disabled={processing} className="bg-agency-accent text-white font-black italic uppercase">
-                    <Save className="h-4 w-4 mr-2" />
-                    {festival ? 'Commit Changes' : 'Initialize Radar'}
-                </Button>
+                <div className="flex items-center gap-3">
+                    <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                        className="gap-2 border-agency-accent/20"
+                    >
+                        {isSidebarCollapsed ? <PanelRightOpen className="h-4 w-4" /> : <PanelRightClose className="h-4 w-4" />}
+                        <span className="hidden sm:inline">{isSidebarCollapsed ? 'Expand Radar' : 'Collapse Radar'}</span>
+                    </Button>
+                    <Button type="submit" disabled={processing} className="bg-agency-accent text-white font-black italic uppercase">
+                        <Save className="h-4 w-4 mr-2" />
+                        {festival ? 'Commit Changes' : 'Initialize Radar'}
+                    </Button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className={cn(
+                    "space-y-6 transition-all duration-300",
+                    isSidebarCollapsed ? "lg:col-span-12" : "lg:col-span-9"
+                )}>
                     <Card className="border-agency-accent/10">
                         <CardHeader>
                             <CardTitle className="uppercase font-black italic tracking-tight">Core Metadata</CardTitle>
@@ -311,133 +328,144 @@ export default function FestivalForm({ festival, categories, authors }: Props) {
                     </Card>
                 </div>
 
-                <div className="space-y-6">
-                    <Card className="border-agency-accent/20 bg-agency-accent/5">
-                        <CardHeader>
-                            <CardTitle className="uppercase font-black italic tracking-tight text-agency-accent">Radar Status</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                    <Label className="font-bold uppercase text-xs">Broadcast Live</Label>
-                                    <p className="text-[10px] text-muted-foreground italic">Visible to public radar</p>
-                                </div>
-                                <Switch
-                                    checked={data.is_published}
-                                    onCheckedChange={(checked) => setData('is_published', checked)}
-                                />
-                            </div>
-
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                    <Label className="font-bold uppercase text-xs">Featured System</Label>
-                                    <p className="text-[10px] text-muted-foreground italic">Highlight on home slider</p>
-                                </div>
-                                <Switch
-                                    checked={data.is_featured}
-                                    onCheckedChange={(checked) => setData('is_featured', checked)}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-agency-accent/10">
-                        <CardHeader>
-                            <CardTitle className="uppercase font-black italic tracking-tight">Main Signal Image</CardTitle>
-                            <CardDescription className="text-xs opacity-60">
-                                This image will be used as the hero section. Recommended size: 1920x1080px for best quality.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <MediaLibrary 
-                                type="image"
-                                currentValue={data.image}
-                                onSelect={(asset) => setData('image', (asset as MediaAsset).url)}
-                                trigger={
-                                    <div 
-                                        className="aspect-video rounded-lg border-2 border-dashed border-agency-accent/20 flex flex-col items-center justify-center cursor-pointer hover:bg-agency-accent/5 transition-colors bg-agency-accent/2 overflow-hidden relative shadow-inner"
-                                    >
-                                        {data.image ? (
-                                            <img src={data.image} alt="" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <>
-                                                <ImagePlus className="h-8 w-8 text-agency-accent/40 mb-2" />
-                                                <p className="text-[10px] font-bold uppercase italic text-agency-accent/60">Capture Main Signal</p>
-                                            </>
-                                        )}
-                                    </div>
-                                }
-                            />
-                            <div className="grid gap-2">
-                                <Label className="uppercase font-bold text-xs opacity-60">Signal URL</Label>
-                                <Input
-                                    value={data.image}
-                                    onChange={(e) => setData('image', e.target.value)}
-                                    placeholder="https://..."
-                                    className="text-xs italic"
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-agency-accent/10">
-                        <CardHeader>
-                            <CardTitle className="uppercase font-black italic tracking-tight">Temporal Range</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid gap-2">
-                                <Label className="uppercase font-bold text-xs opacity-60">Start Point</Label>
-                                <Input
-                                    type="date"
-                                    value={data.start_date}
-                                    max={data.end_date}
-                                    onChange={(e) => setData('start_date', e.target.value)}
-                                />
-                                {errors.start_date && <p className="text-xs text-destructive font-bold">{errors.start_date}</p>}
-                            </div>
-                            <div className="grid gap-2">
-                                <Label className="uppercase font-bold text-xs opacity-60">End Point</Label>
-                                <Input
-                                    type="date"
-                                    value={data.end_date}
-                                    min={data.start_date}
-                                    onChange={(e) => setData('end_date', e.target.value)}
-                                />
-                                {errors.end_date && <p className="text-xs text-destructive font-bold">{errors.end_date}</p>}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="border-agency-accent/10">
-                        <CardHeader>
-                            <CardTitle className="uppercase font-black italic tracking-tight">Social Signals</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="flex gap-2">
-                                <Input
-                                    value={newTag}
-                                    onChange={(e) => setNewTag(e.target.value)}
-                                    placeholder="#hashtag"
-                                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                                />
-                                <Button type="button" size="icon" onClick={addTag} variant="outline">
-                                    <Plus className="h-4 w-4" />
-                                </Button>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {data.social_tags.map((tag, i) => (
-                                    <Badge key={i} variant="secondary" className="pl-2 gap-1 bg-agency-accent/10 text-agency-accent border-agency-accent/20">
-                                        {tag}
-                                        <X
-                                            className="h-3 w-3 cursor-pointer"
-                                            onClick={() => setData('social_tags', data.social_tags.filter(t => t !== tag))}
+                <AnimatePresence>
+                    {!isSidebarCollapsed && (
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20, width: 0 }}
+                            animate={{ opacity: 1, x: 0, width: 'auto' }}
+                            exit={{ opacity: 0, x: 20, width: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="lg:col-span-3 space-y-6 overflow-hidden"
+                        >
+                            <Card className="border-agency-accent/20 bg-agency-accent/5">
+                                <CardHeader>
+                                    <CardTitle className="uppercase font-black italic tracking-tight text-agency-accent">Radar Status</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-0.5">
+                                            <Label className="font-bold uppercase text-xs">Broadcast Live</Label>
+                                            <p className="text-[10px] text-muted-foreground italic">Visible to public radar</p>
+                                        </div>
+                                        <Switch
+                                            checked={data.is_published}
+                                            onCheckedChange={(checked) => setData('is_published', checked)}
                                         />
-                                    </Badge>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-0.5">
+                                            <Label className="font-bold uppercase text-xs">Featured System</Label>
+                                            <p className="text-[10px] text-muted-foreground italic">Highlight on home slider</p>
+                                        </div>
+                                        <Switch
+                                            checked={data.is_featured}
+                                            onCheckedChange={(checked) => setData('is_featured', checked)}
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-agency-accent/10">
+                                <CardHeader>
+                                    <CardTitle className="uppercase font-black italic tracking-tight">Main Signal Image</CardTitle>
+                                    <CardDescription className="text-xs opacity-60">
+                                        This image will be used as the hero section. Recommended size: 1920x1080px for best quality.
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <MediaLibrary 
+                                        type="image"
+                                        currentValue={data.image}
+                                        onSelect={(asset) => setData('image', (asset as MediaAsset).url)}
+                                        trigger={
+                                            <div 
+                                                className="aspect-video rounded-lg border-2 border-dashed border-agency-accent/20 flex flex-col items-center justify-center cursor-pointer hover:bg-agency-accent/5 transition-colors bg-agency-accent/2 overflow-hidden relative shadow-inner"
+                                            >
+                                                {data.image ? (
+                                                    <img src={data.image} alt="" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <>
+                                                        <ImagePlus className="h-8 w-8 text-agency-accent/40 mb-2" />
+                                                        <p className="text-[10px] font-bold uppercase italic text-agency-accent/60">Capture Main Signal</p>
+                                                    </>
+                                                )}
+                                            </div>
+                                        }
+                                    />
+                                    <div className="grid gap-2">
+                                        <Label className="uppercase font-bold text-xs opacity-60">Signal URL</Label>
+                                        <Input
+                                            value={data.image}
+                                            onChange={(e) => setData('image', e.target.value)}
+                                            placeholder="https://..."
+                                            className="text-xs italic"
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-agency-accent/10">
+                                <CardHeader>
+                                    <CardTitle className="uppercase font-black italic tracking-tight">Temporal Range</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid gap-2">
+                                        <Label className="uppercase font-bold text-xs opacity-60">Start Point</Label>
+                                        <Input
+                                            type="date"
+                                            value={data.start_date}
+                                            max={data.end_date}
+                                            onChange={(e) => setData('start_date', e.target.value)}
+                                        />
+                                        {errors.start_date && <p className="text-xs text-destructive font-bold">{errors.start_date}</p>}
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label className="uppercase font-bold text-xs opacity-60">End Point</Label>
+                                        <Input
+                                            type="date"
+                                            value={data.end_date}
+                                            min={data.start_date}
+                                            onChange={(e) => setData('end_date', e.target.value)}
+                                        />
+                                        {errors.end_date && <p className="text-xs text-destructive font-bold">{errors.end_date}</p>}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-agency-accent/10">
+                                <CardHeader>
+                                    <CardTitle className="uppercase font-black italic tracking-tight">Social Intel</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid gap-2">
+                                        <Label className="uppercase font-bold text-xs opacity-60">Signal Tags</Label>
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={newTag}
+                                                onChange={(e) => setNewTag(e.target.value)}
+                                                placeholder="#techno"
+                                                onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                                                className="italic"
+                                            />
+                                            <Button type="button" size="icon" onClick={addTag} variant="outline" className="border-agency-accent/20">
+                                                <Plus className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2 mt-2">
+                                            {data.social_tags.map(tag => (
+                                                <Badge key={tag} className="bg-agency-accent/10 text-agency-accent border-agency-accent/20 font-bold italic py-1">
+                                                    #{tag}
+                                                    <X className="h-3 w-3 ml-2 cursor-pointer hover:text-destructive" onClick={() => setData('social_tags', data.social_tags.filter(t => t !== tag))} />
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </form>
     );

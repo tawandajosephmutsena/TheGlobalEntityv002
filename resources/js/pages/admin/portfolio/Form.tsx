@@ -15,7 +15,9 @@ import { useForm } from '@inertiajs/react';
 import React from 'react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ImagePlus, X, Plus, Save, ArrowLeft, GripVertical } from 'lucide-react';
+import { ImagePlus, X, Plus, Save, ArrowLeft, GripVertical, PanelRightClose, PanelRightOpen } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import MediaLibrary from '@/components/admin/MediaLibrary';
@@ -60,6 +62,7 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
         },
     });
 
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
     const [newTech, setNewTech] = React.useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -117,14 +120,28 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
                         {portfolioItem ? 'Edit Project' : 'New Project'}
                     </h1>
                 </div>
-                <Button type="submit" disabled={processing} className="bg-agency-accent text-agency-primary hover:bg-agency-accent/90">
-                    <Save className="h-4 w-4 mr-2" />
-                    {portfolioItem ? 'Update Project' : 'Create Project'}
-                </Button>
+                <div className="flex items-center gap-3">
+                    <Button 
+                        type="button" 
+                        variant="outline" 
+                        onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                        className="gap-2 border-agency-accent/20"
+                    >
+                        {isSidebarCollapsed ? <PanelRightOpen className="h-4 w-4" /> : <PanelRightClose className="h-4 w-4" />}
+                        <span className="hidden sm:inline">{isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}</span>
+                    </Button>
+                    <Button type="submit" disabled={processing} className="bg-agency-accent text-agency-primary hover:bg-agency-accent/90">
+                        <Save className="h-4 w-4 mr-2" />
+                        {portfolioItem ? 'Update Project' : 'Create Project'}
+                    </Button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className={cn(
+                    "space-y-6 transition-all duration-300",
+                    isSidebarCollapsed ? "lg:col-span-12" : "lg:col-span-9"
+                )}>
                     <Card>
                         <CardHeader>
                             <CardTitle>Basic Information</CardTitle>
@@ -293,196 +310,206 @@ export default function PortfolioForm({ portfolioItem, categories }: Props) {
                     </Card>
                 </div>
 
-                <div className="space-y-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Status & Visibility</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                    <Label>Publish Project</Label>
-                                    <p className="text-xs text-muted-foreground">Make it visible on the site</p>
-                                </div>
-                                <Switch
-                                    checked={data.is_published}
-                                    onCheckedChange={(checked) => setData('is_published', checked)}
-                                />
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                    <Label>Featured Project</Label>
-                                    <p className="text-xs text-muted-foreground">Highlight on homepage</p>
-                                </div>
-                                <Switch
-                                    checked={data.is_featured}
-                                    onCheckedChange={(checked) => setData('is_featured', checked)}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Featured Image</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <MediaLibrary 
-                                type="image"
-                                currentValue={data.featured_image}
-                                onSelect={(asset) => setData('featured_image', (asset as MediaAsset).url)}
-                                trigger={
-                                    <div 
-                                        className="aspect-video rounded-lg border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors bg-muted/20 overflow-hidden relative shadow-inner"
-                                    >
-                                        {data.featured_image ? (
-                                            <img src={data.featured_image} alt="" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <>
-                                                <ImagePlus className="h-8 w-8 text-muted-foreground mb-2" />
-                                                <p className="text-xs text-muted-foreground">Select Main Image</p>
-                                            </>
-                                        )}
+                <AnimatePresence>
+                    {!isSidebarCollapsed && (
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20, width: 0 }}
+                            animate={{ opacity: 1, x: 0, width: 'auto' }}
+                            exit={{ opacity: 0, x: 20, width: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="lg:col-span-3 space-y-6 overflow-hidden"
+                        >
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Status & Visibility</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-0.5">
+                                            <Label>Publish Project</Label>
+                                            <p className="text-xs text-muted-foreground">Make it visible on the site</p>
+                                        </div>
+                                        <Switch
+                                            checked={data.is_published}
+                                            onCheckedChange={(checked) => setData('is_published', checked)}
+                                        />
                                     </div>
-                                }
-                            />
-                            <div className="grid gap-2">
-                                <Label className="text-xs opacity-60">Image URL</Label>
-                                <Input
-                                    value={data.featured_image}
-                                    onChange={(e) => setData('featured_image', e.target.value)}
-                                    placeholder="https://..."
-                                    className="text-xs"
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Project Metadata</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="client">Client Name</Label>
-                                <Input
-                                    id="client"
-                                    value={data.client}
-                                    onChange={(e) => setData('client', e.target.value)}
-                                    placeholder="Leave empty for internal"
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="project_date">Completion Date</Label>
-                                <Input
-                                    id="project_date"
-                                    type="date"
-                                    value={data.project_date}
-                                    onChange={(e) => setData('project_date', e.target.value)}
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="project_url">Project URL</Label>
-                                <Input
-                                    id="project_url"
-                                    value={data.project_url}
-                                    onChange={(e) => setData('project_url', e.target.value)}
-                                    placeholder="https://..."
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Technologies</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="flex gap-2">
-                                <Input
-                                    value={newTech}
-                                    onChange={(e) => setNewTech(e.target.value)}
-                                    placeholder="Add tech..."
-                                    onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTech())}
-                                />
-                                <Button type="button" size="icon" onClick={addTech} variant="outline">
-                                    <Plus className="h-4 w-4" />
-                                </Button>
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                                {data.technologies.map((tech, i) => (
-                                    <Badge key={i} variant="secondary" className="pl-2 gap-1 bg-agency-accent/5 text-agency-primary hover:bg-agency-accent/10 transition-colors">
-                                        {tech}
-                                        <X
-                                            className="h-3 w-3 cursor-pointer hover:text-destructive transition-colors"
-                                            onClick={() => removeTech(tech)}
+                                    <div className="flex items-center justify-between">
+                                        <div className="space-y-0.5">
+                                            <Label>Featured Project</Label>
+                                            <p className="text-xs text-muted-foreground">Highlight on homepage</p>
+                                        </div>
+                                        <Switch
+                                            checked={data.is_featured}
+                                            onCheckedChange={(checked) => setData('is_featured', checked)}
                                         />
-                                    </Badge>
-                                ))}
-                                {data.technologies.length === 0 && (
-                                    <p className="text-xs text-muted-foreground italic">No technologies added.</p>
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
+                                    </div>
+                                </CardContent>
+                            </Card>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Project Stats</CardTitle>
-                            <CardDescription>Metrics displayed in the results section</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <Button 
-                                type="button" 
-                                variant="outline" 
-                                size="sm" 
-                                className="w-full"
-                                onClick={() => setData('stats', [...data.stats, { value: '', label: '' }])}
-                            >
-                                <Plus className="h-4 w-4 mr-2" /> Add Stat
-                            </Button>
-                            <div className="space-y-3">
-                                {data.stats.map((stat: { value: string; label: string }, i: number) => (
-                                    <div key={i} className="group relative p-3 border rounded-lg bg-muted/10 space-y-2">
-                                        <button 
-                                            type="button" 
-                                            className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                            onClick={() => setData('stats', data.stats.filter((_: { value: string; label: string }, idx: number) => idx !== i))}
-                                            title="Remove stat"
-                                        >
-                                            <X className="h-3 w-3" />
-                                        </button>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Featured Image</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <MediaLibrary 
+                                        type="image"
+                                        currentValue={data.featured_image}
+                                        onSelect={(asset) => setData('featured_image', (asset as MediaAsset).url)}
+                                        trigger={
+                                            <div 
+                                                className="aspect-video rounded-lg border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-muted/50 transition-colors bg-muted/20 overflow-hidden relative shadow-inner"
+                                            >
+                                                {data.featured_image ? (
+                                                    <img src={data.featured_image} alt="" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <>
+                                                        <ImagePlus className="h-8 w-8 text-muted-foreground mb-2" />
+                                                        <p className="text-xs text-muted-foreground">Select Main Image</p>
+                                                    </>
+                                                )}
+                                            </div>
+                                        }
+                                    />
+                                    <div className="grid gap-2">
+                                        <Label className="text-xs opacity-60">Image URL</Label>
                                         <Input
-                                            value={stat.value}
-                                            onChange={(e) => {
-                                                const newStats = [...data.stats];
-                                                newStats[i] = { ...stat, value: e.target.value };
-                                                setData('stats', newStats);
-                                            }}
-                                            placeholder="+85%"
-                                            className="text-lg font-bold"
-                                        />
-                                        <Input
-                                            value={stat.label}
-                                            onChange={(e) => {
-                                                const newStats = [...data.stats];
-                                                newStats[i] = { ...stat, label: e.target.value };
-                                                setData('stats', newStats);
-                                            }}
-                                            placeholder="Mobile Traffic"
+                                            value={data.featured_image}
+                                            onChange={(e) => setData('featured_image', e.target.value)}
+                                            placeholder="https://..."
                                             className="text-xs"
                                         />
                                     </div>
-                                ))}
-                                {data.stats.length === 0 && (
-                                    <p className="text-xs text-muted-foreground italic text-center py-2">
-                                        No stats added. Default stats will be shown.
-                                    </p>
-                                )}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Project Metadata</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="client">Client Name</Label>
+                                        <Input
+                                            id="client"
+                                            value={data.client}
+                                            onChange={(e) => setData('client', e.target.value)}
+                                            placeholder="Leave empty for internal"
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="project_date">Completion Date</Label>
+                                        <Input
+                                            id="project_date"
+                                            type="date"
+                                            value={data.project_date}
+                                            onChange={(e) => setData('project_date', e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="project_url">Project URL</Label>
+                                        <Input
+                                            id="project_url"
+                                            value={data.project_url}
+                                            onChange={(e) => setData('project_url', e.target.value)}
+                                            placeholder="https://..."
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Technologies</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="flex gap-2">
+                                        <Input
+                                            value={newTech}
+                                            onChange={(e) => setNewTech(e.target.value)}
+                                            placeholder="Add tech..."
+                                            onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTech())}
+                                        />
+                                        <Button type="button" size="icon" onClick={addTech} variant="outline">
+                                            <Plus className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {data.technologies.map((tech: string, i: number) => (
+                                            <Badge key={i} variant="secondary" className="pl-2 gap-1 bg-agency-accent/5 text-agency-primary hover:bg-agency-accent/10 transition-colors">
+                                                {tech}
+                                                <X
+                                                    className="h-3 w-3 cursor-pointer hover:text-destructive transition-colors"
+                                                    onClick={() => removeTech(tech)}
+                                                />
+                                            </Badge>
+                                        ))}
+                                        {data.technologies.length === 0 && (
+                                            <p className="text-xs text-muted-foreground italic">No technologies added.</p>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Project Stats</CardTitle>
+                                    <CardDescription>Metrics displayed in the results section</CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <Button 
+                                        type="button" 
+                                        variant="outline" 
+                                        size="sm" 
+                                        className="w-full"
+                                        onClick={() => setData('stats', [...data.stats, { value: '', label: '' }])}
+                                    >
+                                        <Plus className="h-4 w-4 mr-2" /> Add Stat
+                                    </Button>
+                                    <div className="space-y-3">
+                                        {data.stats.map((stat: { value: string; label: string }, i: number) => (
+                                            <div key={i} className="group relative p-3 border rounded-lg bg-muted/10 space-y-2">
+                                                <button 
+                                                    type="button" 
+                                                    className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-destructive text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    onClick={() => setData('stats', data.stats.filter((_: any, idx: number) => idx !== i))}
+                                                    title="Remove stat"
+                                                >
+                                                    <X className="h-3 w-3" />
+                                                </button>
+                                                <Input
+                                                    value={stat.value}
+                                                    onChange={(e) => {
+                                                        const newStats = [...data.stats];
+                                                        newStats[i] = { ...stat, value: e.target.value };
+                                                        setData('stats', newStats);
+                                                    }}
+                                                    placeholder="+85%"
+                                                    className="text-lg font-bold"
+                                                />
+                                                <Input
+                                                    value={stat.label}
+                                                    onChange={(e) => {
+                                                        const newStats = [...data.stats];
+                                                        newStats[i] = { ...stat, label: e.target.value };
+                                                        setData('stats', newStats);
+                                                    }}
+                                                    placeholder="Mobile Traffic"
+                                                    className="text-xs"
+                                                />
+                                            </div>
+                                        ))}
+                                        {data.stats.length === 0 && (
+                                            <p className="text-xs text-muted-foreground italic text-center py-2">
+                                                No stats added. Default stats will be shown.
+                                            </p>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </div>
         </form>
     );

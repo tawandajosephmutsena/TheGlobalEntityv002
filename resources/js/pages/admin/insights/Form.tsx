@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, List, Type, ImageIcon } from 'lucide-react';
+import { Save, ArrowLeft, ImagePlus, X, Plus, History, Eye, Trash2, List, Type, ImageIcon, PanelRightClose, PanelRightOpen } from 'lucide-react';
 import { Insight, Category, User, SharedData } from '@/types';
 import { useForm, Link, usePage } from '@inertiajs/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
@@ -29,7 +29,9 @@ import RealTimePreview from '@/components/admin/RealTimePreview';
 import PreviewShare from '@/components/admin/PreviewShare';
 import { accessibilityManager } from '@/lib/accessibilityManager';
 import BlogArticleBuilder from '@/components/admin/BlogBuilder/BlogArticleBuilder';
+import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export type BlockType = 'hero' | 'text' | 'image' | 'features' | 'stats' | 'services' | 'portfolio' | 'insights' | 'cta' | 'cinematic_hero' | 'form' | 'video' | 'story' | 'manifesto' | 'process' | 'contact_info' | 'faq' | 'animated_shader_hero' | 'testimonials' | 'logo_cloud' | 'apple_cards_carousel' | 'creative_grid' | 'cover_demo' | 'video_background_hero' | 'parallax_features' | 'gsap_horizontal_scroll' | 'kimi_hero' | 'carousel' | 'team_hero' | 'team_grid' | 'culture_bento' | 'team_join' | 'cta_hero' | 'ecosystem_content' | 'enterprise_pricing' | 'faq_section' | 'ai_features' | 'stacking_cards' | 'product_card_stack' | 'stacked_cards' | 'cards_slider' | 'about_hero' | 'about_who_are_you' | 'about_truth_untangled' | 'about_more_than_entertainment' | 'about_origin_story' | 'stitch_featured_blog' | (string & {});
 
@@ -304,6 +306,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
     const [showVersionComparison, setShowVersionComparison] = React.useState(false);
     const [comparisonVersions, setComparisonVersions] = React.useState<[number, number] | null>(null);
     const [showPreview, setShowPreview] = React.useState(false);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
     const formRef = useRef<HTMLFormElement>(null);
 
     const [blocks, setBlocks] = useState<Block[]>(data.content.blocks || []);
@@ -474,10 +477,22 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                     <Eye className="h-4 w-4" />
                     {showPreview ? 'Hide Preview' : 'Show Preview'}
                 </Button>
+                <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                    className="gap-2"
+                >
+                    {isSidebarCollapsed ? <PanelRightOpen className="h-4 w-4" /> : <PanelRightClose className="h-4 w-4" />}
+                    {isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+                </Button>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div className={cn(
+                    "space-y-6 transition-all duration-300",
+                    isSidebarCollapsed ? "lg:col-span-12" : "lg:col-span-9"
+                )}>
                     <Card>
                         <CardHeader>
                             <CardTitle>Article Content</CardTitle>
@@ -651,232 +666,242 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
                     </Card>
                 </div>
 
-                <div className="space-y-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Publishing</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <Label>Published</Label>
-                                <Switch
-                                    checked={data.is_published}
-                                    onCheckedChange={(checked) => setData('is_published', checked)}
-                                />
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <Label>Featured</Label>
-                                <Switch
-                                    checked={data.is_featured}
-                                    onCheckedChange={(checked) => setData('is_featured', checked)}
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="published_at">Publication Date</Label>
-                                <Input
-                                    id="published_at"
-                                    type="datetime-local"
-                                    value={data.published_at}
-                                    onChange={(e) => setData('published_at', e.target.value)}
-                                    className="bg-background border-agency-accent/20 focus:border-agency-accent/50 focus:ring-agency-accent/20"
-                                />
-                                {errors.published_at && (
-                                    <p className="text-sm text-destructive mt-1">{errors.published_at}</p>
-                                )}
-                            </div>
-                            {user?.is_super_admin && (
-                                <div className="grid gap-2 text-xs">
-                                   <Label>Author</Label>
-                                   <Select 
-                                        value={data.author_id.toString()} 
-                                        onValueChange={(val) => setData('author_id', parseInt(val))}
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select author" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {authors.map(author => (
-                                                <SelectItem key={author.id} value={author.id.toString()}>
-                                                    {author.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                   </Select>
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Cataloging</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid gap-2">
-                                <Label>Primary Category</Label>
-                                <Select 
-                                    value={data.category_id?.toString()} 
-                                    onValueChange={(val) => setData('category_id', parseInt(val))}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map(cat => (
-                                            <SelectItem key={cat.id} value={cat.id.toString()}>
-                                                {cat.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label>Additional Categories</Label>
-                                <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto border rounded-md p-3 bg-card">
-                                    {categories.map(cat => (
-                                        <div key={cat.id} className="flex items-center space-x-2">
-                                            <Checkbox 
-                                                id={`add-cat-${cat.id}`} 
-                                                checked={data.additional_categories.includes(cat.id)}
-                                                onCheckedChange={(checked) => {
-                                                    if (checked) {
-                                                        setData('additional_categories', [...data.additional_categories, cat.id]);
-                                                    } else {
-                                                        setData('additional_categories', data.additional_categories.filter(id => id !== cat.id));
-                                                    }
-                                                }}
-                                            />
-                                            <label 
-                                                htmlFor={`add-cat-${cat.id}`}
-                                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                            >
-                                                {cat.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label>Link Podcast</Label>
-                                <Select 
-                                    value={data.podcast_id ? data.podcast_id.toString() : "none"} 
-                                    onValueChange={(val) => setData('podcast_id', val === "none" ? '' : parseInt(val))}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select podcast" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="none">None</SelectItem>
-                                        {podcasts.map(podcast => (
-                                            <SelectItem key={podcast.id} value={podcast.id.toString()}>
-                                                {podcast.title}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label>Link Festival</Label>
-                                <Select 
-                                    value={data.festival_id ? data.festival_id.toString() : "none"} 
-                                    onValueChange={(val) => setData('festival_id', val === "none" ? '' : parseInt(val))}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select festival" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="none">None</SelectItem>
-                                        {festivals.map(festival => (
-                                            <SelectItem key={festival.id} value={festival.id.toString()}>
-                                                {festival.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="grid gap-2">
-                                <Label>Tags</Label>
-                                <div className="flex gap-2">
-                                    <Input
-                                        value={newTag}
-                                        onChange={(e) => setNewTag(e.target.value)}
-                                        placeholder="Add tag..."
-                                        onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                                    />
-                                    <Button type="button" size="icon" onClick={addTag} variant="outline">
-                                        <Plus className="h-4 w-4" />
-                                    </Button>
-                                </div>
-                                <div className="flex flex-wrap gap-1.5 mt-2">
-                                    {data.tags.map(tag => (
-                                         <Badge key={tag} variant="secondary" className="gap-1 px-1.5">
-                                            {tag}
-                                            <X className="h-3 w-3 cursor-pointer" onClick={() => removeTag(tag)} />
-                                         </Badge>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="reading_time">Reading Time (min)</Label>
-                                <Input
-                                    id="reading_time"
-                                    type="number"
-                                    value={data.reading_time}
-                                    onChange={(e) => setData('reading_time', parseInt(e.target.value))}
-                                />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Featured Image</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <MediaLibrary 
-                                type="image"
-                                currentValue={data.featured_image}
-                                onSelect={(asset) => setData('featured_image', asset.url)}
-                                trigger={
-                                    <div 
-                                        className="aspect-video rounded border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-muted mb-3 overflow-hidden bg-muted/20"
-                                    >
-                                        {data.featured_image ? (
-                                            <img src={data.featured_image} alt="" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <ImagePlus className="h-8 w-8 text-muted-foreground" />
+                <AnimatePresence>
+                    {!isSidebarCollapsed && (
+                        <motion.div 
+                            initial={{ opacity: 0, x: 20, width: 0 }}
+                            animate={{ opacity: 1, x: 0, width: 'auto' }}
+                            exit={{ opacity: 0, x: 20, width: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="lg:col-span-3 space-y-6 overflow-hidden"
+                        >
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Publishing</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <Label>Published</Label>
+                                        <Switch
+                                            checked={data.is_published}
+                                            onCheckedChange={(checked) => setData('is_published', checked)}
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <Label>Featured</Label>
+                                        <Switch
+                                            checked={data.is_featured}
+                                            onCheckedChange={(checked) => setData('is_featured', checked)}
+                                        />
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="published_at">Publication Date</Label>
+                                        <Input
+                                            id="published_at"
+                                            type="datetime-local"
+                                            value={data.published_at}
+                                            onChange={(e) => setData('published_at', e.target.value)}
+                                            className="bg-background border-agency-accent/20 focus:border-agency-accent/50 focus:ring-agency-accent/20"
+                                        />
+                                        {errors.published_at && (
+                                            <p className="text-sm text-destructive mt-1">{errors.published_at}</p>
                                         )}
                                     </div>
-                                }
-                            />
-                            <Input
-                                value={data.featured_image}
-                                onChange={(e) => setData('featured_image', e.target.value)}
-                                placeholder="Image URL"
-                                className="text-xs"
-                            />
-                        </CardContent>
-                    </Card>
+                                    {user?.is_super_admin && (
+                                        <div className="grid gap-2 text-xs">
+                                           <Label>Author</Label>
+                                           <Select 
+                                                value={data.author_id.toString()} 
+                                                onValueChange={(val) => setData('author_id', parseInt(val))}
+                                            >
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Select author" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {authors.map(author => (
+                                                        <SelectItem key={author.id} value={author.id.toString()}>
+                                                            {author.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                           </Select>
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
 
-                    {insight && (
-                        <Card>
-                            <CardHeader>
-                                <CardTitle>Preview Sharing</CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <PreviewShare
-                                    contentType="insight"
-                                    contentId={insight.id}
-                                    contentTitle={data.title}
-                                />
-                            </CardContent>
-                        </Card>
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Cataloging</CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid gap-2">
+                                        <Label>Primary Category</Label>
+                                        <Select 
+                                            value={data.category_id?.toString()} 
+                                            onValueChange={(val) => setData('category_id', parseInt(val))}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select category" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {categories.map(cat => (
+                                                    <SelectItem key={cat.id} value={cat.id.toString()}>
+                                                        {cat.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
+                                    </div>
+
+                                    <div className="grid gap-2">
+                                        <Label>Additional Categories</Label>
+                                        <div className="flex flex-col gap-2 max-h-[200px] overflow-y-auto border rounded-md p-3 bg-card">
+                                            {categories.map(cat => (
+                                                <div key={cat.id} className="flex items-center space-x-2">
+                                                    <Checkbox 
+                                                        id={`add-cat-${cat.id}`} 
+                                                        checked={data.additional_categories.includes(cat.id)}
+                                                        onCheckedChange={(checked) => {
+                                                            if (checked) {
+                                                                setData('additional_categories', [...data.additional_categories, cat.id]);
+                                                            } else {
+                                                                setData('additional_categories', data.additional_categories.filter(id => id !== cat.id));
+                                                            }
+                                                        }}
+                                                    />
+                                                    <label 
+                                                        htmlFor={`add-cat-${cat.id}`}
+                                                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                                    >
+                                                        {cat.name}
+                                                    </label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="grid gap-2">
+                                        <Label>Link Podcast</Label>
+                                        <Select 
+                                            value={data.podcast_id ? data.podcast_id.toString() : "none"} 
+                                            onValueChange={(val) => setData('podcast_id', val === "none" ? '' : parseInt(val))}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select podcast" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="none">None</SelectItem>
+                                                {podcasts.map(podcast => (
+                                                    <SelectItem key={podcast.id} value={podcast.id.toString()}>
+                                                        {podcast.title}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+
+                                    <div className="grid gap-2">
+                                        <Label>Link Festival</Label>
+                                        <Select 
+                                            value={data.festival_id ? data.festival_id.toString() : "none"} 
+                                            onValueChange={(val) => setData('festival_id', val === "none" ? '' : parseInt(val))}
+                                        >
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select festival" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="none">None</SelectItem>
+                                                {festivals.map(festival => (
+                                                    <SelectItem key={festival.id} value={festival.id.toString()}>
+                                                        {festival.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label>Tags</Label>
+                                        <div className="flex gap-2">
+                                            <Input
+                                                value={newTag}
+                                                onChange={(e) => setNewTag(e.target.value)}
+                                                placeholder="Add tag..."
+                                                onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                                            />
+                                            <Button type="button" size="icon" onClick={addTag} variant="outline">
+                                                <Plus className="h-4 w-4" />
+                                            </Button>
+                                        </div>
+                                        <div className="flex flex-wrap gap-1.5 mt-2">
+                                            {data.tags.map(tag => (
+                                                 <Badge key={tag} variant="secondary" className="gap-1 px-1.5">
+                                                    {tag}
+                                                    <X className="h-3 w-3 cursor-pointer" onClick={() => removeTag(tag)} />
+                                                 </Badge>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="grid gap-2">
+                                        <Label htmlFor="reading_time">Reading Time (min)</Label>
+                                        <Input
+                                            id="reading_time"
+                                            type="number"
+                                            value={data.reading_time}
+                                            onChange={(e) => setData('reading_time', parseInt(e.target.value))}
+                                        />
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Featured Image</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <MediaLibrary 
+                                        type="image"
+                                        currentValue={data.featured_image}
+                                        onSelect={(asset) => setData('featured_image', asset.url)}
+                                        trigger={
+                                            <div 
+                                                className="aspect-video rounded border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:bg-muted mb-3 overflow-hidden bg-muted/20"
+                                            >
+                                                {data.featured_image ? (
+                                                    <img src={data.featured_image} alt="" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    <ImagePlus className="h-8 w-8 text-muted-foreground" />
+                                                )}
+                                            </div>
+                                        }
+                                    />
+                                    <Input
+                                        value={data.featured_image}
+                                        onChange={(e) => setData('featured_image', e.target.value)}
+                                        placeholder="Image URL"
+                                        className="text-xs"
+                                    />
+                                </CardContent>
+                            </Card>
+
+                            {insight && (
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>Preview Sharing</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <PreviewShare
+                                            contentType="insight"
+                                            contentId={insight.id}
+                                            contentTitle={data.title}
+                                        />
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </motion.div>
                     )}
-                </div>
+                </AnimatePresence>
             </div>
 
             {/* Version History and Comparison */}

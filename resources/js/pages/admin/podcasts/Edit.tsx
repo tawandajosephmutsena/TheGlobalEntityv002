@@ -14,8 +14,10 @@ import MediaLibrary from '@/components/admin/MediaLibrary';
 import { Separator } from '@/components/ui/separator';
 import { MediaAsset } from '@/types';
 import {
-    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check
+    X, Image as ImageIcon, Tag, Save, Loader2, AlertCircle, Upload, Link, Check, PanelRightClose, PanelRightOpen, ArrowLeft
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 declare function route(name: string, params?: unknown, absolute?: boolean): string;
 
@@ -79,6 +81,8 @@ export default function PodcastEdit({ podcast, categories }: Props) {
         duration: podcast.duration,
     });
     
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    
     // Check if current media is external
     const isUrl = podcast.media_url && (podcast.media_url.startsWith('http://') || podcast.media_url.startsWith('https://'));
     const [mediaSource, setMediaSource] = useState<'upload' | 'link'>(isUrl ? 'link' : 'upload');
@@ -140,9 +144,29 @@ export default function PodcastEdit({ podcast, categories }: Props) {
             { title: 'Edit', href: '#' },
         ]}>
             <div className="max-w-4xl mx-auto space-y-8">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Edit Episode</h1>
-                    <p className="text-muted-foreground text-sm mt-1">Update podcast details and republish.</p>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl font-bold tracking-tight">Edit Episode</h1>
+                        <p className="text-muted-foreground text-sm mt-1">Update podcast details and republish.</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Button variant="outline" onClick={() => router.get('/admin/podcasts')} className="gap-2">
+                            <ArrowLeft className="size-4" /> Back
+                        </Button>
+                        <Button 
+                            type="button" 
+                            variant="outline" 
+                            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                            className="gap-2"
+                        >
+                            {isSidebarCollapsed ? <PanelRightOpen className="size-4" /> : <PanelRightClose className="size-4" />}
+                            {isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+                        </Button>
+                        <Button onClick={handleSubmit} disabled={isSubmitting} className="gap-2">
+                            {isSubmitting ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
+                            Save Changes
+                        </Button>
+                    </div>
                 </div>
 
                 {Object.keys(errors).length > 0 && (
@@ -160,8 +184,11 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                 )}
 
                 {/* Main form */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className={cn(
+                        "space-y-6 transition-all duration-300",
+                        isSidebarCollapsed ? "lg:col-span-12" : "lg:col-span-9"
+                    )}>
                         {/* Title */}
                         <div className="space-y-2">
                             <Label htmlFor="title">Episode Title *</Label>
@@ -333,140 +360,152 @@ export default function PodcastEdit({ podcast, categories }: Props) {
                         </div>
                     </div>
 
-                    {/* Sidebar */}
-                    <div className="space-y-6">
-                        {/* Thumbnail */}
-                        <div className="rounded-xl border border-border bg-card p-4 space-y-3">
-                            <h3 className="font-bold text-sm">Episode Artwork</h3>
-                            <MediaLibrary
-                                type="image"
-                                onSelect={handleThumbnailSelect}
-                                trigger={
-                                    <div className="aspect-square rounded-lg border border-dashed border-border overflow-hidden cursor-pointer hover:border-primary/50 transition-all">
-                                        {formData.thumbnail ? (
-                                            <img src={formData.thumbnail.startsWith('http') ? formData.thumbnail : `/storage/${formData.thumbnail}`} alt="Thumbnail" className="w-full h-full object-cover" />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center p-4 text-center">
-                                                <div>
-                                                    <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
-                                                    <p className="text-xs text-muted-foreground">Select artwork</p>
+                    <AnimatePresence>
+                        {!isSidebarCollapsed && (
+                            <motion.div 
+                                initial={{ opacity: 0, x: 20, width: 0 }}
+                                animate={{ opacity: 1, x: 0, width: 'auto' }}
+                                exit={{ opacity: 0, x: 20, width: 0 }}
+                                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                className="lg:col-span-3 space-y-6 overflow-hidden"
+                            >
+                                {/* Sidebar Content */}
+                                <div className="space-y-6">
+                                    {/* Thumbnail */}
+                                    <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+                                        <h3 className="font-bold text-sm">Episode Artwork</h3>
+                                        <MediaLibrary
+                                            type="image"
+                                            onSelect={handleThumbnailSelect}
+                                            trigger={
+                                                <div className="aspect-square rounded-lg border border-dashed border-border overflow-hidden cursor-pointer hover:border-primary/50 transition-all">
+                                                    {formData.thumbnail ? (
+                                                        <img src={formData.thumbnail.startsWith('http') ? formData.thumbnail : `/storage/${formData.thumbnail}`} alt="Thumbnail" className="w-full h-full object-cover" />
+                                                    ) : (
+                                                        <div className="w-full h-full flex items-center justify-center p-4 text-center">
+                                                            <div>
+                                                                <ImageIcon className="size-8 mx-auto text-muted-foreground mb-2" />
+                                                                <p className="text-xs text-muted-foreground">Select artwork</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </div>
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="rounded-xl border border-border bg-card p-4 space-y-4">
+                                        <h3 className="font-bold text-sm">Categories</h3>
+                                        <div className="space-y-2">
+                                            <Label>Primary Category</Label>
+                                            <Select
+                                                value={String(formData.category_id)}
+                                                onValueChange={(v) => setFormData(prev => ({ ...prev, category_id: v }))}
+                                            >
+                                                <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+                                                <SelectContent>
+                                                    {categories.map(cat => (
+                                                        <SelectItem key={cat.id} value={String(cat.id)}>{cat.name}</SelectItem>
+                                                    ))}
+                                                </SelectContent>
+                                            </Select>
+                                            {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
+                                        </div>
+                                        
+                                        <div className="space-y-2">
+                                            <Label>Additional Categories</Label>
+                                            <div className="flex flex-col gap-2 p-3 rounded-lg border bg-muted/20">
+                                                {categories.filter(c => String(c.id) !== String(formData.category_id)).map(cat => (
+                                                    <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
+                                                        <div 
+                                                            className={`size-4 rounded border flex items-center justify-center transition-colors ${
+                                                                formData.additional_categories.includes(cat.id) 
+                                                                    ? 'bg-primary border-primary text-primary-foreground' 
+                                                                    : 'bg-background border-input group-hover:border-primary/50'
+                                                            }`}
+                                                            onClick={() => {
+                                                                setFormData(prev => ({
+                                                                    ...prev,
+                                                                    additional_categories: prev.additional_categories.includes(cat.id)
+                                                                        ? prev.additional_categories.filter(id => id !== cat.id)
+                                                                        : [...prev.additional_categories, cat.id]
+                                                                }));
+                                                            }}
+                                                        >
+                                                            {formData.additional_categories.includes(cat.id) && <Check className="size-2.5 stroke-[3]" />}
+                                                        </div>
+                                                        <span className="text-xs">{cat.name}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <Separator className="my-2" />
+
+                                        <div className="space-y-2">
+                                            <Label>Media Type</Label>
+                                            <Select
+                                                value={formData.media_type}
+                                                onValueChange={(v) => setFormData(prev => ({ ...prev, media_type: v as 'audio' | 'video' }))}
+                                            >
+                                                <SelectTrigger><SelectValue /></SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="audio">Audio</SelectItem>
+                                                    <SelectItem value="video">Video</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <div className="space-y-2">
+                                                <Label>Season</Label>
+                                                <Input
+                                                    type="number" min={1}
+                                                    value={formData.season_number}
+                                                    onChange={(e) => setFormData(prev => ({ ...prev, season_number: e.target.value }))}
+                                                />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <Label>Episode</Label>
+                                                <Input
+                                                    type="number" min={1}
+                                                    value={formData.episode_number}
+                                                    onChange={(e) => setFormData(prev => ({ ...prev, episode_number: e.target.value }))}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Publishing */}
+                                    <div className="rounded-xl border border-border bg-card p-4 space-y-4">
+                                        <h3 className="font-bold text-sm">Publishing</h3>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm">Published</span>
+                                            <Switch
+                                                checked={formData.is_published}
+                                                onCheckedChange={(v) => setFormData(prev => ({ ...prev, is_published: v }))}
+                                            />
+                                        </div>
+                                        {!formData.is_published && (
+                                            <div className="space-y-2">
+                                                <Label>Schedule</Label>
+                                                <Input
+                                                    type="datetime-local"
+                                                    value={formData.published_at}
+                                                    onChange={(e) => setFormData(prev => ({ ...prev, published_at: e.target.value }))}
+                                                />
                                             </div>
                                         )}
                                     </div>
-                                }
-                            />
-                        </div>
 
-                        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-                            <h3 className="font-bold text-sm">Categories</h3>
-                            <div className="space-y-2">
-                                <Label>Primary Category</Label>
-                                <Select
-                                    value={String(formData.category_id)}
-                                    onValueChange={(v) => setFormData(prev => ({ ...prev, category_id: v }))}
-                                >
-                                    <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map(cat => (
-                                            <SelectItem key={cat.id} value={String(cat.id)}>{cat.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.category_id && <p className="text-sm text-destructive">{errors.category_id}</p>}
-                            </div>
-                            
-                            <div className="space-y-2">
-                                <Label>Additional Categories</Label>
-                                <div className="flex flex-col gap-2 p-3 rounded-lg border bg-muted/20">
-                                    {categories.filter(c => String(c.id) !== String(formData.category_id)).map(cat => (
-                                        <label key={cat.id} className="flex items-center gap-2 cursor-pointer group">
-                                            <div 
-                                                className={`size-4 rounded border flex items-center justify-center transition-colors ${
-                                                    formData.additional_categories.includes(cat.id) 
-                                                        ? 'bg-primary border-primary text-primary-foreground' 
-                                                        : 'bg-background border-input group-hover:border-primary/50'
-                                                }`}
-                                                onClick={() => {
-                                                    setFormData(prev => ({
-                                                        ...prev,
-                                                        additional_categories: prev.additional_categories.includes(cat.id)
-                                                            ? prev.additional_categories.filter(id => id !== cat.id)
-                                                            : [...prev.additional_categories, cat.id]
-                                                    }));
-                                                }}
-                                            >
-                                                {formData.additional_categories.includes(cat.id) && <Check className="size-2.5 stroke-[3]" />}
-                                            </div>
-                                            <span className="text-xs">{cat.name}</span>
-                                        </label>
-                                    ))}
+                                    {/* Actions */}
+                                    <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full gap-2">
+                                        {isSubmitting ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
+                                        Save Changes
+                                    </Button>
                                 </div>
-                            </div>
-
-                            <Separator className="my-2" />
-
-                            <div className="space-y-2">
-                                <Label>Media Type</Label>
-                                <Select
-                                    value={formData.media_type}
-                                    onValueChange={(v) => setFormData(prev => ({ ...prev, media_type: v as 'audio' | 'video' }))}
-                                >
-                                    <SelectTrigger><SelectValue /></SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="audio">Audio</SelectItem>
-                                        <SelectItem value="video">Video</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="space-y-2">
-                                    <Label>Season</Label>
-                                    <Input
-                                        type="number" min={1}
-                                        value={formData.season_number}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, season_number: e.target.value }))}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label>Episode</Label>
-                                    <Input
-                                        type="number" min={1}
-                                        value={formData.episode_number}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, episode_number: e.target.value }))}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Publishing */}
-                        <div className="rounded-xl border border-border bg-card p-4 space-y-4">
-                            <h3 className="font-bold text-sm">Publishing</h3>
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">Published</span>
-                                <Switch
-                                    checked={formData.is_published}
-                                    onCheckedChange={(v) => setFormData(prev => ({ ...prev, is_published: v }))}
-                                />
-                            </div>
-                            {!formData.is_published && (
-                                <div className="space-y-2">
-                                    <Label>Schedule</Label>
-                                    <Input
-                                        type="datetime-local"
-                                        value={formData.published_at}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, published_at: e.target.value }))}
-                                    />
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Actions */}
-                        <Button onClick={handleSubmit} disabled={isSubmitting} className="w-full gap-2">
-                            {isSubmitting ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
-                            Save Changes
-                        </Button>
-                    </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </AdminLayout>
