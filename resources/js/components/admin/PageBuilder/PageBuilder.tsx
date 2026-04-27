@@ -37,11 +37,11 @@ export default function PageBuilder({
     }, []);
 
     return (
-        <div className="flex h-[calc(100vh-10rem)] bg-background border rounded-xl overflow-hidden shadow-2xl">
+        <div className="flex h-full bg-background overflow-hidden">
             {/* Sidebar: Block List & Editor */}
             {!isPreviewFullscreen && (
                 <div 
-                    className="w-[400px] flex-shrink-0 border-r bg-muted/10 flex flex-col overflow-hidden min-h-0"
+                    className="w-[320px] flex-shrink-0 border-r bg-muted/10 flex flex-col overflow-hidden min-h-0"
                 >
                     <BlockList 
                         blocks={blocks}

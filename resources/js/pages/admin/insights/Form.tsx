@@ -522,7 +522,7 @@ export default function InsightForm({ insight, categories, authors, podcasts = [
 
                             <div className="grid gap-2">
                                 <Label>Content & Layout Builder</Label>
-                                <div className="min-h-[600px] border rounded-xl overflow-hidden bg-muted/5">
+                                <div className="border rounded-xl overflow-hidden bg-muted/5">
                                     <BlogArticleBuilder 
                                         blocks={blocks}
                                         setBlocks={setBlocks}

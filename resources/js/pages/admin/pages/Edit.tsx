@@ -681,46 +681,48 @@ export default function Edit({ page }: Props) {
     ];
 
     return (
-        <AdminLayout title={`Edit ${page.title}`} breadcrumbs={breadcrumbs}>
-            <div className="flex flex-col gap-6 h-full min-h-[calc(100vh-8rem)]">
-                {/* Fixed Header */}
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <Link href="/admin/pages" className="p-2 rounded-full hover:bg-muted transition-colors">
-                            <ChevronLeft className="h-5 w-5" />
-                        </Link>
-                        <div>
-                            <div className="flex items-center gap-3">
-                                <h1 className="text-2xl font-black uppercase tracking-tight">Edit Page</h1>
-                                <span className="text-xs font-mono text-muted-foreground bg-muted ring-1 ring-border px-2 py-0.5 rounded leading-none">/{page.slug}</span>
+        <AdminLayout title={`Edit ${page.title}`} breadcrumbs={breadcrumbs} className="p-0 gap-0 overflow-hidden">
+            <div className="flex flex-col h-[calc(100vh-4rem)]">
+                {/* Header Area with Padding */}
+                <div className="px-6 py-4 border-b bg-background/50 backdrop-blur-sm flex-shrink-0">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <Link href="/admin/pages" className="p-2 rounded-full hover:bg-muted transition-colors">
+                                <ChevronLeft className="h-5 w-5" />
+                            </Link>
+                            <div>
+                                <div className="flex items-center gap-3">
+                                    <h1 className="text-xl font-black uppercase tracking-tight">Edit Page</h1>
+                                    <span className="text-xs font-mono text-muted-foreground bg-muted ring-1 ring-border px-2 py-0.5 rounded leading-none">/{page.slug}</span>
+                                </div>
+                                <p className="text-muted-foreground text-[10px] font-medium uppercase tracking-[0.2em]">Managing content for {page.title}</p>
                             </div>
-                            <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-[0.2em]">Managing content for {page.title}</p>
                         </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <Button variant="outline" size="sm" asChild className="h-9">
-                            <a href={page.slug === 'home' ? '/' : `/${page.slug}`} target="_blank" rel="noreferrer">
-                                <Eye className="h-4 w-4 mr-2" /> Preview
-                            </a>
-                        </Button>
-                        <Button type="button" onClick={() => handleSubmit()} disabled={processing} className="bg-agency-accent text-white hover:bg-agency-accent/90 h-9 font-bold px-6">
-                            <Save className="h-4 w-4 mr-2" />
-                            {processing ? 'Saving...' : 'Save Changes'}
-                        </Button>
+                        <div className="flex items-center gap-3">
+                            <Button variant="outline" size="sm" asChild className="h-8">
+                                <a href={page.slug === 'home' ? '/' : `/${page.slug}`} target="_blank" rel="noreferrer">
+                                    <Eye className="h-4 w-4 mr-2" /> Preview
+                                </a>
+                            </Button>
+                            <Button type="button" onClick={() => handleSubmit()} disabled={processing} className="bg-agency-accent text-white hover:bg-agency-accent/90 h-8 font-bold px-4 text-xs">
+                                <Save className="h-4 w-4 mr-2" />
+                                {processing ? 'Saving...' : 'Save Changes'}
+                            </Button>
+                        </div>
                     </div>
                 </div>
 
-                {/* Main Content: Real-time Visual Builder */}
-                <div className="flex-1 min-h-0">
+                {/* Main Content Area */}
+                <div className="flex-1 min-h-0 flex flex-col">
                     <Tabs defaultValue="content" className="h-full flex flex-col">
-                        <div className="flex items-center justify-between mb-4">
+                        <div className="px-6 py-2 border-b bg-background/30 flex items-center justify-between">
                             <TabsList className="bg-muted/30 p-1">
-                                <TabsTrigger value="content" className="data-[state=active]:bg-background data-[state=active]:shadow-sm">Visual Editor</TabsTrigger>
-                                <TabsTrigger value="settings" className="data-[state=active]:bg-background data-[state=active]:shadow-sm">SEO & Settings</TabsTrigger>
+                                <TabsTrigger value="content" className="h-8 px-4 text-xs data-[state=active]:bg-background data-[state=active]:shadow-sm uppercase font-bold tracking-wider">Visual Editor</TabsTrigger>
+                                <TabsTrigger value="settings" className="h-8 px-4 text-xs data-[state=active]:bg-background data-[state=active]:shadow-sm uppercase font-bold tracking-wider">SEO & Settings</TabsTrigger>
                             </TabsList>
                         </div>
 
-                        <TabsContent value="content" className="flex-1 mt-0 h-full">
+                        <TabsContent value="content" className="flex-1 mt-0 h-full focus-visible:outline-none">
                             <PageBuilder 
                                 blocks={blocks}
                                 setBlocks={setBlocks}
@@ -734,8 +736,8 @@ export default function Edit({ page }: Props) {
                             />
                         </TabsContent>
 
-                        <TabsContent value="settings" className="mt-0 space-y-6 animate-in fade-in slide-in-from-bottom-2 overflow-y-auto max-h-[calc(100vh-20rem)] p-1">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <TabsContent value="settings" className="flex-1 mt-0 h-full overflow-y-auto p-6 focus-visible:outline-none">
+                            <div className="max-w-5xl mx-auto space-y-6">
                                 <Card>
                                     <CardHeader>
                                         <CardTitle className="text-lg font-bold uppercase tracking-tight">Page Identity</CardTitle>

@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from 'react';
-import { Block, BlockType } from '@/Pages/admin/insights/Form';
+import { Block, BlockType } from '@/pages/admin/insights/Form';
 import BlogBlockList from './BlogBlockList';
 import VisualPreview from '../PageBuilder/VisualPreview';
 import { Layers, Eye, Edit3, Settings2, Save, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from '@/lib/utils';
 
 interface BlogArticleBuilderProps {
     blocks: Block[];
@@ -46,9 +47,9 @@ export default function BlogArticleBuilder({
     }, []);
 
     return (
-        <div className="flex flex-col h-[800px] bg-background border rounded-2xl overflow-hidden shadow-sm">
+        <div className="flex flex-col h-[calc(100vh-12rem)] min-h-[700px] bg-background border rounded-2xl overflow-hidden shadow-sm transition-all duration-300">
             {/* Header / Mode Switcher */}
-            <div className="h-14 border-b bg-muted/5 flex items-center justify-between px-6">
+            <div className="h-14 border-b bg-muted/5 flex items-center justify-between px-6 flex-shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-agency-accent/10 text-agency-accent">
                         <Edit3 className="h-4 w-4" />
@@ -88,12 +89,19 @@ export default function BlogArticleBuilder({
                 </div>
             </div>
 
-            <div className="flex-1 flex overflow-hidden">
-                {/* Always show the Block List/Editor in Editor Tab */}
+            <div className="flex-1 flex overflow-hidden relative">
+                {/* Editor Mode: Sidebar + Preview */}
                 <div 
-                    className={`flex-1 flex overflow-hidden ${activeTab === 'preview' ? 'hidden lg:flex' : 'flex'}`}
+                    className={cn(
+                        "flex-1 flex overflow-hidden transition-all duration-300",
+                        activeTab === 'preview' && "translate-x-0"
+                    )}
                 >
-                    <div className="w-full lg:w-[450px] border-r flex flex-col bg-muted/5">
+                    {/* Sidebar: Only show in editor mode OR as overlay? Actually let's hide it if preview active */}
+                    <div className={cn(
+                        "border-r flex flex-col bg-muted/5 transition-all duration-300 overflow-hidden min-h-0",
+                        activeTab === 'editor' ? "w-full lg:w-[400px]" : "w-0 border-r-0"
+                    )}>
                         <BlogBlockList 
                             blocks={blocks}
                             activeBlockId={activeBlockId}
@@ -107,34 +115,23 @@ export default function BlogArticleBuilder({
                         />
                     </div>
 
-                    {/* In Desktop, show a smaller preview next to editor, or hide if preview tab is active */}
-                    <div className="hidden lg:flex flex-1 bg-muted/20 relative items-center justify-center p-8 overflow-hidden">
-                        <div className="w-full max-w-4xl h-full shadow-2xl rounded-xl overflow-hidden bg-background border ring-1 ring-black/5">
+                    {/* Preview Area: Expands when sidebar is hidden */}
+                    <div className={cn(
+                        "flex-1 bg-muted/20 relative flex flex-col overflow-hidden transition-all duration-300",
+                        activeTab === 'editor' ? "hidden lg:flex" : "flex"
+                    )}>
+                        <div className="w-full h-full bg-background overflow-hidden">
                             <VisualPreview 
                                 blocks={blocks}
                                 pageTitle={pageTitle}
                                 pageSlug={pageSlug}
                                 previewBaseUrl={previewBaseUrl}
-                                isFullscreen={false}
-                                onToggleFullscreen={() => setActiveTab('preview')}
+                                isFullscreen={activeTab === 'preview'}
+                                onToggleFullscreen={() => setActiveTab(activeTab === 'editor' ? 'preview' : 'editor')}
                             />
                         </div>
                     </div>
                 </div>
-
-                {/* Fullscreen Preview Tab */}
-                {activeTab === 'preview' && (
-                    <div className="flex-1 bg-background relative flex flex-col overflow-hidden lg:hidden">
-                        <VisualPreview 
-                            blocks={blocks}
-                            pageTitle={pageTitle}
-                            pageSlug={pageSlug}
-                            previewBaseUrl={previewBaseUrl}
-                            isFullscreen={true}
-                            onToggleFullscreen={() => setActiveTab('editor')}
-                        />
-                    </div>
-                )}
             </div>
         </div>
     );
